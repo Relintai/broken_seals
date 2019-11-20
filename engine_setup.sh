@@ -41,7 +41,7 @@ fi
 
 if [ ! -d ui_extensions ]; then
 	git clone git@github.com:Relintai/ui_extensions.git ui_extensions
-	cp -R ../ui_extensions  ../engine/modules/ui_extensions
+	cp -R ./ui_extensions  ../engine/modules/ui_extensions
 else
 	cd ui_extensions
 
