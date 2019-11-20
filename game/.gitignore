@@ -12,3 +12,5 @@ todo\.cache\.ini
 todo\.config\.ini
 
 export_presets\.cfg
+
+export.cfg
