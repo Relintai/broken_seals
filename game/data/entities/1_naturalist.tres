@@ -1,0 +1,17 @@
+[gd_resource type="EntityData" load_steps=5 format=2]
+
+[ext_resource path="res://data/entity_classes/1_naturalist.tres" type="EntityClassData" id=1]
+[ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=2]
+[ext_resource path="res://data/item_templates/2_test.tres" type="ItemTemplate" id=3]
+
+[sub_resource type="LootDataItem" id=1]
+item = ExtResource( 3 )
+
+[resource]
+id = 1
+entity_type = 4
+entity_controller = 1
+text_name = "Naturalist"
+entity_class_data = ExtResource( 1 )
+loot_db = SubResource( 1 )
+script = ExtResource( 2 )

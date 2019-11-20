@@ -1,0 +1,16 @@
+[gd_resource type="ItemVisual" load_steps=4 format=2]
+
+[ext_resource path="res://data/character_textures/armor_green_scarf.png" type="Texture" id=1]
+
+[sub_resource type="ItemVisualEntry" id=1]
+texture_male = ExtResource( 1 )
+texture_female = ExtResource( 1 )
+
+[sub_resource type="ItemVisualEntry" id=2]
+texture_male = ExtResource( 1 )
+texture_female = ExtResource( 1 )
+
+[resource]
+layer = 5
+visual_spine_1 = SubResource( 1 )
+visual_spine_2 = SubResource( 2 )

@@ -1,0 +1,36 @@
+[gd_resource type="CraftRecipe" load_steps=8 format=2]
+
+[ext_resource path="res://data/item_templates/2_test.tres" type="ItemTemplate" id=1]
+[ext_resource path="res://data/item_templates/1_gold.tres" type="ItemTemplate" id=2]
+
+[sub_resource type="CraftRecipeHelper" id=1]
+item = ExtResource( 2 )
+count = 1
+
+[sub_resource type="CraftRecipeHelper" id=2]
+item = ExtResource( 2 )
+count = 1
+
+[sub_resource type="ItemTemplate" id=3]
+resource_name = "sdfsdf"
+text_name = "sdfsdf"
+
+[sub_resource type="CraftRecipeHelper" id=4]
+item = SubResource( 3 )
+
+[sub_resource type="CraftRecipeHelper" id=5]
+item = ExtResource( 1 )
+count = 1
+
+[resource]
+resource_name = "Test"
+id = 1
+text_name = "Test"
+category = 1
+sub_category = 1
+required_materials_count = 2
+RequiredMaterials_0 = SubResource( 1 )
+RequiredMaterials_1 = SubResource( 2 )
+required_tools_count = 1
+RequiredTools_0 = SubResource( 4 )
+item = SubResource( 5 )

@@ -1,0 +1,33 @@
+[gd_resource type="ItemTemplate" load_steps=4 format=2]
+
+[ext_resource path="res://scripts/items/ItemTemplateGD.gd" type="Script" id=1]
+[ext_resource path="res://data/item_visuals/1_chest_of_the_infinite_wisdom.tres" type="ItemVisual" id=2]
+[ext_resource path="res://data/icons/4_chest_of_the_infinite_wisdom.tres" type="Texture" id=3]
+
+[resource]
+id = 3
+text_name = "Chest of the Infinite Wisdom"
+item_type = 1
+rarity = 6
+armor_type = 1
+equip_slot = 3
+item_visual = ExtResource( 2 )
+icon = ExtResource( 3 )
+item_stat_modifier_count = 2
+Modifiers_0/stat_id = 8
+Modifiers_0/min_base_mod = 1000.0
+Modifiers_0/max_base_mod = 0.0
+Modifiers_0/min_bonus_mod = 1000.0
+Modifiers_0/max_bonus_mod = 0.0
+Modifiers_0/min_percent_mod = 0.0
+Modifiers_0/max_percent_mod = 0.0
+Modifiers_0/scaling_factor = 1.0
+Modifiers_1/stat_id = 7
+Modifiers_1/min_base_mod = 1000.0
+Modifiers_1/max_base_mod = 0.0
+Modifiers_1/min_bonus_mod = 1000.0
+Modifiers_1/max_bonus_mod = 0.0
+Modifiers_1/min_percent_mod = 0.0
+Modifiers_1/max_percent_mod = 0.0
+Modifiers_1/scaling_factor = 1.0
+script = ExtResource( 1 )

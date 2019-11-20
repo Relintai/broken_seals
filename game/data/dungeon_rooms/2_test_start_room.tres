@@ -1,0 +1,6 @@
+[gd_resource type="DungeonRoomData" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/dungeon_start_rooms/start_room.gd" type="Script" id=1]
+
+[resource]
+target_script = ExtResource( 1 )

@@ -1,0 +1,186 @@
+[gd_resource type="EntityClassData" load_steps=43 format=2]
+
+[sub_resource type="StatDataEntry" id=1]
+stat_id = 5
+
+[sub_resource type="StatDataEntry" id=2]
+stat_id = 12
+
+[sub_resource type="StatDataEntry" id=3]
+stat_id = 13
+
+[sub_resource type="StatDataEntry" id=4]
+stat_id = 19
+base = 10.0
+
+[sub_resource type="StatDataEntry" id=5]
+stat_id = 34
+
+[sub_resource type="StatDataEntry" id=6]
+stat_id = 21
+
+[sub_resource type="StatDataEntry" id=7]
+stat_id = 24
+
+[sub_resource type="StatDataEntry" id=8]
+stat_id = 38
+
+[sub_resource type="StatDataEntry" id=9]
+stat_id = 36
+
+[sub_resource type="StatDataEntry" id=10]
+stat_id = 31
+
+[sub_resource type="StatDataEntry" id=11]
+stat_id = 32
+
+[sub_resource type="StatDataEntry" id=12]
+stat_id = 3
+base = 1.5
+
+[sub_resource type="StatDataEntry" id=13]
+stat_id = 4
+
+[sub_resource type="StatDataEntry" id=14]
+stat_id = 10
+
+[sub_resource type="StatDataEntry" id=15]
+stat_id = 25
+
+[sub_resource type="StatDataEntry" id=16]
+stat_id = 0
+base = 10000.0
+
+[sub_resource type="StatDataEntry" id=17]
+stat_id = 28
+
+[sub_resource type="StatDataEntry" id=18]
+stat_id = 8
+
+[sub_resource type="StatDataEntry" id=19]
+stat_id = 33
+
+[sub_resource type="StatDataEntry" id=20]
+stat_id = 2
+base = 100.0
+
+[sub_resource type="StatDataEntry" id=21]
+stat_id = 15
+base = 5.0
+
+[sub_resource type="StatDataEntry" id=22]
+stat_id = 16
+base = 50.0
+
+[sub_resource type="StatDataEntry" id=23]
+stat_id = 26
+
+[sub_resource type="StatDataEntry" id=24]
+stat_id = 22
+base = 15.0
+
+[sub_resource type="StatDataEntry" id=25]
+stat_id = 30
+
+[sub_resource type="StatDataEntry" id=26]
+stat_id = 20
+base = 15.0
+
+[sub_resource type="StatDataEntry" id=27]
+stat_id = 39
+
+[sub_resource type="StatDataEntry" id=28]
+stat_id = 11
+
+[sub_resource type="StatDataEntry" id=29]
+stat_id = 29
+
+[sub_resource type="StatDataEntry" id=30]
+stat_id = 35
+
+[sub_resource type="StatDataEntry" id=31]
+stat_id = 1
+base = 4.2
+
+[sub_resource type="StatDataEntry" id=32]
+stat_id = 17
+base = 5.0
+
+[sub_resource type="StatDataEntry" id=33]
+stat_id = 18
+base = 50.0
+
+[sub_resource type="StatDataEntry" id=34]
+stat_id = 27
+
+[sub_resource type="StatDataEntry" id=35]
+stat_id = 23
+
+[sub_resource type="StatDataEntry" id=36]
+stat_id = 14
+
+[sub_resource type="StatDataEntry" id=37]
+stat_id = 9
+
+[sub_resource type="StatDataEntry" id=38]
+stat_id = 7
+
+[sub_resource type="StatDataEntry" id=39]
+stat_id = 6
+
+[sub_resource type="StatDataEntry" id=40]
+stat_id = 37
+
+[sub_resource type="StatDataEntry" id=41]
+stat_id = 40
+base = 1.0
+
+[sub_resource type="StatData" id=42]
+base_stat_health = SubResource( 16 )
+base_stat_speed = SubResource( 31 )
+base_stat_mana = SubResource( 20 )
+base_stat_gcd = SubResource( 12 )
+base_stat_haste = SubResource( 13 )
+base_stat_agility = SubResource( 1 )
+base_stat_strength = SubResource( 39 )
+base_stat_stamina = SubResource( 38 )
+base_stat_intellect = SubResource( 18 )
+base_stat_spirit = SubResource( 37 )
+base_stat_haste_rating = SubResource( 14 )
+base_stat_resilience = SubResource( 28 )
+base_stat_armor = SubResource( 2 )
+base_stat_attack_power = SubResource( 3 )
+base_stat_spell_power = SubResource( 36 )
+base_stat_melee_crit = SubResource( 21 )
+base_stat_melee_crit_bonus = SubResource( 22 )
+base_stat_spell_crit = SubResource( 32 )
+base_stat_spell_crit_bonus = SubResource( 33 )
+base_stat_block = SubResource( 4 )
+base_stat_parry = SubResource( 26 )
+base_stat_damage_reduction = SubResource( 6 )
+base_stat_melee_damage_reduction = SubResource( 24 )
+base_stat_spell_damage_reduction = SubResource( 35 )
+base_stat_damage_taken = SubResource( 7 )
+base_stat_heal_taken = SubResource( 15 )
+base_stat_melee_damage = SubResource( 23 )
+base_stat_spell_damage = SubResource( 34 )
+base_stat_holy_resist = SubResource( 17 )
+base_stat_shadow_resist = SubResource( 29 )
+base_stat_nature_resist = SubResource( 25 )
+base_stat_fire_resist = SubResource( 10 )
+base_stat_frost_resist = SubResource( 11 )
+base_stat_lightning_resist = SubResource( 19 )
+base_stat_chaos_resist = SubResource( 5 )
+base_stat_silence_resist = SubResource( 30 )
+base_stat_fear_resist = SubResource( 9 )
+base_stat_stun_resist = SubResource( 40 )
+base_stat_energy = SubResource( 8 )
+base_stat_rage = SubResource( 27 )
+base_stat_xp_rate = SubResource( 41 )
+
+[resource]
+resource_name = "Berserker"
+id = 2
+text_name = "Berserker"
+stat_data = SubResource( 42 )
+player_resource_type = 1

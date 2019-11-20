@@ -1,0 +1,21 @@
+[gd_resource type="CraftRecipe" load_steps=5 format=2]
+
+[ext_resource path="res://data/item_templates/3_chest_of_the_infinite_wisdom.tres" type="ItemTemplate" id=1]
+[ext_resource path="res://data/item_templates/2_test.tres" type="ItemTemplate" id=2]
+
+[sub_resource type="CraftRecipeHelper" id=1]
+item = ExtResource( 2 )
+count = 1
+
+[sub_resource type="CraftRecipeHelper" id=2]
+item = ExtResource( 1 )
+count = 1
+
+[resource]
+resource_name = "Chest of the Infinite Wisdom"
+id = 2
+text_name = "Chest of the Infinite Wisdom"
+category = 3
+required_materials_count = 1
+RequiredMaterials_0 = SubResource( 1 )
+item = SubResource( 2 )
