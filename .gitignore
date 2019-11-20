@@ -7,6 +7,9 @@ modules
 *.meta
 game/.import/**
 
+.vs/*
+.kdev4/*
+
 TestRWTextures
 
 _build/*
