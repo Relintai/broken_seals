@@ -1,0 +1,10 @@
+[gd_resource type="XPData" format=2]
+
+[resource]
+level_1 = 300
+level_2 = 600
+level_3 = 1000
+level_4 = 10000
+level_5 = 200000
+level_6 = 400000
+level_7 = 600000

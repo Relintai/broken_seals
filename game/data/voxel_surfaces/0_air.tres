@@ -1,0 +1,6 @@
+[gd_resource type="VoxelSurfaceMerger" format=2]
+
+[resource]
+resource_name = "Air"
+voxel_name = "Air"
+transparent = true

@@ -1,0 +1,20 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+//render_mode unshaded, cull_disabled;
+//render_mode unshaded;
+//render_mode specular_toon;
+render_mode vertex_lighting;
+render_mode shadows_disabled;
+//render_mode ambient_light_disabled;
+
+void fragment() {
+  METALLIC = 0.0;
+  ROUGHNESS = 0.01;
+  ALBEDO = vec3(0.1, 0.3, 0.5);
+}
+
+void light() {
+    DIFFUSE_LIGHT += dot(NORMAL, LIGHT) * ATTENUATION * ALBEDO;
+}"

@@ -1,0 +1,15 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://data/icons/naturalist/natures_swiftness.tres" type="Texture" id=1]
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=2]
+
+[resource]
+id = 2
+spell_type = 16
+target_type = -2147461888
+target_relation_type = 4
+rank = 1
+icon = ExtResource( 1 )
+aoe_targetType = -2147459840
+aoe_movement_type = 4
+script = ExtResource( 2 )

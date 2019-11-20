@@ -1,0 +1,11 @@
+[gd_resource type="VoxelmanLevelGenerator" load_steps=3 format=2]
+
+[ext_resource path="res://dungeon_generator/MainDungeonGenerator.gd" type="Script" id=1]
+[ext_resource path="res://prop_tool/dada.tres" type="PropData" id=2]
+
+[resource]
+script = ExtResource( 1 )
+prop = ExtResource( 2 )
+gen_type = 1
+_level_seed = 35
+_spawn_mobs = false

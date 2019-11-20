@@ -1,0 +1,17 @@
+[gd_resource type="EntityData" load_steps=5 format=2]
+
+[ext_resource path="res://data/entity_classes/1_naturalist.tres" type="EntityClassData" id=1]
+[ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=2]
+[ext_resource path="res://data/crafting/1_test_craft.tres" type="CraftRecipe" id=3]
+[ext_resource path="res://data/crafting/2_chest_of_the_infinite_wisdom.tres" type="CraftRecipe" id=4]
+
+[resource]
+resource_name = "Naturalist"
+id = 1
+entity_type = 4
+entity_controller = 1
+text_name = "Naturalist"
+bag_size = 24
+entity_class_data = ExtResource( 1 )
+craft_recipes = [ ExtResource( 3 ), ExtResource( 4 ) ]
+script = ExtResource( 2 )

@@ -1,0 +1,9 @@
+[gd_resource type="VoxelmanLibrarySimple" load_steps=3 format=2]
+
+[ext_resource path="res://data/materials/voxelman2.tres" type="Material" id=1]
+[ext_resource path="res://data/models/Material_003.material" type="Material" id=2]
+
+[resource]
+material = ExtResource( 1 )
+prop_material = ExtResource( 2 )
+atlas_rows = 2
