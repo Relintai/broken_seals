@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/thigh.dae-d1ee5ec45cc4767d20e26985f309bfe4.res"
+
+[deps]
+
+source_file="res://data/character_models/thigh.dae"
+dest_files=[ "res://.import/thigh.dae-d1ee5ec45cc4767d20e26985f309bfe4.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

@@ -1,0 +1,13 @@
+[gd_resource type="Aura" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/auras/aura_script.gd" type="Script" id=1]
+[ext_resource path="res://data/icons/naturalist/root.tres" type="Texture" id=2]
+
+[resource]
+id = 20
+icon = ExtResource( 2 )
+time = 10.0
+debuff = true
+aura_type = 1
+states_add = 4
+script = ExtResource( 1 )

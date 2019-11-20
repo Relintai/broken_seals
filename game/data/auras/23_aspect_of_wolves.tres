@@ -1,0 +1,32 @@
+[gd_resource type="Aura" load_steps=4 format=2]
+
+[ext_resource path="res://scripts/auras/aura_script.gd" type="Script" id=1]
+[ext_resource path="res://data/icons/naturalist/aspect_of_wolves.tres" type="Texture" id=2]
+[ext_resource path="res://data/aura_groups/3_aspect_of_wolves.tres" type="AuraGroup" id=3]
+
+[resource]
+resource_name = "Aspect of Wolves"
+id = 23
+icon = ExtResource( 2 )
+time = 22.0
+tick = 2.0
+debuff = true
+rank = 1
+aura_type = 1
+aura_group = ExtResource( 3 )
+text_name = "Aspect of Wolves"
+text_description = "Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
+damage_enabled = true
+damage_type = 16
+damage_min = 10
+damage_max = 12
+attribute_count = 2
+StatModAttribute_0/stat = 26
+StatModAttribute_0/base_mod = 0.0
+StatModAttribute_0/bonus_mod = 0.0
+StatModAttribute_0/percent_mod = -10.0
+StatModAttribute_1/stat = 27
+StatModAttribute_1/base_mod = 0.0
+StatModAttribute_1/bonus_mod = 0.0
+StatModAttribute_1/percent_mod = -10.0
+script = ExtResource( 1 )

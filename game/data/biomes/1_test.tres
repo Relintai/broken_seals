@@ -1,0 +1,7 @@
+[gd_resource type="BiomeData" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/biomes/simple_biome.gd" type="Script" id=1]
+
+[resource]
+target_script = ExtResource( 1 )
+voxel_surfaces = [ null, null, null, null ]

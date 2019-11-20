@@ -1,0 +1,8 @@
+[gd_resource type="AIActionContainer" load_steps=3 format=2]
+
+[sub_resource type="AIAction" id=1]
+
+[sub_resource type="AIFSMAction" id=2]
+
+[resource]
+ai_actions = [ SubResource( 1 ), SubResource( 2 ), null ]

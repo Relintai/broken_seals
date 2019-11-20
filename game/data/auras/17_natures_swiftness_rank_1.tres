@@ -1,0 +1,21 @@
+[gd_resource type="Aura" load_steps=4 format=2]
+
+[ext_resource path="res://data/icons/naturalist/natures_swiftness.tres" type="Texture" id=1]
+[ext_resource path="res://scripts/auras/aura_script.gd" type="Script" id=2]
+[ext_resource path="res://data/effect_data/natures_swiftness.tres" type="SpellEffectVisual" id=3]
+
+[resource]
+resource_name = "Nature's Swiftness"
+id = 17
+icon = ExtResource( 1 )
+time = 10.0
+aura_type = 1
+text_name = "Nature's Swiftness"
+text_description = "Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
+visual_spell_effects = ExtResource( 3 )
+attribute_count = 1
+StatModAttribute_0/stat = 1
+StatModAttribute_0/base_mod = 0.0
+StatModAttribute_0/bonus_mod = 0.0
+StatModAttribute_0/percent_mod = 60.0
+script = ExtResource( 2 )

@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/upperarm.dae-cf2b46f2d30871ec43b123c1e370e293.res"
+
+[deps]
+
+source_file="res://data/character_models/upperarm.dae"
+dest_files=[ "res://.import/upperarm.dae-cf2b46f2d30871ec43b123c1e370e293.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

@@ -1,0 +1,23 @@
+[gd_resource type="Aura" load_steps=4 format=2]
+
+[ext_resource path="res://scripts/auras/aura_script.gd" type="Script" id=1]
+[ext_resource path="res://data/icons/naturalist/aspect_of_wasps.tres" type="Texture" id=2]
+[ext_resource path="res://data/aura_groups/2_aspect_of_wasps.tres" type="AuraGroup" id=3]
+
+[resource]
+resource_name = "Aspect of Wasps"
+id = 11
+icon = ExtResource( 2 )
+time = 21.0
+tick = 1.0
+debuff = true
+rank = 10
+aura_type = 1
+aura_group = ExtResource( 3 )
+text_name = "Aspect of Wasps"
+text_description = "Deals 230 to 270 damage every 3 sec, this damage increases over the duration, for 21 sec."
+damage_enabled = true
+damage_type = 16
+damage_min = 280
+damage_max = 300
+script = ExtResource( 1 )

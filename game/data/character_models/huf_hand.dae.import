@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/huf_hand.dae-c941276dbbdc18a22d21e82280ce9e77.res"
+
+[deps]
+
+source_file="res://data/character_models/huf_hand.dae"
+dest_files=[ "res://.import/huf_hand.dae-c941276dbbdc18a22d21e82280ce9e77.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )
