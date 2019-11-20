@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/bags/BagFrame.gd" type="Script" id=2]
+
+[node name="BagFrame" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+bag_scene = ExtResource( 1 )
+container_path = NodePath("")
+
+[node name="BagOpenerFrame" type="HBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -39.0
+margin_top = -37.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="BagOpenerFrame"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+text = "B"
+
+[node name="Bag" parent="." instance=ExtResource( 1 )]
+visible = false
+margin_left = 68.0
+margin_top = 115.0
+margin_right = 551.0
+margin_bottom = 432.0
+grow_horizontal = 0
+grow_vertical = 0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 10
+size_flags_vertical = 10
+[connection signal="pressed" from="BagOpenerFrame/Button" to="Bag" method="show"]

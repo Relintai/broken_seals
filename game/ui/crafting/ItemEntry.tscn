@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/crafting/ItemEntry.gd" type="Script" id=1]
+
+[node name="ItemEntry" type="PanelContainer"]
+margin_right = 695.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 100, 60 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+icon_path = NodePath("HBoxContainer/PanelContainer/TextureRect")
+label_path = NodePath("HBoxContainer/Label")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 681.0
+margin_bottom = 64.0
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 36.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_left = 58.0
+margin_top = 12.0
+margin_right = 667.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+text = "Spanner"
+align = 1

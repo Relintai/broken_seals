@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/castbar/Castbar.gd" type="Script" id=1]
+
+[node name="Castbar" type="MarginContainer"]
+margin_left = 339.0
+margin_top = 416.0
+margin_right = 691.0
+margin_bottom = 441.0
+script = ExtResource( 1 )
+progress_bar_path = NodePath("ProgressBar")
+label_path = NodePath("Label")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_right = 352.0
+margin_bottom = 25.0
+
+[node name="Label" type="Label" parent="."]
+margin_right = 352.0
+margin_bottom = 25.0
+align = 1
+valign = 1

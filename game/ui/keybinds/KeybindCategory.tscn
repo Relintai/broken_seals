@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/keybinds/KeybindCategory.gd" type="Script" id=1]
+[ext_resource path="res://ui/keybinds/KeybindEntry.tscn" type="PackedScene" id=2]
+
+[node name="KeybindCategory" type="VBoxContainer"]
+margin_right = 1016.0
+margin_bottom = 23.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+keybind_entry_scene = ExtResource( 2 )
+content_container_path = NodePath("VBoxContainer/content")
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1016.0
+margin_bottom = 25.0
+text = "Category"
+
+[node name="VBoxContainer" type="MarginContainer" parent="."]
+margin_top = 33.0
+margin_right = 1016.0
+margin_bottom = 33.0
+custom_constants/margin_left = 20
+
+[node name="content" type="VBoxContainer" parent="VBoxContainer"]
+margin_left = 20.0
+margin_right = 1016.0

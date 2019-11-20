@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+
+[node name="BaseWindow" type="Panel"]
+margin_right = 523.0
+margin_bottom = 427.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer"]
+margin_right = 523.0
+margin_bottom = 427.0
+dragger_visibility = 2
+
+[node name="Header" type="MarginContainer" parent="MarginContainer/VSplitContainer"]
+margin_right = 523.0
+margin_bottom = 32.0
+
+[node name="VSplitContainer" type="VSplitContainer" parent="MarginContainer/VSplitContainer/Header"]
+margin_right = 523.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+collapsed = true
+dragger_visibility = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VSplitContainer/Header/VSplitContainer"]
+margin_right = 523.0
+margin_bottom = 24.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 1
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VSplitContainer/Header/VSplitContainer/MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 521.0
+margin_bottom = 23.0
+dragger_visibility = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VSplitContainer/Header/VSplitContainer/MarginContainer/HSplitContainer"]
+margin_right = 485.0
+margin_bottom = 21.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "Header"
+valign = 1
+
+[node name="Button" type="Button" parent="MarginContainer/VSplitContainer/Header/VSplitContainer/MarginContainer/HSplitContainer"]
+margin_left = 485.0
+margin_right = 519.0
+margin_bottom = 21.0
+hint_tooltip = "Close"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.07
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VSplitContainer/Header/VSplitContainer"]
+margin_top = 24.0
+margin_right = 523.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="Content" type="MarginContainer" parent="MarginContainer/VSplitContainer"]
+margin_top = 32.0
+margin_right = 523.0
+margin_bottom = 427.0

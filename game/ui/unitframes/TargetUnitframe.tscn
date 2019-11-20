@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/unitframes/TargetUnitframe.gd" type="Script" id=1]
+[ext_resource path="res://ui/auraframe/AuraEntry.tscn" type="PackedScene" id=2]
+
+[node name="TargetUnitframe" type="UnitFrame"]
+margin_left = 151.0
+margin_right = 300.0
+margin_bottom = 60.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+aura_entry_scene = ExtResource( 2 )
+name_text_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/Label")
+health_range_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/ProgressBar")
+aura_grid_path = NodePath("auras")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 147.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+margin_right = 145.0
+margin_bottom = 58.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 145.0
+margin_bottom = 25.0
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 33.0
+margin_right = 145.0
+margin_bottom = 58.0
+
+[node name="auras" type="GridContainer" parent="."]
+margin_left = 1.0
+margin_top = 61.0
+margin_right = 149.0
+margin_bottom = 193.0
+columns = 9
+__meta__ = {
+"_edit_use_anchors_": false
+}

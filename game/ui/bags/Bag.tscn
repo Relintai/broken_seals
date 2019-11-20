@@ -1,0 +1,323 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/bags/InventoryGUI.gd" type="Script" id=2]
+[ext_resource path="res://ui/bags/BagEntry.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/bags/EquipmentSlot.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/bags/ItemPupop.gd" type="Script" id=5]
+
+[node name="Inventory" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+inventory_item_scene = ExtResource( 3 )
+inventory_item_container_path = NodePath("VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/ScrollContainer/GridContainer")
+item_tooltip_path = NodePath("TooltipContainer/ItemTooltip")
+inventory_slots = [ NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer/Head"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2/Neck"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2/Shoulder"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3/Chest"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2/Hands"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4/Belt"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer5/Legs"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer5/Feet"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3/Ring1"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3/Ring2"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4/Trinket1"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4/Trinket2"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6/PanelContainer/HBoxContainer/MainHand"), NodePath("VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6/PanelContainer/HBoxContainer/OffHand") ]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 596.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1016.0
+margin_bottom = 26.0
+
+[node name="BagName" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 982.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+text = "Inventory"
+align = 1
+
+[node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 986.0
+margin_right = 1016.0
+margin_bottom = 26.269
+rect_min_size = Vector2( 30, 20 )
+text = "X"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 34.0
+margin_right = 1016.0
+margin_bottom = 592.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer3"]
+margin_right = 227.96
+margin_bottom = 558.0
+rect_min_size = Vector2( 227.96, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 223.96
+margin_bottom = 554.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 219.0
+margin_bottom = 146.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Head" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 156.0
+margin_right = 219.0
+margin_bottom = 206.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Shoulder" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+margin_left = 30.0
+margin_right = 80.0
+text = "sh"
+equip_slot = 2
+
+[node name="Neck" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+text = "Neck"
+equip_slot = 1
+
+[node name="Hands" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_right = 188.0
+text = "Hands"
+equip_slot = 4
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 219.0
+margin_bottom = 266.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Ring1" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3" instance=ExtResource( 4 )]
+margin_left = 30.0
+margin_right = 80.0
+text = "Ring"
+equip_slot = 8
+texture_path = NodePath("../Ring1/MarginContainer/TextureRect")
+
+[node name="Chest" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3" instance=ExtResource( 4 )]
+text = "Chest"
+equip_slot = 3
+
+[node name="Ring2" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer3" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_right = 188.0
+text = "Ring"
+equip_slot = 9
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 276.0
+margin_right = 219.0
+margin_bottom = 326.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Trinket1" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4" instance=ExtResource( 4 )]
+margin_left = 30.0
+margin_right = 80.0
+text = "Tr"
+equip_slot = 10
+
+[node name="Belt" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4" instance=ExtResource( 4 )]
+text = "Belt"
+equip_slot = 5
+
+[node name="Trinket2" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer4" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_right = 188.0
+text = "Tr"
+equip_slot = 11
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 219.0
+margin_bottom = 386.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Legs" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer5" instance=ExtResource( 4 )]
+margin_left = 57.0
+margin_right = 107.0
+text = "Legs"
+equip_slot = 6
+
+[node name="Feet" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer5" instance=ExtResource( 4 )]
+margin_left = 111.0
+margin_right = 161.0
+text = "Feet"
+equip_slot = 7
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer"]
+margin_top = 396.0
+margin_right = 219.0
+margin_bottom = 454.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6"]
+margin_left = 53.0
+margin_right = 165.0
+margin_bottom = 58.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 108.0
+margin_bottom = 54.0
+
+[node name="MainHand" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6/PanelContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_right = 50.0
+text = "MH"
+equip_slot = 12
+
+[node name="OffHand" parent="VBoxContainer/HBoxContainer3/PanelContainer/VBoxContainer/HBoxContainer6/PanelContainer/HBoxContainer" instance=ExtResource( 4 )]
+margin_left = 54.0
+margin_right = 104.0
+text = "OH"
+equip_slot = 13
+texture_path = NodePath("../OffHand/MarginContainer/TextureRect")
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 231.0
+margin_right = 1016.0
+margin_bottom = 558.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer2"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 781.0
+margin_bottom = 554.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer"]
+margin_right = 777.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/ScrollContainer"]
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/vseparation = 5
+custom_constants/hseparation = 5
+columns = 6
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer"]
+margin_top = 524.0
+margin_right = 777.0
+margin_bottom = 550.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 743.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "190 "
+align = 2
+
+[node name="ResizeButton" type="Button" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/HBoxContainer2"]
+margin_left = 747.0
+margin_right = 777.0
+margin_bottom = 26.269
+rect_min_size = Vector2( 30, 20 )
+
+[node name="TooltipContainer" type="Control" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 596.0
+mouse_filter = 2
+
+[node name="ItemTooltip" type="PopupPanel" parent="TooltipContainer"]
+margin_right = 295.0
+margin_bottom = 223.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+name_path = NodePath("../ItemTooltip/VBoxContainer/HBoxContainer/VBoxContainer/NameLabel")
+description_path = NodePath("../ItemTooltip/VBoxContainer/DescriptionLabel")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TooltipContainer/ItemTooltip"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 291.0
+margin_bottom = 219.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TooltipContainer/ItemTooltip/VBoxContainer"]
+margin_right = 287.0
+margin_bottom = 26.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TooltipContainer/ItemTooltip/VBoxContainer/HBoxContainer"]
+margin_right = 249.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="NameLabel" type="RichTextLabel" parent="TooltipContainer/ItemTooltip/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 4.0
+margin_right = 249.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 18 )
+size_flags_horizontal = 3
+bbcode_enabled = true
+
+[node name="Button" type="Button" parent="TooltipContainer/ItemTooltip/VBoxContainer/HBoxContainer"]
+margin_left = 257.0
+margin_right = 287.0
+margin_bottom = 26.269
+rect_min_size = Vector2( 30, 20 )
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="TooltipContainer/ItemTooltip/VBoxContainer"]
+margin_top = 34.0
+margin_right = 287.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="TooltipContainer/ItemTooltip/VBoxContainer"]
+margin_top = 50.0
+margin_right = 287.0
+margin_bottom = 215.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/CloseButton" to="." method="hide"]
+[connection signal="pressed" from="TooltipContainer/ItemTooltip/VBoxContainer/HBoxContainer/Button" to="TooltipContainer/ItemTooltip" method="hide"]

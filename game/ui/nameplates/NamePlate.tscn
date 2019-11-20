@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/nameplates/name_plate_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/nameplates/texture_progress_fg.tres" type="Texture" id=2]
+[ext_resource path="res://player/NamePlate.gd" type="Script" id=3]
+
+[node name="NamePlate" type="VBoxContainer"]
+margin_right = 62.0
+margin_bottom = 17.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_filter = 2
+theme = ExtResource( 1 )
+custom_constants/separation = 0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+health_bar_path = NodePath("MarginContainer/TextureProgress")
+health_bar_label_path = NodePath("MarginContainer/CenterContainer/Label")
+normal_color = Color( 0.74902, 0.74902, 0.74902, 1 )
+mouseover_scale = Vector2( 0.75, 0.75 )
+
+[node name="Name" type="Label" parent="."]
+margin_right = 62.0
+margin_bottom = 15.0
+custom_constants/line_spacing = 0
+text = "Asda"
+align = 1
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_top = 15.0
+margin_right = 62.0
+margin_bottom = 17.0
+size_flags_horizontal = 15
+size_flags_vertical = 15
+size_flags_stretch_ratio = 2.3
+
+[node name="TextureProgress" type="TextureProgress" parent="MarginContainer"]
+margin_right = 62.0
+margin_bottom = 2.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 50.0
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 2 )
+tint_under = Color( 0.219608, 0.215686, 0.215686, 0.756863 )
+tint_progress = Color( 0.917647, 0.0117647, 0.0117647, 1 )
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+visible = false
+margin_right = 62.0
+margin_bottom = 2.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer"]
+visible = false
+margin_left = 22.0
+margin_top = -7.0
+margin_right = 40.0
+margin_bottom = 8.0
+text = "50%"

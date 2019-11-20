@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://networking/SpawnPoint.gd" type="Script" id=2]
+
+
+[node name="SpawnPoint" type="Spatial"]
+script = ExtResource( 2 )
+multi_player = true
+gui_path = NodePath("PanelContainer")
+host_button_path = NodePath("PanelContainer/VBoxContainer/host")
+address_line_edit_path = NodePath("PanelContainer/VBoxContainer/VBoxContainer/address")
+port_line_edit_path = NodePath("PanelContainer/VBoxContainer/VBoxContainer/port")
+connect_button_path = NodePath("PanelContainer/VBoxContainer/VBoxContainer/connect")
+naturalist_button_path = NodePath("PanelContainer/VBoxContainer/select naturalist")
+terrarin_path = NodePath("..")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -126.0
+margin_top = -169.5
+margin_right = 126.0
+margin_bottom = 169.5
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 248.0
+margin_bottom = 335.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 35
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 244.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+margin_right = 244.0
+margin_bottom = 15.0
+text = "Ip:"
+
+[node name="address" type="LineEdit" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 244.0
+margin_bottom = 47.3413
+placeholder_text = "127.0.0.1"
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 244.0
+margin_bottom = 70.0
+text = "Port:"
+
+[node name="port" type="LineEdit" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 244.0
+margin_bottom = 102.341
+placeholder_text = "23223"
+
+[node name="connect" type="Button" parent="PanelContainer/VBoxContainer/VBoxContainer"]
+margin_top = 110.0
+margin_right = 244.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Connect"
+
+[node name="host" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 175.0
+margin_right = 244.0
+margin_bottom = 210.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Host"
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_top = 245.0
+margin_right = 244.0
+margin_bottom = 260.0
+size_flags_vertical = 1
+text = "Class: (Just select for offline play):"
+
+[node name="select naturalist" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 295.0
+margin_right = 244.0
+margin_bottom = 331.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Naturalist"

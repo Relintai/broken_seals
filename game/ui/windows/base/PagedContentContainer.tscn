@@ -1,0 +1,56 @@
+[gd_scene format=2]
+
+[node name="PagedContent" type="VSplitContainer"]
+margin_right = 523.0
+margin_bottom = 400.0
+dragger_visibility = 2
+
+[node name="Content" type="MarginContainer" parent="."]
+margin_right = 523.0
+margin_bottom = 376.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+
+[node name="Controls" type="MarginContainer" parent="."]
+margin_top = 376.0
+margin_right = 523.0
+margin_bottom = 400.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Controls"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 521.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button2" type="Button" parent="Controls/HBoxContainer"]
+margin_right = 154.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "< Previous page"
+
+[node name="MarginContainer" type="MarginContainer" parent="Controls/HBoxContainer"]
+margin_left = 158.0
+margin_right = 359.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.3
+
+[node name="Button" type="Button" parent="Controls/HBoxContainer"]
+margin_left = 363.0
+margin_right = 519.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Next page >"

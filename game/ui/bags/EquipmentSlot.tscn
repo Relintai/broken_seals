@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/bags/EquipmentSlot.gd" type="Script" id=1]
+
+[node name="EquipmentSlot" type="Button"]
+margin_left = 84.0
+margin_right = 134.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+text = "Head"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+texture_path = NodePath("MarginContainer/TextureRect")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 76.0
+margin_bottom = 45.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true

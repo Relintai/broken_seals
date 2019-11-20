@@ -1,0 +1,94 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/auraframe/AuraEntry.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/ui_dynamicfont_small.tres" type="DynamicFont" id=2]
+
+[node name="AuraEntry" type="VBoxContainer"]
+margin_right = 30.0
+margin_bottom = 51.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+texture_rect_path = NodePath("MarginContainer/MarginContainer/TextureRect")
+tooltip_node_path = NodePath("MarginContainer/MarginContainer")
+time_label_path = NodePath("MarginContainer2/Label")
+magic_bg_path = NodePath("MarginContainer/MagicBG")
+bleed_bg_path = NodePath("MarginContainer/BleedBG")
+poison_bg_path = NodePath("MarginContainer/PoisonBG")
+physical_bg_path = NodePath("MarginContainer/PhysicalBG")
+curse_bg_path = NodePath("MarginContainer/CurseBG")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MagicBG" type="ColorRect" parent="MarginContainer"]
+visible = false
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0.215686, 0.0666667, 0.772549, 1 )
+
+[node name="BleedBG" type="ColorRect" parent="MarginContainer"]
+visible = false
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0.541176, 0, 0, 1 )
+
+[node name="PoisonBG" type="ColorRect" parent="MarginContainer"]
+visible = false
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0, 0.301961, 0.027451, 1 )
+
+[node name="PhysicalBG" type="ColorRect" parent="MarginContainer"]
+visible = false
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0.27451, 0.0627451, 0.0627451, 1 )
+
+[node name="CurseBG" type="ColorRect" parent="MarginContainer"]
+visible = false
+margin_right = 30.0
+margin_bottom = 30.0
+color = Color( 0.172549, 0.0588235, 0.262745, 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 1
+custom_constants/margin_top = 1
+custom_constants/margin_left = 1
+custom_constants/margin_bottom = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 29.0
+margin_bottom = 29.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+margin_top = 38.0
+margin_right = 30.0
+margin_bottom = 51.0
+rect_min_size = Vector2( 30, 10 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer2"]
+margin_right = 30.0
+margin_bottom = 13.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 2 )
+align = 1
+valign = 1
+max_lines_visible = 1

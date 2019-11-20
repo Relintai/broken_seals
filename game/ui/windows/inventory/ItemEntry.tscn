@@ -1,0 +1,54 @@
+[gd_scene format=2]
+
+[node name="ItemEntry" type="PanelContainer"]
+margin_right = 398.0
+margin_bottom = 97.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 384.0
+margin_bottom = 83.0
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+margin_right = 28.0
+margin_bottom = 69.0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 14.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 36.0
+margin_right = 370.0
+margin_bottom = 69.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
+margin_right = 334.0
+margin_bottom = 53.0
+
+[node name="Name" type="Label" parent="HBoxContainer/VBoxContainer/PanelContainer"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 320.0
+margin_bottom = 39.0
+text = "Sword of Big Damage"
+
+[node name="StatsGrid" type="GridContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 61.0
+margin_right = 334.0
+margin_bottom = 61.0
+
+[node name="SpellsContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 69.0
+margin_right = 334.0
+margin_bottom = 69.0

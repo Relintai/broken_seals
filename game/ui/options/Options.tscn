@@ -1,0 +1,128 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/player_ui/RemoveProfile.gd" type="Script" id=2]
+[ext_resource path="res://ui/options/OptionRow.gd" type="Script" id=3]
+[ext_resource path="res://ui/options/Threads.gd" type="Script" id=4]
+[ext_resource path="res://ui/options/OptionCheckBox.gd" type="Script" id=5]
+
+[node name="Options" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -271.5
+margin_top = -236.5
+margin_right = 271.5
+margin_bottom = 236.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 539.0
+margin_bottom = 469.0
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 535.0
+margin_bottom = 431.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+
+[node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 30.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="Threads2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Video"]
+visible = false
+margin_right = 519.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+property_category = "rendering/threads"
+property_name = "thread_model"
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads2"]
+margin_top = 5.0
+margin_right = 255.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "asd"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads2"]
+margin_left = 263.0
+margin_right = 519.0
+margin_bottom = 26.269
+size_flags_horizontal = 3
+text = "tb"
+
+[node name="Threads" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Video"]
+margin_right = 527.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads"]
+margin_top = 5.0
+margin_right = 259.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Thread Model"
+
+[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads"]
+margin_left = 267.0
+margin_right = 527.0
+margin_bottom = 26.269
+size_flags_horizontal = 3
+align = 1
+expand_icon = true
+
+[node name="Debug" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 30.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="DebugInfo" type="CheckBox" parent="PanelContainer/VBoxContainer/TabContainer/Debug"]
+margin_right = 527.0
+margin_bottom = 26.269
+text = "Show Debug info"
+script = ExtResource( 5 )
+property_category = "debug"
+property_name = "debug_info"
+
+[node name="RemoveProfile" type="Button" parent="PanelContainer/VBoxContainer/TabContainer/Debug"]
+margin_top = 34.0
+margin_right = 527.0
+margin_bottom = 60.269
+size_flags_horizontal = 3
+text = "Remove Profile"
+script = ExtResource( 2 )
+
+[node name="Close" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 439.0
+margin_right = 535.0
+margin_bottom = 465.269
+text = "Close"
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Close" to="." method="hide"]

@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="ScrollContainer" type="HSplitContainer"]
+editor/display_folded = true
+margin_right = 523.0
+margin_bottom = 403.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+collapsed = true
+dragger_visibility = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 511.0
+margin_bottom = 403.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VScrollBar" type="VScrollBar" parent="."]
+margin_left = 511.0
+margin_right = 523.0
+margin_bottom = 403.0
+

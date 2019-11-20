@@ -1,0 +1,110 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/talents/TalentEntry.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=2]
+
+[node name="TalentEntry" type="CenterContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 45, 45 )
+size_flags_horizontal = 3
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+main_container_path = NodePath("Button")
+popup_path = NodePath("Button/PopupPanel")
+aura_name_label_path = NodePath("Button/PopupPanel/VBoxContainer/HBoxContainer/Label")
+aura_description_label_path = NodePath("Button/PopupPanel/VBoxContainer/Label")
+icon_rect_path = NodePath("Button/MarginContainer/TextureRect")
+rank_label_path = NodePath("Button/MarginContainer/TextureRect/Label")
+upgrade_button_path = NodePath("Button/PopupPanel/VBoxContainer/HBoxContainer/Button")
+
+[node name="Button" type="Button" parent="."]
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 45, 45 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Button/MarginContainer"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 42.0
+margin_bottom = 42.0
+expand = true
+
+[node name="Label" type="Label" parent="Button/MarginContainer/TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "2/2"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupPanel" type="PopupPanel" parent="Button"]
+margin_left = 41.592
+margin_top = 1.58763
+margin_right = 211.592
+margin_bottom = 127.588
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button/PopupPanel"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 166.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Button/PopupPanel/VBoxContainer"]
+margin_right = 162.0
+margin_bottom = 30.0
+
+[node name="Label" type="Label" parent="Button/PopupPanel/VBoxContainer/HBoxContainer"]
+margin_top = 7.0
+margin_right = 124.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "asdasdasdasdasda"
+valign = 1
+
+[node name="Button" type="Button" parent="Button/PopupPanel/VBoxContainer/HBoxContainer"]
+margin_left = 132.0
+margin_right = 162.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+text = "X"
+
+[node name="Button" type="Button" parent="Button/PopupPanel/VBoxContainer"]
+margin_top = 38.0
+margin_right = 162.0
+margin_bottom = 64.269
+text = "Upgrade"
+
+[node name="Label" type="Label" parent="Button/PopupPanel/VBoxContainer"]
+margin_top = 72.0
+margin_right = 162.0
+margin_bottom = 118.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "increases your Dodge by 5%.
+Also Adds 10% lols."
+[connection signal="pressed" from="Button" to="." method="open_popup"]
+[connection signal="pressed" from="Button/PopupPanel/VBoxContainer/HBoxContainer/Button" to="Button/PopupPanel" method="hide"]
+[connection signal="pressed" from="Button/PopupPanel/VBoxContainer/Button" to="." method="upgrade"]

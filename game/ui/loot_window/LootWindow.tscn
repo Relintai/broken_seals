@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/loot_window/LootWindow.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=2]
+[ext_resource path="res://ui/loot_window/LootEntry.tscn" type="PackedScene" id=3]
+
+[node name="LootWindow" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+entry_scene = ExtResource( 3 )
+container_path = NodePath("VBoxContainer/ScrollContainer/container")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 596.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 1016.0
+margin_bottom = 15.0
+text = "Loot"
+align = 1
+valign = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 23.0
+margin_right = 1016.0
+margin_bottom = 558.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="container" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+margin_right = 1016.0
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 566.0
+margin_right = 1016.0
+margin_bottom = 592.269
+text = "close"
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="hide"]

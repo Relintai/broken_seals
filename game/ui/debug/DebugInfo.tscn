@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/debug/DebugInfo.gd" type="Script" id=1]
+[ext_resource path="res://ui/debug/debuginfo_font.tres" type="DynamicFont" id=2]
+
+[node name="DebugInfo" type="CanvasLayer"]
+layer = 3
+
+[node name="DebugInfo" type="Label" parent="."]
+visible = false
+anchor_bottom = 1.0
+margin_right = 301.0
+custom_fonts/font = ExtResource( 2 )
+valign = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

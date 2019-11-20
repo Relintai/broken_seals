@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/talents/talent_switcher_button.gd" type="Script" id=1]
+
+[node name="TalentSwitcher" type="Button"]
+margin_left = 301.0
+margin_right = 401.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 70, 30 )
+text = "Melee"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

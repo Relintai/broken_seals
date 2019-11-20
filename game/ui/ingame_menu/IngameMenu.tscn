@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/options/Options.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/ingame_menu/ExitButton.gd" type="Script" id=3]
+[ext_resource path="res://ui/keybinds/Keybinds.tscn" type="PackedScene" id=4]
+
+[node name="IngameMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -77.0
+margin_top = -51.0
+margin_right = 78.0
+margin_bottom = 51.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 151.0
+margin_bottom = 132.0
+
+[node name="Resume" type="Button" parent="Menu/VBoxContainer"]
+margin_right = 147.0
+margin_bottom = 26.269
+text = "Resume"
+
+[node name="Keybinds" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 34.0
+margin_right = 147.0
+margin_bottom = 60.269
+text = "Keybinds"
+
+[node name="Options" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 68.0
+margin_right = 147.0
+margin_bottom = 94.269
+text = "Options"
+
+[node name="Exit" type="Button" parent="Menu/VBoxContainer"]
+margin_top = 102.0
+margin_right = 147.0
+margin_bottom = 128.269
+text = "Exit"
+script = ExtResource( 3 )
+
+[node name="Options" parent="." instance=ExtResource( 2 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -307.0
+margin_top = -220.0
+margin_right = 307.0
+margin_bottom = 220.0
+
+[node name="KeybindWindow" parent="." instance=ExtResource( 4 )]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -426.0
+margin_top = -270.0
+margin_right = 426.0
+margin_bottom = 270.0
+[connection signal="pressed" from="Menu/VBoxContainer/Resume" to="." method="hide"]
+[connection signal="pressed" from="Menu/VBoxContainer/Keybinds" to="KeybindWindow" method="show"]
+[connection signal="pressed" from="Menu/VBoxContainer/Options" to="Options" method="show"]

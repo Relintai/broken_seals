@@ -1,0 +1,114 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+
+[node name="Register" type="PanelContainer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -107.5
+margin_top = -182.0
+margin_right = 107.5
+margin_bottom = 182.0
+theme = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 211.0
+margin_bottom = 360.0
+custom_constants/separation = 10
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 207.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 7.0
+margin_right = 159.0
+margin_bottom = 22.0
+size_flags_horizontal = 3
+text = "Register"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 167.0
+margin_right = 207.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 40, 30 )
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 207.0
+margin_bottom = 48.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 58.0
+margin_right = 207.0
+margin_bottom = 73.0
+text = "Username"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+margin_top = 83.0
+margin_right = 207.0
+margin_bottom = 107.341
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+margin_top = 117.0
+margin_right = 207.0
+margin_bottom = 132.0
+text = "Email"
+
+[node name="LineEdit4" type="LineEdit" parent="VBoxContainer"]
+margin_top = 142.0
+margin_right = 207.0
+margin_bottom = 166.341
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 176.0
+margin_right = 207.0
+margin_bottom = 191.0
+text = "Password"
+
+[node name="LineEdit2" type="LineEdit" parent="VBoxContainer"]
+margin_top = 201.0
+margin_right = 207.0
+margin_bottom = 225.341
+secret = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+margin_top = 235.0
+margin_right = 207.0
+margin_bottom = 250.0
+text = "Password Again"
+
+[node name="LineEdit3" type="LineEdit" parent="VBoxContainer"]
+margin_top = 260.0
+margin_right = 207.0
+margin_bottom = 284.341
+secret = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer"]
+margin_top = 294.0
+margin_right = 207.0
+margin_bottom = 320.269
+text = "I Accept the EULA"
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 330.0
+margin_right = 207.0
+margin_bottom = 356.269
+text = "Register"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="hide"]
