@@ -1,7 +1,7 @@
 [gd_resource type="SpatialMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://data/voxel_textures/a2.png" type="Texture" id=1]
-
+[ext_resource path="res://data/voxel_textures/test_01.png" type="Texture" id=1]
 
 [resource]
+flags_vertex_lighting = true
 albedo_texture = ExtResource( 1 )

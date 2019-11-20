@@ -95,8 +95,8 @@ texture_female = ExtResource( 18 )
 [sub_resource type="ItemVisualEntry" id=13]
 mesh_male = ExtResource( 1 )
 mesh_female = ExtResource( 1 )
-texture_male = ExtResource( 19 )
-texture_female = ExtResource( 19 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
 
 [sub_resource type="ItemVisualEntry" id=14]
 mesh_male = ExtResource( 12 )
