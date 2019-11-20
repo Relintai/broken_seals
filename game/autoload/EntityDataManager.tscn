@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://autoload/EntityDataManager.gd" type="Script" id=1]
+[ext_resource path="res://player/NetworkedPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/Mob.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/DisplayPlayer.tscn" type="PackedScene" id=5]
+
+[node name="EntityDataManager" type="EntityDataManager"]
+xp_data_path = "res://data/xp/xp_data.tres"
+entity_datas_folder = "res://data/entities"
+spells_folder = "res://data/spells"
+auras_folder = "res://data/auras"
+craft_data_folder = "res://data/crafting"
+item_template_folder = "res://data/item_templates"
+mob_data_folder = "res://data/mob_data"
+player_character_data_folder = "res://data/player_character_data"
+script = ExtResource( 1 )
+player_scene = ExtResource( 3 )
+networked_player_scene = ExtResource( 2 )
+mob_scene = ExtResource( 4 )
+player_display_scene = ExtResource( 5 )

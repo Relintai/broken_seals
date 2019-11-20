@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://autoload/ProfileManager.gd" type="Script" id=1]
+
+[node name="ProfileManager" type="ProfileManager"]
+script = ExtResource( 1 )
+save_interval = 1.0

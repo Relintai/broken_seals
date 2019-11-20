@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://autoload/Logger.gd" type="Script" id=1]
+
+[node name="Logger" type="Node"]
+script = ExtResource( 1 )

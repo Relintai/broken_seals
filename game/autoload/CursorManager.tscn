@@ -1,0 +1,22 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://autoload/CursorManager.gd" type="Script" id=1]
+[ext_resource path="res://data/cursors/arrow16.png" type="Texture" id=2]
+[ext_resource path="res://data/cursors/loot16.png" type="Texture" id=3]
+[ext_resource path="res://data/cursors/attack16.png" type="Texture" id=4]
+[ext_resource path="res://data/cursors/speak.png" type="Texture" id=5]
+[ext_resource path="res://data/cursors/drag_drop.png" type="Texture" id=6]
+[ext_resource path="res://data/cursors/forbidden.png" type="Texture" id=7]
+[ext_resource path="res://data/cursors/ibeam.png" type="Texture" id=8]
+
+
+[node name="CursorManager" type="Node"]
+script = ExtResource( 1 )
+default_cursor = ExtResource( 2 )
+loot_cursor = ExtResource( 3 )
+attack_cursor = ExtResource( 4 )
+speak_cursor = ExtResource( 5 )
+drag_drop_cursor = ExtResource( 6 )
+forbidden_cursor = ExtResource( 7 )
+text_cursor = ExtResource( 8 )
+text_cursor_hotspot = Vector2( 2, 11 )

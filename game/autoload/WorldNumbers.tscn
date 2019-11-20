@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://autoload/WorldNumbers.gd" type="Script" id=1]
+[ext_resource path="res://ui/numbers/Number.tscn" type="PackedScene" id=2]
+
+[node name="WorldNumbers" type="Node"]
+script = ExtResource( 1 )
+number_scene = ExtResource( 2 )

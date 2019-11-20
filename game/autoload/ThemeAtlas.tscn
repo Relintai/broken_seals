@@ -1,0 +1,25 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://ui/theme/scrollbar_grabber_atlas.tres" type="Texture" id=2]
+[ext_resource path="res://ui/theme/h_scroll_bar_texture.tres" type="Texture" id=3]
+[ext_resource path="res://ui/theme/panel_bg_atlas.tres" type="Texture" id=4]
+[ext_resource path="res://ui/theme/scrollbar_bg_atlas.tres" type="Texture" id=5]
+[ext_resource path="res://ui/theme/separator_texture.tres" type="Texture" id=6]
+[ext_resource path="res://ui/theme/button_bg_atlas.tres" type="Texture" id=7]
+[ext_resource path="res://ui/theme/bag_icon.tres" type="Texture" id=8]
+[ext_resource path="res://ui/theme/locked_icon.tres" type="Texture" id=9]
+[ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=10]
+[ext_resource path="res://ui/theme/spellbook_icon.tres" type="Texture" id=11]
+[ext_resource path="res://ui/theme/radio_texture.tres" type="Texture" id=12]
+[ext_resource path="res://ui/theme/radio_checked_texture.tres" type="Texture" id=13]
+[ext_resource path="res://ui/theme/checkbox_texture.tres" type="Texture" id=14]
+[ext_resource path="res://ui/theme/dropdown_icon.tres" type="Texture" id=15]
+[ext_resource path="res://ui/theme/checkbox_checked_texture.tres" type="Texture" id=16]
+[ext_resource path="res://ui/theme/window_bg_atlas.tres" type="Texture" id=17]
+[ext_resource path="res://ui/theme/window_bg_bg.tres" type="Texture" id=18]
+
+[node name="ThemeAtlas" type="TextureMerger"]
+texture_flags = 0
+keep_original_atlases = true
+automatic_merge = true
+textures = [ ExtResource( 8 ), ExtResource( 7 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 3 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 17 ), ExtResource( 18 ) ]
