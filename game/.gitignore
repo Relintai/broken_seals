@@ -1,0 +1,14 @@
+\exports/
+\.import/
+
+addons/scene_notes/
+
+addons/todo/
+
+scene-notes\.ini
+
+todo\.cache\.ini
+
+todo\.config\.ini
+
+export_presets\.cfg
