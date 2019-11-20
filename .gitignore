@@ -1,0 +1,19 @@
+./engine/*
+./modules/*
+engine
+modules
+*.d
+*.o
+*.meta
+game/.import/**
+
+TestRWTextures
+
+_build/*
+_binaries/*
+game/android/build/*
+
+#ignore everything in the Engine Directory
+engine/*
+
+*.blend1
