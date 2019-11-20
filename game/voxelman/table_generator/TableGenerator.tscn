@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://voxelman/table_generator/TableGenerator.gd" type="Script" id=1]
+
+[node name="TableGenerator" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+text_edit_path = NodePath("PanelContainer/VBoxContainer/TextEdit")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 1010.0
+margin_bottom = 586.0
+
+[node name="TextEdit" type="TextEdit" parent="PanelContainer/VBoxContainer"]
+margin_right = 996.0
+margin_bottom = 527.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 535.0
+margin_right = 996.0
+margin_bottom = 572.0
+text = "Generate"
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]

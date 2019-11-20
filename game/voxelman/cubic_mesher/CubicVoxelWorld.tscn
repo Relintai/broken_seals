@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://voxelman/cubic_mesher/CubicVoxelWorld.gd" type="Script" id=1]
+[ext_resource path="res://data/voxel_libraries/main_library.tres" type="VoxelmanLibrarySimple" id=4]
+
+
+[node name="VoxelWorld" type="VoxelWorld"]
+library = ExtResource( 4 )
+voxel_scale = 2.0
+player_path = NodePath("Camera")
+script = ExtResource( 1 )
+gen_type = 2
