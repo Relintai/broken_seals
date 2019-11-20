@@ -1,0 +1,11 @@
+[gd_scene format=2]
+
+[node name="SharedScene" type="Node"]
+
+[node name="Options" type="Control" parent="."]
+margin_right = 806.0
+margin_bottom = 557.0
+
+[node name="Keybindings" type="Control" parent="."]
+margin_right = 746.0
+margin_bottom = 531.0

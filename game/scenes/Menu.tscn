@@ -1,0 +1,528 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://menu/CharacterEntry.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Menu.gd" type="Script" id=3]
+[ext_resource path="res://menu/menu_character_button_group.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://scenes/CharacterSelectorMenu.gd" type="Script" id=5]
+[ext_resource path="res://scenes/CharacterCreationMenu.gd" type="Script" id=6]
+[ext_resource path="res://menu/character_creation_button_group.tres" type="ButtonGroup" id=7]
+[ext_resource path="res://ui/options/Options.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/register/Register.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/login/Login.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/ConnectButton.gd" type="Script" id=11]
+[ext_resource path="res://scenes/HostButton.gd" type="Script" id=12]
+[ext_resource path="res://scenes/DisconnectButton.gd" type="Script" id=13]
+[ext_resource path="res://scenes/ConnectServerButton.gd" type="Script" id=14]
+[ext_resource path="res://scenes/HostGameButton.gd" type="Script" id=15]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 1
+background_sky = SubResource( 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+character_selector_scene = NodePath("CharacterSelectorMenu")
+charcer_creation_scenes = NodePath("CharacterCreationMenu")
+
+[node name="GameName" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -61.0
+margin_right = 61.0
+margin_bottom = 26.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GameName"]
+margin_left = 4.0
+margin_top = 5.0
+margin_right = 118.0
+margin_bottom = 20.0
+text = "Borken Seals"
+align = 1
+valign = 1
+
+[node name="CharacterSelectorMenu" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+menu_path = NodePath("..")
+container_path = NodePath("CharacterSelector/CharacterSelector/VBoxContainer/ScrollContainer/Container")
+player_display_container_path = NodePath("../CharacterDisplay")
+character_button_group = ExtResource( 4 )
+character_entry = ExtResource( 2 )
+character_folder = "characters"
+
+[node name="CharacterSelector" type="MarginContainer" parent="CharacterSelectorMenu"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -289.0
+margin_top = -300.0
+margin_bottom = 300.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CharacterSelector" type="PanelContainer" parent="CharacterSelectorMenu/CharacterSelector"]
+margin_top = 20.0
+margin_right = 269.0
+margin_bottom = 580.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 265.0
+margin_bottom = 556.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
+margin_right = 261.0
+margin_bottom = 484.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Container" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/ScrollContainer"]
+margin_right = 261.0
+size_flags_horizontal = 3
+
+[node name="Load" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
+margin_top = 492.0
+margin_right = 261.0
+margin_bottom = 518.269
+text = "Load"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
+margin_top = 526.0
+margin_right = 261.0
+margin_bottom = 552.0
+
+[node name="Delete" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 26.269
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Delete"
+
+[node name="Create" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
+margin_left = 132.0
+margin_right = 261.0
+margin_bottom = 26.269
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Create"
+
+[node name="PlayerDisplays" type="Node" parent="CharacterSelectorMenu"]
+
+[node name="CharacterCreationMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+character_entry = ExtResource( 2 )
+menu_path = NodePath("..")
+name_imput_path = NodePath("CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/LineEdit")
+container_path = NodePath("CharacterSelector2/CharacterSelector/VBoxContainer/ScrollContainer/Container")
+character_creation_button_group = ExtResource( 7 )
+character_folder = "characters"
+
+[node name="CharacterSelector2" type="MarginContainer" parent="CharacterCreationMenu"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -289.0
+margin_top = -300.0
+margin_bottom = 300.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CharacterSelector" type="PanelContainer" parent="CharacterCreationMenu/CharacterSelector2"]
+margin_top = 20.0
+margin_right = 269.0
+margin_bottom = 580.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 265.0
+margin_bottom = 556.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer"]
+margin_right = 261.0
+margin_bottom = 421.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Container" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/ScrollContainer"]
+margin_right = 261.0
+size_flags_horizontal = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer"]
+margin_top = 429.0
+margin_right = 261.0
+margin_bottom = 552.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 257.0
+margin_bottom = 119.0
+
+[node name="Label" type="Label" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_right = 253.0
+margin_bottom = 15.0
+text = "Character name"
+
+[node name="LineEdit" type="LineEdit" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 253.0
+margin_bottom = 47.3413
+
+[node name="Create" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 55.0
+margin_right = 253.0
+margin_bottom = 81.269
+size_flags_horizontal = 3
+text = "Create"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 89.0
+margin_right = 253.0
+margin_bottom = 115.269
+text = "Back"
+
+[node name="ConnectMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="ConnectMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -126.0
+margin_top = -89.0
+margin_right = 126.0
+margin_bottom = 89.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConnectMenu/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 248.0
+margin_bottom = 254.0
+
+[node name="Label3" type="Label" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_right = 244.0
+margin_bottom = 15.0
+text = "Connect"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 244.0
+margin_bottom = 38.0
+text = "Hostname / IP"
+
+[node name="LineEdit" type="LineEdit" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 244.0
+margin_bottom = 70.3413
+text = "127.0.0.1"
+
+[node name="Label2" type="Label" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 244.0
+margin_bottom = 93.0
+text = "Port"
+
+[node name="LineEdit2" type="LineEdit" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 101.0
+margin_right = 244.0
+margin_bottom = 125.341
+text = "23223"
+
+[node name="CheckBox" type="CheckBox" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 133.0
+margin_right = 244.0
+margin_bottom = 159.269
+text = "Use WebSockets"
+
+[node name="Status" type="Label" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 167.0
+margin_right = 244.0
+margin_bottom = 182.0
+align = 1
+valign = 1
+
+[node name="ConnectButton" type="Button" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 190.0
+margin_right = 244.0
+margin_bottom = 216.269
+text = "Connect"
+script = ExtResource( 14 )
+container_path = NodePath("../../..")
+status_label_path = NodePath("../Status")
+use_websockets_checkbox_path = NodePath("../CheckBox")
+ip_line_edit_path = NodePath("../LineEdit")
+port_line_edit_path = NodePath("../LineEdit2")
+
+[node name="Button2" type="Button" parent="ConnectMenu/PanelContainer/VBoxContainer"]
+margin_top = 224.0
+margin_right = 244.0
+margin_bottom = 250.269
+text = "Cancel"
+
+[node name="HostMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="HostMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -126.0
+margin_top = -101.5
+margin_right = 126.0
+margin_bottom = 101.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HostMenu/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 248.0
+margin_bottom = 199.0
+
+[node name="Label3" type="Label" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_right = 244.0
+margin_bottom = 15.0
+text = "Host"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 244.0
+margin_bottom = 38.0
+text = "Port"
+
+[node name="LineEdit2" type="LineEdit" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 46.0
+margin_right = 244.0
+margin_bottom = 70.3413
+text = "23223"
+
+[node name="CheckBox" type="CheckBox" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 244.0
+margin_bottom = 104.269
+text = "Use WebSockets"
+
+[node name="Status" type="Label" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 112.0
+margin_right = 244.0
+margin_bottom = 127.0
+align = 1
+valign = 1
+
+[node name="HostButton" type="Button" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 135.0
+margin_right = 244.0
+margin_bottom = 161.269
+text = "Host"
+script = ExtResource( 15 )
+container_path = NodePath("../../..")
+status_label_path = NodePath("../Status")
+use_websockets_checkbox_path = NodePath("../CheckBox")
+port_line_edit_path = NodePath("../LineEdit2")
+
+[node name="Button2" type="Button" parent="HostMenu/PanelContainer/VBoxContainer"]
+margin_top = 169.0
+margin_right = 244.0
+margin_bottom = 195.269
+text = "Cancel"
+
+[node name="OptionsButton" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="OptionsButton"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1004.0
+margin_bottom = 580.0
+mouse_filter = 2
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsButton/Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -175.0
+margin_right = 111.0
+mouse_filter = 2
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Disconnect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+visible = false
+margin_right = 120.0
+margin_bottom = 26.269
+rect_min_size = Vector2( 120, 0 )
+text = "Disconnect"
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Connect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 13.0
+margin_right = 120.0
+margin_bottom = 39.269
+rect_min_size = Vector2( 120, 0 )
+text = "Connect"
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Host" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 47.0
+margin_right = 120.0
+margin_bottom = 73.269
+rect_min_size = Vector2( 120, 0 )
+text = "Host"
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 81.0
+margin_right = 120.0
+margin_bottom = 107.269
+rect_min_size = Vector2( 120, 0 )
+text = "Login"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 115.0
+margin_right = 120.0
+margin_bottom = 141.269
+rect_min_size = Vector2( 120, 0 )
+text = "Register"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 149.0
+margin_right = 120.0
+margin_bottom = 175.269
+rect_min_size = Vector2( 120, 0 )
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="Login" parent="." instance=ExtResource( 10 )]
+visible = false
+margin_left = -107.5
+margin_top = -127.5
+margin_right = 107.5
+margin_bottom = 127.5
+
+[node name="Register" parent="." instance=ExtResource( 9 )]
+visible = false
+
+[node name="CharacterDisplay" type="Spatial" parent="."]
+
+[node name="World" type="Spatial" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="World"]
+transform = Transform( 0.906006, -0.157589, 0.392835, 0.0104413, 0.936144, 0.351461, -0.423137, -0.314324, 0.849797, 0.300506, 1.57764, 2.14719 )
+current = true
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Delete" to="CharacterSelectorMenu" method="delete_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Create" to="." method="switch_to_menu" binds= [ 1 ]]
+[connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Create" to="CharacterCreationMenu" method="create"]
+[connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Back" to="." method="switch_to_menu" binds= [ 0 ]]
+[connection signal="pressed" from="ConnectMenu/PanelContainer/VBoxContainer/Button2" to="ConnectMenu" method="hide"]
+[connection signal="pressed" from="HostMenu/PanelContainer/VBoxContainer/Button2" to="HostMenu" method="hide"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Connect" to="ConnectMenu" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Host" to="HostMenu" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button2" to="Login" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button3" to="Register" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button" to="Options" method="show"]

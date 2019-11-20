@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/MainScene.gd" type="Script" id=1]
+[ext_resource path="res://scenes/World.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=4]
+[ext_resource path="res://ui/debug/DebugInfo.tscn" type="PackedScene" id=5]
+[ext_resource path="res://debug/FreeLookCam.tscn" type="PackedScene" id=6]
+
+[node name="Main" type="Node"]
+script = ExtResource( 1 )
+menu_scene = ExtResource( 3 )
+world_scene = ExtResource( 2 )
+debug_camera_scene = ExtResource( 6 )
+loading_screen_path = NodePath("LoadingScreen/PanelContainer")
+
+[node name="LoadingScreen" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="PanelContainer" type="PanelContainer" parent="LoadingScreen"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="LoadingScreen/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1020.0
+margin_bottom = 596.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+bbcode_text = "[center]
+
+
+
+
+
+
+Broken Seals
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[wave]LOADING[/wave]
+[/center]"
+text = "
+
+
+
+
+
+
+Broken Seals
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LOADING
+"
+
+[node name="DebugInfo" parent="." instance=ExtResource( 5 )]

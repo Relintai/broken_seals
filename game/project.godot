@@ -1,0 +1,365 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "AIActionContainer",
+"class": "AITestActionContainer",
+"language": "GDScript",
+"path": "res://scripts/ai/TestContainer.gd"
+}, {
+"base": "Aura",
+"class": "AuraGD",
+"language": "GDScript",
+"path": "res://scripts/auras/aura_script.gd"
+}, {
+"base": "Spatial",
+"class": "CharacterSkeketonAttachPoint",
+"language": "GDScript",
+"path": "res://player/CharacterSkeletonAttachPoint.gd"
+}, {
+"base": "VoxelChunk",
+"class": "CubicVoxelChunk",
+"language": "GDScript",
+"path": "res://voxelman/cubic_mesher/CubicVoxelChunk.gd"
+}, {
+"base": "Entity",
+"class": "DisplayPlayerGD",
+"language": "GDScript",
+"path": "res://player/DisplayPlayer.gd"
+}, {
+"base": "EntityData",
+"class": "EntityDataGD",
+"language": "GDScript",
+"path": "res://scripts/entities/EntityDataGD.gd"
+}, {
+"base": "VoxelMesherCubic",
+"class": "GDCubicVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/cubic_mesher/CubicVoxelMesher.gd"
+}, {
+"base": "ItemTemplate",
+"class": "ItemTemplateGD",
+"language": "GDScript",
+"path": "res://scripts/items/ItemTemplateGD.gd"
+}, {
+"base": "Node",
+"class": "Main",
+"language": "GDScript",
+"path": "res://scenes/MainScene.gd"
+}, {
+"base": "VoxelmanLevelGenerator",
+"class": "MainDungeonGenerator",
+"language": "GDScript",
+"path": "res://dungeon_generator/MainDungeonGenerator.gd"
+}, {
+"base": "VoxelmanLevelGenerator",
+"class": "MainPlanetGenerator",
+"language": "GDScript",
+"path": "res://scripts/world_generators/MainPlanetGenerator.gd"
+}, {
+"base": "EntityResource",
+"class": "ManaResource",
+"language": "GDScript",
+"path": "res://scripts/resources/mana_resource.gd"
+}, {
+"base": "VoxelChunk",
+"class": "MarchingCubesVoxelChunk",
+"language": "GDScript",
+"path": "res://voxelman/mc_mesher/MarchingCubesVoxelChunk.gd"
+}, {
+"base": "VoxelMesherTransvoxel",
+"class": "MarchingCubesVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/mc_mesher/MarchingCobesVoxelMesher.gd"
+}, {
+"base": "Control",
+"class": "Menu",
+"language": "GDScript",
+"path": "res://scenes/Menu.gd"
+}, {
+"base": "",
+"class": "NetworkedPlayerGD",
+"language": "GDScript",
+"path": "res://player/NetworkedPlayer.gd"
+}, {
+"base": "",
+"class": "PlayerGD",
+"language": "GDScript",
+"path": "res://player/Player.gd"
+}, {
+"base": "Resource",
+"class": "PlayerMaster",
+"language": "GDScript",
+"path": "res://networking/PlayerMaster.gd"
+}, {
+"base": "Spatial",
+"class": "PropTool",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropTool.gd"
+}, {
+"base": "Spatial",
+"class": "PropToolEntity",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropToolEntity.gd"
+}, {
+"base": "OmniLight",
+"class": "PropToolLight",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropToolLight.gd"
+}, {
+"base": "MeshInstance",
+"class": "PropToolMesh",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropToolMesh.gd"
+}, {
+"base": "Spatial",
+"class": "PropToolProp",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropToolProp.gd"
+}, {
+"base": "Spatial",
+"class": "PropToolScene",
+"language": "GDScript",
+"path": "res://addons/prop_tool/tools/PropToolScene.gd"
+}, {
+"base": "SpellEffectVisual",
+"class": "SpellEffectVisualBasic",
+"language": "GDScript",
+"path": "res://scripts/resources/spell_effect_visual_basic.gd"
+}, {
+"base": "Spell",
+"class": "SpellGD",
+"language": "GDScript",
+"path": "res://scripts/spells/gd_spell_script.gd"
+}, {
+"base": "SpellProjectile",
+"class": "SpellProjectileGD",
+"language": "GDScript",
+"path": "res://scripts/projectiles/SpellProjectileGD.gd"
+}, {
+"base": "VoxelChunk",
+"class": "TVGUVoxelChunk",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher_gen_uv/TVGUVoxelChunk.gd"
+}, {
+"base": "VoxelMesherTransvoxel",
+"class": "TVGUVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher_gen_uv/TVGUVoxelMesher.gd"
+}, {
+"base": "VoxelChunk",
+"class": "TVNUVoxelChunk",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher_normal_uv/TVNUVoxelChunk.gd"
+}, {
+"base": "VoxelMesherTransvoxel",
+"class": "TVNUVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher_normal_uv/TVNUVoxelMesher.gd"
+}, {
+"base": "VoxelChunk",
+"class": "TVVoxelChunk",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher/TVVoxelChunk.gd"
+}, {
+"base": "VoxelMesherTransvoxel",
+"class": "TVVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd"
+}, {
+"base": "VoxelMesherTransvoxel",
+"class": "TestVoxelMesher",
+"language": "GDScript",
+"path": "res://voxelman/transvoxel_mesher/TestVoxelMesher.gd"
+} ]
+_global_script_class_icons={
+"AITestActionContainer": "",
+"AuraGD": "",
+"CharacterSkeketonAttachPoint": "",
+"CubicVoxelChunk": "",
+"DisplayPlayerGD": "",
+"EntityDataGD": "",
+"GDCubicVoxelMesher": "",
+"ItemTemplateGD": "",
+"Main": "",
+"MainDungeonGenerator": "",
+"MainPlanetGenerator": "",
+"ManaResource": "",
+"MarchingCubesVoxelChunk": "",
+"MarchingCubesVoxelMesher": "",
+"Menu": "",
+"NetworkedPlayerGD": "",
+"PlayerGD": "",
+"PlayerMaster": "",
+"PropTool": "",
+"PropToolEntity": "",
+"PropToolLight": "",
+"PropToolMesh": "",
+"PropToolProp": "",
+"PropToolScene": "",
+"SpellEffectVisualBasic": "",
+"SpellGD": "",
+"SpellProjectileGD": "",
+"TVGUVoxelChunk": "",
+"TVGUVoxelMesher": "",
+"TVNUVoxelChunk": "",
+"TVNUVoxelMesher": "",
+"TVVoxelChunk": "",
+"TVVoxelMesher": "",
+"TestVoxelMesher": ""
+}
+Node="input/actionbar_5_11"
+
+[application]
+
+config/name="Broken Seals 3D"
+run/main_scene="res://scenes/Main.tscn"
+config/icon="res://icon.png"
+config/version="0.2"
+
+[autoload]
+
+Logger="*res://autoload/Logger.tscn"
+Settings="*res://autoload/SettingsManager.gd"
+CursorManager="*res://autoload/CursorManager.tscn"
+PhysicsQuery="*res://autoload/PhysicsQuery.tscn"
+Entities="*res://autoload/EntityDataManager.tscn"
+Profiles="*res://autoload/ProfileManager.tscn"
+WorldNumbers="*res://autoload/WorldNumbers.tscn"
+ThemeAtlas="*res://autoload/ThemeAtlas.tscn"
+Server="*res://autoload/Server.tscn"
+
+[debug]
+
+gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unused_class_variable=false
+gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_signal=false
+gdscript/warnings/return_value_discarded=false
+gdscript/warnings/integer_division=false
+
+[display]
+
+window/dpi/allow_hidpi=true
+window/vsync/use_vsync=false
+window/handheld/orientation="sensor_landscape"
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
+mouse_cursor/sensitivity=0.9
+
+[editor_plugins]
+
+enabled=PoolStringArray( "ess_data", "prop_tool", "zylann.editor_light" )
+
+[importer_defaults]
+
+texture_array={
+"compress/mode": 0,
+"compress/no_bptc_if_rgb": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 0,
+"slices/horizontal": 8,
+"slices/vertical": 8
+}
+
+[input]
+
+ui_accept={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777222,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+actionbar_1_0={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_1={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_2={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":67,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_3={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_4={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":71,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_5={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":49,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_6={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":50,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_7={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":51,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_8={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":52,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_9={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_10={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":70,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_11={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":84,"unicode":0,"echo":false,"script":null)
+ ]
+}
+actionbar_1_12={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":39,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+3d_physics/layer_1="World"
+3d_physics/layer_2="Entities"
+
+[physics]
+
+2d/default_gravity=0
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+quality/driver/fallback_to_gles2=true
+vram_compression/import_etc=true
+quality/directional_shadow/size.mobile=1024
+quality/shading/force_vertex_shading=true
