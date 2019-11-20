@@ -256,7 +256,7 @@ mouse_cursor/sensitivity=0.9
 
 [editor_plugins]
 
-enabled=PoolStringArray( "ess_data", "prop_tool", "zylann.editor_light" )
+enabled=PoolStringArray( "ess_data", "prop_tool" )
 
 [importer_defaults]
 
