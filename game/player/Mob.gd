@@ -1,8 +1,7 @@
 extends Entity
 
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# Copyright Péter Magyar relintai@gmail.com
+# MIT License, functionality from this class needs to be protable to the entity spell system
 
 #export (String) var map_path : String
 export(float) var max_visible_distance : float = 120 setget set_max_visible_distance

@@ -1,9 +1,8 @@
 extends "PlayerGDBase.gd"
 class_name PlayerGD
 
-# This Source Code Form is subject to the terms of the Mozilla Public
-# License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+# Copyright Péter Magyar relintai@gmail.com
+# MIT License, functionality from this class needs to be protable to the entity spell system
 
 export (float) var MOUSE_SENSITIVITY : float = 0.05
 export (String) var world_path : String = ".."
