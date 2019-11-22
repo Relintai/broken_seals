@@ -2,6 +2,8 @@
 
 ### The project requires a few custom engine modules to run! read the Editing the game part!
 
+Keep in mind, that most of the work went into the engine modules so far, and the style itself.
+
 A 3D third person RPG. With both multiplayer, and singleplayer capabilities.
 
 The main gameplay-loop goal is to create an experience with enough complexity and depth, that can rival the more old-school MMO- and action rpgs, because nowadays I feel like that is something that got lost.
