@@ -179,8 +179,8 @@ base_stat_rage = SubResource( 27 )
 base_stat_xp_rate = SubResource( 41 )
 
 [resource]
-resource_name = "Berserker"
+resource_name = "Berserker DO NOT USE"
 id = 2
-text_name = "Berserker"
+text_name = "Berserker DO NOT USE"
 stat_data = SubResource( 42 )
 player_resource_type = 1

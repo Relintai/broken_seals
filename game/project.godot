@@ -219,7 +219,7 @@ Node="input/actionbar_5_11"
 
 [application]
 
-config/name="Broken Seals 3D"
+config/name="Broken Seals"
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 config/version="0.2"
