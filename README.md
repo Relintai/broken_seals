@@ -66,11 +66,17 @@ This will happen in the next few days.
 To be able to open this project you will need a few engine modules compiled into godot, namely:
 
 https://github.com/Relintai/world_generator.git
+
 https://github.com/Relintai/entity_spell_system.git
+
 https://github.com/Relintai/ui_extensions.git
+
 https://github.com/Relintai/voxelman.git
+
 https://github.com/Relintai/texture_packer.git
+
 https://github.com/Relintai/godot_fastnoise.git
+
 
 These modules should be more like core modules. Game specific c++ features will go to a different module. I'll set it up soon.
 
