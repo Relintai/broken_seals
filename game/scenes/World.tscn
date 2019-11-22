@@ -7,7 +7,7 @@
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 1 )
-_force_planet = 1
+_force_planet = -1
 _level_seed = 0
 _spawn_mobs = false
 
