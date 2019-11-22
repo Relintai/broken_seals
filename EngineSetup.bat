@@ -38,23 +38,6 @@ IF NOT EXIST ./fastnoise (
 
 xcopy "fastnoise" "../engine/modules/fastnoise" /e /i /h /y
 
-GOTO VIOFF
-IF NOT EXIST ./voxel_importer (
-	git clone https://github.com/Relintai/voxel_importer.git voxel_importer
-) ELSE (
-	cd voxel_importer
-
-	git reset --hard
-	git pull origin master
-	git checkout master
-	git reset --hard
-
-	cd ..
-)
-
-xcopy "voxel_importer" "../engine/modules/voxel_importer" /e /i /h /y
-:VIOFF
-
 IF NOT EXIST ./ui_extensions (
 	git clone https://github.com/Relintai/ui_extensions.git ui_extensions
 ) ELSE (
@@ -69,23 +52,6 @@ IF NOT EXIST ./ui_extensions (
 )
 
 xcopy "ui_extensions" "../engine/modules/ui_extensions" /e /i /h /y
-
-GOTO IMOFF
-IF NOT EXIST ./input_manager (
-	git clone https://github.com/Relintai/input_manager.git input_manager
-) ELSE (
-	cd input_manager
-
-	git reset --hard
-	git pull origin master
-	git checkout master
-	git reset --hard
-
-	cd ..
-)
-
-xcopy "input_manager" "../engine/modules/input_manager" /e /i /h /y
-:IMOFF
 
 IF NOT EXIST ./entity_spell_system (
 	git clone https://github.com/Relintai/entity_spell_system.git entity_spell_system
