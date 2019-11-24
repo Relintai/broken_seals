@@ -1,4 +1,4 @@
-From: https://opengameart.org/content/handpainted-stone-wall-textures
+Original From: https://opengameart.org/content/handpainted-stone-wall-textures
 
 
 Author: 

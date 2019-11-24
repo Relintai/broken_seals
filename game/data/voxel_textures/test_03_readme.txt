@@ -1,4 +1,4 @@
-From: https://opengameart.org/content/seamless-2
+Original From: https://opengameart.org/content/seamless-2
 
 Author: 
 arikel
