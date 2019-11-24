@@ -110,6 +110,6 @@ Sometimes when the model gets imported into godot it will look like this:
 
 Usually the simplest fix is to just export again (since blender is probably still open). 
 I was also able to fix it by changins some settings and clicking reimport a few times in the inspector.
-But exportin again is usuallz the fastest.
+But exportin again is usually the fastest.
 
 I haven't been able to figure out what causes this yet.
