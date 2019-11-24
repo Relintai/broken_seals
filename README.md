@@ -31,8 +31,8 @@ Now all of these will get higher priority.
 
 ## Screenshots
 
-![Initial OS Release Screen 1](screenshots/screen1.png)
-![Initial OS Release Screen 2](screenshots/screen2.png)
+![Initial OS Release Screen 1](pictures/screen1.png)
+![Initial OS Release Screen 2](pictures/screen2.png)
 
 Note: Before going open source I removed the assets which was derived from paid stuff, which means the game doesn't look like this anymore.
 The new textures will need to be cleaned up / improved. It will be done soon. I'll change the screenshots when that's done.
@@ -89,3 +89,27 @@ And then just compile godot as usual. Note I have a bunch of scripts to do it in
 
 After you pull changes, just run `scons`, it will update the dependencies.
 
+## Editing/Exporting the model
+
+To edit the model you will need blender, and the better collada exporter plugin for it.
+
+If you edit the model (the armature), and want to export it, you will need to do it with these settings:
+
+![Export settings](pictures/export_settings.png)
+
+I recommend, that before exporting, you set the action back to the rest action, like
+
+![Export Action](pictures/export_setting_action.png)
+
+this will usually eliminate the import issue below.
+
+Sometimes when the model gets imported into godot it will look like this:
+
+![Export Error](pictures/export_error.png)
+(I'll add an in-editor screenshot aswell when it happens again)
+
+Usually the simplest fix is to just export again (since blender is probably still open). 
+I was also able to fix it by changins some settings and clicking reimport a few times in the inspector.
+But exportin again is usuallz the fastest.
+
+I haven't been able to figure out what causes this yet.
