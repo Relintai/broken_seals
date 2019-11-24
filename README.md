@@ -40,30 +40,23 @@ The reason to use these screens is to convey the style I'm going for.
 
 ## Editing the game
 
-Firstly I recommend, that you grab the addons from: 
+In order for you to open the game in the editor you will need a custom built version, which can be downloaded from the releases tab, or if you want to build it, chech the Compiling section.
 
-https://github.com/Relintai/entity-spell-system-addons.git
+Once you have the proper editor, you should also grab the addons.
 
-And place them in game/addons.
+You will need scons installed. Scons is required to build godot aswell, so the official godot docs already contain information on how to set it up [here](https://docs.godotengine.org/en/latest/development/compiling/index.html).
 
-* The new (wip) setup script will do this automatically!
-* The ai editor addon is half-baked right now, you don't need to enable that.
-* And the PropTool leaks a little amount of memory, it will be fixed soon.
+in the project's folder call:
 
-If you just want to try the game, grab the editor executable from releases, and open the project with that, or if you want to compile godot yourself go to the Compiling section.
+``` scons t=all_addons ```
+
+Note that if you built the editor yourself (a.k.a you already ran the command `scons`), you will already have these, and you can skip this step.
 
 ## Project architecture
 
 This is the main game, it has scripts so compiling, and setting up the engine is really easy.
 
-These scripts worked well enough for me, but they are not good enough now.
-
-I'll work on a better solution to replace the engine setup scripts. (Top priority)
-This will happen in the next few days.
-
-(I'll not use git submodules, as I've been bitten already by them, I'm thinking about a scons script, as you already need scons for compiling godot.)
-
-To be able to open this project you will need a few engine modules compiled into godot, namely:
+To be able to open this project you will need a few engine modules compiled into godot, (The setup script will grab these) namely:
 
 https://github.com/Relintai/world_generator.git
 
@@ -77,22 +70,22 @@ https://github.com/Relintai/texture_packer.git
 
 https://github.com/Relintai/godot_fastnoise.git
 
-
 These modules should be more like core modules. Game specific c++ features will go to a different module. I'll set it up soon.
 
 ## Compiling
 
-Either:
+Before compiling, in the project's folder just run scons, it will set every dependency up. Like:
 
-Run `EngineSetup.bat` on windows, or `engine_setup.sh` on linux/osx. These scripts will clone godot, and the required engine modules, and they'll copy them to the proper folders.
+``` scons ```
 
-And then just compile godot as usual. Note I have a bunch of scripts to do it in the root of the project, just select the one you need.
+I still have the old setup scripts in the repository, in case the scons command fails:
+`EngineSetup.bat` on windows, or `engine_setup.sh` on linux/osx.
+
+And then just compile godot as usual. Note I have a bunch of scripts to do it in the root of the project, you can just select the one you need.
 
 [Official docs for compiling GODOT](https://docs.godotengine.org/en/latest/development/compiling/index.html)
 
-If you run the setup scripts again, they'll just pull, from the repositories.
+## Pulling upstream changes
 
-Or:
-
-Clone Godot, and install the modules mentioned in the Project architecture section, and compile as usual.
+After you pull changes, just run `scons`, it will update the dependencies.
 

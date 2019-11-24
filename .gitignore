@@ -6,6 +6,7 @@ modules
 *.o
 *.meta
 game/.import/**
+.sconsign.dblite
 
 .vs/*
 .kdev4/*
