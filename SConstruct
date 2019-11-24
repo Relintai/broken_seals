@@ -31,7 +31,6 @@ addon_repositories = [
 ]
 
 third_party_addon_repositories = [
-    ['https://github.com/RodZill4/godot-procedural-textures.git', 'godot-procedural-textures', '/addons' ],
 ]
 
 target_commits = {}
