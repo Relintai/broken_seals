@@ -254,6 +254,7 @@ keep_pressed_outside = true
 text = "Cr"
 
 [node name="MapButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
+visible = false
 margin_left = 180.0
 margin_right = 225.0
 margin_bottom = 45.0
@@ -266,8 +267,8 @@ keep_pressed_outside = true
 text = "Map"
 
 [node name="LockButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 225.0
-margin_right = 270.0
+margin_left = 180.0
+margin_right = 225.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -309,8 +310,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 270.0
-margin_right = 315.0
+margin_left = 225.0
+margin_right = 270.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
