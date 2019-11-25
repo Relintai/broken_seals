@@ -209,12 +209,18 @@ elif action == 'update' or action == 'u':
         update_all()
     elif target == 'engine':
         update_engine()
+        save_target_commits_array()
     elif target == 'modules':
         update_modules()
+        save_target_commits_array()
     elif target == 'all_addons':
         update_addons()
         update_addons_third_party_addons()
+        save_target_commits_array()
     elif target == 'addons':
         update_addons()
+        save_target_commits_array()
     elif target == 'third_party_addons':
         update_addons_third_party_addons()
+        save_target_commits_array()
+        
