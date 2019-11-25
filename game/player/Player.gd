@@ -4,8 +4,9 @@ class_name PlayerGD
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, functionality from this class needs to be protable to the entity spell system
 
-export (float) var MOUSE_SENSITIVITY : float = 0.05
-export (String) var world_path : String = ".."
+export(float) var MOUSE_SENSITIVITY : float = 0.05
+export(String) var world_path : String = ".."
+export(NodePath) var model_path : NodePath = "Rotation_Helper/Model"
 
 const ray_length = 1000
 const ACCEL : float = 100.0
@@ -55,9 +56,13 @@ var last_mouse_over : Entity = null
 
 var world : VoxelWorld = null
 
+var model_rotation_node : Spatial
+
 func _ready() -> void:
 	camera = $CameraPivot/Camera as Camera
 	camera_pivot = $CameraPivot as Spatial
+	
+	model_rotation_node = get_node(model_path)
 
 	animation_tree = get_character_skeleton().get_animation_tree()
 	
@@ -108,6 +113,11 @@ func process_input(delta: float) -> void:
 		input_dir = input_dir.normalized()
 		
 		animation_tree["parameters/run-loop/blend_position"] = input_dir
+		
+		if (input_dir.y < 0.1):
+			model_rotation_node.transform.basis = Basis(Vector3(0, acos(input_dir.x) - PI / 2.0, 0))
+		else:
+			model_rotation_node.transform.basis = Basis()
 	else:
 		if anim_node_state_machine != null and animation_run:
 			anim_node_state_machine.travel("idle-loop")

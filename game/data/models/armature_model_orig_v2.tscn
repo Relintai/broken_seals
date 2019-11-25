@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://data/models/Material_003.material" type="Material" id=1]
 [ext_resource path="res://data/materials/Character.material" type="Material" id=2]
@@ -108,37 +108,18 @@ animation = "run-loop"
 animation = "run-loop"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
-animation = "run-left-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=12]
-animation = "run-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=13]
-animation = "run-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=14]
-animation = "run-loop"
-
-[sub_resource type="AnimationNodeAnimation" id=15]
-animation = "run-loop"
+animation = "run-right-loop"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=16]
 blend_point_0/node = SubResource( 8 )
-blend_point_0/pos = Vector2( -0.7, 0 )
+blend_point_0/pos = Vector2( -1, 0 )
 blend_point_1/node = SubResource( 9 )
 blend_point_1/pos = Vector2( 0, 1 )
 blend_point_2/node = SubResource( 10 )
 blend_point_2/pos = Vector2( 0, -1 )
 blend_point_3/node = SubResource( 11 )
-blend_point_3/pos = Vector2( 0.7, 0 )
-blend_point_4/node = SubResource( 12 )
-blend_point_4/pos = Vector2( -0.4, 0.6 )
-blend_point_5/node = SubResource( 13 )
-blend_point_5/pos = Vector2( 0.4, 0.6 )
-blend_point_6/node = SubResource( 14 )
-blend_point_6/pos = Vector2( -0.4, -0.6 )
-blend_point_7/node = SubResource( 15 )
-blend_point_7/pos = Vector2( 0.4, -0.6 )
+blend_point_3/pos = Vector2( 1, 0 )
+blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 xfade_time = 0.09
@@ -260,7 +241,7 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="LeftHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="2"]
-transform = Transform( 0.103423, -0.988299, -0.111872, 0.0563123, -0.106434, 0.992666, -0.993037, -0.108967, 0.0446433, 0.24534, 0.761419, -0.0093764 )
+transform = Transform( 0.103426, -0.988451, -0.110561, 0.0564442, -0.105111, 0.992813, -0.99303, -0.108925, 0.0449195, 0.242846, 0.761501, -0.0114767 )
 bone_name = "left_hand"
 
 [node name="LeftHandAP" type="Spatial" parent="armature/Armature/Skeleton/LeftHandAttachment"]
@@ -268,7 +249,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.09 )
 script = ExtResource( 4 )
 
 [node name="RightHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="3"]
-transform = Transform( -0.0419373, -0.998348, 0.0385388, -0.126586, 0.0435551, 0.99092, -0.991086, 0.0366921, -0.128214, -0.248004, 0.765597, -0.00721164 )
+transform = Transform( -0.0427069, -0.998132, 0.0431305, -0.127995, 0.0482658, 0.990538, -0.990869, 0.0367939, -0.129825, -0.248857, 0.765104, -0.00449833 )
 bone_name = "right_hand"
 
 [node name="RightHandAP" type="Spatial" parent="armature/Armature/Skeleton/RightHandAttachment"]
@@ -284,7 +265,7 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0
 script = ExtResource( 4 )
 
 [node name="NeckAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="5"]
-transform = Transform( 0.999958, -0.00333619, 0.00850667, 0.00911698, 0.316362, -0.948499, 0.000473225, 0.948623, 0.316412, 0.00137434, 1.31442, 0.00221472 )
+transform = Transform( 0.999954, -0.00337903, 0.0089612, 0.00956298, 0.316377, -0.948509, 0.00036994, 0.94862, 0.316421, 0.00119397, 1.31494, 0.00220678 )
 bone_name = "neck"
 
 [node name="TorsoAP" type="Spatial" parent="armature/Armature/Skeleton/NeckAttachment"]
@@ -296,7 +277,7 @@ tree_root = SubResource( 33 )
 anim_player = NodePath("../armature/AnimationPlayer")
 active = true
 parameters/playback = SubResource( 34 )
-parameters/run-loop/blend_position = Vector2( 0, 0 )
+parameters/run-loop/blend_position = Vector2( 0, -0.0172414 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.658055, -0.746238, 0.100464, -0.680577, -0.532387, 0.503368, -0.322147, -0.399617, -0.858212, 1.19209e-07, 1.31508, 5.22633 )
