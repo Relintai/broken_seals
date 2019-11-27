@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=74 format=2]
+[gd_resource type="EntityClassData" load_steps=76 format=2]
 
 [ext_resource path="res://data/spells/26_rest.tres" type="Spell" id=1]
 [ext_resource path="res://data/spells/21_strength_of_nature_rank_1.tres" type="Spell" id=2]
@@ -19,12 +19,16 @@
 [ext_resource path="res://data/spells/25_inner_will.tres" type="Spell" id=17]
 [ext_resource path="res://data/auras/1_test1.tres" type="Aura" id=18]
 [ext_resource path="res://scripts/entities/NaturalistGD.gd" type="Script" id=19]
+[ext_resource path="res://scripts/ai/EntityAIGD.gd" type="Script" id=20]
 [ext_resource path="res://data/auras/13_aspect_of_bees_rank_1.tres" type="Aura" id=21]
 [ext_resource path="res://data/auras/15_close_wounds_rank_1.tres" type="Aura" id=22]
 [ext_resource path="res://data/spells/29_aspect_of_wolves.tres" type="Spell" id=23]
 [ext_resource path="res://data/spells/27_aspect_of_scorpions.tres" type="Spell" id=24]
 [ext_resource path="res://data/spells/28_aspectofwasps.tres" type="Spell" id=25]
 [ext_resource path="res://data/spells/30_aspect_of_bees.tres" type="Spell" id=26]
+
+[sub_resource type="EntityAI" id=49]
+script = ExtResource( 20 )
 
 [sub_resource type="TalentRowData" id=1]
 Talent_0_0 = ExtResource( 21 )
@@ -251,5 +255,5 @@ specs = [ SubResource( 3 ) ]
 spells = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 13 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 1 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 26 ) ]
 start_spells = [ ExtResource( 24 ) ]
 auras = [ ExtResource( 18 ) ]
-ai_actions = [ null, null ]
+ais = [ SubResource( 49 ) ]
 script = ExtResource( 19 )

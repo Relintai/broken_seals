@@ -219,7 +219,7 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> Entity:
 	createinfo.player_name = "Mob"
 	createinfo.level = level
 #	createinfo.level = level
-	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_MOB
+	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_AI
 
 	var entity : Entity = spawn(createinfo, false, position)
 	entity.slevelup(level - 1)

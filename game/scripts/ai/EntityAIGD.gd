@@ -1,4 +1,5 @@
-extends EntityClassData
+extends EntityAI
+class_name EntityAIGD
 
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, functionality from this class needs to be protable to the entity spell system
@@ -8,9 +9,22 @@ var _data : Dictionary = {
 	"spells": []
 }
 
-func _init():
-	for i in range(get_num_spells()):
-		var spell : Spell = get_spell(i)
+func _on_set_owner():
+	if not is_instance_valid(owner):
+		return
+		
+	if not owner.sentity_data:
+		return
+		
+	var ent_data : EntityData = owner.sentity_data
+	
+	if not ent_data.entity_class_data:
+		return
+		
+	var class_data : EntityClassData = ent_data.entity_class_data
+	
+	for i in range(class_data.get_num_spells()):
+		var spell : Spell = class_data.get_spell(i)
 		
 		if spell.get_num_target_aura_applys() > 0:
 			var aura : Aura = spell.get_target_aura_apply(0)
@@ -30,35 +44,37 @@ func _init():
 		arr.sort_custom(self, "sort_spells_by_rank")
 
 
-func _sai_attack(entity):
-	var mob : Entity = entity as Entity
+func _update(delta):
+	if owner.ai_state == EntityEnums.AI_STATE_ATTACK:
+		attack(delta)
+
+func attack(delta):
+	var target : Entity = owner.starget
 	
-	var target : Entity = entity.starget
-	
-	if mob != null and target == null:
-		mob.ai_state = EntityEnums.AI_STATE_REGENERATE
-		mob.target_movement_direction = Vector2()
+	if target == null:
+		owner.ai_state = EntityEnums.AI_STATE_REGENERATE
+		owner.target_movement_direction = Vector2()
 		return
 	
 	var cast : bool = false
-	if not entity.gets_has_global_cooldown():
+	if not owner.gets_has_global_cooldown():
 		var taspellsdict : Dictionary = _data["target_aura_spells"]
 		
 		for taskey in taspellsdict.keys():
 			for tas in taspellsdict[taskey]:
 				var spell_id : int = tas["spell_id"]
 				
-				if not entity.hass_spell_id(spell_id):
+				if not owner.hass_spell_id(spell_id):
 					continue
 			
 				if taskey == null:
-					if target.sget_aura_by(entity, tas["aura_id"]) == null and not entity.hass_cooldown(spell_id):
-						entity.crequest_spell_cast(spell_id)
+					if target.sget_aura_by(owner, tas["aura_id"]) == null and not owner.hass_cooldown(spell_id):
+						owner.crequest_spell_cast(spell_id)
 						cast = true
 						break
 				else:
-					if target.sget_aura_with_group_by(entity, taskey) == null and not entity.hass_cooldown(spell_id):
-						entity.crequest_spell_cast(spell_id)
+					if target.sget_aura_with_group_by(owner, taskey) == null and not owner.hass_cooldown(spell_id):
+						owner.crequest_spell_cast(spell_id)
 						cast = true
 						break
 			if cast:
@@ -68,27 +84,22 @@ func _sai_attack(entity):
 			var sps : Array = _data["spells"]
 		
 			for spell_id in sps:
-				if not entity.hass_spell_id(spell_id):
+				if not owner.hass_spell_id(spell_id):
 					continue
 			
-				if not entity.hass_cooldown(spell_id):
-					entity.crequest_spell_cast(spell_id)
+				if not owner.hass_cooldown(spell_id):
+					owner.crequest_spell_cast(spell_id)
 					cast = true
 					break
 	
 	
-	if entity.sis_casting():
-		mob.target_movement_direction = Vector2()
+	if owner.sis_casting():
+		owner.target_movement_direction = Vector2()
 		return
 	
-	var dir : Vector3 = target.translation - entity.translation
+	var dir : Vector3 = target.translation - owner.translation
 	
-	mob.target_movement_direction = Vector2(dir.x, dir.z)
-
-func _setup_resources(entity):
-	var p : EntityResource = ManaResource.new()
-	
-	entity.adds_resource(p)
+	owner.target_movement_direction = Vector2(dir.x, dir.z)
 
 func sort_spells_by_rank(a, b):
 	if a == null or b == null:

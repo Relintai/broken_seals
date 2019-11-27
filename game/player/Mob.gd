@@ -97,18 +97,18 @@ func _physics_process(delta : float) -> void:
 	if dead:
 		return
 		
-	if ai_state == EntityEnums.AI_STATE_OFF:
-		return
-	elif ai_state == EntityEnums.AI_STATE_PATROL:
-		sentity_data.sai_rest(self)
-	elif ai_state == EntityEnums.AI_STATE_REST:
-		sentity_data.sai_rest(self)
-	elif ai_state == EntityEnums.AI_STATE_REGENERATE:
-		sentity_data.sai_regenerate(self)
-	elif ai_state == EntityEnums.AI_STATE_ATTACK:
-		sentity_data.sai_attack(self)
-	elif ai_state == EntityEnums.AI_STATE_FOLLOW_PATH:
-		sentity_data.sai_follow(self)
+#	if ai_state == EntityEnums.AI_STATE_OFF:
+#		return
+#	elif ai_state == EntityEnums.AI_STATE_PATROL:
+#		sentity_data.sai_rest(self)
+#	elif ai_state == EntityEnums.AI_STATE_REST:
+#		sentity_data.sai_rest(self)
+#	elif ai_state == EntityEnums.AI_STATE_REGENERATE:
+#		sentity_data.sai_regenerate(self)
+#	elif ai_state == EntityEnums.AI_STATE_ATTACK:
+#		sentity_data.sai_attack(self)
+#	elif ai_state == EntityEnums.AI_STATE_FOLLOW_PATH:
+#		sentity_data.sai_follow(self)
 
 	process_movement(delta)
 

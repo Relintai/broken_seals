@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "AIActionContainer",
-"class": "AITestActionContainer",
-"language": "GDScript",
-"path": "res://scripts/ai/TestContainer.gd"
-}, {
 "base": "Aura",
 "class": "AuraGD",
 "language": "GDScript",
@@ -33,6 +28,11 @@ _global_script_classes=[ {
 "class": "DisplayPlayerGD",
 "language": "GDScript",
 "path": "res://player/DisplayPlayer.gd"
+}, {
+"base": "EntityAI",
+"class": "EntityAIGD",
+"language": "GDScript",
+"path": "res://scripts/ai/EntityAIGD.gd"
 }, {
 "base": "EntityData",
 "class": "EntityDataGD",
@@ -180,11 +180,11 @@ _global_script_classes=[ {
 "path": "res://voxelman/transvoxel_mesher/TestVoxelMesher.gd"
 } ]
 _global_script_class_icons={
-"AITestActionContainer": "",
 "AuraGD": "",
 "CharacterSkeketonAttachPoint": "",
 "CubicVoxelChunk": "",
 "DisplayPlayerGD": "",
+"EntityAIGD": "",
 "EntityDataGD": "",
 "GDCubicVoxelMesher": "",
 "ItemTemplateGD": "",
