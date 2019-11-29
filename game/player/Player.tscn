@@ -46,6 +46,7 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0
 [node name="Model" type="Spatial" parent="Rotation_Helper"]
 
 [node name="character" parent="Rotation_Helper/Model" instance=ExtResource( 1 )]
+refresh_in_editor = false
 
 [node name="GUILayer" parent="." instance=ExtResource( 3 )]
 [connection signal="onc_open_loot_winow_request" from="." to="GUILayer" method="_on_Player_onc_open_loot_winow_request"]

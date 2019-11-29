@@ -18,10 +18,14 @@ __meta__ = {
 }
 item_entry_scene = ExtResource( 4 )
 recipe_selector_scene = ExtResource( 3 )
-item_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription")
-tools_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/ToolsContainer")
-materials_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/MaterialContainer")
-recipe_selector_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/Recipes/VBoxContainer")
+item_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription")
+tools_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/ToolsContainer")
+materials_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/MaterialContainer")
+recipe_selector_container_path = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/Recipes/VBoxContainer")
+recipe_selector_main_on = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/Recipes")
+recipe_selector_main_off = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/CenterContainer2")
+materials_container_main_on = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry")
+materials_container_main_off = NodePath("VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CenterContainer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 4.0
@@ -128,28 +132,37 @@ margin_bottom = 520.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="CraftEntry" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
-margin_right = 607.0
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 674.0
 margin_bottom = 520.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CraftEntry" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 718.0
+margin_bottom = 516.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.6
 custom_constants/separation = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry"]
-margin_right = 607.0
-margin_bottom = 480.0
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry"]
+margin_right = 714.0
+margin_bottom = 472.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer"]
-margin_right = 607.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer"]
+margin_right = 714.0
 margin_bottom = 122.0
 size_flags_horizontal = 3
 
-[node name="CraftItemDescription" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
-margin_right = 607.0
+[node name="CraftItemDescription" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
+margin_right = 714.0
 margin_bottom = 60.0
 alignment = 1
 script = ExtResource( 5 )
@@ -157,40 +170,40 @@ icon_path = NodePath("VBoxContainer/PanelContainer/TextureRect")
 name_label_path = NodePath("PanelContainer2/VBoxContainer/Label")
 description_label_path = NodePath("PanelContainer2/VBoxContainer/RichTextLabel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription"]
-margin_left = 121.0
-margin_right = 181.0
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription"]
+margin_left = 175.0
+margin_right = 235.0
 margin_bottom = 60.0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/VBoxContainer"]
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/VBoxContainer/PanelContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/VBoxContainer/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 56.0
 margin_bottom = 56.0
 expand = true
 
-[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription"]
-margin_left = 185.0
-margin_right = 485.0
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription"]
+margin_left = 239.0
+margin_right = 539.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 300, 0 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2"]
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 296.0
 margin_bottom = 56.0
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2/VBoxContainer"]
 margin_right = 292.0
 margin_bottom = 15.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2/CraftItemDescription/PanelContainer2/VBoxContainer"]
 margin_top = 23.0
 margin_right = 292.0
 margin_bottom = 52.0
@@ -199,56 +212,95 @@ text = "
 "
 scroll_active = false
 
-[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
 margin_top = 68.0
-margin_right = 607.0
+margin_right = 714.0
 margin_bottom = 83.0
 text = "Tools"
 
-[node name="ToolsContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
+[node name="ToolsContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
 margin_top = 91.0
-margin_right = 607.0
+margin_right = 714.0
 margin_bottom = 91.0
 
-[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
 margin_top = 99.0
-margin_right = 607.0
+margin_right = 714.0
 margin_bottom = 114.0
 text = "Materials"
 
-[node name="MaterialContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
+[node name="MaterialContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/ScrollContainer/VBoxContainer2"]
 margin_top = 122.0
-margin_right = 607.0
+margin_right = 714.0
 margin_bottom = 122.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry"]
-margin_top = 490.0
-margin_right = 607.0
-margin_bottom = 520.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry"]
+margin_top = 482.0
+margin_right = 714.0
+margin_bottom = 512.0
 alignment = 1
 
-[node name="CraftButton" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/HBoxContainer"]
-margin_left = 253.0
-margin_right = 353.0
+[node name="CraftButton" type="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/HBoxContainer"]
+margin_left = 307.0
+margin_right = 407.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 100, 30 )
 text = "Craft"
 
-[node name="Recipes" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
-margin_left = 611.0
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 670.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CenterContainer"]
+margin_left = 288.0
+margin_top = 248.0
+margin_right = 378.0
+margin_bottom = 263.0
+text = "Select a recipe"
+align = 1
+valign = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 678.0
 margin_right = 1016.0
 margin_bottom = 520.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.4
+size_flags_stretch_ratio = 0.5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/Recipes"]
-margin_right = 405.0
-margin_bottom = 40.0
+[node name="Recipes" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 286.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/Recipes"]
+margin_right = 282.0
 size_flags_horizontal = 3
 
-[node name="Button" parent="VBoxContainer/VBoxContainer/HBoxContainer/Recipes/VBoxContainer" instance=ExtResource( 3 )]
-margin_right = 405.0
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 334.0
+margin_bottom = 516.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer2/CenterContainer2"]
+margin_left = 135.0
+margin_top = 248.0
+margin_right = 195.0
+margin_bottom = 263.0
+text = "No recipes"
+align = 1
+valign = 1
 [connection signal="pressed" from="VBoxContainer/Header/Button" to="." method="hide"]
 [connection signal="pressed" from="VBoxContainer/Categories/HBoxContainer2/Alchemy" to="." method="set_category" binds= [ 1 ]]
 [connection signal="pressed" from="VBoxContainer/Categories/HBoxContainer2/Smithing" to="." method="set_category" binds= [ 2 ]]
@@ -256,4 +308,4 @@ margin_right = 405.0
 [connection signal="pressed" from="VBoxContainer/Categories/HBoxContainer2/Engineering" to="." method="set_category" binds= [ 5 ]]
 [connection signal="pressed" from="VBoxContainer/Categories/HBoxContainer2/Tailoring" to="." method="set_category" binds= [ 3 ]]
 [connection signal="pressed" from="VBoxContainer/Categories/HBoxContainer2/Other" to="." method="set_category" binds= [ 0 ]]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainer/CraftEntry/HBoxContainer/CraftButton" to="." method="request_craft"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainer/PanelContainer/CraftEntry/HBoxContainer/CraftButton" to="." method="request_craft"]

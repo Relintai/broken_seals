@@ -12,6 +12,11 @@ export(NodePath) var tools_container_path : NodePath
 export(NodePath) var materials_container_path : NodePath
 export(NodePath) var recipe_selector_container_path : NodePath
 
+export(NodePath) var recipe_selector_main_on : NodePath
+export(NodePath) var recipe_selector_main_off : NodePath
+export(NodePath) var materials_container_main_on : NodePath
+export(NodePath) var materials_container_main_off : NodePath
+
 var _item_container : Node
 var _tools_container : Node
 var _materials_container : Node
@@ -21,11 +26,21 @@ var _selected_craft_recipe : CraftRecipe
 
 var _player : Entity
 
+var _recipe_selector_main_on : Node
+var _recipe_selector_main_off : Node
+var _materials_container_main_on : Node
+var _materials_container_main_off : Node
+
 func _ready():
 	_item_container = get_node(item_container_path)
 	_tools_container = get_node(tools_container_path)
 	_materials_container = get_node(materials_container_path)
 	_recipe_selector_container = get_node(recipe_selector_container_path)
+	
+	_recipe_selector_main_on = get_node(recipe_selector_main_on)
+	_recipe_selector_main_off = get_node(recipe_selector_main_off)
+	_materials_container_main_on = get_node(materials_container_main_on)
+	_materials_container_main_off = get_node(materials_container_main_off)
 
 func set_player(entity: Entity) -> void:
 	_player = entity
@@ -36,6 +51,7 @@ func set_category(category: int) -> void:
 	for ch in _recipe_selector_container.get_children():
 		ch.queue_free()
 	
+	var count : int = 0
 	for i in range(_player.gets_craft_recipe_count()):
 		var cr : CraftRecipe = _player.gets_craft_recipe(i)
 		
@@ -46,6 +62,15 @@ func set_category(category: int) -> void:
 			
 			rss.set_recipe(cr, self)
 			
+			count += 1
+			
+	if count == 0:
+		_recipe_selector_main_on.visible = false
+		_recipe_selector_main_off.visible = true
+	else:
+		_recipe_selector_main_on.visible = true
+		_recipe_selector_main_off.visible = false
+		
 
 func request_craft() -> void:
 	_player.crequest_craft(_selected_craft_recipe.id)
@@ -58,6 +83,15 @@ func request_craft() -> void:
 
 func select_recipe(recipe : CraftRecipe) -> void:
 	_selected_craft_recipe = recipe
+	
+	if _selected_craft_recipe == null:
+		_materials_container_main_on.visible = false
+		_materials_container_main_off.visible = true
+		
+		return
+	else:
+		_materials_container_main_on.visible = true
+		_materials_container_main_off.visible = false
 	
 	_item_container.set_item(recipe.item)
 	
