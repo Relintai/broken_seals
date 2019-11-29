@@ -23,6 +23,8 @@ known_label_path = NodePath("SpellEntryPopup/VBoxContainer/PanelContainer")
 learn_button_path = NodePath("SpellEntryPopup/VBoxContainer/LearnButton")
 spell_button_path = NodePath("PanelContainer/HBoxContainer/Button")
 popup_path = NodePath("SpellEntryPopup")
+not_known_color = Color( 0.596078, 0.596078, 0.596078, 1 )
+unlearnable_color = Color( 0.772549, 0.192157, 0.192157, 1 )
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
@@ -63,7 +65,7 @@ size_flags_vertical = 3
 expand = true
 
 [node name="SpellName" type="Label" parent="PanelContainer/HBoxContainer"]
-margin_left = 63.0
+margin_left = 59.0
 margin_top = 20.0
 margin_right = 278.0
 margin_bottom = 35.0

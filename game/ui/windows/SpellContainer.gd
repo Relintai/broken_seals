@@ -4,14 +4,17 @@ extends Control
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-export (NodePath) var icon_path : NodePath
-export (NodePath) var name_label_path : NodePath
-#export (NodePath) var description_label_path : NodePath
-export (NodePath) var known_label_path : NodePath
-export (NodePath) var learn_button_path : NodePath
-export (NodePath) var spell_button_path : NodePath
-export (NodePath) var popup_path : NodePath
+export(NodePath) var icon_path : NodePath
+export(NodePath) var name_label_path : NodePath
+#export(NodePath) var description_label_path : NodePath
+export(NodePath) var known_label_path : NodePath
+export(NodePath) var learn_button_path : NodePath
+export(NodePath) var spell_button_path : NodePath
+export(NodePath) var popup_path : NodePath
 
+export(Color) var known_color : Color = Color.white
+export(Color) var not_known_color : Color = Color.gray
+export(Color) var unlearnable_color : Color = Color.gray
 
 var _icon : TextureRect
 var _name_label : Label
@@ -21,6 +24,8 @@ var _popup : Popup
 
 var _spell : Spell
 var _player : Entity
+
+var _spell_known : bool 
 
 func _ready() -> void:
 	_icon = get_node(icon_path) as TextureRect
@@ -46,12 +51,7 @@ func set_spell(p_player : Entity, p_spell: Spell) -> void:
 	_popup.set_spell(_spell)
 	
 	if not _spell == null:
-		if _player.hasc_spell(p_spell):
-			get_node(known_label_path).show()
-			get_node(learn_button_path).hide()
-		else:
-			get_node(known_label_path).hide()
-			get_node(learn_button_path).show()
+		_spell_known = _player.hasc_spell(p_spell)
 		
 		_icon.texture = _spell.icon
 		_name_label.text = _spell.text_name + " (Rank " + str(_spell.rank) + ")"
@@ -59,6 +59,8 @@ func set_spell(p_player : Entity, p_spell: Spell) -> void:
 		_icon.texture = null
 		
 		_name_label.text = "....."
+		
+	update_spell_indicators()
 
 func learn_spell() -> void:
 	if _player == null or _spell == null:
@@ -71,16 +73,45 @@ func learn_spell() -> void:
 
 func cspell_added(entity: Entity, spell: Spell) -> void:
 	if spell == _spell:
-		get_node(known_label_path).show()
-		get_node(learn_button_path).hide()
+		_spell_known = true
+		
+	update_spell_indicators()
 
 func cspell_removed(entity: Entity, spell: Spell) -> void:
 	if spell == _spell:
-		get_node(known_label_path).hide()
-		get_node(learn_button_path).show()
+		_spell_known = false
+		
+	update_spell_indicators()
 
 func spell_button_pressed() -> void:
 	var pos : Vector2 = _spell_button.rect_global_position
 	pos.x += _spell_button.rect_size.x
 	
 	_popup.popup(Rect2(pos, _popup.rect_size))
+
+func update_spell_indicators():
+	if _spell_known:
+		get_node(known_label_path).show()
+		get_node(learn_button_path).hide()
+		
+		modulate = known_color
+	else:
+		if _spell != null:
+			if _spell.training_required_spell:
+				if not _player.hasc_spell(_spell.training_required_spell):
+					
+					get_node(known_label_path).hide()
+					get_node(learn_button_path).show()
+		
+					modulate = unlearnable_color
+					
+					return
+		
+		get_node(known_label_path).hide()
+		get_node(learn_button_path).show()
+		
+		modulate = not_known_color
+		
+		modulate = not_known_color
+		
+		
