@@ -6,8 +6,12 @@ extends Button
 
 export (NodePath) var button_path : NodePath
 export (NodePath) var icon_path : NodePath
+
 export (NodePath) var cooldown_indicator_path : NodePath
 export (NodePath) var cooldown_text_path : NodePath
+
+export (NodePath) var stack_counter : NodePath
+var _stack_counter : Label
 
 var _tooltip : Popup
 
@@ -35,7 +39,13 @@ func _ready() -> void:
 	cooldown_indicator = get_node(cooldown_indicator_path) as TextureProgress
 	cooldown_text = get_node(cooldown_text_path) as Label
 	
+	_stack_counter = get_node(stack_counter) as Label
+	
 	button.connect("pressed", self, "_on_button_pressed")
+	
+#func _exit_tree():
+#	if item != null:
+#		item.disconnect("stack_size_changed", self, "stack_size_changed")
 
 func _process(delta : float) -> void:
 	if cd == null and gcd < 0.001:
@@ -75,9 +85,18 @@ func hide_cooldown_timer() -> void:
 	cooldown_text.hide()
 
 func set_item_instance(pitem : ItemInstance) -> void:
+	if item != null and item.item_template.stack_size > 1:
+		item.disconnect("stack_size_changed", self, "stack_size_changed")
+		_stack_counter.hide()
+	
 	item = pitem
 	
 	setup_icon()
+	
+	if item != null and item.item_template.stack_size > 1:
+		item.connect("stack_size_changed", self, "stack_size_changed")
+		_stack_counter.show()
+		stack_size_changed(item)
 	
 func setup_icon() -> void:
 	if (item == null):
@@ -105,10 +124,21 @@ func _on_button_pressed() -> void:
 	pass
 		
 func set_button_entry_data(ii : ItemInstance) -> void:
+	if item != null and item.item_template.stack_size > 1:
+		item.disconnect("stack_size_changed", self, "stack_size_changed")
+		_stack_counter.hide()
 	
 	item = ii
-
+	
 	setup_icon()
+	
+	if item != null and item.item_template.stack_size > 1:
+		item.connect("stack_size_changed", self, "stack_size_changed")
+		_stack_counter.show()
+		stack_size_changed(item)
+	
+func stack_size_changed(ii : ItemInstance) -> void:
+	_stack_counter.text = str(ii.stack_size)
 	
 func get_drag_data(pos: Vector2) -> Object:
 	if item == null:

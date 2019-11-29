@@ -27,6 +27,7 @@ button_path = NodePath(".")
 icon_path = NodePath("MarginContainer/TextureRect")
 cooldown_indicator_path = NodePath("CooldownIndicator")
 cooldown_text_path = NodePath("CooldownText")
+stack_counter = NodePath("MarginContainer2/StackCounter")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -78,3 +79,26 @@ clip_text = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StackCounter" type="Label" parent="MarginContainer2"]
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 2
+valign = 2

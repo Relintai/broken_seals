@@ -73,6 +73,7 @@ func cbag_changed(entity: Entity, bag: Bag) -> void:
 	if _bag != null:
 		_bag.disconnect("size_changed", self, "bag_size_changed")
 		_bag.disconnect("item_added", self, "bag_item_added")
+		_bag.disconnect("item_count_changed", self, "item_count_changed")
 		_bag.disconnect("item_removed", self, "item_removed")
 		_bag.disconnect("item_swapped", self, "item_swapped")
 		
