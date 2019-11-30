@@ -10,15 +10,13 @@ id = 28
 spell_type = 8
 rank = 1
 icon = ExtResource( 3 )
+target_aura_applys = [ ExtResource( 2 ) ]
 text_name = "Aspect of Wasps"
 text_description = "Range: 26m.
 Instant.
 Deals 230 to 270 damage every 3 sec, this damage increases over the duration, for 21 sec."
-target_aura_applys = [ ExtResource( 2 ) ]
 range = true
 range_range = 26.0
-cost_type = 480
-give_resource_type = 480
 aoe_targetType = 541
 aoe_movement_type = 99418736
 aoe_colliderType = 541

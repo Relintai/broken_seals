@@ -27,233 +27,231 @@
 [ext_resource path="res://data/spells/28_aspectofwasps.tres" type="Spell" id=25]
 [ext_resource path="res://data/spells/30_aspect_of_bees.tres" type="Spell" id=26]
 
-[sub_resource type="EntityAI" id=49]
+[sub_resource type="EntityAI" id=1]
 script = ExtResource( 20 )
 
-[sub_resource type="TalentRowData" id=1]
+[sub_resource type="TalentRowData" id=2]
 Talent_0_0 = ExtResource( 21 )
 
-[sub_resource type="TalentRowData" id=2]
+[sub_resource type="TalentRowData" id=3]
 Talent_2_0 = ExtResource( 22 )
 
-[sub_resource type="CharacterSpec" id=3]
-resource_name = "Melee"
+[sub_resource type="CharacterSpec" id=4]
 id = 1
-text_name = "Melee"
-talent_rows = [ SubResource( 1 ), SubResource( 2 ) ]
+talent_rows = [ SubResource( 2 ), SubResource( 3 ) ]
 
-[sub_resource type="StatDataEntry" id=4]
+[sub_resource type="StatDataEntry" id=5]
 stat_id = 5
 base = 12.0
 
-[sub_resource type="StatDataEntry" id=5]
+[sub_resource type="StatDataEntry" id=6]
 stat_id = 12
 
-[sub_resource type="StatDataEntry" id=6]
+[sub_resource type="StatDataEntry" id=7]
 stat_id = 13
 
-[sub_resource type="StatDataEntry" id=7]
+[sub_resource type="StatDataEntry" id=8]
 stat_id = 19
 
-[sub_resource type="StatDataEntry" id=8]
+[sub_resource type="StatDataEntry" id=9]
 stat_id = 34
 
-[sub_resource type="StatDataEntry" id=9]
+[sub_resource type="StatDataEntry" id=10]
 stat_id = 21
 
-[sub_resource type="StatDataEntry" id=10]
+[sub_resource type="StatDataEntry" id=11]
 stat_id = 24
 
-[sub_resource type="StatDataEntry" id=11]
+[sub_resource type="StatDataEntry" id=12]
 stat_id = 38
 
-[sub_resource type="StatDataEntry" id=12]
+[sub_resource type="StatDataEntry" id=13]
 stat_id = 36
 
-[sub_resource type="StatDataEntry" id=13]
+[sub_resource type="StatDataEntry" id=14]
 stat_id = 31
 
-[sub_resource type="StatDataEntry" id=14]
+[sub_resource type="StatDataEntry" id=15]
 stat_id = 32
 
-[sub_resource type="StatDataEntry" id=15]
+[sub_resource type="StatDataEntry" id=16]
 stat_id = 3
 base = 1.5
 
-[sub_resource type="StatDataEntry" id=16]
+[sub_resource type="StatDataEntry" id=17]
 stat_id = 4
 
-[sub_resource type="StatDataEntry" id=17]
+[sub_resource type="StatDataEntry" id=18]
 stat_id = 10
 
-[sub_resource type="StatDataEntry" id=18]
+[sub_resource type="StatDataEntry" id=19]
 stat_id = 25
 
-[sub_resource type="StatDataEntry" id=19]
+[sub_resource type="StatDataEntry" id=20]
 stat_id = 0
 
-[sub_resource type="StatDataEntry" id=20]
+[sub_resource type="StatDataEntry" id=21]
 stat_id = 28
 
-[sub_resource type="Curve" id=21]
+[sub_resource type="Curve" id=22]
 max_value = 10.0
 _data = [ Vector2( 0, 10 ), 0.0, 0.0, 0, 1, Vector2( 1, 10 ), 0.0, 0.0, 1, 0 ]
 
-[sub_resource type="StatDataEntry" id=22]
+[sub_resource type="StatDataEntry" id=23]
 stat_id = 8
 base = 20.0
 mod_stat_count = 1
 ModStat_0/stat_id = 2
-ModStat_0/curve = SubResource( 21 )
+ModStat_0/curve = SubResource( 22 )
 ModStat_0/max_value = 1000.0
 
-[sub_resource type="StatDataEntry" id=23]
+[sub_resource type="StatDataEntry" id=24]
 stat_id = 33
 
-[sub_resource type="StatDataEntry" id=24]
+[sub_resource type="StatDataEntry" id=25]
 stat_id = 2
 
-[sub_resource type="StatDataEntry" id=25]
+[sub_resource type="StatDataEntry" id=26]
 stat_id = 15
 base = 5.0
 
-[sub_resource type="StatDataEntry" id=26]
+[sub_resource type="StatDataEntry" id=27]
 stat_id = 16
 base = 50.0
 
-[sub_resource type="StatDataEntry" id=27]
+[sub_resource type="StatDataEntry" id=28]
 stat_id = 26
 
-[sub_resource type="StatDataEntry" id=28]
+[sub_resource type="StatDataEntry" id=29]
 stat_id = 22
 base = 15.0
 
-[sub_resource type="StatDataEntry" id=29]
+[sub_resource type="StatDataEntry" id=30]
 stat_id = 30
 
-[sub_resource type="StatDataEntry" id=30]
+[sub_resource type="StatDataEntry" id=31]
 stat_id = 20
 
-[sub_resource type="StatDataEntry" id=31]
+[sub_resource type="StatDataEntry" id=32]
 stat_id = 39
 
-[sub_resource type="StatDataEntry" id=32]
+[sub_resource type="StatDataEntry" id=33]
 stat_id = 11
 
-[sub_resource type="StatDataEntry" id=33]
+[sub_resource type="StatDataEntry" id=34]
 stat_id = 29
 
-[sub_resource type="StatDataEntry" id=34]
+[sub_resource type="StatDataEntry" id=35]
 stat_id = 35
 
-[sub_resource type="StatDataEntry" id=35]
+[sub_resource type="StatDataEntry" id=36]
 stat_id = 1
 base = 4.2
 modifier_apply_type = 1
 
-[sub_resource type="StatDataEntry" id=36]
+[sub_resource type="StatDataEntry" id=37]
 stat_id = 17
 base = 5.0
 
-[sub_resource type="StatDataEntry" id=37]
+[sub_resource type="StatDataEntry" id=38]
 stat_id = 18
 base = 50.0
 
-[sub_resource type="StatDataEntry" id=38]
+[sub_resource type="StatDataEntry" id=39]
 stat_id = 27
 
-[sub_resource type="StatDataEntry" id=39]
+[sub_resource type="StatDataEntry" id=40]
 stat_id = 23
 
-[sub_resource type="StatDataEntry" id=40]
+[sub_resource type="StatDataEntry" id=41]
 stat_id = 14
 
-[sub_resource type="StatDataEntry" id=41]
+[sub_resource type="StatDataEntry" id=42]
 stat_id = 9
 
-[sub_resource type="Curve" id=42]
+[sub_resource type="Curve" id=43]
 max_value = 10.0
 _data = [ Vector2( 0, 10 ), 0.0, 0.0, 0, 1, Vector2( 1, 10 ), 0.0, 0.0, 1, 0 ]
 
-[sub_resource type="StatDataEntry" id=43]
+[sub_resource type="StatDataEntry" id=44]
 stat_id = 7
 base = 10.0
 mod_stat_count = 1
 ModStat_0/stat_id = 0
-ModStat_0/curve = SubResource( 42 )
+ModStat_0/curve = SubResource( 43 )
 ModStat_0/max_value = 1000.0
 
-[sub_resource type="StatDataEntry" id=44]
+[sub_resource type="StatDataEntry" id=45]
 stat_id = 6
 base = 8.0
 
-[sub_resource type="StatDataEntry" id=45]
+[sub_resource type="StatDataEntry" id=46]
 stat_id = 37
 
-[sub_resource type="StatDataEntry" id=46]
+[sub_resource type="StatDataEntry" id=47]
 stat_id = 40
 base = 1.0
 
-[sub_resource type="SimpleLevelStatData" id=47]
+[sub_resource type="SimpleLevelStatData" id=48]
 agility_per_level = 2
 strength_per_level = 1
 stamina_per_level = 2
 intellect_per_level = 2
 spirit_per_level = 3
 
-[sub_resource type="StatData" id=48]
-base_stat_health = SubResource( 19 )
-base_stat_speed = SubResource( 35 )
-base_stat_mana = SubResource( 24 )
-base_stat_gcd = SubResource( 15 )
-base_stat_haste = SubResource( 16 )
-base_stat_agility = SubResource( 4 )
-base_stat_strength = SubResource( 44 )
-base_stat_stamina = SubResource( 43 )
-base_stat_intellect = SubResource( 22 )
-base_stat_spirit = SubResource( 41 )
-base_stat_haste_rating = SubResource( 17 )
-base_stat_resilience = SubResource( 32 )
-base_stat_armor = SubResource( 5 )
-base_stat_attack_power = SubResource( 6 )
-base_stat_spell_power = SubResource( 40 )
-base_stat_melee_crit = SubResource( 25 )
-base_stat_melee_crit_bonus = SubResource( 26 )
-base_stat_spell_crit = SubResource( 36 )
-base_stat_spell_crit_bonus = SubResource( 37 )
-base_stat_block = SubResource( 7 )
-base_stat_parry = SubResource( 30 )
-base_stat_damage_reduction = SubResource( 9 )
-base_stat_melee_damage_reduction = SubResource( 28 )
-base_stat_spell_damage_reduction = SubResource( 39 )
-base_stat_damage_taken = SubResource( 10 )
-base_stat_heal_taken = SubResource( 18 )
-base_stat_melee_damage = SubResource( 27 )
-base_stat_spell_damage = SubResource( 38 )
-base_stat_holy_resist = SubResource( 20 )
-base_stat_shadow_resist = SubResource( 33 )
-base_stat_nature_resist = SubResource( 29 )
-base_stat_fire_resist = SubResource( 13 )
-base_stat_frost_resist = SubResource( 14 )
-base_stat_lightning_resist = SubResource( 23 )
-base_stat_chaos_resist = SubResource( 8 )
-base_stat_silence_resist = SubResource( 34 )
-base_stat_fear_resist = SubResource( 12 )
-base_stat_stun_resist = SubResource( 45 )
-base_stat_energy = SubResource( 11 )
-base_stat_rage = SubResource( 31 )
-base_stat_xp_rate = SubResource( 46 )
-level_stat_data = SubResource( 47 )
+[sub_resource type="StatData" id=49]
+base_stat_health = SubResource( 20 )
+base_stat_speed = SubResource( 36 )
+base_stat_mana = SubResource( 25 )
+base_stat_gcd = SubResource( 16 )
+base_stat_haste = SubResource( 17 )
+base_stat_agility = SubResource( 5 )
+base_stat_strength = SubResource( 45 )
+base_stat_stamina = SubResource( 44 )
+base_stat_intellect = SubResource( 23 )
+base_stat_spirit = SubResource( 42 )
+base_stat_haste_rating = SubResource( 18 )
+base_stat_resilience = SubResource( 33 )
+base_stat_armor = SubResource( 6 )
+base_stat_attack_power = SubResource( 7 )
+base_stat_spell_power = SubResource( 41 )
+base_stat_melee_crit = SubResource( 26 )
+base_stat_melee_crit_bonus = SubResource( 27 )
+base_stat_spell_crit = SubResource( 37 )
+base_stat_spell_crit_bonus = SubResource( 38 )
+base_stat_block = SubResource( 8 )
+base_stat_parry = SubResource( 31 )
+base_stat_damage_reduction = SubResource( 10 )
+base_stat_melee_damage_reduction = SubResource( 29 )
+base_stat_spell_damage_reduction = SubResource( 40 )
+base_stat_damage_taken = SubResource( 11 )
+base_stat_heal_taken = SubResource( 19 )
+base_stat_melee_damage = SubResource( 28 )
+base_stat_spell_damage = SubResource( 39 )
+base_stat_holy_resist = SubResource( 21 )
+base_stat_shadow_resist = SubResource( 34 )
+base_stat_nature_resist = SubResource( 30 )
+base_stat_fire_resist = SubResource( 14 )
+base_stat_frost_resist = SubResource( 15 )
+base_stat_lightning_resist = SubResource( 24 )
+base_stat_chaos_resist = SubResource( 9 )
+base_stat_silence_resist = SubResource( 35 )
+base_stat_fear_resist = SubResource( 13 )
+base_stat_stun_resist = SubResource( 46 )
+base_stat_energy = SubResource( 12 )
+base_stat_rage = SubResource( 32 )
+base_stat_xp_rate = SubResource( 47 )
+level_stat_data = SubResource( 48 )
 
 [resource]
 resource_name = "Naturalist"
 id = 1
 text_name = "Naturalist"
-stat_data = SubResource( 48 )
+stat_data = SubResource( 49 )
 player_resource_type = 2
-specs = [ SubResource( 3 ) ]
+specs = [ SubResource( 4 ) ]
 spells = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 13 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 1 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 26 ) ]
 start_spells = [ ExtResource( 24 ) ]
 auras = [ ExtResource( 18 ) ]
-ais = [ SubResource( 49 ) ]
+ais = [ SubResource( 1 ) ]
 script = ExtResource( 19 )

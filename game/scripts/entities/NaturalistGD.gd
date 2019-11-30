@@ -85,10 +85,10 @@ func _sai_attack(entity):
 	
 	mob.target_movement_direction = Vector2(dir.x, dir.z)
 
-func _setup_resources(entity):
-	var p : EntityResource = ManaResource.new()
-	
-	entity.adds_resource(p)
+#func _setup_resources(entity):
+#	var p : EntityResource = ManaResource.new()
+#
+#	entity.adds_resource(p)
 
 func sort_spells_by_rank(a, b):
 	if a == null or b == null:

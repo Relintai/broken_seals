@@ -16,8 +16,6 @@ text_description = "Instant.
 Cooldown: {2}
 Increases your spell damage by 30% for 20 sec."
 cooldown_cooldown = 180.0
-cost_type = 480
-give_resource_type = 6
 aoe_targetType = 2
 aoe_movement_type = 915097248
 aoe_colliderType = 480

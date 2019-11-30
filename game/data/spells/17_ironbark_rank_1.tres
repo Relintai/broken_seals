@@ -12,15 +12,13 @@ target_type = 480
 target_relation_type = 914787760
 rank = 1
 icon = ExtResource( 2 )
+caster_aura_applys = [ ExtResource( 3 ) ]
 text_name = "Ironbark"
 text_description = "Instant.
 Cooldown: {2}
 Reduces damage taken by 70%. This spell is not on the global cooldown."
 cooldown_cooldown = 60.0
 cooldown_global_cooldown = false
-caster_aura_applys = [ ExtResource( 3 ) ]
-cost_type = 480
-give_resource_type = 480
 aoe_targetType = -1910718371
 aoe_movement_type = 1611610192
 aoe_colliderType = -298046312

@@ -12,17 +12,15 @@ level = 10
 rank = 1
 icon = ExtResource( 3 )
 needs_target = true
+target_aura_applys = [ ExtResource( 2 ) ]
 text_name = "Aspect of Bees"
 text_description = "Range: 26m.
 Instant.
 Cooldown: {2}
 Deals 460 to 540 damage every 3 sec, healing you for 80% of the damage."
 cooldown_cooldown = 21.0
-target_aura_applys = [ ExtResource( 2 ) ]
 range = true
 range_range = 26.0
-cost_type = 480
-give_resource_type = 480
 aoe_targetType = -1910718371
 aoe_movement_type = 1611610192
 aoe_colliderType = -298046312

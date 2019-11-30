@@ -15,7 +15,6 @@ text_name = "adadadadadad"
 damage = true
 damage_min = 200
 damage_max = 300
-give_resource_type = 2
 aoe_targetType = 1431112251
 aoe_movement_type = 860237388
 aoe_colliderType = 827465778

@@ -16,7 +16,6 @@ text_description = "Instant.
 Cooldown: {2}
 Absorbs 4200 to 4400 damage, also deals 340 to 380 damage to any attacker, for 30 sec."
 cooldown_cooldown = 45.0
-give_resource_type = 5
 aoe_targetType = 5
 aoe_movement_type = 7274563
 aoe_colliderType = 7929968

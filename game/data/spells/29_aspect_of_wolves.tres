@@ -11,14 +11,12 @@ spell_type = 8
 rank = 1
 icon = ExtResource( 3 )
 needs_target = true
+target_aura_applys = [ ExtResource( 2 ) ]
 text_name = "Aspect of Wolves"
 text_description = "Range: 26m.
 Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
-target_aura_applys = [ ExtResource( 2 ) ]
 range = true
 range_range = 26.0
-cost_type = 480
-give_resource_type = 480
 aoe_targetType = 1129071960
 aoe_movement_type = 2190112
 aoe_colliderType = 1058050193

@@ -10,16 +10,15 @@ id = 20
 spell_type = 8
 rank = 1
 icon = ExtResource( 1 )
+target_aura_applys = [ ExtResource( 3 ) ]
 text_name = "Root"
 text_description = "Range: 26m.
 Casttime: 1.5 sec.
 Cooldown: {2}
 Roots the target for 8 sec."
-target_aura_applys = [ ExtResource( 3 ) ]
 range = true
 cast = true
 cast_cast_time = 1.4
-give_resource_type = 5
 aoe_targetType = 8
 aoe_movement_type = 1
 aoe_colliderType = 537722880

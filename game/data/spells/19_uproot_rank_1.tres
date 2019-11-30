@@ -17,8 +17,6 @@ Roots every enemy around you in a 15m radius for 8 sec. This spell doesn't have 
 cooldown_cooldown = 24.0
 range = true
 range_range = 15.0
-cost_type = 480
-give_resource_type = 6
 aoe = true
 aoe_targetType = -572653568
 aoe_movement_type = -436862976

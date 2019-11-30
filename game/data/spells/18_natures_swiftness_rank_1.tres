@@ -12,15 +12,13 @@ target_type = 520
 target_relation_type = 393653346
 rank = 1
 icon = ExtResource( 1 )
+caster_aura_applys = [ ExtResource( 2 ) ]
 text_name = "Nature's Swiftness"
 text_description = "Instant.
 Cooldown: {2}
 Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
 cooldown_cooldown = 20.0
 cooldown_global_cooldown = false
-caster_aura_applys = [ ExtResource( 2 ) ]
-cost_type = 480
-give_resource_type = 480
 aoe_targetType = 520
 aoe_movement_type = 538514176
 aoe_colliderType = 186459648
