@@ -61,7 +61,7 @@ func _process(delta : float) -> void:
 
 func generate_terrarin(chunk : VoxelChunk) -> void:
 	var buffer : VoxelChunk = chunk.get_buffer()
-	buffer.create(int(size_x) + 3, int(size_y) + 3, int(size_z) + 3)
+	buffer.create(int(chunk_size_x) + 3, int(chunk_size_y) + 3, int(chunk_size_z) + 3)
 	
 	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	noise.seed = 10
@@ -75,8 +75,8 @@ func generate_terrarin(chunk : VoxelChunk) -> void:
 	terr_noise.period = 20.0
 	terr_noise.persistence = 0.9
 	
-	for x in range(-1, size_x + 2):
-		for z in range(-1, size_z + 2):
+	for x in range(-1, chunk_size_x + 2):
+		for z in range(-1, chunk_size_z + 2):
 			var val : float = noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
 			val *= val
 			val *= 100
@@ -135,7 +135,7 @@ func spawn_chunk(x : int, y : int, z : int, lod_size : int = 1) -> void:
 	chunk.library = library
 	chunk.voxel_scale = voxel_scale
 	chunk.lod_size = lod_size
-	chunk.set_chunk_size(int(size_x), int(size_y), int(size_z))
+	chunk.set_chunk_size(int(chunk_size_x), int(chunk_size_y), int(chunk_size_z))
 	
 	chunk.create_mesher()
 	chunk.mesher.base_light_value = 0.6
