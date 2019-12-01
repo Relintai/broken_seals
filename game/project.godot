@@ -67,7 +67,7 @@ _global_script_classes=[ {
 "base": "EntityResource",
 "class": "ManaResource",
 "language": "GDScript",
-"path": "res://scripts/resources/mana_resource.gd"
+"path": "res://scripts/resources/ManResource.gd"
 }, {
 "base": "VoxelChunk",
 "class": "MarchingCubesVoxelChunk",

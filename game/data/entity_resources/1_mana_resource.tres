@@ -1,0 +1,7 @@
+[gd_resource type="EntityResourceData" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/resources/ManaResourceData.gd" type="Script" id=1]
+
+[resource]
+id = 1
+script = ExtResource( 1 )

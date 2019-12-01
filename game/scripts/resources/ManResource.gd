@@ -6,9 +6,10 @@ class_name ManaResource
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 func _init():
-	resource_type = EntityEnums.PLAYER_RESOURCE_TYPES_MANA
-	
-#	should_process = true
+	should_process = false
 
 #func _ons_stat_changed(stat : Stat):
 #	print(stat.get_id())
+
+func _process_server(delta):
+	pass

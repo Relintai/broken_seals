@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=76 format=2]
+[gd_resource type="EntityClassData" load_steps=77 format=2]
 
 [ext_resource path="res://data/spells/26_rest.tres" type="Spell" id=1]
 [ext_resource path="res://data/spells/21_strength_of_nature_rank_1.tres" type="Spell" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://data/spells/27_aspect_of_scorpions.tres" type="Spell" id=24]
 [ext_resource path="res://data/spells/28_aspectofwasps.tres" type="Spell" id=25]
 [ext_resource path="res://data/spells/30_aspect_of_bees.tres" type="Spell" id=26]
+[ext_resource path="res://data/entity_resources/1_mana_resource.tres" type="EntityResourceData" id=27]
 
 [sub_resource type="EntityAI" id=1]
 script = ExtResource( 20 )
@@ -249,6 +250,7 @@ id = 1
 text_name = "Naturalist"
 stat_data = SubResource( 49 )
 player_resource_type = 2
+entity_resources = [ ExtResource( 27 ) ]
 specs = [ SubResource( 4 ) ]
 spells = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 9 ), ExtResource( 7 ), ExtResource( 13 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 17 ), ExtResource( 1 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 23 ), ExtResource( 26 ) ]
 start_spells = [ ExtResource( 24 ) ]

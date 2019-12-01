@@ -8,6 +8,7 @@
 
 [node name="EntityDataManager" type="EntityDataManager"]
 xp_data_path = "res://data/xp/xp_data.tres"
+entity_resources_folder = "res://data/entity_resources"
 entity_datas_folder = "res://data/entities"
 spells_folder = "res://data/spells"
 auras_folder = "res://data/auras"
