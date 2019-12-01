@@ -12,22 +12,23 @@ import subprocess
 import json
 import shutil
 
+repository_index = 0
 module_clone_path  = '/modules/' 
 clone_command = 'git clone {0} {1}'
 
-engine_repository = [ 'https://github.com/godotengine/godot.git', 'engine', '' ]
+engine_repository = [ ['https://github.com/godotengine/godot.git', 'https://github.com/godotengine/godot.git'], 'engine', '' ]
 
 module_repositories = [
-    [ 'https://github.com/Relintai/world_generator.git', 'world_generator', '' ],
-    [ 'https://github.com/Relintai/entity_spell_system.git', 'entity_spell_system', '' ],
-    [ 'https://github.com/Relintai/ui_extensions.git', 'ui_extensions', '' ],
-    [ 'https://github.com/Relintai/voxelman.git', 'voxelman', '' ],
-    [ 'https://github.com/Relintai/texture_packer.git', 'texture_packer', '' ],
-    [ 'https://github.com/Relintai/godot_fastnoise.git', 'fastnoise', '' ],
+    [ ['https://github.com/Relintai/world_generator.git', 'git@github.com:Relintai/world_generator.git'], 'world_generator', '' ],
+    [ ['https://github.com/Relintai/entity_spell_system.git', 'git@github.com:Relintai/entity_spell_system.git'], 'entity_spell_system', '' ],
+    [ ['https://github.com/Relintai/ui_extensions.git', 'git@github.com:Relintai/ui_extensions.git'], 'ui_extensions', '' ],
+    [ ['https://github.com/Relintai/voxelman.git', 'git@github.com:Relintai/voxelman.git'], 'voxelman', '' ],
+    [ ['https://github.com/Relintai/texture_packer.git', 'git@github.com:Relintai/texture_packer.git'], 'texture_packer', '' ],
+    [ ['https://github.com/Relintai/godot_fastnoise.git', 'git@github.com:Relintai/godot_fastnoise.git'], 'fastnoise', '' ],
 ]
 
 addon_repositories = [
-    ['https://github.com/Relintai/entity-spell-system-addons.git', 'entity-spell-system-addons', 'addons' ],
+    [['https://github.com/Relintai/entity-spell-system-addons.git', 'git@github.com:Relintai/entity-spell-system-addons.git'], 'entity-spell-system-addons', 'addons' ],
 ]
 
 third_party_addon_repositories = [
@@ -54,7 +55,7 @@ def update_repository(data, clone_path):
     if not os.path.isdir(full_path):
         os.chdir(cwd + clone_path)
 
-        subprocess.call(clone_command.format(data[0], data[1]), shell=True)
+        subprocess.call(clone_command.format(data[0][repository_index], data[1]), shell=True)
 
     os.chdir(full_path)
 
@@ -77,7 +78,7 @@ def setup_repository(data, clone_path):
     if not os.path.isdir(full_path):
         os.chdir(cwd + clone_path)
 
-        subprocess.call(clone_command.format(data[0], data[1]), shell=True)
+        subprocess.call(clone_command.format(data[0][repository_index], data[1]), shell=True)
 
     os.chdir(full_path)
 
@@ -173,9 +174,15 @@ opts.Add('a', 'What to do', '')
 opts.Add(EnumVariable('action', 'What to do', 'setup', ('setup', 'update')))
 opts.Add('t', 'Action target', '')
 opts.Add(EnumVariable('target', 'Action target', 'all', ('all', 'engine', 'modules', 'all_addons', 'addons', 'third_party_addons')))
+opts.Add(EnumVariable('repository_type', 'Type of repositories to clone from first', 'http', ('http', 'ssh')))
 
 opts.Update(env)
 Help(opts.GenerateHelpText(env))
+
+rt = env['action']
+
+if rt == 'ssh':
+    repository_index = 1
 
 action = env['action']
 target = env['target']
