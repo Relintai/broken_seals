@@ -179,7 +179,7 @@ opts.Add(EnumVariable('repository_type', 'Type of repositories to clone from fir
 opts.Update(env)
 Help(opts.GenerateHelpText(env))
 
-rt = env['action']
+rt = env['repository_type']
 
 if rt == 'ssh':
     repository_index = 1
