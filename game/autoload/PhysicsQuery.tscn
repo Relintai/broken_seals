@@ -2,5 +2,5 @@
 
 [ext_resource path="res://autoload/PhysicsQuery.gd" type="Script" id=1]
 
-[node name="PhysicsQuery" type="Spatial"]
+[node name="PhysicsQuery" type="ESSPhysicsQuery"]
 script = ExtResource( 1 )
