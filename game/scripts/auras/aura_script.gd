@@ -66,7 +66,7 @@ func _sdeapply(data : AuraData) -> void:
 				data.owner.sremove_state_ref(i)
 	
 func _con_aura_added(data : AuraData) -> void:
-	if data.owner.get_character_skeleton() == null:
+	if data.owner.get_character_skeleton() == null or data.owner.get_character_skeleton().root_attach_point == null:
 		return
 	
 	var bse : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
