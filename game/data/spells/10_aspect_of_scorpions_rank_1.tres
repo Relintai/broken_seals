@@ -4,7 +4,7 @@
 [ext_resource path="res://data/icons/naturalist/aspect_of_scorpions.tres" type="Texture" id=2]
 [ext_resource path="res://data/auras/10_aspect_of_scorpions_rank_1.tres" type="Aura" id=3]
 [ext_resource path="res://data/effect_data/aspect_of_scorpions.tres" type="SpellEffectVisual" id=4]
-[ext_resource path="res://data/spells/2_test_cast_spell.tres" type="Spell" id=5]
+[ext_resource path="res://data/spells/27_aspect_of_scorpions.tres" type="Spell" id=5]
 
 [resource]
 resource_name = "Aspect of Scorpions"

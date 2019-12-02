@@ -5,6 +5,7 @@
 [ext_resource path="res://data/icons/4_chest_of_the_infinite_wisdom.tres" type="Texture" id=3]
 
 [resource]
+resource_name = "Chest of the Infinite Wisdom"
 id = 3
 text_name = "Chest of the Infinite Wisdom"
 item_type = 1

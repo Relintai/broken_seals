@@ -23,11 +23,12 @@ extends Node
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-export (PackedScene) var player_scene : PackedScene
-export (PackedScene) var networked_player_scene : PackedScene
-export (PackedScene) var mob_scene : PackedScene
-export (PackedScene) var player_display_scene : PackedScene
-export (String) var spawn_parent_path : String = "/root/Main"
+export(PackedScene) var player_scene : PackedScene
+export(PackedScene) var networked_player_scene : PackedScene
+export(PackedScene) var mob_scene : PackedScene
+export(PackedScene) var player_display_scene : PackedScene
+export(String) var spawn_parent_path : String = "/root/Main"
+export(int) var default_level_override : int = 0
 
 var _spawn_parent : Node = null
 
@@ -167,17 +168,23 @@ func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Enti
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
-	createinfo.level = class_profile.level
+	createinfo.level = 1
 	createinfo.xp = class_profile.xp
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	
 	var entity : Entity = player_display_scene.instance() as Entity
+	entity.initialize(createinfo)
+
+	var level : int = class_profile.level
+
+	if default_level_override > 0:
+		level = default_level_override
+	
+	entity.slevelup(level - 1)
 
 	parent.add_child(entity)
 	entity.owner = parent
 		
-	entity.initialize(createinfo)
-	
 	return entity
 
 func spawn_networked_player(class_id : int,  position : Vector3, name : String, node_name : String, sid : int) -> Entity:
@@ -189,11 +196,18 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
-	createinfo.level = class_profile.level
+	createinfo.level = 1
 	createinfo.xp = class_profile.xp
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	
 	var entity : Entity = spawn(createinfo, true, position, node_name)
+	
+	var level : int = class_profile.level
+	
+	if default_level_override > 0:
+		level = default_level_override
+	
+	entity.slevelup(level - 1)
 	
 	if get_tree().is_network_server():
 		entity.set_network_master(sid)
@@ -213,11 +227,18 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
-	createinfo.level = class_profile.level
+	createinfo.level = 1
 	createinfo.xp = class_profile.xp
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	
 	var entity : Entity = spawn(createinfo, false, position, node_name)
+	
+	var level : int = class_profile.level
+	
+	if default_level_override > 0:
+		level = default_level_override
+	
+	entity.slevelup(level - 1)
 	
 	entity.set_network_master(network_owner)
 			
@@ -237,11 +258,15 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> Entity:
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = "Mob"
-	createinfo.level = level
-#	createinfo.level = level
-	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_AI
+	createinfo.level = 1
 
+	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_AI
+	
 	var entity : Entity = spawn(createinfo, false, position)
+	
+	if default_level_override > 0:
+		level = default_level_override
+	
 	entity.slevelup(level - 1)
 	
 	Logger.info("Mob spawned " + str(createinfo))

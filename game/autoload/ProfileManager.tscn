@@ -4,4 +4,3 @@
 
 [node name="ProfileManager" type="ProfileManager"]
 script = ExtResource( 1 )
-save_interval = 1.0

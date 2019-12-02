@@ -116,19 +116,6 @@ func _physics_process(delta : float) -> void:
 		
 	if dead:
 		return
-		
-#	if ai_state == EntityEnums.AI_STATE_OFF:
-#		return
-#	elif ai_state == EntityEnums.AI_STATE_PATROL:
-#		sentity_data.sai_rest(self)
-#	elif ai_state == EntityEnums.AI_STATE_REST:
-#		sentity_data.sai_rest(self)
-#	elif ai_state == EntityEnums.AI_STATE_REGENERATE:
-#		sentity_data.sai_regenerate(self)
-#	elif ai_state == EntityEnums.AI_STATE_ATTACK:
-#		sentity_data.sai_attack(self)
-#	elif ai_state == EntityEnums.AI_STATE_FOLLOW_PATH:
-#		sentity_data.sai_follow(self)
 
 	process_movement(delta)
 
@@ -146,7 +133,6 @@ func process_movement(delta : float) -> void:
 		if anim_node_state_machine != null and not animation_run:
 			anim_node_state_machine.travel("run-loop")
 			animation_run = true
-		
 		
 		target_movement_direction = target_movement_direction.normalized()
 		moving = true
@@ -203,26 +189,11 @@ func process_movement(delta : float) -> void:
 	facing.y = 0
 	
 	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
-	
-#	if facing.length_squared() > 0.1:
-#		look_at(translation + facing, Vector3(0, 1, 0))
-#	else:
-#		if starget != null:
-#			look_at(starget.translation, Vector3(0, 1, 0))
-	
 	sset_position(translation, rotation)
 	
 	if vel.length_squared() < 0.12:
 		sleep = true
 	
-#	if get_tree().network_peer:
-#		if get_tree().is_network_server():
-#			set_position(translation, rotation)
-#		else:
-#			rpc("set_position", translation, rotation)
-
-#	print(vel.length_squared())
-
 	if translation.y < -50.0:
 		print("killed mob with fall damage")
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
@@ -340,7 +311,6 @@ func _son_level_up(value: int) -> void:
 	sfree_talent_points += value
 
 	for i in range(Stat.MAIN_STAT_ID_COUNT):
-#		print(i)
 		var st : int = sentity_data.entity_class_data.get_stat_data().get_level_stat_data().get_stat_diff(i, slevel - value, slevel)
 
 		var statid : int = i + Stat.MAIN_STAT_ID_START
