@@ -1,31 +1,13 @@
-[gd_resource type="VoxelmanLibraryMerger" load_steps=8 format=2]
+[gd_resource type="VoxelmanLibraryMerger" load_steps=6 format=2]
 
-[ext_resource path="res://data/materials/world_material.tres" type="Material" id=1]
+[ext_resource path="res://data/materials/1_standard_material.tres" type="Material" id=1]
 [ext_resource path="res://data/voxel_surfaces/2_test.tres" type="VoxelSurfaceMerger" id=3]
 [ext_resource path="res://data/voxel_surfaces/1_stone.tres" type="VoxelSurfaceMerger" id=4]
 [ext_resource path="res://data/voxel_surfaces/3_test2.tres" type="VoxelSurfaceMerger" id=5]
 [ext_resource path="res://data/voxel_surfaces/0_air.tres" type="VoxelSurfaceMerger" id=7]
 
-[sub_resource type="Shader" id=1]
-code = "shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_back,specular_disabled,vertex_lighting;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
-
-void fragment() {
-	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	albedo_tex *= COLOR;
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
-
 [resource]
 material = ExtResource( 1 )
-prop_material = SubResource( 2 )
+prop_material = ExtResource( 1 )
 texture_flags = 1
 voxel_surfaces = [ ExtResource( 7 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ) ]

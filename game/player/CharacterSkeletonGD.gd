@@ -226,8 +226,11 @@ func prepare_textures() -> void:
 	
 	var tex : Texture = _texture_packer.get_generated_texture(0)
 	
-	var mat : SpatialMaterial = _material as SpatialMaterial
-	mat.albedo_texture = tex
+#	var mat : SpatialMaterial = _material as SpatialMaterial
+#	mat.albedo_texture = tex
+	var mat : ShaderMaterial = _material as ShaderMaterial
+	mat.set_shader_param("texture_albedo", tex)
+#	mat.albedo_texture = tex
 	_texture = tex
 
 
