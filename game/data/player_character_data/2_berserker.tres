@@ -4,9 +4,11 @@
 [ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=2]
 
 [resource]
+resource_name = "Berserker"
 id = 2
 entity_type = 4
 entity_controller = 1
+text_name = "Berserker"
 bag_size = 24
 entity_class_data = ExtResource( 1 )
 script = ExtResource( 2 )

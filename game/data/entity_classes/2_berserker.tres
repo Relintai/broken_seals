@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=43 format=2]
+[gd_resource type="EntityClassData" load_steps=44 format=2]
 
 [sub_resource type="StatDataEntry" id=1]
 stat_id = 5
@@ -49,7 +49,7 @@ stat_id = 25
 
 [sub_resource type="StatDataEntry" id=16]
 stat_id = 0
-base = 10000.0
+base = 100.0
 
 [sub_resource type="StatDataEntry" id=17]
 stat_id = 28
@@ -135,7 +135,14 @@ stat_id = 37
 stat_id = 40
 base = 1.0
 
-[sub_resource type="StatData" id=42]
+[sub_resource type="SimpleLevelStatData" id=42]
+agility_per_level = 4
+strength_per_level = 6
+stamina_per_level = 6
+intellect_per_level = 1
+spirit_per_level = 2
+
+[sub_resource type="StatData" id=43]
 base_stat_health = SubResource( 16 )
 base_stat_speed = SubResource( 31 )
 base_stat_mana = SubResource( 20 )
@@ -177,10 +184,11 @@ base_stat_stun_resist = SubResource( 40 )
 base_stat_energy = SubResource( 8 )
 base_stat_rage = SubResource( 27 )
 base_stat_xp_rate = SubResource( 41 )
+level_stat_data = SubResource( 42 )
 
 [resource]
 resource_name = "Berserker DO NOT USE"
 id = 2
 text_name = "Berserker DO NOT USE"
-stat_data = SubResource( 42 )
+stat_data = SubResource( 43 )
 player_resource_type = 1

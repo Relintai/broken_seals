@@ -194,11 +194,11 @@ stat_id = 40
 base = 1.0
 
 [sub_resource type="SimpleLevelStatData" id=48]
-agility_per_level = 2
-strength_per_level = 1
-stamina_per_level = 2
-intellect_per_level = 2
-spirit_per_level = 3
+agility_per_level = 4
+strength_per_level = 2
+stamina_per_level = 4
+intellect_per_level = 4
+spirit_per_level = 6
 
 [sub_resource type="StatData" id=49]
 base_stat_health = SubResource( 20 )
