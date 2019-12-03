@@ -7,11 +7,13 @@ extends Container
 export (NodePath) var name_text_path : NodePath
 export (NodePath) var level_text_path : NodePath
 export (NodePath) var health_range_path : NodePath
+export (NodePath) var health_text_path : NodePath
 export (NodePath) var xp_range_path : NodePath
 
 var _name_text : Label
 var _level_text : Label
 var _health_range : Range
+var _health_text : Label
 var _xp_range : Range
 
 var _player : Entity
@@ -20,6 +22,7 @@ func _ready() -> void:
 	_name_text = get_node(name_text_path)
 	_level_text = get_node(level_text_path)
 	_health_range = get_node(health_range_path)
+	_health_text = get_node(health_text_path)
 	_xp_range = get_node(xp_range_path)
 
 func set_player(p_player: Entity) -> void:
@@ -59,11 +62,16 @@ func _on_player_health_changed(health: Stat) -> void:
 		_health_range.min_value = 0
 		_health_range.max_value = 1
 		_health_range.value = 0
+		
+		_health_text.text = ""
+		
 		return
 		
 	_health_range.min_value = 0
 	_health_range.max_value = health.cmax
 	_health_range.value = health.ccurrent
+	
+	_health_text.text = str(health.ccurrent) + "/" + str(health.cmax)
 	
 func cname_changed(entity: Entity) -> void:
 	_name_text.text = _player.centity_name
