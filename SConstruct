@@ -37,11 +37,13 @@ third_party_addon_repositories = [
 target_commits = {}
 
 def load_target_commits_array():
+    global target_commits
+
     if os.path.isfile('./HEADS'):
         with open('./HEADS', 'r') as infile:
             target_commits = json.load(infile)
     else:
-        target_commits = [] 
+        target_commits = {}
 
 def save_target_commits_array():
     with open('./HEADS', 'w') as outfile:
@@ -160,8 +162,6 @@ def setup_addons_third_party_addons():
         copy_addon_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def setup_all():
-    load_target_commits_array()
-
     setup_engine()
     setup_modules()
     setup_addons()
@@ -178,6 +178,8 @@ opts.Add(EnumVariable('repository_type', 'Type of repositories to clone from fir
 
 opts.Update(env)
 Help(opts.GenerateHelpText(env))
+
+load_target_commits_array()
 
 rt = env['repository_type']
 
