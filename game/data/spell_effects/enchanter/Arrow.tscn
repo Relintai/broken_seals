@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[sub_resource type="SpatialMaterial" id=1]
-albedo_color = Color( 0.635294, 0.462745, 0.239216, 1 )
+[ext_resource path="res://data/shaders/1_standard_shader.tres" type="Shader" id=1]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.635294, 0.462745, 0.239216, 1 )
 
 [sub_resource type="CubeMesh" id=2]
 material = SubResource( 1 )
 size = Vector3( 1, 0.01, 0.01 )
 
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 0.866667, 0.917647, 0.984314, 1 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.866667, 0.917647, 0.984314, 1 )
 
 [sub_resource type="PrismMesh" id=4]
 material = SubResource( 3 )
