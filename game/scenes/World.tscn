@@ -61,6 +61,9 @@ level_generator = SubResource( 1 )
 voxel_scale = 4.0
 chunk_spawn_range = 3
 script = ExtResource( 8 )
+meshes = [  ]
+editor_generate = false
+show_loading_screen = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )

@@ -1,0 +1,7 @@
+[gd_resource type="Spell" format=2]
+
+[resource]
+resource_name = "Normal temperature"
+id = 33
+text_name = "Normal temperature"
+text_description = "Use water spells  at maximum efficiency. Some ice and fire based spells are also usable at reduced efficiency."

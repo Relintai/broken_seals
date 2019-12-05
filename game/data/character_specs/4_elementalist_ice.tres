@@ -1,0 +1,6 @@
+[gd_resource type="CharacterSpec" format=2]
+
+[resource]
+resource_name = "Elementalist Ice"
+id = 4
+text_name = "Elementalist Ice"
