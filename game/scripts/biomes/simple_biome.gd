@@ -39,7 +39,7 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 			val += 2
 			
 			var tv : float = terr_noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
-			tv *= tv * tv
+			tv *= tv * tv * tv
 			val += tv * 2
 			
 			var dval : float = noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
@@ -63,7 +63,8 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 				else:
 					chunk.set_voxel(2, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 				
-				chunk.set_voxel(int(255.0 * (val - int(val)) / 180.0) * 180, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+#				chunk.set_voxel(int(255.0 * (val - int(val)) / 180.0) * 180, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
 #	chunk.build()
 
