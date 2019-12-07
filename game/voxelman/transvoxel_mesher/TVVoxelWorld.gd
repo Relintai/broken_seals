@@ -40,7 +40,7 @@ var _player_file_name : String
 var _player : Entity
 
 func _ready():
-	if generate_on_ready:
+	if generate_on_ready and not Engine.is_editor_hint():
 		
 		if level_generator != null:
 			level_generator.setup(self, 80, false, library)

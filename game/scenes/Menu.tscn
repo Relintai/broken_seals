@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -19,11 +19,12 @@
 [ext_resource path="res://data/voxel_libraries/2_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=17]
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
+[ext_resource path="res://voxelman/transvoxel_mesher/TVVoxelChunk.gd" type="Script" id=20]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
 _force_planet = -1
-_level_seed = 0
+_level_seed = 80
 _spawn_mobs = false
 
 [sub_resource type="ProceduralSky" id=2]
@@ -40,19 +41,19 @@ sun_latitude = 39.71
 sun_longitude = -8.09
 sun_angle_min = 0.0
 sun_angle_max = 23.15
-sun_energy = 9.7
+sun_energy = 9.29
 texture_size = 0
 
 [sub_resource type="Environment" id=3]
 background_mode = 2
 background_sky = SubResource( 2 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 1.23
-ambient_light_sky_contribution = 0.11
+ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
+ambient_light_energy = 1.24
+ambient_light_sky_contribution = 0.09
 fog_enabled = true
-fog_color = Color( 0.188235, 0.207843, 0.164706, 1 )
+fog_color = Color( 0.184314, 0.207843, 0.156863, 1 )
 fog_sun_color = Color( 0.239216, 0.337255, 0.396078, 1 )
-fog_sun_amount = 0.54
+fog_sun_amount = 0.53
 fog_depth_begin = 155.9
 fog_depth_end = 379.9
 fog_depth_curve = 1.18921
@@ -67,7 +68,8 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 adjustment_enabled = true
-adjustment_contrast = 1.05
+adjustment_brightness = 1.1
+adjustment_contrast = 1.25
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -593,6 +595,118 @@ light_color = Color( 0.631373, 0.631373, 0.631373, 1 )
 light_energy = 0.48
 light_specular = 0.0
 directional_shadow_normal_bias = 0.1
+
+[node name="Chunk[-1,-1,-1]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, -96, -96 )
+position_x = -1
+position_y = -1
+position_z = -1
+size_x = 460293
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[-1,0,-1]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 0, -96 )
+position_x = -1
+position_z = -1
+size_y = 532167232
+size_z = 32704
+data_size_x = 77842328
+data_size_z = 251552768
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[-1,-1,0]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, -96, 0 )
+position_x = -1
+position_y = -1
+position_z = 252630368
+data_size_x = 252631472
+data_size_z = 252633200
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[-1,0,0]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 0, 0 )
+position_x = -1
+position_z = 29
+size_x = 1
+size_y = 4
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[0,-1,-1]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -96, -96 )
+position_x = 248352896
+position_y = -1
+position_z = -1
+data_size_z = 248351808
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[0,0,-1]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -96 )
+position_z = -1
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[0,-1,0]" type="VoxelChunk" parent="World"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -96, 0 )
+position_y = -1
+size_y = 7
+size_z = 1065353216
+data_size_x = 253500256
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
+
+[node name="Chunk[0,0,0]" type="VoxelChunk" parent="World"]
+position_x = 96
+position_z = 254438160
+data_size_x = 1
+data_size_y = 111
+data_size_z = 254440608
+library = ExtResource( 17 )
+voxel_scale = 6.0
+mesher = Object(VoxelMesherTransvoxel,"library":ExtResource( 17 ),"material":Resource( "res://data/materials/1_standard_material.tres" ),"voxel_scale":6.0,"lod_size":1,"ao_strength":0.2,"base_light_value":0.45,"uv_margin":Rect2( 0.017, 0.017, 0.966, 0.966 ),"script":Resource( "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd" ))
+
+voxel_world = Object(VoxelWorld,"_import_path":NodePath(""),"pause_mode":0,"process_priority":0,"transform":Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 ),"visible":true,"up_vector":Vector3( 0, 1, 0 ),"chunk_size_x":16,"chunk_size_y":16,"chunk_size_z":16,"current_seed":0,"use_threads":false,"max_concurrent_generations":1,"library":ExtResource( 17 ),"level_generator":SubResource( 1 ),"voxel_scale":6.0,"chunk_spawn_range":1,"player_path":NodePath(""),"player":null,"script":ExtResource( 16 ),"meshes":[  ],"editor_generate":false,"show_loading_screen":false,"generate_on_ready":true,"initial_generation":true,"spawned":false,"_editor_generate":false,"_player_file_name":"","_player":null)
+
+script = ExtResource( 20 )
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Delete" to="CharacterSelectorMenu" method="delete_character"]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Create" to="." method="switch_to_menu" binds= [ 1 ]]

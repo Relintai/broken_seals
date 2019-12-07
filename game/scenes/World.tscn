@@ -25,19 +25,19 @@ sun_latitude = 39.71
 sun_longitude = -8.09
 sun_angle_min = 0.0
 sun_angle_max = 23.15
-sun_energy = 9.7
+sun_energy = 9.29
 texture_size = 0
 
 [sub_resource type="Environment" id=3]
 background_mode = 2
 background_sky = SubResource( 2 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 1.23
-ambient_light_sky_contribution = 0.11
+ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
+ambient_light_energy = 1.24
+ambient_light_sky_contribution = 0.09
 fog_enabled = true
-fog_color = Color( 0.188235, 0.207843, 0.164706, 1 )
+fog_color = Color( 0.184314, 0.207843, 0.156863, 1 )
 fog_sun_color = Color( 0.239216, 0.337255, 0.396078, 1 )
-fog_sun_amount = 0.54
+fog_sun_amount = 0.53
 fog_depth_begin = 155.9
 fog_depth_end = 379.9
 fog_depth_curve = 1.18921
@@ -52,7 +52,8 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 adjustment_enabled = true
-adjustment_contrast = 1.05
+adjustment_brightness = 1.1
+adjustment_contrast = 1.25
 
 [node name="World" type="VoxelWorld" groups=[
 "save",
