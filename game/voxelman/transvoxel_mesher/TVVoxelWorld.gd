@@ -26,8 +26,9 @@ extends VoxelWorld
 
 export(Array, MeshDataResource) var meshes : Array
 
-export (bool) var editor_generate : bool = false setget set_editor_generate, get_editor_generate
-export (bool) var show_loading_screen : bool = true
+export(bool) var editor_generate : bool = false setget set_editor_generate, get_editor_generate
+export(bool) var show_loading_screen : bool = true
+export(bool) var generate_on_ready : bool = false
 
 var initial_generation : bool = true
 
@@ -37,6 +38,14 @@ var _editor_generate : bool
 
 var _player_file_name : String
 var _player : Entity
+
+func _ready():
+	if generate_on_ready:
+		
+		if level_generator != null:
+			level_generator.setup(self, 80, false, library)
+		
+		spawn()
 
 #func _process(delta : float) -> void:
 #	if not generation_queue.empty():
