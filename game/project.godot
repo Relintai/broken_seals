@@ -248,7 +248,6 @@ gdscript/warnings/integer_division=false
 [display]
 
 window/dpi/allow_hidpi=true
-window/vsync/use_vsync=false
 window/handheld/orientation="sensor_landscape"
 window/stretch/mode="2d"
 window/stretch/aspect="expand"

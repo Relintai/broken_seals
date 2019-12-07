@@ -6,12 +6,10 @@
 [ext_resource path="res://ui/theme/actionbar_dynamicfont.tres" type="DynamicFont" id=5]
 
 [node name="ActionBarEntry" type="TouchButton"]
-margin_top = 1.0
-margin_right = 70.0
-margin_bottom = 71.0
+margin_right = 46.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 46, 46 )
 focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
 theme = ExtResource( 3 )
 shortcut_in_tooltip = false
 action_mode = 0
@@ -43,8 +41,8 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 68.0
-margin_bottom = 68.0
+margin_right = 44.0
+margin_bottom = 44.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

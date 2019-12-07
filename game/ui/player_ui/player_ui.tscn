@@ -319,15 +319,17 @@ enabled_focus_mode = 0
 keep_pressed_outside = true
 text = "M"
 
-[node name="Actionbars" type="Control" parent="GUI"]
+[node name="Actionbars" type="HBoxContainer" parent="GUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
+alignment = 2
 script = ExtResource( 8 )
 __meta__ = {
-"_edit_lock_": true
+"_edit_use_anchors_": false
 }
 actionbar_scene = ExtResource( 14 )
 
