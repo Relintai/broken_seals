@@ -12,16 +12,16 @@ _level_seed = 0
 _spawn_mobs = false
 
 [sub_resource type="ProceduralSky" id=2]
-sky_top_color = Color( 0.0431373, 0.00784314, 0.0666667, 1 )
-sky_horizon_color = Color( 0.27451, 0.447059, 0.427451, 1 )
+sky_top_color = Color( 0.447059, 0.780392, 0.854902, 1 )
+sky_horizon_color = Color( 0.273637, 0.277344, 0.206924, 1 )
 sky_curve = 0.263535
 sky_energy = 0.3
 ground_bottom_color = Color( 0.196078, 0.152941, 0.152941, 1 )
 ground_horizon_color = Color( 0.223529, 0.192157, 0.164706, 1 )
 ground_curve = 0.101965
 ground_energy = 0.4
-sun_color = Color( 0.619608, 0.47451, 0.113725, 1 )
-sun_latitude = 37.43
+sun_color = Color( 0.45098, 0.352941, 0.113725, 1 )
+sun_latitude = 39.71
 sun_longitude = -8.09
 sun_angle_min = 0.0
 sun_angle_max = 23.15
@@ -31,12 +31,15 @@ texture_size = 0
 [sub_resource type="Environment" id=3]
 background_mode = 2
 background_sky = SubResource( 2 )
-ambient_light_color = Color( 0.737255, 0.737255, 0.737255, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 1.23
+ambient_light_sky_contribution = 0.11
 fog_enabled = true
-fog_color = Color( 0.278431, 0.360784, 0.360784, 1 )
-fog_sun_color = Color( 0.113725, 0.568627, 0.827451, 1 )
-fog_depth_begin = 34.0
-fog_depth_end = 257.9
+fog_color = Color( 0.188235, 0.207843, 0.164706, 1 )
+fog_sun_color = Color( 0.239216, 0.337255, 0.396078, 1 )
+fog_sun_amount = 0.54
+fog_depth_begin = 155.9
+fog_depth_end = 379.9
 fog_depth_curve = 1.18921
 tonemap_mode = 2
 tonemap_exposure = 0.83
@@ -64,17 +67,23 @@ script = ExtResource( 8 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( -0.797163, 0.45442, 0.397535, 0, -0.658427, 0.752644, 0.603765, 0.59998, 0.524873, 0, 18.834, 0 )
+transform = Transform( -0.797163, 0.45442, 0.397535, 0.124932, -0.520028, 0.844963, 0.590697, 0.723238, 0.357776, 0, 18.834, 0 )
 layers = 3
-light_energy = 1.4
-light_specular = 0.7
+light_color = Color( 1, 0.878431, 0.878431, 1 )
+light_energy = 0.7
+light_specular = 0.65
+shadow_enabled = true
 shadow_bias = 0.07
 script = ExtResource( 3 )
 
 [node name="DirectionalLight2" type="DirectionalLight" parent="."]
-transform = Transform( -0.797163, 0.523191, -0.301335, 0, 0.499093, 0.866549, 0.603765, 0.69078, -0.397858, 0, 18.834, 0 )
-light_energy = 0.4
+transform = Transform( 0.826603, 0.474891, -0.302004, -0.49276, 0.351482, -0.79602, -0.271874, 0.806808, 0.524543, 0, 18.834, 0 )
+light_color = Color( 0.631373, 0.631373, 0.631373, 1 )
+light_energy = 0.48
 light_specular = 0.0
 directional_shadow_normal_bias = 0.1

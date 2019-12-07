@@ -38,7 +38,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.822 )
 current = true
 fov = 60.0
 size = 28.0
-far = 300.0
+far = 1000.0
 
 [node name="Rotation_Helper" type="Spatial" parent="."]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )

@@ -187,6 +187,8 @@ func build_mesh(data) -> void:
 						
 					st.add_bones(bone_array)
 					st.add_weights(weights_array)
+
+					st.add_color(Color(0.7, 0.7, 0.7))
 					st.add_vertex(bt.xform(vertices[i]))
 	
 				for i in range(len(indices)):

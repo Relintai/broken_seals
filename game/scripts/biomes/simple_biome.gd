@@ -66,6 +66,8 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 #				chunk.set_voxel(int(255.0 * (val - int(val)) / 180.0) * 180, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
+#	box_blur(chunk)
+
 #	chunk.build()
 
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs:
@@ -73,3 +75,29 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \
 							chunk.position_z * chunk.size_z * chunk.voxel_scale - chunk.size_z / 2))
 
+func box_blur(chunk : VoxelChunk):
+	for x in range(0, chunk.size_x):
+		for z in range(0, chunk.size_z):
+			for y in range(0, chunk.size_z):
+				
+				var avg : float = 0
+				
+				avg += chunk.get_voxel(x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				avg += chunk.get_voxel(x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				avg /= 8.0
+				
+				chunk.set_voxel(avg, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(avg, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
