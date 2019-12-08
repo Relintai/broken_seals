@@ -14,9 +14,14 @@ label_path = NodePath("Label")
 [node name="ProgressBar" type="ProgressBar" parent="."]
 margin_right = 352.0
 margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+percent_visible = false
 
 [node name="Label" type="Label" parent="."]
 margin_right = 352.0
 margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 align = 1
 valign = 1
