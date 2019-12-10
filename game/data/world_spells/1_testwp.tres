@@ -1,0 +1,6 @@
+[gd_resource type="WorldSpellData" format=2]
+
+[resource]
+resource_name = "Test"
+id = 1
+text_name = "Test"
