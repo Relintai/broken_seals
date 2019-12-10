@@ -139,11 +139,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/spells/gd_spell_script.gd"
 }, {
-"base": "SpellProjectile",
-"class": "SpellProjectileGD",
-"language": "GDScript",
-"path": "res://scripts/projectiles/SpellProjectileGD.gd"
-}, {
 "base": "VoxelChunk",
 "class": "TVGUVoxelChunk",
 "language": "GDScript",
@@ -178,6 +173,11 @@ _global_script_classes=[ {
 "class": "TestVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/transvoxel_mesher/TestVoxelMesher.gd"
+}, {
+"base": "WorldSpell",
+"class": "WorldSpellGD",
+"language": "GDScript",
+"path": "res://scripts/projectiles/WorldSpellGD.gd"
 } ]
 _global_script_class_icons={
 "AuraGD": "",
@@ -206,14 +206,14 @@ _global_script_class_icons={
 "PropToolScene": "",
 "SpellEffectVisualBasic": "",
 "SpellGD": "",
-"SpellProjectileGD": "",
 "TVGUVoxelChunk": "",
 "TVGUVoxelMesher": "",
 "TVNUVoxelChunk": "",
 "TVNUVoxelMesher": "",
 "TVVoxelChunk": "",
 "TVVoxelMesher": "",
-"TestVoxelMesher": ""
+"TestVoxelMesher": "",
+"WorldSpellGD": ""
 }
 Node="input/actionbar_5_11"
 

@@ -53,7 +53,7 @@ func _son_cast_player_moved(info):
 
 func fire_projectile(info : SpellCastInfo):
 	if projectile_type == SPELL_PROJECTILE_TYPE_FOLLOW:
-		var sp : SpellProjectileGD = SpellProjectileGD.new()
+		var sp : WorldSpellGD = WorldSpellGD.new()
 		
 		info.get_caster().get_parent().add_child(sp)
 		sp.owner = info.get_caster().get_parent()
