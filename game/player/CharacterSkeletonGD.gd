@@ -63,8 +63,8 @@ var _editor_built : bool = false
 func _ready():
 	st = SurfaceTool.new()
 	_texture_packer = TexturePacker.new()
-#	_texture_packer.texture_flags = 0
-	_texture_packer.texture_flags = Texture.FLAG_FILTER
+	_texture_packer.texture_flags = 0
+#	_texture_packer.texture_flags = Texture.FLAG_FILTER
 	_texture_packer.max_atlas_size = 512
 	
 	skeleton = get_node(skeleton_path) as Skeleton
