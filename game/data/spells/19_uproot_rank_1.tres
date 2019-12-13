@@ -19,7 +19,5 @@ range = true
 range_range = 15.0
 aoe = true
 aoe_targetType = -572653568
-aoe_movement_type = -436862976
 aoe_colliderType = 537722880
-projectile_type = 6
 script = ExtResource( 2 )

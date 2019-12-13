@@ -13,7 +13,5 @@ icon = ExtResource( 2 )
 text_name = "Rest"
 text_description = "Rest for 30 seconds, greatly increasing your regeneration."
 aoe_targetType = 5
-aoe_movement_type = 6357069
 aoe_colliderType = 1065353216
-projectile_type = 7
 script = ExtResource( 1 )

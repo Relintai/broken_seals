@@ -26,7 +26,7 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 
 	handle_cooldown(info)
 		
-	if has_projectile():
+	if projectile != null:
 		fire_projectile(info)
 	else:
 		handle_effect(info)
@@ -40,7 +40,7 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 	if is_instance_valid(info.target):
 		info.target.son_cast_finished_target(info)
 	
-	if has_projectile():
+	if projectile != null:
 		fire_projectile(info)
 	else:
 		handle_effect(info)
@@ -52,13 +52,14 @@ func _son_cast_player_moved(info):
 		info.caster.sfail_cast()
 
 func fire_projectile(info : SpellCastInfo):
-	if projectile_type == SPELL_PROJECTILE_TYPE_FOLLOW:
-		var sp : WorldSpellGD = WorldSpellGD.new()
-		
-		info.get_caster().get_parent().add_child(sp)
-		sp.owner = info.get_caster().get_parent()
-	
-		sp.launch(info, projectile, projectile_speed)
+	pass
+#	if projectile_type == SPELL_PROJECTILE_TYPE_FOLLOW:
+#		var sp : WorldSpellGD = WorldSpellGD.new()
+#
+#		info.get_caster().get_parent().add_child(sp)
+#		sp.owner = info.get_caster().get_parent()
+#
+#		sp.launch(info, projectile, projectile_speed)
 
 func _son_spell_hit(info):
 	handle_effect(info)

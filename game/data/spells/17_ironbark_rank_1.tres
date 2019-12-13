@@ -20,7 +20,5 @@ Reduces damage taken by 70%. This spell is not on the global cooldown."
 cooldown_cooldown = 60.0
 cooldown_global_cooldown = false
 aoe_targetType = -1910718371
-aoe_movement_type = 1611610192
 aoe_colliderType = -298046312
-projectile_type = 882743928
 script = ExtResource( 1 )

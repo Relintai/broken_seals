@@ -17,7 +17,5 @@ Cooldown: {2}
 Increases your spell damage by 30% for 20 sec."
 cooldown_cooldown = 180.0
 aoe_targetType = 2
-aoe_movement_type = 915097248
 aoe_colliderType = 480
-projectile_type = 8
 script = ExtResource( 1 )

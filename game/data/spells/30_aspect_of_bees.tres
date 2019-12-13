@@ -22,7 +22,5 @@ cooldown_cooldown = 21.0
 range = true
 range_range = 26.0
 aoe_targetType = -1910718371
-aoe_movement_type = 1611610192
 aoe_colliderType = -298046312
-projectile_type = 1065353216
 script = ExtResource( 1 )

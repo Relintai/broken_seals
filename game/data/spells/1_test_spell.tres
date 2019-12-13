@@ -1,8 +1,7 @@
-[gd_resource type="Spell" load_steps=4 format=2]
+[gd_resource type="Spell" load_steps=3 format=2]
 
 [ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
 [ext_resource path="res://data/icons/naturalist/test.tres" type="Texture" id=2]
-[ext_resource path="res://data/spell_effects/enchanter/Arrow.tscn" type="PackedScene" id=4]
 
 [resource]
 resource_name = "adadadadadad"
@@ -16,8 +15,5 @@ damage = true
 damage_min = 200
 damage_max = 300
 aoe_targetType = 1431112251
-aoe_movement_type = 860237388
 aoe_colliderType = 827465778
-projectile = ExtResource( 4 )
-projectile_speed = 50.0
 script = ExtResource( 1 )

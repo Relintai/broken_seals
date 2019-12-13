@@ -11,5 +11,4 @@ target_relation_type = 4
 rank = 1
 icon = ExtResource( 1 )
 aoe_targetType = -2147459840
-aoe_movement_type = 4
 script = ExtResource( 2 )

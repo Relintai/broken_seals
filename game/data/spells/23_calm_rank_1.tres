@@ -16,7 +16,5 @@ Cooldown: {2}
 Reduces the target's melee and spell damage by 50% for 10 sec."
 cooldown_cooldown = 90.0
 aoe_targetType = -2147478784
-aoe_movement_type = 1
 aoe_colliderType = 7602273
-projectile_type = 5
 script = ExtResource( 1 )

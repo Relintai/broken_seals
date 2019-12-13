@@ -20,7 +20,5 @@ Increases your movement speed by 60% for 6 sec. This spell is not on the global 
 cooldown_cooldown = 20.0
 cooldown_global_cooldown = false
 aoe_targetType = 520
-aoe_movement_type = 538514176
 aoe_colliderType = 186459648
-projectile_type = 101
 script = ExtResource( 3 )

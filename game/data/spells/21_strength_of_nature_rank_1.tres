@@ -21,7 +21,5 @@ heal = true
 heal_min = 6700
 heal_max = 7000
 aoe_targetType = 5
-aoe_movement_type = 7602259
 aoe_colliderType = 7602273
-projectile_type = 8
 script = ExtResource( 1 )

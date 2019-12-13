@@ -36,7 +36,5 @@ damage_type = 16
 damage_min = 130
 damage_max = 150
 aoe_targetType = -1910718371
-aoe_movement_type = 1611610192
 aoe_colliderType = 1065353216
-projectile_type = 882743928
 script = ExtResource( 3 )

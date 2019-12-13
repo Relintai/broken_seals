@@ -19,8 +19,6 @@ Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% f
 range = true
 range_range = 26.0
 aoe_targetType = 1129071960
-aoe_movement_type = 2190112
 aoe_colliderType = 1058050193
-projectile_type = -1039400960
 training_required_spell = ExtResource( 4 )
 script = ExtResource( 1 )
