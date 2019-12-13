@@ -114,6 +114,9 @@ def copytree(src, dst):
 
             shutil.copytree(sp, dp)
         else:
+            if not os.path.isdir(dst):
+                os.makedirs(dst)
+
             shutil.copy2(sp, dp)
 
 def update_engine():
