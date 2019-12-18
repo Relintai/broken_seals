@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/huf_thigh_left.dae-c22a30784e3ebd7b7e696a5d9559fcfb.res"
+
+[deps]
+
+source_file="res://data/character_models/huf_thigh_left.dae"
+dest_files=[ "res://.import/huf_thigh_left.dae-c22a30784e3ebd7b7e696a5d9559fcfb.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )
