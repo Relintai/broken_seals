@@ -1,4 +1,3 @@
-rem This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 start "Android templates" /wait cmd /c call "Build_Android_Templates.bat" ^> 01.txt
 start "Android templates release" /wait cmd /c call "Build_Android_Templates_Release.bat" ^> 02.txt
