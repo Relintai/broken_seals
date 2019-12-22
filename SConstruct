@@ -32,7 +32,7 @@ repository_index = 0
 module_clone_path  = '/modules/' 
 clone_command = 'git clone {0} {1}'
 
-engine_repository = [ ['https://github.com/godotengine/godot.git', 'https://github.com/godotengine/godot.git'], 'engine', '' ]
+engine_repository = [ ['https://github.com/godotengine/godot.git', 'git@github.com:godotengine/godot.git'], 'engine', '' ]
 
 module_repositories = [
     [ ['https://github.com/Relintai/world_generator.git', 'git@github.com:Relintai/world_generator.git'], 'world_generator', '' ],
@@ -41,10 +41,12 @@ module_repositories = [
     [ ['https://github.com/Relintai/voxelman.git', 'git@github.com:Relintai/voxelman.git'], 'voxelman', '' ],
     [ ['https://github.com/Relintai/texture_packer.git', 'git@github.com:Relintai/texture_packer.git'], 'texture_packer', '' ],
     [ ['https://github.com/Relintai/godot_fastnoise.git', 'git@github.com:Relintai/godot_fastnoise.git'], 'fastnoise', '' ],
+    [ ['https://github.com/Relintai/mesh_data_resource.git', 'git@github.com:Relintai/mesh_data_resource.git'], 'mesh_data_resource', '' ],
 ]
 
 addon_repositories = [
-    [['https://github.com/Relintai/entity-spell-system-addons.git', 'git@github.com:Relintai/entity-spell-system-addons.git'], 'entity-spell-system-addons', 'addons' ],
+    [ ['https://github.com/Relintai/ess_data.git', 'git@github.com:Relintai/ess_data.git' ], 'ess_data', '' ],
+    [ ['https://github.com/Relintai/prop_tool.git', 'git@github.com:Relintai/prop_tool.git' ], 'prop_tool', '' ],
 ]
 
 third_party_addon_repositories = [
@@ -116,9 +118,6 @@ def setup_repository(data, clone_path):
 def copy_repository(data, target_folder, clone_path):
     copytree(os.path.abspath(clone_path + data[1] + '/' + data[2]), os.path.abspath(target_folder + data[1]))
 
-def copy_addon_repository(data, target_folder, clone_path):
-    copytree(os.path.abspath(clone_path + data[1] + '/' + data[2]), os.path.abspath(target_folder))
-
 def copytree(src, dst):
     for item in os.listdir(src):
         sp = os.path.join(src, item)
@@ -146,12 +145,12 @@ def update_modules():
 def update_addons():
     for rep in addon_repositories:
         update_repository(rep, module_clone_path)
-        copy_addon_repository(rep, './game/addons/', '.' + module_clone_path)
+        copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def update_addons_third_party_addons():
     for rep in third_party_addon_repositories:
         update_repository(rep, module_clone_path)
-        copy_addon_repository(rep, './game/addons/', '.' + module_clone_path)
+        copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def update_all():
     update_engine()
@@ -173,12 +172,12 @@ def setup_modules():
 def setup_addons():
     for rep in addon_repositories:
         setup_repository(rep, module_clone_path)
-        copy_addon_repository(rep, './game/addons/', '.' + module_clone_path)
+        copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def setup_addons_third_party_addons():
     for rep in third_party_addon_repositories:
         setup_repository(rep, module_clone_path)
-        copy_addon_repository(rep, './game/addons/', '.' + module_clone_path)
+        copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def setup_all():
     setup_engine()
