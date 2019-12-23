@@ -76,14 +76,7 @@ __meta__ = {
 transform = Transform( -0.797163, 0.45442, 0.397535, 0.124932, -0.520028, 0.844963, 0.590697, 0.723238, 0.357776, 0, 18.834, 0 )
 layers = 3
 light_color = Color( 1, 0.878431, 0.878431, 1 )
-light_energy = 0.7
+light_energy = 0.87
 light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 3 )
-
-[node name="DirectionalLight2" type="DirectionalLight" parent="."]
-transform = Transform( 0.826603, 0.474891, -0.302004, -0.49276, 0.351482, -0.79602, -0.271874, 0.806808, 0.524543, 0, 18.834, 0 )
-light_color = Color( 0.631373, 0.631373, 0.631373, 1 )
-light_energy = 0.48
-light_specular = 0.0
-directional_shadow_normal_bias = 0.1
