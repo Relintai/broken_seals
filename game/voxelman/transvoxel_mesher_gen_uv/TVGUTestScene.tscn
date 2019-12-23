@@ -1,13 +1,10 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://debug/FreeLookCam.tscn" type="PackedScene" id=1]
 [ext_resource path="res://data/materials/voxelman.tres" type="Material" id=2]
 [ext_resource path="res://voxelman/FPSCounter.gd" type="Script" id=3]
 [ext_resource path="res://voxelman/transvoxel_mesher_gen_uv/TVGUVoxelWorld.tscn" type="PackedScene" id=4]
-[ext_resource path="res://data/voxel_textures/a2.png" type="Texture" id=5]
-[ext_resource path="res://data/voxel_libraries/main_library.tres" type="VoxelmanLibrarySimple" id=6]
-
-
+[ext_resource path="res://data/voxel_textures/grass_albedo.png" type="Texture" id=5]
 
 [sub_resource type="Environment" id=1]
 ambient_light_color = Color( 1, 1, 1, 1 )
@@ -50,7 +47,6 @@ environment = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, -0.236854, 0.971545, 0, -0.971545, -0.236854, 0, 41.8924, 0 )
 
 [node name="VoxelWorld" parent="." instance=ExtResource( 4 )]
-library = ExtResource( 6 )
 voxel_scale = 1.0
 
 [node name="DirectionalLight2" type="DirectionalLight" parent="."]
