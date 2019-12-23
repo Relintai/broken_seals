@@ -1,0 +1,260 @@
+{
+	"connections": [
+		{
+			"from": "noise",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 1
+		},
+		{
+			"from": "voronoi",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 0
+		},
+		{
+			"from": "blend_2",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "export",
+			"to_port": 0
+		},
+		{
+			"from": "gaussian_blur",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 1
+		},
+		{
+			"from": "perlin",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "gaussian_blur",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"name": "@@2692",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "Material",
+			"node_position": {
+				"x": 484,
+				"y": -482
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao_light_affect": 1,
+				"depth_scale": 1,
+				"emission_energy": 1,
+				"metallic": 1,
+				"normal_scale": 1,
+				"roughness": 1,
+				"size": 6,
+				"subsurf_scatter_strength": 0
+			},
+			"type": "material"
+		},
+		{
+			"name": "noise",
+			"node_position": {
+				"x": -1083,
+				"y": -309
+			},
+			"parameters": {
+				"density": 0.034225,
+				"size": 6
+			},
+			"type": "noise"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -869,
+				"y": 0
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0.070004,
+							"g": 0.072917,
+							"pos": 0,
+							"r": 0.061265
+						},
+						{
+							"a": 1,
+							"b": 0.130355,
+							"g": 0.1875,
+							"pos": 0.563636,
+							"r": 0.100421
+						},
+						{
+							"a": 1,
+							"b": 0.164892,
+							"g": 0.557292,
+							"pos": 0.990909,
+							"r": 0.262991
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "export",
+			"node_position": {
+				"x": 505,
+				"y": -129
+			},
+			"parameters": {
+				"size": 6,
+				"suffix": "albedo"
+			},
+			"type": "export"
+		},
+		{
+			"name": "blend_2",
+			"node_position": {
+				"x": -757,
+				"y": -544
+			},
+			"parameters": {
+				"amount": 0.57795,
+				"blend_type": 11
+			},
+			"type": "blend"
+		},
+		{
+			"name": "voronoi",
+			"node_position": {
+				"x": -1099,
+				"y": -697
+			},
+			"parameters": {
+				"intensity": 1,
+				"randomness": 0.79,
+				"scale_x": 4,
+				"scale_y": 4,
+				"stretch_x": 1,
+				"stretch_y": 1
+			},
+			"type": "voronoi"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -489,
+				"y": -511
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 0,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0.20187,
+							"g": 0.401783,
+							"pos": 0.709091,
+							"r": 0.447917
+						},
+						{
+							"a": 1,
+							"b": 0.091117,
+							"g": 0.901042,
+							"pos": 1,
+							"r": 0.825111
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "blend_3",
+			"node_position": {
+				"x": -15,
+				"y": -435
+			},
+			"parameters": {
+				"amount": 0.365625,
+				"blend_type": 8
+			},
+			"type": "blend"
+		},
+		{
+			"name": "gaussian_blur",
+			"node_position": {
+				"x": -611.25,
+				"y": -39
+			},
+			"parameters": {
+				"param0": 6,
+				"param1": 0.05,
+				"param2": 0
+			},
+			"type": "gaussian_blur"
+		},
+		{
+			"name": "perlin",
+			"node_position": {
+				"x": -1175.75,
+				"y": 10
+			},
+			"parameters": {
+				"iterations": 6,
+				"persistence": 0.8,
+				"scale_x": 32,
+				"scale_y": 32
+			},
+			"type": "perlin"
+		}
+	],
+	"parameters": {
+
+	},
+	"type": "graph"
+}

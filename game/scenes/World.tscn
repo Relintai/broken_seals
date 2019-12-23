@@ -62,7 +62,7 @@ use_threads = false
 max_concurrent_generations = 1
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
-voxel_scale = 6.0
+voxel_scale = 2.0
 chunk_spawn_range = 3
 script = ExtResource( 8 )
 

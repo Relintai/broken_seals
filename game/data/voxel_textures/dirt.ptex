@@ -1,0 +1,277 @@
+{
+	"connections": [
+		{
+			"from": "perlin",
+			"from_port": 0,
+			"to": "colorize_2",
+			"to_port": 0
+		},
+		{
+			"from": "noise_2",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "emboss_2",
+			"to_port": 0
+		},
+		{
+			"from": "emboss_2",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_2",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 1
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "export",
+			"to_port": 0
+		}
+	],
+	"label": "Graph",
+	"name": "@@3901",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "Material",
+			"node_position": {
+				"x": 0,
+				"y": 0
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao_light_affect": 1,
+				"depth_scale": 1,
+				"emission_energy": 1,
+				"metallic": 1,
+				"normal_scale": 1,
+				"roughness": 1,
+				"size": 6,
+				"subsurf_scatter_strength": 0
+			},
+			"type": "material"
+		},
+		{
+			"name": "export",
+			"node_position": {
+				"x": 6,
+				"y": 328
+			},
+			"parameters": {
+				"size": 6,
+				"suffix": "albedo"
+			},
+			"type": "export"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -1160,
+				"y": 40
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 0,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0.125156,
+							"g": 0.183677,
+							"pos": 0.690909,
+							"r": 0.25
+						},
+						{
+							"a": 1,
+							"b": 0.089244,
+							"g": 0.260592,
+							"pos": 0.990909,
+							"r": 0.317708
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "colorize_2",
+			"node_position": {
+				"x": -1093,
+				"y": 376
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0.011867,
+							"g": 0.013639,
+							"pos": 0.006818,
+							"r": 0.026042
+						},
+						{
+							"a": 1,
+							"b": 0.147277,
+							"g": 0.196776,
+							"pos": 0.527273,
+							"r": 0.260417
+						},
+						{
+							"a": 1,
+							"b": 0.278948,
+							"g": 0.415009,
+							"pos": 1,
+							"r": 0.520833
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "emboss_2",
+			"node_position": {
+				"x": -927,
+				"y": 55
+			},
+			"parameters": {
+				"param0": 7,
+				"param1": 47.885,
+				"param2": 7.3
+			},
+			"type": "emboss"
+		},
+		{
+			"name": "perlin",
+			"node_position": {
+				"x": -1358,
+				"y": 390
+			},
+			"parameters": {
+				"iterations": 4,
+				"persistence": 1,
+				"scale_x": 10,
+				"scale_y": 10
+			},
+			"type": "perlin"
+		},
+		{
+			"name": "perlin_2",
+			"node_position": {
+				"x": -1260,
+				"y": 763
+			},
+			"parameters": {
+				"iterations": 3,
+				"persistence": 0.5,
+				"scale_x": 4,
+				"scale_y": 4
+			},
+			"type": "perlin"
+		},
+		{
+			"name": "noise_2",
+			"node_position": {
+				"x": -1427,
+				"y": 46
+			},
+			"parameters": {
+				"density": 0.0036,
+				"size": 7
+			},
+			"type": "noise"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -672,
+				"y": 90
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 0,
+							"b": 0,
+							"g": 0,
+							"pos": 0.618182,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0.053286,
+							"g": 0.191732,
+							"pos": 0.818182,
+							"r": 0.286458
+						},
+						{
+							"a": 1,
+							"b": 0.583333,
+							"g": 0.579783,
+							"pos": 1,
+							"r": 0.545464
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "blend_3",
+			"node_position": {
+				"x": -469.75,
+				"y": 378
+			},
+			"parameters": {
+				"amount": 0.6543,
+				"blend_type": 8
+			},
+			"type": "blend"
+		}
+	],
+	"parameters": {
+
+	},
+	"type": "graph"
+}

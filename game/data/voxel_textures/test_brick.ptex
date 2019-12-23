@@ -50,7 +50,7 @@
 		}
 	],
 	"label": "Graph",
-	"name": "@@49",
+	"name": "49",
 	"node_position": {
 		"x": 0,
 		"y": 0
@@ -76,7 +76,7 @@
 				"metallic": 1,
 				"normal_scale": 1,
 				"roughness": 1,
-				"size": 7,
+				"size": 6,
 				"subsurf_scatter_strength": 0
 			},
 			"type": "material"
@@ -227,7 +227,7 @@
 				"y": -33.25
 			},
 			"parameters": {
-				"size": 7,
+				"size": 6,
 				"suffix": "albedo"
 			},
 			"type": "export"
