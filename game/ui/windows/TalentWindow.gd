@@ -90,7 +90,9 @@ func centity_data_changed(data: EntityData) -> void:
 		var s : Node = spec_scene.instance()
 		_spec_container.add_child(s)
 		s.owner = _spec_container
-		s.name = spec.text_name
+		
+		if spec.text_name != "":
+			s.name = spec.text_name
 		
 		s.set_spec(_player, spec, i)
 

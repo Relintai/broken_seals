@@ -47,7 +47,7 @@ func _generate_chunk(chunk : VoxelChunk) -> void:
 	_planet.generate_chunk(chunk, _spawn_mobs)
 
 func create_planet():
-	var planet_files : Array
+	var planet_files : Array = Array()
 	
 	var dir = Directory.new()
 	if dir.open(planet_folder) == OK:

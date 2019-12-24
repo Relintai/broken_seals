@@ -85,7 +85,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 		if info.target == null:
 			return
 			
-		var ok : bool = false
+#		var ok : bool = false
 		
 #		if (target_relation_type & TARGET_SELF):
 #			ok = true

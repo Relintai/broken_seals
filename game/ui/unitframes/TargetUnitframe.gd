@@ -69,7 +69,7 @@ func set_player(p_player : Entity) -> void:
 	
 	_player.connect("caura_added", self, "on_caura_added")
 	_player.connect("caura_removed", self, "on_caura_removed")
-	_player.connect("cdied", self, "cdied")
+	_player.connect("cdied", self, "cdied", [], CONNECT_DEFERRED)
 	
 	var health = _player.get_health()
 	_on_player_health_changed(health)

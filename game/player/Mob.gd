@@ -329,7 +329,7 @@ func _son_level_up(value: int) -> void:
 	randomize()
 	arr.shuffle()
 	
-	for v in range(value):
+	for _v in range(value):
 		for i in range(arr.size()):
 			var spell : Spell = arr[i]
 			

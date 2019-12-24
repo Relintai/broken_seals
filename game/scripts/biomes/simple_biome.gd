@@ -108,12 +108,13 @@ func box_blur(chunk : VoxelChunk):
 				avg += chunk.get_voxel(x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				
 				avg /= 8.0
+				var aavg: int = int(avg)
 				
-				chunk.set_voxel(avg, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(avg, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				chunk.set_voxel(aavg, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
