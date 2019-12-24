@@ -1,6 +1,6 @@
 [gd_resource type="ItemVisual" load_steps=46 format=2]
 
-[ext_resource path="res://data/character_models/neck.dae" type="MeshDataResource" id=1]
+[ext_resource path="res://data/character_models/huf_neck.dae" type="MeshDataResource" id=1]
 [ext_resource path="res://data/character_models/huf_calf.dae" type="MeshDataResource" id=2]
 [ext_resource path="res://data/character_models/huf_thigh_left.dae" type="MeshDataResource" id=3]
 [ext_resource path="res://data/character_models/huf_pelvis.dae" type="MeshDataResource" id=4]

@@ -48,6 +48,43 @@ var root_attach_point : CharacterSkeketonAttachPoint
 
 export(Array, ItemVisual) var viss : Array
 
+var bone_names = {
+	0: "root",
+	1: "pelvis",
+	2: "spine",
+	3: "spine_1",
+	4: "spine_2",
+	5: "neck",
+	6: "head",
+	
+	7: "left_clavicle",
+	8: "left_upper_arm",
+	9: "left_forearm",
+	10: "left_hand",
+	11: "left_thunb_base",
+	12: "left_thumb_end",
+	13: "left_fingers_base",
+	14: "left_fingers_end",
+	
+	15: "right_clavicle",
+	16: "right_upper_arm",
+	17: "right_forearm",
+	18: "right_hand",
+	19: "right_thumb_base",
+	20: "right_thumb_head",
+	21: "right_fingers_base",
+	22: "right_fingers_head",
+	
+	23: "left_thigh",
+	24: "left_calf",
+	25: "left_foot",
+	
+	26: "right_thigh",
+	27: "right_calf",
+	28: "right_foot",
+}
+
+
 var _texture_packer : TexturePacker
 var _textures : Array
 var _texture : Texture
@@ -137,13 +174,21 @@ func build_mesh(data) -> void:
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var vertex_count : int = 0
 	
-	for bone_idx in range(EntityEnums.SKELETON_POINTS_MAX):
-		for j in range(get_model_entry_count(bone_idx)):
-			var entry : SkeletonModelEntry = get_model_entry(bone_idx, j)
-			
+	for skele_point in range(EntityEnums.SKELETON_POINTS_MAX):
+		var bone_name : String = get_bone_name(skele_point)
+		
+		if bone_name == "":
+			print("Bone name error")
+			continue
+		
+		var bone_idx : int = skeleton.find_bone(bone_name)
+		
+		for j in range(get_model_entry_count(skele_point)):
+			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
+
 			if entry.entry.get_mesh(gender) != null:
 				var bt : Transform = skeleton.get_bone_global_pose(bone_idx)
-
+				
 				var arrays : Array = entry.entry.get_mesh(gender).array
 	
 				var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PoolVector3Array
@@ -158,7 +203,7 @@ func build_mesh(data) -> void:
 				var weights_array : PoolRealArray = PoolRealArray()
 				weights_array.append(1.0)
 				
-				var ta : AtlasTexture = _textures[bone_idx]
+				var ta : AtlasTexture = _textures[skele_point]
 				
 				var tx : float = 0
 				var ty : float = 0
@@ -275,3 +320,9 @@ func editor_build(val : bool) -> void:
 		_editor_built = false
 		
 	refresh_in_editor = val
+
+func get_bone_name(skele_point : int) -> String:
+	if bone_names.has(skele_point):
+		return bone_names[skele_point]
+		
+	return ""
