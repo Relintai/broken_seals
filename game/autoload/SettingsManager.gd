@@ -27,7 +27,14 @@ const SAVE_PATH : String = "user://settings.cfg"
 var _config_file : ConfigFile = ConfigFile.new()
 var _settings : Dictionary = {
 	"rendering" : {
-		"thread_model" : ProjectSettings.get("rendering/threads/thread_model")
+		"viewport_scale" : ProjectSettings.get("display/window/size/viewport_scale"),
+		"thread_model" : ProjectSettings.get("rendering/threads/thread_model"),
+		"borderless" : ProjectSettings.get("display/window/size/borderless"),
+		"fullscreen" : ProjectSettings.get("display/window/size/fullscreen"),
+		"always_on_top" : ProjectSettings.get("display/window/size/always_on_top"),
+		"shadows_enabled" : ProjectSettings.get("rendering/quality/shadows/enabled"),
+		"use_vsync" : ProjectSettings.get("display/window/vsync/use_vsync"),
+		"vsync_via_compositor" : ProjectSettings.get("display/window/vsync/vsync_via_compositor"),
 	},
 	"debug" : {
 		"debug_info" : false
@@ -77,3 +84,35 @@ func load_settings() -> void:
 
 func set_rendering_thread_model(value : int) -> void:
 	ProjectSettings.set("rendering/threads/thread_model", value)
+	
+func set_rendering_borderless(value : bool) -> void:
+	ProjectSettings.set("display/window/size/borderless", value)
+	OS.window_borderless = value
+	
+func set_rendering_fullscreen(value : bool) -> void:
+	ProjectSettings.set("display/window/size/fullscreen", value)
+	OS.window_fullscreen = value
+	
+func set_rendering_always_on_top(value : bool) -> void:
+	ProjectSettings.set("display/window/size/always_on_top", value)
+	OS.set_window_always_on_top(value)
+	
+func set_rendering_viewport_scale(value : int) -> void:
+	ProjectSettings.set("rendering/window/size/viewport_scale", value)
+	var v: Vector2 = OS.get_window_size()
+	v *= value * 0.01
+	
+	get_tree().get_root().size = v
+
+func set_rendering_shadows_enabled(value : bool) -> void:
+	ProjectSettings.set("rendering/quality/shadows/enabled", value)
+
+func set_rendering_use_vsync(value : bool) -> void:
+	ProjectSettings.set("display/window/vsync/use_vsync", value)
+	
+	OS.vsync_enabled = value
+	
+func set_rendering_vsync_via_compositor(value : bool) -> void:
+	ProjectSettings.set("display/window/vsync/vsync_via_compositor", value)
+	
+	OS.vsync_via_compositor = value

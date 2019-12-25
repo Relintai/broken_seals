@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/options/OptionsViewportLabel.gd" type="Script" id=1]
+
+[node name="OptionsViewportLabel" type="HBoxContainer"]
+margin_right = 527.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 6.0
+margin_right = 261.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 265.0
+margin_right = 527.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+align = 1
+valign = 1

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/options/OptionsSliderRow.gd" type="Script" id=1]
+
+[node name="OptionsSliderRow" type="HBoxContainer"]
+margin_top = 46.0
+margin_right = 527.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 6.0
+margin_right = 261.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 265.0
+margin_right = 527.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+min_value = 5.0
+step = 5.0
+value = 100.0

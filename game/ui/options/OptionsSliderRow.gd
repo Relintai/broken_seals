@@ -1,4 +1,5 @@
-extends DirectionalLight
+tool
+extends HBoxContainer
 
 # Copyright (c) 2019 Péter Magyar
 #
@@ -20,6 +21,24 @@ extends DirectionalLight
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _ready():
-	shadow_enabled = ProjectSettings.get("rendering/quality/shadows/enabled")
+export(String) var property_category : String
+export(String) var property_name : String
 
+export(String) var property_label : String
+
+var _slider : HSlider = null
+
+func _ready():
+	$Label.text = property_label
+	
+	if Engine.editor_hint:
+		return
+	
+	_slider = $HSlider as Slider
+
+	_slider.value = Settings.get_value(property_category, property_name)
+	
+	_slider.connect("value_changed", self, "value_changed")
+
+func value_changed(val: float) -> void:
+	Settings.set_value(property_category, property_name, val)

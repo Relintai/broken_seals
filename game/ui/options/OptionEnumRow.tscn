@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/options/OptionEnumRow.gd" type="Script" id=1]
+
+[node name="OptionEnumRow" type="HBoxContainer"]
+margin_top = 34.0
+margin_right = 527.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_top = 6.0
+margin_right = 261.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 265.0
+margin_right = 527.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1

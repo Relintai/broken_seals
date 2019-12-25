@@ -1,4 +1,4 @@
-extends DirectionalLight
+extends HBoxContainer
 
 # Copyright (c) 2019 Péter Magyar
 #
@@ -20,6 +20,18 @@ extends DirectionalLight
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _ready():
-	shadow_enabled = ProjectSettings.get("rendering/quality/shadows/enabled")
+export(String) var property_label : String
+export(bool) var width : bool = true
 
+var _label : Label = null
+
+func _ready():
+	$Label.text = property_label
+	_label = $Label2 as Label
+
+
+func _process(delta: float) -> void:
+	if width:
+		_label.text = str(int(get_tree().root.size.x))
+	else:
+		_label.text = str(int(get_tree().root.size.y))

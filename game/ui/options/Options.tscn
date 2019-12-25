@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/player_ui/RemoveProfile.gd" type="Script" id=2]
-[ext_resource path="res://ui/options/OptionRow.gd" type="Script" id=3]
-[ext_resource path="res://ui/options/Threads.gd" type="Script" id=4]
+[ext_resource path="res://ui/options/OptionsViewportLabel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/options/OptionCheckboxRow.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/options/OptionCheckBox.gd" type="Script" id=5]
+[ext_resource path="res://ui/options/OptionEnumRow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/options/OptionsSpinboxRow.tscn" type="PackedScene" id=8]
 
 [node name="Options" type="Control"]
 anchor_right = 1.0
@@ -50,49 +52,75 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 
-[node name="Threads2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Video"]
-visible = false
-margin_right = 519.0
-margin_bottom = 26.0
-size_flags_horizontal = 3
-script = ExtResource( 3 )
-property_category = "rendering/threads"
+[node name="ViewportWidth" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
+margin_bottom = 15.0
+property_label = "Viewport Width"
+
+[node name="ViewportHeight" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
+margin_top = 23.0
+margin_bottom = 38.0
+property_label = "Viewport Height"
+width = false
+
+[node name="ViewportScale" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 8 )]
+margin_top = 46.0
+margin_bottom = 70.0
+property_category = "rendering"
+property_name = "viewport_scale"
+property_label = "Viewport Scale"
+min_value = 20
+step = 5
+suffix = "%"
+
+[node name="Borderless" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 78.0
+margin_bottom = 104.0
+property_category = "rendering"
+property_name = "borderless"
+property_label = "Borderless Window"
+
+[node name="FullScreen" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 112.0
+margin_bottom = 138.0
+property_category = "rendering"
+property_name = "fullscreen"
+property_label = "Fullscreen"
+
+[node name="AlwaysOnTop" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 146.0
+margin_bottom = 172.0
+property_category = "rendering"
+property_name = "always_on_top"
+property_label = "Always On Top"
+
+[node name="ThreadModel" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 6 )]
+margin_top = 180.0
+margin_bottom = 206.0
+property_category = "rendering"
 property_name = "thread_model"
+property_label = "Thread Model"
+options = [ "Single-Unsafe", "Single-Safe", "Multi Threaded" ]
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads2"]
-margin_top = 5.0
-margin_right = 255.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "asd"
+[node name="Shadows" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 214.0
+margin_bottom = 240.0
+property_category = "rendering"
+property_name = "shadows_enabled"
+property_label = "Shadows Enabled"
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads2"]
-margin_left = 263.0
-margin_right = 519.0
-margin_bottom = 26.269
-size_flags_horizontal = 3
-text = "tb"
+[node name="VSync" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 248.0
+margin_bottom = 274.0
+property_category = "rendering"
+property_name = "use_vsync"
+property_label = "VSync"
 
-[node name="Threads" type="HBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Video"]
-margin_right = 527.0
-margin_bottom = 26.0
-size_flags_horizontal = 3
-script = ExtResource( 4 )
-
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads"]
-margin_top = 5.0
-margin_right = 259.0
-margin_bottom = 20.0
-size_flags_horizontal = 3
-text = "Thread Model"
-
-[node name="OptionButton" type="OptionButton" parent="PanelContainer/VBoxContainer/TabContainer/Video/Threads"]
-margin_left = 267.0
-margin_right = 527.0
-margin_bottom = 26.269
-size_flags_horizontal = 3
-align = 1
-expand_icon = true
+[node name="VSyncViaCompositor" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+margin_top = 282.0
+margin_bottom = 308.0
+property_category = "rendering"
+property_name = "vsync_via_compositor"
+property_label = "VSync Via Compositor"
 
 [node name="Debug" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false

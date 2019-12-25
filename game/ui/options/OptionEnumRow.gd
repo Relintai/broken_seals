@@ -1,3 +1,4 @@
+tool
 extends HBoxContainer
 
 # Copyright (c) 2019 Péter Magyar
@@ -23,3 +24,24 @@ extends HBoxContainer
 export(String) var property_category : String
 export(String) var property_name : String
 
+export(String) var property_label : String
+
+export(Array, String) var options : Array
+
+func _ready():
+	$Label.text = property_label
+	
+	if Engine.editor_hint:
+		return
+		
+	var ob : OptionButton = $OptionButton as OptionButton
+	
+	for i in range(options.size()):
+		ob.add_item(options[i], i)
+	
+	ob.selected = Settings.get_value(property_category, property_name)
+	
+	ob.connect("item_selected", self, "item_selected")
+
+func item_selected(id : int) -> void:
+	Settings.set_value(property_category, property_name, id)

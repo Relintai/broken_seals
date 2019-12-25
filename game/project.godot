@@ -220,6 +220,7 @@ Node="input/actionbar_5_11"
 [application]
 
 config/name="Broken Seals"
+config/description="An open source third person RPG "
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 config/version="0.2"
@@ -250,6 +251,7 @@ window/handheld/orientation="sensor_landscape"
 window/stretch/mode="2d"
 window/stretch/aspect="expand"
 mouse_cursor/sensitivity=0.9
+window/size/viewport_scale=100
 
 [editor_plugins]
 
@@ -360,3 +362,4 @@ quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 quality/directional_shadow/size.mobile=1024
 quality/shading/force_vertex_shading=true
+quality/shadows/enabled=false
