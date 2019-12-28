@@ -78,9 +78,14 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 					chunk.set_voxel(3, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 				else:
 					chunk.set_voxel(2, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
+
+				var val2 : float = (val - int(val)) * 3.0
+				val2 = int(val2)
+				val2 /= 3.0
 				
+				chunk.set_voxel(int(255.0 * val2), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 #				chunk.set_voxel(int(255.0 * (val - int(val)) / 180.0) * 180, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+#				chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
 #	box_blur(chunk)
 

@@ -91,8 +91,6 @@ func _ready() -> void:
 
 	world = get_node(world_path) as VoxelWorld
 
-#	set_process(true)
-
 func _physics_process(delta : float) -> void:
 	if not _on:
 		return
