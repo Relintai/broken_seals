@@ -169,7 +169,7 @@ func setup_icon() -> void:
 		
 		spell_id = spell.id
 		spell_type = spell.spell_type
-		has_gcd = spell.cooldown_global_cooldown
+		has_gcd = spell.cooldown_global_cooldown_enabled
 	
 func _on_button_pressed() -> void:
 	if (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL):
