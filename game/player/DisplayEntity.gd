@@ -171,13 +171,13 @@ func process_movement(delta : float) -> void:
 	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
 	vel.x = hvel.x
 	vel.z = hvel.z
-	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = get_body().move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
 	
 	if get_tree().network_peer:
 		if get_tree().is_network_server():
-			set_position(translation, rotation)
+			set_position(get_body().translation, get_body().rotation)
 		else:
-			rpc("set_position", translation, rotation)
+			rpc("set_position", get_body().translation, get_body().rotation)
 
 func _input(event: InputEvent) -> void:
 	if not cursor_grabbed:
@@ -285,17 +285,16 @@ func rotate_delta(x_delta : float) -> void:
 	while y_rot < 0:
 		y_rot += 360
 	
-	rotation_degrees = Vector3(0.0, y_rot, 0.0)
+	get_body().rotation_degrees = Vector3(0.0, y_rot, 0.0)
 	
 func target(position : Vector2):
 	var from = camera.project_ray_origin(position)
 	var to = from + camera.project_ray_normal(position) * ray_length
 		
-	var space_state = get_world().direct_space_state
+	var space_state = get_body().get_world().direct_space_state
 	var result = space_state.intersect_ray(from, to, [], 2)
 		
 	if result:
-		print(result)
 		if result.collider and result.collider is Entity:
 			var ent : Entity = result.collider as Entity
 			
@@ -310,7 +309,7 @@ func cmouseover(event):
 	var from = camera.project_ray_origin(event.position)
 	var to = from + camera.project_ray_normal(event.position) * ray_length
 		
-	var space_state = get_world().direct_space_state
+	var space_state = get_body().get_world().direct_space_state
 	var result = space_state.intersect_ray(from, to, [], 2)
 	
 	if result:

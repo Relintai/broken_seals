@@ -14,32 +14,25 @@ extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 [node name="Mob" type="Entity" groups=[
 "mobs",
 ]]
-input_ray_pickable = false
-collision_layer = 3
-collision_mask = 3
-character_skeleton_path = NodePath("Rotation_Helper/Model/character")
+body_path = NodePath("Body")
+character_skeleton_path = NodePath("Body/Rotation_Helper/Model/character")
 script = ExtResource( 2 )
 
-[node name="Body_CollisionShape" type="CollisionShape" parent="."]
+[node name="NamePlate" parent="." instance=ExtResource( 3 )]
+
+[node name="Body" type="KinematicBody" parent="."]
+
+[node name="Body_CollisionShape" type="CollisionShape" parent="Body"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.73, 0 )
 shape = SubResource( 1 )
 
-[node name="Feet_CollisionShape" type="CollisionShape" parent="."]
+[node name="Feet_CollisionShape" type="CollisionShape" parent="Body"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
 shape = SubResource( 2 )
 
-[node name="Rotation_Helper" type="Spatial" parent="."]
+[node name="Rotation_Helper" type="Spatial" parent="Body"]
 transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
 
-[node name="Model" type="Spatial" parent="Rotation_Helper"]
+[node name="Model" type="Spatial" parent="Body/Rotation_Helper"]
 
-[node name="character" parent="Rotation_Helper/Model" instance=ExtResource( 1 )]
-
-[node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.185015, 1.74294, -0.107748 )
-visible = false
-light_color = Color( 0.592157, 0.631373, 0.607843, 1 )
-omni_range = 8.0
-omni_attenuation = 0.31864
-
-[node name="NamePlate" parent="." instance=ExtResource( 3 )]
+[node name="character" parent="Body/Rotation_Helper/Model" instance=ExtResource( 1 )]

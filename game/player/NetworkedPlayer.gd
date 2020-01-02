@@ -100,7 +100,7 @@ func rotate_delta(x_delta : float) -> void:
 	if y_rot < 0:
 		y_rot = 360
 	
-	rotation_degrees = Vector3(0.0, y_rot, 0.0)
+	get_body().rotation_degrees = Vector3(0.0, y_rot, 0.0)
 
 #remote func set_position(position : Vector3, rot : Vector3) -> void:
 #	translation = position
@@ -113,14 +113,14 @@ remote func sset_position(position : Vector3, rotation : Vector3) -> void:
 
 	if multiplayer.network_peer and multiplayer.is_network_server():
 		cset_position(position, rotation)
-		vrpc("cset_position", translation, rotation)
+		vrpc("cset_position", position, rotation)
 		
 remote func cset_position(position : Vector3, rotation : Vector3) -> void:
 #	if get_network_master() != 1:
 #		print(str(get_network_master()) + "npcset")
 		
-	translation = position
-	rotation = rotation
+	get_body().translation = position
+	get_body().rotation = rotation
 		
 func _moved() -> void:
 	if sis_casting():

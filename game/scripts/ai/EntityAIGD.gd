@@ -117,7 +117,7 @@ func attack(delta):
 		owner.target_movement_direction = Vector2()
 		return
 	
-	var dir : Vector3 = target.translation - owner.translation
+	var dir : Vector3 = target.get_body().translation - owner.get_body().translation
 	
 	owner.target_movement_direction = Vector2(dir.x, dir.z)
 

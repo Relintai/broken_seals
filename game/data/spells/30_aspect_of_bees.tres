@@ -19,7 +19,6 @@ Instant.
 Cooldown: {2}
 Deals 460 to 540 damage every 3 sec, healing you for 80% of the damage."
 cooldown_cooldown = 21.0
-range = true
 range_range = 26.0
 aoe_targetType = -1910718371
 aoe_colliderType = -298046312

@@ -216,4 +216,4 @@ func set_terrarin_player():
 	
 	var terrarin : VoxelWorld = get_node("/root/GameScene/VoxelWorld")
 	
-	terrarin.set_player(local_player_master.player as Spatial)
+	terrarin.set_player(local_player_master.player.get_body() as Spatial)

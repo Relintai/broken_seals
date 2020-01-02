@@ -14,7 +14,6 @@ text_name = "Inner Will"
 text_description = "Cooldown: 1.5 min.
 Removes any movement impairing effects, stuns, and effects which makes you lose control of your character. This spell is not on the global cooldown."
 cooldown_cooldown = 90.0
-cooldown_global_cooldown = false
 aoe_targetType = 7
 aoe_colliderType = 480
 script = ExtResource( 1 )

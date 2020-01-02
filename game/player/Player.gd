@@ -79,8 +79,8 @@ var world : VoxelWorld = null
 var model_rotation_node : Spatial
 
 func _ready() -> void:
-	camera = $CameraPivot/Camera as Camera
-	camera_pivot = $CameraPivot as Spatial
+	camera = $Body/CameraPivot/Camera as Camera
+	camera_pivot = $Body/CameraPivot as Spatial
 	
 	model_rotation_node = get_node(model_path)
 
@@ -190,13 +190,13 @@ func process_movement(delta : float) -> void:
 	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
 	vel.x = hvel.x
 	vel.z = hvel.z
-	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = get_body().move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 	if multiplayer.has_network_peer():
 		if not multiplayer.is_network_server():
-			rpc_id(1, "sset_position", translation, rotation)
+			rpc_id(1, "sset_position", get_body().translation, get_body().rotation)
 		else:
-			sset_position(translation, rotation)
+			sset_position(get_body().translation, get_body().rotation)
 
 
 func _input(event: InputEvent) -> void:
@@ -305,19 +305,18 @@ func rotate_delta(x_delta : float) -> void:
 	while y_rot < 0:
 		y_rot += 360
 	
-	rotation_degrees = Vector3(0.0, y_rot, 0.0)
+	get_body().rotation_degrees = Vector3(0.0, y_rot, 0.0)
 	
 func target(position : Vector2):
 	var from = camera.project_ray_origin(position)
 	var to = from + camera.project_ray_normal(position) * ray_length
 		
-	var space_state = get_world().direct_space_state
-	var result = space_state.intersect_ray(from, to, [], 2)
+	var space_state = get_body().get_world().direct_space_state
+	var result = space_state.intersect_ray(from, to, [], get_body().collision_mask)
 		
 	if result:
-		print(result)
-		if result.collider and result.collider is Entity:
-			var ent : Entity = result.collider as Entity
+		if result.collider and result.collider.owner is Entity:
+			var ent : Entity = result.collider.owner as Entity
 			
 			crequest_target_change(ent.get_path())
 			return
@@ -330,12 +329,15 @@ func cmouseover(event):
 	var from = camera.project_ray_origin(event.position)
 	var to = from + camera.project_ray_normal(event.position) * ray_length
 		
-	var space_state = get_world().direct_space_state
-	var result = space_state.intersect_ray(from, to, [], 2)
+	var space_state = get_body().get_world().direct_space_state
+	var result = space_state.intersect_ray(from, to, [], get_body().collision_mask)
 	
 	if result:
-		if result.collider and result.collider is Entity:
-			var mo : Entity = result.collider as Entity
+		if result.collider:# and result.collider.owner is Entity:
+			var mo : Entity = result.collider.owner as Entity
+			
+			if mo == null:
+				return
 			
 			if last_mouse_over != null and last_mouse_over != mo:
 				if is_instance_valid(last_mouse_over):
@@ -369,14 +371,14 @@ remote func sset_position(position : Vector3, rotation : Vector3) -> void:
 		print(str(get_network_master()) + "psset")
 	
 	if multiplayer.network_peer and multiplayer.is_network_server():
-		vrpc("cset_position", translation, rotation)
+		vrpc("cset_position", position, rotation)
 		cset_position(position, rotation)
 		
 remote func cset_position(position : Vector3, rotation : Vector3) -> void:
 	if get_network_master() != 1:
 		print(str(get_network_master()) + " pcset")
-	translation = position
-	rotation = rotation
+	get_body().translation = position
+	get_body().rotation = rotation
 		
 func _moved() -> void:
 	if sis_casting():

@@ -17,7 +17,6 @@ text_description = "Instant.
 Cooldown: {2}
 Heals you for 6700 to 7000."
 cooldown_cooldown = 150.0
-heal = true
 heal_min = 6700
 heal_max = 7000
 aoe_targetType = 5

@@ -16,8 +16,6 @@ text_description = "Range: 26m.
 Casttime: 1.5 sec.
 Cooldown: {2}
 Roots the target for 8 sec."
-range = true
-cast = true
 cast_cast_time = 1.4
 aoe_targetType = 8
 aoe_colliderType = 537722880

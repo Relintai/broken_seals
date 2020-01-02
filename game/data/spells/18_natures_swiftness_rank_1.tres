@@ -18,7 +18,6 @@ text_description = "Instant.
 Cooldown: {2}
 Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
 cooldown_cooldown = 20.0
-cooldown_global_cooldown = false
 aoe_targetType = 520
 aoe_colliderType = 186459648
 script = ExtResource( 3 )

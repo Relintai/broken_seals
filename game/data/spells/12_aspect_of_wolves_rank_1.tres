@@ -16,7 +16,6 @@ target_aura_applys = [ ExtResource( 3 ) ]
 text_name = "Aspect of Wolves"
 text_description = "Range: 26m.
 Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
-range = true
 range_range = 26.0
 aoe_targetType = 1129071960
 aoe_colliderType = 1058050193

@@ -11,7 +11,6 @@ rank = 1
 icon = ExtResource( 2 )
 needs_target = true
 text_name = "adadadadadad"
-damage = true
 damage_min = 200
 damage_max = 300
 aoe_targetType = 1431112251

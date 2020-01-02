@@ -15,7 +15,6 @@ text_description = "Instant.
 Cooldown: {2}
 Roots every enemy around you in a 15m radius for 8 sec. This spell doesn't have diminishing return."
 cooldown_cooldown = 24.0
-range = true
 range_range = 15.0
 aoe = true
 aoe_targetType = -572653568

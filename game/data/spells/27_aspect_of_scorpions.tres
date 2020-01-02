@@ -17,9 +17,8 @@ text_name = "Aspect of Scorpions"
 text_description = "Range: 26m.
 Casttime: {3}.
 Deals 340 to 380 damage every 3 sec, and increases damage taken by 10% for 30 sec."
-range = true
 range_range = 26.0
-cast = true
+cast_enabled = true
 cast_cast_time = 1.2
 spell_cooldown_mainpulation_data_count = -1
 script = ExtResource( 2 )

@@ -82,17 +82,17 @@ func _process(delta : float) -> void:
 		return
 	
 	var cam_pos : Vector3 = camera.global_transform.xform(Vector3())
-	var dstv : Vector3 = cam_pos - translation
+	var dstv : Vector3 = cam_pos - get_body().translation
 	dstv.y = 0
 	var dst : float = dstv.length_squared()
 
 	if dst > max_visible_distance_squared:
-		if visible:
-			hide()
+		if get_body().visible:
+			get_body().hide()
 		return
 	else:
-		if not visible:
-			show()
+		if not get_body().visible:
+			get_body().show()
 		
 	#TODO check later if this gives a performance boost
 #	var cam_facing : Vector3 = -camera.global_transform.basis.z
@@ -121,7 +121,7 @@ func _physics_process(delta : float) -> void:
 
 func process_movement(delta : float) -> void:
 	if starget != null:
-		look_at(starget.translation, Vector3(0, 1, 0))
+		get_body().look_at(starget.get_body().translation, Vector3(0, 1, 0))
 	
 	var state : int = getc_state()
 	
@@ -188,13 +188,13 @@ func process_movement(delta : float) -> void:
 	var facing : Vector3 = vel
 	facing.y = 0
 	
-	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
-	sset_position(translation, rotation)
+	vel = get_body().move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	sset_position(get_body().translation, get_body().rotation)
 	
 	if vel.length_squared() < 0.12:
 		sleep = true
 	
-	if translation.y < -50.0:
+	if get_body().translation.y < -50.0:
 		print("killed mob with fall damage")
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
 		sdi.damage_source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN
@@ -209,7 +209,7 @@ func rotate_delta(x_delta : float) -> void:
 	if y_rot < 0:
 		y_rot = 360
 	
-	rotation_degrees = Vector3(0.0, y_rot, 0.0)
+	get_body().rotation_degrees = Vector3(0.0, y_rot, 0.0)
 
 func sstart_attack(entity : Entity) -> void:
 	ai_state = EntityEnums.AI_STATE_ATTACK
@@ -271,10 +271,10 @@ func _son_damage_dealt(data):
 
 func _con_damage_dealt(info : SpellDamageInfo) -> void:
 #	if info.dealer == 
-	WorldNumbers.damage(translation, 1.6, info.damage, info.crit)
+	WorldNumbers.damage(get_body().translation, 1.6, info.damage, info.crit)
 
 func _con_heal_dealt(info : SpellHealInfo) -> void:
-	WorldNumbers.heal(translation, 1.6, info.heal, info.crit)
+	WorldNumbers.heal(get_body().translation, 1.6, info.heal, info.crit)
 
 func _moved() -> void:
 	if sis_casting():
@@ -352,9 +352,9 @@ func _son_level_up(value: int) -> void:
 func sset_position(position : Vector3, rotation : Vector3) -> void:
 	if multiplayer.network_peer and multiplayer.is_network_server():
 #		cset_position(position, rotation)
-		vrpc("cset_position", translation, rotation)
+		vrpc("cset_position", position, rotation)
 		
 remote func cset_position(position : Vector3, rotation : Vector3) -> void:
-	translation = position
-	rotation = rotation
+	get_body().translation = position
+	get_body().rotation = rotation
 

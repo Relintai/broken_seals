@@ -15,7 +15,6 @@ text_name = "Aspect of Wasps"
 text_description = "Range: 26m.
 Instant.
 Deals 230 to 270 damage every 3 sec, this damage increases over the duration, for 21 sec."
-range = true
 range_range = 26.0
 aoe_targetType = 541
 aoe_colliderType = 541

@@ -38,7 +38,7 @@ func launch(info : SpellCastInfo, effect : PackedScene, speed : float) -> void:
 	_speed = speed
 	
 #	translation = info.caster.translation
-	translation = info.caster.get_character_skeleton().right_hand_attach_point.global_transform.origin
+	get_body().translation = info.caster.get_character_skeleton().right_hand_attach_point.global_transform.origin
 	
 	var eff : Node = effect.instance()
 	
@@ -53,7 +53,7 @@ func _process(delta : float) -> void:
 		queue_free()
 		return
 		
-	var l : Vector3 =  _target.global_transform.origin - translation
+	var l : Vector3 =  _target.global_transform.origin - get_body().translation
 		
 	if l.length() < 1:
 		_info.spell.son_spell_hit(_info)
@@ -62,6 +62,6 @@ func _process(delta : float) -> void:
 		
 	var dir : Vector3 = l.normalized()
 
-	global_transform.origin += dir * _speed * delta
-	global_transform  = transform.looking_at(_target.global_transform.origin, Vector3(0, 1, 0))
+	get_body().global_transform.origin += dir * _speed * delta
+	get_body().global_transform  = get_body().transform.looking_at(_target.global_transform.origin, Vector3(0, 1, 0))
 	

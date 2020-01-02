@@ -142,7 +142,7 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 
 	entity.from_dict(load_file(file_name))
 
-	entity.translation = position
+	entity.get_node(entity.get_body_path()).translation = position
 #	entity.initialize(createinfo)
 	entity.set_network_master(network_owner)
 			
@@ -302,7 +302,7 @@ func spawn(createinfo : EntityCreateInfo, networked : bool, position : Vector3, 
 	spawn_parent.add_child(entity_node)
 	entity_node.owner = spawn_parent
 
-	entity_node.translation = position
+	entity_node.get_body().translation = position
 		
 	entity_node.initialize(createinfo)
 	

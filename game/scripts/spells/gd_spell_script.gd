@@ -25,7 +25,7 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 	if info.caster.sis_casting():
 		return
 	
-	if info.spell.cooldown_global_cooldown and info.caster.gets_has_global_cooldown() or info.caster.hass_category_cooldown(spell_type) or info.caster.hass_cooldown(id):
+	if info.spell.cooldown_global_cooldown_enabled and info.caster.gets_has_global_cooldown() or info.caster.hass_category_cooldown(spell_type) or info.caster.hass_cooldown(id):
 		return
 	
 	if !info.caster.hass_spell(self):
