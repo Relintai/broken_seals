@@ -4,7 +4,7 @@ export SCONS_CACHE_LIMIT=5000
 
 cd ./engine
 
-scons -j6 platform=osx target=release_debug entities_2d=no
+scons -j6 platform=osx target=release_debug 
 
 rm -Rf bin/Godot.app
 cp -r misc/dist/osx_tools.app ./bin/Godot.app

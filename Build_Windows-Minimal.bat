@@ -9,7 +9,7 @@ if not defined DevEnvDir (
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
 )
 
-call scons -j6 platform=windows target=release_debug entities_2d=no  javascript_eval=false module_arkit_enabled=no module_assimp_enabled=no module_csg_enabled=no module_gdnative_enabled=no module_opus_enabled=no module_webp_enabled=no module_webm_enabled=no module_visual_script_enabled=no module_xatlas_unwrap_enabled=no module_theora_enabled=no module_vhacd_enabled=no module_tinyexr_enabled=no module_squish_enabled=no module_gridmap_enabled=no
+call scons -j6 platform=windows target=release_debug javascript_eval=false module_arkit_enabled=no module_assimp_enabled=no module_csg_enabled=no module_gdnative_enabled=no module_opus_enabled=no module_webp_enabled=no module_webm_enabled=no module_visual_script_enabled=no module_xatlas_unwrap_enabled=no module_theora_enabled=no module_vhacd_enabled=no module_tinyexr_enabled=no module_squish_enabled=no module_gridmap_enabled=no
  
 cd ..
 

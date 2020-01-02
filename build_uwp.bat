@@ -6,9 +6,9 @@ if not defined DevEnvDir (
 	call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 )
 
-call scons -j6 platform=uwp target=release entities_2d=no
-rem call scons -j6 platform=uwp target=release_debug entities_2d=no
-rem call scons -j6 platform=uwp target=release entities_2d=no
+call scons -j6 platform=uwp target=release 
+rem call scons -j6 platform=uwp target=release_debug 
+rem call scons -j6 platform=uwp target=release 
  
 cd ..
 
