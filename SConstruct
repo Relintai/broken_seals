@@ -247,10 +247,12 @@ if len(sys.argv) > 1:
 
         subprocess.call(build_string, shell=True)
 
+        exit()
+
     #if arg[0] == 'r':
     #    pass
 
-    exit()
+        
 
 opts = Variables(args=ARGUMENTS)
 
