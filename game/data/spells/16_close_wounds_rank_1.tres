@@ -9,7 +9,6 @@ resource_name = "Close Wounds"
 id = 16
 spell_type = 8
 target_type = 2
-target_relation_type = -870457328
 rank = 1
 icon = ExtResource( 2 )
 caster_aura_applys = [ ExtResource( 3 ) ]

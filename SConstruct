@@ -186,6 +186,72 @@ def setup_all():
     setup_addons_third_party_addons()
 
 env = Environment()
+
+if len(sys.argv) > 1:
+
+    arg = sys.argv[1]
+
+    if arg[0] == 'b':
+        build_string = 'scons '
+
+        build_string += 'tools='
+        if 'e' in arg:
+            build_string += 'yes'
+        else:
+            build_string += 'no'
+        build_string += ' '
+
+        build_string += 'target='
+        if 'r' in arg:
+            build_string += 'release'
+        if 'd' in arg:
+            build_string += 'debug'
+        else:
+            build_string += 'release_debug'
+        build_string += ' '
+
+        build_string += 'custom_modules_shared='
+        if 's' in arg:
+            build_string += 'yes'
+        else:
+            build_string += 'no'
+        build_string += ' '
+
+        build_string += 'platform='
+        if 'l' in arg:
+            build_string += 'x11'
+        elif 'w' in arg:
+            build_string += 'windows'
+        else:
+            print('No platform specified')
+            exit()
+
+        build_string += ' '
+
+        for i in range(2, len(sys.argv)):
+            build_string += ' ' + sys.argv[i] + ' '
+
+        print('Running command: ' + build_string)
+
+        cwd = os.getcwd()
+        full_path = cwd + '/engine/'
+
+        if not os.path.isdir(full_path):
+            print("engine directory doesnt exists.")
+            exit()
+
+        os.chdir(full_path)
+
+        subprocess.call('export SCONS_CACHE=~/.scons_cache', shell=True)
+        subprocess.call('export SCONS_CACHE_LIMIT=5000', shell=True)
+
+        subprocess.call(build_string, shell=True)
+
+    #if arg[0] == 'r':
+    #    pass
+
+    exit()
+
 opts = Variables(args=ARGUMENTS)
 
 opts.Add('a', 'What to do', '')

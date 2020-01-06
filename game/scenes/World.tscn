@@ -53,7 +53,7 @@ glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 adjustment_enabled = true
 adjustment_brightness = 1.1
-adjustment_contrast = 1.25
+adjustment_contrast = 1.22
 
 [node name="World" type="VoxelWorld" groups=[
 "save",
