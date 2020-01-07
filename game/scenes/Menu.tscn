@@ -67,8 +67,6 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 adjustment_enabled = true
-adjustment_brightness = 1.1
-adjustment_contrast = 1.25
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -570,8 +568,6 @@ level_generator = SubResource( 1 )
 voxel_scale = 6.0
 chunk_spawn_range = 1
 script = ExtResource( 16 )
-meshes = [  ]
-editor_generate = false
 show_loading_screen = false
 generate_on_ready = true
 
