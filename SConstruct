@@ -217,17 +217,6 @@ if len(sys.argv) > 1:
             build_string += 'no'
         build_string += ' '
 
-        build_string += 'platform='
-        if 'l' in arg:
-            build_string += 'x11'
-        elif 'w' in arg:
-            build_string += 'windows'
-        else:
-            print('No platform specified')
-            exit()
-
-        build_string += ' '
-
         for i in range(2, len(sys.argv)):
             build_string += ' ' + sys.argv[i] + ' '
 
@@ -242,10 +231,56 @@ if len(sys.argv) > 1:
 
         os.chdir(full_path)
 
-        subprocess.call('export SCONS_CACHE=~/.scons_cache', shell=True)
-        subprocess.call('export SCONS_CACHE_LIMIT=5000', shell=True)
+        cache_exports_str = 'export SCONS_CACHE=~/.scons_cache;export SCONS_CACHE_LIMIT=5000;'
 
-        subprocess.call(build_string, shell=True)
+        if 'l' in arg:
+            build_string += 'platform=x11'
+
+            subprocess.call(cache_exports_str + build_string, shell=True)
+        elif 'w' in arg:
+            build_string += 'platform=windows'
+
+            subprocess.call(cache_exports_str + build_string, shell=True)
+        elif 'a' in arg:
+            build_string += 'platform=android'
+
+            android_exports_str = 'export ANDROID_NDK_ROOT=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_NDK_HOME=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_HOME=~/SDKs/Android/SDK;'
+
+            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=armv7', shell=True)
+            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=arm64v8', shell=True)
+            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=x86', shell=True)
+
+            os.chdir(full_path + 'platform/android/java/')
+
+            subprocess.call(cache_exports_str + android_exports_str + './gradlew generateGodotTemplates', shell=True)
+        elif 'j' in arg:
+            build_string += 'platform=javascript'
+
+            subprocess.call(cache_exports_str + build_string, shell=True)
+        elif 'i' in arg:
+            build_string += 'platform=iphone'
+
+            subprocess.call(cache_exports_str + build_string + ' arch=arm', shell=True)
+            subprocess.call(cache_exports_str + build_string + ' arch=arm64', shell=True)
+
+            #subprocess.call('lipo -create bin/libgodot.iphone.{0}.arm.a bin/libgodot.iphone.{0}.arm64.a -output bin/libgodot.iphone.{1}.fat.a'.fomat(), shell=True)
+
+            #lipo -create bin/libgodot.iphone.opt.debug.arm.a bin/libgodot.iphone.opt.debug.arm64.a -output bin/libgodot.iphone.debug.fat.a
+            #rm bin/ios_xcode/libgodot.iphone.debug.fat.a
+            #cp bin/libgodot.iphone.debug.fat.a  bin/ios_xcode/libgodot.iphone.debug.fat.a
+
+            #lipo -create bin/libgodot.iphone.opt.arm.a bin/libgodot.iphone.opt.arm64.a -output bin/libgodot.iphone.release.fat.a
+            #rm bin/ios_xcode/libgodot.iphone.release.fat.a
+            #cp bin/libgodot.iphone.release.fat.a  bin/ios_xcode/libgodot.iphone.release.fat.a
+
+            subprocess.call('rm bin/iphone.zip', shell=True)
+            #cd bin/ios_xcode
+            subprocess.call(cache_exports_str + build_string + ' arch=arm64', shell=True)
+            subprocess.call('zip -r -X ../iphone.zip .', shell=True)
+
+        else:
+            print('No platform specified')
+            exit()
 
         exit()
 
