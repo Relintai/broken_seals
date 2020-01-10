@@ -31,12 +31,9 @@ Now all of these will get higher priority.
 
 ## Screenshots
 
-![Initial OS Release Screen 1](pictures/screen1.png)
-![Initial OS Release Screen 2](pictures/screen2.png)
+Currently the game looks like this:
 
-Note: Before going open source I removed the assets which was derived from paid stuff, which means the game doesn't look like this anymore.
-The new textures will need to be cleaned up / improved. It will be done soon. I'll change the screenshots when that's done.
-The reason to use these screens is to convey the style I'm going for.
+![Initial OS Release Screen 1](pictures/screen.png)
 
 ## Editing the game
 
