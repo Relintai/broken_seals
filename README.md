@@ -33,7 +33,7 @@ Now all of these will get higher priority.
 
 Currently the game looks like this:
 
-![Initial OS Release Screen 1](pictures/screen.png)
+![Broken Seals as of 2020.01.10.](pictures/screen.jpg)
 
 ## Editing the game
 
