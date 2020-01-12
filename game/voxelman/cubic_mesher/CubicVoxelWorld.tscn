@@ -1,11 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://voxelman/cubic_mesher/CubicVoxelWorld.gd" type="Script" id=1]
 [ext_resource path="res://data/voxel_libraries/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=2]
+[ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=3]
+
+[sub_resource type="VoxelmanLevelGenerator" id=1]
+script = ExtResource( 3 )
+_force_planet = -1
+_level_seed = 0
+_spawn_mobs = false
 
 [node name="VoxelWorld" type="VoxelWorld"]
+use_threads = false
+max_concurrent_generations = 1
 library = ExtResource( 2 )
-voxel_scale = 2.0
-player_path = NodePath("Camera")
+level_generator = SubResource( 1 )
+voxel_scale = 4.0
 script = ExtResource( 1 )
-gen_type = 2
+
+[node name="Camera" type="Camera" parent="."]
+current = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.751552, -0.185778, 0.632974, 0.622874, -0.116152, -0.773651, 0.217249, 0.975702, 0.028422, 0, 27.1286, 0 )

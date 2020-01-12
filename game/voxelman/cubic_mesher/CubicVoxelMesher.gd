@@ -26,12 +26,12 @@ class_name GDCubicVoxelMesher
 
 var count : int = 0
 
-func _add_chunk(buffer : VoxelChunk) -> void:
-	buffer.generate_ao();
+func _add_chunk(chunk : VoxelChunk) -> void:
+	chunk.generate_ao();
 	
-	var x_size : int = buffer.get_size_x() - 1
-	var y_size : int = buffer.get_size_y() - 1
-	var z_size : int = buffer.get_size_z() - 1
+	var x_size : int = chunk.get_size_x() - 1
+	var y_size : int = chunk.get_size_y() - 1
+	var z_size : int = chunk.get_size_z() - 1
 	
 	var voxel_size : float = lod_size
 	
@@ -40,11 +40,11 @@ func _add_chunk(buffer : VoxelChunk) -> void:
 	var tile_uv_size : float = 1/4.0
 	var base_light : Color = Color(0.4, 0.4, 0.4)
 	
-	for y in range(lod_size, y_size - lod_size, lod_size):
-		for z in range(lod_size, z_size - lod_size, lod_size):
-			for x in range(lod_size, x_size - lod_size, lod_size):
+	for y in range(chunk.get_margin_start() + lod_size, y_size, lod_size):
+		for z in range(chunk.get_margin_start() + lod_size, z_size, lod_size):
+			for x in range(chunk.get_margin_start() + lod_size, x_size, lod_size):
 				
-				cube_points.setup(buffer, x, y, z, lod_size)
+				cube_points.setup(chunk, x, y, z, lod_size)
 
 				if not cube_points.has_points():
 					continue
@@ -77,6 +77,7 @@ func _add_chunk(buffer : VoxelChunk) -> void:
 					var face_light_direction : Vector3 = cube_points.get_face_light_direction(face)
 
 					for i in range(4):
+						add_normal(normals[i])
 					
 						var light : Color = cube_points.get_face_point_light_color(face, i)
 						light += base_light
@@ -93,7 +94,7 @@ func _add_chunk(buffer : VoxelChunk) -> void:
 						light.b = clamp(light.b, 0, 1.0)
 
 						add_uv((cube_points.get_point_uv_direction(face, i) + Vector2(0.5, 0.5)) * Vector2(tile_uv_size, tile_uv_size))
-
+						
 						add_vertex((vertices[i] * voxel_size + Vector3(x, y, z)) * voxel_scale)
 
 	

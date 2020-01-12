@@ -51,7 +51,7 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 		for z in range(0, chunk.size_z + 1):
 			var val : float = noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
 			val *= val
-			val *= 100
+			val *= 200
 			val += 2
 			
 			var tv : float = terr_noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
@@ -72,6 +72,7 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 			for y in range(0, v):
 				seed(x + (chunk.position_x * chunk.size_x) + z + (chunk.position_z * chunk.size_z) + y + (chunk.position_y * chunk.size_y))
 				
+				
 				if v < 2:
 					chunk.set_voxel(1, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 				elif v == 2:
@@ -79,18 +80,24 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 				else:
 					chunk.set_voxel(2, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 
-				var val2 : float = (val - int(val)) * 4.0
-				val2 = int(val2)
-				val2 /= 4.0
+				if y == v - 1:
+					chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				else:
+					chunk.set_voxel(255, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				
-				chunk.set_voxel(int(255.0 * val2), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+#				var val2 : float = (val - int(val)) * 4.0
+#				val2 = int(val2)
+#				val2 /= 4.0
+				
+#				chunk.set_voxel(int(255.0 * val2), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 #				chunk.set_voxel(int(255.0 * (val - int(val)) / 180.0) * 180, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 #				chunk.set_voxel(int(255.0 * (val - int(val))), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
 #	box_blur(chunk)
 
 #	chunk.build()
-
+	
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs:
 		Entities.spawn_mob(1, randi() % 3, Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale - chunk.size_x / 2,\
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \
@@ -102,17 +109,59 @@ func box_blur(chunk : VoxelChunk):
 			for y in range(0, chunk.size_z):
 				
 				var avg : float = 0
+				var avgc : int = 0
 				
-				avg += chunk.get_voxel(x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
-				avg += chunk.get_voxel(x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				var curr : int = chunk.get_voxel(x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				
-				avg /= 8.0
+				if curr > 0:
+					avg += curr
+					avgc += 1
+					
+				curr = chunk.get_voxel(x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				curr = chunk.get_voxel(x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				if curr > 0:
+					avg += curr
+					avgc += 1
+				
+				
+				avg /= float(avgc)
+				
 				var aavg: int = int(avg)
 				
 				chunk.set_voxel(aavg, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)

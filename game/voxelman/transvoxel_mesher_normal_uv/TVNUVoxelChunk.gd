@@ -11,4 +11,4 @@ class_name TVNUVoxelChunk
 #	world = get_node("..")
 
 func _create_mesher():
-	mesher = TVNUVoxelMesher.new()
+	add_mesher(TVNUVoxelMesher.new())

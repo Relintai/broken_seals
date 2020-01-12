@@ -66,6 +66,9 @@ func _ready():
 
 func _generation_finished():
 	initial_generation = false
+	
+#	for i in range(get_chunk_count()):
+#		get_chunk_index(i).draw_debug_voxels(555555)
 			
 	if show_loading_screen and not Engine.editor_hint:
 		get_node("..").hide_loading_screen()

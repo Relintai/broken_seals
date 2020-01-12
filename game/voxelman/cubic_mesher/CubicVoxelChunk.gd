@@ -33,9 +33,31 @@ var lod_data : Array = [
 		1 #CHUNK_INDEX_BACK
 ]
 
-func _create_mesher():
-	mesher = VoxelMesherCubic.new()
-#	mesher = CubicVoxelMesher.new()
+func _create_meshers():
+#	mesher = VoxelMesherCubic.new()
+	add_mesher(GDCubicVoxelMesher.new())
 #	mesher.base_light_value = 0.45
 #	mesher.ao_strength = 0.05
 #	mesher.ao_strength = 0.2
+
+func a_build_phase(phase):
+	if phase == VoxelChunk.BUILD_PHASE_LIGHTS:
+#		clear_baked_lights()
+#		generate_random_ao()
+#
+##		var vl : VoxelLight = VoxelLight.new()
+#
+#		bake_lights()
+#
+#		set_physics_process_internal(true)
+#		._build_phase(phase)
+		pass
+	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
+#		set_physics_process_internal(true)
+		._build_phase(phase)
+	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
+		._build_phase(phase)
+		
+		notification(NOTIFICATION_TRANSFORM_CHANGED)
+	else:
+		._build_phase(phase)

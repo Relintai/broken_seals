@@ -30,5 +30,5 @@ class_name TVGUVoxelChunk
 #func _ready():
 #	world = get_node("..")
 
-func _create_mesher():
-	mesher = TVGUVoxelMesher.new()
+func _create_meshers():
+	add_mesher(TVGUVoxelMesher.new())

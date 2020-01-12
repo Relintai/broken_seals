@@ -27,8 +27,6 @@ enum GenType {
 	TEST, NORMAL
 }
 
-signal generation_finished
-
 export(int) var gen_type : int = GenType.NORMAL
 
 export(Array, MeshDataResource) var meshes : Array
@@ -39,22 +37,26 @@ var spawned : bool = false
 var generation_queue : Array
 
 func _ready() -> void:
+	if level_generator != null:
+		level_generator.setup(self, 80, false, library)
+	
 	spawn()
+	set_process(true)
 
-func _process(delta : float) -> void:
-	if not generation_queue.empty():
-		var chunk : VoxelChunk = generation_queue.front()
-		
-		if gen_type == GenType.NORMAL:
-#			generate(chunk)
-			pass
-		else:
-			generate_terrarin(chunk)
-			
-		generation_queue.remove(0)
-		
-		if generation_queue.empty():
-			emit_signal("generation_finished")
+#func _process(delta : float) -> void:
+#	if not generation_queue.empty():
+#		var chunk : VoxelChunk = generation_queue.front()
+#
+#		if gen_type == GenType.NORMAL:
+##			generate(chunk)
+#			pass
+#		else:
+#			generate_terrarin(chunk)
+#
+#		generation_queue.remove(0)
+#
+#		if generation_queue.empty():
+#			emit_signal("generation_finished")
 
 func generate_terrarin(chunk : VoxelChunk) -> void:
 	var buffer : VoxelChunk = chunk.get_buffer()
@@ -122,35 +124,42 @@ func generate_terrarin(chunk : VoxelChunk) -> void:
 	chunk.draw_debug_voxel_lights()
 
 
-func spawn_chunk(x : int, y : int, z : int, lod_size : int = 1) -> void:
-	var name : String = "Chunk," + str(x) + "," + str(y) + "," + str(z)
-	var chunk : VoxelChunk = VoxelChunk.new()
-#	var chunk : VoxelChunk = MarchingCubesVoxelChunk.new()
-	
-	chunk.voxel_world = self
-	chunk.set_chunk_position(x, y, z)
-	chunk.library = library
-	chunk.voxel_scale = voxel_scale
-	chunk.lod_size = lod_size
-	chunk.set_chunk_size(int(chunk_size_x), int(chunk_size_y), int(chunk_size_z))
-	
-	chunk.create_mesher()
-	chunk.mesher.base_light_value = 0.6
+#func spawn_chunk(x : int, y : int, z : int, lod_size : int = 1) -> void:
+#	var name : String = "Chunk," + str(x) + "," + str(y) + "," + str(z)
+#	var chunk : VoxelChunk = VoxelChunk.new()
+##	var chunk : VoxelChunk = MarchingCubesVoxelChunk.new()
+#
+#	chunk.voxel_world = self
+#	chunk.set_chunk_position(x, y, z)
+#	chunk.library = library
+#	chunk.voxel_scale = voxel_scale
+#	chunk.lod_size = lod_size
+#	chunk.set_chunk_size(int(chunk_size_x), int(chunk_size_y), int(chunk_size_z))
+#
+#	chunk.create_mesher()
+#	chunk.mesher.base_light_value = 0.6
+#
+#	chunks[name] = chunk
+#
+#	generation_queue.append(chunk)
 
-	chunks[name] = chunk
+func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
+	var chunk : VoxelChunk = CubicVoxelChunk.new()
 	
-	generation_queue.append(chunk)
-
+	#chunk.lod_size = 1
+	
+	return ._create_chunk(x, y, z, chunk)
 
 func spawn() -> void:
-	var hsize : int = 4
+	var hsize : int = 5
 	
 #	if gen_type == GenType.NORMAL:
 	for x in range(-hsize, hsize):
 		for z in range(-hsize, hsize):
-			for y in range(1):
+			for y in range(-4, 2):
 #				spawn_chunk(x, y, z, abs(int(ceil(x / 2))) + 1)
-				spawn_chunk(x, y, z, 1)
+#				spawn_chunk(x, y, z, 1)
+				create_chunk(x, y, z)
 	
 #func set_player(p_player : Spatial) -> void:
 #	player = p_player

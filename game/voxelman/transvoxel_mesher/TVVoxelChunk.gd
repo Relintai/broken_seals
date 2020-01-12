@@ -43,13 +43,15 @@ func _ready():
 	
 	set_notify_transform(true)
 
-func _create_mesher():
-	mesher = TVVoxelMesher.new()
+func _create_meshers():
+	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
 #	var m : float = 1.0 / 16.0
 
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+	
+	add_mesher(mesher)
 	
 	_prop_texture_packer = TexturePacker.new()
 	_prop_texture_packer.max_atlas_size = 1024
@@ -77,7 +79,8 @@ func spawn_prop_entities(parent_transform : Transform, prop : PropData):
 			spawn_prop_entities(get_prop_mesh_transform(parent_transform * p.transform, vmanpp.snap_to_mesh, vmanpp.snap_axis), p.prop)
 
 func build_phase_prop_mesh() -> void:
-	mesher.reset()
+	for i in range(get_mesher_count()):
+		get_mesher(i).reset()
 
 	if get_prop_count() == 0:
 		next_phase()
@@ -94,7 +97,9 @@ func build_phase_prop_mesh() -> void:
 		_prop_material.metallic = 0
 		
 		VisualServer.instance_geometry_set_material_override(get_prop_mesh_instance_rid(), _prop_material.get_rid())
-		mesher.material = _prop_material
+		
+		for i in range(get_mesher_count()):
+			get_mesher(i).material = _prop_material
 		
 	for i in range(get_prop_count()):
 		var prop : VoxelChunkPropData = get_prop(i)
@@ -117,17 +122,20 @@ func build_phase_prop_mesh() -> void:
 		if prop.mesh != null:
 			var t : Transform = get_prop_transform(prop, prop.snap_to_mesh, prop.snap_axis)
 			
-			prop.prop.add_meshes_into(mesher, _prop_texture_packer, t, self)
+			for i in range(get_mesher_count()):
+				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, self)
 			
 		if prop.prop != null:
 			var vmanpp : PropData = prop.prop as PropData
 			var t : Transform = get_prop_transform(prop, vmanpp.snap_to_mesh, vmanpp.snap_axis)
 			
-			prop.prop.add_meshes_into(mesher, _prop_texture_packer, t, self)
+			for i in range(get_mesher_count()):
+				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, self)
 
-	mesher.bake_colors(self)
-	mesher.build_mesh(get_prop_mesh_rid())
-	mesher.material = null
+	for i in range(get_mesher_count()):
+		get_mesher(i).bake_colors(self)
+		get_mesher(i).build_mesh(get_prop_mesh_rid())
+		get_mesher(i).material = null
 		
 	if not _entities_spawned:
 		for i in range(get_prop_count()):
