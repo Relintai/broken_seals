@@ -1,6 +1,6 @@
 [gd_resource type="VoxelSurfaceMerger" load_steps=2 format=2]
 
-[ext_resource path="res://data/voxel_textures/grass_albedo.png" type="Texture" id=1]
+[ext_resource path="res://data/voxel_textures/Ground03_col.png" type="Texture" id=1]
 
 [resource]
 resource_name = "Test2"

@@ -10,5 +10,4 @@
 [resource]
 material = ExtResource( 1 )
 prop_material = ExtResource( 1 )
-texture_flags = 1
 voxel_surfaces = [ ExtResource( 7 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ) ]

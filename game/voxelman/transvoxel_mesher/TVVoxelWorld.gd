@@ -171,7 +171,7 @@ func setup_client_seed(pseed : int) -> void:
 
 func load_character(file_name : String) -> void:
 	_player_file_name = file_name
-	_player = Entities.load_player(file_name, Vector3(5, 10, 5), 1) as Entity
+	_player = Entities.load_player(file_name, Vector3(5, 30, 5), 1) as Entity
 	#TODO hack, do this properly
 	_player.set_physics_process(false)
 	
