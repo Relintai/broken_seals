@@ -550,7 +550,7 @@ margin_bottom = 127.5
 visible = false
 
 [node name="Char" type="Spatial" parent="."]
-transform = Transform( 0.359313, 0, 0.933217, 0, 1, 0, -0.933217, 0, 0.359313, -2.44425, 2.36948, 0 )
+transform = Transform( 0.359313, 0, 0.933217, 0, 1, 0, -0.933217, 0, 0.359313, -2.44425, 0.926699, 0 )
 
 [node name="CharacterDisplay" type="Spatial" parent="Char"]
 transform = Transform( 1, 0, 0, 0, 0.990268, -0.139173, 0, 0.139173, 0.990268, 0, 0, 0 )
@@ -566,7 +566,6 @@ use_threads = false
 max_concurrent_generations = 1
 library = ExtResource( 17 )
 level_generator = SubResource( 1 )
-voxel_scale = 3.0
 chunk_spawn_range = 1
 script = ExtResource( 16 )
 show_loading_screen = false

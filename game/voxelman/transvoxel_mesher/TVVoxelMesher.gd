@@ -51,6 +51,8 @@ var lod_data : Array = [
 		1 #CHUNK_INDEX_BACK
 ]
 
+const TEXTURE_SCALE = 4
+
 func get_case_code(buffer : VoxelChunk, x : int, y : int, z : int, size : int = 1) -> int:
 	var case_code : int = 0
 	
@@ -263,7 +265,7 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 					
-						add_uv(surface.transform_uv(VoxelSurface.VOXEL_SIDE_SIDE, uv))
+						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
 					elif (bz + 0.0001 > bx and bz + 0.0001 > by):
 						var uv : Vector2 = Vector2(s.z, t.z)
 						var umargin : Rect2 = uv_margin
@@ -273,7 +275,7 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 						
-						add_uv(surface.transform_uv(VoxelSurface.VOXEL_SIDE_SIDE, uv))
+						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
 					else:
 						var uv : Vector2 = Vector2(s.y, t.y)
 						var umargin : Rect2 = uv_margin
@@ -283,7 +285,7 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 						
-						add_uv(surface.transform_uv(VoxelSurface.VOXEL_SIDE_TOP, uv))
+						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_TOP, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
 
 				for i in range(len(temp_verts)):
 

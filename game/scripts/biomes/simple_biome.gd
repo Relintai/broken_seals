@@ -32,19 +32,19 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	noise.seed = 10 * current_seed
 	noise.octaves = 4
-	noise.period = 180.0
+	noise.period = 280.0
 	noise.persistence = 0.8
 	
 	var terr_noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	terr_noise.seed = 10 * 321 + 112 * current_seed
 	terr_noise.octaves = 4
-	terr_noise.period = 20.0
+	terr_noise.period = 90.0
 	terr_noise.persistence = 0.9
 	
 	var det_noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	det_noise.seed = 10 * 3231 + 112 * current_seed
 	det_noise.octaves = 6
-	det_noise.period = 10.0
+	det_noise.period = 80.0
 	det_noise.persistence = 0.3
 	
 	for x in range(0, chunk.size_x + 1):

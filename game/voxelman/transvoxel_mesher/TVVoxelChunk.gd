@@ -229,7 +229,7 @@ func generate_random_ao() -> void:
 	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	noise.seed = 123
 	noise.octaves = 4
-	noise.period = 6
+	noise.period = 30
 	noise.persistence = 0.3
 
 	for x in range(0, size_x + 1):
