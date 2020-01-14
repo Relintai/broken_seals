@@ -550,12 +550,13 @@ margin_bottom = 127.5
 visible = false
 
 [node name="Char" type="Spatial" parent="."]
-transform = Transform( 0.359313, 0, 0.933217, 0, 1, 0, -0.933217, 0, 0.359313, -2.44425, 6.02678, 0 )
+transform = Transform( 0.359313, 0, 0.933217, 0, 1, 0, -0.933217, 0, 0.359313, -2.44425, 2.36948, 0 )
 
 [node name="CharacterDisplay" type="Spatial" parent="Char"]
+transform = Transform( 1, 0, 0, 0, 0.990268, -0.139173, 0, 0.139173, 0.990268, 0, 0, 0 )
 
 [node name="Camera" type="Camera" parent="Char"]
-transform = Transform( 0.906006, -0.157589, 0.392835, 0.0104413, 0.936144, 0.351461, -0.423137, -0.314324, 0.849797, 0.300506, 1.57764, 2.14719 )
+transform = Transform( 0.907555, -0.0761571, 0.41297, 0.0262364, 0.99178, 0.125239, -0.419113, -0.102827, 0.902093, 0.324024, 1.1984, 2.19226 )
 current = true
 
 [node name="World" type="VoxelWorld" parent="." groups=[
@@ -565,7 +566,7 @@ use_threads = false
 max_concurrent_generations = 1
 library = ExtResource( 17 )
 level_generator = SubResource( 1 )
-voxel_scale = 6.0
+voxel_scale = 3.0
 chunk_spawn_range = 1
 script = ExtResource( 16 )
 show_loading_screen = false

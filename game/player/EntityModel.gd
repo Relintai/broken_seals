@@ -5,7 +5,7 @@ func _enter_tree():
 	
 	while spat != null:
 		if spat is Spatial:
-			transform *= (spat as Spatial).transform 
+			transform = (spat as Spatial).transform * transform
 		
 		spat = spat.get_parent()
 		
