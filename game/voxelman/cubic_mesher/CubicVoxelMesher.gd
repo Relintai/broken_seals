@@ -26,7 +26,7 @@ class_name GDCubicVoxelMesher
 
 var count : int = 0
 
-func _add_chunk(chunk : VoxelChunk) -> void:
+func _add_chunk(chunk : Node) -> void:
 	chunk.generate_ao();
 	
 	var x_size : int = chunk.get_size_x() - 1
