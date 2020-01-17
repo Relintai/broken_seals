@@ -51,7 +51,7 @@ var lod_data : Array = [
 		1 #CHUNK_INDEX_BACK
 ]
 
-const TEXTURE_SCALE = 2
+const TEXTURE_SCALE = 3
 
 func get_case_code(buffer : VoxelChunk, x : int, y : int, z : int, size : int = 1) -> int:
 	var case_code : int = 0
