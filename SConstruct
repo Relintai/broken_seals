@@ -220,6 +220,17 @@ if len(sys.argv) > 1:
         for i in range(2, len(sys.argv)):
             build_string += ' ' + sys.argv[i] + ' '
 
+        target = " "
+
+        if 'E' in arg:
+            target += 'bin/libess.x11.opt.tools.64.so'
+        elif 'T' in arg:
+            target += 'bin/libtexture_packer.x11.opt.tools.64.so'
+        elif 'V' in arg:
+            target += 'bin/libvoxelman.x11.opt.tools.64.so'
+        elif 'W' in arg:
+            target += 'bin/libworld_generator.x11.opt.tools.64.so'
+
         print('Running command: ' + build_string)
 
         cwd = os.getcwd()
@@ -236,7 +247,7 @@ if len(sys.argv) > 1:
         if 'l' in arg:
             build_string += 'platform=x11'
 
-            subprocess.call(cache_exports_str + build_string, shell=True)
+            subprocess.call(cache_exports_str + build_string + target, shell=True)
         elif 'w' in arg:
             build_string += 'platform=windows'
 
