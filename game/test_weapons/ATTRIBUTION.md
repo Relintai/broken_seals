@@ -1,0 +1,29 @@
+These are from here: https://opengameart.org/content/cethiels-weapons-3d
+
+This is a CC0 collection of 3D hand-painted style RPG swords and shields.
+
+It is based on an awesome CC0 2D weapon collection by Cethiel. Check out his
+patreon and Twitter and consider supporting him for making this possible!
+
+https://twitter.com/Cethyel
+
+https://www.patreon.com/cethiel
+
+https://opengameart.org/content/weapons-collection
+
+I (Drummyfish) have created the 3D models based on selected 2D weapons from
+Cethiel's collection and used them as textures as well. I release the models as
+CC0 too.
+
+There are 10 swords and 4 shields, each one in 3 color variants! The models are
+low-poly, but the Blender file includes subdivided models if you need a
+high-poly version.
+
+If you want HD versions of the textures, become Cethiel's patreon and you will
+get access to his works in HD, which can be used instead of the provided SD
+textures -- this has been tested, as Cethiel kindly provided me with the HD
+versions.
+
+Copyright/Attribution Notice: 
+Not needed. If you want, credit Cethiel & Drummyfish.
+
