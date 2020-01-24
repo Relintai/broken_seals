@@ -42,6 +42,7 @@ module_repositories = [
     [ ['https://github.com/Relintai/texture_packer.git', 'git@github.com:Relintai/texture_packer.git'], 'texture_packer', '' ],
     [ ['https://github.com/Relintai/godot_fastnoise.git', 'git@github.com:Relintai/godot_fastnoise.git'], 'fastnoise', '' ],
     [ ['https://github.com/Relintai/mesh_data_resource.git', 'git@github.com:Relintai/mesh_data_resource.git'], 'mesh_data_resource', '' ],
+    [ ['https://github.com/Relintai/procedural_animations.git', 'git@github.com:Relintai/procedural_animations.git'], 'procedural_animations', '' ],
 ]
 
 addon_repositories = [
@@ -230,6 +231,8 @@ if len(sys.argv) > 1:
             target += 'bin/libvoxelman.x11.opt.tools.64.so'
         elif 'W' in arg:
             target += 'bin/libworld_generator.x11.opt.tools.64.so'
+        elif 'P' in arg:
+            target += 'bin/libprocedural_animations.x11.opt.tools.64.so'
 
         print('Running command: ' + build_string)
 

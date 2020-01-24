@@ -31,4 +31,4 @@ class_name MarchingCubesVoxelChunk
 #	world = get_node("..")
 
 func _create_mesher():
-	mesher = MarchingCubesVoxelMesher.new()
+	add_mesher(MarchingCubesVoxelMesher.new())
