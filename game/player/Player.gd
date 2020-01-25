@@ -190,7 +190,7 @@ func process_movement(delta : float) -> void:
 	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
 	vel.x = hvel.x
 	vel.z = hvel.z
-	vel = get_body().move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = get_body().move_and_slide(vel, Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 	if multiplayer.has_network_peer():
 		if not multiplayer.is_network_server():
