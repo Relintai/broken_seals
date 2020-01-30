@@ -119,7 +119,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
 func spawn() -> void:
 	for x in range(-chunk_spawn_range, chunk_spawn_range):
 		for z in range(-chunk_spawn_range, chunk_spawn_range):
-			for y in range(-1, 1):
+			for y in range(-1, 2):
 				create_chunk(x, y, z)
 
 	set_process(true)
