@@ -2,7 +2,7 @@ For stone_1.ptex, and stone_1_albedo.png
 
 Created for Broken Seals
 
-# Copyright (c) 2019 Péter Magyar
+# Copyright (c) 2019-2020 Péter Magyar
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
