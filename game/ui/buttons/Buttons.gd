@@ -57,7 +57,7 @@ func _lock_button_click():
 	if cls == null:
 		return
 		
-	var profile = Profiles.get_class_profile(cls.id)
+	var profile = ProfileManager.get_class_profile(cls.id)
 	
 	profile.actionbar_locked = not profile.actionbar_locked
 	

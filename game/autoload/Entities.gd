@@ -38,7 +38,7 @@ var _players : Array
 var _mobs : Array
 
 func _ready():
-	EntityDataManager.load_all()
+	#EntityDataManager.load_all()
 	
 	_spawn_parent = get_node(spawn_parent_path)
 
@@ -166,7 +166,7 @@ func spawn_display_player(name : String) -> Entity:
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	var cls : EntityData = EntityDataManager.get_player_character_data(class_id)
-	var class_profile : ClassProfile = Profiles.get_class_profile(class_id)
+	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
@@ -194,7 +194,7 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 	
 	var cls : EntityData = Entities.get_entity_data(class_id)
 	
-	var class_profile : ClassProfile = Profiles.get_class_profile(class_id)
+	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
@@ -225,7 +225,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	
 	var cls : EntityData = Entities.get_player_character_data(class_id)
 	
-	var class_profile : ClassProfile = Profiles.get_class_profile(class_id)
+	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	createinfo.entity_data = cls
 	createinfo.player_name = name
