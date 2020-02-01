@@ -289,10 +289,10 @@ func _setup():
 	sentity_name = sentity_data.text_name
 	
 func _son_xp_gained(value : int) -> void:
-	if not Entities.get_xp_data().can_level_up(gets_level()):
+	if not EntityDataManager.get_xp_data().can_level_up(gets_level()):
 		return
 	
-	var xpr : int = Entities.get_xp_data().get_xp(gets_level());
+	var xpr : int = EntityDataManager.get_xp_data().get_xp(gets_level());
 	
 	if xpr <= sxp:
 		slevelup(1)

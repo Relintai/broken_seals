@@ -36,8 +36,8 @@ func _ready():
 	
 	var fb : Button = null
 	
-	for i in range(Entities.get_player_character_data_count()):
-		var d : EntityData = Entities.get_player_character_data_index(i)
+	for i in range(EntityDataManager.get_player_character_data_count()):
+		var d : EntityData = EntityDataManager.get_player_character_data_index(i)
 		
 		var ce : Button = character_entry.instance() as Button
 		

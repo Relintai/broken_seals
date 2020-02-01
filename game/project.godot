@@ -257,6 +257,21 @@ window/size/viewport_scale=100
 
 enabled=PoolStringArray( "ess_data", "prop_tool" )
 
+[ess]
+
+data/xp_data_path="res://data/xp/xp_data.tres"
+data/entity_resources_folder="res://data/entity_resources"
+data/entity_skills_folder="res://data/entity_skills"
+data/entity_datas_folder="res://data/entities"
+data/spells_folder="res://data/spells"
+data/auras_folder="res://data/auras"
+data/world_spell_datas_folder="res://data/world_spells"
+data/craft_data_folder="res://data/crafting"
+data/item_template_folder="res://data/item_templates"
+data/mob_data_folder="res://data/mob_data"
+data/player_character_data_folder="res://data/player_character_data"
+data/automatic_load=true
+
 [importer_defaults]
 
 texture_array={

@@ -6,7 +6,7 @@
 [ext_resource path="res://player/Mob.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/DisplayPlayer.tscn" type="PackedScene" id=5]
 
-[node name="EntityDataManager" type="EntityDataManager"]
+[node name="EntityDataManager" type="Node"]
 xp_data_path = "res://data/xp/xp_data.tres"
 entity_resources_folder = "res://data/entity_resources"
 entity_skills_folder = "res://data/entity_skills"

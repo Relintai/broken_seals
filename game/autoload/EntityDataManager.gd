@@ -38,6 +38,8 @@ var _players : Array
 var _mobs : Array
 
 func _ready():
+	EntityDataManager.load_all()
+	
 	_spawn_parent = get_node(spawn_parent_path)
 
 #    get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -121,7 +123,7 @@ puppet func spawn_owned_player(data : String, position : Vector3) -> void:
 func load_player(file_name : String, position : Vector3, network_owner : int) -> Entity:
 #	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 #
-#	var cls : EntityData = Entities.get_player_character_data(class_id)
+#	var cls : EntityData = EntityDataManager.get_player_character_data(class_id)
 #
 #	var class_profile : ClassProfile = Profiles.get_class_profile(class_id)
 #
@@ -163,7 +165,7 @@ func spawn_display_player(name : String) -> Entity:
 	
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-	var cls : EntityData = Entities.get_player_character_data(class_id)
+	var cls : EntityData = EntityDataManager.get_player_character_data(class_id)
 	var class_profile : ClassProfile = Profiles.get_class_profile(class_id)
 	
 	createinfo.entity_data = cls
@@ -251,7 +253,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 func spawn_mob(class_id : int, level : int, position : Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	
-	var cls : EntityData = Entities.get_entity_data(class_id)
+	var cls : EntityData = EntityDataManager.get_entity_data(class_id)
 	
 	if cls == null:
 		print("clsnull")
