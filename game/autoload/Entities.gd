@@ -38,7 +38,8 @@ var _players : Array
 var _mobs : Array
 
 func _ready():
-	#EntityDataManager.load_all()
+	ProfileManager.load()
+	EntityDataManager.load_all()
 	
 	_spawn_parent = get_node(spawn_parent_path)
 

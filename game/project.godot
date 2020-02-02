@@ -258,7 +258,6 @@ enabled=PoolStringArray( "ess_data", "prop_tool" )
 
 [ess]
 
-data/automatic_load=true
 data/xp_data_path="res://data/xp/xp_data.tres"
 data/entity_resources_folder="res://data/entity_resources"
 data/entity_skills_folder="res://data/entity_skills"
@@ -270,7 +269,6 @@ data/craft_data_folder="res://data/crafting"
 data/item_template_folder="res://data/item_templates"
 data/mob_data_folder="res://data/mob_data"
 data/player_character_data_folder="res://data/player_character_data"
-profiles/automatic_load=true
 
 [importer_defaults]
 
