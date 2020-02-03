@@ -88,8 +88,12 @@ func _ready() -> void:
 	
 	if animation_tree != null:
 		anim_node_state_machine = animation_tree["parameters/playback"]
+		
+	set_physics_process(false)
 
+func _enter_tree():
 	world = get_node(world_path) as VoxelWorld
+	set_physics_process(true)
 
 func _physics_process(delta : float) -> void:
 	if not _on:
@@ -380,23 +384,9 @@ remote func cset_position(position : Vector3, rotation : Vector3) -> void:
 	get_body().translation = position
 	get_body().rotation = rotation
 		
-func _moved() -> void:
-	if sis_casting():
-		sfail_cast()
-		
-func _setup():
-	setup_actionbars()
-		
-func _con_target_changed(entity: Entity, old_target: Entity) -> void:
-	if is_instance_valid(old_target):
-		old_target.onc_untargeted()
-		
-	if is_instance_valid(ctarget):
-		ctarget.onc_targeted()
-		
-		if canc_interact():
-			crequest_interact()
-		
+#func _setup():
+#	setup_actionbars()
+
 func _con_cast_started(info):
 	if anim_node_state_machine != null and not casting_anim:
 		anim_node_state_machine.travel("casting-loop")
@@ -426,85 +416,6 @@ func _con_spell_cast_success(info):
 		
 		if animation_run:
 			anim_node_state_machine.travel("run-loop")
-
-func _son_xp_gained(value : int) -> void:
-	if not EntityDataManager.get_xp_data().can_level_up(gets_level()):
-		return
-	
-	var xpr : int = EntityDataManager.get_xp_data().get_xp(gets_level());
-	
-	if xpr <= sxp:
-		slevelup(1)
-		sxp = 0
-
-
-func _son_level_up(level: int) -> void:
-	if sentity_data == null:
-		return
-		
-	var ecd : EntityClassData = sentity_data.entity_class_data
-	
-	if ecd == null:
-		return
-	
-	sfree_spell_points += ecd.spell_points_per_level * level
-	sfree_talent_points += level
-	
-	for i in range(Stat.MAIN_STAT_ID_COUNT):
-		var st : int = sentity_data.entity_class_data.get_stat_data().get_level_stat_data().get_stat_diff(i, slevel - level, slevel)
-
-		var statid : int = i + Stat.MAIN_STAT_ID_START
-		
-		var stat : Stat = get_stat_int(statid)
-		
-		var sm : StatModifier = stat.get_modifier(0)
-		sm.base_mod += st
-		
-
-#func _con_xp_gained(value):
-#	print(value)
-
-func _scraft(id):
-	if not hass_craft_recipe_id(id):
-		return
-		
-	var recipe : CraftRecipe = gets_craft_recipe_id(id)
-	
-	if recipe == null:
-		return
-	
-	for i in range(recipe.required_tools_count):
-		var mat : CraftRecipeHelper = recipe.get_required_tool(i)
-		
-		if mat == null:
-			continue
-			
-		if not sbag.has_item(mat.item, mat.count):
-			return
-			
-	
-	for i in range(recipe.required_materials_count):
-		var mat : CraftRecipeHelper = recipe.get_required_material(i)
-		
-		if mat == null:
-			continue
-			
-		if not sbag.has_item(mat.item, mat.count):
-			return
-			
-	#ok, player has everything
-	
-	for i in range(recipe.required_materials_count):
-		var mat : CraftRecipeHelper = recipe.get_required_material(i)
-		
-		if mat == null:
-			continue
-			
-		sbag.remove_items(mat.item, mat.count)
-		
-	var item : ItemInstance = recipe.item.item.create_item_instance()
-		
-	sbag.add_item(item)
 	
 func _from_dict(dict):
 	._from_dict(dict)

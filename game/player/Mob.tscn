@@ -36,3 +36,4 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0
 [node name="Model" type="Spatial" parent="Body/Rotation_Helper"]
 
 [node name="character" parent="Body/Rotation_Helper/Model" instance=ExtResource( 1 )]
+refresh_in_editor = false

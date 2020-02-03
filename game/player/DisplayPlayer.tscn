@@ -29,6 +29,7 @@ __meta__ = {
 }
 
 [node name="character" parent="DisplayPlayer/Rotation_Helper/Model" instance=ExtResource( 2 )]
+refresh_in_editor = false
 use_threads = false
 mesh_instance_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/MeshInstance")
 skeleton_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton")

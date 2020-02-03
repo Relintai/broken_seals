@@ -78,11 +78,11 @@ func refresh():
 					Logger.error("Save corrupted! Not Dict! " + file_name)
 					continue
 				
-				var display : Entity = Entities.spawn_display_player(file_name)
-				player_display_container_node.add_child(display)
-				display.owner = player_display_container_node
+				var display : Entity = Entities.spawn_display_player(file_name, player_display_container_node.get_path())
+				#player_display_container_node.add_child(display)
+				#display.owner = player_display_container_node
 				
-				display.from_dict(p as Dictionary)
+				#display.from_dict(p as Dictionary)
 				
 				var centry : Button = character_entry.instance() as Button
 				container.add_child(centry)
@@ -90,7 +90,6 @@ func refresh():
 				centry.group = character_button_group
 				centry.connect("pressed", self, "character_selection_changed")
 				
-				#display.sentity_data.entity_class_data.entity_class_name
 				centry.setup(file_name, display.sentity_name, "", display.slevel, display)
 				
 				if first_entry == null:

@@ -34,8 +34,6 @@ const GRAVITY : float = -24.8
 const JUMP_SPEED : float = 3.8
 const MAX_SLOPE_ANGLE : float = 40.0
 
-#var process_gravity : bool = true
-
 var _on : bool = true
 
 var y_rot : float = 0.0
@@ -66,7 +64,6 @@ func _ready() -> void:
 	set_process(true)
 	set_physics_process(true)
 	
-	
 func _process(delta : float) -> void:
 	if dead:
 		death_timer += delta
@@ -93,19 +90,6 @@ func _process(delta : float) -> void:
 	else:
 		if not get_body().visible:
 			get_body().show()
-		
-	#TODO check later if this gives a performance boost
-#	var cam_facing : Vector3 = -camera.global_transform.basis.z
-#	var d : float = cam_facing.dot(dstv)
-#
-#	if d > 0:
-#		if visible:
-#			hide()
-#		return
-#	else:
-#		if not visible:
-#			show()
-	
 
 func _physics_process(delta : float) -> void:
 	if not _on:
@@ -285,8 +269,8 @@ func set_max_visible_distance(var value : float) -> void:
 	
 	max_visible_distance = value
 
-func _setup():
-	sentity_name = sentity_data.text_name
+#func _setup():
+#	sentity_name = sentity_data.text_name
 	
 func _son_xp_gained(value : int) -> void:
 	if not EntityDataManager.get_xp_data().can_level_up(gets_level()):
