@@ -7,12 +7,6 @@
 			"to_port": 0
 		},
 		{
-			"from": "colorize",
-			"from_port": 0,
-			"to": "blend",
-			"to_port": 0
-		},
-		{
 			"from": "perlin",
 			"from_port": 0,
 			"to": "blend",
@@ -34,6 +28,24 @@
 			"from": "colorize_2",
 			"from_port": 0,
 			"to": "export",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 0
+		},
+		{
+			"from": "perlin_2",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend_2",
+			"from_port": 0,
+			"to": "blend",
 			"to_port": 0
 		}
 	],
@@ -64,7 +76,7 @@
 				"metallic": 1,
 				"normal_scale": 1,
 				"roughness": 1,
-				"size": 6,
+				"size": 8,
 				"subsurf_scatter_strength": 0
 			},
 			"type": "material"
@@ -72,14 +84,14 @@
 		{
 			"name": "voronoi",
 			"node_position": {
-				"x": -704.5,
-				"y": -297.5
+				"x": -686.5,
+				"y": -300.5
 			},
 			"parameters": {
 				"intensity": 1,
 				"randomness": 0.95,
-				"scale_x": 4,
-				"scale_y": 4,
+				"scale_x": 12,
+				"scale_y": 12,
 				"stretch_x": 1,
 				"stretch_y": 1
 			},
@@ -88,8 +100,8 @@
 		{
 			"name": "colorize",
 			"node_position": {
-				"x": -320.5,
-				"y": -430.5
+				"x": -451.5,
+				"y": -513.5
 			},
 			"parameters": {
 				"gradient": {
@@ -106,7 +118,7 @@
 							"a": 1,
 							"b": 1,
 							"g": 1,
-							"pos": 0.072727,
+							"pos": 0.045454,
 							"r": 1
 						},
 						{
@@ -129,7 +141,7 @@
 				"y": 62.5
 			},
 			"parameters": {
-				"size": 6,
+				"size": 8,
 				"suffix": "albedo"
 			},
 			"type": "export"
@@ -142,9 +154,9 @@
 			},
 			"parameters": {
 				"iterations": 9,
-				"persistence": 0.9,
-				"scale_x": 11,
-				"scale_y": 14
+				"persistence": 0.95,
+				"scale_x": 32,
+				"scale_y": 32
 			},
 			"type": "perlin"
 		},
@@ -155,7 +167,7 @@
 				"y": -126.5
 			},
 			"parameters": {
-				"amount": 0.6287,
+				"amount": 0.9828,
 				"blend_type": 2
 			},
 			"type": "blend"
@@ -172,24 +184,24 @@
 					"points": [
 						{
 							"a": 1,
-							"b": 0.057292,
-							"g": 0.057292,
+							"b": 0.083333,
+							"g": 0.083333,
 							"pos": 0,
-							"r": 0.057292
+							"r": 0.083333
 						},
 						{
 							"a": 1,
-							"b": 0.078125,
-							"g": 0.078125,
+							"b": 0.083333,
+							"g": 0.083333,
 							"pos": 0.245454,
-							"r": 0.078125
+							"r": 0.083333
 						},
 						{
 							"a": 1,
-							"b": 0.223958,
-							"g": 0.209699,
+							"b": 0.291667,
+							"g": 0.267362,
 							"pos": 0.514936,
-							"r": 0.16692
+							"r": 0.194445
 						},
 						{
 							"a": 1,
@@ -217,6 +229,32 @@
 				}
 			},
 			"type": "colorize"
+		},
+		{
+			"name": "blend_2",
+			"node_position": {
+				"x": -262.928589,
+				"y": -389.75
+			},
+			"parameters": {
+				"amount": 0.5,
+				"blend_type": 6
+			},
+			"type": "blend"
+		},
+		{
+			"name": "perlin_2",
+			"node_position": {
+				"x": -35.928589,
+				"y": -552.75
+			},
+			"parameters": {
+				"iterations": 3,
+				"persistence": 0.5,
+				"scale_x": 10,
+				"scale_y": 9
+			},
+			"type": "perlin"
 		}
 	],
 	"parameters": {
