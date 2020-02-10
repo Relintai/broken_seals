@@ -12,4 +12,3 @@ player_scene = ExtResource( 3 )
 networked_player_scene = ExtResource( 2 )
 mob_scene = ExtResource( 4 )
 player_display_scene = ExtResource( 5 )
-default_level_override = 50
