@@ -57,7 +57,7 @@ adjustment_enabled = true
 "save",
 ]]
 use_threads = false
-max_concurrent_generations = 1
+max_concurrent_generations = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
 chunk_spawn_range = 3

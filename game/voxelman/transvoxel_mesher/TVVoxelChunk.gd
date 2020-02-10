@@ -207,17 +207,12 @@ func _build_phase(phase):
 	if phase == VoxelChunk.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
-		
-#		var vl : VoxelLight = VoxelLight.new()
-		
 		bake_lights()
-
 		set_physics_process_internal(true)
 	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 		set_physics_process_internal(true)
 	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
 		._build_phase(phase)
-		
 		notification(NOTIFICATION_TRANSFORM_CHANGED)
 	else:
 		._build_phase(phase)
@@ -253,8 +248,9 @@ func _physics_process(delta):
 		set_physics_process_internal(false)
 
 	elif current_build_phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
-		build_phase_prop_mesh()
+		#build_phase_prop_mesh()
 		set_physics_process_internal(false)
+		next_phase()
 
 func visibility_changed() -> void:
 	if get_mesh_instance_rid() != RID():

@@ -10,8 +10,15 @@
             "group": "build",
             "args": [
                 "platform=x11",
+                "custom_modules_shared=yes",
                 "target=release_debug",
-                "-j2"
+                //"bin/libess.x11.opt.tools.64.so",
+                //"bin/libtexture_packer.x11.opt.tools.64.so",
+                "bin/libvoxelman.x11.opt.tools.64.so",
+                //"bin/libworld_generator.x11.opt.tools.64.so",
+                //"bin/libprocedural_animations.x11.opt.tools.64.so",
+                //"bin/libfqms.x11.opt.tools.64.so",
+                "-j3"
             ],
             "problemMatcher": "$msCompile"
         }

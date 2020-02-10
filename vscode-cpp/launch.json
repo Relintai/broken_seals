@@ -9,11 +9,18 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/godot.x11.opt.tools.64",
-            //"args": ["-e"],
-            "args": ["--path", "/home/relintai/Projects/broken_seals_3d/game/"],
+            "args": [
+                "--path",
+                "${workspaceFolder}/../game/"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/bin/"
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
@@ -32,10 +39,18 @@
             "request": "launch",
             "program": "${workspaceFolder}/bin/godot.x11.opt.tools.64",
             //"args": ["-e"],
-            "args": ["--path", "/home/relintai/Projects/broken_seals_3d/game/"],
+            "args": [
+                "--path",
+                "${workspaceFolder}/../game/",
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${workspaceFolder}/bin/"
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "setupCommands": [
