@@ -113,12 +113,15 @@ def setup_repository(data, clone_path, branch = 'master'):
     os.chdir(full_path)
 
     subprocess.call('git reset --hard', shell=True)
+    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
     subprocess.call('git pull origin master', shell=True)
 
     if data[1] in target_commits:
         target = target_commits[data[1]][branch]
 
-    subprocess.call('git checkout -B master ' + target, shell=True)
+    subprocess.call('git checkout -B ' + branch + ' ' + target, shell=True)
+    subprocess.call('git clean -f', shell=True)
     subprocess.call('git reset --hard', shell=True)
 
     os.chdir(cwd)
@@ -338,11 +341,10 @@ if env['t']:
 if not os.path.isdir('./modules'):
     os.mkdir('./modules')
 
-
-if action in 'm':
+if 'm' in action:
     godot_branch = "master"
 
-if action in 'setup' or action[0] == 's':
+if 'setup' in action or action[0] == 's':
     if target == 'all':
         setup_all()
     elif target == 'engine':
@@ -356,7 +358,7 @@ if action in 'setup' or action[0] == 's':
         setup_addons()
     elif target == 'third_party_addons':
         setup_addons_third_party_addons()
-elif action in 'update' or action[0] == 'u':
+elif 'update' in action or action[0] == 'u':
     if target == 'all':
         update_all()
     elif target == 'engine':
