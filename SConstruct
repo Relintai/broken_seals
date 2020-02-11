@@ -56,6 +56,8 @@ third_party_addon_repositories = [
 
 target_commits = {}
 
+godot_branch = '3.2'
+
 def load_target_commits_array():
     global target_commits
 
@@ -69,7 +71,7 @@ def save_target_commits_array():
     with open('./HEADS', 'w') as outfile:
         json.dump(target_commits, outfile)
 
-def update_repository(data, clone_path):
+def update_repository(data, clone_path, branch = 'master'):
     cwd = os.getcwd()
 
     full_path = cwd + clone_path + data[1] + '/'
@@ -82,23 +84,29 @@ def update_repository(data, clone_path):
     os.chdir(full_path)
 
     subprocess.call('git reset --hard', shell=True)
-    subprocess.call('git pull origin master', shell=True)
-    subprocess.call('git checkout master', shell=True)
+    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
     subprocess.call('git reset --hard', shell=True)
+    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git pull origin ' + branch, shell=True)
 
     process = subprocess.Popen('git rev-parse HEAD', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     output = process.communicate()[0].decode().strip()
-    target_commits[data[1]] = output
+
+    if data[1] not in target_commits:
+        target_commits[data[1]] = {}
+
+    target_commits[data[1]][branch] = output
 
     os.chdir(cwd)
 
-def setup_repository(data, clone_path):
+def setup_repository(data, clone_path, branch = 'master'):
     cwd = os.getcwd()
 
     full_path = cwd + clone_path + data[1] + '/'
     
     if not os.path.isdir(full_path):
-        os.chdir(cwd + clone_path)
+        osnn.chdir(cwd + clone_path)
 
         subprocess.call(clone_command.format(data[0][repository_index], data[1]), shell=True)
 
@@ -107,12 +115,10 @@ def setup_repository(data, clone_path):
     subprocess.call('git reset --hard', shell=True)
     subprocess.call('git pull origin master', shell=True)
 
-    target = 'master'
-
     if data[1] in target_commits:
-        target = target_commits[data[1]]
+        target = target_commits[data[1]][branch]
 
-    subprocess.call('git checkout ' + target, shell=True)
+    subprocess.call('git checkout -B master ' + target, shell=True)
     subprocess.call('git reset --hard', shell=True)
 
     os.chdir(cwd)
@@ -137,7 +143,7 @@ def copytree(src, dst):
             shutil.copy2(sp, dp)
 
 def update_engine():
-    update_repository(engine_repository, '/')
+    update_repository(engine_repository, '/', godot_branch)
 
 def update_modules():
     for rep in module_repositories:
@@ -164,7 +170,7 @@ def update_all():
 
 
 def setup_engine():
-    setup_repository(engine_repository, '/')
+    setup_repository(engine_repository, '/', godot_branch)
 
 def setup_modules():
     for rep in module_repositories:
@@ -186,6 +192,7 @@ def setup_all():
     setup_modules()
     setup_addons()
     setup_addons_third_party_addons()
+
 
 env = Environment()
 
@@ -301,11 +308,6 @@ if len(sys.argv) > 1:
 
         exit()
 
-    #if arg[0] == 'r':
-    #    pass
-
-        
-
 opts = Variables(args=ARGUMENTS)
 
 opts.Add('a', 'What to do', '')
@@ -337,7 +339,10 @@ if not os.path.isdir('./modules'):
     os.mkdir('./modules')
 
 
-if action == 'setup' or action == 's':
+if action in 'm':
+    godot_branch = "master"
+
+if action in 'setup' or action[0] == 's':
     if target == 'all':
         setup_all()
     elif target == 'engine':
@@ -351,7 +356,7 @@ if action == 'setup' or action == 's':
         setup_addons()
     elif target == 'third_party_addons':
         setup_addons_third_party_addons()
-elif action == 'update' or action == 'u':
+elif action in 'update' or action[0] == 'u':
     if target == 'all':
         update_all()
     elif target == 'engine':
