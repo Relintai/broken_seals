@@ -168,8 +168,6 @@ func build_phase_lights() -> void:
 			
 		if prop.prop != null:
 			prop.prop.add_prop_lights_into(self, t, true)
-	
-	next_phase()
 
 func get_prop_transform(prop : VoxelChunkPropData, snap_to_mesh: bool, snap_axis: Vector3) -> Transform:
 	var pos : Vector3 = Vector3(prop.x * voxel_scale, prop.y * voxel_scale, prop.z * voxel_scale)
@@ -246,9 +244,10 @@ func _physics_process(delta):
 	if current_build_phase == VoxelChunk.BUILD_PHASE_LIGHTS:
 		build_phase_lights()
 		set_physics_process_internal(false)
+		next_phase()
 
 	elif current_build_phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
-		#build_phase_prop_mesh()
+		build_phase_prop_mesh()
 		set_physics_process_internal(false)
 		next_phase()
 

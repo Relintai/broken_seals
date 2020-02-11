@@ -328,7 +328,6 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						
 					
 					add_color(light)
-
 					vert_pos *= float(voxel_scale)
 					
 					add_normal(normal)
