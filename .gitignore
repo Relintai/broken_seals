@@ -11,6 +11,7 @@ game/.import/**
 
 .vs/*
 .kdev4/*
+.vscode/*
 
 TestRWTextures
 
@@ -22,3 +23,5 @@ game/android/build/*
 engine/*
 
 *.blend1
+
+.dir-locals.el

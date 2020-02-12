@@ -310,6 +310,22 @@ if len(sys.argv) > 1:
             exit()
 
         exit()
+    elif arg[0] == 'p':
+        cwd = os.getcwd()
+        full_path = cwd + '/engine/'
+
+        if not os.path.isdir(full_path):
+            print("engine directory doesnt exists.")
+            exit()
+
+        os.chdir(full_path)
+
+        #apply the compilation database patch to just the working directory, without creating a commit
+        subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
+        #unstage all files
+        subprocess.call('git reset', shell=True)
+
+        exit()
 
 opts = Variables(args=ARGUMENTS)
 
