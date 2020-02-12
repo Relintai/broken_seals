@@ -237,7 +237,7 @@ func generate_random_ao() -> void:
 					
 				if val < 0:
 					val = -val
-			
+
 				set_voxel(int(val * 255.0), x, y, z, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO)
 
 func _physics_process(delta):
@@ -245,7 +245,7 @@ func _physics_process(delta):
 		build_phase_lights()
 		set_physics_process_internal(false)
 		next_phase()
-
+		
 	elif current_build_phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 		build_phase_prop_mesh()
 		set_physics_process_internal(false)

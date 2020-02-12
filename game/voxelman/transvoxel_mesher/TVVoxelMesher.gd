@@ -300,22 +300,22 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 					var vpy : int = int(vert_pos.y)
 					var vpz : int = int(vert_pos.z)
 					
-					var light : Color = Color(buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_R) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_G) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_B) / 255.0)
-					var ao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_AO) / 255.0) * ao_strength
-					var rao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO) / 255.0)
-					ao += rao
-					
-					light.r += base_light_value
-					light.g += base_light_value
-					light.b += base_light_value
-
-					light.r -= ao
-					light.g -= ao
-					light.b -= ao
-						
-					light.r = clamp(light.r, 0, 1.0)
-					light.g = clamp(light.g, 0, 1.0)
-					light.b = clamp(light.b, 0, 1.0)
+#					var light : Color = Color(buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_R) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_G) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_B) / 255.0)
+#					var ao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_AO) / 255.0) * ao_strength
+#					var rao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO) / 255.0)
+#					ao += rao
+#
+#					light.r += base_light_value
+#					light.g += base_light_value
+#					light.b += base_light_value
+#
+#					light.r -= ao
+#					light.g -= ao
+#					light.b -= ao
+#
+#					light.r = clamp(light.r, 0, 1.0)
+#					light.g = clamp(light.g, 0, 1.0)
+#					light.b = clamp(light.b, 0, 1.0)
 					
 #					if regular_cell_class == 11:
 #						print("asd")
@@ -327,7 +327,7 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 #						light.b = 1
 						
 					
-					add_color(light)
+					#add_color(light)
 					vert_pos *= float(voxel_scale)
 					
 					add_normal(normal)
