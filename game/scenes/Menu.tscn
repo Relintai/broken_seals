@@ -15,10 +15,11 @@
 [ext_resource path="res://scenes/DisconnectButton.gd" type="Script" id=13]
 [ext_resource path="res://scenes/ConnectServerButton.gd" type="Script" id=14]
 [ext_resource path="res://scenes/HostGameButton.gd" type="Script" id=15]
-[ext_resource path="res://voxelman/transvoxel_mesher/TVVoxelWorld.gd" type="Script" id=16]
+[ext_resource path="res://voxelman/world/TVVoxelWorld.gd" type="Script" id=16]
 [ext_resource path="res://data/voxel_libraries/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=17]
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
+
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )

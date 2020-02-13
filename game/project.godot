@@ -19,11 +19,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://player/CharacterSkeletonAttachPoint.gd"
 }, {
-"base": "VoxelChunk",
-"class": "CubicVoxelChunk",
-"language": "GDScript",
-"path": "res://voxelman/cubic_mesher/CubicVoxelChunk.gd"
-}, {
 "base": "Entity",
 "class": "DisplayPlayerGD",
 "language": "GDScript",
@@ -42,7 +37,7 @@ _global_script_classes=[ {
 "base": "VoxelMesherCubic",
 "class": "GDCubicVoxelMesher",
 "language": "GDScript",
-"path": "res://voxelman/cubic_mesher/CubicVoxelMesher.gd"
+"path": "res://voxelman/world/CubicVoxelMesher.gd"
 }, {
 "base": "ItemTemplate",
 "class": "ItemTemplateGD",
@@ -132,17 +127,17 @@ _global_script_classes=[ {
 "base": "VoxelChunk",
 "class": "TVVoxelChunk",
 "language": "GDScript",
-"path": "res://voxelman/transvoxel_mesher/TVVoxelChunk.gd"
+"path": "res://voxelman/world/TVVoxelChunk.gd"
 }, {
 "base": "VoxelMesherTransvoxel",
 "class": "TVVoxelMesher",
 "language": "GDScript",
-"path": "res://voxelman/transvoxel_mesher/TVVoxelMesher.gd"
+"path": "res://voxelman/world/TVVoxelMesher.gd"
 }, {
 "base": "VoxelMesherTransvoxel",
 "class": "TestVoxelMesher",
 "language": "GDScript",
-"path": "res://voxelman/transvoxel_mesher/TestVoxelMesher.gd"
+"path": "res://voxelman/world/TestVoxelMesher.gd"
 }, {
 "base": "WorldSpell",
 "class": "WorldSpellGD",
@@ -152,7 +147,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "AuraGD": "",
 "CharacterSkeketonAttachPoint": "",
-"CubicVoxelChunk": "",
 "DisplayPlayerGD": "",
 "EntityAIGD": "",
 "EntityDataGD": "",
