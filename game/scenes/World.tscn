@@ -56,7 +56,8 @@ adjustment_enabled = true
 [node name="World" type="VoxelWorld" groups=[
 "save",
 ]]
-max_concurrent_generations = 4
+use_threads = false
+max_concurrent_generations = 1
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
 chunk_spawn_range = 3

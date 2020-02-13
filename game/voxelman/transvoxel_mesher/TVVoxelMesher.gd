@@ -53,6 +53,49 @@ var lod_data : Array = [
 
 const TEXTURE_SCALE = 4
 
+func get_voxel_type_array(buffer : VoxelChunk, x : int, y : int, z : int, size : int = 1) -> Array:
+	var arr : Array = [
+		buffer.get_voxel(x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x, y + size, z, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x, y, z + size, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x, y + size, z + size, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x + size, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x + size, y + size, z, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x + size, y, z + size, VoxelChunk.DEFAULT_CHANNEL_TYPE),
+		buffer.get_voxel(x + size, y + size, z + size, VoxelChunk.DEFAULT_CHANNEL_TYPE)
+	]
+
+	return arr
+
+func get_case_code_from_arr(data : Array) -> int:
+	var case_code : int = 0
+	
+	if (data[0] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_000
+		
+	if (data[1] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_010
+		
+	if (data[2] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_001
+		
+	if (data[3] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_011
+		
+	if (data[4] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_100
+		
+	if (data[5] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_110
+		
+	if (data[6] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_101
+		
+	if (data[7] != 0):
+		case_code = case_code | VOXEL_ENTRY_MASK_111
+		
+	return case_code
+
 func get_case_code(buffer : VoxelChunk, x : int, y : int, z : int, size : int = 1) -> int:
 	var case_code : int = 0
 	
@@ -148,7 +191,8 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 		for z in range(0, z_size, lod_size):
 			for x in range(0, x_size, lod_size):
 				
-				var case_code : int = get_case_code(buffer, x, y, z, lod_size)
+				var type_arr : Array = get_voxel_type_array(buffer, x, y, z, lod_size)
+				var case_code : int = get_case_code_from_arr(type_arr)
 				
 				if case_code == 0 or case_code == 255:
 					continue
@@ -166,9 +210,62 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 
 				var temp_verts : Array = Array()
 				
-				var type_id : int = get_voxel_type(buffer, x, y, z, lod_size)
+				var carr : Dictionary
 				
-				var surface : VoxelSurface = library.get_voxel_surface(type_id)
+				for t in type_arr:
+					if carr.has(t):
+						carr[t] += 1
+					else:
+						carr[t] = 1
+
+				var type_id1 : int = -1
+				var type_id1c : int = -1
+				var type_id2 : int = -1
+				var type_id2c : int = -1
+				
+				for k in carr.keys():
+					if k == 0:
+						continue
+					
+					var c : int = carr[k]
+					
+					if type_id1c == -1:
+						type_id1 = k
+						type_id1c = c
+						continue
+						
+					if c > type_id1c:
+						type_id1 = k
+						type_id1c = c
+						
+				for k in carr.keys():
+					if k == 0:
+						continue
+						
+					var c : int = carr[k]
+					
+					if type_id2c == -1:
+						type_id2 = k
+						type_id2c = c
+						continue
+
+					if c > type_id2c and k != type_id1:
+						type_id2 = k
+						type_id2c = c
+				
+				var surface_ratio : float = 1
+				
+				if type_id1 != type_id2:
+					surface_ratio = float(type_id1c) / float(type_id2c) / 8.0
+					
+				var surface1 : VoxelSurface = library.get_voxel_surface(type_id1)
+				var surface2 : VoxelSurface = library.get_voxel_surface(type_id2)
+				
+				if type_id1 == 0:
+					print(type_id1)
+					
+				if type_id2 == 0:
+					print("asd" + str(type_id2))
 				
 				for i in range(vertex_count):
 					var fv : int = get_regular_vertex_data_first_vertex(case_code, i)
@@ -177,15 +274,14 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 					var offs0 : Vector3 = corner_id_to_vertex(fv) * lod_size
 					var offs1 : Vector3 = corner_id_to_vertex(sv) * lod_size
 					
-					var type0 : int = buffer.get_voxel(int(x + offs0.x), int(y + offs0.y), int(z + offs0.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
-#					var type1 : int = buffer.get_voxel(int(x + offs1.x), int(y + offs1.y), int(z + offs1.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
-					
+					var type : int = buffer.get_voxel(int(x + offs0.x), int(y + offs0.y), int(z + offs0.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
+
 					var fill : int = 0
 					
 					var vert_pos : Vector3
 					var vert_dir : Vector3
 					
-					if type0 == 0:
+					if type == 0:
 						fill = buffer.get_voxel(int(x + offs1.x), int(y + offs1.y), int(z + offs1.z), VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
 						vert_pos = get_regular_vertex_second_position(case_code, i)
@@ -202,11 +298,6 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 					
 					temp_verts.append(vert_pos)
 					
-#					if regular_uv_entries.size() > uvs[i]:
-#						add_uv(Vector2(regular_uv_entries[uvs[i]][0], regular_uv_entries[uvs[i]][1]));
-					
-#					add_uv(Vector2(0, 0))
-
 				var temp_normals : Array = Array()
 				
 				#warning-ignore:unused_variable
@@ -252,10 +343,6 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 					var by : float = abs(normal.y)
 					var bz : float = abs(normal.z)
 					
-#					if case_code == 7 and cvi == 0:
-#						print(str(bx) + " " + str(by) + " " + str(bz))
-#						add_uv(surface.transform_uv(VoxelSurface.VOXEL_SIDE_SIDE, Vector2(s.z, t.z)))
-
 					if (bx + 0.0001 > by and bx + 0.0001 > bz):
 						var uv : Vector2 = Vector2(s.x, t.x)
 						var umargin : Rect2 = uv_margin
@@ -265,7 +352,8 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 					
-						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						add_uv(surface1.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						add_uv2(surface2.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
 					elif (bz + 0.0001 > bx and bz + 0.0001 > by):
 						var uv : Vector2 = Vector2(s.z, t.z)
 						var umargin : Rect2 = uv_margin
@@ -275,7 +363,8 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 						
-						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						add_uv(surface1.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						add_uv2(surface2.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_SIDE, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
 					else:
 						var uv : Vector2 = Vector2(s.y, t.y)
 						var umargin : Rect2 = uv_margin
@@ -285,10 +374,10 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 						uv.x += umargin.position.x
 						uv.y += umargin.position.y
 						
-						add_uv(surface.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_TOP, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
-
+						add_uv(surface1.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_TOP, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						add_uv2(surface2.transform_uv_scaled(VoxelSurface.VOXEL_SIDE_TOP, uv, x % TEXTURE_SCALE, z % TEXTURE_SCALE, TEXTURE_SCALE))
+						
 				for i in range(len(temp_verts)):
-
 					var vert_pos : Vector3 = temp_verts[i] as Vector3
 					
 					vert_pos *= float(lod_size)
@@ -300,52 +389,12 @@ func add_buffer_normal(buffer : VoxelChunk) -> void:
 					var vpy : int = int(vert_pos.y)
 					var vpz : int = int(vert_pos.z)
 					
-#					var light : Color = Color(buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_R) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_G) / 255.0, buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_LIGHT_COLOR_B) / 255.0)
-#					var ao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_AO) / 255.0) * ao_strength
-#					var rao : float = (buffer.get_voxel(vpx, vpy, vpz, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO) / 255.0)
-#					ao += rao
-#
-#					light.r += base_light_value
-#					light.g += base_light_value
-#					light.b += base_light_value
-#
-#					light.r -= ao
-#					light.g -= ao
-#					light.b -= ao
-#
-#					light.r = clamp(light.r, 0, 1.0)
-#					light.g = clamp(light.g, 0, 1.0)
-#					light.b = clamp(light.b, 0, 1.0)
-					
-#					if regular_cell_class == 11:
-#						print("asd")
-#					if case_code == 112 + 2:
-##						print(regular_cell_class)
-##						print("asd")
-#						light.r = 1
-#						light.g = 1
-#						light.b = 1
-						
-					
-					#add_color(light)
+					add_color(Color(1, 1, 1, surface_ratio))
 					vert_pos *= float(voxel_scale)
 					
 					add_normal(normal)
 					add_vertex(vert_pos)
 					
-				
-#				if case_code == 7:
-#
-#					#reset
-#					set_regular_vertex_data(case_code, 2, 0x3304)
-#
-#					set_regular_vertex_data(case_code, 3, 0x2315)
-#					set_regular_vertex_data(case_code, 4, 0x4113)
-#					set_regular_vertex_data(case_code, 5, 0x1326)
-#
-#					set_regular_vertex_data(case_code, 6, 0x3304)
-#					set_regular_vertex_data(case_code, 7, 0x2315)
-#					set_regular_vertex_data(case_code, 8, 0x2315)
 					
 func add_buffer_lod(buffer : VoxelChunk) -> void:
 	if lod_data[CHUNK_INDEX_UP] < lod_size:
@@ -399,15 +448,14 @@ func generate_main_lod_mesh(buffer : VoxelChunk) -> void:
 					var offs0 : Vector3 = corner_id_to_vertex(fv) * lod_size
 					var offs1 : Vector3 = corner_id_to_vertex(sv) * lod_size
 					
-					var type0 : int = buffer.get_voxel(int(x + offs0.x), int(y + offs0.y), int(z + offs0.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
-#					var type1 : int = buffer.get_voxel(int(x + offs1.x), int(y + offs1.y), int(z + offs1.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
+					var type : int = buffer.get_voxel(int(x + offs0.x), int(y + offs0.y), int(z + offs0.z), VoxelChunk.DEFAULT_CHANNEL_TYPE)
 					
 					var fill : int = 0
 					
 					var vert_pos : Vector3
 					var vert_dir : Vector3
 					
-					if type0 == 0:
+					if type == 0:
 						fill = buffer.get_voxel(int(x + offs1.x), int(y + offs1.y), int(z + offs1.z), VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 
 						vert_pos = get_regular_vertex_second_position(case_code, i)
@@ -424,11 +472,6 @@ func generate_main_lod_mesh(buffer : VoxelChunk) -> void:
 					
 					temp_verts.append(vert_pos)
 					
-#					if regular_uv_entries.size() > uvs[i]:
-#						add_uv(Vector2(regular_uv_entries[uvs[i]][0], regular_uv_entries[uvs[i]][1]));
-					
-#					add_uv(Vector2(0, 0))
-
 				var temp_normals : Array = Array()
 				
 				#warning-ignore:unused_variable

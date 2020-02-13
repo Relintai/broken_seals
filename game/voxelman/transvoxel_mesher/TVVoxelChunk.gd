@@ -207,13 +207,15 @@ func _build_phase(phase):
 		generate_random_ao()
 		bake_lights()
 		set_physics_process_internal(true)
+		return false
 	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 		set_physics_process_internal(true)
+		return false
 	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
-		._build_phase(phase)
 		notification(NOTIFICATION_TRANSFORM_CHANGED)
+		return ._build_phase(phase)
 	else:
-		._build_phase(phase)
+		return ._build_phase(phase)
 
 func _prop_added(prop):
 	pass

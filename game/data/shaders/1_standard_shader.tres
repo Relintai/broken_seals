@@ -8,7 +8,18 @@ uniform sampler2D texture_albedo : hint_albedo;
 
 void fragment() {
 	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	vec2 base_uv2 = UV2;
+	
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	vec4 albedo_tex2 = texture(texture_albedo, base_uv2);
+	
+	float ratio = COLOR.a;
+	
+	albedo_tex *= ratio;
+	albedo_tex2 *= 1.0 - ratio;
+	
+	albedo_tex += albedo_tex2;
+	
 	albedo_tex *= COLOR;
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 }

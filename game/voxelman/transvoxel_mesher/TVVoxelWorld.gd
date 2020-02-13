@@ -162,7 +162,6 @@ func add_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 				
 				chunk.add_voxel_light(light)
 
-
 func setup_client_seed(pseed : int) -> void:
 #	_player_file_name = ""
 #	_player = null
