@@ -50,7 +50,7 @@ func _create_meshers():
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
 	add_mesher(mesher)
 	
-	add_mesher(VoxelMesherCubic.new())
+	#add_mesher(VoxelMesherCubic.new())
 	
 	_prop_texture_packer = TexturePacker.new()
 	_prop_texture_packer.max_atlas_size = 1024

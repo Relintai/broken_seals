@@ -65,7 +65,7 @@ func _generate_chunk(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 #					chunk.set_voxel(100, hs + x, y + 1, hs + z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 #					break
 		
-		for y in range(chunk.data_size_y):
+		for y in range(-chunk.get_margin_start(), chunk.size_y + chunk.get_margin_end()):
 			for x in range(0, 2):
 				for z in range(0, 2):
 					chunk.set_voxel(0, hs + x, y, hs + z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
@@ -81,7 +81,7 @@ func _generate_chunk(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 					chunk.set_voxel(4, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 					chunk.set_voxel(255, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 					
-		for y in range(chunk.get_size_y() - sizey + 1, chunk.data_size_y):
+		for y in range(chunk.get_size_y() - sizey + 1, chunk.size_y + chunk.get_margin_end()):
 			for x in range(0, 2):
 				for z in range(0, 2):
 					chunk.set_voxel(0, hs + x, y, hs + z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
