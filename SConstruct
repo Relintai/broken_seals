@@ -216,7 +216,7 @@ if len(sys.argv) > 1:
         build_string += 'target='
         if 'r' in arg:
             build_string += 'release'
-        if 'd' in arg:
+        elif 'd' in arg:
             build_string += 'debug'
         else:
             build_string += 'release_debug'
