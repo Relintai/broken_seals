@@ -47,11 +47,10 @@ func _create_meshers():
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
-#	var m : float = 1.0 / 16.0
-
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
-	
 	add_mesher(mesher)
+	
+	add_mesher(VoxelMesherCubic.new())
 	
 	_prop_texture_packer = TexturePacker.new()
 	_prop_texture_packer.max_atlas_size = 1024

@@ -26,9 +26,6 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 	generate_terrarin(chunk, spawn_mobs)
 
 func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
-#	chunk.create(int(chunk.size_x) + 1, int(chunk.size_y) + 1, int(chunk.size_z) + 1)
-	chunk.set_size(int(chunk.size_x), int(chunk.size_y), int(chunk.size_z), 0, 1)
-	
 	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
 	noise.seed = 10 * current_seed
 	noise.octaves = 4
@@ -47,8 +44,8 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 	det_noise.period = 80.0
 	det_noise.persistence = 0.3
 	
-	for x in range(0, chunk.size_x + 1):
-		for z in range(0, chunk.size_z + 1):
+	for x in range(-chunk.get_margin_start(), chunk.size_x + chunk.get_margin_end()):
+		for z in range(-chunk.get_margin_start(), chunk.size_z + chunk.get_margin_end()):
 			var val : float = noise.get_noise_2d(x + (chunk.position_x * chunk.size_x), z + (chunk.position_z * chunk.size_z))
 			val *= val
 			val *= 200
@@ -66,10 +63,10 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 			
 			v -= chunk.position_y * (chunk.size_y)
 
-			if v > chunk.size_y + 1:
-				v = chunk.size_y + 1
+			if v > chunk.size_y + chunk.get_margin_end():
+				v = chunk.size_y + chunk.get_margin_end()
 
-			for y in range(0, v):
+			for y in range(-chunk.get_margin_start(), v):
 				seed(x + (chunk.position_x * chunk.size_x) + z + (chunk.position_z * chunk.size_z) + y + (chunk.position_y * chunk.size_y))
 				
 				

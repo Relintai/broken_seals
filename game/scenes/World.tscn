@@ -56,10 +56,13 @@ adjustment_enabled = true
 [node name="World" type="VoxelWorld" groups=[
 "save",
 ]]
+data_margin_start = 1
+data_margin_end = 2
 use_threads = false
 max_concurrent_generations = 1
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
+voxel_scale = 1.3
 chunk_spawn_range = 3
 script = ExtResource( 8 )
 

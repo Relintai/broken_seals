@@ -373,7 +373,7 @@ func get_case_code(buffer : VoxelChunk, x : int, y : int, z : int, size : int = 
 		
 	return case_code
 		
-func _add_chunk(buffer : VoxelChunk) -> void:
+func _add_chunk(buffer : Node) -> void:
 	var x_size : int = buffer.get_size_x() - 1
 	var y_size : int = buffer.get_size_y() - 1
 	var z_size : int = buffer.get_size_z() - 1

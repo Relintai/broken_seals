@@ -20,7 +20,6 @@
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 
-
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
 _force_planet = -1
@@ -563,6 +562,8 @@ current = true
 [node name="World" type="VoxelWorld" parent="." groups=[
 "save",
 ]]
+data_margin_start = 1
+data_margin_end = 2
 use_threads = false
 max_concurrent_generations = 1
 library = ExtResource( 17 )
