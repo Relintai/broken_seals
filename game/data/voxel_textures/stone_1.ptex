@@ -64,7 +64,7 @@
 				"metallic": 1,
 				"normal_scale": 1,
 				"roughness": 1,
-				"size": 6,
+				"size": 8,
 				"subsurf_scatter_strength": 0
 			},
 			"type": "material"
@@ -78,8 +78,8 @@
 			"parameters": {
 				"intensity": 1,
 				"randomness": 0.95,
-				"scale_x": 7,
-				"scale_y": 7,
+				"scale_x": 14,
+				"scale_y": 14,
 				"stretch_x": 1,
 				"stretch_y": 1
 			},
@@ -129,7 +129,7 @@
 				"y": 62.5
 			},
 			"parameters": {
-				"size": 6,
+				"size": 8,
 				"suffix": "albedo"
 			},
 			"type": "export"
