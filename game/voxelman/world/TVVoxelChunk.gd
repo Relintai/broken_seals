@@ -88,14 +88,14 @@ func build_phase_prop_mesh() -> void:
 	if get_prop_mesh_rid() == RID():
 		allocate_prop_mesh()
 		
-	if _prop_material == null:
-		_prop_material = SpatialMaterial.new()
-		_prop_material.flags_vertex_lighting = true
-		_prop_material.vertex_color_use_as_albedo = true
-		_prop_material.params_specular_mode = SpatialMaterial.SPECULAR_DISABLED
-		_prop_material.metallic = 0
+#	if _prop_material == null:
+#		_prop_material = SpatialMaterial.new()
+#		_prop_material.flags_vertex_lighting = true
+#		_prop_material.vertex_color_use_as_albedo = true
+#		_prop_material.params_specular_mode = SpatialMaterial.SPECULAR_DISABLED
+#		_prop_material.metallic = 0
 		
-		VisualServer.instance_geometry_set_material_override(get_prop_mesh_instance_rid(), _prop_material.get_rid())
+		VisualServer.instance_geometry_set_material_override(get_prop_mesh_instance_rid(), library.get_prop_material().get_rid())
 		
 		for i in range(get_mesher_count()):
 			get_mesher(i).material = _prop_material
@@ -211,7 +211,8 @@ func _build_phase(phase):
 		set_physics_process_internal(true)
 		return false
 	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
-		notification(NOTIFICATION_TRANSFORM_CHANGED)
+		_notification(NOTIFICATION_TRANSFORM_CHANGED)
+		
 		return ._build_phase(phase)
 	else:
 		return ._build_phase(phase)

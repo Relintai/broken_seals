@@ -207,7 +207,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	return createinfo.created_entity
 
 	
-func spawn_mob(class_id : int, level : int, position : Vector3) -> Entity:
+func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	
 	var cls : EntityData = EntityDataManager.get_entity_data(class_id)
@@ -220,11 +220,11 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> Entity:
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_AI
 	createinfo.transform.origin = position
 	
-	EntityDataManager.request_entity_spawn(createinfo)
+	EntityDataManager.request_entity_spawn_deferred(createinfo)
 	
 	Logger.info("Mob spawned " + str(createinfo))
 	
-	return createinfo.created_entity
+	#return createinfo.created_entity
 
 	
 func on_entity_spawn_requested(createinfo : EntityCreateInfo):

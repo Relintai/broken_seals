@@ -97,7 +97,7 @@ var _thread : Thread = null
 
 var _editor_built : bool = false
 
-func _ready():
+func _enter_tree():
 	st = SurfaceTool.new()
 	_texture_packer = TexturePacker.new()
 	_texture_packer.texture_flags = 0
@@ -111,6 +111,9 @@ func _ready():
 	right_hand_attach_point = get_node(right_hand_attach_point_path) as CharacterSkeketonAttachPoint
 	torso_attach_point = get_node(torso_attach_point_path) as CharacterSkeketonAttachPoint
 	root_attach_point = get_node(root_attach_point_path) as CharacterSkeketonAttachPoint
+
+	if _material == null:
+		_material = material.duplicate()
 	
 	if not OS.can_use_threads():
 		use_threads = false
@@ -267,10 +270,7 @@ func prepare_textures() -> void:
 		_textures[bone_idx] = texture
 		
 	_texture_packer.merge()
-	
-	if _material == null:
-		_material = material.duplicate()
-	
+
 	var tex : Texture = _texture_packer.get_generated_texture(0)
 	
 #	var mat : SpatialMaterial = _material as SpatialMaterial

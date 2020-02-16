@@ -127,7 +127,11 @@ func set_max_distance(var value : float) -> void:
 	max_distance = value
 
 func c_health_changed(stat : Stat) -> void:
-	health_bar.max_value = stat.cmax
+	if stat.cmax != 0:
+		health_bar.max_value = stat.cmax
+	else:
+		health_bar.max_value = 1
+		
 	health_bar.value = stat.ccurrent
 	
 	
