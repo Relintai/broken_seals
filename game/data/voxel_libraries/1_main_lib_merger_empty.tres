@@ -1,14 +1,15 @@
-[gd_resource type="VoxelmanLibraryMerger" load_steps=7 format=2]
+[gd_resource type="VoxelmanLibraryMerger" load_steps=8 format=2]
 
 [ext_resource path="res://data/materials/1_standard_material.tres" type="Material" id=1]
 [ext_resource path="res://data/voxel_surfaces/4_dungeon_stone.tres" type="VoxelSurfaceMerger" id=2]
 [ext_resource path="res://data/voxel_surfaces/2_test.tres" type="VoxelSurfaceMerger" id=3]
 [ext_resource path="res://data/voxel_surfaces/1_stone.tres" type="VoxelSurfaceMerger" id=4]
 [ext_resource path="res://data/voxel_surfaces/3_test2.tres" type="VoxelSurfaceMerger" id=5]
+[ext_resource path="res://data/materials/4_standard_material_prop.tres" type="Material" id=6]
 [ext_resource path="res://data/voxel_surfaces/0_air.tres" type="VoxelSurfaceMerger" id=7]
 
 [resource]
 material = ExtResource( 1 )
-prop_material = ExtResource( 1 )
+prop_material = ExtResource( 6 )
 texture_flags = 1
 voxel_surfaces = [ ExtResource( 7 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ) ]

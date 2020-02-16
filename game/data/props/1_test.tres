@@ -1,3 +1,14 @@
-[gd_resource type="PropData" format=2]
+[gd_resource type="PropData" load_steps=4 format=2]
+
+[ext_resource path="res://data/character_models/upperarm.dae" type="MeshDataResource" id=1]
+[ext_resource path="res://data/voxel_textures/test_brick_albedo.png" type="Texture" id=2]
+
+[sub_resource type="PropDataMesh" id=1]
+mesh = ExtResource( 1 )
+texture = ExtResource( 2 )
+snap_to_mesh = false
+snap_axis = Vector3( 0, -1, 0 )
 
 [resource]
+resource_name = "adad"
+props = [ SubResource( 1 ) ]
