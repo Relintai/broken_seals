@@ -1,10 +1,21 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://texture_tools/test/new_packerimageresource.tres" type="Texture" id=3]
 
 [node name="LayeredTextureMaker" type="Node2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-refresh_rate = 3.0
+texture = ExtResource( 3 )
+refresh_rate = 2.0
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0.780392, 0.478431, 0.478431, 1 )
+self_modulate = Color( 0.454902, 1, 0.796078, 1 )
+position = Vector2( 8.29768, 10.7308 )
+rotation = 0.724902
+scale = Vector2( 0.152605, 0.115388 )
+texture = ExtResource( 2 )
