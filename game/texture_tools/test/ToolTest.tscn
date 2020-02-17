@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
+
+[node name="LayeredTextureMaker" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+refresh_rate = 3.0

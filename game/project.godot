@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/items/ItemTemplateGD.gd"
 }, {
+"base": "Node2D",
+"class": "LayeredTextureMaker",
+"language": "GDScript",
+"path": "res://texture_tools/LayeredTextureMaker.gd"
+}, {
 "base": "Node",
 "class": "Main",
 "language": "GDScript",
@@ -152,6 +157,7 @@ _global_script_class_icons={
 "EntityDataGD": "",
 "GDCubicVoxelMesher": "",
 "ItemTemplateGD": "",
+"LayeredTextureMaker": "",
 "Main": "",
 "MainDungeonGenerator": "",
 "MainPlanetGenerator": "",
