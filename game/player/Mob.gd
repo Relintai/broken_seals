@@ -279,7 +279,7 @@ func _son_xp_gained(value : int) -> void:
 	var xpr : int = EntityDataManager.get_xp_data().get_xp(gets_level());
 	
 	if xpr <= sxp:
-		slevelup(1)
+		scharacter_levelup(1)
 		sxp = 0
 
 func _son_level_up(value: int) -> void:
