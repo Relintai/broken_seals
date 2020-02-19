@@ -26,6 +26,7 @@ func _handle_aura_damage(aura_data : AuraData, damage_info : SpellDamageInfo) ->
 	randomize()
 	
 	damage_info.damage = damage_min + (randi() % (damage_max - damage_min))
+	damage_info.damage *= damage_info.dealer.gets_level() / float(EntityEnums.MAX_CHARACTER_LEVEL)
 	damage_info.damage_source_type = aura_data.aura.damage_type
 	
 	if (is_instance_valid(damage_info.dealer)):
@@ -35,6 +36,7 @@ func _handle_aura_heal(aura_data : AuraData, shi : SpellHealInfo) -> void:
 	randomize()
 	
 	shi.heal = heal_min + (randi() % (heal_max - heal_min))
+	shi.damage *= shi.dealer.gets_level() / float(EntityEnums.MAX_CHARACTER_LEVEL)
 	shi.heal_source_type = aura_data.aura.aura_type
 	
 	shi.dealer.sdeal_heal_to(shi)
