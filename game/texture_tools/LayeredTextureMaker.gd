@@ -79,17 +79,19 @@ func _process(delta):
 		if get_children().has(preview_node) and get_child(get_child_count() - 1) != preview_node:
 			move_child(preview_node, get_child_count() - 1)
 			
-		queued_save = true
+		#queued_save = true
 			
 
 func save() -> void:
-	queued_save = false
+	#queued_save = false
 	
 	if texture == null:
 		#print("LayeredTextureMaker: Set a target texture!")
 		return
 		
-	texture.set_data(viewport.get_texture().get_data())
+	#texture.set_data(viewport.get_texture().get_data())
+	viewport.get_texture().get_data().save_png(texture.resource_path)
+#	texture.property_list_changed_notify()
 	
 func preview_refresh() -> void:
 	for ch in viewport.get_children():
