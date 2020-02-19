@@ -21,6 +21,67 @@ class_name AuraGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
+func _handle_aura_damage(aura_data : AuraData, damage_info : SpellDamageInfo) -> void:
+	randomize()
+	
+	damage_info.damage = damage_min + (randi() % (damage_max - damage_min))
+	damage_info.damage_source_type = aura_data.aura.damage_type
+	
+	if (is_instance_valid(damage_info.dealer)):
+		damage_info.dealer.sdeal_damage_to(damage_info)
+	
+func _handle_aura_heal(aura_data : AuraData, shi : SpellHealInfo) -> void:
+	randomize()
+	
+	shi.heal = heal_min + (randi() % (heal_max - heal_min))
+	shi.heal_source_type = aura_data.aura.aura_type
+	
+	shi.dealer.sdeal_heal_to(shi)
+
+func _sapply(info : AuraApplyInfo) -> void:
+#	var add : bool = false
+	var ad : AuraData = info.target.sget_aura_by(info.caster, info.aura.id)
+
+	if ad == null:
+#		add = true
+		ad = AuraData.new()
+		
+		setup_aura_data(ad, info);
+
+		for i in range(get_aura_stat_attribute_count()):
+			var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
+			var stat : Stat = info.target.get_stat_enum(stat_attribute.stat)
+			stat.add_modifier(id, stat_attribute.base_mod, stat_attribute.bonus_mod, stat_attribute.percent_mod)
+
+		if states_add != 0:
+			for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
+				var t : int = 1 << i
+				
+				if states_add & t != 0:
+					info.target.sadd_state_ref(i)
+				
+
+		info.target.sadd_aura(ad);
+	else:
+		ad.remaining_time = time
+		
+	
+func _sdeapply(data : AuraData) -> void:
+	for i in range(get_aura_stat_attribute_count()):
+		var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
+		
+		var stat : Stat = data.owner.get_stat_enum(stat_attribute.stat)
+		
+		stat.remove_modifier(id)
+		
+	if states_add != 0:
+		for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
+			var t : int = 1 << i
+				
+			if states_add & t != 0:
+				data.owner.sremove_state_ref(i)
+
 func _con_aura_added(data : AuraData) -> void:
 	if data.owner.get_character_skeleton() == null or data.owner.get_character_skeleton().root_attach_point == null:
 		return
