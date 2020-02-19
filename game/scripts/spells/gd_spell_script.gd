@@ -23,6 +23,11 @@ class_name SpellGD
 
 
 func _sstart_casting(info : SpellCastInfo) -> void:
+	if needs_target and info.target == null:
+		return
+		
+	
+	
 	if info.caster.sis_casting():
 		return
 	
