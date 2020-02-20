@@ -133,7 +133,7 @@ func build_phase_prop_mesh() -> void:
 
 	for i in range(get_mesher_count()):
 		get_mesher(i).bake_colors(self)
-		get_mesher(i).build_mesh(get_prop_mesh_rid())
+		get_mesher(i).build_mesh_into(get_prop_mesh_rid())
 		get_mesher(i).material = null
 		
 	if not _entities_spawned:
