@@ -223,7 +223,7 @@ func _son_death():
 	
 	dead = true
 	
-	var ldiff : float = slevel - starget.slevel + 10.0
+	var ldiff : float = scharacter_level - starget.scharacter_level + 10.0
 	
 	if ldiff < 0:
 		ldiff = 0
@@ -233,7 +233,7 @@ func _son_death():
 		
 	ldiff /= 10.0
 	
-	starget.adds_xp(int(5.0 * slevel * ldiff))
+	starget.adds_xp(int(5.0 * scharacter_level * ldiff))
 		
 	starget = null
 	
@@ -273,37 +273,31 @@ func set_max_visible_distance(var value : float) -> void:
 #	sentity_name = sentity_data.text_name
 	
 func _son_xp_gained(value : int) -> void:
-	if not EntityDataManager.get_xp_data().can_level_up(gets_level()):
+	if not EntityDataManager.get_xp_data().can_character_level_up(gets_character_level()):
 		return
 	
-	var xpr : int = EntityDataManager.get_xp_data().get_xp(gets_level());
+	var xpr : int = EntityDataManager.get_xp_data().get_character_xp(gets_character_level());
 	
-	if xpr <= sxp:
+	if xpr <= scharacter_xp:
 		scharacter_levelup(1)
-		sxp = 0
+		scharacter_xp = 0
 
-func _son_level_up(value: int) -> void:
-	if sentity_data == null:
-		return
+func _son_class_level_up(value: int):
+	._son_class_level_up(value)
+	refresh_spells(value)
+
+func _son_character_level_up(value: int) -> void:
+	._son_character_level_up(value)
+	refresh_spells(value)
 		
+func refresh_spells(value: int):
+	if gets_free_spell_points() == 0 and gets_free_talent_points() == 0:
+		return
+	
 	var ecd : EntityClassData = sentity_data.entity_class_data
 	
 	if ecd == null:
 		return
-	
-	sfree_spell_points += ecd.spell_points_per_level * value
-	sfree_talent_points += value
-
-	for i in range(Stat.MAIN_STAT_ID_COUNT):
-		var st : int = sentity_data.entity_class_data.get_stat_data().get_level_stat_data().get_stat_diff(i, slevel - value, slevel)
-
-		var statid : int = i + Stat.MAIN_STAT_ID_START
-		
-		var stat : Stat = get_stat_int(statid)
-		
-		var sm : StatModifier = stat.get_modifier(0)
-		sm.base_mod += st
-		
 	
 	var arr : Array = Array()
 	

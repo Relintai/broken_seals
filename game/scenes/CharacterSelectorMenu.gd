@@ -90,7 +90,7 @@ func refresh():
 				centry.group = character_button_group
 				centry.connect("pressed", self, "character_selection_changed")
 				
-				centry.setup(file_name, display.sentity_name, "", display.slevel, display)
+				centry.setup(file_name, display.sentity_name, "", display.scharacter_level, display)
 				
 				if first_entry == null:
 					first_entry = centry

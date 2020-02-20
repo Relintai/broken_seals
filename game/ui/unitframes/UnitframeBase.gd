@@ -68,7 +68,7 @@ func set_player(p_player: Entity) -> void:
 	health.connect("c_changed", self, "_on_player_health_changed")
 	
 	_name_text.text = _player.centity_name
-	_level_text.text = str(_player.clevel)
+	_level_text.text = str(_player.ccharacter_level)
 	
 	clevel_changed(_player, 0)
 	con_xp_gained(_player, 0)
@@ -93,13 +93,13 @@ func cname_changed(entity: Entity) -> void:
 	_name_text.text = _player.centity_name
 
 func clevel_changed(entity: Entity, value : int) -> void:
-	_level_text.text = str(_player.clevel)
+	_level_text.text = str(_player.ccharacter_level)
 	
 	_xp_range.min_value = 0
-	_xp_range.max_value = EntityDataManager.get_xp_data().get_xp(_player.clevel)
+	_xp_range.max_value = EntityDataManager.get_xp_data().get_character_xp(_player.ccharacter_level)
 
 func con_xp_gained(entity: Entity, val: int) -> void:
-	_xp_range.value = _player.cxp
+	_xp_range.value = _player.ccharacter_xp
 
 func centity_data_changed(data: EntityData) -> void:
 	var health = _player.get_health()
