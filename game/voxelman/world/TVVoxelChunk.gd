@@ -236,8 +236,12 @@ func _build_phase(phase):
 			next_phase()
 			return true
 
-
 		var arr : Array = mesher.build_mesh()
+		
+#		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+#		fqms.initialize(arr)
+#		fqms.simplify_mesh(0.5)
+#		arr = fqms.get_arrays()
 
 		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
 
