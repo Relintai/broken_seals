@@ -26,8 +26,6 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 	if needs_target and info.target == null:
 		return
 		
-	
-	
 	if info.caster.sis_casting():
 		return
 	
@@ -35,6 +33,21 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 		return
 	
 	if !info.caster.hass_spell_id(id):
+		return
+		
+	var entity_relation_type = info.caster.gets_relation_to(info.target)
+	
+	var ok = false
+	
+	if target_relation_type & TARGET_FRIENDLY or target_relation_type & TARGET_SELF:
+		if entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_FRIENDLY or entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_NEUTRAL:
+			ok = true
+			
+	if target_relation_type & TARGET_ENEMY:
+		if entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_HOSTILE:
+			ok = true
+			
+	if !ok:
 		return
 	
 	if cast_enabled:
