@@ -238,9 +238,15 @@ func _build_phase(phase):
 
 		var arr : Array = mesher.build_mesh()
 		
+#		print("Orig tris " + str(arr[VisualServer.ARRAY_INDEX].size() / 3))
 #		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+#		fqms.max_iteration_count = 10
+#		fqms.enable_smart_link = false
+#		fqms.preserve_border_dges = true
+#		fqms.preserve_uv_foldover_edges = true
+#		fqms.preserve_uv_seam_edges = true
 #		fqms.initialize(arr)
-#		fqms.simplify_mesh(0.5)
+#		fqms.simplify_mesh(0.6)
 #		arr = fqms.get_arrays()
 
 		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
