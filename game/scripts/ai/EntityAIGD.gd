@@ -29,6 +29,9 @@ var _data : Dictionary = {
 	"spells": []
 }
 
+func _ready():
+	pass
+
 func _on_set_owner():
 	if not is_instance_valid(owner):
 		return
@@ -112,14 +115,17 @@ func attack(delta):
 					cast = true
 					break
 	
-	
 	if owner.sis_casting():
 		owner.target_movement_direction = Vector2()
 		return
 	
-	var dir : Vector3 = target.get_body().translation - owner.get_body().translation
+	owner.target_movement_direction = Vector2()
 	
-	owner.target_movement_direction = Vector2(dir.x, dir.z)
+	var dir : Vector3 = target.get_body().translation - owner.get_body().translation
+	var l = dir.length()
+	
+	if l > 2.5:
+		owner.target_movement_direction = Vector2(dir.x, dir.z)
 
 func sort_spells_by_rank(a, b):
 	if a == null or b == null:
