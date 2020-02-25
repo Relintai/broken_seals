@@ -61,7 +61,7 @@ func drop_data(position, data):
 		return
 		
 	if dd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM:
-		_player.crequest_equip(equip_slot, dd.item_id)
+		_player.crequest_equip(equip_slot, dd.get_meta("slot_id"))
 
 func can_drop_data(position, data):
 	if _player == null:
@@ -88,7 +88,8 @@ func get_drag_data(position):
 
 	esd.origin = self
 	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM
-	esd.item_id = equip_slot
+	esd.item_id = _item_instance.item_template.id
+	esd.set_meta("equip_slot_id", equip_slot)
 	
 	return esd
 

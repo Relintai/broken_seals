@@ -167,8 +167,9 @@ func get_drag_data(pos: Vector2) -> Object:
 
 	esd.origin = self
 	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM
-	esd.item_id = slot_id
-	
+	esd.item_id = item.item_template.id
+	esd.set_meta("slot_id", slot_id)
+		
 	setup_icon()
 
 	return esd

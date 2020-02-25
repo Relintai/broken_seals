@@ -170,13 +170,40 @@ func setup_icon() -> void:
 		spell_id = spell.id
 		spell_type = spell.spell_type
 		has_gcd = spell.cooldown_global_cooldown_enabled
+	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM):
+		if (button_entry.item_id == 0):
+			if icon_rect.texture != null:
+				ThemeAtlas.unref_texture(icon_rect.texture)
+		
+			icon_rect.texture = null
+			return
+			
+		if icon_rect.texture != null:
+			ThemeAtlas.unref_texture(icon_rect.texture)
+			icon_rect.texture = null
+			
+		var item : ItemTemplate = EntityDataManager.get_item_template(button_entry.item_id)
+		
+		if item.icon != null:
+			icon_rect.texture = ThemeAtlas.add_texture(item.icon)
+#			icon_rect.texture = item.icon
+		
+		spell_id = item.use_spell.id
+		spell_type = item.use_spell.spell_type
+		has_gcd = item.use_spell.cooldown_global_cooldown_enabled
 	
 func _on_button_pressed() -> void:
-	if (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL):
+	if button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL:
 		if (button_entry.item_id == 0):
 			return
 			
 		player.crequest_spell_cast(button_entry.item_id)
+		
+	elif button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM:
+		if (button_entry.item_id == 0):
+			return
+			
+		player.crequest_use_item(button_entry.item_id)
 		
 func set_button_entry_data(type: int, item_id: int) -> void:
 	button_entry.type = type
@@ -221,13 +248,24 @@ func can_drop_data(pos, data) -> bool:
 
 
 func drop_data(pos, esd) -> void:
-	if (esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL):
+	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL and button_entry.item_id == esd.item_id:
+		return
+	
+	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL:
 		button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL
-	elif (esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_ITEM):
+		button_entry.item_id = esd.item_id
+	elif esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_ITEM or esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM or esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM:
 		button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM
-
-	button_entry.item_id = esd.item_id
-
+		
+		if button_entry.item_id != esd.item_id:
+			var it : ItemTemplate = EntityDataManager.get_item_template(esd.item_id)
+			
+			if it == null or it.use_spell == null:
+				button_entry.item_id = 0
+			else:
+				button_entry.item_id = esd.item_id
+			
+	
 	setup_icon()
 	
 func set_player(p_player: Entity) -> void:
