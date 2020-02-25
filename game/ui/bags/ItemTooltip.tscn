@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/bags/ItemPupop.gd" type="Script" id=1]
+
+[node name="ItemTooltip" type="PopupPanel"]
+margin_right = 295.0
+margin_bottom = 223.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+name_path = NodePath("../ItemTooltip/VBoxContainer/HBoxContainer/VBoxContainer/NameLabel")
+description_path = NodePath("../ItemTooltip/VBoxContainer/DescriptionLabel")
+use_button_path = NodePath("VBoxContainer/UseButton")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 291.0
+margin_bottom = 219.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 287.0
+margin_bottom = 26.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+margin_right = 253.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="NameLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 4.0
+margin_right = 253.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 18 )
+size_flags_horizontal = 3
+bbcode_enabled = true
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 257.0
+margin_right = 287.0
+margin_bottom = 26.269
+rect_min_size = Vector2( 30, 20 )
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 34.0
+margin_right = 287.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UseButton" type="Button" parent="VBoxContainer"]
+margin_top = 46.0
+margin_right = 287.0
+margin_bottom = 72.269
+text = "Use"
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="VBoxContainer"]
+margin_top = 80.0
+margin_right = 287.0
+margin_bottom = 215.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="hide"]
+[connection signal="pressed" from="VBoxContainer/UseButton" to="." method="use_button_pressed"]

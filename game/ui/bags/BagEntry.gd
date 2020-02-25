@@ -57,7 +57,7 @@ func _ready() -> void:
 	
 	_stack_counter = get_node(stack_counter) as Label
 	
-	button.connect("pressed", self, "_on_button_pressed")
+	button.connect("button_up", self, "_on_button_pressed")
 	
 #func _exit_tree():
 #	if item != null:
@@ -124,8 +124,8 @@ func setup_icon() -> void:
 			
 		if item.item_template.use_spell != null:
 			var spell : Spell = item.item_template.use_spell
-			spell_id = spell.spell_id
-			has_gcd = spell.cooldown_global_cooldown
+			spell_id = spell.id
+			has_gcd = spell.cooldown_global_cooldown_enabled
 		else:
 			spell_id = 0
 			has_gcd = false
@@ -134,10 +134,6 @@ func setup_icon() -> void:
 		
 		
 	
-func _on_button_pressed() -> void:
-	#if spell_id != 0:
-	#	player.crequest_spell_cast(button_entry.item_id)
-	pass
 		
 func set_button_entry_data(ii : ItemInstance) -> void:
 	if item != null and item.item_template.stack_size > 1:
@@ -238,13 +234,14 @@ func _cgcd_started(value :float) -> void:
 	
 func _cgcd_finished() -> void:
 	gcd = 0
-	
-func _pressed():
+
+func _on_button_pressed() -> void:
+#func _pressed():
 	if _tooltip != null and item != null:
 		var pos : Vector2 = rect_global_position
 		pos.x += rect_size.x
 		
-		_tooltip.set_item(item)
+		_tooltip.set_item(player, item)
 		_tooltip.popup(Rect2(pos, _tooltip.rect_size))
 #		_tooltip.pac
 	

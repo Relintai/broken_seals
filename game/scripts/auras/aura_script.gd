@@ -25,6 +25,10 @@ class_name AuraGD
 func _handle_aura_damage(aura_data : AuraData, damage_info : SpellDamageInfo) -> void:
 	randomize()
 	
+	if  damage_info.dealer == null:
+		printerr("_handle_aura_damage: damage_info.dealer is null! ")
+		return
+	
 	damage_info.damage = damage_min + (randi() % (damage_max - damage_min))
 	damage_info.damage *= damage_info.dealer.scharacter_level / float(EntityEnums.MAX_CHARACTER_LEVEL)
 	damage_info.damage_source_type = aura_data.aura.damage_type

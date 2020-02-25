@@ -27,6 +27,7 @@ text_name = "Amplify Pain"
 text_description = "Range: 26m.
 Casttime: {3}.
 Causes your damage over time effects to tick."
+cooldown_cooldown = 16.0
 range_range = 26.0
 cast_cast_time = 1.5
 damage_type = 16

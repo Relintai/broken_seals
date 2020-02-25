@@ -33,6 +33,8 @@ var _item_instance : ItemInstance
 
 func _ready():
 	_texture = get_node(texture_path) as TextureRect
+	
+	connect("button_up", self, "_on_button_pressed")
 
 func set_tooltip_node(tooltip : Popup) -> void:
 	_tooltip = tooltip
@@ -101,3 +103,13 @@ func con_equip_success(entity: Entity, pequip_slot: int, item: ItemInstance, old
 		return
 		
 	_texture.texture = item.item_template.icon
+
+func _on_button_pressed() -> void:
+#func _pressed():
+	if _tooltip != null and _item_instance != null:
+		var pos : Vector2 = rect_global_position
+		pos.x += rect_size.x
+		
+		_tooltip.set_item(_player, _item_instance)
+		_tooltip.popup(Rect2(pos, _tooltip.rect_size))
+#		_tooltip.pac

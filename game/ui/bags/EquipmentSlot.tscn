@@ -29,7 +29,7 @@ __meta__ = {
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 76.0
+margin_right = 45.0
 margin_bottom = 45.0
 mouse_filter = 2
 size_flags_horizontal = 3
