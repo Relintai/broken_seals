@@ -39,7 +39,19 @@ var _editor_generate : bool
 var _player_file_name : String
 var _player : Entity
 
-func _ready():
+func _enter_tree():
+#	for ch in get_children():
+#		if ch is VoxelChunk:
+#			var c : VoxelChunk = ch as VoxelChunk
+#
+#			c.set_voxel_world(self)
+#			c.set_library(library)
+#			c.set_size(c.size_x, c.size_y, c.size_z, c.margin_start, c.margin_end)
+#			add_chunk(c, c.position_x, c.position_y, c.position_z)
+#			c.build_deferred()
+			
+	
+	
 	if generate_on_ready and not Engine.is_editor_hint():
 		
 		if level_generator != null:
@@ -136,9 +148,9 @@ func set_editor_generate(value : bool) -> void:
 		
 		level_generator.setup(self, current_seed, false, library)
 		spawn()
-	else:
-		spawned = false
-		clear()
+#	else:
+#		spawned = false
+#		clear()
 		
 	_editor_generate = value
 	

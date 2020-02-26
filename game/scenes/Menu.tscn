@@ -571,8 +571,6 @@ level_generator = SubResource( 1 )
 voxel_scale = 1.6
 chunk_spawn_range = 1
 script = ExtResource( 16 )
-meshes = [  ]
-editor_generate = false
 show_loading_screen = false
 generate_on_ready = true
 
