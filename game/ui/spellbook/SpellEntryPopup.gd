@@ -39,5 +39,5 @@ func set_spell(spell : Spell) -> void:
 		return
 		
 	_label.text = _spell.text_name
-	_desc_label.text = _spell.text_description
+	_desc_label.text = _spell.get_description(1, 1)
 	
