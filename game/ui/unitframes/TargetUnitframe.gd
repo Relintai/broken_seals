@@ -61,8 +61,8 @@ func set_player(p_player : Entity) -> void:
 		
 	_player = p_player
 	
-	for index in range(_player.cget_aura_count()):
-		var aura : AuraData = _player.cget_aura(index)
+	for index in range(_player.getc_aura_count()):
+		var aura : AuraData = _player.getc_aura(index)
 		
 		on_caura_added(aura)
 		

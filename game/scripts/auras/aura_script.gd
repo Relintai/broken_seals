@@ -47,7 +47,7 @@ func _handle_aura_heal(aura_data : AuraData, shi : SpellHealInfo) -> void:
 
 func _sapply(info : AuraApplyInfo) -> void:
 #	var add : bool = false
-	var ad : AuraData = info.target.sget_aura_by(info.caster, info.aura.id)
+	var ad : AuraData = info.target.gets_aura_by(info.caster, info.aura.id)
 
 	if ad == null:
 #		add = true
@@ -65,10 +65,10 @@ func _sapply(info : AuraApplyInfo) -> void:
 				var t : int = 1 << i
 				
 				if states_add & t != 0:
-					info.target.sadd_state_ref(i)
+					info.target.adds_state_ref(i)
 				
 
-		info.target.sadd_aura(ad);
+		info.target.adds_aura(ad);
 	else:
 		ad.remaining_time = time
 		
@@ -86,7 +86,7 @@ func _sdeapply(data : AuraData) -> void:
 			var t : int = 1 << i
 				
 			if states_add & t != 0:
-				data.owner.sremove_state_ref(i)
+				data.owner.removes_state_ref(i)
 
 func _con_aura_added(data : AuraData) -> void:
 	if data.owner.get_character_skeleton() == null or data.owner.get_character_skeleton().root_attach_point == null:

@@ -91,12 +91,12 @@ func attack(delta):
 					continue
 			
 				if taskey == null:
-					if target.sget_aura_by(owner, tas["aura_id"]) == null and not owner.hass_cooldown(spell_id):
+					if target.gets_aura_by(owner, tas["aura_id"]) == null and not owner.hass_cooldown(spell_id):
 						owner.crequest_spell_cast(spell_id)
 						cast = true
 						break
 				else:
-					if target.sget_aura_with_group_by(owner, taskey) == null and not owner.hass_cooldown(spell_id):
+					if target.gets_aura_with_group_by(owner, taskey) == null and not owner.hass_cooldown(spell_id):
 						owner.crequest_spell_cast(spell_id)
 						cast = true
 						break

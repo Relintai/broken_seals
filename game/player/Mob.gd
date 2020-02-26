@@ -218,8 +218,8 @@ func _son_death():
 		return
 		
 	#warning-ignore:unused_variable
-	for i in range(sget_aura_count()):
-		sremove_aura(sget_aura(0))
+	for i in range(gets_aura_count()):
+		removes_aura(gets_aura(0))
 	
 	dead = true
 	

@@ -26,9 +26,9 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 	if not is_instance_valid(target):
 		return
 	
-	for i in range(target.sget_aura_count()):
+	for i in range(target.gets_aura_count()):
 		
-		var ad : AuraData = target.sget_aura(i)
+		var ad : AuraData = target.gets_aura(i)
 		
 		if ad.caster == info.caster:
 			var aura : Aura = ad.aura

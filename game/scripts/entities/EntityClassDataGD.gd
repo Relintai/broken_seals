@@ -72,12 +72,12 @@ func _sai_attack(entity):
 					continue
 			
 				if taskey == null:
-					if target.sget_aura_by(entity, tas["aura_id"]) == null and not entity.hass_cooldown(spell_id):
+					if target.gets_aura_by(entity, tas["aura_id"]) == null and not entity.hass_cooldown(spell_id):
 						entity.crequest_spell_cast(spell_id)
 						cast = true
 						break
 				else:
-					if target.sget_aura_with_group_by(entity, taskey) == null and not entity.hass_cooldown(spell_id):
+					if target.gets_aura_with_group_by(entity, taskey) == null and not entity.hass_cooldown(spell_id):
 						entity.crequest_spell_cast(spell_id)
 						cast = true
 						break

@@ -148,12 +148,12 @@ func handle_effect(info : SpellCastInfo) -> void:
 			var ad : AuraData = null
 			
 			if aura.aura_group != null:
-				ad = info.target.sget_aura_with_group_by(info.caster, aura.aura_group)
+				ad = info.target.gets_aura_with_group_by(info.caster, aura.aura_group)
 			else:
-				ad = info.target.sget_aura_by(info.caster, aura.get_id())
+				ad = info.target.gets_aura_by(info.caster, aura.get_id())
 			
 			if ad != null:
-				info.target.sremove_aura_exact(ad)
+				info.target.removes_aura_exact(ad)
 			
 			var ainfo : AuraApplyInfo = AuraApplyInfo.new()
 		
