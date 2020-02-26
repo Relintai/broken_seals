@@ -207,45 +207,45 @@ func _build_phase(phase):
 		bake_lights()
 		set_physics_process_internal(true)
 		return false
-	elif phase == VoxelChunk.BUILD_PHASE_TERRARIN_MESH:
-		for i in range(get_mesher_count()):
-			var mesher : VoxelMesher = get_mesher(i)
-			mesher.bake_colors(self)
-			
-		for i in range(get_mesher_count()):
-			var mesher : VoxelMesher = get_mesher(i)
-			mesher.set_library(library)
-		
-		if get_mesh_rid() == RID():
-			allocate_main_mesh()
-
-		var mesher : VoxelMesher = null
-		for i in range(get_mesher_count()):
-			var m : VoxelMesher = get_mesher(i)
-			
-			if mesher == null:
-				mesher = m
-				continue
-
-			mesher.set_material(library.material)
-			mesher.add_mesher(m)
-
-		VisualServer.mesh_clear(get_mesh_rid())
-
-		if mesher.get_vertex_count() == 0:
-			next_phase()
-			return true
-
-		var arr : Array = mesher.build_mesh()
-
-		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
-
-		if library.material != null:
-			VisualServer.mesh_surface_set_material(get_mesh_rid(), 0, library.material.get_rid())
-
-		next_phase();
-
-		return true;
+#	elif phase == VoxelChunk.BUILD_PHASE_TERRARIN_MESH:
+#		for i in range(get_mesher_count()):
+#			var mesher : VoxelMesher = get_mesher(i)
+#			mesher.bake_colors(self)
+#
+#		for i in range(get_mesher_count()):
+#			var mesher : VoxelMesher = get_mesher(i)
+#			mesher.set_library(library)
+#
+#		if get_mesh_rid() == RID():
+#			allocate_main_mesh()
+#
+#		var mesher : VoxelMesher = null
+#		for i in range(get_mesher_count()):
+#			var m : VoxelMesher = get_mesher(i)
+#
+#			if mesher == null:
+#				mesher = m
+#				continue
+#
+#			mesher.set_material(library.material)
+#			mesher.add_mesher(m)
+#
+#		VisualServer.mesh_clear(get_mesh_rid())
+#
+#		if mesher.get_vertex_count() == 0:
+#			next_phase()
+#			return true
+#
+#		var arr : Array = mesher.build_mesh()
+#
+#		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
+#
+#		if library.material != null:
+#			VisualServer.mesh_surface_set_material(get_mesh_rid(), 0, library.material.get_rid())
+#
+#		next_phase();
+#
+#		return true;
 	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 		set_physics_process_internal(true)
 		return false
