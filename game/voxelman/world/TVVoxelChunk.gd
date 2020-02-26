@@ -1,3 +1,4 @@
+tool
 extends VoxelChunk
 class_name TVVoxelChunk
 
