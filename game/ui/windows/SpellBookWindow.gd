@@ -187,3 +187,10 @@ class CustomSpellSorter:
 		
 		return true
 		
+
+
+func _on_SpellBookButton_toggled(button_pressed):
+	if button_pressed:
+		show()
+	else:
+		hide()

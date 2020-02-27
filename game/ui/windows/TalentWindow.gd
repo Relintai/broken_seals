@@ -96,3 +96,10 @@ func centity_data_changed(data: EntityData) -> void:
 		
 		s.set_spec(_player, spec, i)
 
+
+
+func _on_TalentButton_toggled(button_pressed):
+	if button_pressed:
+		show()
+	else:
+		hide()

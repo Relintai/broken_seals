@@ -138,3 +138,10 @@ func select_recipe(recipe : CraftRecipe) -> void:
 		_materials_container.add_child(ie)
 		ie.owner = _materials_container
 		ie.set_item(_player, ih)
+
+
+func _on_CraftingButton_toggled(button_pressed):
+	if button_pressed:
+		show()
+	else:
+		hide()

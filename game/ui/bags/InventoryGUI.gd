@@ -124,3 +124,10 @@ func item_swapped(bag: Bag, item1_slot : int, item2_slot: int) -> void:
 
 func on_visibility_changed() -> void:
 	refresh_bags()
+
+
+func _on_BagButton_toggled(button_pressed):
+	if button_pressed:
+		show()
+	else:
+		hide()

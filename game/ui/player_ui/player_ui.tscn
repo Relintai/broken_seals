@@ -425,8 +425,8 @@ mouse_filter = 2
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
-[connection signal="pressed" from="GUI/Buttons/HBoxContainer/BagButton" to="GUI/Windows/Inventory" method="show"]
-[connection signal="pressed" from="GUI/Buttons/HBoxContainer/TalentButton" to="GUI/Windows/TalentWindow" method="show"]
-[connection signal="pressed" from="GUI/Buttons/HBoxContainer/CraftingButton" to="GUI/Windows/CraftingWindow" method="show"]
-[connection signal="pressed" from="GUI/Buttons/HBoxContainer/MapButton" to="GUI/Windows/Map" method="show"]
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/SpellBookButton" to="GUI/Windows/SpellBookWindow" method="_on_SpellBookButton_toggled"]
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/BagButton" to="GUI/Windows/Inventory" method="_on_BagButton_toggled"]
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/TalentButton" to="GUI/Windows/TalentWindow" method="_on_TalentButton_toggled"]
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/CraftingButton" to="GUI/Windows/CraftingWindow" method="_on_CraftingButton_toggled"]
 [connection signal="pressed" from="GUI/Buttons/HBoxContainer/Menu" to="GUI/IngameMenu" method="show"]
