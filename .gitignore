@@ -25,3 +25,5 @@ engine/*
 *.blend1
 
 .dir-locals.el
+
+game/.prop_tool_temp/**

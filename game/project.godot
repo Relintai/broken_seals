@@ -234,36 +234,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://networking/PlayerMaster.gd"
 }, {
-"base": "Spatial",
-"class": "PropTool",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropTool.gd"
-}, {
-"base": "Spatial",
-"class": "PropToolEntity",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropToolEntity.gd"
-}, {
-"base": "OmniLight",
-"class": "PropToolLight",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropToolLight.gd"
-}, {
-"base": "MeshInstance",
-"class": "PropToolMesh",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropToolMesh.gd"
-}, {
-"base": "Spatial",
-"class": "PropToolProp",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropToolProp.gd"
-}, {
-"base": "Spatial",
-"class": "PropToolScene",
-"language": "GDScript",
-"path": "res://addons/prop_tool/tools/PropToolScene.gd"
-}, {
 "base": "SpellEffectVisual",
 "class": "SpellEffectVisualBasic",
 "language": "GDScript",
@@ -340,12 +310,6 @@ _global_script_class_icons={
 "NetworkedPlayerGD": "",
 "PlayerGD": "",
 "PlayerMaster": "",
-"PropTool": "",
-"PropToolEntity": "",
-"PropToolLight": "",
-"PropToolMesh": "",
-"PropToolProp": "",
-"PropToolScene": "",
 "SpellEffectVisualBasic": "",
 "SpellGD": "",
 "TVVoxelChunk": "",
@@ -392,7 +356,7 @@ window/size/viewport_scale=100
 
 [editor_plugins]
 
-enabled=PoolStringArray( "ess_data", "prop_tool" )
+enabled=PoolStringArray( "ess_data" )
 
 [ess]
 
