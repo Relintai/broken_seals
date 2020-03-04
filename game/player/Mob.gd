@@ -51,6 +51,8 @@ var sleep : bool = false
 var dead : bool = false
 var death_timer : float = 0
 
+var _world : VoxelWorld = null
+
 func _ready() -> void:
 	animation_tree = get_character_skeleton().get_animation_tree()
 	
@@ -60,27 +62,13 @@ func _ready() -> void:
 	animation_tree["parameters/run-loop/blend_position"] = Vector2(0, -1)
 
 	ai_state = EntityEnums.AI_STATE_PATROL
-
-	set_process(true)
-	set_physics_process(true)
 	
 func _enter_tree():
-	var world : VoxelWorld = get_node("..") as VoxelWorld
+	_world = get_node("..") as VoxelWorld
 	
-	if world != null:
-		if not world.is_position_walkable(get_body().transform.origin):
-			world.connect("chunk_mesh_generation_finished", self, "chunk_mesh_generation_finished", [], CONNECT_DEFERRED)
-			set_process(false)
-			set_physics_process(false)
-	
-func chunk_mesh_generation_finished(chunk):
-	var world : VoxelWorld = get_node("..") as VoxelWorld
-	
-	if world.is_position_walkable(get_body().transform.origin):
-		world.disconnect("chunk_mesh_generation_finished", self, "chunk_mesh_generation_finished")
-		set_process(true)
-		set_physics_process(true)
-	
+	set_process(true)
+	set_physics_process(true)
+
 	
 func _process(delta : float) -> void:
 	if dead:
@@ -90,6 +78,7 @@ func _process(delta : float) -> void:
 			queue_free()
 		
 		return
+		
 	
 	var camera : Camera = get_tree().get_root().get_camera() as Camera
 	
@@ -118,7 +107,11 @@ func _physics_process(delta : float) -> void:
 		
 	if dead:
 		return
-
+		
+	if _world != null:
+		if not _world.is_position_walkable(get_body().transform.origin):
+			return
+	
 	process_movement(delta)
 
 func process_movement(delta : float) -> void:
