@@ -202,6 +202,7 @@ func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, sna
 	return base_transform
 
 func _build_phase(phase):
+#	print(name + " " + str(phase))
 	if phase == VoxelChunk.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
