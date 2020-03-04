@@ -39,6 +39,9 @@ var _editor_generate : bool
 var _player_file_name : String
 var _player : Entity
 
+const VIS_UPDATE_INTERVAL = 5
+var vis_update : float = 0
+
 func _enter_tree():
 	for ch in get_children():
 		if ch is VoxelChunk:
@@ -51,14 +54,52 @@ func _enter_tree():
 			add_chunk(c, c.position_x, c.position_y, c.position_z)
 			c.build_deferred()
 			
-	
-	
 	if generate_on_ready and not Engine.is_editor_hint():
 		
 		if level_generator != null:
 			level_generator.setup(self, 80, false, library)
 		
 		spawn()
+		
+func _process(delta):
+	if _player == null:
+		set_process(false)
+		return
+		
+	vis_update += delta
+	
+	if vis_update >= VIS_UPDATE_INTERVAL:
+		vis_update = 0
+		
+		var ppos : Vector3 = _player.get_body().transform.origin
+		
+		var cpos : Vector3 = ppos
+		cpos.x = int(cpos.x / (chunk_size_x * voxel_scale))
+		cpos.y = int(cpos.y / (chunk_size_y * voxel_scale))
+		cpos.z = int(cpos.z / (chunk_size_z * voxel_scale))
+		
+		var count : int = get_chunk_count()
+		var i : int = 0
+		while i < count:
+			var c : VoxelChunk = get_chunk_index(i)
+			
+			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
+			
+			if l > chunk_spawn_range + 2:
+#				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
+				remove_chunk_index(i)
+				c.queue_free()
+				i -= 1
+				count -= 1
+				
+			i += 1
+			
+		for x in range(-chunk_spawn_range + int(cpos.x), chunk_spawn_range + int(cpos.x)):
+			for z in range(-chunk_spawn_range + int(cpos.z), chunk_spawn_range + int(cpos.z)):
+				for y in range(-1, 2):
+					if not has_chunk(x, y, z):
+#						print("spawn " + str(Vector3(x, y, z)))
+						create_chunk(x, y, z)
 
 #func _process(delta : float) -> void:
 #	if not generation_queue.empty():
@@ -128,7 +169,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
 	#chunk.meshing_create_collider = false
 	
 	chunk.lod_size = 1
-	
+#	print("added " + str(Vector3(x, y, z)))
 	return ._create_chunk(x, y, z, chunk)
 	
 func spawn() -> void:
@@ -198,6 +239,8 @@ func load_character(file_name : String) -> void:
 		level_generator.setup(self, _player.sseed, true, library)
 	
 	spawn()
+	
+	set_process(true)
 	
 func needs_loading_screen() -> bool:
 	return show_loading_screen

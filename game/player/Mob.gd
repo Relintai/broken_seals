@@ -64,6 +64,24 @@ func _ready() -> void:
 	set_process(true)
 	set_physics_process(true)
 	
+func _enter_tree():
+	var world : VoxelWorld = get_node("..") as VoxelWorld
+	
+	if world != null:
+		if not world.is_position_walkable(get_body().transform.origin):
+			world.connect("chunk_mesh_generation_finished", self, "chunk_mesh_generation_finished", [], CONNECT_DEFERRED)
+			set_process(false)
+			set_physics_process(false)
+	
+func chunk_mesh_generation_finished(chunk):
+	var world : VoxelWorld = get_node("..") as VoxelWorld
+	
+	if world.is_position_walkable(get_body().transform.origin):
+		world.disconnect("chunk_mesh_generation_finished", self, "chunk_mesh_generation_finished")
+		set_process(true)
+		set_physics_process(true)
+	
+	
 func _process(delta : float) -> void:
 	if dead:
 		death_timer += delta
