@@ -123,7 +123,8 @@ func _process(delta):
 #				get_node("..").hide_loading_screen()
 
 func _generation_finished():
-	max_frame_chunk_build_steps = _max_frame_chunk_build_temp
+	if not Engine.editor_hint:
+		max_frame_chunk_build_steps = _max_frame_chunk_build_temp
 	
 	initial_generation = false
 	
@@ -180,8 +181,9 @@ func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
 	return ._create_chunk(x, y, z, chunk)
 	
 func spawn() -> void:
-	_max_frame_chunk_build_temp = max_frame_chunk_build_steps
-	max_frame_chunk_build_steps = 0
+	if not Engine.editor_hint:
+		_max_frame_chunk_build_temp = max_frame_chunk_build_steps
+		max_frame_chunk_build_steps = 0
 	
 	for x in range(-chunk_spawn_range, chunk_spawn_range):
 		for z in range(-chunk_spawn_range, chunk_spawn_range):
