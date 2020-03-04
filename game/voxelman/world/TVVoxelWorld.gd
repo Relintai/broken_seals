@@ -41,6 +41,7 @@ var _player : Entity
 
 const VIS_UPDATE_INTERVAL = 5
 var vis_update : float = 0
+var _max_frame_chunk_build_temp : int
 
 func _enter_tree():
 	for ch in get_children():
@@ -62,6 +63,9 @@ func _enter_tree():
 		spawn()
 		
 func _process(delta):
+	if initial_generation:
+		return
+	
 	if _player == null:
 		set_process(false)
 		return
@@ -119,6 +123,8 @@ func _process(delta):
 #				get_node("..").hide_loading_screen()
 
 func _generation_finished():
+	max_frame_chunk_build_steps = _max_frame_chunk_build_temp
+	
 	initial_generation = false
 	
 #	for i in range(get_chunk_count()):
@@ -135,6 +141,7 @@ func _prepare_chunk_for_generation(chunk):
 	refresh_chunk_lod_level_data(chunk)
 
 func refresh_chunk_lod_level_data(chunk : VoxelChunk) -> void:
+	
 	var cpx : int = chunk.position_x
 	var cpy : int = chunk.position_y
 	var cpz : int = chunk.position_z
@@ -173,6 +180,9 @@ func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
 	return ._create_chunk(x, y, z, chunk)
 	
 func spawn() -> void:
+	_max_frame_chunk_build_temp = max_frame_chunk_build_steps
+	max_frame_chunk_build_steps = 0
+	
 	for x in range(-chunk_spawn_range, chunk_spawn_range):
 		for z in range(-chunk_spawn_range, chunk_spawn_range):
 			for y in range(-1, 2):
