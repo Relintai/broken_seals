@@ -36,3 +36,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875205, 0 )
 refresh_in_editor = false
 
 [node name="NamePlate" parent="." instance=ExtResource( 3 )]
+max_distance = 50.0
