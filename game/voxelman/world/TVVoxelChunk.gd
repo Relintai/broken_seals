@@ -202,13 +202,15 @@ func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, sna
 	return base_transform
 
 func _build_phase(phase):
+
 #	print(name + " " + str(phase))
 	if phase == VoxelChunk.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
 		bake_lights()
-		set_physics_process_internal(true)
-		return false
+		#set_physics_process_internal(true)
+		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_PHYSICS_PROCESS
+		return
 #	elif phase == VoxelChunk.BUILD_PHASE_TERRARIN_MESH:
 #		for i in range(get_mesher_count()):
 #			var mesher : VoxelMesher = get_mesher(i)
@@ -249,14 +251,15 @@ func _build_phase(phase):
 #
 #		return true;
 	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
-		set_physics_process_internal(true)
-		return false
+#		set_physics_process_internal(true)
+		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_PHYSICS_PROCESS
+		return
 	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 		
-		return ._build_phase(phase)
+		._build_phase(phase)
 	else:
-		return ._build_phase(phase)
+		._build_phase(phase)
 
 func _prop_added(prop):
 	pass
@@ -283,16 +286,20 @@ func generate_random_ao() -> void:
 
 				set_voxel(int(val * 255.0), x, y, z, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO)
 
-func _physics_process(delta):
+func _build_phase_physics_process(phase):
 	if current_build_phase == VoxelChunk.BUILD_PHASE_LIGHTS:
 		build_phase_lights()
-		set_physics_process_internal(false)
+#		set_physics_process_internal(false)
+		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_NORMAL
 		next_phase()
 		
 	elif current_build_phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 		build_phase_prop_mesh()
-		set_physics_process_internal(false)
+#		set_physics_process_internal(false)
+		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_NORMAL
 		next_phase()
+	else:
+		._build_phase_physics_process(phase)
 
 func visibility_changed() -> void:
 	if get_mesh_instance_rid() != RID():
