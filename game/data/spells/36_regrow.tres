@@ -1,0 +1,24 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://data/icons/naturalist/root.tres" type="Texture" id=2]
+
+[resource]
+resource_name = "Regrow"
+id = 36
+spell_type = 8
+target_relation_type = 5
+rank = 1
+icon = ExtResource( 2 )
+text_name = "Regrow"
+text_description = "Heals you for %%heal_min  to %%heal_max ."
+range_enabled = true
+range_range = 30.0
+cast_enabled = true
+cast_cast_time = 2.0
+heal_enabled = true
+heal_min = 12
+heal_max = 18
+heal_scale_stat = 14
+heal_scale_coeff = 0.1
+script = ExtResource( 1 )

@@ -212,7 +212,7 @@ _global_script_classes=[ {
 "base": "EntityResource",
 "class": "ManaResource",
 "language": "GDScript",
-"path": "res://scripts/resources/ManResource.gd"
+"path": "res://scripts/resources/ManaResource.gd"
 }, {
 "base": "Control",
 "class": "Menu",

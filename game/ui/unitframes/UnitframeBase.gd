@@ -24,21 +24,29 @@ export (NodePath) var name_text_path : NodePath
 export (NodePath) var level_text_path : NodePath
 export (NodePath) var health_range_path : NodePath
 export (NodePath) var health_text_path : NodePath
+export (NodePath) var resource_range_path : NodePath
+export (NodePath) var resource_text_path : NodePath
 export (NodePath) var xp_range_path : NodePath
 
 var _name_text : Label
 var _level_text : Label
 var _health_range : Range
 var _health_text : Label
+var _resource_range : Range
+var _resource_text : Label
 var _xp_range : Range
 
 var _player : Entity
+
+var _mana : ManaResource
 
 func _ready() -> void:
 	_name_text = get_node(name_text_path)
 	_level_text = get_node(level_text_path)
 	_health_range = get_node(health_range_path)
 	_health_text = get_node(health_text_path)
+	_resource_range = get_node(resource_range_path)
+	_resource_text = get_node(resource_text_path)
 	_xp_range = get_node(xp_range_path)
 
 func set_player(p_player: Entity) -> void:
@@ -62,6 +70,12 @@ func set_player(p_player: Entity) -> void:
 	_player.connect("con_character_level_changed", self, "clevel_changed")
 	_player.connect("con_xp_gained", self, "con_xp_gained")
 	_player.connect("centity_data_changed", self, "centity_data_changed")
+	
+	if _player.getc_resource_count() > 0:
+		var mana : ManaResource = _player.getc_resource_index(0) as ManaResource
+		
+		if mana != null:
+			mana.connect("changed", self, "_on_mana_changed")
 	
 	var health = _player.get_health()
 	_on_player_health_changed(health)
@@ -88,6 +102,22 @@ func _on_player_health_changed(health: Stat) -> void:
 	_health_range.value = health.ccurrent
 	
 	_health_text.text = str(health.ccurrent) + "/" + str(health.cmax)
+	
+func _on_mana_changed(resource: EntityResource) -> void:
+	if resource.max == 0:
+		_resource_range.min_value = 0
+		_resource_range.max_value = 1
+		_resource_range.value = 0
+		
+		_resource_range.text = ""
+		
+		return
+		
+	_resource_range.min_value = 0
+	_resource_range.max_value = resource.cmax
+	_resource_range.value = resource.ccurrent
+	
+	_resource_range.text = str(resource.ccurrent) + "/" + str(resource.cmax)
 	
 func cname_changed(entity: Entity) -> void:
 	_name_text.text = _player.centity_name

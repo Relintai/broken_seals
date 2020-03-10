@@ -22,3 +22,4 @@ extends EntityResourceData
 
 func _get_entity_resource_instance() -> EntityResource:
 	return ManaResource.new()
+	

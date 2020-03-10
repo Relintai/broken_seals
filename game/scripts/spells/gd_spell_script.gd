@@ -42,6 +42,10 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 	if target_relation_type & TARGET_FRIENDLY or target_relation_type & TARGET_SELF:
 		if entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_FRIENDLY or entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_NEUTRAL:
 			ok = true
+		else:
+			if entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_HOSTILE:
+				info.target = info.caster
+				ok = true
 			
 	if target_relation_type & TARGET_ENEMY:
 		if entity_relation_type == EntityEnums.ENTITY_RELATION_TYPE_HOSTILE:
@@ -49,6 +53,14 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 			
 	if !ok:
 		return
+		
+	if range_enabled:
+		if info.caster != info.target:
+			var c : Vector3 = info.caster.get_body().transform.origin
+			var t : Vector3 = info.target.get_body().transform.origin
+			
+			if (c - t).length() > range_range:
+				return
 	
 	if cast_enabled:
 		info.caster.sstart_casting(info)
@@ -132,6 +144,15 @@ func handle_effect(info : SpellCastInfo) -> void:
 		sdi.receiver = info.target
 		
 		handle_spell_damage(sdi)
+		
+	if heal_enabled and info.target:
+		var shi : SpellHealInfo = SpellHealInfo.new()
+		
+		shi.heal_source = self
+		shi.dealer = info.caster
+		shi.receiver = info.target
+		
+		handle_spell_heal(shi)
 		
 	for aura in caster_aura_applys:
 		var ainfo : AuraApplyInfo = AuraApplyInfo.new()
