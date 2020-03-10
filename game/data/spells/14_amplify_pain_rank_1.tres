@@ -22,6 +22,7 @@ id = 14
 spell_type = 8
 level = 10
 icon = ExtResource( 2 )
+needs_target = true
 visual_spell_effects = SubResource( 1 )
 text_name = "Amplify Pain"
 text_description = "Range: 26m.

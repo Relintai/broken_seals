@@ -8,6 +8,7 @@
 resource_name = "Aspect of Wolves"
 id = 12
 spell_type = 8
+rank = 1
 icon = ExtResource( 2 )
 needs_target = true
 target_aura_applys = [ ExtResource( 3 ) ]

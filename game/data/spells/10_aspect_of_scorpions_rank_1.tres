@@ -9,6 +9,7 @@
 resource_name = "Aspect of Scorpions"
 id = 10
 spell_type = 8
+rank = 1
 icon = ExtResource( 2 )
 visual_spell_effects = ExtResource( 4 )
 target_aura_applys = [ ExtResource( 3 ) ]

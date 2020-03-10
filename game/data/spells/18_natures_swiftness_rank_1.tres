@@ -15,7 +15,7 @@ icon = ExtResource( 1 )
 caster_aura_applys = [ ExtResource( 2 ) ]
 text_name = "Nature's Swiftness"
 text_description = "Instant.
-Cooldown: {2}
+Cooldown: %%cooldown_cooldown sec
 Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
 cooldown_cooldown = 20.0
 aoe_targetType = 520
