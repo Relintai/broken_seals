@@ -44,8 +44,8 @@ func _ready():
 	
 	set_notify_transform(true)
 
-func _enter_tree():
-	create_debug_immediate_geometry()
+#func _enter_tree():
+#	create_debug_immediate_geometry()
 	
 	
 
