@@ -44,6 +44,11 @@ func _ready():
 	
 	set_notify_transform(true)
 
+func _enter_tree():
+	create_debug_immediate_geometry()
+	
+	
+
 func _create_meshers():
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
@@ -234,22 +239,46 @@ func _build_phase(phase):
 #			mesher.set_material(library.material)
 #			mesher.add_mesher(m)
 #
-#		VisualServer.mesh_clear(get_mesh_rid())
+#		if (get_mesh_rid() != RID()):
+#			VisualServer.mesh_clear(get_mesh_rid())
 #
 #		if mesher.get_vertex_count() == 0:
 #			next_phase()
 #			return true
 #
+#		if (get_mesh_rid() == RID()):
+#			allocate_main_mesh()
+#
 #		var arr : Array = mesher.build_mesh()
 #
-#		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
+#		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+#		fqms.initialize(arr)
+#		fqms.simplify_mesh(0.5)
+#		fqms.enable_smart_link = false
+#		fqms.preserve_border_dges = true
+#		fqms.preserve_uv_seam_edges = true
+#		var arr2 = fqms.get_arrays()
+#
+##		print("-----")
+##		print(arr[VisualServer.ARRAY_VERTEX].size())
+##		print(arr2[VisualServer.ARRAY_VERTEX].size())
+#
+#		var imgeom : ImmediateGeometry = get_child(0) as ImmediateGeometry
+#		imgeom.begin(Mesh.PRIMITIVE_POINTS)
+#		var vs = arr2[VisualServer.ARRAY_VERTEX]
+#		for v in vs:
+#			imgeom.add_vertex(v)
+#		imgeom.end()
+#
+#
+#		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr2)
 #
 #		if library.material != null:
 #			VisualServer.mesh_surface_set_material(get_mesh_rid(), 0, library.material.get_rid())
 #
 #		next_phase();
 #
-#		return true;
+#		return
 	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
 #		set_physics_process_internal(true)
 		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_PHYSICS_PROCESS
