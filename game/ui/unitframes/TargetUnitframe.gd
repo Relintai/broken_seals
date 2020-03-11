@@ -1,4 +1,4 @@
-extends UnitFrame
+extends VBoxContainer
 
 # Copyright (c) 2019-2020 Péter Magyar
 #
@@ -25,20 +25,27 @@ export (PackedScene) var aura_entry_scene : PackedScene
 export (NodePath) var name_text_path : NodePath
 export (NodePath) var health_range_path : NodePath
 export (NodePath) var health_text_path : NodePath
+export (NodePath) var resource_range_path : NodePath
+export (NodePath) var resource_text_path : NodePath
 export (NodePath) var aura_grid_path : NodePath
 
 var _name_text : Label
 var _health_range : Range
 var _health_text : Label
+var _resource_range : Range
+var _resource_text : Label
 var _aura_grid : GridContainer
 
 var _player : Entity
+var _mana : ManaResource
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_name_text = get_node(name_text_path) as Label
 	_health_range = get_node(health_range_path) as Range
 	_health_text = get_node(health_text_path) as Label
+	_resource_range = get_node(resource_range_path) as Range
+	_resource_text = get_node(resource_text_path) as Label
 	_aura_grid = get_node(aura_grid_path) as GridContainer
 
 func set_player(p_player : Entity) -> void:
@@ -47,6 +54,11 @@ func set_player(p_player : Entity) -> void:
 		_player.disconnect("caura_added", self, "on_caura_added")
 		_player.disconnect("caura_removed", self, "on_caura_removed")
 		_player.disconnect("cdied", self, "cdied")
+		_player.disconnect("centity_resource_added", self, "centity_resource_added")
+		
+		if _mana != null:
+			_mana.disconnect("changed", self, "_on_mana_changed")
+			_mana = null
 		
 		for a in _aura_grid.get_children():
 			_aura_grid.remove_child(a)
@@ -70,6 +82,10 @@ func set_player(p_player : Entity) -> void:
 	_player.connect("caura_added", self, "on_caura_added")
 	_player.connect("caura_removed", self, "on_caura_removed")
 	_player.connect("cdied", self, "cdied", [], CONNECT_DEFERRED)
+	_player.connect("centity_resource_added", self, "centity_resource_added")
+	
+	for i in range(_player.getc_resource_count()):
+		centity_resource_added(_player.getc_resource_index(i))
 	
 	var health = _player.get_health()
 	_on_player_health_changed(health)
@@ -79,6 +95,29 @@ func set_player(p_player : Entity) -> void:
 	
 	set_process(true)
 	show()
+	
+func centity_resource_added(res : EntityResource):
+	if res is ManaResource:
+		_mana= res as ManaResource
+
+		_mana.connect("changed", self, "_on_mana_changed")
+		_on_mana_changed(_mana)
+	
+func _on_mana_changed(resource: EntityResource) -> void:
+	if resource.max_value == 0:
+		_resource_range.min_value = 0
+		_resource_range.max_value = 1
+		_resource_range.value = 0
+		
+		_resource_text.text = ""
+		
+		return
+		
+	_resource_range.min_value = 0
+	_resource_range.max_value = resource.max_value
+	_resource_range.value = resource.current_value
+	
+	_resource_text.text = str(resource.current_value) + "/" + str(resource.max_value)
 
 func on_caura_added(aura_data : AuraData) -> void:
 	var created_node : Node = aura_entry_scene.instance()

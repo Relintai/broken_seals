@@ -32,7 +32,7 @@ func _handle_aura_damage(aura_data : AuraData, damage_info : SpellDamageInfo) ->
 	damage_info.damage = damage_min + (randi() % (damage_max - damage_min))
 	
 	if scale_with_level:
-		damage_info.damage *= damage_info.dealer.scharacter_level / float(EntityEnums.MAX_CHARACTER_LEVEL)
+		damage_info.damage *= int(float(damage_info.dealer.scharacter_level) / float(EntityEnums.MAX_CHARACTER_LEVEL))
 
 	damage_info.damage_source_type = aura_data.aura.damage_type
 	

@@ -57,6 +57,11 @@ func set_player(p_player: Entity) -> void:
 		_player.disconnect("con_level_changed", self, "clevel_changed")
 		_player.disconnect("con_xp_gained", self, "con_xp_gained")
 		_player.disconnect("centity_data_changed", self, "centity_data_changed")
+		_player.disconnect("centity_resource_added", self, "centity_resource_added")
+		
+		if _mana != null:
+			_mana.disconnect("changed", self, "_on_mana_changed")
+			_mana = null
 		
 		_player = null
 	
@@ -70,12 +75,10 @@ func set_player(p_player: Entity) -> void:
 	_player.connect("con_character_level_changed", self, "clevel_changed")
 	_player.connect("con_xp_gained", self, "con_xp_gained")
 	_player.connect("centity_data_changed", self, "centity_data_changed")
+	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
-	if _player.getc_resource_count() > 0:
-		var mana : ManaResource = _player.getc_resource_index(0) as ManaResource
-		
-		if mana != null:
-			mana.connect("changed", self, "_on_mana_changed")
+	for i in range(_player.getc_resource_count()):
+		centity_resource_added(_player.getc_resource_index(i))
 	
 	var health = _player.get_health()
 	_on_player_health_changed(health)
@@ -86,6 +89,13 @@ func set_player(p_player: Entity) -> void:
 	
 	clevel_changed(_player, 0)
 	con_xp_gained(_player, 0)
+	
+func centity_resource_added(res : EntityResource):
+	if res is ManaResource:
+		_mana = res as ManaResource
+
+		_mana.connect("changed", self, "_on_mana_changed")
+		_on_mana_changed(_mana)
 	
 func _on_player_health_changed(health: Stat) -> void:
 	if health.cmax == 0:
@@ -104,20 +114,20 @@ func _on_player_health_changed(health: Stat) -> void:
 	_health_text.text = str(health.ccurrent) + "/" + str(health.cmax)
 	
 func _on_mana_changed(resource: EntityResource) -> void:
-	if resource.max == 0:
+	if resource.max_value == 0:
 		_resource_range.min_value = 0
 		_resource_range.max_value = 1
 		_resource_range.value = 0
 		
-		_resource_range.text = ""
+		_resource_text.text = ""
 		
 		return
 		
 	_resource_range.min_value = 0
-	_resource_range.max_value = resource.cmax
-	_resource_range.value = resource.ccurrent
+	_resource_range.max_value = resource.max_value
+	_resource_range.value = resource.current_value
 	
-	_resource_range.text = str(resource.ccurrent) + "/" + str(resource.cmax)
+	_resource_text.text = str(resource.current_value) + "/" + str(resource.max_value)
 	
 func cname_changed(entity: Entity) -> void:
 	_name_text.text = _player.centity_name

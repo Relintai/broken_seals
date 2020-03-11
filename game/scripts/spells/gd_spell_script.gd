@@ -62,9 +62,23 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 			if (c - t).length() > range_range:
 				return
 	
+	if resource_cost != null and resource_cost.entity_resource_data != null:
+		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+
+		if r == null:
+			return
+
+		if r.current_value < resource_cost.cost:
+			return
+	
 	if cast_enabled:
 		info.caster.sstart_casting(info)
 		return
+		
+	if resource_cost != null and resource_cost.entity_resource_data != null:
+		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+
+		r.current_value -= resource_cost.cost
 
 	info.caster.sspell_cast_success(info)
 
@@ -81,6 +95,15 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 	handle_gcd(info)
 
 func _sfinish_cast(info : SpellCastInfo) -> void:
+	if resource_cost != null and resource_cost.entity_resource_data != null:
+		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+
+		if r.current_value < resource_cost.cost:
+			info.caster.son_cast_failed(info)
+			return
+
+		r.current_value -= resource_cost.cost
+	
 	info.caster.son_cast_finished(info)
 	info.caster.sspell_cast_success(info)
 	

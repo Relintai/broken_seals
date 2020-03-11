@@ -21,11 +21,46 @@ class_name ManaResource
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _init():
-	should_process = false
+var mana_regen : int = 10
+var tickrate : float = 2
+var timer : float = 0
 
-#func _ons_stat_changed(stat : Stat):
-#	print(stat.get_id())
+func _init():
+	should_process = true
+
+func _ons_added(entity):
+	refresh()
+
+func _ons_stat_changed(stat : Stat):
+	if stat.id == Stat.STAT_ID_INTELLECT || stat.id == Stat.STAT_ID_SPIRIT:
+		refresh()
+
+func refresh():
+	var intellect : Stat = owner.get_stat_int(Stat.STAT_ID_INTELLECT)
+	var spirit : Stat = owner.get_stat_int(Stat.STAT_ID_SPIRIT)
+	
+	var m : bool = false
+	
+	if max_value == current_value:
+		m = true
+	
+	var nv : int = int(intellect.scurrent) * 10
+	
+	max_value = nv
+	
+	if m:
+		current_value = nv
+	
+	mana_regen = int(spirit.scurrent)
 
 func _process_server(delta):
-	pass
+	timer += delta
+	
+	if timer > tickrate:
+		timer -= tickrate
+		
+		if current_value < max_value:
+			current_value += mana_regen
+
+			if current_value > max_value:
+				current_value = max_value

@@ -21,5 +21,8 @@ extends EntityResourceData
 # SOFTWARE.
 
 func _get_entity_resource_instance() -> EntityResource:
-	return ManaResource.new()
+	var mr = ManaResource.new()
+	mr.data_id = id
+	
+	return mr
 	

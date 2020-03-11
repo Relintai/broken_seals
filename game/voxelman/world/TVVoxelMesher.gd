@@ -173,7 +173,7 @@ func n_add_chunk(b : Node) -> void:
 
 				var temp_verts : Array = Array()
 				
-				var carr : Dictionary
+				var carr : Dictionary = Dictionary()
 				
 				for t in type_arr:
 					if carr.has(t):

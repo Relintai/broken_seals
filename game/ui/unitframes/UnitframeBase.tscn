@@ -79,6 +79,8 @@ margin_right = 142.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+align = 1
+valign = 1
 
 [node name="XPBar" type="ProgressBar" parent="VBoxContainer"]
 margin_top = 48.0
