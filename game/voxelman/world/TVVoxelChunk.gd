@@ -254,7 +254,7 @@ func _build_phase(phase):
 #		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
 #		fqms.initialize(arr)
 #		fqms.simplify_mesh(0.5)
-#		fqms.enable_smart_link = false
+#		fqms.enable_smart_link = true
 #		fqms.preserve_border_dges = true
 #		fqms.preserve_uv_seam_edges = true
 #		var arr2 = fqms.get_arrays()
@@ -263,12 +263,12 @@ func _build_phase(phase):
 ##		print(arr[VisualServer.ARRAY_VERTEX].size())
 ##		print(arr2[VisualServer.ARRAY_VERTEX].size())
 #
-#		var imgeom : ImmediateGeometry = get_child(0) as ImmediateGeometry
-#		imgeom.begin(Mesh.PRIMITIVE_POINTS)
-#		var vs = arr2[VisualServer.ARRAY_VERTEX]
-#		for v in vs:
-#			imgeom.add_vertex(v)
-#		imgeom.end()
+##		var imgeom : ImmediateGeometry = get_child(0) as ImmediateGeometry
+##		imgeom.begin(Mesh.PRIMITIVE_POINTS)
+##		var vs = arr2[VisualServer.ARRAY_VERTEX]
+##		for v in vs:
+##			imgeom.add_vertex(v)
+##		imgeom.end()
 #
 #
 #		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr2)

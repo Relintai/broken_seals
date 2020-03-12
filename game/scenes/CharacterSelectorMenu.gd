@@ -157,6 +157,6 @@ func character_selection_changed() -> void:
 		return
 		
 	for e in player_display_container_node.get_children():
-		e.hide()
+		e.get_body().hide()
 		
 	b.entity.show()

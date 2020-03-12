@@ -103,9 +103,10 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
 	createinfo.serialized_data = load_file(file_name)
 	createinfo.transform.origin = position
+	createinfo.networked = false
 	Logger.info("Player spawned ")
 	EntityDataManager.request_entity_spawn(createinfo)
-	
+
 	return createinfo.created_entity
 	
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:

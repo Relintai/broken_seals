@@ -224,11 +224,11 @@ func n_add_chunk(b : Node) -> void:
 				var surface1 : VoxelSurface = library.get_voxel_surface(type_id1)
 				var surface2 : VoxelSurface = library.get_voxel_surface(type_id2)
 				
-				if type_id1 == 0:
-					print(type_id1)
-					
-				if type_id2 == 0:
-					print("asd" + str(type_id2))
+#				if type_id1 == 0:
+#					print(type_id1)
+#
+#				if type_id2 == 0:
+#					print("asd" + str(type_id2))
 				
 				for i in range(vertex_count):
 					var fv : int = get_regular_vertex_data_first_vertex(case_code, i)
