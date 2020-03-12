@@ -58,9 +58,8 @@ adjustment_enabled = true
 ]]
 data_margin_start = 1
 data_margin_end = 2
-use_threads = false
 max_concurrent_generations = 4
-max_frame_chunk_build_steps = 1
+max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
 voxel_scale = 1.6

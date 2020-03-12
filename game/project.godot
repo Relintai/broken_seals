@@ -244,7 +244,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/spells/gd_spell_script.gd"
 }, {
-"base": "VoxelChunk",
+"base": "VoxelChunkDefault",
 "class": "TVVoxelChunk",
 "language": "GDScript",
 "path": "res://voxelman/world/TVVoxelChunk.gd"

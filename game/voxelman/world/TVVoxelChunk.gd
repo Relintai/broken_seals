@@ -1,5 +1,5 @@
 tool
-extends VoxelChunk
+extends VoxelChunkDefault
 class_name TVVoxelChunk
 
 # Copyright Péter Magyar relintai@gmail.com
@@ -54,6 +54,8 @@ func _create_meshers():
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+	mesher.lod_size = lod_size
+	mesher.voxel_scale = voxel_scale
 	add_mesher(mesher)
 	
 	#add_mesher(VoxelMesherCubic.new())
@@ -209,14 +211,14 @@ func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, sna
 func _build_phase(phase):
 
 #	print(name + " " + str(phase))
-	if phase == VoxelChunk.BUILD_PHASE_LIGHTS:
+	if phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
 		bake_lights()
 		#set_physics_process_internal(true)
-		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_PHYSICS_PROCESS
+		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
-#	elif phase == VoxelChunk.BUILD_PHASE_TERRARIN_MESH:
+#	elif phase == VoxelChunkDefault.BUILD_PHASE_TERRARIN_MESH:
 #		for i in range(get_mesher_count()):
 #			var mesher : VoxelMesher = get_mesher(i)
 #			mesher.bake_colors(self)
@@ -279,11 +281,11 @@ func _build_phase(phase):
 #		next_phase();
 #
 #		return
-	elif phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
+	elif phase == VoxelChunkDefault.BUILD_PHASE_PROP_MESH:
 #		set_physics_process_internal(true)
-		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_PHYSICS_PROCESS
+		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
-	elif phase == VoxelChunk.BUILD_PHASE_FINALIZE:
+	elif phase == VoxelChunkDefault.BUILD_PHASE_FINALIZE:
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 		
 		._build_phase(phase)
@@ -313,19 +315,19 @@ func generate_random_ao() -> void:
 				if val < 0:
 					val = -val
 
-				set_voxel(int(val * 255.0), x, y, z, VoxelChunk.DEFAULT_CHANNEL_RANDOM_AO)
+				set_voxel(int(val * 255.0), x, y, z, VoxelChunkDefault.DEFAULT_CHANNEL_RANDOM_AO)
 
 func _build_phase_physics_process(phase):
-	if current_build_phase == VoxelChunk.BUILD_PHASE_LIGHTS:
+	if current_build_phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
 		build_phase_lights()
 #		set_physics_process_internal(false)
-		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_NORMAL
+		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_NORMAL
 		next_phase()
 		
-	elif current_build_phase == VoxelChunk.BUILD_PHASE_PROP_MESH:
+	elif current_build_phase == VoxelChunkDefault.BUILD_PHASE_PROP_MESH:
 		build_phase_prop_mesh()
 #		set_physics_process_internal(false)
-		active_build_phase_type = VoxelChunk.BUILD_PHASE_TYPE_NORMAL
+		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_NORMAL
 		next_phase()
 	else:
 		._build_phase_physics_process(phase)
