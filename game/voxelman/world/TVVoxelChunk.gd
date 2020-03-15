@@ -39,16 +39,10 @@ var lod_data : Array = [
 	1 #CHUNK_INDEX_BACK
 ]
 
-func _ready():
-	connect("visibility_changed", self, "visibility_changed")
-	
-	set_notify_transform(true)
-
 #func _enter_tree():
 #	create_debug_immediate_geometry()
 	
 	
-
 func _create_meshers():
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
@@ -66,9 +60,6 @@ func _create_meshers():
 	_prop_texture_packer.background_color = Color(0, 0, 0, 1)
 	_prop_texture_packer.texture_flags = Texture.FLAG_MIPMAPS
 
-func _process_props():
-	pass
-	
 func spawn_prop_entities(parent_transform : Transform, prop : PropData):
 	for i in range(prop.get_prop_count()):
 		var p : PropDataEntry = prop.get_prop(i)
@@ -285,10 +276,6 @@ func _build_phase(phase):
 #		set_physics_process_internal(true)
 		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
-	elif phase == VoxelChunkDefault.BUILD_PHASE_FINALIZE:
-		_notification(NOTIFICATION_TRANSFORM_CHANGED)
-		
-		._build_phase(phase)
 	else:
 		._build_phase(phase)
 
@@ -331,28 +318,6 @@ func _build_phase_physics_process(phase):
 		next_phase()
 	else:
 		._build_phase_physics_process(phase)
-
-func visibility_changed() -> void:
-	if get_mesh_instance_rid() != RID():
-		VisualServer.instance_set_visible(get_mesh_instance_rid(), visible)
-			
-	if get_prop_mesh_instance_rid() != RID():
-		VisualServer.instance_set_visible(get_prop_mesh_instance_rid(), visible)
-			
-		
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_TRANSFORM_CHANGED:
-		if get_mesh_instance_rid() != RID():
-			VisualServer.instance_set_transform(get_mesh_instance_rid(), transform)
-			
-		if get_prop_mesh_instance_rid() != RID():
-			VisualServer.instance_set_transform(get_prop_mesh_instance_rid(), transform)
-			
-		if get_body_rid() != RID():
-			PhysicsServer.body_set_state(get_body_rid(), PhysicsServer.BODY_STATE_TRANSFORM, transform)
-			
-		if get_prop_body_rid() != RID():
-			PhysicsServer.body_set_state(get_prop_body_rid(), PhysicsServer.BODY_STATE_TRANSFORM, transform)
 
 #func _draw_debug_voxel_lights(debug_drawer):
 #	for light in _lightsarr:

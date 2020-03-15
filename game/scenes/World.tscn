@@ -51,7 +51,6 @@ glow_intensity = 1.6
 glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
-adjustment_enabled = true
 
 [node name="World" type="VoxelWorld" groups=[
 "save",
