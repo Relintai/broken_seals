@@ -23,7 +23,7 @@ extends Node
 export(PackedScene) var actionbar_scene
 
 var _player : Entity
-
+var _abp : ActionBarProfile
 
 func set_player(p_player: Entity) -> void:
 	if not _player == null:
@@ -40,15 +40,20 @@ func set_player(p_player: Entity) -> void:
 	_player.connect("centity_data_changed", self, "_centity_data_changed")
 	
 func _centity_data_changed(cls: EntityData) -> void:
+	if _abp != null:
+		_abp.disconnect("changed", self, "on_changed")
+	
 	clear_actionbars()
 
 	if cls == null:
 		return
 
-	var abp = _player.get_action_bar_profile()
+	_abp = _player.get_action_bar_profile()
+	
+	_abp.connect("changed", self, "on_changed")
 
-	for i in range(abp.get_action_bar_count()):
-		var abe = abp.get_action_bar(i)
+	for i in range(_abp.get_action_bar_count()):
+		var abe = _abp.get_action_bar(i)
 		var s = actionbar_scene.instance()
 		
 		add_child(s)
@@ -57,7 +62,8 @@ func _centity_data_changed(cls: EntityData) -> void:
 		
 		s.owner = self
 		
-
+func on_changed():
+	ProfileManager.save()
 		
 func clear_actionbars() -> void:
 	var children = get_children()
