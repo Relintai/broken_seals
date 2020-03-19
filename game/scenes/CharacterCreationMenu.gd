@@ -34,6 +34,8 @@ func _ready():
 	name_line_edit = get_node(name_imput_path)
 	container = get_node(container_path)
 	
+	var profile : PlayerProfile = ProfileManager.getc_player_profile()
+	
 	var fb : Button = null
 	
 	for i in range(EntityDataManager.get_player_character_data_count()):
@@ -48,7 +50,7 @@ func _ready():
 		ce.owner = container
 
 		ce.id = d.id
-		ce.set_class_name(d.entity_class_data.text_name)
+		ce.set_class_name(d.entity_class_data.text_name, profile.get_class_profile(d.id).class_id)
 		ce.group = character_creation_button_group
 		
 	if fb != null:

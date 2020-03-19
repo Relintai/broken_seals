@@ -37,12 +37,13 @@ func _ready():
 	level_label = get_node(level_label_path) as Label
 
 
-func setup(pfile_name : String, name : String, cls_name : String, level : int, pentity : Entity) -> void:
+func setup(pfile_name : String, name : String, cls_name : String, level : int, class_level : int, pentity : Entity) -> void:
 	file_name = pfile_name
 	name_label.text = name
-	class_label.text = cls_name
+	class_label.text = cls_name + " (lvl " + str(class_level) + ')'
 	level_label.text = str(level)
 	entity = pentity
 	
-func set_class_name(name : String) -> void:
-	class_label.text = name
+func set_class_name(name : String, level : int) -> void:
+	name_label.text = name
+	level_label.text = str(level)

@@ -90,7 +90,8 @@ func refresh():
 				centry.group = character_button_group
 				centry.connect("pressed", self, "character_selection_changed")
 				
-				centry.setup(file_name, display.sentity_name, "", display.scharacter_level, display)
+
+				centry.setup(file_name, display.sentity_name, EntityDataManager.get_player_character_data(display.characterclass_id).text_name, display.scharacter_level, display.sclass_level, display)
 				
 				if first_entry == null:
 					first_entry = centry
@@ -159,4 +160,4 @@ func character_selection_changed() -> void:
 	for e in player_display_container_node.get_children():
 		e.get_body().hide()
 		
-	b.entity.show()
+	b.entity.get_body().show()

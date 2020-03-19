@@ -16,7 +16,7 @@ __meta__ = {
 }
 name_label_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/name")
 class_label_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/class")
-level_label_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/level")
+level_label_path = NodePath("MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/level")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -60,22 +60,32 @@ custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 76.0
+margin_left = 72.0
 margin_right = 214.0
 margin_bottom = 78.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="name" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 15.0
 
 [node name="class" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 23.0
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 38.0
 
-[node name="level" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
 margin_top = 46.0
-margin_right = 138.0
+margin_right = 142.0
 margin_bottom = 61.0
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 36.0
+margin_bottom = 15.0
+text = "Level "
+
+[node name="level" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 40.0
+margin_right = 40.0
+margin_bottom = 15.0
