@@ -61,7 +61,7 @@ max_concurrent_generations = 4
 max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
-voxel_scale = 1.6
+voxel_scale = 3.0
 chunk_spawn_range = 3
 script = ExtResource( 8 )
 
