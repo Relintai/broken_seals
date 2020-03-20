@@ -116,8 +116,6 @@ func refresh_all() -> void:
 	if _player == null:
 		return
 
-	
-
 	if _character_class == null:
 		return
 

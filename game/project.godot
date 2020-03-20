@@ -360,6 +360,8 @@ enabled=PoolStringArray( "ess_data" )
 
 [ess]
 
+spells/allow_class_spell_learning=true
+spells/allow_class_recipe_learning=true
 level/use_class_xp=true
 data/xp_data_path="res://data/xp/xp_data.tres"
 data/entity_resources_folder="res://data/entity_resources"

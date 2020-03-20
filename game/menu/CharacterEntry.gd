@@ -26,16 +26,20 @@ export(NodePath) var level_label_path : NodePath
 
 var id : int
 var file_name : String
+
 var name_label : Label
 var class_label : Label
 var level_label : Label
+
 var entity : Entity
+var class_profile : ClassProfile
 
 func _ready():
 	name_label = get_node(name_label_path) as Label
 	class_label = get_node(class_label_path) as Label
 	level_label = get_node(level_label_path) as Label
-
+	
+	connect("visibility_changed", self, "on_visibility_changed")
 
 func setup(pfile_name : String, name : String, cls_name : String, level : int, class_level : int, pentity : Entity) -> void:
 	file_name = pfile_name
@@ -44,6 +48,12 @@ func setup(pfile_name : String, name : String, cls_name : String, level : int, c
 	level_label.text = str(level)
 	entity = pentity
 	
-func set_class_name(name : String, level : int) -> void:
+func set_class_name(name : String, level : int, pclass_profile : ClassProfile) -> void:
 	name_label.text = name
 	level_label.text = str(level)
+	class_profile = pclass_profile
+
+func on_visibility_changed():
+	if visible and class_profile != null:
+		level_label.text = str(class_profile.level)
+		

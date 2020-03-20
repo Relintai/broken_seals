@@ -110,12 +110,29 @@ func clear() -> void:
 	for e in player_display_container_node.get_children():
 		e.queue_free()
 
-func delete_character() -> void:
+func retire_character() -> void:
 	var b : BaseButton = character_button_group.get_pressed_button()
 	
 	if b == null:
 		return
+		
+	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.characterclass_id)
 	
+	var xp_data : XPData = EntityDataManager.get_xp_data()
+	
+	if xp_data.can_class_level_up(class_profile.level):
+		class_profile.xp += b.entity.sclass_xp
+		
+		var xpr : int = xp_data.get_class_xp(class_profile.level)
+		
+		while xp_data.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
+			class_profile.level += 1
+			class_profile.xp -= xpr
+			
+			xpr = xp_data.get_class_xp(class_profile.level)
+			
+		ProfileManager.save()
+
 	var file_name : String = "user://" + character_folder + "/" + b.file_name
 	
 	var f : File = File.new()
@@ -161,3 +178,4 @@ func character_selection_changed() -> void:
 		e.get_body().hide()
 		
 	b.entity.get_body().show()
+

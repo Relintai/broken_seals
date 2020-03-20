@@ -50,7 +50,8 @@ func _ready():
 		ce.owner = container
 
 		ce.id = d.id
-		ce.set_class_name(d.entity_class_data.text_name, profile.get_class_profile(d.id).class_id)
+		var class_profile : ClassProfile = profile.get_class_profile(d.id)
+		ce.set_class_name(d.entity_class_data.text_name, class_profile.level, class_profile)
 		ce.group = character_creation_button_group
 		
 	if fb != null:

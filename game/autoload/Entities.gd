@@ -112,9 +112,9 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	var cls : EntityData = EntityDataManager.get_player_character_data(class_id)
-	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
+	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(class_id)
 
-	var level : int = class_profile.level
+	var level : int = 1
 	
 	if default_level_override > 0:
 		level = default_level_override
@@ -122,8 +122,8 @@ func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Enti
 	createinfo.class_id = class_id
 	createinfo.entity_data = cls
 	createinfo.player_name = name
-	createinfo.character_level = 1
-	createinfo.class_level = level
+	createinfo.character_level = level
+	createinfo.class_level = class_profile.level
 	createinfo.character_xp = 0
 	createinfo.class_xp = class_profile.xp
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
