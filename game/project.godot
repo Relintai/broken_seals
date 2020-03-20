@@ -375,6 +375,7 @@ data/item_template_folder="res://data/item_templates"
 data/mob_data_folder="res://data/mob_data"
 data/player_character_data_folder="res://data/player_character_data"
 data/entity_species_data_folder="res://data/species"
+profiles/automatic_save=true
 
 [importer_defaults]
 
