@@ -25,6 +25,7 @@ export(NodePath) var prev_button_path : NodePath
 export(NodePath) var next_button_path : NodePath
 export(NodePath) var spell_points_label_path : NodePath
 
+export(bool) var show_not_learned : bool = true
 export(bool) var show_not_learnable : bool = false
 
 var _spell_entry_container : Node
@@ -93,18 +94,22 @@ func refresh_entries() -> void:
 		var spindex : int = i + (_page * len(_spell_entries))
 
 		if spindex >= _spells.size():
-			_spell_entries[i].set_spell(_player, null)
+			_spell_entries[n].set_spell(_player, null)
 			i += 1
 			n += 1
 			continue
 
 		var spell : Spell = _spells[spindex]
 		
-		if not show_not_learnable:
-			if not _player.hasc_spell(spell) and spell.training_required_spell \
-				and not _player.hasc_spell(spell.training_required_spell):
-					i += 1
-					continue
+		if not _player.hasc_spell(spell):
+			if not show_not_learned:
+				i += 1
+				continue
+			
+			if not show_not_learnable:
+				if spell.training_required_spell and not _player.hasc_spell(spell.training_required_spell):
+						i += 1
+						continue
 				
 		
 		_spell_entries[n].set_spell(_player, spell)

@@ -16,7 +16,7 @@ spell_entry_container_path = NodePath("PagedContent/GridContainer")
 prev_button_path = NodePath("PagedContent/Controls/HBoxContainer/Button2")
 next_button_path = NodePath("PagedContent/Controls/HBoxContainer/Button")
 spell_points_label_path = NodePath("PagedContent/Controls/HBoxContainer/SpellPoints")
-show_not_learnable = true
+show_not_learned = false
 
 [node name="PagedContent" type="VBoxContainer" parent="."]
 margin_left = 4.0
