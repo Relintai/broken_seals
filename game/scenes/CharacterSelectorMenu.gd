@@ -110,7 +110,7 @@ func clear() -> void:
 	for e in player_display_container_node.get_children():
 		e.queue_free()
 
-func retire_character() -> void:
+func renounce_character() -> void:
 	var b : BaseButton = character_button_group.get_pressed_button()
 	
 	if b == null:
@@ -178,4 +178,3 @@ func character_selection_changed() -> void:
 		e.get_body().hide()
 		
 	b.entity.get_body().show()
-

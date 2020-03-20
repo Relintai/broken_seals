@@ -164,12 +164,12 @@ margin_top = 526.0
 margin_right = 261.0
 margin_bottom = 552.0
 
-[node name="Retire" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
+[node name="Renounce" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
 margin_right = 128.0
 margin_bottom = 26.269
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Retire"
+text = "Renounce"
 
 [node name="Create" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
 margin_left = 132.0
@@ -589,7 +589,7 @@ light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 19 )
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
-[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Retire" to="CharacterSelectorMenu" method="retire_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Renounce" to="CharacterSelectorMenu" method="renounce_character"]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Create" to="." method="switch_to_menu" binds= [ 1 ]]
 [connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Create" to="CharacterCreationMenu" method="create"]
 [connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Back" to="." method="switch_to_menu" binds= [ 0 ]]
