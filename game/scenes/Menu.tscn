@@ -108,11 +108,14 @@ __meta__ = {
 "_editor_description_": ""
 }
 menu_path = NodePath("..")
-container_path = NodePath("CharacterSelector/CharacterSelector/VBoxContainer/ScrollContainer/Container")
+container_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Container")
 player_display_container_path = NodePath("../Char/CharacterDisplay")
 character_button_group = ExtResource( 4 )
 character_entry = ExtResource( 2 )
 character_folder = "characters"
+load_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+renounce_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Renounce")
+create_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Create")
 
 [node name="CharacterSelector" type="MarginContainer" parent="CharacterSelectorMenu"]
 anchor_left = 1.0
@@ -129,52 +132,48 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CharacterSelector" type="PanelContainer" parent="CharacterSelectorMenu/CharacterSelector"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector"]
 margin_top = 20.0
 margin_right = 269.0
 margin_bottom = 580.0
+alignment = 2
+
+[node name="CharacterSelector" type="PanelContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer"]
+margin_top = 450.0
+margin_right = 269.0
+margin_bottom = 560.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector"]
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 265.0
-margin_bottom = 556.0
+margin_bottom = 106.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
-margin_right = 261.0
-margin_bottom = 484.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Container" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/ScrollContainer"]
+[node name="Container" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_right = 261.0
 size_flags_horizontal = 3
 
-[node name="Load" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
-margin_top = 492.0
+[node name="Load" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
+margin_top = 8.0
 margin_right = 261.0
-margin_bottom = 518.269
+margin_bottom = 34.269
 text = "Load"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer"]
-margin_top = 526.0
+[node name="Renounce" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
+margin_top = 42.0
 margin_right = 261.0
-margin_bottom = 552.0
-
-[node name="Renounce" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
-margin_right = 128.0
-margin_bottom = 26.269
+margin_bottom = 68.269
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Renounce"
 
-[node name="Create" type="Button" parent="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer"]
-margin_left = 132.0
+[node name="Create" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
+margin_top = 76.0
 margin_right = 261.0
-margin_bottom = 26.269
+margin_bottom = 102.269
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Create"
@@ -588,9 +587,9 @@ light_energy = 0.87
 light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 19 )
-[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
-[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Renounce" to="CharacterSelectorMenu" method="renounce_character"]
-[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/CharacterSelector/VBoxContainer/HBoxContainer/Create" to="." method="switch_to_menu" binds= [ 1 ]]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Renounce" to="CharacterSelectorMenu" method="renounce_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Create" to="." method="switch_to_menu" binds= [ 1 ]]
 [connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Create" to="CharacterCreationMenu" method="create"]
 [connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Back" to="." method="switch_to_menu" binds= [ 0 ]]
 [connection signal="pressed" from="ConnectMenu/PanelContainer/VBoxContainer/Button2" to="ConnectMenu" method="hide"]

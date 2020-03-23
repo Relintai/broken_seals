@@ -27,6 +27,10 @@ export(ButtonGroup) var character_button_group : ButtonGroup
 export(PackedScene) var character_entry : PackedScene
 export(String) var character_folder : String
 
+export(NodePath) var load_button_path : NodePath
+export(NodePath) var renounce_button_path : NodePath
+export(NodePath) var create_button_path : NodePath
+
 var container : Node
 var player_display_container_node : Node
 
@@ -98,9 +102,24 @@ func refresh():
 					
 		if first_entry != null:
 			first_entry.pressed = true
-				
+			
+		if first_entry != null:
+			get_node(container_path).show()
+			get_node(load_button_path).show()
+			get_node(create_button_path).hide()
+			get_node(renounce_button_path).show()
+		else:
+			get_node(container_path).hide()
+			get_node(load_button_path).hide()
+			get_node(create_button_path).show()
+			get_node(renounce_button_path).hide()
 	else:
 		dir.make_dir("user://" + character_folder)
+		
+		get_node(container_path).hide()
+		get_node(load_button_path).hide()
+		get_node(create_button_path).show()
+		get_node(renounce_button_path).hide()
 
 func clear() -> void:
 	for c in container.get_children():
