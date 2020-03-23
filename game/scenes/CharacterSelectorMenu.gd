@@ -31,6 +31,8 @@ export(NodePath) var load_button_path : NodePath
 export(NodePath) var renounce_button_path : NodePath
 export(NodePath) var create_button_path : NodePath
 
+export(bool) var automatic_character_load : bool = false
+
 var container : Node
 var player_display_container_node : Node
 
@@ -108,6 +110,9 @@ func refresh():
 			get_node(load_button_path).show()
 			get_node(create_button_path).hide()
 			get_node(renounce_button_path).show()
+			
+			if (automatic_character_load):
+				load_character()
 		else:
 			get_node(container_path).hide()
 			get_node(load_button_path).hide()
