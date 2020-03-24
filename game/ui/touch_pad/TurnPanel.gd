@@ -2,7 +2,7 @@ extends Node2D
 
 const INACTIVE_IDX = -1;
 
-export (NodePath) var listenerNodePath : NodePath = "../../../../../.."
+export (String) var listenerNodePath : String = "../../../../../.."
 export (String) var padname : String = ""
 
 var parent : Control
