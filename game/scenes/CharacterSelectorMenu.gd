@@ -94,6 +94,7 @@ func refresh():
 				container.add_child(centry)
 				centry.owner = container
 				centry.group = character_button_group
+				centry.pressed = true
 				centry.connect("pressed", self, "character_selection_changed")
 				
 
