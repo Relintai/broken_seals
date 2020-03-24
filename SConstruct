@@ -262,6 +262,9 @@ if len(sys.argv) > 1:
             if 'win' in sys.platform:
                 build_string = 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64&' + build_string
 
+        if 'o' in arg:
+            build_string += 'use_llvm=yes'
+
         if 'v' in arg:
             build_string += 'vsproj=yes'
 
