@@ -27,6 +27,7 @@ import os
 import subprocess
 import json
 import shutil
+import traceback
 
 repository_index = 0
 module_clone_path  = '/modules/' 
@@ -57,6 +58,29 @@ target_commits = {}
 
 godot_branch = '3.2'
 
+def onerror(func, path, exc_info):
+    """
+    https://stackoverflow.com/questions/2656322/shutil-rmtree-fails-on-windows-with-access-is-denied
+
+    Because Windows.
+
+    Error handler for ``shutil.rmtree``.
+
+    If the error is due to an access error (read only file)
+    it attempts to add write permission and then retries.
+
+    If the error is for another reason it re-raises the error.
+
+    Usage : ``shutil.rmtree(path, onerror=onerror)``
+    """
+    import stat
+    if not os.access(path, os.W_OK):
+        # Is the error an access error ?
+        os.chmod(path, stat.S_IWUSR)
+        func(path)
+    else:
+        raise
+
 def load_target_commits_array():
     global target_commits
 
@@ -82,9 +106,11 @@ def update_repository(data, clone_path, branch = 'master'):
 
     os.chdir(full_path)
 
+    subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
     subprocess.call('git clean -f', shell=True)
     subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
+    subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
     subprocess.call('git clean -f', shell=True)
     subprocess.call('git pull origin ' + branch, shell=True)
@@ -105,12 +131,13 @@ def setup_repository(data, clone_path, branch = 'master'):
     full_path = cwd + clone_path + data[1] + '/'
     
     if not os.path.isdir(full_path):
-        osnn.chdir(cwd + clone_path)
+        os.chdir(cwd + clone_path)
 
         subprocess.call(clone_command.format(data[0][repository_index], data[1]), shell=True)
 
     os.chdir(full_path)
 
+    subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
     subprocess.call('git clean -f', shell=True)
     subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
@@ -121,6 +148,7 @@ def setup_repository(data, clone_path, branch = 'master'):
 
     subprocess.call('git checkout -B ' + branch + ' ' + target, shell=True)
     subprocess.call('git clean -f', shell=True)
+    subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
 
     os.chdir(cwd)
@@ -135,9 +163,9 @@ def copytree(src, dst):
 
         if os.path.isdir(sp):
             if os.path.isdir(dp):
-                shutil.rmtree(dp)
+                shutil.rmtree(dp, onerror=onerror)
 
-            shutil.copytree(sp, dp)
+                shutil.copytree(sp, dp)
         else:
             if not os.path.isdir(dst):
                 os.makedirs(dst)
@@ -228,10 +256,19 @@ if len(sys.argv) > 1:
             build_string += 'no'
         build_string += ' '
 
+        if 'm' in arg:
+            build_string += 'use_mingw=yes'
+        else:
+            if 'win' in sys.platform:
+                build_string = 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64&' + build_string
+
+        if 'v' in arg:
+            build_string += 'vsproj=yes'
+
         for i in range(2, len(sys.argv)):
             build_string += ' ' + sys.argv[i] + ' '
 
-        target = " "
+        target = ' '
 
         if 'E' in arg:
             target += 'bin/libess.x11.opt.tools.64.so'
@@ -252,12 +289,15 @@ if len(sys.argv) > 1:
         full_path = cwd + '/engine/'
 
         if not os.path.isdir(full_path):
-            print("engine directory doesnt exists.")
+            print('engine directory doesnt exists.')
             exit()
 
         os.chdir(full_path)
 
         cache_exports_str = 'export SCONS_CACHE=~/.scons_cache;export SCONS_CACHE_LIMIT=5000;'
+
+        if 'win' in sys.platform:
+            cache_exports_str = 'set SCONS_CACHE=%userprofile%\.scons_cache\&set SCONS_CACHE_LIMIT=5000&'
 
         if 'l' in arg:
             build_string += 'platform=x11'
@@ -271,6 +311,9 @@ if len(sys.argv) > 1:
             build_string += 'platform=android'
 
             android_exports_str = 'export ANDROID_NDK_ROOT=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_NDK_HOME=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_HOME=~/SDKs/Android/SDK;'
+
+            if 'win' in sys.platform:
+                android_exports_str = 'set ANDROID_NDK_ROOT=%userprofile%/SDKs/Android/NDK/android-ndk-r20b&set ANDROID_NDK_HOME=%userprofile%/SDKs/Android/NDK/android-ndk-r20b&set ANDROID_HOME=%userprofile%/SDKs/Android/SDK&'
 
             subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=armv7', shell=True)
             subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=arm64v8', shell=True)
@@ -314,7 +357,7 @@ if len(sys.argv) > 1:
         full_path = cwd + '/engine/'
 
         if not os.path.isdir(full_path):
-            print("engine directory doesnt exists.")
+            print('engine directory doesnt exists.')
             exit()
 
         os.chdir(full_path)
@@ -357,7 +400,7 @@ if not os.path.isdir('./modules'):
     os.mkdir('./modules')
 
 if 'm' in action:
-    godot_branch = "master"
+    godot_branch = 'master'
 
 if 'setup' in action or action[0] == 's':
     if target == 'all':
