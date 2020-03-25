@@ -112,7 +112,7 @@ size_flags_horizontal = 7
 size_flags_vertical = 7
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/TouchMovementControls/HBoxContainer"]
-margin_right = 290.0
+margin_right = 323.0
 margin_bottom = 400.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -120,7 +120,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 1.4
 
 [node name="Control" type="Control" parent="GUI/TouchMovementControls/HBoxContainer/VBoxContainer"]
-margin_right = 290.0
+margin_right = 323.0
 margin_bottom = 196.0
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -128,7 +128,7 @@ size_flags_vertical = 3
 
 [node name="TouchPad" type="Control" parent="GUI/TouchMovementControls/HBoxContainer/VBoxContainer"]
 margin_top = 204.0
-margin_right = 290.0
+margin_right = 323.0
 margin_bottom = 400.0
 mouse_filter = 2
 size_flags_horizontal = 15
@@ -139,16 +139,15 @@ position = Vector2( 107.368, 94.2101 )
 padname = "TouchPad"
 
 [node name="Control" type="Control" parent="GUI/TouchMovementControls/HBoxContainer"]
-margin_left = 294.0
-margin_right = 605.0
+margin_left = 327.0
+margin_right = 557.0
 margin_bottom = 400.0
 mouse_filter = 2
 size_flags_horizontal = 15
 size_flags_vertical = 15
-size_flags_stretch_ratio = 1.5
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="GUI/TouchMovementControls/HBoxContainer"]
-margin_left = 609.0
+margin_left = 561.0
 margin_right = 1024.0
 margin_bottom = 400.0
 mouse_filter = 2
@@ -157,14 +156,14 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
 [node name="Control" type="Control" parent="GUI/TouchMovementControls/HBoxContainer/VBoxContainer2"]
-margin_right = 415.0
+margin_right = 463.0
 margin_bottom = 150.0
 mouse_filter = 2
 size_flags_vertical = 3
 
 [node name="TurnPanel" type="Control" parent="GUI/TouchMovementControls/HBoxContainer/VBoxContainer2"]
 margin_top = 158.0
-margin_right = 415.0
+margin_right = 463.0
 margin_bottom = 400.0
 mouse_filter = 2
 size_flags_horizontal = 15
