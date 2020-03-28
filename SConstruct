@@ -260,7 +260,7 @@ if len(sys.argv) > 1:
             build_string += 'use_mingw=yes'
         else:
             if 'win' in sys.platform:
-                build_string = 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64&' + build_string
+                build_string = 'call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" amd64&' + build_string
 
         if 'o' in arg:
             build_string += 'use_llvm=yes'
@@ -300,7 +300,7 @@ if len(sys.argv) > 1:
         cache_exports_str = 'export SCONS_CACHE=~/.scons_cache;export SCONS_CACHE_LIMIT=5000;'
 
         if 'win' in sys.platform:
-            cache_exports_str = 'set SCONS_CACHE=%userprofile%\.scons_cache\&set SCONS_CACHE_LIMIT=5000&'
+            cache_exports_str = 'set SCONS_CACHE=%userprofile%\\.scons_cache\\&set SCONS_CACHE_LIMIT=5000&'
 
         if 'l' in arg:
             build_string += 'platform=x11'
