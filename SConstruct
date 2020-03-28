@@ -356,6 +356,10 @@ if len(sys.argv) > 1:
 
         exit()
     elif arg[0] == 'p':
+        if arg == 'p':
+            print("Applies a patch. Append c for the compilation database patch, and/or g for the gles2 batching patch. For example: pcg")
+            exit()
+
         cwd = os.getcwd()
         full_path = cwd + '/engine/'
 
@@ -365,8 +369,14 @@ if len(sys.argv) > 1:
 
         os.chdir(full_path)
 
-        #apply the compilation database patch to just the working directory, without creating a commit
-        subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
+        #apply the patch to just the working directory, without creating a commit
+
+        if 'c' in arg:
+            subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
+
+        if 'g' in arg:
+            subprocess.call('git apply --index ../patches/gles2_batch_rendering.patch', shell=True)
+
         #unstage all files
         subprocess.call('git reset', shell=True)
 
