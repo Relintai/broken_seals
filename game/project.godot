@@ -500,6 +500,7 @@ actionbar_1_12={
 quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
+quality/2d/use_batching=true
 quality/directional_shadow/size.mobile=1024
 quality/shading/force_vertex_shading=true
 quality/shadows/enabled=false
