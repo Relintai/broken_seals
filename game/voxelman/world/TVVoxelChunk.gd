@@ -32,7 +32,7 @@ var _entities_spawned : bool
 
 const GENERATE_LOD = true
 const LOD_NUM = 3
-var current_lod_level : int = LOD_NUM setget set_current_lod_level, get_current_lod_level
+var current_lod_level : int = 0 setget set_current_lod_level, get_current_lod_level
 var _lod_meshes : Array
 var _lod_mesh_instances : Array
 
