@@ -78,9 +78,13 @@ func _process(delta):
 		var ppos : Vector3 = _player.get_body().transform.origin
 		
 		var cpos : Vector3 = ppos
-		cpos.x = int(cpos.x / (chunk_size_x * voxel_scale))
-		cpos.y = int(cpos.y / (chunk_size_y * voxel_scale))
-		cpos.z = int(cpos.z / (chunk_size_z * voxel_scale))
+		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))
+		var ppy : int = int(cpos.y / (chunk_size_y * voxel_scale))
+		var ppz : int = int(cpos.z / (chunk_size_z * voxel_scale))
+
+		cpos.x = ppx
+		cpos.y = ppy
+		cpos.z = ppz
 		
 		var count : int = get_chunk_count()
 		var i : int = 0
@@ -95,7 +99,22 @@ func _process(delta):
 				c.queue_free()
 				i -= 1
 				count -= 1
+			else:
+				var dx : int = abs(ppx - c.position_x)
+				var dy : int = abs(ppy - c.position_y)
+				var dz : int = abs(ppz - c.position_z)
 				
+				var mr : int = max(max(dx, dy), dz)
+				
+				if mr <= 1:
+					c.current_lod_level = 0
+				elif mr == 2:
+					c.current_lod_level = 1
+				elif mr == 3 or mr == 4:
+					c.current_lod_level = 2
+				else:
+					c.current_lod_level = 3
+
 			i += 1
 			
 		for x in range(-chunk_spawn_range + int(cpos.x), chunk_spawn_range + int(cpos.x)):
@@ -227,7 +246,7 @@ func add_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 					continue
 				
 				chunk.add_voxel_light(light)
-
+				
 func setup_client_seed(pseed : int) -> void:
 #	_player_file_name = ""
 #	_player = null

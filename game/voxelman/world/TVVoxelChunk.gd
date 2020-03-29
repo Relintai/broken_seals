@@ -30,9 +30,9 @@ var _textures : Array
 var _prop_material : SpatialMaterial
 var _entities_spawned : bool
 
-const GENERATE_LOD = false
-const LOD_NUM = 4
-var current_lod_level : int = 0 setget set_current_lod_level, get_current_lod_level
+const GENERATE_LOD = true
+const LOD_NUM = 3
+var current_lod_level : int = LOD_NUM setget set_current_lod_level, get_current_lod_level
 var _lod_meshes : Array
 var _lod_mesh_instances : Array
 
@@ -207,6 +207,8 @@ func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, sna
 
 func _build_phase(phase):
 	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:
+		._build_phase(phase)
+		
 		if GENERATE_LOD and _lod_mesh_instances.size() == 0:
 			for i in range(LOD_NUM):
 				var inst : RID = VisualServer.instance_create()
@@ -218,12 +220,11 @@ func _build_phase(phase):
 				
 				VisualServer.instance_set_base(inst, mesh)
 				VisualServer.instance_set_transform(inst, Transform(Basis(), Vector3(position_x * size_x * voxel_scale, position_y * size_y * voxel_scale, position_z * size_z * voxel_scale)))
+#				VisualServer.instance_set_transform(inst, transform)
 				VisualServer.instance_set_visible(inst, false)
 				
 				_lod_mesh_instances.append(inst)
 				_lod_meshes.append(mesh)
-		
-		._build_phase(phase)
 	elif phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
@@ -263,38 +264,59 @@ func _build_phase(phase):
 
 		if (get_mesh_rid() == RID()):
 			allocate_main_mesh()
-
+			
 		var arr : Array = mesher.build_mesh()
-
+		
 		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 		if library.get_material(0) != null:
 			VisualServer.mesh_surface_set_material(get_mesh_rid(), 0, library.get_material(0).get_rid())
+			
+#		VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
 		
-		if GENERATE_LOD and LOD_NUM > 0:
+		if GENERATE_LOD and LOD_NUM >= 1:
 			#for lod 1 just remove uv2
 			
-			var arr_lod1 : Array
-			arr_lod1.resize(arr.size())
-			
-			for i in range(arr.size()):
-				if i == VisualServer.ARRAY_TEX_UV2:
-					continue
-				
-				arr_lod1[i] = arr[i]
+			arr[VisualServer.ARRAY_TEX_UV2] = null
 
-			VisualServer.mesh_add_surface_from_arrays(_lod_meshes[0], VisualServer.PRIMITIVE_TRIANGLES, arr_lod1)
+			VisualServer.mesh_add_surface_from_arrays(_lod_meshes[0], VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 			if library.get_material(1) != null:
 				VisualServer.mesh_surface_set_material(_lod_meshes[0], 0, library.get_material(1).get_rid())
-			
-			if LOD_NUM > 1:
-				pass
-#		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
-#		fqms.initialize(arr)
-#		fqms.simplify_mesh(600, 7)
-#		var arr2 = fqms.get_arrays()
+				
+			if LOD_NUM >= 2:
+				arr = merge_mesh_array(arr)
+				
+				VisualServer.mesh_add_surface_from_arrays(_lod_meshes[1], VisualServer.PRIMITIVE_TRIANGLES, arr)
 
+				if library.get_material(2) != null:
+					VisualServer.mesh_surface_set_material(_lod_meshes[1], 0, library.get_material(2).get_rid())
+				
+			if LOD_NUM >= 3:
+				arr = bake_mesh_array_uv(arr)
+				arr[VisualServer.ARRAY_TEX_UV] = null
+				
+				VisualServer.mesh_add_surface_from_arrays(_lod_meshes[2], VisualServer.PRIMITIVE_TRIANGLES, arr)
+
+				if library.get_material(3) != null:
+					VisualServer.mesh_surface_set_material(_lod_meshes[2], 0, library.get_material(3).get_rid())
+#			if LOD_NUM > 4:
+#					var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+#					fqms.initialize(merged)
+#
+#					var arr_merged_simplified : Array = merged
+
+#					for i in range(2, _lod_meshes.size()):
+#						fqms.simplify_mesh(arr_merged_simplified[0].size() * 0.8, 7)
+#						arr_merged_simplified = fqms.get_arrays()
+
+#						if arr_merged_simplified[0].size() == 0:
+#							break
+
+#						VisualServer.mesh_add_surface_from_arrays(_lod_meshes[i], VisualServer.PRIMITIVE_TRIANGLES, arr_merged_simplified)
+
+#						if library.get_material(i) != null:
+#							VisualServer.mesh_surface_set_material(_lod_meshes[i], 0, library.get_material(i).get_rid())
 
 		next_phase();
 
@@ -308,9 +330,86 @@ func _build_phase(phase):
 		
 		._build_phase(phase)
 		
-		set_current_lod_level(1)
+		set_current_lod_level(current_lod_level)
 	else:
 		._build_phase(phase)
+
+func merge_mesh_array(arr : Array) -> Array:
+	var verts : PoolVector3Array = arr[VisualServer.ARRAY_VERTEX]
+	var normals : PoolVector3Array = arr[VisualServer.ARRAY_NORMAL]
+	var uvs : PoolVector2Array = arr[VisualServer.ARRAY_TEX_UV]
+	var colors : PoolColorArray = arr[VisualServer.ARRAY_COLOR]
+	var indices : PoolIntArray = arr[VisualServer.ARRAY_INDEX]
+
+	var i : int = 0
+	while i < verts.size():
+		var v : Vector3 = verts[i]
+		
+		var equals : Array
+		for j in range(i + 1, verts.size()):
+			var vc : Vector3 = verts[j]
+			
+			if is_equal_approx(v.x, vc.x) and is_equal_approx(v.y, vc.y) and is_equal_approx(v.z, vc.z):
+				equals.push_back(j)
+		
+		for k in range(equals.size()):
+			var rem : int = equals[k]
+			var remk : int = rem - k
+			
+			verts.remove(remk)
+			normals.remove(remk)
+			uvs.remove(remk)
+			colors.remove(remk)
+			
+			for j in range(indices.size()):
+				var indx : int = indices[j]
+				
+				if indx == remk:
+					indices.set(j, i)
+				elif indx > remk:
+					indices.set(j, indx - 1)
+					
+		i += 1
+		
+	arr[VisualServer.ARRAY_VERTEX] = verts
+	arr[VisualServer.ARRAY_NORMAL] = normals
+	arr[VisualServer.ARRAY_TEX_UV] = uvs
+	arr[VisualServer.ARRAY_COLOR] = colors
+	arr[VisualServer.ARRAY_INDEX] = indices
+	
+	return arr
+	
+func bake_mesh_array_uv(arr : Array) -> Array:
+	var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
+	var tex : Texture = mat.get_shader_param("texture_albedo")
+	
+	if tex == null:
+		return arr
+		
+	var img : Image = tex.get_data()
+	
+	if img == null:
+		return arr
+		
+	var imgsize : Vector2 = img.get_size()
+		
+	var uvs : PoolVector2Array = arr[VisualServer.ARRAY_TEX_UV]
+	var colors : PoolColorArray = arr[VisualServer.ARRAY_COLOR]
+
+	img.lock()
+	for i in range(uvs.size()):
+		var uv : Vector2 = uvs[i]
+		uv *= imgsize
+		
+		var c : Color = img.get_pixelv(uv)
+		
+		colors[i] = colors[i] * c * 0.7
+		
+	img.unlock()
+
+	arr[VisualServer.ARRAY_COLOR] = colors
+	
+	return arr
 
 func _prop_added(prop):
 	pass
@@ -360,6 +459,21 @@ func _build_phase_physics_process(phase):
 ##		print(Vector3(pos_x, pos_y, pos_z))
 #		draw_cross_voxels_fill(Vector3(pos_x, pos_y, pos_z), 1)
 
+func _notification(what):
+	if what == NOTIFICATION_EXIT_TREE:
+		for m in _lod_mesh_instances:
+			VisualServer.free_rid(m)
+			
+		for m in _lod_meshes:
+			VisualServer.free_rid(m)
+
+func _visibility_changed(visible):
+	if not GENERATE_LOD:
+		._visibility_changed(visible)
+		return
+	
+	set_current_lod_level(current_lod_level)
+
 func update_lod_transforms():
 	for m in _lod_mesh_instances:
 		VisualServer.instance_set_transform(m, transform);
@@ -369,17 +483,24 @@ func get_current_lod_level():
 	
 func set_current_lod_level(val):
 	current_lod_level = val
-	
+		
 	if not GENERATE_LOD:
 		return
 	
+	if current_lod_level < 0:
+		current_lod_level = 0
+		
+	if current_lod_level > LOD_NUM:
+		current_lod_level = LOD_NUM
+
 	VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
 	
 	for m in _lod_mesh_instances:
 		VisualServer.instance_set_visible(m, false)
-		
+
 	if val == 0:
 		VisualServer.instance_set_visible(get_mesh_instance_rid(), true)
 	else:
-		VisualServer.instance_set_visible(_lod_mesh_instances[val - 1], true)
+		if (_lod_mesh_instances.size() > val - 1):
+			VisualServer.instance_set_visible(_lod_mesh_instances[val - 1], true)
 	
