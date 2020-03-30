@@ -110,7 +110,7 @@ func _process(delta):
 					c.current_lod_level = 0
 				elif mr == 2:
 					c.current_lod_level = 1
-				elif mr == 3 or mr == 4:
+				elif mr == 3:# or mr == 4:
 					c.current_lod_level = 2
 				else:
 					c.current_lod_level = 3
