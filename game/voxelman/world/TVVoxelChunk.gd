@@ -30,10 +30,6 @@ var _textures : Array
 var _prop_material : SpatialMaterial
 var _entities_spawned : bool
 
-const GENERATE_LOD = true
-const LOD_NUM = 3
-var current_lod_level : int = 0 setget set_current_lod_level, get_current_lod_level
-
 #func _enter_tree():
 #	create_debug_immediate_geometry()
 	
@@ -80,7 +76,7 @@ func build_phase_prop_mesh() -> void:
 		return
 		
 	if has_meshes(MESH_INDEX_PROP, MESH_TYPE_INDEX_MESH):
-		create_meshes(MESH_INDEX_PROP, LOD_NUM + 1)
+		create_meshes(MESH_INDEX_PROP, lod_num + 1)
 		
 #	if _prop_material == null:
 #		_prop_material = SpatialMaterial.new()
@@ -205,111 +201,106 @@ func _build_phase(phase):
 		#set_physics_process_internal(true)
 		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
-	elif phase == VoxelChunkDefault.BUILD_PHASE_TERRARIN_MESH:
-		for i in range(get_mesher_count()):
-			var mesher : VoxelMesher = get_mesher(i)
-			mesher.bake_colors(self)
-
-		for i in range(get_mesher_count()):
-			var mesher : VoxelMesher = get_mesher(i)
-			mesher.set_library(library)
-
-
-		var mesh_rid : RID = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
-		
-		if mesh_rid == RID():
-			create_meshes(MESH_INDEX_TERRARIN, LOD_NUM + 1)
-			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
-
-		var mesher : VoxelMesher = null
-		for i in range(get_mesher_count()):
-			var m : VoxelMesher = get_mesher(i)
-
-			if mesher == null:
-				mesher = m
-				continue
-
-			mesher.set_material(library.material)
-			mesher.add_mesher(m)
-
-		if (mesh_rid != RID()):
-			VisualServer.mesh_clear(mesh_rid)
-
-		if mesher.get_vertex_count() == 0:
-			next_phase()
-			return true
-
-		if (mesh_rid == RID()):
-			create_meshes(MESH_INDEX_TERRARIN, LOD_NUM + 1)
-			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
-			
-		var arr : Array = mesher.build_mesh()
-		
-		VisualServer.mesh_add_surface_from_arrays(mesh_rid, VisualServer.PRIMITIVE_TRIANGLES, arr)
-
-		if library.get_material(0) != null:
-			VisualServer.mesh_surface_set_material(mesh_rid, 0, library.get_material(0).get_rid())
-			
-#		VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
-		
-		if GENERATE_LOD and LOD_NUM >= 1:
-			#for lod 1 just remove uv2
-			
-			arr[VisualServer.ARRAY_TEX_UV2] = null
-
-			VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), VisualServer.PRIMITIVE_TRIANGLES, arr)
-
-			if library.get_material(1) != null:
-				VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), 0, library.get_material(1).get_rid())
-				
-			if LOD_NUM >= 2:
-				arr = merge_mesh_array(arr)
-				
-				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), VisualServer.PRIMITIVE_TRIANGLES, arr)
-
-				if library.get_material(2) != null:
-					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), 0, library.get_material(2).get_rid())
-				
-			if LOD_NUM >= 3:
-				var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
-				var tex : Texture = mat.get_shader_param("texture_albedo")
-				
-				arr = bake_mesh_array_uv(arr, tex)
-				arr[VisualServer.ARRAY_TEX_UV] = null
-				
-				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), VisualServer.PRIMITIVE_TRIANGLES, arr)
-
-				if library.get_material(3) != null:
-					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), 0, library.get_material(3).get_rid())
-#			if LOD_NUM > 4:
-#					var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
-#					fqms.initialize(merged)
+#	elif phase == VoxelChunkDefault.BUILD_PHASE_TERRARIN_MESH:
+#		for i in range(get_mesher_count()):
+#			var mesher : VoxelMesher = get_mesher(i)
+#			mesher.bake_colors(self)
 #
-#					var arr_merged_simplified : Array = merged
-
-#					for i in range(2, _lod_meshes.size()):
-#						fqms.simplify_mesh(arr_merged_simplified[0].size() * 0.8, 7)
-#						arr_merged_simplified = fqms.get_arrays()
-
-#						if arr_merged_simplified[0].size() == 0:
-#							break
-
-#						VisualServer.mesh_add_surface_from_arrays(_lod_meshes[i], VisualServer.PRIMITIVE_TRIANGLES, arr_merged_simplified)
-
-#						if library.get_material(i) != null:
-#							VisualServer.mesh_surface_set_material(_lod_meshes[i], 0, library.get_material(i).get_rid())
-
-		next_phase();
-
-		return
+#		for i in range(get_mesher_count()):
+#			var mesher : VoxelMesher = get_mesher(i)
+#			mesher.set_library(library)
+#
+#		var mesh_rid : RID = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
+#
+#		if mesh_rid == RID():
+#			create_meshes(MESH_INDEX_TERRARIN, lod_num + 1)
+#			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
+#
+#		var mesher : VoxelMesher = null
+#		for i in range(get_mesher_count()):
+#			var m : VoxelMesher = get_mesher(i)
+#
+#			if mesher == null:
+#				mesher = m
+#				continue
+#
+#			mesher.set_material(library.material)
+#			mesher.add_mesher(m)
+#
+#		if (mesh_rid != RID()):
+#			VisualServer.mesh_clear(mesh_rid)
+#
+#		if mesher.get_vertex_count() == 0:
+#			next_phase()
+#			return true
+#
+#		if (mesh_rid == RID()):
+#			create_meshes(MESH_INDEX_TERRARIN, lod_num + 1)
+#			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
+#
+#		var arr : Array = mesher.build_mesh()
+#
+#		VisualServer.mesh_add_surface_from_arrays(mesh_rid, VisualServer.PRIMITIVE_TRIANGLES, arr)
+#
+#		if library.get_material(0) != null:
+#			VisualServer.mesh_surface_set_material(mesh_rid, 0, library.get_material(0).get_rid())
+#
+##		VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
+#
+#		if generate_lod and lod_num >= 1:
+#			#for lod 1 just remove uv2
+#
+#			arr[VisualServer.ARRAY_TEX_UV2] = null
+#
+#			VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), VisualServer.PRIMITIVE_TRIANGLES, arr)
+#
+#			if library.get_material(1) != null:
+#				VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), 0, library.get_material(1).get_rid())
+#
+#			if lod_num >= 2:
+#				arr = merge_mesh_array(arr)
+#
+#				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), VisualServer.PRIMITIVE_TRIANGLES, arr)
+#
+#				if library.get_material(2) != null:
+#					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), 0, library.get_material(2).get_rid())
+#
+#			if lod_num >= 3:
+#				var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
+#				var tex : Texture = mat.get_shader_param("texture_albedo")
+#
+#				arr = bake_mesh_array_uv(arr, tex)
+#				arr[VisualServer.ARRAY_TEX_UV] = null
+#
+#				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), VisualServer.PRIMITIVE_TRIANGLES, arr)
+#
+#				if library.get_material(3) != null:
+#					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), 0, library.get_material(3).get_rid())
+##			if lod_num > 4:
+##					var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+##					fqms.initialize(merged)
+##
+##					var arr_merged_simplified : Array = merged
+#
+##					for i in range(2, _lod_meshes.size()):
+##						fqms.simplify_mesh(arr_merged_simplified[0].size() * 0.8, 7)
+##						arr_merged_simplified = fqms.get_arrays()
+#
+##						if arr_merged_simplified[0].size() == 0:
+##							break
+#
+##						VisualServer.mesh_add_surface_from_arrays(_lod_meshes[i], VisualServer.PRIMITIVE_TRIANGLES, arr_merged_simplified)
+#
+##						if library.get_material(i) != null:
+##							VisualServer.mesh_surface_set_material(_lod_meshes[i], 0, library.get_material(i).get_rid())
+#
+#		next_phase();
+#
+#		return
 	elif phase == VoxelChunkDefault.BUILD_PHASE_PROP_MESH:
 #		set_physics_process_internal(true)
 		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
-	elif phase == BUILD_PHASE_FINALIZE:
-		._build_phase(phase)
-		
-		set_current_lod_level(current_lod_level)
 	else:
 		._build_phase(phase)
 
@@ -353,30 +344,3 @@ func _build_phase_physics_process(phase):
 	else:
 		._build_phase_physics_process(phase)
 
-func _visibility_changed(visible):
-	._visibility_changed(visible)
-
-	set_current_lod_level(current_lod_level)
-
-func get_current_lod_level():
-	return current_lod_level
-	
-func set_current_lod_level(val):
-	current_lod_level = val
-		
-	if not GENERATE_LOD:
-		return
-	
-	if current_lod_level < 0:
-		current_lod_level = 0
-		
-	if current_lod_level > LOD_NUM:
-		current_lod_level = LOD_NUM
-
-	for i in range(LOD_NUM + 1):
-		var vis : bool = false
-		
-		if i == current_lod_level:
-			vis = true
-			
-		VisualServer.instance_set_visible(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH_INSTANCE, i), vis)
