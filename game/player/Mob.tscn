@@ -17,6 +17,7 @@ extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 body_path = NodePath("Body")
 character_skeleton_path = NodePath("Body/Rotation_Helper/Model/character")
 script = ExtResource( 2 )
+max_visible_distance = 100.0
 
 [node name="NamePlate" parent="." instance=ExtResource( 3 )]
 max_distance = 50.0
@@ -37,4 +38,3 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0
 [node name="Model" type="Spatial" parent="Body/Rotation_Helper"]
 
 [node name="character" parent="Body/Rotation_Helper/Model" instance=ExtResource( 1 )]
-refresh_in_editor = false

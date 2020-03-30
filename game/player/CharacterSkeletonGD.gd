@@ -28,14 +28,16 @@ export(bool) var refresh_in_editor : bool = false setget editor_build
 export(bool) var automatic_build : bool = false
 export(bool) var use_threads : bool = false
 
+export(bool) var use_lod : bool = true
+
 export(NodePath) var mesh_instance_path : NodePath
 var mesh_instance : MeshInstance = null
 
 export(NodePath) var skeleton_path : NodePath
 var skeleton : Skeleton
 
-export(Material) var material : Material = null
-var _material : Material = null
+export(Array, Material) var materials : Array
+var _materials : Array = Array()
 
 export (NodePath) var left_hand_attach_point_path : NodePath
 var left_hand_attach_point : CharacterSkeketonAttachPoint
@@ -47,6 +49,12 @@ export (NodePath) var root_attach_point_path : NodePath
 var root_attach_point : CharacterSkeketonAttachPoint
 
 export(Array, ItemVisual) var viss : Array
+
+var meshes : Array
+
+var _current_lod_level : int = 0
+
+var _generating : bool = false
 
 var bone_names = {
 	0: "root",
@@ -89,7 +97,7 @@ var _texture_packer : TexturePacker
 var _textures : Array
 var _texture : Texture
 
-var mesh : ArrayMesh = null
+#var mesh : ArrayMesh = null
 var st : SurfaceTool = null
 
 var _thread_done : bool = false
@@ -112,8 +120,9 @@ func _enter_tree():
 	torso_attach_point = get_node(torso_attach_point_path) as CharacterSkeketonAttachPoint
 	root_attach_point = get_node(root_attach_point_path) as CharacterSkeketonAttachPoint
 
-	if _material == null:
-		_material = material.duplicate()
+	if _materials.size() != materials.size():
+		for m in materials:
+			_materials.append(m.duplicate())
 	
 	if not OS.can_use_threads():
 		use_threads = false
@@ -135,9 +144,15 @@ func _process(delta):
 		finish_build_mesh()
 		set_process(false)
 		_thread_done = false
+		_generating = false
 		
 
 func _build_model():
+	if _generating:
+		return
+		
+	_generating = true
+	
 	if Engine.is_editor_hint() and not refresh_in_editor:
 		set_process(false)
 		return
@@ -172,8 +187,10 @@ func build_mesh(data) -> void:
 
 	prepare_textures()
 
+	meshes.clear()
+
 	st.clear()
-	st.set_material(_material)
+	st.set_material(_materials[0])
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var vertex_count : int = 0
 	
@@ -244,8 +261,27 @@ func build_mesh(data) -> void:
 	
 				vertex_count += len(vertices)
 	
-	mesh = st.commit()
-	mesh.surface_set_material(0, _material)
+	var arr : Array = st.commit_to_arrays()
+	
+	var mesh : ArrayMesh = ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	mesh.surface_set_material(0, _materials[0])
+	meshes.append(mesh)
+	
+	if use_lod:
+		
+		arr = merge_mesh_array(arr)
+		var meshl2 : ArrayMesh = ArrayMesh.new()
+		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		meshl2.surface_set_material(0, _materials[1])
+		meshes.append(meshl2)
+
+		arr = bake_mesh_array_uv(arr, _texture)
+		arr[VisualServer.ARRAY_TEX_UV] = null
+		var meshl3 : ArrayMesh = ArrayMesh.new()
+		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		meshl3.surface_set_material(0, _materials[2])
+		meshes.append(meshl3)
 
 #	finish_build_mesh()
 	_thread_done = true
@@ -275,8 +311,13 @@ func prepare_textures() -> void:
 	
 #	var mat : SpatialMaterial = _material as SpatialMaterial
 #	mat.albedo_texture = tex
-	var mat : ShaderMaterial = _material as ShaderMaterial
+	var mat : ShaderMaterial = _materials[0] as ShaderMaterial
 	mat.set_shader_param("texture_albedo", tex)
+	
+	if use_lod:
+		var mat2 : ShaderMaterial = _materials[1] as ShaderMaterial
+		mat2.set_shader_param("texture_albedo", tex)
+	
 #	mat.albedo_texture = tex
 	_texture = tex
 
@@ -290,14 +331,15 @@ func setup_build_mesh() -> void:
 		get_animation_player().seek(0, true)
 	
 func finish_build_mesh() -> void:
-	mesh_instance.mesh = mesh
+	mesh_instance.mesh = meshes[_current_lod_level]
 		
 	if get_animation_tree() != null:
 		get_animation_tree().active = true
-		
+	
+	_generating = false	
 
 func clear_mesh() -> void:
-	mesh = null
+	meshes.clear()
 	
 	if mesh_instance != null:
 		mesh_instance.mesh = null
@@ -326,3 +368,20 @@ func get_bone_name(skele_point : int) -> String:
 		return bone_names[skele_point]
 		
 	return ""
+	
+func set_lod_level(level : int) -> void:
+	if _current_lod_level == level:
+		return
+		
+	if meshes.size() == 0:
+		return
+	
+	if level < 0:
+		return
+		
+	if level >= meshes.size():
+		level = meshes.size() - 1
+		
+	_current_lod_level = level
+	
+	mesh_instance.mesh = meshes[_current_lod_level]

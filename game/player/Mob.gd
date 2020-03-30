@@ -95,6 +95,15 @@ func _process(delta : float) -> void:
 			get_body().hide()
 		return
 	else:
+#		var lod_level : int = int(dst / max_visible_distance_squared * 3.0)
+
+		if dst < 400: #20^2
+			get_character_skeleton().set_lod_level(0)
+		elif dst > 400 and dst < 900: #20^2, 30^2
+			get_character_skeleton().set_lod_level(1)
+		else:
+			get_character_skeleton().set_lod_level(2)
+		
 		if not get_body().visible:
 			get_body().show()
 
