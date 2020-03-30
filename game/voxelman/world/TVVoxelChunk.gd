@@ -293,7 +293,10 @@ func _build_phase(phase):
 					VisualServer.mesh_surface_set_material(_lod_meshes[1], 0, library.get_material(2).get_rid())
 				
 			if LOD_NUM >= 3:
-				arr = bake_mesh_array_uv(arr)
+				var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
+				var tex : Texture = mat.get_shader_param("texture_albedo")
+				
+				arr = bake_mesh_array_uv(arr, tex)
 				arr[VisualServer.ARRAY_TEX_UV] = null
 				
 				VisualServer.mesh_add_surface_from_arrays(_lod_meshes[2], VisualServer.PRIMITIVE_TRIANGLES, arr)
@@ -333,83 +336,6 @@ func _build_phase(phase):
 		set_current_lod_level(current_lod_level)
 	else:
 		._build_phase(phase)
-
-func merge_mesh_array(arr : Array) -> Array:
-	var verts : PoolVector3Array = arr[VisualServer.ARRAY_VERTEX]
-	var normals : PoolVector3Array = arr[VisualServer.ARRAY_NORMAL]
-	var uvs : PoolVector2Array = arr[VisualServer.ARRAY_TEX_UV]
-	var colors : PoolColorArray = arr[VisualServer.ARRAY_COLOR]
-	var indices : PoolIntArray = arr[VisualServer.ARRAY_INDEX]
-
-	var i : int = 0
-	while i < verts.size():
-		var v : Vector3 = verts[i]
-		
-		var equals : Array
-		for j in range(i + 1, verts.size()):
-			var vc : Vector3 = verts[j]
-			
-			if is_equal_approx(v.x, vc.x) and is_equal_approx(v.y, vc.y) and is_equal_approx(v.z, vc.z):
-				equals.push_back(j)
-		
-		for k in range(equals.size()):
-			var rem : int = equals[k]
-			var remk : int = rem - k
-			
-			verts.remove(remk)
-			normals.remove(remk)
-			uvs.remove(remk)
-			colors.remove(remk)
-			
-			for j in range(indices.size()):
-				var indx : int = indices[j]
-				
-				if indx == remk:
-					indices.set(j, i)
-				elif indx > remk:
-					indices.set(j, indx - 1)
-					
-		i += 1
-		
-	arr[VisualServer.ARRAY_VERTEX] = verts
-	arr[VisualServer.ARRAY_NORMAL] = normals
-	arr[VisualServer.ARRAY_TEX_UV] = uvs
-	arr[VisualServer.ARRAY_COLOR] = colors
-	arr[VisualServer.ARRAY_INDEX] = indices
-	
-	return arr
-	
-func bake_mesh_array_uv(arr : Array) -> Array:
-	var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
-	var tex : Texture = mat.get_shader_param("texture_albedo")
-	
-	if tex == null:
-		return arr
-		
-	var img : Image = tex.get_data()
-	
-	if img == null:
-		return arr
-		
-	var imgsize : Vector2 = img.get_size()
-		
-	var uvs : PoolVector2Array = arr[VisualServer.ARRAY_TEX_UV]
-	var colors : PoolColorArray = arr[VisualServer.ARRAY_COLOR]
-
-	img.lock()
-	for i in range(uvs.size()):
-		var uv : Vector2 = uvs[i]
-		uv *= imgsize
-		
-		var c : Color = img.get_pixelv(uv)
-		
-		colors[i] = colors[i] * c * 0.7
-		
-	img.unlock()
-
-	arr[VisualServer.ARRAY_COLOR] = colors
-	
-	return arr
 
 func _prop_added(prop):
 	pass
