@@ -33,17 +33,6 @@ var _entities_spawned : bool
 const GENERATE_LOD = true
 const LOD_NUM = 3
 var current_lod_level : int = 0 setget set_current_lod_level, get_current_lod_level
-var _lod_meshes : Array
-var _lod_mesh_instances : Array
-
-var lod_data : Array = [
-	1, #CHUNK_INDEX_UP
-	1, #CHUNK_INDEX_DOWN
-	1, #CHUNK_INDEX_LEFT
-	1, #CHUNK_INDEX_RIGHT
-	1, #CHUNK_INDEX_FRONT
-	1 #CHUNK_INDEX_BACK
-]
 
 #func _enter_tree():
 #	create_debug_immediate_geometry()
@@ -90,8 +79,8 @@ func build_phase_prop_mesh() -> void:
 		next_phase()
 		return
 		
-	if get_prop_mesh_rid() == RID():
-		allocate_prop_mesh()
+	if has_meshes(MESH_INDEX_PROP, MESH_TYPE_INDEX_MESH):
+		create_meshes(MESH_INDEX_PROP, LOD_NUM + 1)
 		
 #	if _prop_material == null:
 #		_prop_material = SpatialMaterial.new()
@@ -99,8 +88,8 @@ func build_phase_prop_mesh() -> void:
 #		_prop_material.vertex_color_use_as_albedo = true
 #		_prop_material.params_specular_mode = SpatialMaterial.SPECULAR_DISABLED
 #		_prop_material.metallic = 0
-		
-		VisualServer.instance_geometry_set_material_override(get_prop_mesh_instance_rid(), library.get_prop_material(0).get_rid())
+
+		VisualServer.instance_geometry_set_material_override(get_mesh_rid_index(MESH_INDEX_PROP, MESH_TYPE_INDEX_MESH_INSTANCE, 0), library.get_prop_material(0).get_rid())
 		
 		for i in range(get_mesher_count()):
 			get_mesher(i).material = _prop_material
@@ -138,7 +127,7 @@ func build_phase_prop_mesh() -> void:
 
 	for i in range(get_mesher_count()):
 		get_mesher(i).bake_colors(self)
-		get_mesher(i).build_mesh_into(get_prop_mesh_rid())
+		get_mesher(i).build_mesh_into(get_mesh_rid_index(MESH_INDEX_PROP, MESH_TYPE_INDEX_MESH, 0))
 		get_mesher(i).material = null
 		
 	if not _entities_spawned:
@@ -209,22 +198,6 @@ func _build_phase(phase):
 	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:
 		._build_phase(phase)
 		
-		if GENERATE_LOD and _lod_mesh_instances.size() == 0:
-			for i in range(LOD_NUM):
-				var inst : RID = VisualServer.instance_create()
-				
-				if get_world() != null:
-					VisualServer.instance_set_scenario(inst, get_world().scenario)
-				
-				var mesh : RID = VisualServer.mesh_create()
-				
-				VisualServer.instance_set_base(inst, mesh)
-				VisualServer.instance_set_transform(inst, Transform(Basis(), Vector3(position_x * size_x * voxel_scale, position_y * size_y * voxel_scale, position_z * size_z * voxel_scale)))
-#				VisualServer.instance_set_transform(inst, transform)
-				VisualServer.instance_set_visible(inst, false)
-				
-				_lod_mesh_instances.append(inst)
-				_lod_meshes.append(mesh)
 	elif phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
 		clear_baked_lights()
 		generate_random_ao()
@@ -241,8 +214,12 @@ func _build_phase(phase):
 			var mesher : VoxelMesher = get_mesher(i)
 			mesher.set_library(library)
 
-		if get_mesh_rid() == RID():
-			allocate_main_mesh()
+
+		var mesh_rid : RID = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
+		
+		if mesh_rid == RID():
+			create_meshes(MESH_INDEX_TERRARIN, LOD_NUM + 1)
+			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
 
 		var mesher : VoxelMesher = null
 		for i in range(get_mesher_count()):
@@ -255,22 +232,23 @@ func _build_phase(phase):
 			mesher.set_material(library.material)
 			mesher.add_mesher(m)
 
-		if (get_mesh_rid() != RID()):
-			VisualServer.mesh_clear(get_mesh_rid())
+		if (mesh_rid != RID()):
+			VisualServer.mesh_clear(mesh_rid)
 
 		if mesher.get_vertex_count() == 0:
 			next_phase()
 			return true
 
-		if (get_mesh_rid() == RID()):
-			allocate_main_mesh()
+		if (mesh_rid == RID()):
+			create_meshes(MESH_INDEX_TERRARIN, LOD_NUM + 1)
+			mesh_rid = get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 0)
 			
 		var arr : Array = mesher.build_mesh()
 		
-		VisualServer.mesh_add_surface_from_arrays(get_mesh_rid(), VisualServer.PRIMITIVE_TRIANGLES, arr)
+		VisualServer.mesh_add_surface_from_arrays(mesh_rid, VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 		if library.get_material(0) != null:
-			VisualServer.mesh_surface_set_material(get_mesh_rid(), 0, library.get_material(0).get_rid())
+			VisualServer.mesh_surface_set_material(mesh_rid, 0, library.get_material(0).get_rid())
 			
 #		VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
 		
@@ -279,18 +257,18 @@ func _build_phase(phase):
 			
 			arr[VisualServer.ARRAY_TEX_UV2] = null
 
-			VisualServer.mesh_add_surface_from_arrays(_lod_meshes[0], VisualServer.PRIMITIVE_TRIANGLES, arr)
+			VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 			if library.get_material(1) != null:
-				VisualServer.mesh_surface_set_material(_lod_meshes[0], 0, library.get_material(1).get_rid())
+				VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 1), 0, library.get_material(1).get_rid())
 				
 			if LOD_NUM >= 2:
 				arr = merge_mesh_array(arr)
 				
-				VisualServer.mesh_add_surface_from_arrays(_lod_meshes[1], VisualServer.PRIMITIVE_TRIANGLES, arr)
+				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 				if library.get_material(2) != null:
-					VisualServer.mesh_surface_set_material(_lod_meshes[1], 0, library.get_material(2).get_rid())
+					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 2), 0, library.get_material(2).get_rid())
 				
 			if LOD_NUM >= 3:
 				var mat : ShaderMaterial = library.get_material(0) as ShaderMaterial
@@ -299,10 +277,10 @@ func _build_phase(phase):
 				arr = bake_mesh_array_uv(arr, tex)
 				arr[VisualServer.ARRAY_TEX_UV] = null
 				
-				VisualServer.mesh_add_surface_from_arrays(_lod_meshes[2], VisualServer.PRIMITIVE_TRIANGLES, arr)
+				VisualServer.mesh_add_surface_from_arrays(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), VisualServer.PRIMITIVE_TRIANGLES, arr)
 
 				if library.get_material(3) != null:
-					VisualServer.mesh_surface_set_material(_lod_meshes[2], 0, library.get_material(3).get_rid())
+					VisualServer.mesh_surface_set_material(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH, 3), 0, library.get_material(3).get_rid())
 #			if LOD_NUM > 4:
 #					var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
 #					fqms.initialize(merged)
@@ -329,8 +307,6 @@ func _build_phase(phase):
 		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
 		return
 	elif phase == BUILD_PHASE_FINALIZE:
-		update_lod_transforms()
-		
 		._build_phase(phase)
 		
 		set_current_lod_level(current_lod_level)
@@ -377,32 +353,10 @@ func _build_phase_physics_process(phase):
 	else:
 		._build_phase_physics_process(phase)
 
-#func _draw_debug_voxel_lights(debug_drawer):
-#	for light in _lightsarr:
-#		var pos_x = (light.get_world_position_x() - (size_x * position_x)) ;
-#		var pos_y = (light.get_world_position_y() - (size_y * position_y)) ;
-#		var pos_z = (light.get_world_position_z() - (size_z * position_z)) ;
-##		print(Vector3(pos_x, pos_y, pos_z))
-#		draw_cross_voxels_fill(Vector3(pos_x, pos_y, pos_z), 1)
-
-func _notification(what):
-	if what == NOTIFICATION_EXIT_TREE:
-		for m in _lod_mesh_instances:
-			VisualServer.free_rid(m)
-			
-		for m in _lod_meshes:
-			VisualServer.free_rid(m)
-
 func _visibility_changed(visible):
-	if not GENERATE_LOD:
-		._visibility_changed(visible)
-		return
-	
-	set_current_lod_level(current_lod_level)
+	._visibility_changed(visible)
 
-func update_lod_transforms():
-	for m in _lod_mesh_instances:
-		VisualServer.instance_set_transform(m, transform);
+	set_current_lod_level(current_lod_level)
 
 func get_current_lod_level():
 	return current_lod_level
@@ -419,14 +373,10 @@ func set_current_lod_level(val):
 	if current_lod_level > LOD_NUM:
 		current_lod_level = LOD_NUM
 
-	VisualServer.instance_set_visible(get_mesh_instance_rid(), false)
-	
-	for m in _lod_mesh_instances:
-		VisualServer.instance_set_visible(m, false)
-
-	if val == 0:
-		VisualServer.instance_set_visible(get_mesh_instance_rid(), true)
-	else:
-		if (_lod_mesh_instances.size() > val - 1):
-			VisualServer.instance_set_visible(_lod_mesh_instances[val - 1], true)
-	
+	for i in range(LOD_NUM + 1):
+		var vis : bool = false
+		
+		if i == current_lod_level:
+			vis = true
+			
+		VisualServer.instance_set_visible(get_mesh_rid_index(MESH_INDEX_TERRARIN, MESH_TYPE_INDEX_MESH_INSTANCE, i), vis)
