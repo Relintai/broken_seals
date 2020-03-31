@@ -157,29 +157,6 @@ func _generation_finished():
 	if _player:
 		_player.set_physics_process(true)
 
-func _prepare_chunk_for_generation(chunk):
-	refresh_chunk_lod_level_data(chunk)
-
-func refresh_chunk_lod_level_data(chunk : VoxelChunk) -> void:
-	
-	var cpx : int = chunk.position_x
-	var cpy : int = chunk.position_y
-	var cpz : int = chunk.position_z
-	
-	var chunk_lod : int = chunk.lod_size
-	
-	var carr : Array = [
-		get_chunk_lod_level(cpx, cpy + 1, cpz, chunk_lod), #CHUNK_INDEX_UP
-		get_chunk_lod_level(cpx, cpy - 1, cpz, chunk_lod), #CHUNK_INDEX_DOWN
-		get_chunk_lod_level(cpx + 1, cpy, cpz, chunk_lod), #CHUNK_INDEX_LEFT
-		get_chunk_lod_level(cpx - 1, cpy, cpz, chunk_lod), #CHUNK_INDEX_RIGHT
-		get_chunk_lod_level(cpx, cpy, cpz - 1, chunk_lod), #CHUNK_INDEX_FRONT
-		get_chunk_lod_level(cpx, cpy, cpz + 1, chunk_lod) #CHUNK_INDEX_BACK
-	]
-	
-	chunk.lod_data = carr
-				
-
 func get_chunk_lod_level(x : int, y : int, z : int, default : int) -> int:
 #	var key : String = str(x) + "," + str(y) + "," + str(z)
 	
