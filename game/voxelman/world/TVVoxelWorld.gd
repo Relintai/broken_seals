@@ -167,7 +167,7 @@ func get_chunk_lod_level(x : int, y : int, z : int, default : int) -> int:
 	
 	return ch.lod_size
 
-func _create_chunk(x : int, y : int, z : int, pchunk : Node) -> VoxelChunk:
+func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk:
 	var chunk : VoxelChunk = TVVoxelChunk.new()
 	
 	#chunk.meshing_create_collider = false

@@ -112,14 +112,14 @@ func build_phase_prop_mesh() -> void:
 			var t : Transform = get_prop_transform(prop, prop.snap_to_mesh, prop.snap_axis)
 			
 			for i in range(get_mesher_count()):
-				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, self)
+				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, voxel_world)
 			
 		if prop.prop != null:
 			var vmanpp : PropData = prop.prop as PropData
 			var t : Transform = get_prop_transform(prop, vmanpp.snap_to_mesh, vmanpp.snap_axis)
 			
 			for i in range(get_mesher_count()):
-				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, self)
+				prop.prop.add_meshes_into(get_mesher(i), _prop_texture_packer, t, voxel_world)
 
 	for i in range(get_mesher_count()):
 		get_mesher(i).bake_colors(self)
@@ -164,29 +164,29 @@ func get_prop_transform(prop : VoxelChunkPropData, snap_to_mesh: bool, snap_axis
 	var t : Transform = Transform(Basis(prop.rotation).scaled(prop.scale), pos)
 
 	if snap_to_mesh:
-		var global_pos : Vector3 = to_global(t.origin)
-		var world_snap_axis : Vector3 = to_global(t.xform(snap_axis))
+		var global_pos : Vector3 = voxel_world.to_global(t.origin)
+		var world_snap_axis : Vector3 = voxel_world.to_global(t.xform(snap_axis))
 		var world_snap_dir : Vector3 = (world_snap_axis - global_pos) * 100
 		
-		var space_state : PhysicsDirectSpaceState = get_world().direct_space_state
+		var space_state : PhysicsDirectSpaceState = voxel_world.direct_space_state
 		var result : Dictionary = space_state.intersect_ray(global_pos - world_snap_dir, global_pos + world_snap_dir, [], 1)
 		
 		if result.size() > 0:
-			t.origin = to_local(result["position"])
+			t.origin = voxel_world.to_local(result["position"])
 	
 	return t
 	
 func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, snap_axis: Vector3) -> Transform:
 	if snap_to_mesh:
-		var pos : Vector3 = to_global(base_transform.origin)
-		var world_snap_axis : Vector3 = to_global(base_transform.xform(snap_axis))
+		var pos : Vector3 = voxel_world.to_global(base_transform.origin)
+		var world_snap_axis : Vector3 = voxel_world.to_global(base_transform.xform(snap_axis))
 		var world_snap_dir : Vector3 = (world_snap_axis - pos) * 100
 		
-		var space_state : PhysicsDirectSpaceState = get_world().direct_space_state
+		var space_state : PhysicsDirectSpaceState = voxel_world.get_world().direct_space_state
 		var result : Dictionary = space_state.intersect_ray(pos - world_snap_dir, pos + world_snap_dir, [], 1)
 		
 		if result.size() > 0:
-			base_transform.origin = to_local(result["position"])
+			base_transform.origin = voxel_world.to_local(result["position"])
 
 	return base_transform
 
