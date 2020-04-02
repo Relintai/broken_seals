@@ -96,7 +96,6 @@ func _process(delta):
 			if l > chunk_spawn_range + 2:
 #				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
 				remove_chunk_index(i)
-				c.queue_free()
 				i -= 1
 				count -= 1
 			else:
