@@ -44,17 +44,6 @@ var vis_update : float = 0
 var _max_frame_chunk_build_temp : int
 
 func _enter_tree():
-	for ch in get_children():
-		if ch is VoxelChunk:
-			var c : VoxelChunk = ch as VoxelChunk
-
-			c.set_voxel_world(self)
-			c.set_library(library)
-			c.set_size(c.size_x, c.size_y, c.size_z, c.margin_start, c.margin_end)
-#			c.is_build_threaded = false
-			add_chunk(c, c.position_x, c.position_y, c.position_z)
-			c.build_deferred()
-			
 	if generate_on_ready and not Engine.is_editor_hint():
 		
 		if level_generator != null:
