@@ -47,20 +47,20 @@ func _create_meshers():
 	_prop_texture_packer.background_color = Color(0, 0, 0, 1)
 	_prop_texture_packer.texture_flags = Texture.FLAG_MIPMAPS
 
-func _build_phase(phase):
-	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:
-		._build_phase(phase)
-		
-	elif phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
-		clear_baked_lights()
-		generate_random_ao()
-		bake_lights()
-		
-		next_phase()
+#func _build_phase(phase):
+#	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:
+#		._build_phase(phase)
+#
+#	elif phase == VoxelChunkDefault.BUILD_PHASE_LIGHTS:
+#		clear_baked_lights()
+#		generate_random_ao(123)
+#		bake_lights()
+#
+#		next_phase()
 		
 		#set_physics_process_internal(true)
 #		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
-		return
+#		return
 #	elif phase == VoxelChunkDefault.BUILD_PHASE_TERRARIN_MESH:
 #		for i in range(get_mesher_count()):
 #			var mesher : VoxelMesher = get_mesher(i)
@@ -157,31 +157,31 @@ func _build_phase(phase):
 #		next_phase();
 #
 #		return
-	else:
-		._build_phase(phase)
+#	else:
+#		._build_phase(phase)
 
 func _prop_added(prop):
 	pass
 	
-func generate_random_ao() -> void:
-	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
-	noise.seed = 123
-	noise.octaves = 4
-	noise.period = 30
-	noise.persistence = 0.3
-
-	for x in range(0, size_x + 1):
-		for z in range(0, size_z + 1):
-			for y in range(0, size_y + 1):
-				var val : float = noise.get_noise_3d(x + (position_x * size_x), y + (position_y * size_y), z + (position_z * size_z)) 
-			
-				val *= 0.6
-				
-				if val > 1:
-					val = 1
-					
-				if val < 0:
-					val = -val
-
-				set_voxel(int(val * 255.0), x, y, z, VoxelChunkDefault.DEFAULT_CHANNEL_RANDOM_AO)
+#func generate_random_ao() -> void:
+#	var noise : OpenSimplexNoise = OpenSimplexNoise.new()
+#	noise.seed = 123
+#	noise.octaves = 4
+#	noise.period = 30
+#	noise.persistence = 0.3
+#
+#	for x in range(0, size_x + 1):
+#		for z in range(0, size_z + 1):
+#			for y in range(0, size_y + 1):
+#				var val : float = noise.get_noise_3d(x + (position_x * size_x), y + (position_y * size_y), z + (position_z * size_z)) 
+#
+#				val *= 0.6
+#
+#				if val > 1:
+#					val = 1
+#
+#				if val < 0:
+#					val = -val
+#
+#				set_voxel(int(val * 255.0), x, y, z, VoxelChunkDefault.DEFAULT_CHANNEL_RANDOM_AO)
 
