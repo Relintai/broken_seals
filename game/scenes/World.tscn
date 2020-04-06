@@ -52,16 +52,16 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 
-[node name="World" type="VoxelWorld" groups=[
+[node name="World" type="VoxelWorldDefault" groups=[
 "save",
 ]]
-data_margin_start = 1
 data_margin_end = 2
 max_concurrent_generations = 4
 max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
 voxel_scale = 3.0
+build_flags = 511
 script = ExtResource( 8 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

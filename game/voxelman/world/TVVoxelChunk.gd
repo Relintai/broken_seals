@@ -37,6 +37,7 @@ func _create_meshers():
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
 	mesher.lod_size = lod_size
 	mesher.voxel_scale = voxel_scale
+	mesher.build_flags = build_flags
 	add_mesher(mesher)
 	
 	#add_mesher(VoxelMesherCubic.new())

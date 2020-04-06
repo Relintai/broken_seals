@@ -1,5 +1,5 @@
 tool
-extends VoxelWorld
+extends VoxelWorldDefault
 
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, might be merged into the Voxelman engine module
