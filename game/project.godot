@@ -249,12 +249,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://voxelman/world/TVVoxelChunk.gd"
 }, {
-"base": "VoxelMesherTransvoxel",
+"base": "VoxelMesherUVTransvoxel",
 "class": "TVVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/world/TVVoxelMesher.gd"
 }, {
-"base": "VoxelMesherTransvoxel",
+"base": "VoxelMesherUVTransvoxel",
 "class": "TestVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/world/TestVoxelMesher.gd"

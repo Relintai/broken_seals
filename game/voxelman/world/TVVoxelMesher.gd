@@ -1,4 +1,4 @@
-extends VoxelMesherTransvoxel
+extends VoxelMesherUVTransvoxel
 class_name TVVoxelMesher
 
 # Copyright Péter Magyar relintai@gmail.com
