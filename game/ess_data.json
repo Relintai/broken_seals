@@ -68,11 +68,6 @@
       "type": "SpellEffectVisual"
    },
    {
-      "folder": "res://data/world_spells/",
-      "name": "World Spells",
-      "type": "WorldSpellData"
-   },
-   {
       "folder": "res://data/item_templates/",
       "header": "Items",
       "name": "Items",

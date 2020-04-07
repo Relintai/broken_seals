@@ -87,10 +87,10 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 
 	handle_cooldown(info)
 		
-	if projectile != null:
-		handle_projectile(info)
-	else:
-		handle_effect(info)
+#	if projectile != null:
+#		handle_projectile(info)
+#	else:
+	handle_effect(info)
 		
 	handle_gcd(info)
 
@@ -109,11 +109,11 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 	
 	if is_instance_valid(info.target):
 		info.target.son_cast_finished_target(info)
-	
-	if projectile != null:
-		handle_projectile(info)
-	else:
-		handle_effect(info)
+#
+#	if projectile != null:
+#		handle_projectile(info)
+#	else:
+	handle_effect(info)
 		
 	handle_cooldown(info)
 	handle_gcd(info)

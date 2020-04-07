@@ -258,11 +258,6 @@ _global_script_classes=[ {
 "class": "TestVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/world/TestVoxelMesher.gd"
-}, {
-"base": "WorldSpell",
-"class": "WorldSpellGD",
-"language": "GDScript",
-"path": "res://scripts/projectiles/WorldSpellGD.gd"
 } ]
 _global_script_class_icons={
 "AuraGD": "",
@@ -314,8 +309,7 @@ _global_script_class_icons={
 "SpellGD": "",
 "TVVoxelChunk": "",
 "TVVoxelMesher": "",
-"TestVoxelMesher": "",
-"WorldSpellGD": ""
+"TestVoxelMesher": ""
 }
 Node="input/actionbar_5_11"
 
@@ -369,13 +363,13 @@ data/entity_skills_folder="res://data/entity_skills"
 data/entity_datas_folder="res://data/entities"
 data/spells_folder="res://data/spells"
 data/auras_folder="res://data/auras"
-data/world_spell_datas_folder="res://data/world_spells"
 data/craft_data_folder="res://data/crafting"
 data/item_template_folder="res://data/item_templates"
 data/mob_data_folder="res://data/mob_data"
 data/player_character_data_folder="res://data/player_character_data"
 data/entity_species_data_folder="res://data/species"
 profiles/automatic_save=true
+data/world_spell_datas_folder="res://data/world_spells"
 
 [importer_defaults]
 
