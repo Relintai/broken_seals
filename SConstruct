@@ -109,11 +109,11 @@ def update_repository(data, clone_path, branch = 'master'):
 
     subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
-    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git clean -f -d', shell=True)
     subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
     subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
-    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git clean -f -d', shell=True)
     subprocess.call('git pull origin ' + branch, shell=True)
 
     process = subprocess.Popen('git rev-parse HEAD', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -140,7 +140,7 @@ def setup_repository(data, clone_path, branch = 'master'):
 
     subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
-    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git clean -f -d', shell=True)
     subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
     subprocess.call('git pull origin master', shell=True)
 
@@ -148,7 +148,7 @@ def setup_repository(data, clone_path, branch = 'master'):
         target = target_commits[data[1]][branch]
 
     subprocess.call('git checkout -B ' + branch + ' ' + target, shell=True)
-    subprocess.call('git clean -f', shell=True)
+    subprocess.call('git clean -f -d', shell=True)
     subprocess.call('git reset', shell=True)
     subprocess.call('git reset --hard', shell=True)
 
