@@ -1,4 +1,4 @@
-[gd_resource type="ESSResourceDB" format=2]
+[gd_resource type="ESSResourceDBFolders" format=2]
 
 [resource]
 xp_data_path = "res://data/xp/xp_data.tres"
