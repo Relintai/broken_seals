@@ -38,8 +38,9 @@ func _ready():
 	_spawn_parent = get_node(spawn_parent_path)
 	
 	ProfileManager.load()
-	EntityDataManager.load_all()
-	EntityDataManager.connect("on_entity_spawn_requested", self, "on_entity_spawn_requested")
+	ESS.load_resource_db()
+	ESS.get_resource_db().load_all()
+	ESS.connect("on_entity_spawn_requested", self, "on_entity_spawn_requested")
 	
 #    get_tree().connect("network_peer_connected", self, "_player_connected")
 #    get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
@@ -64,7 +65,7 @@ remote func creceive_spawn_for(data: String, global_name : String, position: Vec
 	createinfo.serialized_data = parse_json(data)
 	createinfo.transform.origin = position
 	
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	Logger.info("Player spawned ")
 	
@@ -87,7 +88,7 @@ puppet func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	createinfo.serialized_data = parse_json(data)
 	createinfo.transform.origin = position
 	
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	Logger.info("Player spawned ")
 	
@@ -105,13 +106,13 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	createinfo.transform.origin = position
 	createinfo.networked = false
 	Logger.info("Player spawned ")
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 
 	return createinfo.created_entity
 	
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-	var cls : EntityData = EntityDataManager.get_player_character_data(class_id)
+	var cls : EntityData = ESS.get_player_character_data(class_id)
 	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(class_id)
 
 	var level : int = 1
@@ -131,7 +132,7 @@ func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Enti
 	createinfo.networked =  false
 	createinfo.parent_path = parent.get_path()
 
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	Logger.info("Player spawned " + str(createinfo))
 	
@@ -150,7 +151,7 @@ func spawn_display_player(file_name : String, node_path : NodePath) -> Entity:
 	
 	Logger.info("Player spawned ")
 
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	return createinfo.created_entity
 
@@ -178,7 +179,7 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 	createinfo.networked =  false
 	createinfo.transform.origin = position
 
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	Logger.info("Player spawned " + str(createinfo))
 	
@@ -207,7 +208,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	createinfo.transform.origin = position
 	createinfo.networked =  false
 
-	EntityDataManager.request_entity_spawn(createinfo)
+	ESS.request_entity_spawn(createinfo)
 	
 	Logger.info("Player spawned " + str(createinfo))
 	
@@ -217,7 +218,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	
-	var cls : EntityData = EntityDataManager.get_entity_data(class_id)
+	var cls : EntityData = ESS.get_resource_db().get_entity_data(class_id)
 	
 	createinfo.class_id = class_id
 	createinfo.entity_data = cls
@@ -228,7 +229,7 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_AI
 	createinfo.transform.origin = position
 	
-	EntityDataManager.request_entity_spawn_deferred(createinfo)
+	ESS.request_entity_spawn_deferred(createinfo)
 	
 	Logger.info("Mob spawned " + str(createinfo))
 	

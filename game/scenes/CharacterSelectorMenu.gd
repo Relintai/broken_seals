@@ -98,7 +98,7 @@ func refresh():
 				centry.connect("pressed", self, "character_selection_changed")
 				
 
-				centry.setup(file_name, display.sentity_name, EntityDataManager.get_player_character_data(display.characterclass_id).text_name, display.scharacter_level, display.sclass_level, display)
+				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.characterclass_id).text_name, display.scharacter_level, display.sclass_level, display)
 				
 				if first_entry == null:
 					first_entry = centry
@@ -143,7 +143,7 @@ func renounce_character() -> void:
 		
 	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.characterclass_id)
 	
-	var xp_data : XPData = EntityDataManager.get_xp_data()
+	var xp_data : XPData = ESS.get_resource_db().get_xp_data()
 	
 	if xp_data.can_class_level_up(class_profile.level):
 		class_profile.xp += b.entity.sclass_xp

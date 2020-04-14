@@ -293,10 +293,10 @@ func set_max_visible_distance(var value : float) -> void:
 #	sentity_name = sentity_data.text_name
 	
 func _son_xp_gained(value : int) -> void:
-	if not EntityDataManager.get_xp_data().can_character_level_up(gets_character_level()):
+	if not ESS.get_resource_db().get_xp_data().can_character_level_up(gets_character_level()):
 		return
 	
-	var xpr : int = EntityDataManager.get_xp_data().get_character_xp(gets_character_level());
+	var xpr : int = ESS.get_resource_db().get_xp_data().get_character_xp(gets_character_level());
 	
 	if xpr <= scharacter_xp:
 		scharacter_levelup(1)

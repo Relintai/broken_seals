@@ -357,19 +357,8 @@ enabled=PoolStringArray( "ess_data" )
 spells/allow_class_spell_learning=true
 spells/allow_class_recipe_learning=true
 level/use_class_xp=true
-data/xp_data_path="res://data/xp/xp_data.tres"
-data/entity_resources_folder="res://data/entity_resources"
-data/entity_skills_folder="res://data/entity_skills"
-data/entity_datas_folder="res://data/entities"
-data/spells_folder="res://data/spells"
-data/auras_folder="res://data/auras"
-data/craft_data_folder="res://data/crafting"
-data/item_template_folder="res://data/item_templates"
-data/mob_data_folder="res://data/mob_data"
-data/player_character_data_folder="res://data/player_character_data"
-data/entity_species_data_folder="res://data/species"
+data/ess_resource_db_path="res://data/resource_db.tres"
 profiles/automatic_save=true
-data/world_spell_datas_folder="res://data/world_spells"
 
 [importer_defaults]
 

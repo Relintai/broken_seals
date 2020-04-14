@@ -7,8 +7,8 @@
 [resource]
 resource_name = "Iron Bar"
 id = 2
-text_name = "Iron Bar"
 stack_size = 10
 icon = ExtResource( 2 )
 use_spell = ExtResource( 3 )
+text_name = "Iron Bar"
 script = ExtResource( 1 )

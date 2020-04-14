@@ -10,6 +10,7 @@ resource_name = "Naturalist"
 id = 1
 entity_type = 4
 entity_controller = 1
+is_playable = true
 text_name = "Naturalist"
 bag_size = 24
 entity_class_data = ExtResource( 1 )

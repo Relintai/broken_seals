@@ -161,7 +161,7 @@ func setup_icon() -> void:
 			ThemeAtlas.unref_texture(icon_rect.texture)
 			icon_rect.texture = null
 			
-		var spell = EntityDataManager.get_spell(button_entry.item_id)
+		var spell = ESS.get_resource_db().get_spell(button_entry.item_id)
 		
 		if spell.icon != null:
 			icon_rect.texture = ThemeAtlas.add_texture(spell.icon)
@@ -182,7 +182,7 @@ func setup_icon() -> void:
 			ThemeAtlas.unref_texture(icon_rect.texture)
 			icon_rect.texture = null
 			
-		var item : ItemTemplate = EntityDataManager.get_item_template(button_entry.item_id)
+		var item : ItemTemplate = ESS.get_resource_db().get_item_template(button_entry.item_id)
 		
 		if item.icon != null:
 			icon_rect.texture = ThemeAtlas.add_texture(item.icon)
@@ -258,7 +258,7 @@ func drop_data(pos, esd) -> void:
 		button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM
 		
 		if button_entry.item_id != esd.item_id:
-			var it : ItemTemplate = EntityDataManager.get_item_template(esd.item_id)
+			var it : ItemTemplate = ESS.get_resource_db().get_item_template(esd.item_id)
 			
 			if it == null or it.use_spell == null:
 				button_entry.item_id = 0

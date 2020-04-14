@@ -7,7 +7,6 @@ enum GenType {
 }
 
 
-export(PropData) var prop : PropData
 export(MeshDataResource) var prop_mesht : MeshDataResource
 
 
@@ -138,16 +137,16 @@ func generate_terrarin(chunk : VoxelChunk) -> void:
 #
 #				buffer.set_voxel(int(255.0 * val), x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 	
-	var prop_data : VoxelChunkPropData = VoxelChunkPropData.new()
-	prop_data.x = 10
-	prop_data.y = 3
-	prop_data.z = 10
-#	prop_data.rotation = Vector3(randi() % 360, randi() % 360, randi() % 360)
-#	prop_data.scale = Vector3(2, 2, 2)
-#	prop_data.mesh = prop_mesht
-	prop_data.prop = prop
+#	var prop_data : VoxelChunkPropData = VoxelChunkPropData.new()
+#	prop_data.x = 10
+#	prop_data.y = 3
+#	prop_data.z = 10
+##	prop_data.rotation = Vector3(randi() % 360, randi() % 360, randi() % 360)
+##	prop_data.scale = Vector3(2, 2, 2)
+##	prop_data.mesh = prop_mesht
+#	prop_data.prop = prop
 	
-	chunk.add_prop(prop_data)
+#	chunk.add_prop(prop_data)
 
 #	generate_caves(chunk)
 
@@ -216,35 +215,35 @@ func generate_test(chunk : VoxelChunk) ->void:
 func spawn_equiv_class(buffer : VoxelChunk, cls : int, x : int, y : int, z : int) -> void:
 #	var size : int = 100
 	
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_000:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_000:
 		buffer.set_voxel(1, x, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 	
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_100:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_100:
 		buffer.set_voxel(1, x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x + 1, y, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 		
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_001:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_001:
 		buffer.set_voxel(1, x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 		
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_101:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_101:
 		buffer.set_voxel(1, x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x + 1, y, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 		
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_010:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_010:
 		buffer.set_voxel(1, x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 	
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_110:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_110:
 		buffer.set_voxel(1, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 		
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_011:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_011:
 		buffer.set_voxel(1, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 		
-	if cls & VoxelMesherTransvoxel.VOXEL_ENTRY_MASK_111:
+	if cls & VoxelMesherUVTransvoxel.VOXEL_ENTRY_MASK_111:
 		buffer.set_voxel(1, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_TYPE)
 		buffer.set_voxel(randi() % 255, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 	

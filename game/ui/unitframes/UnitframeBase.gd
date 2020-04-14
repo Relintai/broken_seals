@@ -136,7 +136,7 @@ func clevel_changed(entity: Entity, value : int) -> void:
 	_level_text.text = str(_player.ccharacter_level)
 	
 	_xp_range.min_value = 0
-	_xp_range.max_value = EntityDataManager.get_xp_data().get_character_xp(_player.ccharacter_level)
+	_xp_range.max_value = ESS.get_resource_db().get_xp_data().get_character_xp(_player.ccharacter_level)
 
 func con_xp_gained(entity: Entity, val: int) -> void:
 	_xp_range.value = _player.ccharacter_xp
