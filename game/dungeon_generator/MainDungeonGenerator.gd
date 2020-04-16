@@ -275,16 +275,16 @@ func generate_noise3d_terrarin(chunk : VoxelChunk) -> void:
 	
 #	generate_random_ao(chunk)
 	#warning-ignore:unused_variable
-	for i in range(5):
-		#var light : VoxelLight = VoxelLight.new()
-		randomize()
-		var color : Color = Color(randf(), randf(), randf())
-		var size : int = randi() % 5 + 5
-		var lx : int = (chunk.position_x * chunk.size_x) + (randi() % (chunk.size_x - 3))
-		var ly : int = (chunk.position_y * chunk.size_y) + (randi() % 6)
-		var lz : int = (chunk.position_z * chunk.size_z) + (randi() % (chunk.size_z - 3))
-#		light.set_world_position((chunk.position_x * chunk.size_x) + 10, (chunk.position_y * chunk.size_y) + 10, (chunk.position_z * chunk.size_z) + 10)
-		_world.add_light(lx, ly, lz, size, color)
+#	for i in range(5):
+#		#var light : VoxelLight = VoxelLight.new()
+#		randomize()
+#		var color : Color = Color(randf(), randf(), randf())
+#		var size : int = randi() % 5 + 5
+#		var lx : int = (chunk.position_x * chunk.size_x) + (randi() % (chunk.size_x - 3))
+#		var ly : int = (chunk.position_y * chunk.size_y) + (randi() % 6)
+#		var lz : int = (chunk.position_z * chunk.size_z) + (randi() % (chunk.size_z - 3))
+##		light.set_world_position((chunk.position_x * chunk.size_x) + 10, (chunk.position_y * chunk.size_y) + 10, (chunk.position_z * chunk.size_z) + 10)
+#		_world.add_light(lx, ly, lz, size, color)
 	
 	chunk.bake_lights()
 	

@@ -192,7 +192,7 @@ func set_editor_generate(value : bool) -> void:
 		
 	_editor_generate = value
 	
-func add_light(x : int, y : int, z : int, size : int, color : Color) -> void:
+func create_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 	var chunkx : int = int(x / chunk_size_x)
 	var chunky : int = int(y / chunk_size_y)
 	var chunkz : int = int(z / chunk_size_z)
@@ -202,15 +202,8 @@ func add_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 	light.size = size
 	light.set_world_position(x, y, z)
 	
-	for xx in range(chunkx - 1, chunkx + 1):
-		for yy in range(chunky - 1, chunky + 1):
-			for zz in range(chunkz - 1, chunkz + 1):
-				var chunk : VoxelChunk = get_chunk(xx, yy, zz)
-				
-				if chunk == null:
-					continue
-				
-				chunk.add_voxel_light(light)
+	add_light(light)
+
 				
 func setup_client_seed(pseed : int) -> void:
 #	_player_file_name = ""
