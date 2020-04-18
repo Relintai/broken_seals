@@ -85,6 +85,14 @@ func refresh():
 					continue
 				
 				var display : Entity = ESS.entity_spawner.spawn_display_player(file_name, player_display_container_node.get_path())
+				
+				var entity_data : EntityData = ESS.get_resource_db().get_entity_data(display.characterclass_id)
+				
+				if entity_data == null:
+					print("EntityData not found!")
+					display.queue_free()
+					continue
+				
 				#player_display_container_node.add_child(display)
 				#display.owner = player_display_container_node
 				

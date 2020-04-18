@@ -161,7 +161,10 @@ func setup_icon() -> void:
 			ThemeAtlas.unref_texture(icon_rect.texture)
 			icon_rect.texture = null
 			
-		var spell = ESS.get_resource_db().get_spell(button_entry.item_id)
+		var spell = ESS.resource_db.get_spell(button_entry.item_id)
+		
+		if spell == null:
+			return
 		
 		if spell.icon != null:
 			icon_rect.texture = ThemeAtlas.add_texture(spell.icon)

@@ -36,13 +36,54 @@ var _loading_screen : Node
 var current_scene : Node
 var current_character_file_name : String = ""
 
+var _modules : Array
+
 func _ready() -> void:
 	_loading_screen = get_node(loading_screen_path)
 	
 	ProfileManager.load()
-	ESS.load_all()
+	ESS.load_entity_spawner()
+	ESS.resource_db = ESSResourceDBStatic.new()
+#	ESS.resource_db = ESSResourceDBFolders.new()
+	ESS.resource_db.remap_ids = true
+#	ESS.load_all()
+	
+	initialize_modules()
 	
 	switch_scene(start_scene)
+	
+func initialize_modules() -> void:
+	_modules.clear()
+	
+	load_modules_at("res://")
+	
+	_modules.sort_custom(ModulePathSorter, "sort_ascending")
+	
+	for module in _modules:
+		if module.has_method("load_module"):
+			module.load_module()
+	
+func load_modules_at(path : String) -> void:
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name == "." or file_name == "..":
+				file_name = dir.get_next()
+				continue
+
+			if dir.current_is_dir():
+				load_modules_at(path + "/" + file_name)
+			else:
+				if file_name == "game_module.tres":
+					var res : Resource = ResourceLoader.load(path + "/" + file_name)
+					
+					_modules.append(res)
+					
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access the path: " + path)
 
 func switch_scene(scene : int) -> void:
 	if current_scene != null:
@@ -110,3 +151,9 @@ func show_loading_screen() -> void:
 	
 func hide_loading_screen() -> void:
 	_loading_screen.hide()
+	
+class ModulePathSorter:
+	static func sort_ascending(a, b):
+		if a.resource_path < b.resource_path:
+			return true
+		return false

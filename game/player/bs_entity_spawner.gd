@@ -117,7 +117,7 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	
 func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-	var cls : EntityData = ESS.get_player_character_data(class_id)
+	var cls : EntityData = ESS.resource_db.get_entity_data(class_id)
 	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(class_id)
 
 	var level : int = 1

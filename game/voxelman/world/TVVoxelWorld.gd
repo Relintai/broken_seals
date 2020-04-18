@@ -240,4 +240,4 @@ func save() -> void:
 	if _player == null or _player_file_name == "":
 		return
 
-	ESS.get_ess_entity_spawner().save_player(_player, _player_file_name)
+	ESS.entity_spawner.save_player(_player, _player_file_name)
