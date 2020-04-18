@@ -43,9 +43,9 @@ func _ready() -> void:
 	
 	ProfileManager.load()
 	ESS.load_entity_spawner()
-	ESS.resource_db = ESSResourceDBStatic.new()
-#	ESS.resource_db = ESSResourceDBFolders.new()
-	ESS.resource_db.remap_ids = true
+	ESS.resource_db = ESSResourceDBMap.new()
+#	ESS.resource_db = ESSResourceDBStatic.new()
+#	ESS.resource_db.remap_ids = true
 #	ESS.load_all()
 	
 	initialize_modules()
