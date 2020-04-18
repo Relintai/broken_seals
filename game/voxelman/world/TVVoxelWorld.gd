@@ -87,21 +87,21 @@ func _process(delta):
 				remove_chunk_index(i)
 				i -= 1
 				count -= 1
-			else:
-				var dx : int = abs(ppx - c.position_x)
-				var dy : int = abs(ppy - c.position_y)
-				var dz : int = abs(ppz - c.position_z)
-				
-				var mr : int = max(max(dx, dy), dz)
-				
-				if mr <= 1:
-					c.current_lod_level = 0
-				elif mr == 2:
-					c.current_lod_level = 1
-				elif mr == 3:# or mr == 4:
-					c.current_lod_level = 2
-				else:
-					c.current_lod_level = 3
+#			else:
+#				var dx : int = abs(ppx - c.position_x)
+#				var dy : int = abs(ppy - c.position_y)
+#				var dz : int = abs(ppz - c.position_z)
+#
+#				var mr : int = max(max(dx, dy), dz)
+#
+#				if mr <= 1:
+#					c.current_lod_level = 0
+#				elif mr == 2:
+#					c.current_lod_level = 1
+#				elif mr == 3:# or mr == 4:
+#					c.current_lod_level = 2
+#				else:
+#					c.current_lod_level = 3
 
 			i += 1
 			
@@ -221,6 +221,8 @@ func load_character(file_name : String) -> void:
 	_player = Entities.load_player(file_name, Vector3(5, 30, 5), 1) as Entity
 	#TODO hack, do this properly
 	_player.set_physics_process(false)
+	
+	set_player(_player.get_body())
 
 	Server.sset_seed(_player.sseed)
 	
