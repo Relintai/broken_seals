@@ -75,7 +75,7 @@ func create() -> void:
 	
 	var id : int = active.id
 	
-	var ent : Entity = Entities.spawn_player_for_menu(id, name_line_edit.text, self)
+	var ent : Entity = ESS.entity_spawner.spawn_player_for_menu(id, name_line_edit.text, self)
 	if f.open(file_name, File.WRITE) == OK:
 		f.store_string(to_json(ent.to_dict()))
 		f.close()

@@ -1,0 +1,16 @@
+[gd_resource type="ESSEntitySpawner" load_steps=6 format=2]
+
+[ext_resource path="res://player/bs_entity_spawner.gd" type="Script" id=1]
+[ext_resource path="res://player/NetworkedPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://player/Mob.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/DisplayPlayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=5]
+
+[resource]
+script = ExtResource( 1 )
+player_scene = ExtResource( 5 )
+networked_player_scene = ExtResource( 2 )
+mob_scene = ExtResource( 3 )
+player_display_scene = ExtResource( 4 )
+spawn_parent_path = "/root/Main"
+default_level_override = 0

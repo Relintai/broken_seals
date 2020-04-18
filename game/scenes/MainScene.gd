@@ -39,6 +39,9 @@ var current_character_file_name : String = ""
 func _ready() -> void:
 	_loading_screen = get_node(loading_screen_path)
 	
+	ProfileManager.load()
+	ESS.load_all()
+	
 	switch_scene(start_scene)
 
 func switch_scene(scene : int) -> void:

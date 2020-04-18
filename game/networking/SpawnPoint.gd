@@ -83,15 +83,15 @@ func spawn():
 		spawned = true
 		
 		if get_tree().network_peer == null:
-			player = Entities.spawn_player(1, Vector3(10, 20, 10), "Player", "1", 1)
+			player = ESS.entity_spawner.spawn_player(1, Vector3(10, 20, 10), "Player", "1", 1)
 			call_deferred("set_terrarin_player")
 #
-#		Entities.spawn_mob(1, 50, Vector3(20, 6, 20))
-#		Entities.spawn_mob(1, 50, Vector3(54, 6, 22))
-#		Entities.spawn_mob(1, 50, Vector3(76, 6, 54))
+#		ESS.entity_spawner.spawn_mob(1, 50, Vector3(20, 6, 20))
+#		ESS.entity_spawner.spawn_mob(1, 50, Vector3(54, 6, 22))
+#		ESS.entity_spawner.spawn_mob(1, 50, Vector3(76, 6, 54))
 
 func set_terrarin_player():
-	terrarin.set_player(player as Spatial)
+	terrarin.set_player(player.get_body() as Spatial)
 
 func _on_host_button_clicked():
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")

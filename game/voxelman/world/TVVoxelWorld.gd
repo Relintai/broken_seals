@@ -218,7 +218,7 @@ func setup_client_seed(pseed : int) -> void:
 
 func load_character(file_name : String) -> void:
 	_player_file_name = file_name
-	_player = Entities.load_player(file_name, Vector3(5, 30, 5), 1) as Entity
+	_player = ESS.entity_spawner.load_player(file_name, Vector3(5, 30, 5), 1) as Entity
 	#TODO hack, do this properly
 	_player.set_physics_process(false)
 	
@@ -240,4 +240,4 @@ func save() -> void:
 	if _player == null or _player_file_name == "":
 		return
 
-	Entities.save_player(_player, _player_file_name)
+	ESS.get_ess_entity_spawner().save_player(_player, _player_file_name)

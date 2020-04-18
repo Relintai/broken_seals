@@ -87,7 +87,7 @@ func update_visibility() -> void:
 		var ent : Entity = e as Entity
 		
 		if self.get_network_master() != 1:
-			Entities.despawn_for(self, ent)
+			ESS.entity_spawner.despawn_for(self, ent)
 		
 		removes_sees(ent)
 
@@ -95,7 +95,7 @@ func update_visibility() -> void:
 		var ent : Entity = e as Entity
 		
 		if self.get_network_master() != 1:
-			Entities.spawn_for(self, ent)
+			ESS.entity_spawner.spawn_for(self, ent)
 		
 		adds_sees(ent)
 

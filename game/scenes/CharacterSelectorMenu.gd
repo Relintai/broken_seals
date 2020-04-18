@@ -84,7 +84,7 @@ func refresh():
 					Logger.error("Save corrupted! Not Dict! " + file_name)
 					continue
 				
-				var display : Entity = Entities.spawn_display_player(file_name, player_display_container_node.get_path())
+				var display : Entity = ESS.entity_spawner.spawn_display_player(file_name, player_display_container_node.get_path())
 				#player_display_container_node.add_child(display)
 				#display.owner = player_display_container_node
 				
@@ -97,7 +97,6 @@ func refresh():
 				centry.pressed = true
 				centry.connect("pressed", self, "character_selection_changed")
 				
-
 				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.characterclass_id).text_name, display.scharacter_level, display.sclass_level, display)
 				
 				if first_entry == null:

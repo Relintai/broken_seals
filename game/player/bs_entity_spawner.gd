@@ -1,4 +1,4 @@
-extends Node
+extends ESSEntitySpawner
 
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, functionality from this class needs to be protable to the entity spell system
@@ -35,31 +35,36 @@ var _spawn_parent : Node = null
 var _next_entity_guid : int = 0
 
 func _ready():
-	_spawn_parent = get_node(spawn_parent_path)
+#	get_scene_tree().multiplayer.connect("network_peer_packet", self, "on_network_peer_packet")
 	
-	ProfileManager.load()
-	ESS.load_resource_db()
-	ESS.get_resource_db().load_all()
-	ESS.connect("on_entity_spawn_requested", self, "on_entity_spawn_requested")
+#	ProfileManager.load()
+#	ESS.load_resource_db()
+#	ESS.get_resource_db().load_all()
+#	ESS.connect("on_entity_spawn_requested", self, "on_entity_spawn_requested")
 	
 #    get_tree().connect("network_peer_connected", self, "_player_connected")
 #    get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 #    get_tree().connect("connected_to_server", self, "_connected_ok")
 #    get_tree().connect("connection_failed", self, "_connected_fail")
 #    get_tree().connect("server_disconnected", self, "_server_disconnected")
+	pass
+	
+func on_network_peer_packet(id : int, packet : PoolByteArray) ->void:
+	#todo
+	pass
 	
 func spawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("spawnfor " + target.name)
-	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.translation)
+#	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.translation)
 	
 func despawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("despawnfor " + target.name)
-	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
+#	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
 	
 remote func creceive_spawn_for(data: String, global_name : String, position: Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.player_name = name
+	createinfo.player_name = global_name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_NETWORKED
 	createinfo.serialized_data = parse_json(data)
@@ -73,7 +78,7 @@ remote func creceive_spawn_for(data: String, global_name : String, position: Vec
 	
 remote func creceive_despawn_for(path : NodePath) -> void:
 #	print("recdespawnfor " + path)
-	var ent = get_node_or_null(path)
+	var ent = get_scene_tree().root.get_node_or_null(path)
 	
 	if ent:
 		ent.queue_free()
@@ -81,8 +86,8 @@ remote func creceive_despawn_for(path : NodePath) -> void:
 puppet func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = multiplayer.get_network_unique_id()
-	createinfo.player_name = name
+	createinfo.guid = get_scene_tree().multiplayer.get_network_unique_id()
+#	createinfo.player_name = ""
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
 	createinfo.serialized_data = parse_json(data)
@@ -99,7 +104,7 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 
 	createinfo.guid = _next_entity_guid
 	_next_entity_guid += 1
-	createinfo.player_name = name
+#	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
 	createinfo.serialized_data = load_file(file_name)
@@ -143,7 +148,7 @@ func spawn_display_player(file_name : String, node_path : NodePath) -> Entity:
 
 	createinfo.guid = _next_entity_guid
 	_next_entity_guid += 1
-	createinfo.player_name = name
+#	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_DISPLAY
 	createinfo.serialized_data = load_file(file_name)
@@ -157,7 +162,7 @@ func spawn_display_player(file_name : String, node_path : NodePath) -> Entity:
 
 func spawn_networked_player(class_id : int,  position : Vector3, name : String, node_name : String, sid : int) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-	var cls : EntityData = Entities.get_player_character_data(class_id)
+	var cls : EntityData = ESS.resource_db.get_player_character_data(class_id)
 	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	var level : int = class_profile.level
@@ -187,7 +192,7 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 	
 func spawn_player(class_id : int,  position : Vector3, name : String, node_name : String, network_owner : int) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-	var cls : EntityData = Entities.get_player_character_data(class_id)
+	var cls : EntityData = ESS.resource_db.get_player_character_data(class_id)
 	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	var level : int = class_profile.level
@@ -236,7 +241,7 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	#return createinfo.created_entity
 
 	
-func on_entity_spawn_requested(createinfo : EntityCreateInfo):
+func _request_entity_spawn(createinfo : EntityCreateInfo):
 	var entity_node : Entity = null
 	
 	if createinfo.entity_player_type == EntityEnums.ENTITY_PLAYER_TYPE_DISPLAY:
@@ -257,12 +262,15 @@ func on_entity_spawn_requested(createinfo : EntityCreateInfo):
 	entity_node.get_body().translation = createinfo.transform.origin
 
 	if (createinfo.parent_path == ""):
+		if _spawn_parent == null:
+			_spawn_parent = get_scene_tree().root.get_node(spawn_parent_path)
+		
 		if _spawn_parent.current_scene != null:
 			var spawn_parent = _spawn_parent.current_scene
 
 			spawn_parent.add_child(entity_node)
 	else:
-		get_node(createinfo.parent_path).add_child(entity_node)
+		get_scene_tree().root.get_node(createinfo.parent_path).add_child(entity_node)
 
 	entity_node.setup(createinfo)
 	

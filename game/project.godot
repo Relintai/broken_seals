@@ -326,7 +326,6 @@ config/version="0.2"
 Logger="*res://autoload/Logger.tscn"
 Settings="*res://autoload/SettingsManager.gd"
 CursorManager="*res://autoload/CursorManager.tscn"
-Entities="*res://autoload/Entities.tscn"
 WorldNumbers="*res://autoload/WorldNumbers.tscn"
 ThemeAtlas="*res://autoload/ThemeAtlas.tscn"
 Server="*res://autoload/Server.tscn"
@@ -358,6 +357,7 @@ spells/allow_class_spell_learning=true
 spells/allow_class_recipe_learning=true
 level/use_class_xp=true
 data/ess_resource_db_path="res://data/resource_db.tres"
+data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"
 profiles/automatic_save=true
 
 [importer_defaults]
