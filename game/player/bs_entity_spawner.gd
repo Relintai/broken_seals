@@ -196,7 +196,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	var class_profile : ClassProfile = ProfileManager.get_class_profile(class_id)
 	
 	var level : int = class_profile.level
-	
+
 	if default_level_override > 0:
 		level = default_level_override
 	
