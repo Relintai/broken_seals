@@ -358,7 +358,7 @@ if len(sys.argv) > 1:
         exit()
     elif arg[0] == 'p':
         if arg == 'p':
-            print("Applies a patch. Append c for the compilation database patch, and/or g for the gles2 batching patch. For example: pcg")
+            print("Applies a patch. Append c for the compilation database patch. For example: pc")
             exit()
 
         cwd = os.getcwd()
@@ -374,9 +374,6 @@ if len(sys.argv) > 1:
 
         if 'c' in arg:
             subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
-
-        if 'g' in arg:
-            subprocess.call('git apply --index ../patches/gles2_batch_rendering.patch', shell=True)
 
         #unstage all files
         subprocess.call('git reset', shell=True)
