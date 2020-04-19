@@ -167,7 +167,7 @@ func get_drag_data(pos: Vector2) -> Object:
 
 	esd.origin = self
 	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM
-	esd.item_id = item.item_template.id
+	esd.item_path = item.item_template.resource_path
 	esd.set_meta("slot_id", slot_id)
 		
 	setup_icon()
@@ -181,10 +181,10 @@ func can_drop_data(pos, data) -> bool:
 
 func drop_data(pos, esd) -> void:
 	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM:
-		player.crequest_item_swap(slot_id, esd.item_id)
+		player.crequest_item_swap(slot_id, esd.get_meta("slot_id"))
 		setup_icon()
 	elif esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM:
-		player.crequest_equip(esd.item_id, slot_id)
+		player.crequest_equip(ESS.resource_db.get_item_template_path(esd.item_path).id, slot_id)
 		setup_icon()
 
 func set_slot_id(pslot_id : int) -> void:

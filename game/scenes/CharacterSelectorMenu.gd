@@ -148,7 +148,7 @@ func renounce_character() -> void:
 	if b == null:
 		return
 		
-	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.characterclass_id)
+	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.sentity_data.resource_path)
 	
 	var xp_data : XPData = ESS.get_resource_db().get_xp_data()
 	

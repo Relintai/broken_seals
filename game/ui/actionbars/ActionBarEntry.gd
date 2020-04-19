@@ -150,7 +150,7 @@ func setup_icon() -> void:
 		
 		icon_rect.texture = null
 	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL):
-		if (button_entry.item_id == 0):
+		if (button_entry.item_path == ""):
 			if icon_rect.texture != null:
 				ThemeAtlas.unref_texture(icon_rect.texture)
 		
@@ -161,7 +161,7 @@ func setup_icon() -> void:
 			ThemeAtlas.unref_texture(icon_rect.texture)
 			icon_rect.texture = null
 			
-		var spell = ESS.resource_db.get_spell(button_entry.item_id)
+		var spell = ESS.resource_db.get_spell_path(button_entry.item_path)
 		
 		if spell == null:
 			return
@@ -174,7 +174,7 @@ func setup_icon() -> void:
 		spell_type = spell.spell_type
 		has_gcd = spell.cooldown_global_cooldown_enabled
 	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM):
-		if (button_entry.item_id == 0):
+		if (button_entry.item_path == ""):
 			if icon_rect.texture != null:
 				ThemeAtlas.unref_texture(icon_rect.texture)
 		
@@ -185,7 +185,7 @@ func setup_icon() -> void:
 			ThemeAtlas.unref_texture(icon_rect.texture)
 			icon_rect.texture = null
 			
-		var item : ItemTemplate = ESS.get_resource_db().get_item_template(button_entry.item_id)
+		var item : ItemTemplate = ESS.get_resource_db().get_item_template_path(button_entry.item_path)
 		
 		if item.icon != null:
 			icon_rect.texture = ThemeAtlas.add_texture(item.icon)
@@ -197,20 +197,20 @@ func setup_icon() -> void:
 	
 func _on_button_pressed() -> void:
 	if button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL:
-		if (button_entry.item_id == 0):
+		if (button_entry.item_path == ""):
 			return
 			
-		player.crequest_spell_cast(button_entry.item_id)
+		player.crequest_spell_cast(ESS.resource_db.spell_path_to_id(button_entry.item_path))
 		
 	elif button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM:
-		if (button_entry.item_id == 0):
+		if (button_entry.item_path == ""):
 			return
 			
-		player.crequest_use_item(button_entry.item_id)
+		player.crequest_use_item(ESS.resource_db.item_template_path_to_id(button_entry.item_path))
 		
-func set_button_entry_data(type: int, item_id: int) -> void:
+func set_button_entry_data(type: int, item_path: String) -> void:
 	button_entry.type = type
-	button_entry.itekm_id = item_id
+	button_entry.item_path = item_path
 
 	setup_icon()
 	
@@ -235,10 +235,10 @@ func get_drag_data(pos: Vector2) -> Object:
 	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM):
 		esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_ITEM
 
-	esd.item_id = button_entry.item_id
+	esd.item_path = button_entry.item_path
 
 	button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_NONE
-	button_entry.item_id = 0
+	button_entry.item_path = ""
 	
 #	Profiles.save()
 	
@@ -251,22 +251,22 @@ func can_drop_data(pos, data) -> bool:
 
 
 func drop_data(pos, esd) -> void:
-	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL and button_entry.item_id == esd.item_id:
+	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL and button_entry.item_path == esd.item_path:
 		return
 	
 	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL:
 		button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL
-		button_entry.item_id = esd.item_id
+		button_entry.item_path = esd.item_path
 	elif esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_ITEM or esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM or esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM:
 		button_entry.type = ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM
 		
-		if button_entry.item_id != esd.item_id:
-			var it : ItemTemplate = ESS.get_resource_db().get_item_template(esd.item_id)
+		if button_entry.item_path != esd.item_path:
+			var it : ItemTemplate = ESS.get_resource_db().get_item_template_path(esd.item_path)
 			
 			if it == null or it.use_spell == null:
-				button_entry.item_id = 0
+				button_entry.item_path = ""
 			else:
-				button_entry.item_id = esd.item_id
+				button_entry.item_path = esd.item_path
 			
 	
 	setup_icon()

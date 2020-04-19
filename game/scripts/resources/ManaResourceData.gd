@@ -22,7 +22,7 @@ extends EntityResourceData
 
 func _get_entity_resource_instance() -> EntityResource:
 	var mr = ManaResource.new()
-	mr.data_id = id
+	mr.data_path = resource_path
 	
 	return mr
 	

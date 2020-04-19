@@ -88,7 +88,7 @@ func get_drag_data(position):
 
 	esd.origin = self
 	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM
-	esd.item_id = _item_instance.item_template.id
+	esd.item_path = _item_instance.item_template.resource_path
 	esd.set_meta("equip_slot_id", equip_slot)
 	
 	return esd

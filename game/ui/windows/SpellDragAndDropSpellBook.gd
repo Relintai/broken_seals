@@ -40,6 +40,6 @@ func get_drag_data(pos):
 	var esd = ESDragAndDrop.new()
 	
 	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL
-	esd.item_id = spell.id
+	esd.item_path = spell.resource_path
 
 	return esd
