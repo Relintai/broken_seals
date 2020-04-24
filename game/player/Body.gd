@@ -23,8 +23,6 @@
 
 extends KinematicBody
 
-
-
 export(float) var max_visible_distance : float = 120 setget set_max_visible_distance
 var max_visible_distance_squared : float = max_visible_distance * max_visible_distance
 
@@ -573,6 +571,19 @@ func on_c_controlled_changed(val):
 #	set_physics_process(val)
 	set_process_input(val)
 	set_process_unhandled_input(val)
+	
+	if val:
+		var cam_scene : PackedScene = ResourceLoader.load("res://data/camera/CameraPivot.tscn")
+		camera_pivot = cam_scene.instance() as Spatial
+		add_child(camera_pivot)
+		
+		camera = camera_pivot.get_node("Camera") as Camera
+	else:
+		if camera_pivot:
+			camera_pivot.queue_free()
+			camera_pivot = null
+			camera = null
+		
  
 func on_sdied(entity):
 	if dead:

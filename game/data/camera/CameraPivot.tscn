@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://player/CameraPivot.gd" type="Script" id=1]
+
+[node name="CameraPivot" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44092, 0 )
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.822 )
+current = true
+fov = 60.0
+size = 28.0
+far = 1000.0
