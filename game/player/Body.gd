@@ -580,8 +580,12 @@ func on_c_controlled_changed(val):
 		var cam_scene : PackedScene = ResourceLoader.load("res://data/camera/CameraPivot.tscn")
 		camera_pivot = cam_scene.instance() as Spatial
 		add_child(camera_pivot)
-		
 		camera = camera_pivot.get_node("Camera") as Camera
+		
+		var uiscn : PackedScene = ResourceLoader.load("res://ui/player_ui/player_ui.tscn")
+		var ui = uiscn.instance()
+		add_child(ui)
+		
 		
 		set_process_input(true)
 		set_process_unhandled_input(true)
@@ -593,6 +597,10 @@ func on_c_controlled_changed(val):
 			
 		set_process_input(false)
 		set_process_unhandled_input(false)
+		var nameplatescn : PackedScene = ResourceLoader.load("res://ui/nameplates/NamePlate.tscn")
+		var nameplate = nameplatescn.instance()
+		add_child(nameplate)
+		
 		
  
 func on_sdied(entity):

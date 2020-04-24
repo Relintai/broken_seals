@@ -1,14 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=2]
-[ext_resource path="res://ui/player_ui/player_ui.tscn" type="PackedScene" id=3]
 
 [node name="Player" type="Entity" groups=[
 "players",
 ]]
-body_path = NodePath("HumanFemale")
-character_skeleton_path = NodePath("HumanFemale/Rotation_Helper/Model/character")
 script = ExtResource( 2 )
-
-[node name="GUILayer" parent="." instance=ExtResource( 3 )]
-[connection signal="onc_open_loot_winow_request" from="." to="GUILayer" method="_on_Player_onc_open_loot_winow_request"]

@@ -51,7 +51,7 @@ func _ready():
 	health_bar = get_node(health_bar_path) as TextureProgress
 	health_bar_label = get_node(health_bar_label_path) as Label
 	
-	entity = get_node("..") as Entity
+	entity = get_node("../..") as Entity
 	health = entity.get_health()
 	
 	health.connect("c_changed", self, "c_health_changed")

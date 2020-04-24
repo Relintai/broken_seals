@@ -42,7 +42,6 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_lock_": true
 }
-player_path = NodePath("../..")
 child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow") ]
 
 [node name="TouchTargetControls" type="MarginContainer" parent="GUI"]

@@ -20,7 +20,7 @@ extends Control
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-export (NodePath) var player_path : NodePath
+export (String) var player_path : String = "../../.."
 export (Array, NodePath) var child_controls : Array
 
 func _ready() -> void:

@@ -57,6 +57,7 @@ func refresh():
 func set_player(p_player : Entity) -> void:
 	player = p_player
 	player.connect("ctarget_bag_changed", self, "ctarget_bag_changed")
+	player.connect("onc_open_loot_winow_request", self, "onc_open_loot_winow_request")
 
 func on_visibility_changed():
 	if visible:
@@ -81,3 +82,5 @@ func ctarget_bag_changed(entity: Entity, bag: Bag) -> void:
 	
 	target_bag.connect("item_removed", self, "on_item_removed")
 	
+func onc_open_loot_winow_request() -> void:
+	show()
