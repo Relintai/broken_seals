@@ -23,6 +23,11 @@
 
 extends KinematicBody
 
+
+
+export(float) var max_visible_distance : float = 120 setget set_max_visible_distance
+var max_visible_distance_squared : float = max_visible_distance * max_visible_distance
+
 export(float) var MOUSE_SENSITIVITY : float = 0.05
 export(String) var world_path : String = "../.."
 export(NodePath) var model_path : NodePath = "Rotation_Helper/Model"
@@ -36,7 +41,8 @@ const JUMP_SPEED : float = 3.8
 const MAX_SLOPE_ANGLE : float = 40.0
 const MOUSE_TARGET_MAX_OFFSET : int = 10
 
-var _on : bool = false
+var _on : bool = true
+var _controlled : bool = false
 
 var y_rot : float = 0.0
 
@@ -51,6 +57,7 @@ var mouse_right_down : bool = false
 var touchpad_dir : Vector2 = Vector2()
 var mouse_down_delta : Vector2 = Vector2()
 var queued_camera_rotaions : Vector2 = Vector2()
+var target_movement_direction : Vector2 = Vector2()
 
 var key_left : bool = false
 var key_right : bool = false
@@ -72,6 +79,10 @@ var animation_run : bool = false
 var moving : bool = false
 var casting_anim : bool = false
 
+var sleep : bool = false
+var dead : bool = false
+var death_timer : float = 0
+
 var last_mouse_over : Entity = null
 
 var world : VoxelWorld = null
@@ -81,8 +92,8 @@ var model_rotation_node : Spatial
 var character_skeleton : CharacterSkeleton3D 
 
 func _ready() -> void:
-	camera = $CameraPivot/Camera as Camera
-	camera_pivot = $CameraPivot as Spatial
+	camera = get_node_or_null("CameraPivot/Camera") as Camera
+	camera_pivot = get_node_or_null("CameraPivot") as Spatial
 	
 	model_rotation_node = get_node(model_path)
 	character_skeleton = get_node(character_skeleton_path)
@@ -91,16 +102,53 @@ func _ready() -> void:
 	entity.connect("ccast_failed", self, "_con_cast_failed")
 	entity.connect("ccast_finished", self, "_con_cast_finished")
 	entity.connect("cspell_cast_success", self, "_con_spell_cast_success")
+	entity.connect("sdied", self, "on_sdied")
+	
 
 	animation_tree = character_skeleton.get_animation_tree()
 	
 	if animation_tree != null:
 		anim_node_state_machine = animation_tree["parameters/playback"]
-
+		
+	animation_tree["parameters/run-loop/blend_position"] = Vector2(0, -1)
+		
+	
 func _enter_tree():
 	world = get_node(world_path) as VoxelWorld
+	set_process(true)
 	set_physics_process(true)
 	get_parent().connect("isc_controlled_changed", self, "on_c_controlled_changed")
+	
+func _process(delta : float) -> void:
+	if entity.ai_state == EntityEnums.AI_STATE_OFF:
+		return
+	
+	var camera : Camera = get_tree().get_root().get_camera() as Camera
+	
+	if camera == null:
+		return
+	
+	var cam_pos : Vector3 = camera.global_transform.xform(Vector3())
+	var dstv : Vector3 = cam_pos - translation
+	dstv.y = 0
+	var dst : float = dstv.length_squared()
+
+	if dst > max_visible_distance_squared:
+		if visible:
+			hide()
+		return
+	else:
+#		var lod_level : int = int(dst / max_visible_distance_squared * 3.0)
+
+		if dst < 400: #20^2
+			entity.get_character_skeleton().set_lod_level(0)
+		elif dst > 400 and dst < 900: #20^2, 30^2
+			entity.get_character_skeleton().set_lod_level(1)
+		else:
+			entity.get_character_skeleton().set_lod_level(2)
+		
+		if not visible:
+			show()
 
 
 func _physics_process(delta : float) -> void:
@@ -109,9 +157,22 @@ func _physics_process(delta : float) -> void:
 		
 	if world.initial_generation:
 		return
-	
-	process_input(delta)
-	process_movement(delta)
+		
+	if entity.sentity_data == null:
+		return
+		
+	if dead:
+		return
+		
+	if entity.ai_state == EntityEnums.AI_STATE_OFF:
+		process_input(delta)
+		process_movement_player(delta)
+	else:
+		if world != null:
+			if not world.is_position_walkable(transform.origin):
+				return
+
+		process_movement_mob(delta)
 
 func process_input(delta: float) -> void:
 	var key_dir : Vector2 = Vector2()
@@ -161,7 +222,7 @@ func process_input(delta: float) -> void:
 			rotate_delta(camera_pivot.get_y_rot())
 			camera_pivot.set_y_rot(0.0)
 
-func process_movement(delta : float) -> void:
+func process_movement_player(delta : float) -> void:
 	var state : int = entity.getc_state()
 	
 	if state & EntityEnums.ENTITY_STATE_TYPE_FLAG_ROOT != 0 or state & EntityEnums.ENTITY_STATE_TYPE_FLAG_STUN != 0:
@@ -209,6 +270,89 @@ func process_movement(delta : float) -> void:
 			rpc_id(1, "sset_position", translation, rotation)
 		else:
 			sset_position(translation, rotation)
+			
+
+func process_movement_mob(delta : float) -> void:
+	if entity.starget != null:
+		look_at(entity.starget.get_body().translation, Vector3(0, 1, 0))
+	
+	var state : int = entity.getc_state()
+	
+	if state & EntityEnums.ENTITY_STATE_TYPE_FLAG_ROOT != 0 or state & EntityEnums.ENTITY_STATE_TYPE_FLAG_STUN != 0:
+		moving = false
+		return
+	
+	if target_movement_direction.length_squared() > 0.1:
+		if anim_node_state_machine != null and not animation_run:
+			anim_node_state_machine.travel("run-loop")
+			animation_run = true
+		
+		target_movement_direction = target_movement_direction.normalized()
+		moving = true
+	else:
+		if anim_node_state_machine != null and animation_run:
+			anim_node_state_machine.travel("idle-loop")
+			animation_run = false
+			
+		moving = false
+	
+	if target_movement_direction.x > 0.1 or target_movement_direction.y > 0.1 or target_movement_direction.x < -0.1 or target_movement_direction.y < -0.1:
+		y_rot = Vector2(0, 1).angle_to(target_movement_direction)
+		
+		var forward : Vector3 = Vector3(0, 0, 1).rotated(Vector3(0, 1, 0), deg2rad(y_rot)) 
+		var right : Vector3 = forward.cross(Vector3(0, 1, 0)) * -target_movement_direction.x
+		forward *= target_movement_direction.y #only potentially make it zero after getting the right vector
+	
+		dir = forward
+		dir += right
+		
+		if dir.length_squared() > 0.1:
+			dir = dir.normalized()
+			
+		moving = true
+	else:
+		dir = Vector3()
+		moving = false
+		
+	if not moving and sleep:
+		return
+		
+	if moving and sleep:
+		sleep = false
+
+	vel.y += delta * GRAVITY
+
+	var hvel : Vector3 = vel
+	hvel.y = 0
+
+	var target : Vector3 = dir
+	target *= entity.get_speed().ccurrent
+
+	var accel
+	if dir.dot(hvel) > 0:
+		accel = ACCEL
+	else:
+		accel = DEACCEL
+
+	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
+	vel.x = hvel.x
+	vel.z = hvel.z
+	
+	var facing : Vector3 = vel
+	facing.y = 0
+	
+	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	sset_position(translation, rotation)
+	
+	if vel.length_squared() < 0.12:
+		sleep = true
+	
+	if translation.y < -50.0:
+		print("killed mob with fall damage")
+		var sdi : SpellDamageInfo = SpellDamageInfo.new()
+		sdi.damage_source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN
+		sdi.damage = 999999999
+		entity.stake_damage(sdi)
 
 
 func _input(event: InputEvent) -> void:
@@ -319,6 +463,7 @@ func rotate_delta(x_delta : float) -> void:
 	
 	rotation_degrees = Vector3(0.0, y_rot, 0.0)
 	
+
 func target(position : Vector2):
 	var from = camera.project_ray_origin(position)
 	var to = from + camera.project_ray_normal(position) * ray_length
@@ -379,21 +524,16 @@ func queue_camera_rotation(rot : Vector2) -> void:
 	queued_camera_rotaions += rot
 
 remote func sset_position(position : Vector3, rotation : Vector3) -> void:
-	if get_network_master() != 1:
-		print(str(get_network_master()) + "psset")
-	
 	if multiplayer.network_peer and multiplayer.is_network_server():
 		entity.vrpc("cset_position", position, rotation)
-		cset_position(position, rotation)
+		
+		if _controlled:
+			cset_position(position, rotation)
 		
 remote func cset_position(position : Vector3, rotation : Vector3) -> void:
-	if get_network_master() != 1:
-		print(str(get_network_master()) + " pcset")
 	translation = position
 	rotation = rotation
-		
-#func _setup():
-#	setup_actionbars()
+	
 
 func _con_cast_started(info):
 	if anim_node_state_machine != null and not casting_anim:
@@ -428,7 +568,29 @@ func _con_spell_cast_success(info):
 	
 func on_c_controlled_changed(val):
 	#create camera and pivot if true
-	_on = val
+	_controlled = val
 	
-	set_physics_process(val)
+#	set_physics_process(val)
+	set_process_input(val)
+	set_process_unhandled_input(val)
  
+func on_sdied(entity):
+	if dead:
+		return
+
+	dead = true
+
+	anim_node_state_machine.travel("dead")
+	
+	set_physics_process(false)
+	
+remote func set_position(position : Vector3, rotation : Vector3) -> void:
+	if get_tree().is_network_server():
+		rpc("set_position", position, rotation)
+
+		
+func set_max_visible_distance(var value : float) -> void:
+	max_visible_distance_squared = value * value
+	
+	max_visible_distance = value
+

@@ -62,8 +62,9 @@ func on_visibility_changed():
 	if visible:
 		refresh()
 	else:
-		target_bag.disconnect("item_removed", self, "on_item_removed")
-		target_bag = null
+		if target_bag != null:
+			target_bag.disconnect("item_removed", self, "on_item_removed")
+			target_bag = null
 		
 func on_item_removed(bag: Bag, item: ItemInstance, slot_id: int) -> void:
 	refresh()
