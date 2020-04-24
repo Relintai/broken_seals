@@ -96,27 +96,35 @@ func _ready() -> void:
 	model_rotation_node = get_node(model_path)
 	character_skeleton = get_node(character_skeleton_path)
 	entity = get_node("..")
+	entity.set_character_skeleton(character_skeleton)
 	entity.connect("ccast_started", self, "_con_cast_started")
 	entity.connect("ccast_failed", self, "_con_cast_failed")
 	entity.connect("ccast_finished", self, "_con_cast_finished")
 	entity.connect("cspell_cast_success", self, "_con_spell_cast_success")
 	entity.connect("sdied", self, "on_sdied")
-	
+	entity.connect("isc_controlled_changed", self, "on_c_controlled_changed")
+	owner = entity
 
+	on_c_controlled_changed(entity.c_is_controlled)
+	
+	transform = entity.get_transform_3d(true)
+	
 	animation_tree = character_skeleton.get_animation_tree()
 	
 	if animation_tree != null:
 		anim_node_state_machine = animation_tree["parameters/playback"]
 		
 	animation_tree["parameters/run-loop/blend_position"] = Vector2(0, -1)
-		
 	
+#	set_process(false)
+#	set_process_input(false)
+#	set_process_unhandled_input(false)
+
 func _enter_tree():
 	world = get_node(world_path) as VoxelWorld
-	set_process(true)
-	set_physics_process(true)
-	get_parent().connect("isc_controlled_changed", self, "on_c_controlled_changed")
 	
+	set_physics_process(true)
+
 func _process(delta : float) -> void:
 	if entity.ai_state == EntityEnums.AI_STATE_OFF:
 		return
@@ -568,21 +576,23 @@ func on_c_controlled_changed(val):
 	#create camera and pivot if true
 	_controlled = val
 	
-#	set_physics_process(val)
-	set_process_input(val)
-	set_process_unhandled_input(val)
-	
 	if val:
 		var cam_scene : PackedScene = ResourceLoader.load("res://data/camera/CameraPivot.tscn")
 		camera_pivot = cam_scene.instance() as Spatial
 		add_child(camera_pivot)
 		
 		camera = camera_pivot.get_node("Camera") as Camera
+		
+		set_process_input(true)
+		set_process_unhandled_input(true)
 	else:
 		if camera_pivot:
 			camera_pivot.queue_free()
 			camera_pivot = null
 			camera = null
+			
+		set_process_input(false)
+		set_process_unhandled_input(false)
 		
  
 func on_sdied(entity):

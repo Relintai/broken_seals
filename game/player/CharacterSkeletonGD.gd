@@ -133,9 +133,10 @@ func _enter_tree():
 	for iv in viss:
 		add_item_visual(iv as ItemVisual)
 			
-#func _exit_tree():
-#	if _thread != null:
-#		_thread.wait_to_finish()
+func _exit_tree():
+	if _thread != null:
+		_thread.wait_to_finish()
+		_thread = null
 		
 func _process(delta):
 	if use_threads and _thread_done:

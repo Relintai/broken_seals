@@ -84,7 +84,7 @@ func _process(delta):
 			interpolating = false
 
 	
-	var position : Vector3 = entity.get_body().translation
+	var position : Vector3 = entity.get_transform_3d().origin
 	
 	var camera : Camera = get_tree().get_root().get_camera() as Camera
 	

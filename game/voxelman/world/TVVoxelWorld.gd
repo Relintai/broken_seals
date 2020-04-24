@@ -64,7 +64,7 @@ func _process(delta):
 	if vis_update >= VIS_UPDATE_INTERVAL:
 		vis_update = 0
 		
-		var ppos : Vector3 = _player.get_body().transform.origin
+		var ppos : Vector3 = _player.get_transform_3d().origin
 		
 		var cpos : Vector3 = ppos
 		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))

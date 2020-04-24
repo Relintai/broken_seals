@@ -1,40 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://player/NetworkedPlayer.gd" type="Script" id=1]
-[ext_resource path="res://data/models/armature_model_orig_v2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/nameplates/NamePlate.tscn" type="PackedScene" id=3]
-[ext_resource path="res://player/Body.gd" type="Script" id=4]
-
-[sub_resource type="CapsuleShape" id=1]
-radius = 0.266582
-height = 0.927641
-
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 
 [node name="NetworkedPlayer" type="Entity"]
 body_path = NodePath("Body")
 character_skeleton_path = NodePath("Body/Rotation_Helper/Model/character")
 script = ExtResource( 1 )
-
-[node name="Body" type="KinematicBody" parent="."]
-script = ExtResource( 4 )
-
-[node name="Body_CollisionShape" type="CollisionShape" parent="Body"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.8, 0 )
-shape = SubResource( 1 )
-
-[node name="Feet_CollisionShape" type="CollisionShape" parent="Body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.194237, 0 )
-shape = SubResource( 2 )
-
-[node name="Rotation_Helper" type="Spatial" parent="Body"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.960532, 0 )
-
-[node name="Model" type="Spatial" parent="Body/Rotation_Helper"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.875205, 0 )
-
-[node name="character" parent="Body/Rotation_Helper/Model" instance=ExtResource( 2 )]
 
 [node name="NamePlate" parent="." instance=ExtResource( 3 )]
 max_distance = 50.0

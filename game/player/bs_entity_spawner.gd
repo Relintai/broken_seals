@@ -259,7 +259,7 @@ func _request_entity_spawn(createinfo : EntityCreateInfo):
 		print("EntityManager: entity node is null")
 		return null
 		
-	entity_node.get_body().translation = createinfo.transform.origin
+	entity_node.set_transform_3d(createinfo.transform)
 
 	if (createinfo.parent_path == ""):
 		if _spawn_parent == null:
