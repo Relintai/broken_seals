@@ -5,6 +5,4 @@
 [node name="Mob" type="Entity" groups=[
 "mobs",
 ]]
-body_path = NodePath("Body")
-character_skeleton_path = NodePath("Body/Rotation_Helper/Model/character")
 script = ExtResource( 2 )

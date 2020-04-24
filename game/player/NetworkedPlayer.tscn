@@ -3,6 +3,4 @@
 [ext_resource path="res://player/NetworkedPlayer.gd" type="Script" id=1]
 
 [node name="NetworkedPlayer" type="Entity"]
-body_path = NodePath("Body")
-character_skeleton_path = NodePath("Body/Rotation_Helper/Model/character")
 script = ExtResource( 1 )
