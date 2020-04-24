@@ -23,9 +23,6 @@ extends ESSEntitySpawner
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-export(PackedScene) var player_scene : PackedScene
-export(PackedScene) var networked_player_scene : PackedScene
-export(PackedScene) var mob_scene : PackedScene
 export(PackedScene) var player_display_scene : PackedScene
 export(String) var spawn_parent_path : String = "/root/Main"
 export(int) var default_level_override : int = 0
@@ -249,11 +246,11 @@ func _request_entity_spawn(createinfo : EntityCreateInfo):
 	else:
 		if not createinfo.networked:
 			if createinfo.entity_controller == EntityEnums.ENITIY_CONTROLLER_PLAYER:
-				entity_node = player_scene.instance()
+				entity_node = PlayerGD.new()
 			else:
-				entity_node = mob_scene.instance()
+				entity_node = MobGD.new()
 		else:
-			entity_node = networked_player_scene.instance()
+			entity_node = NetworkedPlayerGD.new()
 		
 	if entity_node == null:
 		print("EntityManager: entity node is null")

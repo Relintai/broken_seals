@@ -10,7 +10,6 @@
 body_path = NodePath("DisplayPlayer")
 character_skeleton_path = NodePath("DisplayPlayer/Rotation_Helper/Model/character")
 sseed = 9240987
-cseed = 9240987
 script = ExtResource( 1 )
 
 [node name="DisplayPlayer" type="KinematicBody" parent="."]
