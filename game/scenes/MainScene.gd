@@ -74,10 +74,18 @@ func load_modules_at(path : String) -> void:
 				continue
 
 			if dir.current_is_dir():
-				load_modules_at(path + "/" + file_name)
+				if path == "res://":
+					load_modules_at(path + file_name)
+				else:
+					load_modules_at(path + "/" + file_name)
 			else:
 				if file_name == "game_module.tres":
-					var res : Resource = ResourceLoader.load(path + "/" + file_name)
+					var res : Resource = null
+					
+					if path == "res://":
+						res = ResourceLoader.load(path + file_name)
+					else:
+						res = ResourceLoader.load(path + "/" + file_name)
 					
 					_modules.append(res)
 					
