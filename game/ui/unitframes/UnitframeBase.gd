@@ -40,7 +40,11 @@ var _player : Entity
 
 var _mana : ManaResource
 
+var health_stat_id : int
+
 func _ready() -> void:
+	health_stat_id = ESS.stat_get_id("Health")
+	
 	_name_text = get_node(name_text_path)
 	_level_text = get_node(level_text_path)
 	_health_range = get_node(health_range_path)
@@ -80,7 +84,7 @@ func set_player(p_player: Entity) -> void:
 	for i in range(_player.getc_resource_count()):
 		centity_resource_added(_player.getc_resource_index(i))
 	
-	var health = _player.get_health()
+	var health = _player.get_stat(health_stat_id)
 	_on_player_health_changed(health)
 	health.connect("c_changed", self, "_on_player_health_changed")
 	
@@ -142,5 +146,5 @@ func con_xp_gained(entity: Entity, val: int) -> void:
 	_xp_range.value = _player.ccharacter_xp
 
 func centity_data_changed(data: EntityData) -> void:
-	var health = _player.get_health()
+	var health = _player.get_stat(health_stat_id)
 	_on_player_health_changed(health)

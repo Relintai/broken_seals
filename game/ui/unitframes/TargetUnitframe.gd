@@ -39,8 +39,12 @@ var _aura_grid : GridContainer
 var _player : Entity
 var _mana : ManaResource
 
+var health_stat_id : int
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	health_stat_id = ESS.stat_get_id("Health")
+	
 	_name_text = get_node(name_text_path) as Label
 	_health_range = get_node(health_range_path) as Range
 	_health_text = get_node(health_text_path) as Label
@@ -50,7 +54,7 @@ func _ready() -> void:
 
 func set_player(p_player : Entity) -> void:
 	if not _player == null and is_instance_valid(_player):
-		_player.get_health().disconnect("c_changed", self, "_on_player_health_changed")
+		_player.get_stat(health_stat_id).disconnect("c_changed", self, "_on_player_health_changed")
 		_player.disconnect("caura_added", self, "on_caura_added")
 		_player.disconnect("caura_removed", self, "on_caura_removed")
 		_player.disconnect("cdied", self, "cdied")
@@ -87,7 +91,7 @@ func set_player(p_player : Entity) -> void:
 	for i in range(_player.getc_resource_count()):
 		centity_resource_added(_player.getc_resource_index(i))
 	
-	var health = _player.get_health()
+	var health = _player.get_stat(health_stat_id)
 	_on_player_health_changed(health)
 	health.connect("c_changed", self, "_on_player_health_changed")
 	

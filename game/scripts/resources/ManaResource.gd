@@ -25,19 +25,24 @@ var mana_regen : int = 10
 var tickrate : float = 2
 var timer : float = 0
 
+var int_id : int = 0
+var spirit_id = 0
+
 func _init():
 	should_process = true
+	int_id = ESS.stat_get_id("Intellect")
+	spirit_id = ESS.stat_get_id("Spirit")
 
 func _ons_added(entity):
 	refresh()
 
 func _ons_stat_changed(stat : Stat):
-	if stat.id == Stat.STAT_ID_INTELLECT || stat.id == Stat.STAT_ID_SPIRIT:
+	if stat.id == int_id || stat.id == spirit_id:
 		refresh()
 
 func refresh():
-	var intellect : Stat = owner.get_stat_int(Stat.STAT_ID_INTELLECT)
-	var spirit : Stat = owner.get_stat_int(Stat.STAT_ID_SPIRIT)
+	var intellect : Stat = owner.get_stat(int_id)
+	var spirit : Stat = owner.get_stat(spirit_id)
 	
 	var m : bool = false
 	

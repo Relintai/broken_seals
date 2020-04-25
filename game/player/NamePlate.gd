@@ -46,13 +46,17 @@ var health_bar_label : Label = null
 var entity : Entity = null
 var health : Stat = null
 
+var health_stat_id : int
+
 func _ready():
+	health_stat_id = ESS.stat_get_id("Health")
+	
 	name_label = get_node(name_label_path) as Label
 	health_bar = get_node(health_bar_path) as TextureProgress
 	health_bar_label = get_node(health_bar_label_path) as Label
 	
 	entity = get_node("../..") as Entity
-	health = entity.get_health()
+	health = entity.get_stat(health_stat_id)
 	
 	health.connect("c_changed", self, "c_health_changed")
 	

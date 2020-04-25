@@ -60,7 +60,7 @@ func _sapply(info : AuraApplyInfo) -> void:
 
 		for i in range(get_aura_stat_attribute_count()):
 			var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
-			var stat : Stat = info.target.get_stat_enum(stat_attribute.stat)
+			var stat : Stat = info.target.get_stat(stat_attribute.stat)
 			stat.add_modifier(id, stat_attribute.base_mod, stat_attribute.bonus_mod, stat_attribute.percent_mod)
 
 		if states_add != 0:
@@ -80,7 +80,7 @@ func _sdeapply(data : AuraData) -> void:
 	for i in range(get_aura_stat_attribute_count()):
 		var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
 		
-		var stat : Stat = data.owner.get_stat_enum(stat_attribute.stat)
+		var stat : Stat = data.owner.get_stat(stat_attribute.stat)
 		
 		stat.remove_modifier(id)
 		

@@ -51,7 +51,7 @@ func _ready() -> void:
 	initialize_modules()
 	
 	switch_scene(start_scene)
-	
+
 func initialize_modules() -> void:
 	_modules.clear()
 	
