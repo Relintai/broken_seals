@@ -13,11 +13,15 @@ var last_pointer_position : Vector2 = Vector2()
 
 var currentPointerIDX = INACTIVE_IDX;
 
-var listener : Entity = null
+var listener : Node = null
 
 func _ready():
 	parent = get_node("..")
-	listener = get_node(listenerNodePath)  as Entity
+	listener = get_node(listenerNodePath)
+	
+	if listener != null:
+		if not listener.has_method("queue_camera_rotation"):
+			listener = null
 	
 	set_process_input(true)
 
