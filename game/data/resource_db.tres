@@ -2,4 +2,4 @@
 
 [resource]
 xp_data_path = "res://data/xp/xp_data.tres"
-folders = PoolStringArray( "res://data/entity_skills", "res://data/entities", "res://data/spells", "res://data/auras", "res://data/crafting", "res://data/item_templates", "res://data/player_character_data", "res://data/species", "res://data/mob_data", "res://data/world_spells", "res://data/entity_resources" )
+folders = PoolStringArray( "res://data/entity_skills", "res://data/entities", "res://data/spells", "res://data/auras", "res://data/crafting", "res://data/item_templates", "res://data/species", "res://data/mob_data", "res://data/world_spells", "res://data/entity_resources" )
