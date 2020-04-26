@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://debug/FreeLookCamera.gd" type="Script" id=1]
+[ext_resource path="res://voxelman/debug/FreeLookCamera.gd" type="Script" id=1]
+
 
 [node name="Camera" type="Camera"]
 transform = Transform( 0.844995, 0.305893, -0.438648, -0.0119927, 0.830883, 0.556318, 0.534639, -0.464826, 0.705761, -7.76488, 10.4889, 10.3045 )

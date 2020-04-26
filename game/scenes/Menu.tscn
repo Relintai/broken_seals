@@ -1,12 +1,12 @@
 [gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://menu/CharacterEntry.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Menu.gd" type="Script" id=3]
-[ext_resource path="res://menu/menu_character_button_group.tres" type="ButtonGroup" id=4]
+[ext_resource path="res://ui/menu/menu_character_button_group.tres" type="ButtonGroup" id=4]
 [ext_resource path="res://scenes/CharacterSelectorMenu.gd" type="Script" id=5]
 [ext_resource path="res://scenes/CharacterCreationMenu.gd" type="Script" id=6]
-[ext_resource path="res://menu/character_creation_button_group.tres" type="ButtonGroup" id=7]
+[ext_resource path="res://ui/menu/character_creation_button_group.tres" type="ButtonGroup" id=7]
 [ext_resource path="res://ui/options/Options.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ui/register/Register.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ui/login/Login.tscn" type="PackedScene" id=10]
@@ -19,6 +19,7 @@
 [ext_resource path="res://data/voxel_libraries/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=17]
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
+
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )

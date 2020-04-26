@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://menu/CharacterEntry.gd" type="Script" id=2]
+[ext_resource path="res://ui/menu/CharacterEntry.gd" type="Script" id=2]
 
 [node name="CharacterEntry" type="Button"]
 margin_right = 224.0
