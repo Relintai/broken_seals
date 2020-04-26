@@ -1,11 +1,14 @@
 [gd_resource type="VoxelSurfaceMerger" load_steps=2 format=2]
 
-[ext_resource path="res://data/voxel_textures/dirt_albedo.png" type="Texture" id=1]
+[ext_resource path="res://data/voxel_libraries/textures/grass_mossy_albedo.png" type="Texture" id=1]
+
+
+
 
 [resource]
-resource_name = "Stone"
-id = 1
-voxel_name = "Stone"
+resource_name = "Test2"
+id = 3
+voxel_name = "Test2"
 texture_top = ExtResource( 1 )
 texture_bottom = ExtResource( 1 )
 texture_side = ExtResource( 1 )

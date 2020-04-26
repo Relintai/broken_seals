@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/test_brick_albedo.png-f24e6b9c0f0ab0573a8291a4f3ce9092.stex"
+path="res://.import/stone_1_albedo.png-b38e364d30b4eb4b7c7bfbc56a76a295.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/voxel_textures/test_brick_albedo.png"
-dest_files=[ "res://.import/test_brick_albedo.png-f24e6b9c0f0ab0573a8291a4f3ce9092.stex" ]
+source_file="res://data/voxel_libraries/textures/stone_1_albedo.png"
+dest_files=[ "res://.import/stone_1_albedo.png-b38e364d30b4eb4b7c7bfbc56a76a295.stex" ]
 
 [params]
 

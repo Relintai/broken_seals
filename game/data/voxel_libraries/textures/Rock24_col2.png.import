@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Rock24_col2.png-550377381889900c805e3a85cc80c40a.stex"
+path="res://.import/Rock24_col2.png-2817c54e28d7f4841cfbaa315064ade9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/voxel_textures/Rock24_col2.png"
-dest_files=[ "res://.import/Rock24_col2.png-550377381889900c805e3a85cc80c40a.stex" ]
+source_file="res://data/voxel_libraries/textures/Rock24_col2.png"
+dest_files=[ "res://.import/Rock24_col2.png-2817c54e28d7f4841cfbaa315064ade9.stex" ]
 
 [params]
 
