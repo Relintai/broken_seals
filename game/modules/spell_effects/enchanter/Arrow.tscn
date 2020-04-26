@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://modules/core/shaders/1_standard_shader.tres" type="Shader" id=1]
+
+
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.635294, 0.462745, 0.239216, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 1, 0.01, 0.01 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.866667, 0.917647, 0.984314, 1 )
+
+[sub_resource type="PrismMesh" id=4]
+material = SubResource( 3 )
+size = Vector3( 0.01, 0.01, 0.01 )
+
+[node name="Arrow" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 2.65431e-14, -1.62921e-07, 1, -1, -1.62921e-07, 0, 1.62921e-07, -1, -1.62921e-07, 0, 0, -0.504589 )
+mesh = SubResource( 4 )
+material/0 = null

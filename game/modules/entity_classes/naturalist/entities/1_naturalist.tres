@@ -1,0 +1,23 @@
+[gd_resource type="EntityData" load_steps=6 format=2]
+
+[ext_resource path="res://modules/core/crafting/2_chest_of_the_infinite_wisdom.tres" type="CraftRecipe" id=1]
+[ext_resource path="res://modules/entity_classes/naturalist/1_naturalist.tres" type="EntityClassData" id=2]
+[ext_resource path="res://modules/species/Human/Female/1_human_female.tres" type="EntitySpeciesData" id=3]
+[ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=4]
+[ext_resource path="res://modules/core/crafting/1_test_craft.tres" type="CraftRecipe" id=5]
+
+
+
+
+[resource]
+resource_name = "Naturalist"
+id = 1
+entity_type = 4
+entity_controller = 1
+is_playable = true
+text_name = "Naturalist"
+bag_size = 24
+entity_species_data = ExtResource( 3 )
+entity_class_data = ExtResource( 2 )
+craft_recipes = [ ExtResource( 5 ), ExtResource( 1 ) ]
+script = ExtResource( 4 )

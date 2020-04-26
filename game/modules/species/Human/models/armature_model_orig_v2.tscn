@@ -1,0 +1,299 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://modules/core/item_visuals/test_base_v3.tres" type="ItemVisual" id=1]
+[ext_resource path="res://player/CharacterSkeletonAttachPoint.gd" type="Script" id=2]
+[ext_resource path="res://modules/core/materials/3_standard_character_material.tres" type="Material" id=3]
+[ext_resource path="res://test_weapons/shield_d.mesh" type="ArrayMesh" id=4]
+[ext_resource path="res://test_weapons/sword_i.mesh" type="ArrayMesh" id=5]
+[ext_resource path="res://modules/species/Human/models/armature.dae" type="PackedScene" id=6]
+[ext_resource path="res://modules/core/materials/9_standard_character_material_notex.tres" type="Material" id=7]
+[ext_resource path="res://player/CharacterSkeletonGD.gd" type="Script" id=8]
+
+[sub_resource type="Skin" id=1]
+bind_count = 31
+bind/0/name = ""
+bind/0/bone = 0
+bind/0/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0010334, -1.32424, 0.004403 )
+bind/1/name = ""
+bind/1/bone = 1
+bind/1/pose = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 3.23883e-05, -0.000216131, 0 )
+bind/2/name = ""
+bind/2/bone = 2
+bind/2/pose = Transform( 1, 0, 0, 0, 4.71856e-07, 1, 0, -1, 4.71856e-07, 0, -3.6933e-07, 0.782716 )
+bind/3/name = ""
+bind/3/bone = 3
+bind/3/pose = Transform( 0.999745, -0.00621639, 0.0217112, -0.0215977, 0.0177767, 0.999609, -0.00659991, -0.999823, 0.0176379, 0.0051749, -0.0147984, 0.832313 )
+bind/4/name = ""
+bind/4/bone = 4
+bind/4/pose = Transform( 1, -9.35914e-10, 1.36474e-09, -3.07044e-09, -0.00336038, 0.999994, 1.03179e-11, -0.999994, -0.00336038, -0.00103352, 0.00608556, 0.989014 )
+bind/5/name = ""
+bind/5/bone = 5
+bind/5/pose = Transform( 1, 6.39974e-07, -8.89245e-07, 8.80181e-07, 0.0113912, 0.999935, 6.50979e-07, -0.999935, 0.0113912, -0.00103425, -0.0106821, 1.13661 )
+bind/6/name = ""
+bind/6/bone = 6
+bind/6/pose = Transform( 1, -0.000269678, 0.00012004, -9.65309e-05, 0.0855512, 0.996334, -0.000278958, -0.996334, 0.0855512, -0.000675752, -0.108904, 1.31976 )
+bind/7/name = ""
+bind/7/bone = 7
+bind/7/pose = Transform( 1, 8.17762e-05, -0.000263342, 0.000258866, 0.0505959, 0.998719, 9.49964e-05, -0.998719, 0.0505959, -0.00116505, -0.0605734, 1.38071 )
+bind/8/name = ""
+bind/8/bone = 8
+bind/8/pose = Transform( 0.0070114, 0.0774383, 0.996973, 0.0774384, 0.993961, -0.077749, -0.996973, 0.0777491, 0.00097251, -0.089079, -1.27734, -0.0279526 )
+bind/9/name = ""
+bind/9/bone = 9
+bind/9/pose = Transform( -0.0450563, 0.0440544, 0.998013, 0.0597335, 0.997358, -0.0413288, -0.997197, 0.0577527, -0.0475687, -0.0365657, -1.27782, 0.120299 )
+bind/10/name = ""
+bind/10/bone = 10
+bind/10/pose = Transform( 0.018514, 0.0309238, 0.99935, 0.0309247, 0.999025, -0.0314866, -0.99935, 0.0314876, 0.0175398, -0.0484489, -1.26707, 0.406214 )
+bind/11/name = ""
+bind/11/bone = 11
+bind/11/pose = Transform( -0.0261653, 0.130666, -0.991081, 0.130703, -0.982463, -0.132981, -0.991077, -0.133017, 0.00862807, -0.147772, 1.13499, 0.846311 )
+bind/12/name = ""
+bind/12/bone = 12
+bind/12/pose = Transform( -0.475656, 0.00430247, 0.879621, 0.00321757, 0.99999, -0.0031513, -0.879626, 0.00133118, -0.475665, 0.317761, -1.25084, 0.691578 )
+bind/13/name = ""
+bind/13/bone = 13
+bind/13/pose = Transform( -0.000220652, -0.000277915, 1, -0.000336948, 1, 0.000277923, -1, -0.000336983, -0.000220542, -0.0614699, -1.24824, 0.794416 )
+bind/14/name = ""
+bind/14/bone = 14
+bind/14/pose = Transform( 0.00944622, 0.00316354, 0.999951, 0.0031337, 0.99999, -0.00319322, -0.999951, 0.00316365, 0.00943635, -0.00773189, -1.26399, 0.790859 )
+bind/15/name = ""
+bind/15/bone = 15
+bind/15/pose = Transform( -0.00970715, 0.0022499, 0.999951, 0.00216274, 0.999995, -0.00222896, -0.999951, 0.00214093, -0.00971181, 0.00940531, -1.26319, 0.831785 )
+bind/16/name = ""
+bind/16/bone = 16
+bind/16/pose = Transform( 0.00658963, -0.0806899, -0.996717, -0.0806899, 0.993446, -0.0809585, 0.996717, 0.0809585, 3.54564e-05, 0.0931853, -1.27701, -0.0320576 )
+bind/17/name = ""
+bind/17/bone = 17
+bind/17/pose = Transform( -0.0392234, -0.0752374, -0.996394, -0.0366487, 0.996599, -0.0738102, 0.998558, 0.0336214, -0.0418474, 0.0773441, -1.27236, 0.151474 )
+bind/18/name = ""
+bind/18/bone = 18
+bind/18/pose = Transform( 0.0229175, -0.0602779, -0.997918, -0.0474641, 0.99699, -0.0613119, 0.99861, 0.0487704, 0.0199873, 0.0862036, -1.27767, 0.383885 )
+bind/19/name = ""
+bind/19/bone = 19
+bind/19/pose = Transform( 0.0297753, 0.082978, -0.996106, 0.0950469, 0.991797, 0.0854601, 0.995027, -0.0972214, 0.0216441, -0.0879441, -1.17267, 0.804474 )
+bind/20/name = ""
+bind/20/bone = 20
+bind/20/pose = Transform( -0.487887, -0.0560934, -0.871102, -0.0378187, 0.998354, -0.043106, 0.872087, 0.0119131, -0.489205, -0.265874, -1.2737, 0.672265 )
+bind/21/name = ""
+bind/21/bone = 21
+bind/21/pose = Transform( 0.00472639, -0.0569537, -0.998365, -0.0438079, 0.997406, -0.0571064, 0.999029, 0.0440062, 0.00221883, 0.134012, -1.27645, 0.738441 )
+bind/22/name = ""
+bind/22/bone = 22
+bind/22/pose = Transform( -0.00289686, -0.0125321, -0.999917, 0.000557578, 0.999921, -0.0125338, 0.999995, -0.00059385, -0.00288976, 0.00631499, -1.25873, 0.795846 )
+bind/23/name = ""
+bind/23/bone = 23
+bind/23/pose = Transform( 0.00643236, -0.0318082, -0.999473, -0.0188087, 0.999313, -0.0319242, 0.999802, 0.0190041, 0.00582956, 0.0383794, -1.27427, 0.810817 )
+bind/24/name = ""
+bind/24/bone = 24
+bind/24/pose = Transform( 0.997079, 0.0643905, 0.0415419, 0.0406052, 0.0156588, -0.999053, -0.0649775, 0.997802, 0.0129985, -0.124325, -0.0162939, -0.795408 )
+bind/25/name = ""
+bind/25/bone = 25
+bind/25/pose = Transform( 0.998221, 0.051846, 0.0300808, 0.0276995, 0.0458923, -0.998563, -0.053149, 0.9976, 0.0443741, -0.118691, -0.0290485, -0.456133 )
+bind/26/name = ""
+bind/26/bone = 26
+bind/26/pose = Transform( 0.998432, 0.0379936, -0.0415485, 0.0267438, -0.969472, -0.243743, -0.0495496, 0.242244, -0.968951, -0.119631, 0.0441252, -0.0300586 )
+bind/27/name = ""
+bind/27/bone = 27
+bind/27/pose = Transform( 0.997517, -0.0648327, -0.0280864, -0.0272037, 0.0143568, -0.999527, 0.0652032, 0.997793, 0.0125575, 0.124711, -0.0142854, -0.795383 )
+bind/28/name = ""
+bind/28/bone = 28
+bind/28/pose = Transform( 0.998496, -0.0523874, -0.0171451, -0.0147558, 0.0455334, -0.998855, 0.0531055, 0.997589, 0.0446915, 0.119101, -0.0275243, -0.456326 )
+bind/29/name = ""
+bind/29/bone = 29
+bind/29/pose = Transform( 0.997795, 0.00782497, 0.066146, 0.0235858, -0.970258, -0.240925, 0.0623004, 0.241949, -0.968288, 0.117675, 0.0501108, -0.0285344 )
+bind/30/name = ""
+bind/30/bone = 30
+bind/30/pose = Transform( 1, 0, 0, 0, 1, -2.84217e-14, 0, -4.98108e-09, 1, 0, -0.832461, 2.76188e-08 )
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "cast-end"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "cast-end"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "casting-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "dead"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "run-left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "run-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "run-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "run-right-loop"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=11]
+blend_point_0/node = SubResource( 7 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 8 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 9 )
+blend_point_2/pos = Vector2( 0, -1 )
+blend_point_3/node = SubResource( 10 )
+blend_point_3/pos = Vector2( 1, 0 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+xfade_time = 0.05
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+auto_advance = true
+xfade_time = 0.15
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+auto_advance = true
+xfade_time = 0.14
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=19]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=20]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=21]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=22]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=23]
+xfade_time = 0.12
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=24]
+xfade_time = 0.12
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=25]
+xfade_time = 0.12
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+xfade_time = 0.12
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+xfade_time = 0.12
+
+[sub_resource type="AnimationNodeStateMachine" id=28]
+states/cast-end/node = SubResource( 3 )
+states/cast-end/position = Vector2( 117.871, -197.811 )
+"states/cast-end 2/node" = SubResource( 2 )
+"states/cast-end 2/position" = Vector2( 317.871, -197.811 )
+states/casting-loop/node = SubResource( 4 )
+states/casting-loop/position = Vector2( -76.129, -197.811 )
+states/dead/node = SubResource( 5 )
+states/dead/position = Vector2( -129.129, 73.189 )
+states/idle-loop/node = SubResource( 6 )
+states/idle-loop/position = Vector2( -255.566, -317.817 )
+states/run-loop/node = SubResource( 11 )
+states/run-loop/position = Vector2( 31.871, -340.817 )
+transitions = [ "idle-loop", "casting-loop", SubResource( 12 ), "casting-loop", "idle-loop", SubResource( 13 ), "casting-loop", "cast-end", SubResource( 14 ), "cast-end", "cast-end 2", SubResource( 15 ), "cast-end 2", "idle-loop", SubResource( 16 ), "idle-loop", "cast-end", SubResource( 17 ), "idle-loop", "run-loop", SubResource( 18 ), "run-loop", "idle-loop", SubResource( 19 ), "casting-loop", "run-loop", SubResource( 20 ), "run-loop", "casting-loop", SubResource( 21 ), "run-loop", "cast-end", SubResource( 22 ), "idle-loop", "dead", SubResource( 23 ), "casting-loop", "dead", SubResource( 24 ), "cast-end 2", "dead", SubResource( 25 ), "run-loop", "dead", SubResource( 26 ), "dead", "idle-loop", SubResource( 27 ) ]
+start_node = "idle-loop"
+graph_offset = Vector2( -567.129, -449.811 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=29]
+
+[node name="character" type="CharacterSkeleton3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00126277, 0, -0.000325084 )
+model_dirty = true
+animation_player_path = NodePath("armature/AnimationPlayer")
+animation_tree_path = NodePath("AnimationTree")
+script = ExtResource( 8 )
+automatic_build = true
+use_threads = true
+mesh_instance_path = NodePath("armature/Armature/Skeleton/MeshInstance")
+skeleton_path = NodePath("armature/Armature/Skeleton")
+materials = [ ExtResource( 3 ), ExtResource( 3 ), ExtResource( 7 ) ]
+left_hand_attach_point_path = NodePath("armature/Armature/Skeleton/LeftHandAttachment/LeftHandAP")
+right_hand_attach_point_path = NodePath("armature/Armature/Skeleton/RightHandAttachment/RightHandAP")
+torso_attach_point_path = NodePath("armature/Armature/Skeleton/NeckAttachment/TorsoAP")
+root_attach_point_path = NodePath("armature/Armature/Skeleton/RootAttachment/RootAP")
+viss = [ ExtResource( 1 ) ]
+
+[node name="armature" parent="." instance=ExtResource( 6 )]
+
+[node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton" index="0"]
+skin = SubResource( 1 )
+
+[node name="LeftHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="1"]
+transform = Transform( 0.103556, -0.988402, -0.110836, 0.0564289, -0.105376, 0.992774, -0.993016, -0.109065, 0.0448651, 0.268934, 0.760735, -0.0111355 )
+bone_name = "left_hand"
+
+[node name="LeftHandAP" type="Spatial" parent="armature/Armature/Skeleton/LeftHandAttachment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.09 )
+script = ExtResource( 2 )
+
+[node name="RightHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="2"]
+transform = Transform( -0.0425484, -0.998138, 0.0430448, -0.127878, 0.0481536, 0.990543, -0.990894, 0.0366551, -0.129694, -0.274808, 0.765291, -0.00484195 )
+bone_name = "right_hand"
+
+[node name="RightHandAP" type="Spatial" parent="armature/Armature/Skeleton/RightHandAttachment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.09 )
+script = ExtResource( 2 )
+
+[node name="RootAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="3"]
+transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, -3.23883e-05, 0, 0.000216131 )
+bone_name = "root"
+
+[node name="RootAP" type="Spatial" parent="armature/Armature/Skeleton/RootAttachment"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+script = ExtResource( 2 )
+
+[node name="NeckAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="4"]
+transform = Transform( 0.999947, -0.00139129, 0.0101847, 0.0102509, 0.0730927, -0.997182, 0.000642988, 0.997324, 0.0731087, 0.00124403, 1.31239, 9.86132e-05 )
+bone_name = "neck"
+
+[node name="TorsoAP" type="Spatial" parent="armature/Armature/Skeleton/NeckAttachment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.09 )
+script = ExtResource( 2 )
+
+[node name="RightHipAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="5"]
+transform = Transform( 0.999897, 5.70245e-09, -0.0143362, -0.0143362, 4.71813e-07, -0.999897, 1.06217e-09, 1, 4.71847e-07, 0.00679527, 0.7709, -3.63798e-10 )
+bone_name = "pelvis"
+
+[node name="Spatial" type="Spatial" parent="armature/Armature/Skeleton/RightHipAttachment"]
+transform = Transform( 0.999874, 9.23108e-09, -0.0158884, -9.23082e-09, 1, 8.90736e-11, 0.0158884, 5.76676e-11, 0.999874, -0.121211, 2.41562e-09, -0.00380749 )
+
+[node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton/RightHipAttachment/Spatial"]
+transform = Transform( -0.0517327, -0.291925, 0.102959, -0.33507, 0.0663555, 0.354256, -0.367493, -0.0194062, -0.337494, 0.005798, 0.164881, -0.202956 )
+mesh = ExtResource( 5 )
+material/0 = null
+material/1 = null
+
+[node name="BoneAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="6"]
+transform = Transform( 0.999944, -0.000513957, 0.0105315, 0.0105227, -0.00109461, -0.999854, 0.000525442, 0.999999, -0.00109028, 0.00321971, 1.12482, -0.000105922 )
+bone_name = "spine_2"
+
+[node name="Spatial" type="Spatial" parent="armature/Armature/Skeleton/BoneAttachment"]
+transform = Transform( -0.430811, -0.000122875, 0.129993, 8.54071e-05, -0.45, -0.000142502, 0.130026, -0.000112184, 0.430809, 0.000957399, -0.0715881, -0.0057677 )
+
+[node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton/BoneAttachment/Spatial"]
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 28 )
+anim_player = NodePath("../armature/AnimationPlayer")
+active = true
+parameters/playback = SubResource( 29 )
+parameters/run-loop/blend_position = Vector2( 0, -0.0172414 )
+
+[editable path="armature"]

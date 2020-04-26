@@ -1,0 +1,267 @@
+{
+	"connections": [
+		{
+			"from": "noise",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 1
+		},
+		{
+			"from": "voronoi",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 0
+		},
+		{
+			"from": "blend_2",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "Material",
+			"to_port": 0
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "export",
+			"to_port": 0
+		},
+		{
+			"from": "perlin",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "gaussian_blur",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 1
+		}
+	],
+	"label": "Graph",
+	"name": "2692",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "Material",
+			"node_position": {
+				"x": 128,
+				"y": -557
+			},
+			"parameters": {
+				"albedo_color": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1,
+					"type": "Color"
+				},
+				"ao_light_affect": 1,
+				"depth_scale": 1,
+				"emission_energy": 1,
+				"metallic": 1,
+				"normal_scale": 1,
+				"roughness": 1,
+				"size": 8,
+				"subsurf_scatter_strength": 0
+			},
+			"type": "material"
+		},
+		{
+			"name": "noise",
+			"node_position": {
+				"x": -1065,
+				"y": -480
+			},
+			"parameters": {
+				"density": 0.00285,
+				"size": 8
+			},
+			"type": "noise"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -621,
+				"y": -156
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 0.214933,
+							"g": 0.286458,
+							"pos": 0,
+							"r": 0.226109
+						},
+						{
+							"a": 1,
+							"b": 0.093054,
+							"g": 0.114583,
+							"pos": 0.309091,
+							"r": 0.089979
+						},
+						{
+							"a": 1,
+							"b": 0.14946,
+							"g": 0.223958,
+							"pos": 0.667273,
+							"r": 0.149306
+						},
+						{
+							"a": 1,
+							"b": 0.328234,
+							"g": 0.520833,
+							"pos": 1,
+							"r": 0.376382
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "export",
+			"node_position": {
+				"x": 149,
+				"y": -236
+			},
+			"parameters": {
+				"size": 8,
+				"suffix": "albedo"
+			},
+			"type": "export"
+		},
+		{
+			"name": "blend_2",
+			"node_position": {
+				"x": -757,
+				"y": -544
+			},
+			"parameters": {
+				"amount": 0.221725,
+				"blend_type": 11
+			},
+			"type": "blend"
+		},
+		{
+			"name": "voronoi",
+			"node_position": {
+				"x": -1099,
+				"y": -697
+			},
+			"parameters": {
+				"intensity": 1,
+				"randomness": 0.79,
+				"scale_x": 4,
+				"scale_y": 4,
+				"stretch_x": 1,
+				"stretch_y": 1
+			},
+			"type": "voronoi"
+		},
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -489,
+				"y": -511
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 0,
+							"b": 0,
+							"g": 0,
+							"pos": 0,
+							"r": 0
+						},
+						{
+							"a": 1,
+							"b": 0.20187,
+							"g": 0.401783,
+							"pos": 0.709091,
+							"r": 0.447917
+						},
+						{
+							"a": 1,
+							"b": 0.09838,
+							"g": 0.885417,
+							"pos": 1,
+							"r": 0.811631
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "blend_3",
+			"node_position": {
+				"x": -247,
+				"y": -382
+			},
+			"parameters": {
+				"amount": 0.741575,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "gaussian_blur",
+			"node_position": {
+				"x": -390.25,
+				"y": 19
+			},
+			"parameters": {
+				"param0": 10,
+				"param1": 0.05,
+				"param2": 0
+			},
+			"type": "gaussian_blur"
+		},
+		{
+			"name": "perlin",
+			"node_position": {
+				"x": -922.75,
+				"y": -149
+			},
+			"parameters": {
+				"iterations": 6,
+				"persistence": 0.8,
+				"scale_x": 30,
+				"scale_y": 30
+			},
+			"type": "perlin"
+		}
+	],
+	"parameters": {
+
+	},
+	"type": "graph"
+}

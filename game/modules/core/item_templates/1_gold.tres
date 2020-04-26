@@ -1,0 +1,11 @@
+[gd_resource type="ItemTemplate" load_steps=2 format=2]
+
+[ext_resource path="res://modules/icons/items/gold.tres" type="Texture" id=1]
+
+
+[resource]
+resource_name = "Gold"
+id = 1
+item_type = 13
+icon = ExtResource( 1 )
+text_name = "Gold"

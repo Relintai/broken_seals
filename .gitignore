@@ -1,7 +1,6 @@
-./engine/*
-./modules/*
 engine
-modules
+modules/*
+
 *.d
 *.o
 *.meta
@@ -19,11 +18,5 @@ _build/*
 _binaries/*
 game/android/build/*
 
-#ignore everything in the Engine Directory
-engine/*
-
 *.blend1
-
 .dir-locals.el
-
-game/.prop_tool_temp/**

@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://modules/core/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
+[ext_resource path="res://modules/entity_classes/naturalist/spell_effects/textures/star.png" type="Texture" id=2]
+
+
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.0627451, 0.741176, 0.619608, 1 )
+shader_param/texture_albedo = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Anim"
+length = 0.3
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("MeshInstance:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.08, 0.09, 0.3 ),
+"transitions": PoolRealArray( 5.09824, 1, 1.31951, 1 ),
+"update": 0,
+"values": [ Vector3( 0.1, 0.1, 0.1 ), Vector3( 1, 1, 1 ), Vector3( 1, 1, 1 ), Vector3( 0.1, 0.1, 0.1 ) ]
+}
+
+[node name="AmplifyPain" type="Spatial"]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Anim"
+anims/Anim = SubResource( 3 )

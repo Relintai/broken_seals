@@ -1,0 +1,6 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_specular_mode = 4

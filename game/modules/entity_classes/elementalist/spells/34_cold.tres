@@ -1,0 +1,7 @@
+[gd_resource type="Spell" format=2]
+
+[resource]
+resource_name = "Cold"
+id = 34
+text_name = "Cold"
+text_description = "Reduce the temperature of your body, to allow the usange of all ice spells. Water spells are still usable at reduced efficiency."

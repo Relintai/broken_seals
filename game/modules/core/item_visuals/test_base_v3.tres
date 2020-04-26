@@ -1,0 +1,200 @@
+[gd_resource type="ItemVisual" load_steps=46 format=2]
+
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_pelvis.dae" type="MeshDataResource" id=1]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf.dae" type="MeshDataResource" id=2]
+[ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf_v3.png" type="Texture" id=3]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_finger.dae" type="MeshDataResource" id=4]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine2.dae" type="MeshDataResource" id=5]
+[ext_resource path="res://modules/species/Human/Female/character_textures/head_v3.png" type="Texture" id=6]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_forearm.dae" type="MeshDataResource" id=7]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_fingers.dae" type="MeshDataResource" id=8]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.dae" type="MeshDataResource" id=9]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_hand.dae" type="MeshDataResource" id=10]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_right.dae" type="MeshDataResource" id=11]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_upperarm.dae" type="MeshDataResource" id=12]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.dae" type="MeshDataResource" id=13]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_neck.dae" type="MeshDataResource" id=14]
+[ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf_v3.png" type="Texture" id=15]
+[ext_resource path="res://modules/species/Human/Female/character_textures/armor_simple_v3.png" type="Texture" id=16]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_head.dae" type="MeshDataResource" id=17]
+[ext_resource path="res://modules/species/Human/Female/character_textures/skin_v3.png" type="Texture" id=18]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot.dae" type="MeshDataResource" id=19]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.dae" type="MeshDataResource" id=20]
+
+[sub_resource type="ItemVisualEntry" id=1]
+mesh_male = ExtResource( 17 )
+mesh_female = ExtResource( 17 )
+texture_male = ExtResource( 6 )
+texture_female = ExtResource( 6 )
+
+[sub_resource type="ItemVisualEntry" id=2]
+mesh_male = ExtResource( 2 )
+mesh_female = ExtResource( 2 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=3]
+mesh_male = ExtResource( 8 )
+mesh_female = ExtResource( 8 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=4]
+mesh_male = ExtResource( 8 )
+mesh_female = ExtResource( 8 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=5]
+mesh_male = ExtResource( 19 )
+mesh_female = ExtResource( 19 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=6]
+mesh_male = ExtResource( 7 )
+mesh_female = ExtResource( 7 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=7]
+mesh_male = ExtResource( 13 )
+mesh_female = ExtResource( 13 )
+texture_male = ExtResource( 15 )
+texture_female = ExtResource( 15 )
+
+[sub_resource type="ItemVisualEntry" id=8]
+mesh_male = ExtResource( 9 )
+mesh_female = ExtResource( 9 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=9]
+mesh_male = ExtResource( 4 )
+mesh_female = ExtResource( 4 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=10]
+mesh_male = ExtResource( 4 )
+mesh_female = ExtResource( 4 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=11]
+mesh_male = ExtResource( 12 )
+mesh_female = ExtResource( 12 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=12]
+mesh_male = ExtResource( 14 )
+mesh_female = ExtResource( 14 )
+texture_male = ExtResource( 15 )
+texture_female = ExtResource( 15 )
+
+[sub_resource type="ItemVisualEntry" id=13]
+mesh_male = ExtResource( 1 )
+mesh_female = ExtResource( 1 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=14]
+mesh_male = ExtResource( 2 )
+mesh_female = ExtResource( 2 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=15]
+mesh_male = ExtResource( 8 )
+mesh_female = ExtResource( 8 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=16]
+mesh_male = ExtResource( 8 )
+mesh_female = ExtResource( 8 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=17]
+mesh_male = ExtResource( 19 )
+mesh_female = ExtResource( 19 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=18]
+mesh_male = ExtResource( 7 )
+mesh_female = ExtResource( 7 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=19]
+mesh_male = ExtResource( 10 )
+mesh_female = ExtResource( 10 )
+texture_male = ExtResource( 15 )
+texture_female = ExtResource( 15 )
+
+[sub_resource type="ItemVisualEntry" id=20]
+mesh_male = ExtResource( 11 )
+mesh_female = ExtResource( 11 )
+texture_male = ExtResource( 16 )
+texture_female = ExtResource( 16 )
+
+[sub_resource type="ItemVisualEntry" id=21]
+mesh_male = ExtResource( 4 )
+mesh_female = ExtResource( 4 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=22]
+mesh_male = ExtResource( 4 )
+mesh_female = ExtResource( 4 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=23]
+mesh_male = ExtResource( 12 )
+mesh_female = ExtResource( 12 )
+texture_male = ExtResource( 18 )
+texture_female = ExtResource( 18 )
+
+[sub_resource type="ItemVisualEntry" id=24]
+mesh_male = ExtResource( 20 )
+mesh_female = ExtResource( 20 )
+texture_male = ExtResource( 3 )
+texture_female = ExtResource( 3 )
+
+[sub_resource type="ItemVisualEntry" id=25]
+mesh_male = ExtResource( 5 )
+mesh_female = ExtResource( 5 )
+texture_male = ExtResource( 3 )
+texture_female = ExtResource( 3 )
+
+[resource]
+layer = 1
+visual_pelvis = SubResource( 13 )
+visual_spine_1 = SubResource( 24 )
+visual_spine_2 = SubResource( 25 )
+visual_neck = SubResource( 12 )
+visual_head = SubResource( 1 )
+visual_left_upper_arm = SubResource( 11 )
+visual_left_forearm = SubResource( 6 )
+visual_left_hand = SubResource( 7 )
+visual_left_thumb_base = SubResource( 9 )
+visual_left_thumb_end = SubResource( 10 )
+visual_left_fingers_base = SubResource( 3 )
+visual_left_fingers_end = SubResource( 4 )
+visual_right_upper_arm = SubResource( 23 )
+visual_right_forearm = SubResource( 18 )
+visual_right_hand = SubResource( 19 )
+visual_right_thumb_base = SubResource( 21 )
+visual_right_thumb_end = SubResource( 22 )
+visual_right_fingers_base = SubResource( 15 )
+visual_right_fingers_end = SubResource( 16 )
+visual_left_thigh = SubResource( 8 )
+visual_left_calf = SubResource( 2 )
+visual_left_foot = SubResource( 5 )
+visual_right_thigh = SubResource( 20 )
+visual_right_calf = SubResource( 14 )
+visual_right_foot = SubResource( 17 )

@@ -1,0 +1,12 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,specular_disabled,vertex_lighting;
+uniform vec4 albedo : hint_color;
+
+void fragment() {
+	vec3 color = albedo.rgb * COLOR.rgb;
+	ALBEDO = color;
+}
+"

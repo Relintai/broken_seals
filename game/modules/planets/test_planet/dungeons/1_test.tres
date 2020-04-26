@@ -1,0 +1,9 @@
+[gd_resource type="DungeonData" load_steps=3 format=2]
+
+[ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.gd" type="Script" id=1]
+[ext_resource path="res://modules/planets/test_planet/dungeon_rooms/2_test_start_room.tres" type="DungeonRoomData" id=2]
+
+
+[resource]
+target_script = ExtResource( 1 )
+dungeon_start_room_datas = [ ExtResource( 2 ) ]

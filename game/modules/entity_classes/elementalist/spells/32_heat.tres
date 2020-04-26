@@ -1,0 +1,7 @@
+[gd_resource type="Spell" format=2]
+
+[resource]
+resource_name = "Heat"
+id = 32
+text_name = "Heat"
+text_description = "Increase the temperature of your body, to allow the usange of all fire spells. Water spells are still usable at reduced efficiency."

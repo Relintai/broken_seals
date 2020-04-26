@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://modules/core/shaders/3_simple_y_billboard.shader" type="Shader" id=1]
+[ext_resource path="res://modules/core/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=2]
+[ext_resource path="res://modules/entity_classes/naturalist/spell_effects/textures/big_glow.png" type="Texture" id=3]
+[ext_resource path="res://modules/entity_classes/naturalist/spell_effects/textures/main_texture.png" type="Texture" id=4]
+
+
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/texture_albedo = ExtResource( 4 )
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+size = Vector2( 0.1, 0.1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.027451, 0.537255, 0.317647, 1 )
+shader_param/texture_albedo = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=4]
+material = SubResource( 3 )
+size = Vector2( 0.3, 0.3 )
+
+[node name="NatureCast" type="Spatial"]
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+amount = 5
+lifetime = 0.29
+explosiveness = 0.08
+randomness = 0.77
+lifetime_randomness = 1.0
+local_coords = false
+mesh = SubResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 0.1
+direction = Vector3( 1, 1, 1 )
+spread = 180.0
+gravity = Vector3( 0, -9, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 1.0
+angular_velocity = 397.64
+angular_velocity_random = 0.2
+radial_accel = 1.0
+tangential_accel = 6.9
+tangential_accel_random = 0.21
+damping = 6.54
+damping_random = 0.5
+angle = 426.5
+angle_random = 1.0
+scale_amount = 0.3
+scale_amount_random = 1.0
+color = Color( 0.0901961, 0.501961, 0.247059, 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+material/0 = null

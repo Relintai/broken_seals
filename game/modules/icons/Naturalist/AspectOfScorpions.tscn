@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
+[ext_resource path="res://modules/icons/Naturalist/AspectOfScorpions.png" type="Texture" id=2]
+[ext_resource path="res://modules/icons/ parts/circles.svg" type="Texture" id=3]
+[ext_resource path="res://modules/icons/icons.png" type="Texture" id=4]
+
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.166667, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.871094, 0.871094, 0.871094, 1, 1, 1, 1, 1 )
+
+[node name="LayeredTextureMaker" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 22.1815, 14.0857 )
+scale = Vector2( 0.85584, 0.746345 )
+texture = ExtResource( 4 )
+
+[node name="circles" type="Sprite" parent="."]
+visible = false
+modulate = Color( 0.427451, 0.0588235, 0.0588235, 1 )
+self_modulate = Color( 0.772549, 0.458824, 0.458824, 1 )
+position = Vector2( 5.77751, 5.69682 )
+scale = Vector2( 0.0683068, 0.0707925 )
+texture = ExtResource( 3 )
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+modulate = Color( 0.662745, 0.207843, 0.207843, 1 )
+position = Vector2( 6.35167, 10.2869 )
+scale = Vector2( 0.05, 0.05 )
+amount = 24
+texture = ExtResource( 3 )
+direction = Vector2( 0.5, 0.5 )
+spread = 108.36
+gravity = Vector2( 0, 0 )
+initial_velocity = 40.0
+linear_accel = 3.2
+linear_accel_random = 0.21
+color_ramp = SubResource( 1 )
+hue_variation_random = 0.02
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+modulate = Color( 0.662745, 0.207843, 0.207843, 1 )
+position = Vector2( 4.59298, 2.6762 )
+scale = Vector2( 0.02, 0.02 )
+amount = 20
+lifetime = 0.74
+explosiveness = 0.14
+randomness = 0.59
+lifetime_randomness = 0.38
+texture = ExtResource( 3 )
+direction = Vector2( 0.5, 0.5 )
+spread = 108.36
+gravity = Vector2( 0, 0 )
+initial_velocity = 40.0
+linear_accel = 3.2
+linear_accel_random = 0.21
+color_ramp = SubResource( 1 )
+
+[node name="CPUParticles2D3" type="CPUParticles2D" parent="."]
+modulate = Color( 0.662745, 0.207843, 0.207843, 1 )
+position = Vector2( 10.675, 2.7188 )
+scale = Vector2( 0.02, 0.02 )
+amount = 20
+lifetime = 0.74
+preprocess = 14.4
+explosiveness = 0.14
+randomness = 0.59
+lifetime_randomness = 0.38
+texture = ExtResource( 3 )
+direction = Vector2( 0.5, 0.5 )
+spread = 108.36
+gravity = Vector2( 0, 0 )
+initial_velocity = 40.0
+linear_accel = 3.2
+linear_accel_random = 0.21
+color_ramp = SubResource( 1 )
+
+[node name="CPUParticles2D4" type="CPUParticles2D" parent="."]
+modulate = Color( 0.662745, 0.207843, 0.207843, 1 )
+position = Vector2( 13.4834, 6.60399 )
+scale = Vector2( 0.02, 0.02 )
+amount = 20
+lifetime = 0.74
+preprocess = 9.6
+explosiveness = 0.14
+randomness = 0.59
+lifetime_randomness = 0.38
+texture = ExtResource( 3 )
+direction = Vector2( 0.5, 0.5 )
+spread = 108.36
+gravity = Vector2( 0, 0 )
+initial_velocity = 40.0
+linear_accel = 3.2
+linear_accel_random = 0.21
+color_ramp = SubResource( 1 )

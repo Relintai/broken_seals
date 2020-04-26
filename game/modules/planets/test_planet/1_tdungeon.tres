@@ -1,0 +1,10 @@
+[gd_resource type="PlanetData" load_steps=3 format=2]
+
+[ext_resource path="res://modules/planets/test_planet/biomes/2_tdungb.tres" type="BiomeData" id=1]
+[ext_resource path="res://modules/planets/test_planet/planets/dung_simple_planet.gd" type="Script" id=2]
+
+
+[resource]
+id = 1
+target_script = ExtResource( 2 )
+biome_datas = [ ExtResource( 1 ) ]

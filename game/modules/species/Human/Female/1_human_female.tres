@@ -1,0 +1,11 @@
+[gd_resource type="EntitySpeciesData" load_steps=2 format=2]
+
+[ext_resource path="res://modules/species/Human/models/HumanFemale.tres" type="SpeciesModelData" id=1]
+
+
+[resource]
+resource_name = "Human Female"
+id = 1
+type = 4
+text_name = "Human Female"
+model_data = ExtResource( 1 )
