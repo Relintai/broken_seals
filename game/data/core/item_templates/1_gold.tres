@@ -5,6 +5,6 @@
 [resource]
 resource_name = "Gold"
 id = 1
-text_name = "Gold"
 item_type = 13
 icon = ExtResource( 1 )
+text_name = "Gold"

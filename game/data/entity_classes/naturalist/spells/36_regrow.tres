@@ -1,8 +1,9 @@
 [gd_resource type="Spell" load_steps=5 format=2]
 
-[ext_resource path="res://data/entity_resources/1_mana_resource.tres" type="EntityResourceData" id=1]
+[ext_resource path="res://data/core/entity_resources/1_mana_resource.tres" type="EntityResourceData" id=1]
 [ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=2]
 [ext_resource path="res://data/entity_classes/naturalist/icons/root.tres" type="Texture" id=3]
+
 
 [sub_resource type="EntityResourceCostData" id=1]
 entity_resource_data = ExtResource( 1 )

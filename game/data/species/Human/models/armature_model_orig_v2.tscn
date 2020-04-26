@@ -1,6 +1,6 @@
 [gd_scene load_steps=38 format=2]
 
-[ext_resource path="res://data/item_visuals/test_base_v3.tres" type="ItemVisual" id=1]
+[ext_resource path="res://data/core/item_visuals/test_base_v3.tres" type="ItemVisual" id=1]
 [ext_resource path="res://player/CharacterSkeletonAttachPoint.gd" type="Script" id=2]
 [ext_resource path="res://data/materials/3_standard_character_material.tres" type="Material" id=3]
 [ext_resource path="res://test_weapons/shield_d.mesh" type="ArrayMesh" id=4]
@@ -8,6 +8,7 @@
 [ext_resource path="res://data/species/Human/models/armature.dae" type="PackedScene" id=6]
 [ext_resource path="res://data/materials/9_standard_character_material_notex.tres" type="Material" id=7]
 [ext_resource path="res://player/CharacterSkeletonGD.gd" type="Script" id=8]
+
 
 
 [sub_resource type="Skin" id=1]
