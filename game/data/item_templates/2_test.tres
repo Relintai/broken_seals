@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/items/ItemTemplateGD.gd" type="Script" id=1]
 [ext_resource path="res://data/icons/3_iron_bar.tres" type="Texture" id=2]
-[ext_resource path="res://data/spells/13_aspect_of_bees_rank_1.tres" type="Spell" id=3]
+[ext_resource path="res://data/entity_classes/naturalist/spells/13_aspect_of_bees_rank_1.tres" type="Spell" id=3]
 
 [resource]
 resource_name = "Iron Bar"

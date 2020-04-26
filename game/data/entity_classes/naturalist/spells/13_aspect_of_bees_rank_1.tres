@@ -1,0 +1,24 @@
+[gd_resource type="Spell" load_steps=4 format=2]
+
+[ext_resource path="res://data/entity_classes/naturalist/auras/13_aspect_of_bees_rank_1.tres" type="Aura" id=1]
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=2]
+[ext_resource path="res://data/entity_classes/naturalist/icons/aspect_of_bees.tres" type="Texture" id=3]
+
+[resource]
+resource_name = "Aspect of Bees"
+id = 3
+spell_type = 8
+rank = 1
+icon = ExtResource( 3 )
+needs_target = true
+target_aura_applys = [ ExtResource( 1 ) ]
+text_name = "Aspect of Bees"
+text_description = "Range: 26m.
+Instant.
+Cooldown: %%cooldown_cooldown sec
+Deals 460 to 540 damage every 3 sec, healing you for 80% of the damage."
+cooldown_cooldown = 21.0
+range_range = 26.0
+aoe_targetType = -1910718371
+aoe_colliderType = -298046312
+script = ExtResource( 2 )

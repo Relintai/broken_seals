@@ -1,7 +1,7 @@
 [gd_resource type="Aura" load_steps=3 format=2]
 
 [ext_resource path="res://scripts/auras/aura_script.gd" type="Script" id=1]
-[ext_resource path="res://data/icons/naturalist/amplify_pain.tres" type="Texture" id=2]
+[ext_resource path="res://data/entity_classes/naturalist/icons/amplify_pain.tres" type="Texture" id=2]
 
 [resource]
 id = 1
