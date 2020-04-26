@@ -1,12 +1,14 @@
 [gd_resource type="VoxelmanLibraryMerger" load_steps=8 format=2]
 
 [ext_resource path="res://data/materials/1_standard_material.tres" type="Material" id=1]
-[ext_resource path="res://data/voxel_libraries/surfaces/4_dungeon_stone.tres" type="VoxelSurfaceMerger" id=2]
-[ext_resource path="res://data/voxel_libraries/surfaces/2_test.tres" type="VoxelSurfaceMerger" id=3]
-[ext_resource path="res://data/voxel_libraries/surfaces/1_stone.tres" type="VoxelSurfaceMerger" id=4]
-[ext_resource path="res://data/voxel_libraries/surfaces/3_test2.tres" type="VoxelSurfaceMerger" id=5]
+[ext_resource path="res://data/planets/test_planet/voxel_library/surfaces/4_dungeon_stone.tres" type="VoxelSurfaceMerger" id=2]
+[ext_resource path="res://data/planets/test_planet/voxel_library/surfaces/2_test.tres" type="VoxelSurfaceMerger" id=3]
+[ext_resource path="res://data/planets/test_planet/voxel_library/surfaces/1_stone.tres" type="VoxelSurfaceMerger" id=4]
+[ext_resource path="res://data/planets/test_planet/voxel_library/surfaces/3_test2.tres" type="VoxelSurfaceMerger" id=5]
 [ext_resource path="res://data/materials/5_standard_material_nouv2.tres" type="Material" id=8]
 [ext_resource path="res://data/materials/7_standard_material_notex.tres" type="Material" id=10]
+
+
 
 
 

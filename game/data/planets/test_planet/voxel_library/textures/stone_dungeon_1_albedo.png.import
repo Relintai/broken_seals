@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stone_dungeon_1_albedo.png-d602f0463a9a529a6bf8adf39ac0bd92.stex"
+path="res://.import/stone_dungeon_1_albedo.png-8a4ea1752e50c2d2a2a8f0926e1a63fd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/voxel_libraries/textures/stone_dungeon_1_albedo.png"
-dest_files=[ "res://.import/stone_dungeon_1_albedo.png-d602f0463a9a529a6bf8adf39ac0bd92.stex" ]
+source_file="res://data/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png"
+dest_files=[ "res://.import/stone_dungeon_1_albedo.png-8a4ea1752e50c2d2a2a8f0926e1a63fd.stex" ]
 
 [params]
 

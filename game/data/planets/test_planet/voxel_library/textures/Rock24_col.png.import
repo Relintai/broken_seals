@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stone_1_albedo.png-b38e364d30b4eb4b7c7bfbc56a76a295.stex"
+path="res://.import/Rock24_col.png-9a87a7efaf0afac9cd06a98df0fc7216.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/voxel_libraries/textures/stone_1_albedo.png"
-dest_files=[ "res://.import/stone_1_albedo.png-b38e364d30b4eb4b7c7bfbc56a76a295.stex" ]
+source_file="res://data/planets/test_planet/voxel_library/textures/Rock24_col.png"
+dest_files=[ "res://.import/Rock24_col.png-9a87a7efaf0afac9cd06a98df0fc7216.stex" ]
 
 [params]
 
