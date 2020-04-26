@@ -9,11 +9,11 @@ func load_module():
 
 		ESS.resource_db.add_entity_resource_db(resource_db)
 		
-		var r : ESSResourceDB = ESS.resource_db
-		
-		for e in r.get_entity_datas():
-			print(e.resource_path)
-			print(e.get_id())
+#		var r : ESSResourceDB = ESS.resource_db
+#
+#		for e in r.get_entity_datas():
+#			print(e.resource_path)
+#			print(e.get_id())
 
 #		for s in r.get_spells():
 #			print(s.resource_name)
