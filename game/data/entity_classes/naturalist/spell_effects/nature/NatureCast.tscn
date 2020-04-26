@@ -1,9 +1,10 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://data/shaders/3_simple_y_billboard.shader" type="Shader" id=1]
-[ext_resource path="res://data/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=2]
+[ext_resource path="res://data/core/shaders/3_simple_y_billboard.shader" type="Shader" id=1]
+[ext_resource path="res://data/core/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=2]
 [ext_resource path="res://data/entity_classes/naturalist/spell_effects/textures/big_glow.png" type="Texture" id=3]
 [ext_resource path="res://data/entity_classes/naturalist/spell_effects/textures/main_texture.png" type="Texture" id=4]
+
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
