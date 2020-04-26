@@ -205,11 +205,6 @@ _global_script_classes=[ {
 "path": "res://scenes/MainScene.gd"
 }, {
 "base": "VoxelmanLevelGenerator",
-"class": "MainDungeonGenerator",
-"language": "GDScript",
-"path": "res://dungeon_generator/MainDungeonGenerator.gd"
-}, {
-"base": "VoxelmanLevelGenerator",
 "class": "MainPlanetGenerator",
 "language": "GDScript",
 "path": "res://scripts/world_generators/MainPlanetGenerator.gd"
@@ -242,7 +237,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "PlayerMaster",
 "language": "GDScript",
-"path": "res://networking/PlayerMaster.gd"
+"path": "res://scripts/networking/PlayerMaster.gd"
 }, {
 "base": "SpellEffectVisual",
 "class": "SpellEffectVisualBasic",
@@ -309,7 +304,6 @@ _global_script_class_icons={
 "ItemTemplateGD": "",
 "LayeredTextureMaker": "",
 "Main": "",
-"MainDungeonGenerator": "",
 "MainPlanetGenerator": "",
 "ManaResource": "",
 "Menu": "",
