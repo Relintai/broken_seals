@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrow16.png-3cc04c454cd16744608672b930ebc21e.stex"
+path="res://.import/speak.png-3d1d6946ebdb2def63f939fa7c38a224.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/cursors/arrow16.png"
-dest_files=[ "res://.import/arrow16.png-3cc04c454cd16744608672b930ebc21e.stex" ]
+source_file="res://cursors/speak.png"
+dest_files=[ "res://.import/speak.png-3d1d6946ebdb2def63f939fa7c38a224.stex" ]
 
 [params]
 
