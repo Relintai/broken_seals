@@ -49,7 +49,6 @@ module_repositories = [
 ]
 
 addon_repositories = [
-    [ ['https://github.com/Relintai/ess_data.git', 'git@github.com:Relintai/ess_data.git' ], 'ess_data', '' ],
 ]
 
 third_party_addon_repositories = [
