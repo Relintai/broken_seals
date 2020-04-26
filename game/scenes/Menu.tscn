@@ -21,6 +21,9 @@
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 
 
+
+
+
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
 _force_planet = -1
