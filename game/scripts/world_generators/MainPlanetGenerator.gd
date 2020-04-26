@@ -22,7 +22,7 @@ class_name MainPlanetGenerator
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-const planet_folder : String = "res://data/planets"
+const planet_folder : String = "res://modules/planets"
 
 export(int) var _force_planet : int = -1
 export(int) var _level_seed : int
