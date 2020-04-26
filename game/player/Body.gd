@@ -581,7 +581,7 @@ func on_c_controlled_changed(val):
 	_controlled = val
 	
 	if val:
-		var cam_scene : PackedScene = ResourceLoader.load("res://data/camera/CameraPivot.tscn")
+		var cam_scene : PackedScene = ResourceLoader.load("res://player/camera/CameraPivot.tscn")
 		camera_pivot = cam_scene.instance() as Spatial
 		add_child(camera_pivot)
 		camera = camera_pivot.get_node("Camera") as Camera
