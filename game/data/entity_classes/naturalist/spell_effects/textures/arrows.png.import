@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/big_glow.png-d3eda1d6185d63bdc430c646a22bb62f.stex"
+path="res://.import/arrows.png-ccd1d947e8119c25045f2d11c787ac90.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/spell_effects/textures/big_glow.png"
-dest_files=[ "res://.import/big_glow.png-d3eda1d6185d63bdc430c646a22bb62f.stex" ]
+source_file="res://data/entity_classes/naturalist/spell_effects/textures/arrows.png"
+dest_files=[ "res://.import/arrows.png-ccd1d947e8119c25045f2d11c787ac90.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=true
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/star.png-d57669aa5fea5b6090428296488efa8d.stex"
+path="res://.import/main_texture.png-accc253a039401582df33486651b8c33.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/spell_effects/textures/star.png"
-dest_files=[ "res://.import/star.png-d57669aa5fea5b6090428296488efa8d.stex" ]
+source_file="res://data/entity_classes/naturalist/spell_effects/textures/main_texture.png"
+dest_files=[ "res://.import/main_texture.png-accc253a039401582df33486651b8c33.stex" ]
 
 [params]
 
@@ -24,7 +24,7 @@ flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

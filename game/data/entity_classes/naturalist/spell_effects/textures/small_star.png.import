@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arrows.png-e04cf4aa970f723402f40b1f4c1c0b3b.stex"
+path="res://.import/small_star.png-01c454c8056e70dd863fc8f53538a44c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/spell_effects/textures/arrows.png"
-dest_files=[ "res://.import/arrows.png-e04cf4aa970f723402f40b1f4c1c0b3b.stex" ]
+source_file="res://data/entity_classes/naturalist/spell_effects/textures/small_star.png"
+dest_files=[ "res://.import/small_star.png-01c454c8056e70dd863fc8f53538a44c.stex" ]
 
 [params]
 
@@ -18,13 +18,13 @@ compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
-flags/repeat=true
+compress/normal_map=2
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false

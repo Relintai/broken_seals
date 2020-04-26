@@ -1,26 +1,26 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://data/spell_effects/textures/main_texture.png" type="Texture" id=1]
-[ext_resource path="res://data/spell_effects/textures/big_glow.png" type="Texture" id=2]
-[ext_resource path="res://data/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=3]
-[ext_resource path="res://data/shaders/3_simple_y_billboard.shader" type="Shader" id=4]
+[ext_resource path="res://data/shaders/3_simple_y_billboard.shader" type="Shader" id=1]
+[ext_resource path="res://data/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=2]
+[ext_resource path="res://data/entity_classes/naturalist/spell_effects/textures/big_glow.png" type="Texture" id=3]
+[ext_resource path="res://data/entity_classes/naturalist/spell_effects/textures/main_texture.png" type="Texture" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
-shader = ExtResource( 3 )
+shader = ExtResource( 2 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/texture_albedo = ExtResource( 1 )
+shader_param/texture_albedo = ExtResource( 4 )
 
 [sub_resource type="QuadMesh" id=2]
 material = SubResource( 1 )
 size = Vector2( 0.1, 0.1 )
 
-[sub_resource type="ShaderMaterial" id=5]
-shader = ExtResource( 4 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
 shader_param/albedo = Color( 0.027451, 0.537255, 0.317647, 1 )
-shader_param/texture_albedo = ExtResource( 2 )
+shader_param/texture_albedo = ExtResource( 3 )
 
 [sub_resource type="QuadMesh" id=4]
-material = SubResource( 5 )
+material = SubResource( 3 )
 size = Vector2( 0.3, 0.3 )
 
 [node name="NatureCast" type="Spatial"]
