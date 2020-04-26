@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/ttt.png-1a66b5c54f9e73c0ec8a5c571a408944.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://data/species/Human/models/ttt.png"
+dest_files=[ "res://.import/ttt.png-1a66b5c54f9e73c0ec8a5c571a408944.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=2
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=1
+process/fix_alpha_border=false
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

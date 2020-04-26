@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/neck.dae-5941689028f1b79638fa68ef3d484569.res"
+
+[deps]
+
+source_file="res://data/species/Human/Female/character_models/neck.dae"
+dest_files=[ "res://.import/neck.dae-5941689028f1b79638fa68ef3d484569.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/huf_neck.dae-c0ba7f7f99df22c1f5ba27d06d45f450.res"
+
+[deps]
+
+source_file="res://data/species/Human/Female/character_models/huf_neck.dae"
+dest_files=[ "res://.import/huf_neck.dae-c0ba7f7f99df22c1f5ba27d06d45f450.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

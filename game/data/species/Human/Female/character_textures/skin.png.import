@@ -1,0 +1,15 @@
+[remap]
+
+importer="packer_image_resource"
+type="PackerImageResource"
+path="res://.import/skin.png-46cac68c74b27d620d8618c90bbc430d.restex"
+
+[deps]
+
+source_file="res://data/species/Human/Female/character_textures/skin.png"
+dest_files=[ "res://.import/skin.png-46cac68c74b27d620d8618c90bbc430d.restex" ]
+
+[params]
+
+hdr_as_srgb=false
+scale=1.0

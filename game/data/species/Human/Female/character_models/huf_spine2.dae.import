@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/huf_spine2.dae-11a818ce7ccd5ec06a3ccd5daec876df.res"
+
+[deps]
+
+source_file="res://data/species/Human/Female/character_models/huf_spine2.dae"
+dest_files=[ "res://.import/huf_spine2.dae-11a818ce7ccd5ec06a3ccd5daec876df.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

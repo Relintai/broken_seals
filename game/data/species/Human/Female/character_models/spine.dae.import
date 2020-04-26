@@ -1,0 +1,16 @@
+[remap]
+
+importer="collada_mdr"
+type="MeshDataResource"
+path="res://.import/spine.dae-aa55bd844618e389a682e02d13e6d22a.res"
+
+[deps]
+
+source_file="res://data/species/Human/Female/character_models/spine.dae"
+dest_files=[ "res://.import/spine.dae-aa55bd844618e389a682e02d13e6d22a.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, -1.5708 )
+scale=Vector3( 0.011, 0.011, 0.011 )

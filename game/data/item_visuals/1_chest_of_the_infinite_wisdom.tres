@@ -1,6 +1,7 @@
 [gd_resource type="ItemVisual" load_steps=4 format=2]
 
-[ext_resource path="res://data/character_textures/armor_green_scarf.png" type="Texture" id=1]
+[ext_resource path="res://data/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=1]
+
 
 [sub_resource type="ItemVisualEntry" id=1]
 texture_male = ExtResource( 1 )
