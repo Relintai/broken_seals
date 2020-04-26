@@ -2,7 +2,6 @@
 
 [ext_resource path="res://data/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=1]
 
-
 [sub_resource type="ItemVisualEntry" id=1]
 texture_male = ExtResource( 1 )
 texture_female = ExtResource( 1 )
