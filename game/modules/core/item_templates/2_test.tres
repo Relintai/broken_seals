@@ -4,7 +4,6 @@
 [ext_resource path="res://modules/icons/3_iron_bar.tres" type="Texture" id=2]
 [ext_resource path="res://scripts/items/ItemTemplateGD.gd" type="Script" id=3]
 
-
 [resource]
 resource_name = "Iron Bar"
 id = 2

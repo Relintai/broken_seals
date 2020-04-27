@@ -3,7 +3,6 @@
 [ext_resource path="res://modules/core/item_templates/2_test.tres" type="ItemTemplate" id=1]
 [ext_resource path="res://modules/core/item_templates/1_gold.tres" type="ItemTemplate" id=2]
 
-
 [sub_resource type="CraftRecipeHelper" id=1]
 item = ExtResource( 2 )
 count = 1

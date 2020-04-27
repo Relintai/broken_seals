@@ -2,7 +2,6 @@
 
 [ext_resource path="res://modules/species/Human/models/HumanFemale.tres" type="SpeciesModelData" id=1]
 
-
 [resource]
 resource_name = "Human Female"
 id = 1

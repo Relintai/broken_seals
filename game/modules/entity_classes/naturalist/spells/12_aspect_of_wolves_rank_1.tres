@@ -4,7 +4,6 @@
 [ext_resource path="res://modules/icons/Naturalist/AspectOfScorpions.png" type="Texture" id=2]
 [ext_resource path="res://modules/entity_classes/naturalist/auras/12_aspect_of_wolves_rank_1.tres" type="Aura" id=3]
 
-
 [resource]
 resource_name = "Aspect of Wolves"
 id = 2
