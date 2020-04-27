@@ -80,10 +80,10 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 
 		r.current_value -= resource_cost.cost
 
-	info.caster.sspell_cast_success(info)
+	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_SUCCESS, info)
 
 	if info.target:
-		info.target.son_cast_finished_target(info)
+		info.target.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED_TARGET, info)
 
 	handle_cooldown(info)
 		
@@ -103,12 +103,12 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 			return
 
 		r.current_value -= resource_cost.cost
-	
-	info.caster.son_cast_finished(info)
-	info.caster.sspell_cast_success(info)
+		
+	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED, info)
+	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_SUCCESS, info)
 	
 	if is_instance_valid(info.target):
-		info.target.son_cast_finished_target(info)
+		info.target.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED_TARGET, info)
 
 	if projectile_scene != null:
 		handle_projectile(info)
@@ -117,6 +117,7 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 		
 	handle_cooldown(info)
 	handle_gcd(info)
+	
 	
 
 
