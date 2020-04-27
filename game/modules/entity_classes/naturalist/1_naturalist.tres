@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=71 format=2]
+[gd_resource type="EntityClassData" load_steps=74 format=2]
 
 [ext_resource path="res://modules/entity_classes/naturalist/spells/16_close_wounds_rank_1.tres" type="Spell" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/19_uproot_rank_1.tres" type="Spell" id=2]
@@ -24,6 +24,8 @@
 [ext_resource path="res://modules/entity_classes/naturalist/spells/25_inner_will.tres" type="Spell" id=22]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/15_rejuvenation_rank_1.tres" type="Spell" id=23]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/18_natures_swiftness_rank_1.tres" type="Spell" id=24]
+[ext_resource path="res://modules/core/entity_resources/3_speed_resource.tres" type="EntityResourceData" id=25]
+[ext_resource path="res://modules/core/entity_resources/2_health_resource.tres" type="EntityResourceData" id=26]
 
 [sub_resource type="EntityAI" id=1]
 script = ExtResource( 9 )
@@ -106,122 +108,123 @@ base = 20.0
 stat_id = 33
 
 [sub_resource type="StatDataEntry" id=25]
-stat_id = 15
+stat_id = 6
 
 [sub_resource type="StatDataEntry" id=26]
-stat_id = 16
+stat_id = 15
 
 [sub_resource type="StatDataEntry" id=27]
-stat_id = 26
+stat_id = 16
 
 [sub_resource type="StatDataEntry" id=28]
-stat_id = 22
+stat_id = 26
 
 [sub_resource type="StatDataEntry" id=29]
-stat_id = 30
+stat_id = 22
 
 [sub_resource type="StatDataEntry" id=30]
-stat_id = 20
+stat_id = 30
 
 [sub_resource type="StatDataEntry" id=31]
-stat_id = 39
+stat_id = 20
 
 [sub_resource type="StatDataEntry" id=32]
-stat_id = 11
+stat_id = 39
 
 [sub_resource type="StatDataEntry" id=33]
-stat_id = 29
+stat_id = 11
 
 [sub_resource type="StatDataEntry" id=34]
-stat_id = 35
+stat_id = 29
 
 [sub_resource type="StatDataEntry" id=35]
-stat_id = 6
-base = 4.2
+stat_id = 35
 
 [sub_resource type="StatDataEntry" id=36]
-stat_id = 17
 
 [sub_resource type="StatDataEntry" id=37]
-stat_id = 18
+stat_id = 17
 
 [sub_resource type="StatDataEntry" id=38]
-stat_id = 27
+stat_id = 18
 
 [sub_resource type="StatDataEntry" id=39]
-stat_id = 23
+stat_id = 27
 
 [sub_resource type="StatDataEntry" id=40]
-stat_id = 14
+stat_id = 23
 
 [sub_resource type="StatDataEntry" id=41]
+stat_id = 14
+
+[sub_resource type="StatDataEntry" id=42]
 stat_id = 4
 base = 9.0
 
-[sub_resource type="StatDataEntry" id=42]
+[sub_resource type="StatDataEntry" id=43]
 stat_id = 2
 base = 17.0
 
-[sub_resource type="StatDataEntry" id=43]
+[sub_resource type="StatDataEntry" id=44]
 stat_id = 1
 base = 8.0
 
-[sub_resource type="StatDataEntry" id=44]
+[sub_resource type="StatDataEntry" id=45]
 stat_id = 37
 
-[sub_resource type="StatDataEntry" id=45]
+[sub_resource type="StatDataEntry" id=46]
 stat_id = 40
 
-[sub_resource type="StatData" id=46]
+[sub_resource type="StatData" id=47]
 level_stat_data = SubResource( 5 )
 stat/agility = SubResource( 6 )
-stat/strength = SubResource( 43 )
-stat/stamina = SubResource( 42 )
+stat/strength = SubResource( 44 )
+stat/stamina = SubResource( 43 )
 stat/intellect = SubResource( 23 )
-stat/spirit = SubResource( 41 )
+stat/spirit = SubResource( 42 )
 stat/health = SubResource( 21 )
-stat/speed = SubResource( 35 )
+stat/mana = SubResource( 25 )
+stat/speed = SubResource( 36 )
 stat/global_cooldown = SubResource( 17 )
 stat/haste = SubResource( 18 )
 stat/haste_rating = SubResource( 19 )
-stat/resilience = SubResource( 32 )
+stat/resilience = SubResource( 33 )
 stat/armor = SubResource( 7 )
 stat/attack_power = SubResource( 8 )
-stat/spell_power = SubResource( 40 )
-stat/melee_crit = SubResource( 25 )
-stat/melee_crit_bonus = SubResource( 26 )
-stat/spell_crit = SubResource( 36 )
-stat/spell_crit_bonus = SubResource( 37 )
+stat/spell_power = SubResource( 41 )
+stat/melee_crit = SubResource( 26 )
+stat/melee_crit_bonus = SubResource( 27 )
+stat/spell_crit = SubResource( 37 )
+stat/spell_crit_bonus = SubResource( 38 )
 stat/block = SubResource( 9 )
-stat/parry = SubResource( 30 )
+stat/parry = SubResource( 31 )
 stat/damage_reduction = SubResource( 11 )
-stat/melee_damage_reduction = SubResource( 28 )
-stat/spell_damage_reduction = SubResource( 39 )
+stat/melee_damage_reduction = SubResource( 29 )
+stat/spell_damage_reduction = SubResource( 40 )
 stat/damage_taken = SubResource( 12 )
 stat/heal_taken = SubResource( 20 )
-stat/melee_damage = SubResource( 27 )
-stat/spell_damage = SubResource( 38 )
+stat/melee_damage = SubResource( 28 )
+stat/spell_damage = SubResource( 39 )
 stat/holy_resist = SubResource( 22 )
-stat/shadow_resist = SubResource( 33 )
-stat/nature_resist = SubResource( 29 )
+stat/shadow_resist = SubResource( 34 )
+stat/nature_resist = SubResource( 30 )
 stat/fire_resist = SubResource( 15 )
 stat/frost_resist = SubResource( 16 )
 stat/lightning_resist = SubResource( 24 )
 stat/chaos_resist = SubResource( 10 )
-stat/silence_resist = SubResource( 34 )
+stat/silence_resist = SubResource( 35 )
 stat/fear_resist = SubResource( 14 )
-stat/stun_resist = SubResource( 44 )
+stat/stun_resist = SubResource( 45 )
 stat/energy = SubResource( 13 )
-stat/rage = SubResource( 31 )
-stat/xp_rate = SubResource( 45 )
+stat/rage = SubResource( 32 )
+stat/xp_rate = SubResource( 46 )
 
 [resource]
 resource_name = "Naturalist"
 id = 1
 text_name = "Naturalist"
-stat_data = SubResource( 46 )
-player_resource_type = 2
-entity_resources = [ ExtResource( 8 ) ]
+stat_data = SubResource( 47 )
+entity_resources = [ ExtResource( 26 ), ExtResource( 25 ), ExtResource( 8 ) ]
 specs = [ SubResource( 4 ) ]
 spells = [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 5 ), ExtResource( 12 ), ExtResource( 23 ), ExtResource( 1 ), ExtResource( 10 ), ExtResource( 24 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 11 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 21 ), ExtResource( 14 ) ]
 start_spells = [ ExtResource( 7 ), ExtResource( 21 ), ExtResource( 14 ) ]

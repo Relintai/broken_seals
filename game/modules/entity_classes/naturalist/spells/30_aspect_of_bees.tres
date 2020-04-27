@@ -4,7 +4,6 @@
 [ext_resource path="res://modules/entity_classes/naturalist/auras/24_aspect_of_bees.tres" type="Aura" id=2]
 [ext_resource path="res://modules/entity_classes/naturalist/icons/aspect_of_bees.tres" type="Texture" id=3]
 
-
 [resource]
 resource_name = "Aspect of Bees"
 id = 20

@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=51 format=2]
+[gd_resource type="EntityClassData" load_steps=50 format=2]
 
 [ext_resource path="res://scripts/entities/EntityClassDataGD.gd" type="Script" id=1]
 [ext_resource path="res://modules/entity_classes/elementalist/character_specs/2_elementalist_fire.tres" type="CharacterSpec" id=2]
@@ -7,9 +7,6 @@
 [ext_resource path="res://modules/entity_classes/elementalist/spells/34_cold.tres" type="Spell" id=5]
 [ext_resource path="res://modules/entity_classes/elementalist/spells/32_heat.tres" type="Spell" id=6]
 [ext_resource path="res://modules/entity_classes/elementalist/spells/33_normal.tres" type="Spell" id=7]
-
-
-
 
 [sub_resource type="SimpleLevelStatData" id=1]
 agility = 4
@@ -78,125 +75,120 @@ base = 5.0
 stat_id = 33
 
 [sub_resource type="StatDataEntry" id=21]
-stat_id = 7
-
-[sub_resource type="StatDataEntry" id=22]
 stat_id = 15
 
-[sub_resource type="StatDataEntry" id=23]
+[sub_resource type="StatDataEntry" id=22]
 stat_id = 16
 
-[sub_resource type="StatDataEntry" id=24]
+[sub_resource type="StatDataEntry" id=23]
 stat_id = 26
 
-[sub_resource type="StatDataEntry" id=25]
+[sub_resource type="StatDataEntry" id=24]
 stat_id = 22
 
-[sub_resource type="StatDataEntry" id=26]
+[sub_resource type="StatDataEntry" id=25]
 stat_id = 30
 
-[sub_resource type="StatDataEntry" id=27]
+[sub_resource type="StatDataEntry" id=26]
 stat_id = 20
 
-[sub_resource type="StatDataEntry" id=28]
+[sub_resource type="StatDataEntry" id=27]
 stat_id = 39
 
-[sub_resource type="StatDataEntry" id=29]
+[sub_resource type="StatDataEntry" id=28]
 stat_id = 11
 
-[sub_resource type="StatDataEntry" id=30]
+[sub_resource type="StatDataEntry" id=29]
 stat_id = 29
 
-[sub_resource type="StatDataEntry" id=31]
+[sub_resource type="StatDataEntry" id=30]
 stat_id = 35
 
-[sub_resource type="StatDataEntry" id=32]
+[sub_resource type="StatDataEntry" id=31]
 stat_id = 6
 base = 4.2
 
-[sub_resource type="StatDataEntry" id=33]
+[sub_resource type="StatDataEntry" id=32]
 stat_id = 17
 
-[sub_resource type="StatDataEntry" id=34]
+[sub_resource type="StatDataEntry" id=33]
 stat_id = 18
 
-[sub_resource type="StatDataEntry" id=35]
+[sub_resource type="StatDataEntry" id=34]
 stat_id = 27
 
-[sub_resource type="StatDataEntry" id=36]
+[sub_resource type="StatDataEntry" id=35]
 stat_id = 23
 
-[sub_resource type="StatDataEntry" id=37]
+[sub_resource type="StatDataEntry" id=36]
 stat_id = 14
 
-[sub_resource type="StatDataEntry" id=38]
+[sub_resource type="StatDataEntry" id=37]
 stat_id = 4
 base = 4.0
 
-[sub_resource type="StatDataEntry" id=39]
+[sub_resource type="StatDataEntry" id=38]
 stat_id = 2
 base = 6.0
 
-[sub_resource type="StatDataEntry" id=40]
+[sub_resource type="StatDataEntry" id=39]
 stat_id = 1
 base = 5.0
 
-[sub_resource type="StatDataEntry" id=41]
+[sub_resource type="StatDataEntry" id=40]
 stat_id = 37
 
-[sub_resource type="StatDataEntry" id=42]
+[sub_resource type="StatDataEntry" id=41]
 stat_id = 40
 
-[sub_resource type="StatData" id=43]
+[sub_resource type="StatData" id=42]
 level_stat_data = SubResource( 1 )
 stat/agility = SubResource( 2 )
-stat/strength = SubResource( 40 )
-stat/stamina = SubResource( 39 )
+stat/strength = SubResource( 39 )
+stat/stamina = SubResource( 38 )
 stat/intellect = SubResource( 19 )
-stat/spirit = SubResource( 38 )
+stat/spirit = SubResource( 37 )
 stat/health = SubResource( 17 )
-stat/speed = SubResource( 32 )
-stat/mana = SubResource( 21 )
+stat/speed = SubResource( 31 )
 stat/global_cooldown = SubResource( 13 )
 stat/haste = SubResource( 14 )
 stat/haste_rating = SubResource( 15 )
-stat/resilience = SubResource( 29 )
+stat/resilience = SubResource( 28 )
 stat/armor = SubResource( 3 )
 stat/attack_power = SubResource( 4 )
-stat/spell_power = SubResource( 37 )
-stat/melee_crit = SubResource( 22 )
-stat/melee_crit_bonus = SubResource( 23 )
-stat/spell_crit = SubResource( 33 )
-stat/spell_crit_bonus = SubResource( 34 )
+stat/spell_power = SubResource( 36 )
+stat/melee_crit = SubResource( 21 )
+stat/melee_crit_bonus = SubResource( 22 )
+stat/spell_crit = SubResource( 32 )
+stat/spell_crit_bonus = SubResource( 33 )
 stat/block = SubResource( 5 )
-stat/parry = SubResource( 27 )
+stat/parry = SubResource( 26 )
 stat/damage_reduction = SubResource( 7 )
-stat/melee_damage_reduction = SubResource( 25 )
-stat/spell_damage_reduction = SubResource( 36 )
+stat/melee_damage_reduction = SubResource( 24 )
+stat/spell_damage_reduction = SubResource( 35 )
 stat/damage_taken = SubResource( 8 )
 stat/heal_taken = SubResource( 16 )
-stat/melee_damage = SubResource( 24 )
-stat/spell_damage = SubResource( 35 )
+stat/melee_damage = SubResource( 23 )
+stat/spell_damage = SubResource( 34 )
 stat/holy_resist = SubResource( 18 )
-stat/shadow_resist = SubResource( 30 )
-stat/nature_resist = SubResource( 26 )
+stat/shadow_resist = SubResource( 29 )
+stat/nature_resist = SubResource( 25 )
 stat/fire_resist = SubResource( 11 )
 stat/frost_resist = SubResource( 12 )
 stat/lightning_resist = SubResource( 20 )
 stat/chaos_resist = SubResource( 6 )
-stat/silence_resist = SubResource( 31 )
+stat/silence_resist = SubResource( 30 )
 stat/fear_resist = SubResource( 10 )
-stat/stun_resist = SubResource( 41 )
+stat/stun_resist = SubResource( 40 )
 stat/energy = SubResource( 9 )
-stat/rage = SubResource( 28 )
-stat/xp_rate = SubResource( 42 )
+stat/rage = SubResource( 27 )
+stat/xp_rate = SubResource( 41 )
 
 [resource]
 resource_name = "Elementalist"
 id = 2
 text_name = "Elementalist"
-stat_data = SubResource( 43 )
-player_resource_type = 2
+stat_data = SubResource( 42 )
 playstyle_type = 2
 specs = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
 spells = [ ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5 ) ]

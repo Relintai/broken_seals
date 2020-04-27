@@ -89,11 +89,7 @@ var entity : Entity
 var model_rotation_node : Spatial
 var character_skeleton : CharacterSkeleton3D 
 
-var speed_stat_id : int
-
 func _ready() -> void:
-	speed_stat_id = ESS.stat_get_id("Speed")
-	
 	camera = get_node_or_null("CameraPivot/Camera") as Camera
 	camera_pivot = get_node_or_null("CameraPivot") as Spatial
 	
@@ -262,7 +258,7 @@ func process_movement_player(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.get_stat(speed_stat_id).ccurrent
+	target *= entity.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value  / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:
@@ -336,7 +332,7 @@ func process_movement_mob(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.get_stat(speed_stat_id).ccurrent
+	target *= entity.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:

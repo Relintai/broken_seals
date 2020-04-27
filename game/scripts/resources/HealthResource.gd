@@ -1,21 +1,18 @@
-extends "PlayerGDBase.gd"
-class_name PlayerGD
-
-# Copyright Péter Magyar relintai@gmail.com
-# MIT License, functionality from this class needs to be protable to the entity spell system
+extends EntityResource
+class_name HealthResource
 
 # Copyright (c) 2019-2020 Péter Magyar
-
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,9 +21,27 @@ class_name PlayerGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _from_dict(dict):
-	._from_dict(dict)
+var stamina_stat_id : int = 0
+var health_stat_id = 0
+
+func _init():
+	current_value = 100
+	stamina_stat_id = ESS.stat_get_id("Stamina")
+	health_stat_id = ESS.stat_get_id("Health")
+
+func _ons_added(entity):
+	refresh()
+
+func _ons_stat_changed(stat : Stat):
+	if stat.id == stamina_stat_id || stat.id == health_stat_id:
+		refresh()
+
+func refresh():
+	var stamina : Stat = owner.get_stat(stamina_stat_id)
+	var health : Stat = owner.get_stat(health_stat_id)
 	
-	randomize()
-	sseed = randi()
-	
+	max_value = int(stamina.scurrent) * 10 + int(health.scurrent)
+	#todo fix this if this solution works well
+	current_value = max_value
+
+
