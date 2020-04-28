@@ -501,18 +501,18 @@ func cmouseover(event):
 			
 			if last_mouse_over != null and last_mouse_over != mo:
 				if is_instance_valid(last_mouse_over):
-					last_mouse_over.onc_mouse_exit()
+					last_mouse_over.notification_cmouse_exit()
 					
 				last_mouse_over = null
 			
 			if last_mouse_over == null:
-				mo.onc_mouse_enter()
+				mo.notification_cmouse_enter()
 				last_mouse_over = mo
 			
 			return
 			
 	if last_mouse_over != null:
-		last_mouse_over.onc_mouse_exit()
+		last_mouse_over.notification_cmouse_exit()
 		last_mouse_over = null
 	
 func analog_force_change(vector, touchpad):

@@ -36,7 +36,7 @@ func _init():
 func _ons_added(entity):
 	refresh()
 
-func _ons_stat_changed(stat : Stat):
+func _notification_sstat_changed(stat : Stat):
 	if stat.id == int_id || stat.id == spirit_id:
 		refresh()
 

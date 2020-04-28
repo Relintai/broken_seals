@@ -57,10 +57,10 @@ func _ready():
 	name_label.text = entity.centity_name
 	
 	entity.connect("cname_changed", self, "cname_changed")
-	entity.connect("onc_mouse_entered", self, "onc_entity_mouse_entered")
-	entity.connect("onc_mouse_exited", self, "onc_entity_mouse_exited")
-	entity.connect("onc_targeted", self, "onc_targeted")
-	entity.connect("onc_untargeted", self, "onc_untargeted")
+	entity.connect("notification_cmouse_entered", self, "onc_entity_mouse_entered")
+	entity.connect("notification_cmouse_exited", self, "onc_entity_mouse_exited")
+	entity.connect("notification_ctargeted", self, "notification_ctargeted")
+	entity.connect("notification_cuntargeted", self, "notification_cuntargeted")
 	
 	modulate = normal_color
 	set_scale(normal_scale)
@@ -151,13 +151,13 @@ func onc_entity_mouse_exited() -> void:
 	modulate = normal_color
 	interpolate_scale(normal_scale)
 	
-func onc_targeted() -> void:
+func notification_ctargeted() -> void:
 	targeted = true
 
 	modulate = targeted_color
 	interpolate_scale(targeted_scale)
 	
-func onc_untargeted() -> void:
+func notification_cuntargeted() -> void:
 	targeted = false
 	
 	modulate = normal_color

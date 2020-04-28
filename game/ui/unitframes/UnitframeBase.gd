@@ -55,7 +55,7 @@ func set_player(p_player: Entity) -> void:
 		_player.disconnect("cname_changed", self, "cname_changed")
 		_player.disconnect("con_level_up", self, "clevel_changed")
 		_player.disconnect("con_level_changed", self, "clevel_changed")
-		_player.disconnect("con_xp_gained", self, "con_xp_gained")
+		_player.disconnect("notification_cxp_gained", self, "notification_cxp_gained")
 		_player.disconnect("centity_data_changed", self, "centity_data_changed")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
 		
@@ -71,9 +71,9 @@ func set_player(p_player: Entity) -> void:
 	_player = p_player
 	
 	_player.connect("cname_changed", self, "cname_changed")
-	_player.connect("con_character_level_up", self, "clevel_changed")
+	_player.connect("notification_ccharacter_level_up", self, "clevel_changed")
 	_player.connect("con_character_level_changed", self, "clevel_changed")
-	_player.connect("con_xp_gained", self, "con_xp_gained")
+	_player.connect("notification_cxp_gained", self, "notification_cxp_gained")
 	_player.connect("centity_data_changed", self, "centity_data_changed")
 	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
@@ -88,7 +88,7 @@ func set_player(p_player: Entity) -> void:
 	_level_text.text = str(_player.ccharacter_level)
 	
 	clevel_changed(_player, 0)
-	con_xp_gained(_player, 0)
+	notification_cxp_gained(_player, 0)
 	
 func centity_resource_added(res : EntityResource):
 	if res is ManaResource:
@@ -138,7 +138,7 @@ func clevel_changed(entity: Entity, value : int) -> void:
 	_xp_range.min_value = 0
 	_xp_range.max_value = ESS.get_resource_db().get_xp_data().get_character_xp(_player.ccharacter_level)
 
-func con_xp_gained(entity: Entity, val: int) -> void:
+func notification_cxp_gained(entity: Entity, val: int) -> void:
 	_xp_range.value = _player.ccharacter_xp
 
 func centity_data_changed(data: EntityData) -> void:

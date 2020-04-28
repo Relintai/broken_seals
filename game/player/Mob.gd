@@ -47,16 +47,16 @@ func sstart_attack(entity : Entity) -> void:
 	
 	starget = entity
 	
-func _onc_mouse_enter() -> void:
+func _notification_cmouse_enter() -> void:
 	if centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_LOOT:
 		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_MOVE)
 		
-func _onc_mouse_exit() -> void:
+func _notification_cmouse_exit() -> void:
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	
-func _son_death():
+func _notification_sdeath():
 	if dead:
 		return
 	
@@ -104,7 +104,7 @@ func _notification_cheal(what, info):
 	if what == SpellEnums.NOTIFICATION_DAMAGE_DAMAGE_DEALT:
 		WorldNumbers.heal(get_body().translation, 1.6, info.heal, info.crit)
 
-func _son_xp_gained(value : int) -> void:
+func _notification_sxp_gained(value : int) -> void:
 	if not ESS.get_resource_db().get_xp_data().can_character_level_up(gets_character_level()):
 		return
 	
@@ -114,12 +114,12 @@ func _son_xp_gained(value : int) -> void:
 		levelup_scharacter(1)
 		scharacter_xp = 0
 
-func _son_class_level_up(value: int):
-	._son_class_level_up(value)
+func _notification_sclass_level_up(value: int):
+	._notification_sclass_level_up(value)
 	refresh_spells(value)
 
-func _son_character_level_up(value: int) -> void:
-	._son_character_level_up(value)
+func _notification_scharacter_level_up(value: int) -> void:
+	._notification_scharacter_level_up(value)
 	refresh_spells(value)
 		
 func refresh_spells(value: int):

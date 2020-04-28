@@ -32,7 +32,7 @@ func _init():
 func _ons_added(entity):
 	refresh()
 
-func _ons_stat_changed(stat : Stat):
+func _notification_sstat_changed(stat : Stat):
 	if stat.id == stamina_stat_id || stat.id == health_stat_id:
 		refresh()
 
