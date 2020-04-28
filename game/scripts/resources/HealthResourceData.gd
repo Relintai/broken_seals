@@ -21,7 +21,7 @@ extends EntityResourceData
 # SOFTWARE.
 
 func _get_entity_resource_instance() -> EntityResource:
-	var mr = HealthResource.new()
+	var mr = EntityResourceHealth.new()
 	mr.data_path = resource_path
 	
 	return mr
