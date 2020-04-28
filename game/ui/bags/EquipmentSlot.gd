@@ -41,14 +41,14 @@ func set_tooltip_node(tooltip : Popup) -> void:
 
 func set_player(player: Entity) -> void:
 	if _player != null:
-		_player.disconnect("con_equip_success", self, "con_equip_success")
+		_player.disconnect("equip_con_success", self, "equip_con_success")
 	
 	_player = player
 	
 	if _player == null:
 		return
 	
-	_player.connect("con_equip_success", self, "con_equip_success")
+	_player.connect("equip_con_success", self, "equip_con_success")
 	
 func drop_data(position, data):
 	if _player == null:
@@ -61,7 +61,7 @@ func drop_data(position, data):
 		return
 		
 	if dd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM:
-		_player.crequest_equip(equip_slot, dd.get_meta("slot_id"))
+		_player.equip_crequest(equip_slot, dd.get_meta("slot_id"))
 
 func can_drop_data(position, data):
 	if _player == null:
@@ -93,7 +93,7 @@ func get_drag_data(position):
 	
 	return esd
 
-func con_equip_success(entity: Entity, pequip_slot: int, item: ItemInstance, old_item: ItemInstance, bag_slot: int):
+func equip_con_success(entity: Entity, pequip_slot: int, item: ItemInstance, old_item: ItemInstance, bag_slot: int):
 	if equip_slot != pequip_slot:
 		return
 
