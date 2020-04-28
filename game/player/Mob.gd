@@ -91,17 +91,19 @@ func _son_death():
 func set_position(position : Vector3, rotation : Vector3) -> void:
 	get_body().set_position(position, rotation)
 
-func _son_damage_dealt(data):
-	if ai_state != EntityEnums.AI_STATE_ATTACK and data.dealer != self:
-		sstart_attack(data.dealer)
+func _notification_sdamage(what, info):
+	if what == SpellEnums.NOTIFICATION_DAMAGE_DAMAGE_DEALT:
+		if ai_state != EntityEnums.AI_STATE_ATTACK and info.dealer != self:
+			sstart_attack(info.dealer)
+			
+func _notification_cdamage(what, info):
+	if what == SpellEnums.NOTIFICATION_DAMAGE_DAMAGE_DEALT:
+		WorldNumbers.damage(get_body().translation, 1.6, info.damage, info.crit)
+			
+func _notification_cheal(what, info):
+	if what == SpellEnums.NOTIFICATION_DAMAGE_DAMAGE_DEALT:
+		WorldNumbers.heal(get_body().translation, 1.6, info.heal, info.crit)
 
-func _con_damage_dealt(info : SpellDamageInfo) -> void:
-#	if info.dealer == 
-	WorldNumbers.damage(get_body().translation, 1.6, info.damage, info.crit)
-
-func _con_heal_dealt(info : SpellHealInfo) -> void:
-	WorldNumbers.heal(get_body().translation, 1.6, info.heal, info.crit)
-		
 func _son_xp_gained(value : int) -> void:
 	if not ESS.get_resource_db().get_xp_data().can_character_level_up(gets_character_level()):
 		return

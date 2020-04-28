@@ -97,10 +97,7 @@ func _ready() -> void:
 	character_skeleton = get_node(character_skeleton_path)
 	entity = get_node("..")
 	entity.set_character_skeleton(character_skeleton)
-	entity.connect("ccast_started", self, "_con_cast_started")
-	entity.connect("ccast_failed", self, "_con_cast_failed")
-	entity.connect("ccast_finished", self, "_con_cast_finished")
-	entity.connect("cspell_cast_success", self, "_con_spell_cast_success")
+	entity.connect("notification_ccast", self, "on_notification_ccast")
 	entity.connect("sdied", self, "on_sdied")
 	entity.connect("isc_controlled_changed", self, "on_c_controlled_changed")
 	owner = entity
@@ -541,35 +538,33 @@ remote func cset_position(position : Vector3, rotation : Vector3) -> void:
 	rotation = rotation
 	
 
-func _con_cast_started(info):
-	if anim_node_state_machine != null and not casting_anim:
-		anim_node_state_machine.travel("casting-loop")
-		casting_anim = true
-		animation_run = false
-		
-func _con_cast_failed(info):
-	if anim_node_state_machine != null and casting_anim:
-		anim_node_state_machine.travel("idle-loop")
-		casting_anim = false
-		
-		if animation_run:
-			anim_node_state_machine.travel("run-loop")
-
-func _con_cast_finished(info):
-	if anim_node_state_machine != null:
-		anim_node_state_machine.travel("cast-end")
-		casting_anim = false
-		
-		if animation_run:
-			anim_node_state_machine.travel("run-loop")
+func on_notification_ccast(what : int, info : SpellCastInfo) -> void:
+	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
+		if anim_node_state_machine != null and not casting_anim:
+			anim_node_state_machine.travel("casting-loop")
+			casting_anim = true
+			animation_run = false
+	elif what == SpellEnums.NOTIFICATION_CAST_FAILED:
+		if anim_node_state_machine != null and casting_anim:
+			anim_node_state_machine.travel("idle-loop")
+			casting_anim = false
 			
-func _con_spell_cast_success(info):
-	if anim_node_state_machine != null:
-		anim_node_state_machine.travel("cast-end")
-		casting_anim = false
-		
-		if animation_run:
-			anim_node_state_machine.travel("run-loop")
+			if animation_run:
+				anim_node_state_machine.travel("run-loop")
+	elif what == SpellEnums.NOTIFICATION_CAST_FINISHED:
+		if anim_node_state_machine != null:
+			anim_node_state_machine.travel("cast-end")
+			casting_anim = false
+			
+			if animation_run:
+				anim_node_state_machine.travel("run-loop")
+	elif what == SpellEnums.NOTIFICATION_CAST_SUCCESS:
+		if anim_node_state_machine != null:
+			anim_node_state_machine.travel("cast-end")
+			casting_anim = false
+			
+			if animation_run:
+				anim_node_state_machine.travel("run-loop")
 	
 	
 func on_c_controlled_changed(val):

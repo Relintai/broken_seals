@@ -51,8 +51,7 @@ func _ready() -> void:
 func set_player(p_player : Entity) -> void:
 	if not _player == null and is_instance_valid(_player):
 		_player.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH).disconnect("changed", self, "_on_player_health_changed")
-		_player.disconnect("caura_added", self, "on_caura_added")
-		_player.disconnect("caura_removed", self, "on_caura_removed")
+		_player.disconnect("notification_caura", self, "on_notification_caura")
 		_player.disconnect("cdied", self, "cdied")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
 		
@@ -76,11 +75,9 @@ func set_player(p_player : Entity) -> void:
 	for index in range(_player.getc_aura_count()):
 		var aura : AuraData = _player.getc_aura(index)
 		
-		on_caura_added(aura)
+		on_notification_caura(SpellEnums.NOTIFICATION_AURA_ADDED, aura)
 		
-	
-	_player.connect("caura_added", self, "on_caura_added")
-	_player.connect("caura_removed", self, "on_caura_removed")
+	_player.connect("notification_caura", self, "on_notification_caura")
 	_player.connect("cdied", self, "cdied", [], CONNECT_DEFERRED)
 	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
@@ -119,20 +116,20 @@ func _on_mana_changed(resource: EntityResource) -> void:
 	
 	_resource_text.text = str(resource.current_value) + "/" + str(resource.max_value)
 
-func on_caura_added(aura_data : AuraData) -> void:
-	var created_node : Node = aura_entry_scene.instance()
-	
-	_aura_grid.add_child(created_node)
-	created_node.owner = _aura_grid
-	
-	created_node.set_aura_data(aura_data)
-	
-func on_caura_removed(aura_data : AuraData) -> void:
-	for bn in _aura_grid.get_children():
-		if bn.get_aura_data() == aura_data:
-			_aura_grid.remove_child(bn)
-			bn.queue_free()
-			return
+func on_notification_caura(what : int, aura_data : AuraData) -> void:
+	if what == SpellEnums.NOTIFICATION_AURA_ADDED:
+		var created_node : Node = aura_entry_scene.instance()
+		
+		_aura_grid.add_child(created_node)
+		created_node.owner = _aura_grid
+		
+		created_node.set_aura_data(aura_data)
+	elif what == SpellEnums.NOTIFICATION_AURA_REMOVED:
+		for bn in _aura_grid.get_children():
+			if bn.get_aura_data() == aura_data:
+				_aura_grid.remove_child(bn)
+				bn.queue_free()
+				return
 	
 func _on_player_health_changed(health : EntityResource) -> void:
 	if health.max_value == 0:

@@ -46,44 +46,34 @@ func _process(delta: float) -> void:
 
 func set_player(p_player: Entity) -> void:
 	if not player == null:
-		player.disconnect("ccast_started", self, "_ccast_started")
-		player.disconnect("ccast_failed", self, "_ccast_failed")
-		player.disconnect("ccast_finished", self, "_ccast_finished")
-		player.disconnect("ccast_interrupted", self, "_ccast_interrupted")
+		player.disconnect("notification_ccast", self, "on_notification_ccast")
 		
 	player = p_player
 	
-	player.connect("ccast_started", self, "_ccast_started")
-	player.connect("ccast_failed", self, "_ccast_failed")
-	player.connect("ccast_finished", self, "_ccast_finished")
-	player.connect("ccast_interrupted", self, "_ccast_interrupted")
+	player.connect("notification_ccast", self, "on_notification_ccast")
 	
 	
-func _ccast_started(pspell_cast_info: SpellCastInfo) -> void:
-	set_process(true)
-	
-	
-	spell_cast_info = pspell_cast_info
-	
-	label.text = spell_cast_info.spell.get_name()
-	
-	progress_bar.value = spell_cast_info.current_cast_time
-	progress_bar.max_value = spell_cast_info.cast_time
-	
-	show()
-	
-	
-func _ccast_failed(pspell_cast_info: SpellCastInfo) -> void:
-	set_process(false)
-	hide()
-	
-func _ccast_finished(pspell_cast_info: SpellCastInfo) -> void:
-	set_process(false)
-	hide()
-	
-func _ccast_interrupted(pspell_cast_info: SpellCastInfo) -> void:
-	set_process(false)
-	hide()
+func on_notification_ccast(what : int, pspell_cast_info: SpellCastInfo) -> void:
+	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
+		set_process(true)
+		
+		spell_cast_info = pspell_cast_info
+		
+		label.text = spell_cast_info.spell.get_name()
+		
+		progress_bar.value = spell_cast_info.current_cast_time
+		progress_bar.max_value = spell_cast_info.cast_time
+		
+		show()
+	elif what == SpellEnums.NOTIFICATION_CAST_FAILED:
+		set_process(false)
+		hide()
+	elif what == SpellEnums.NOTIFICATION_CAST_FINISHED:
+		set_process(false)
+		hide()
+	elif what == SpellEnums.NOTIFICATION_CAST_INTERRUPTED:
+		set_process(false)
+		hide()
 	
 	
 	

@@ -42,34 +42,33 @@ func set_target(pentity : Entity) -> void:
 		pass
 	
 	entity = pentity
-	entity.connect("caura_added", self, "on_caura_added")
-	entity.connect("caura_removed", self, "on_caura_removed")
+	entity.connect("notification_caura", self, "on_notification_caura")
 
-func on_caura_added(aura_data : AuraData) -> void:
-	var created_node : Node = aura_entry_scene.instance()
-	
-	if (not aura_data.aura.debuff):
-		buff_container_node.add_child(created_node)
-		created_node.owner = buff_container_node
-	else:
-		debuff_container_node.add_child(created_node)
-		created_node.owner = debuff_container_node
-	
-	created_node.set_aura_data(aura_data)
-
-func on_caura_removed(aura_data : AuraData) -> void:
-	if (not aura_data.aura.debuff):
-		for bn in buff_container_node.get_children():
-			if bn.get_aura_data() == aura_data:
-				buff_container_node.remove_child(bn)
-				bn.queue_free()
-				return
-	else:
-		for bn in debuff_container_node.get_children():
-			if bn.get_aura_data() == aura_data:
-				debuff_container_node.remove_child(bn)
-				bn.queue_free()
-				return
+func on_notification_caura(what :int, aura_data : AuraData) -> void:
+	if what == SpellEnums.NOTIFICATION_AURA_ADDED:
+		var created_node : Node = aura_entry_scene.instance()
+		
+		if (not aura_data.aura.debuff):
+			buff_container_node.add_child(created_node)
+			created_node.owner = buff_container_node
+		else:
+			debuff_container_node.add_child(created_node)
+			created_node.owner = debuff_container_node
+		
+		created_node.set_aura_data(aura_data)
+	elif what == SpellEnums.NOTIFICATION_AURA_REMOVED:
+		if (not aura_data.aura.debuff):
+			for bn in buff_container_node.get_children():
+				if bn.get_aura_data() == aura_data:
+					buff_container_node.remove_child(bn)
+					bn.queue_free()
+					return
+		else:
+			for bn in debuff_container_node.get_children():
+				if bn.get_aura_data() == aura_data:
+					debuff_container_node.remove_child(bn)
+					bn.queue_free()
+					return
 
 func set_player(player : Entity) -> void:
 	set_target(player)
