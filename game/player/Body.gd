@@ -255,7 +255,7 @@ func process_movement_player(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value  / 100.0 * 4.2
+	target *= entity.getc_speed().current_value  / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:
@@ -329,7 +329,7 @@ func process_movement_mob(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value / 100.0 * 4.2
+	target *= entity.getc_speed().current_value / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:

@@ -51,12 +51,11 @@ func _ready() -> void:
 
 func set_player(p_player: Entity) -> void:
 	if not _player == null:
-		_player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH).disconnect("changed", self, "_on_player_health_changed")
+		_player.getc_health().disconnect("changed", self, "_on_player_health_changed")
 		_player.disconnect("cname_changed", self, "cname_changed")
 		_player.disconnect("con_level_up", self, "clevel_changed")
 		_player.disconnect("con_level_changed", self, "clevel_changed")
 		_player.disconnect("notification_cxp_gained", self, "notification_cxp_gained")
-		_player.disconnect("centity_data_changed", self, "centity_data_changed")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
 		
 		if _mana != null:
@@ -74,13 +73,12 @@ func set_player(p_player: Entity) -> void:
 	_player.connect("notification_ccharacter_level_up", self, "clevel_changed")
 	_player.connect("con_character_level_changed", self, "clevel_changed")
 	_player.connect("notification_cxp_gained", self, "notification_cxp_gained")
-	_player.connect("centity_data_changed", self, "centity_data_changed")
 	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
 	for i in range(_player.resource_getc_count()):
 		centity_resource_added(_player.resource_getc_index(i))
 	
-	var health = _player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
+	var health = _player.getc_health()
 	_on_player_health_changed(health)
 	health.connect("changed", self, "_on_player_health_changed")
 	
@@ -141,6 +139,3 @@ func clevel_changed(entity: Entity, value : int) -> void:
 func notification_cxp_gained(entity: Entity, val: int) -> void:
 	_xp_range.value = _player.ccharacter_xp
 
-func centity_data_changed(data: EntityData) -> void:
-	var health = _player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
-	_on_player_health_changed(health)

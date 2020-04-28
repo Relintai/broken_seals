@@ -50,7 +50,7 @@ func _ready() -> void:
 
 func set_player(p_player : Entity) -> void:
 	if not _player == null and is_instance_valid(_player):
-		_player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH).disconnect("changed", self, "_on_player_health_changed")
+		_player.getc_health().disconnect("changed", self, "_on_player_health_changed")
 		_player.disconnect("notification_caura", self, "on_notification_caura")
 		_player.disconnect("diecd", self, "diecd")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
@@ -84,7 +84,7 @@ func set_player(p_player : Entity) -> void:
 	for i in range(_player.resource_getc_count()):
 		centity_resource_added(_player.resource_getc_index(i))
 	
-	var health = _player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
+	var health = _player.getc_health()
 	_on_player_health_changed(health)
 	health.connect("changed", self, "_on_player_health_changed")
 	

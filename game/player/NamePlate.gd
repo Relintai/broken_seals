@@ -171,5 +171,5 @@ func on_centity_resource_added(resorce) -> void:
 	if health != null:
 		return
 	
-	health = entity.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
+	health = entity.getc_health()
 	health.connect("changed", self, "c_health_changed")
