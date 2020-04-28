@@ -88,7 +88,7 @@ func refresh() -> void:
 		if a == null:
 			break
 		
-		if _player.hasc_talent(a.id):
+		if _player.talent_hasc(a.id):
 			known_rank_count += 1
 			
 		rank_count += 1
@@ -116,7 +116,7 @@ func open_popup() -> void:
 	_popup.popup(Rect2(p, _popup.rect_size))
 	
 func upgrade():
-	_player.crequest_talent_learn(_spec_index, _row, culomn)
+	_player.talent_crequest_learn(_spec_index, _row, culomn)
 	
 func ctalent_learned(entity: Entity, talent_id: int) -> void:
 	refresh()

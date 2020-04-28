@@ -22,17 +22,17 @@ class_name SpellGD
 # SOFTWARE.
 
 
-func _sstart_casting(info : SpellCastInfo) -> void:
+func _cast_starts(info : SpellCastInfo) -> void:
 	if needs_target and info.target == null:
 		return
 		
-	if info.caster.sis_casting():
+	if info.caster.cast_is_castings():
 		return
 	
-	if cooldown_global_cooldown_enabled and info.caster.gets_has_global_cooldown() or info.caster.hass_category_cooldown(spell_type) or info.caster.hass_cooldown(id):
+	if cooldown_global_cooldown_enabled and info.caster.gcd_hass() or info.caster.category_cooldown_hass(spell_type) or info.caster.cooldown_hass(id):
 		return
 	
-	if !info.caster.hass_spell_id(id):
+	if !info.caster.spell_hass_id(id):
 		return
 		
 	var entity_relation_type = info.caster.gets_relation_to(info.target)
@@ -63,7 +63,7 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 				return
 	
 	if resource_cost != null and resource_cost.entity_resource_data != null:
-		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+		var r : EntityResource = info.caster.resource_gets_id(resource_cost.entity_resource_data.id)
 
 		if r == null:
 			return
@@ -72,11 +72,11 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 			return
 	
 	if cast_enabled:
-		info.caster.sstart_casting(info)
+		info.caster.cast_starts(info)
 		return
 		
 	if resource_cost != null and resource_cost.entity_resource_data != null:
-		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+		var r : EntityResource = info.caster.resource_gets_id(resource_cost.entity_resource_data.id)
 
 		r.current_value -= resource_cost.cost
 
@@ -94,9 +94,9 @@ func _sstart_casting(info : SpellCastInfo) -> void:
 		
 	handle_gcd(info)
 
-func _sfinish_cast(info : SpellCastInfo) -> void:
+func _cast_finishs(info : SpellCastInfo) -> void:
 	if resource_cost != null and resource_cost.entity_resource_data != null:
-		var r : EntityResource = info.caster.gets_resource_id(resource_cost.entity_resource_data.id)
+		var r : EntityResource = info.caster.resource_gets_id(resource_cost.entity_resource_data.id)
 
 		if r.current_value < resource_cost.cost:
 			info.caster.son_cast_failed(info)
@@ -123,7 +123,7 @@ func _sfinish_cast(info : SpellCastInfo) -> void:
 
 func _son_cast_player_moved(info):
 	if !cast_can_move_while_casting:
-		info.caster.sfail_cast()
+		info.caster.cast_fails()
 
 func _son_spell_hit(info):
 	handle_effect(info)
@@ -183,12 +183,12 @@ func handle_effect(info : SpellCastInfo) -> void:
 			var ad : AuraData = null
 			
 			if aura.aura_group != null:
-				ad = info.target.gets_aura_with_group_by(info.caster, aura.aura_group)
+				ad = info.target.aura_gets_with_group_by(info.caster, aura.aura_group)
 			else:
-				ad = info.target.gets_aura_by(info.caster, aura.get_id())
+				ad = info.target.aura_gets_by(info.caster, aura.get_id())
 			
 			if ad != null:
-				info.target.removes_aura_exact(ad)
+				info.target.aura_removes_exact(ad)
 			
 			var ainfo : AuraApplyInfo = AuraApplyInfo.new()
 		
@@ -203,11 +203,11 @@ func handle_effect(info : SpellCastInfo) -> void:
 		
 func handle_cooldown(info : SpellCastInfo) -> void:
 	if cooldown_cooldown > 0:
-		info.caster.adds_cooldown(id, cooldown_cooldown)
+		info.caster.cooldown_adds(id, cooldown_cooldown)
 		
 func handle_gcd(info : SpellCastInfo) -> void:
 	if cooldown_global_cooldown_enabled and cast_cast_time < 0.01:
-		info.caster.sstart_global_cooldown(info.caster.get_gcd().scurrent)
+		info.caster.gcd_starts(info.caster.get_gcd().scurrent)
 
 func add_spell_cast_effect(info : SpellCastInfo) -> void:
 	var basic_spell_effect : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic

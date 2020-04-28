@@ -49,4 +49,4 @@ func set_item(entity : Entity, item : ItemInstance) -> void:
 		_use_button.hide()
 		
 func use_button_pressed():
-	_entity.crequest_use_item(_item.item_template.id)
+	_entity.item_crequest_use(_item.item_template.id)

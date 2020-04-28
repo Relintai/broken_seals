@@ -68,8 +68,8 @@ func set_category(category: int) -> void:
 		ch.queue_free()
 	
 	var count : int = 0
-	for i in range(_player.gets_craft_recipe_count()):
-		var cr : CraftRecipe = _player.gets_craft_recipe(i)
+	for i in range(_player.craft_gets_recipe_count()):
+		var cr : CraftRecipe = _player.craft_gets_recipe(i)
 		
 		if cr.category == category:
 			var rss : Node = recipe_selector_scene.instance()
@@ -89,7 +89,7 @@ func set_category(category: int) -> void:
 		
 
 func request_craft() -> void:
-	_player.crequest_craft(_selected_craft_recipe.id)
+	_player.craft_crequest(_selected_craft_recipe.id)
 	
 	for ch in _tools_container.get_children():
 		ch.refresh()

@@ -98,7 +98,7 @@ func _ready() -> void:
 	entity = get_node("..")
 	entity.set_character_skeleton(character_skeleton)
 	entity.connect("notification_ccast", self, "on_notification_ccast")
-	entity.connect("sdied", self, "on_sdied")
+	entity.connect("diesd", self, "on_diesd")
 	entity.connect("isc_controlled_changed", self, "on_c_controlled_changed")
 	owner = entity
 
@@ -255,7 +255,7 @@ func process_movement_player(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value  / 100.0 * 4.2
+	target *= entity.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value  / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:
@@ -329,7 +329,7 @@ func process_movement_mob(delta : float) -> void:
 	hvel.y = 0
 
 	var target : Vector3 = dir
-	target *= entity.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value / 100.0 * 4.2
+	target *= entity.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_SPEED).current_value / 100.0 * 4.2
 
 	var accel
 	if dir.dot(hvel) > 0:
@@ -478,12 +478,12 @@ func target(position : Vector2):
 		if result.collider and result.collider.owner is Entity:
 			var ent : Entity = result.collider.owner as Entity
 			
-			entity.crequest_target_change(ent.get_path())
+			entity.target_crequest_change(ent.get_path())
 			return
 
-		entity.crequest_target_change(NodePath())
+		entity.target_crequest_change(NodePath())
 	else:
-		entity.crequest_target_change(NodePath())
+		entity.target_crequest_change(NodePath())
 		
 func cmouseover(event):
 	var from = camera.project_ray_origin(event.position)
@@ -598,7 +598,7 @@ func on_c_controlled_changed(val):
 		
 		
  
-func on_sdied(entity):
+func on_diesd(entity):
 	if dead:
 		return
 

@@ -181,7 +181,7 @@ func can_drop_data(pos, data) -> bool:
 
 func drop_data(pos, esd) -> void:
 	if esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_INVENTORY_ITEM:
-		player.crequest_item_swap(slot_id, esd.get_meta("slot_id"))
+		player.item_crequest_swap(slot_id, esd.get_meta("slot_id"))
 		setup_icon()
 	elif esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM:
 		player.equip_crequest(ESS.resource_db.get_item_template_path(esd.item_path).id, slot_id)
@@ -205,8 +205,8 @@ func set_player(p_player: Entity) -> void:
 	if player == null:
 		return
 
-#	for i in range(player.getc_cooldown_count()):
-#		var cooldown : Cooldown = player.getc_cooldown(i)
+#	for i in range(player.cooldown_getc_count()):
+#		var cooldown : Cooldown = player.cooldown_getc(i)
 
 	player.connect("ccooldown_added", self, "_ccooldown_added")
 	player.connect("ccooldown_removed", self, "_ccooldown_removed")

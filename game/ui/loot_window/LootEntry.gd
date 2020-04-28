@@ -38,7 +38,7 @@ func _ready():
 		Logger.error("LootEntry is not setup correctly!")
 
 func on_click():
-	player.crequest_loot(index)
+	player.loot_crequest(index)
 
 func set_item(pindex : int, item_instance : ItemInstance, pplayer : Entity) -> void:
 	index = index

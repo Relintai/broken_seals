@@ -80,24 +80,24 @@ func attack(delta):
 		return
 	
 	var cast : bool = false
-	if not owner.gets_has_global_cooldown():
+	if not owner.gcd_hass():
 		var taspellsdict : Dictionary = _data["target_aura_spells"]
 		
 		for taskey in taspellsdict.keys():
 			for tas in taspellsdict[taskey]:
 				var spell_id : int = tas["spell_id"]
 				
-				if not owner.hass_spell_id(spell_id):
+				if not owner.spell_hass_id(spell_id):
 					continue
 			
 				if taskey == null:
-					if target.gets_aura_by(owner, tas["aura_id"]) == null and not owner.hass_cooldown(spell_id):
-						owner.crequest_spell_cast(spell_id)
+					if target.aura_gets_by(owner, tas["aura_id"]) == null and not owner.cooldown_hass(spell_id):
+						owner.spell_crequest_cast(spell_id)
 						cast = true
 						break
 				else:
-					if target.gets_aura_with_group_by(owner, taskey) == null and not owner.hass_cooldown(spell_id):
-						owner.crequest_spell_cast(spell_id)
+					if target.aura_gets_with_group_by(owner, taskey) == null and not owner.cooldown_hass(spell_id):
+						owner.spell_crequest_cast(spell_id)
 						cast = true
 						break
 			if cast:
@@ -107,15 +107,15 @@ func attack(delta):
 			var sps : Array = _data["spells"]
 		
 			for spell_id in sps:
-				if not owner.hass_spell_id(spell_id):
+				if not owner.spell_hass_id(spell_id):
 					continue
 			
-				if not owner.hass_cooldown(spell_id):
-					owner.crequest_spell_cast(spell_id)
+				if not owner.cooldown_hass(spell_id):
+					owner.spell_crequest_cast(spell_id)
 					cast = true
 					break
 	
-	if owner.sis_casting():
+	if owner.cast_is_castings():
 		owner.get_body().target_movement_direction = Vector2()
 		return
 	

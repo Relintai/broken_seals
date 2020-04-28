@@ -66,8 +66,8 @@ func update_visibility() -> void:
 	#warning-ignore:unassigned_variable
 	var used_to_see : Array = Array()
 	
-	for i in range(gets_sees_count()):
-		var ent : Entity = gets_sees(i)
+	for i in range(sees_gets_count()):
+		var ent : Entity = sees_gets(i)
 		
 		used_to_see.append(ent)
 		
@@ -89,7 +89,7 @@ func update_visibility() -> void:
 		if self.get_network_master() != 1:
 			ESS.entity_spawner.despawn_for(self, ent)
 		
-		removes_sees(ent)
+		sees_removes(ent)
 
 	for e in currenty_sees_filtered:
 		var ent : Entity = e as Entity
@@ -97,7 +97,7 @@ func update_visibility() -> void:
 		if self.get_network_master() != 1:
 			ESS.entity_spawner.spawn_for(self, ent)
 		
-		adds_sees(ent)
+		sees_adds(ent)
 
 
 

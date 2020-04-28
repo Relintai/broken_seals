@@ -65,8 +65,8 @@ func _son_death():
 		return
 		
 	#warning-ignore:unused_variable
-	for i in range(gets_aura_count()):
-		removes_aura(gets_aura(0))
+	for i in range(aura_gets_count()):
+		aura_removes(aura_gets(0))
 	
 	dead = true
 	
@@ -80,7 +80,7 @@ func _son_death():
 		
 	ldiff /= 10.0
 	
-	starget.adds_xp(int(5.0 * scharacter_level * ldiff))
+	starget.xp_adds(int(5.0 * scharacter_level * ldiff))
 		
 	starget = null
 	
@@ -111,7 +111,7 @@ func _son_xp_gained(value : int) -> void:
 	var xpr : int = ESS.get_resource_db().get_xp_data().get_character_xp(gets_character_level());
 	
 	if xpr <= scharacter_xp:
-		scharacter_levelup(1)
+		levelup_scharacter(1)
 		scharacter_xp = 0
 
 func _son_class_level_up(value: int):
@@ -143,12 +143,12 @@ func refresh_spells(value: int):
 		for i in range(arr.size()):
 			var spell : Spell = arr[i]
 			
-			if not hass_spell(spell):
-				var spnum :int = gets_spell_count()
+			if not spell_hass(spell):
+				var spnum :int = spell_gets_count()
 				
-				crequest_spell_learn(spell.id)
+				spell_learn_requestc(spell.id)
 				
-				if spnum != gets_spell_count():
+				if spnum != spell_gets_count():
 					break
 				
 			if sfree_spell_points == 0:

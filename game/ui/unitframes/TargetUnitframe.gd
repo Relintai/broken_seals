@@ -50,9 +50,9 @@ func _ready() -> void:
 
 func set_player(p_player : Entity) -> void:
 	if not _player == null and is_instance_valid(_player):
-		_player.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH).disconnect("changed", self, "_on_player_health_changed")
+		_player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH).disconnect("changed", self, "_on_player_health_changed")
 		_player.disconnect("notification_caura", self, "on_notification_caura")
-		_player.disconnect("cdied", self, "cdied")
+		_player.disconnect("diecd", self, "diecd")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
 		
 		if _mana != null:
@@ -72,19 +72,19 @@ func set_player(p_player : Entity) -> void:
 		
 	_player = p_player
 	
-	for index in range(_player.getc_aura_count()):
-		var aura : AuraData = _player.getc_aura(index)
+	for index in range(_player.aura_getc_count()):
+		var aura : AuraData = _player.aura_getc(index)
 		
 		on_notification_caura(SpellEnums.NOTIFICATION_AURA_ADDED, aura)
 		
 	_player.connect("notification_caura", self, "on_notification_caura")
-	_player.connect("cdied", self, "cdied", [], CONNECT_DEFERRED)
+	_player.connect("diecd", self, "diecd", [], CONNECT_DEFERRED)
 	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
-	for i in range(_player.getc_resource_count()):
-		centity_resource_added(_player.getc_resource_index(i))
+	for i in range(_player.resource_getc_count()):
+		centity_resource_added(_player.resource_getc_index(i))
 	
-	var health = _player.getc_resource_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
+	var health = _player.resource_getc_index(EntityEnums.ENTITY_RESOURCE_INDEX_HEALTH)
 	_on_player_health_changed(health)
 	health.connect("changed", self, "_on_player_health_changed")
 	
@@ -147,5 +147,5 @@ func _on_player_health_changed(health : EntityResource) -> void:
 	
 	_health_text.text = str(health.current_value) + "/" + str(health.max_value)
 	
-func cdied(entity : Entity) -> void:
+func diecd(entity : Entity) -> void:
 	set_player(null)

@@ -61,24 +61,24 @@ func _sai_attack(entity):
 		return
 	
 	var cast : bool = false
-	if not entity.gets_has_global_cooldown():
+	if not entity.gcd_hass():
 		var taspellsdict : Dictionary = _data["target_aura_spells"]
 		
 		for taskey in taspellsdict.keys():
 			for tas in taspellsdict[taskey]:
 				var spell_id : int = tas["spell_id"]
 				
-				if not entity.hass_spell_id(spell_id):
+				if not entity.spell_hass_id(spell_id):
 					continue
 			
 				if taskey == null:
-					if target.gets_aura_by(entity, tas["aura_id"]) == null and not entity.hass_cooldown(spell_id):
-						entity.crequest_spell_cast(spell_id)
+					if target.aura_gets_by(entity, tas["aura_id"]) == null and not entity.cooldown_hass(spell_id):
+						entity.spell_crequest_cast(spell_id)
 						cast = true
 						break
 				else:
-					if target.gets_aura_with_group_by(entity, taskey) == null and not entity.hass_cooldown(spell_id):
-						entity.crequest_spell_cast(spell_id)
+					if target.aura_gets_with_group_by(entity, taskey) == null and not entity.cooldown_hass(spell_id):
+						entity.spell_crequest_cast(spell_id)
 						cast = true
 						break
 			if cast:
@@ -88,16 +88,16 @@ func _sai_attack(entity):
 			var sps : Array = _data["spells"]
 		
 			for spell_id in sps:
-				if not entity.hass_spell_id(spell_id):
+				if not entity.spell_hass_id(spell_id):
 					continue
 			
-				if not entity.hass_cooldown(spell_id):
-					entity.crequest_spell_cast(spell_id)
+				if not entity.cooldown_hass(spell_id):
+					entity.spell_crequest_cast(spell_id)
 					cast = true
 					break
 	
 	
-	if entity.sis_casting():
+	if entity.cast_is_castings():
 		mob.target_movement_direction = Vector2()
 		return
 	
@@ -108,7 +108,7 @@ func _sai_attack(entity):
 #func _setup_resources(entity):
 #	var p : EntityResource = ManaResource.new()
 #
-#	entity.adds_resource(p)
+#	entity.resource_adds(p)
 
 func sort_spells_by_rank(a, b):
 	if a == null or b == null:

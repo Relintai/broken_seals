@@ -101,13 +101,13 @@ func refresh_entries() -> void:
 
 		var spell : Spell = _spells[spindex]
 		
-		if not _player.hasc_spell(spell):
+		if not _player.spell_hasc(spell):
 			if not show_not_learned:
 				i += 1
 				continue
 			
 			if not show_not_learnable:
-				if spell.training_required_spell and not _player.hasc_spell(spell.training_required_spell):
+				if spell.training_required_spell and not _player.spell_hasc(spell.training_required_spell):
 						i += 1
 						continue
 				

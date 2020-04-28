@@ -200,13 +200,13 @@ func _on_button_pressed() -> void:
 		if (button_entry.item_path == ""):
 			return
 			
-		player.crequest_spell_cast(ESS.resource_db.spell_path_to_id(button_entry.item_path))
+		player.spell_crequest_cast(ESS.resource_db.spell_path_to_id(button_entry.item_path))
 		
 	elif button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM:
 		if (button_entry.item_path == ""):
 			return
 			
-		player.crequest_use_item(ESS.resource_db.item_template_path_to_id(button_entry.item_path))
+		player.item_crequest_use(ESS.resource_db.item_template_path_to_id(button_entry.item_path))
 		
 func set_button_entry_data(type: int, item_path: String) -> void:
 	button_entry.type = type
@@ -288,8 +288,8 @@ func set_player(p_player: Entity) -> void:
 	if player == null:
 		return
 
-#	for i in range(player.getc_cooldown_count()):
-#		var cooldown : Cooldown = player.getc_cooldown(i)
+#	for i in range(player.cooldown_getc_count()):
+#		var cooldown : Cooldown = player.cooldown_getc(i)
 
 	player.connect("ccooldown_added", self, "_ccooldown_added")
 	player.connect("ccooldown_removed", self, "_ccooldown_removed")
