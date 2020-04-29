@@ -1,10 +1,191 @@
-[gd_resource type="EntityData" load_steps=6 format=2]
+[gd_resource type="EntityData" load_steps=49 format=2]
 
 [ext_resource path="res://modules/core/crafting/2_chest_of_the_infinite_wisdom.tres" type="CraftRecipe" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/1_naturalist.tres" type="EntityClassData" id=2]
 [ext_resource path="res://modules/species/Human/Female/1_human_female.tres" type="EntitySpeciesData" id=3]
 [ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=4]
 [ext_resource path="res://modules/core/crafting/1_test_craft.tres" type="CraftRecipe" id=5]
+
+[sub_resource type="SimpleLevelStatData" id=43]
+agility = 3
+strength = 4
+stamina = 5
+intellect = 6
+spirit = 4
+
+[sub_resource type="StatDataEntry" id=2]
+base = 16.0
+
+[sub_resource type="StatDataEntry" id=3]
+stat_id = 12
+
+[sub_resource type="StatDataEntry" id=4]
+stat_id = 13
+
+[sub_resource type="StatDataEntry" id=5]
+stat_id = 19
+
+[sub_resource type="StatDataEntry" id=6]
+stat_id = 34
+
+[sub_resource type="StatDataEntry" id=7]
+stat_id = 21
+
+[sub_resource type="StatDataEntry" id=8]
+stat_id = 24
+
+[sub_resource type="StatDataEntry" id=9]
+stat_id = 38
+
+[sub_resource type="StatDataEntry" id=10]
+stat_id = 36
+
+[sub_resource type="StatDataEntry" id=11]
+stat_id = 31
+
+[sub_resource type="StatDataEntry" id=12]
+stat_id = 32
+
+[sub_resource type="StatDataEntry" id=13]
+stat_id = 8
+base = 1.5
+
+[sub_resource type="StatDataEntry" id=14]
+stat_id = 9
+
+[sub_resource type="StatDataEntry" id=15]
+stat_id = 10
+
+[sub_resource type="StatDataEntry" id=16]
+stat_id = 25
+
+[sub_resource type="StatDataEntry" id=17]
+stat_id = 5
+base = 100.0
+
+[sub_resource type="StatDataEntry" id=18]
+stat_id = 28
+
+[sub_resource type="StatDataEntry" id=19]
+stat_id = 3
+base = 18.0
+
+[sub_resource type="StatDataEntry" id=20]
+stat_id = 33
+
+[sub_resource type="StatDataEntry" id=21]
+stat_id = 6
+base = 100.0
+
+[sub_resource type="StatDataEntry" id=22]
+stat_id = 15
+
+[sub_resource type="StatDataEntry" id=23]
+stat_id = 16
+
+[sub_resource type="StatDataEntry" id=24]
+stat_id = 26
+
+[sub_resource type="StatDataEntry" id=25]
+stat_id = 22
+
+[sub_resource type="StatDataEntry" id=26]
+stat_id = 30
+
+[sub_resource type="StatDataEntry" id=27]
+stat_id = 20
+
+[sub_resource type="StatDataEntry" id=28]
+stat_id = 39
+
+[sub_resource type="StatDataEntry" id=29]
+stat_id = 11
+
+[sub_resource type="StatDataEntry" id=30]
+stat_id = 29
+
+[sub_resource type="StatDataEntry" id=31]
+stat_id = 35
+
+[sub_resource type="StatDataEntry" id=32]
+stat_id = 7
+
+[sub_resource type="StatDataEntry" id=33]
+stat_id = 17
+
+[sub_resource type="StatDataEntry" id=34]
+stat_id = 18
+
+[sub_resource type="StatDataEntry" id=35]
+stat_id = 27
+
+[sub_resource type="StatDataEntry" id=36]
+stat_id = 23
+
+[sub_resource type="StatDataEntry" id=37]
+stat_id = 14
+
+[sub_resource type="StatDataEntry" id=38]
+stat_id = 4
+base = 13.0
+
+[sub_resource type="StatDataEntry" id=39]
+stat_id = 2
+base = 18.0
+
+[sub_resource type="StatDataEntry" id=40]
+stat_id = 1
+base = 16.0
+
+[sub_resource type="StatDataEntry" id=41]
+stat_id = 37
+
+[sub_resource type="StatDataEntry" id=42]
+stat_id = 40
+
+[sub_resource type="StatData" id=44]
+level_stat_data = SubResource( 43 )
+stat/agility = SubResource( 2 )
+stat/strength = SubResource( 40 )
+stat/stamina = SubResource( 39 )
+stat/intellect = SubResource( 19 )
+stat/spirit = SubResource( 38 )
+stat/health = SubResource( 17 )
+stat/mana = SubResource( 21 )
+stat/speed = SubResource( 32 )
+stat/global_cooldown = SubResource( 13 )
+stat/haste = SubResource( 14 )
+stat/haste_rating = SubResource( 15 )
+stat/resilience = SubResource( 29 )
+stat/armor = SubResource( 3 )
+stat/attack_power = SubResource( 4 )
+stat/spell_power = SubResource( 37 )
+stat/melee_crit = SubResource( 22 )
+stat/melee_crit_bonus = SubResource( 23 )
+stat/spell_crit = SubResource( 33 )
+stat/spell_crit_bonus = SubResource( 34 )
+stat/block = SubResource( 5 )
+stat/parry = SubResource( 27 )
+stat/damage_reduction = SubResource( 7 )
+stat/melee_damage_reduction = SubResource( 25 )
+stat/spell_damage_reduction = SubResource( 36 )
+stat/damage_taken = SubResource( 8 )
+stat/heal_taken = SubResource( 16 )
+stat/melee_damage = SubResource( 24 )
+stat/spell_damage = SubResource( 35 )
+stat/holy_resist = SubResource( 18 )
+stat/shadow_resist = SubResource( 30 )
+stat/nature_resist = SubResource( 26 )
+stat/fire_resist = SubResource( 11 )
+stat/frost_resist = SubResource( 12 )
+stat/lightning_resist = SubResource( 20 )
+stat/chaos_resist = SubResource( 6 )
+stat/silence_resist = SubResource( 31 )
+stat/fear_resist = SubResource( 10 )
+stat/stun_resist = SubResource( 41 )
+stat/energy = SubResource( 9 )
+stat/rage = SubResource( 28 )
+stat/xp_rate = SubResource( 42 )
 
 [resource]
 resource_name = "Naturalist"
@@ -14,6 +195,7 @@ entity_controller = 1
 is_playable = true
 text_name = "Naturalist"
 bag_size = 24
+stat_data = SubResource( 44 )
 entity_species_data = ExtResource( 3 )
 entity_class_data = ExtResource( 2 )
 craft_recipes = [ ExtResource( 5 ), ExtResource( 1 ) ]
