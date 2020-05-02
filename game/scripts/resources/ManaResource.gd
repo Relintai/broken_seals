@@ -36,27 +36,27 @@ func _init():
 func _ons_added(entity):
 	refresh()
 
-func _notification_sstat_changed(stat : Stat):
-	if stat.id == int_id || stat.id == spirit_id:
+func _notification_sstat_changed(stat_id : int, value : float):
+	if stat_id == int_id || stat_id == spirit_id:
 		refresh()
 
 func refresh():
-	var intellect : Stat = owner.get_stat(int_id)
-	var spirit : Stat = owner.get_stat(spirit_id)
+	var intellect : int = owner.stat_gets_current(int_id)
+	var spirit : int = owner.stat_gets_current(spirit_id)
 	
 	var m : bool = false
 	
 	if max_value == current_value:
 		m = true
 	
-	var nv : int = int(intellect.scurrent) * 10
+	var nv : int = int(intellect) * 10
 	
 	max_value = nv
 	
 	if m:
 		current_value = nv
 	
-	mana_regen = int(spirit.scurrent)
+	mana_regen = int(spirit)
 
 func _process_server(delta):
 	timer += delta

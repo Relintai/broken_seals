@@ -33,12 +33,12 @@ func _init():
 func _ons_added(entity):
 	refresh()
 
-func _notification_sstat_changed(stat : Stat):
-	if stat.id == speed_stat_id:
+func _notification_sstat_changed(stat_id : int, value : float):
+	if stat_id == speed_stat_id:
 		refresh()
 
 func refresh():
-	var speed_stat : Stat = owner.get_stat(speed_stat_id)
+	var speed_stat : int = owner.stat_gets_current(speed_stat_id)
 
-	current_value = base_value + speed_stat.scurrent * 0.01
+	current_value = base_value + speed_stat * 0.01
 

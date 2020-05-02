@@ -32,15 +32,15 @@ func _init():
 func _ons_added(entity):
 	refresh()
 
-func _notification_sstat_changed(stat : Stat):
-	if stat.id == stamina_stat_id || stat.id == health_stat_id:
+func _notification_sstat_changed(stat_id : int, value : float):
+	if stat_id == stamina_stat_id || stat_id == health_stat_id:
 		refresh()
 
 func refresh():
-	var stamina : Stat = owner.get_stat(stamina_stat_id)
-	var health : Stat = owner.get_stat(health_stat_id)
+	var stamina : int = owner.stat_gets_current(stamina_stat_id)
+	var health : int = owner.stat_gets_current(health_stat_id)
 	
-	max_value = int(stamina.scurrent) * 10 + int(health.scurrent)
+	max_value = int(stamina) * 10 + int(health)
 	#todo fix this if this solution works well
 	current_value = max_value
 

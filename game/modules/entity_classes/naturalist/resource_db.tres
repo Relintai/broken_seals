@@ -39,7 +39,6 @@
 [ext_resource path="res://modules/entity_classes/naturalist/spells/35_strike.tres" type="Spell" id=37]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/36_regrow.tres" type="Spell" id=38]
 
-
 [resource]
 entity_datas = [ ExtResource( 36 ), ExtResource( 35 ) ]
 spells = [ ExtResource( 11 ), ExtResource( 5 ), ExtResource( 25 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 33 ), ExtResource( 1 ), ExtResource( 13 ), ExtResource( 34 ), ExtResource( 4 ), ExtResource( 30 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 31 ), ExtResource( 14 ), ExtResource( 32 ), ExtResource( 26 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 22 ), ExtResource( 37 ), ExtResource( 38 ) ]
