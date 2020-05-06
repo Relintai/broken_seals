@@ -50,6 +50,8 @@ func sstart_attack(entity : Entity) -> void:
 func _notification_cmouse_enter() -> void:
 	if centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_LOOT:
 		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
+	elif centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_NONE:
+		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_MOVE)
 		
@@ -84,7 +86,11 @@ func _notification_sdeath():
 		
 	starget = null
 	
-	sentity_interaction_type = EntityEnums.ENITIY_INTERACTION_TYPE_LOOT
+	if sentity_data.loot_db != null:
+		sentity_interaction_type = EntityEnums.ENITIY_INTERACTION_TYPE_LOOT
+	else:
+		sentity_interaction_type = EntityEnums.ENITIY_INTERACTION_TYPE_NONE
+		
 	ai_state = EntityEnums.AI_STATE_OFF
 
 	
