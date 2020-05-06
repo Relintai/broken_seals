@@ -80,7 +80,10 @@ func _cast_starts(info : SpellCastInfo) -> void:
 
 		r.current_value -= resource_cost.cost
 
+	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED, info)
 	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_SUCCESS, info)
+	
+	info.caster.notification_ccast(SpellEnums.NOTIFICATION_CAST_FINISHED, info)
 
 	if info.target:
 		info.target.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED_TARGET, info)
@@ -103,9 +106,11 @@ func _cast_finishs(info : SpellCastInfo) -> void:
 			return
 
 		r.current_value -= resource_cost.cost
-		
+
 	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED, info)
 	info.caster.notification_scast(SpellEnums.NOTIFICATION_CAST_SUCCESS, info)
+	
+	info.caster.notification_ccast(SpellEnums.NOTIFICATION_CAST_FINISHED, info)
 	
 	if is_instance_valid(info.target):
 		info.target.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED_TARGET, info)
@@ -119,14 +124,10 @@ func _cast_finishs(info : SpellCastInfo) -> void:
 	handle_gcd(info)
 	
 	
-
-
 func _son_cast_player_moved(info):
 	if !cast_can_move_while_casting:
 		info.caster.cast_fails()
 
-func _son_spell_hit(info):
-	handle_effect(info)
 
 func handle_effect(info : SpellCastInfo) -> void:
 	if target_type == SPELL_TARGET_TYPE_TARGET:
@@ -229,27 +230,30 @@ func remove_spell_cast_effect(info : SpellCastInfo) -> void:
 		if basic_spell_effect.spell_cast_effect_right_hand != null:
 			info.caster.get_character_skeleton().right_hand_attach_point.remove_effect(basic_spell_effect.spell_cast_effect_right_hand)
 		
-func _con_spell_cast_started(info):
-	add_spell_cast_effect(info)
+func _notification_ccast(what, info):
+	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
+		add_spell_cast_effect(info)
+	elif what == SpellEnums.NOTIFICATION_CAST_FAILED:
+		remove_spell_cast_effect(info)
+	elif what == SpellEnums.NOTIFICATION_CAST_FINISHED:
+		remove_spell_cast_effect(info)
+	elif what == SpellEnums.NOTIFICATION_CAST_INTERRUPTED:
+		remove_spell_cast_effect(info)
+	elif what == SpellEnums.NOTIFICATION_CAST_SUCCESS:
+		remove_spell_cast_effect(info)
 
-func _con_spell_cast_failed(info):
-	remove_spell_cast_effect(info)
-	
-func _con_spell_cast_interrupted(info):
-	remove_spell_cast_effect(info)
-	
-func _con_spell_cast_success(info):
-	remove_spell_cast_effect(info)
-	
-	if not is_instance_valid(info.target):
-		return
-	
-	var bse : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
+		if not is_instance_valid(info.target):
+			return
 		
-	if bse != null:
-		if bse.torso_spell_cast_finish_effect != null:
-			info.target.get_character_skeleton().torso_attach_point.add_effect_timed(bse.torso_spell_cast_finish_effect, bse.torso_spell_cast_finish_effect_time)
-
-		if bse.root_spell_cast_finish_effect != null:
-			info.target.get_character_skeleton().root_attach_point.add_effect_timed(bse.root_spell_cast_finish_effect, bse.root_spell_cast_finish_effect_time)
+		var bse : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
 			
+		if bse != null:
+			if bse.torso_spell_cast_finish_effect != null:
+				info.target.get_character_skeleton().torso_attach_point.add_effect_timed(bse.torso_spell_cast_finish_effect, bse.torso_spell_cast_finish_effect_time)
+	
+			if bse.root_spell_cast_finish_effect != null:
+				info.target.get_character_skeleton().root_attach_point.add_effect_timed(bse.root_spell_cast_finish_effect, bse.root_spell_cast_finish_effect_time)
+
+
+func _son_spell_hit(info):
+	handle_effect(info)
