@@ -12,6 +12,7 @@ extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 
 [node name="HumanFemale" type="KinematicBody"]
 script = ExtResource( 1 )
+max_visible_distance = 90.0
 model_path = NodePath("../HumanFemale/Rotation_Helper/Model")
 character_skeleton_path = NodePath("../HumanFemale/Rotation_Helper/Model/character")
 
