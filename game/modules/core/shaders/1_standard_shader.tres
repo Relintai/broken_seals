@@ -11,14 +11,17 @@ void fragment() {
 	vec2 base_uv2 = UV2;
 	
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	vec4 albedo_tex2 = texture(texture_albedo, base_uv2);
 	
 	float ratio = COLOR.a;
 	
-	albedo_tex *= ratio;
-	albedo_tex2 *= 1.0 - ratio;
-	
-	albedo_tex += albedo_tex2;
+	if (ratio < 0.998) {
+		vec4 albedo_tex2 = texture(texture_albedo, base_uv2);
+		
+		albedo_tex *= ratio;
+		albedo_tex2 *= 1.0 - ratio;
+		
+		albedo_tex += albedo_tex2;
+	} 
 	
 	albedo_tex *= COLOR;
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
