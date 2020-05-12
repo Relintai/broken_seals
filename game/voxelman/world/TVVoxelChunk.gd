@@ -38,6 +38,7 @@ func _create_meshers():
 	mesher.lod_size = lod_size
 	mesher.voxel_scale = voxel_scale
 	mesher.build_flags = build_flags
+	mesher.texture_scale = 3
 	add_mesher(mesher)
 	
 	#add_mesher(VoxelMesherCubic.new())
