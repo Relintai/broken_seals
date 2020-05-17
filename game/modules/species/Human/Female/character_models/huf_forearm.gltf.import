@@ -1,0 +1,16 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/huf_forearm.gltf-8b78258ea9daca7cc382c76da07171af.res"
+
+[deps]
+
+source_file="res://modules/species/Human/Female/character_models/huf_forearm.gltf"
+dest_files=[ "res://.import/huf_forearm.gltf-8b78258ea9daca7cc382c76da07171af.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 1.571, 0, 0 )
+scale=Vector3( 0.011, 0.011, 0.011 )

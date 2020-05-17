@@ -1,0 +1,16 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/huf_thigh_left.gltf-f967ea8aff882be703adaf054058d4f8.res"
+
+[deps]
+
+source_file="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf"
+dest_files=[ "res://.import/huf_thigh_left.gltf-f967ea8aff882be703adaf054058d4f8.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 1.571, 0, 0 )
+scale=Vector3( 0.011, 0.011, 0.011 )

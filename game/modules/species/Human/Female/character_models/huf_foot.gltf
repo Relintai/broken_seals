@@ -1,0 +1,114 @@
+{
+    "asset" : {
+        "generator" : "Khronos glTF Blender I/O v1.1.46",
+        "version" : "2.0"
+    },
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "foot",
+            "rotation" : [
+                0.7071068286895752,
+                0,
+                0,
+                0.7071067094802856
+            ]
+        }
+    ],
+    "materials" : [
+        {
+            "doubleSided" : true,
+            "name" : "Standard",
+            "pbrMetallicRoughness" : {}
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Geometry_n22640",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "POSITION" : 0,
+                        "NORMAL" : 1,
+                        "TEXCOORD_0" : 2
+                    },
+                    "indices" : 3,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5126,
+            "count" : 76,
+            "max" : [
+                19.065866470336914,
+                4.999999523162842,
+                3.193444013595581
+            ],
+            "min" : [
+                -2.183391571044922,
+                -5.000000476837158,
+                -6.124234199523926
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 76,
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 76,
+            "type" : "VEC2"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5123,
+            "count" : 84,
+            "type" : "SCALAR"
+        }
+    ],
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 912,
+            "byteOffset" : 0
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 912,
+            "byteOffset" : 912
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 608,
+            "byteOffset" : 1824
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 168,
+            "byteOffset" : 2432
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 2600,
+            "uri" : "data:application/octet-stream;base64,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"
+        }
+    ]
+}
