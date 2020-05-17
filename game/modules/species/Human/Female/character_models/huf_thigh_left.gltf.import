@@ -12,5 +12,5 @@ dest_files=[ "res://.import/huf_thigh_left.gltf-f967ea8aff882be703adaf054058d4f8
 [params]
 
 offset=Vector3( 0, 0, 0 )
-rotation=Vector3( 1.571, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 0.011, 0.011, 0.011 )

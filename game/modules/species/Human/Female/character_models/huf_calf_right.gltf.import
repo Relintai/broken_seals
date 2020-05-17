@@ -1,0 +1,16 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/huf_calf_right.gltf-7009a84554d1f398b9f839dc332c40d7.res"
+
+[deps]
+
+source_file="res://modules/species/Human/Female/character_models/huf_calf_right.gltf"
+dest_files=[ "res://.import/huf_calf_right.gltf-7009a84554d1f398b9f839dc332c40d7.res" ]
+
+[params]
+
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 0.011, 0.011, 0.011 )

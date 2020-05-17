@@ -12,5 +12,5 @@ dest_files=[ "res://.import/huf_spine.gltf-1872146be20593ed8d52842436b52a43.res"
 [params]
 
 offset=Vector3( 0, 0, 0 )
-rotation=Vector3( 1.571, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 0.011, 0.011, 0.011 )

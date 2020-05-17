@@ -1,14 +1,16 @@
-[gd_resource type="ItemVisual" load_steps=46 format=2]
+[gd_resource type="ItemVisual" load_steps=48 format=2]
 
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_pelvis.gltf" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_right.gltf" type="MeshDataResource" id=2]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf" type="MeshDataResource" id=2]
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf_v3.png" type="Texture" id=3]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf" type="MeshDataResource" id=4]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_left.gltf" type="MeshDataResource" id=4]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_spine2.gltf" type="MeshDataResource" id=5]
 [ext_resource path="res://modules/species/Human/Female/character_textures/head_v3.png" type="Texture" id=6]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_hand.gltf" type="MeshDataResource" id=7]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf.gltf" type="MeshDataResource" id=8]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot.gltf" type="MeshDataResource" id=9]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_right.gltf" type="MeshDataResource" id=8]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_left.gltf" type="MeshDataResource" id=9]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_right.gltf" type="MeshDataResource" id=10]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_right.gltf" type="MeshDataResource" id=11]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=13]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_neck.gltf" type="MeshDataResource" id=14]
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf_v3.png" type="Texture" id=15]
@@ -28,8 +30,8 @@ texture_male = ExtResource( 6 )
 texture_female = ExtResource( 6 )
 
 [sub_resource type="ItemVisualEntry" id=2]
-mesh_male = ExtResource( 8 )
-mesh_female = ExtResource( 8 )
+mesh_male = ExtResource( 4 )
+mesh_female = ExtResource( 4 )
 texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 
@@ -64,8 +66,8 @@ texture_male = ExtResource( 15 )
 texture_female = ExtResource( 15 )
 
 [sub_resource type="ItemVisualEntry" id=8]
-mesh_male = ExtResource( 4 )
-mesh_female = ExtResource( 4 )
+mesh_male = ExtResource( 2 )
+mesh_female = ExtResource( 2 )
 texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 
@@ -100,8 +102,8 @@ texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 
 [sub_resource type="ItemVisualEntry" id=14]
-mesh_male = ExtResource( 8 )
-mesh_female = ExtResource( 8 )
+mesh_male = ExtResource( 10 )
+mesh_female = ExtResource( 10 )
 texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 
@@ -118,8 +120,8 @@ texture_male = ExtResource( 18 )
 texture_female = ExtResource( 18 )
 
 [sub_resource type="ItemVisualEntry" id=17]
-mesh_male = ExtResource( 9 )
-mesh_female = ExtResource( 9 )
+mesh_male = ExtResource( 11 )
+mesh_female = ExtResource( 11 )
 texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 
@@ -136,8 +138,8 @@ texture_male = ExtResource( 15 )
 texture_female = ExtResource( 15 )
 
 [sub_resource type="ItemVisualEntry" id=20]
-mesh_male = ExtResource( 2 )
-mesh_female = ExtResource( 2 )
+mesh_male = ExtResource( 8 )
+mesh_female = ExtResource( 8 )
 texture_male = ExtResource( 16 )
 texture_female = ExtResource( 16 )
 

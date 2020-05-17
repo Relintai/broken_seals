@@ -11,14 +11,18 @@
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_finger.gltf" type="MeshDataResource" id=9]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_fingers.gltf" type="MeshDataResource" id=10]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_hand.gltf" type="MeshDataResource" id=11]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf.gltf" type="MeshDataResource" id=12]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot.gltf" type="MeshDataResource" id=13]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_left.gltf" type="MeshDataResource" id=12]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_left.gltf" type="MeshDataResource" id=13]
 [ext_resource path="res://modules/species/Human/Female/character_models/thigh.gltf" type="MeshDataResource" id=14]
 [ext_resource path="res://modules/species/Human/Female/character_textures/skin.png" type="Texture" id=15]
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_simple.png" type="Texture" id=16]
 [ext_resource path="res://modules/species/Human/Female/character_textures/head.png" type="Texture" id=17]
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=18]
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf.png" type="Texture" id=19]
+
+
+
+
 
 
 [sub_resource type="ItemVisualEntry" id=1]
