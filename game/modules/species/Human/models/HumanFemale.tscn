@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://player/Body.gd" type="Script" id=1]
-[ext_resource path="res://modules/species/Human/models/armature_model_orig_v2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://modules/species/Human/models/armature_huf.tscn" type="PackedScene" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.266582
@@ -14,7 +14,7 @@ extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 script = ExtResource( 1 )
 max_visible_distance = 90.0
 model_path = NodePath("../HumanFemale/Rotation_Helper/Model")
-character_skeleton_path = NodePath("../HumanFemale/Rotation_Helper/Model/character")
+character_skeleton_path = NodePath("Rotation_Helper/Model/character2")
 
 [node name="Body_CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.73, 0 )
@@ -29,10 +29,4 @@ transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0
 
 [node name="Model" type="Spatial" parent="Rotation_Helper"]
 
-[node name="character" parent="Rotation_Helper/Model" instance=ExtResource( 2 )]
-mesh_instance_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton/MeshInstance")
-skeleton_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton")
-left_hand_attach_point_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton/LeftHandAttachment/LeftHandAP")
-right_hand_attach_point_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton/RightHandAttachment/RightHandAP")
-torso_attach_point_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton/NeckAttachment/TorsoAP")
-root_attach_point_path = NodePath("../../../../HumanFemale/Rotation_Helper/Model/character/armature/Armature/Skeleton/RootAttachment/RootAP")
+[node name="character2" parent="Rotation_Helper/Model" instance=ExtResource( 2 )]

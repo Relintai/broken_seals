@@ -203,7 +203,7 @@ func build_mesh(data) -> void:
 			continue
 		
 		var bone_idx : int = skeleton.find_bone(bone_name)
-		
+
 		for j in range(get_model_entry_count(skele_point)):
 			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
 
@@ -346,7 +346,7 @@ func clear_mesh() -> void:
 		mesh_instance.mesh = null
 
 func editor_build(val : bool) -> void:
-	if not is_inside_tree() or _editor_built:
+	if not is_inside_tree():
 		return
 
 	if st == null:

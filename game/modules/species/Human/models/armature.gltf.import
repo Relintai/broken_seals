@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/armature.dae-a775d69f664271289a2784919318c34c.scn"
+path="res://.import/armature.gltf-e13d926b47d16442c46cb6a8fc53585f.scn"
 
 [deps]
 
-source_file="res://modules/species/Human/models/armature.dae"
-dest_files=[ "res://.import/armature.dae-a775d69f664271289a2784919318c34c.scn" ]
+source_file="res://modules/species/Human/models/armature.gltf"
+dest_files=[ "res://.import/armature.gltf-e13d926b47d16442c46cb6a8fc53585f.scn" ]
 
 [params]
 
@@ -27,11 +27,11 @@ meshes/lightmap_texel_size=0.1
 skins/use_named_skins=true
 external_files/store_in_subdir=false
 animation/import=true
-animation/fps=15
+animation/fps=30.0
 animation/filter_script=""
-animation/storage=false
+animation/storage=2
 animation/keep_custom_tracks=false
-animation/optimizer/enabled=true
+animation/optimizer/enabled=false
 animation/optimizer/max_linear_error=0.05
 animation/optimizer/max_angular_error=0.01
 animation/optimizer/max_angle=22

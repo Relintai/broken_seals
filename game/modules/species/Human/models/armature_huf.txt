@@ -1,0 +1,8 @@
+0 rest
+10 cast end
+20 casting loop
+30 dead
+40 idle loop
+50 run left loop
+60 run loop
+70 run right loop

@@ -1,10 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/DisplayPlayer.gd" type="Script" id=1]
-[ext_resource path="res://modules/species/Human/models/armature_model_orig_v2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://modules/species/Human/models/armature_huf.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/EntityModel.gd" type="Script" id=3]
-
-
 
 
 [node name="DisplayPlayer" type="Entity" groups=[
@@ -31,10 +29,9 @@ __meta__ = {
 }
 
 [node name="character" parent="DisplayPlayer/Rotation_Helper/Model" instance=ExtResource( 2 )]
-use_threads = false
-mesh_instance_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/MeshInstance")
-skeleton_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton")
-left_hand_attach_point_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/LeftHandAttachment/LeftHandAP")
-right_hand_attach_point_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/RightHandAttachment/RightHandAP")
-torso_attach_point_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/NeckAttachment/TorsoAP")
-root_attach_point_path = NodePath("../../../../DisplayPlayer/Rotation_Helper/Model/character/armature/Armature/Skeleton/RootAttachment/RootAP")
+mesh_instance_path = NodePath("../character/armature/Armature/Skeleton/MeshInstance")
+skeleton_path = NodePath("../character/armature/Armature/Skeleton")
+left_hand_attach_point_path = NodePath("../character/armature/Armature/Skeleton/LeftHandAttachment/LeftHandAP")
+right_hand_attach_point_path = NodePath("../character/armature/Armature/Skeleton/RightHandAttachment/RightHandAP")
+torso_attach_point_path = NodePath("../character/armature/Armature/Skeleton/NeckAttachment/TorsoAP")
+root_attach_point_path = NodePath("../character/armature/Armature/Skeleton/RootAttachment/RootAP")

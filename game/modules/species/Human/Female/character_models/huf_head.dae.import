@@ -12,5 +12,5 @@ dest_files=[ "res://.import/huf_head.dae-58749e35eddd4263049caf0ab9bd74b1.res" ]
 [params]
 
 offset=Vector3( 0, 0, 0 )
-rotation=Vector3( 0, 0, -1.5708 )
+rotation=Vector3( 1.571, 1.571, -1.571 )
 scale=Vector3( 0.011, 0.011, 0.011 )
