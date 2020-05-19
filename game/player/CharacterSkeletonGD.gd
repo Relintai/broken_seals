@@ -48,7 +48,7 @@ var torso_attach_point : CharacterSkeketonAttachPoint
 export (NodePath) var root_attach_point_path : NodePath
 var root_attach_point : CharacterSkeketonAttachPoint
 
-export(Array, ItemVisual) var viss : Array
+export(Array, ModelVisual) var viss : Array
 
 var meshes : Array
 
@@ -131,7 +131,7 @@ func _enter_tree():
 			
 #	if not Engine.is_editor_hint():
 	for iv in viss:
-		add_item_visual(iv as ItemVisual)
+		add_model_visual(iv as ModelVisual)
 			
 func _exit_tree():
 	if _thread != null:

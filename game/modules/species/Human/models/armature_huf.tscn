@@ -1,6 +1,6 @@
 [gd_scene load_steps=47 format=2]
 
-[ext_resource path="res://modules/core/item_visuals/test_base_v3.tres" type="ItemVisual" id=1]
+[ext_resource path="res://modules/core/model_visuals/test_base_v3.tres" type="ModelVisual" id=1]
 [ext_resource path="res://player/CharacterSkeletonAttachPoint.gd" type="Script" id=2]
 [ext_resource path="res://modules/core/materials/3_standard_character_material.tres" type="Material" id=3]
 [ext_resource path="res://test_weapons/shield_d.mesh" type="ArrayMesh" id=4]
