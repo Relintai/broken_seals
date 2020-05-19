@@ -371,6 +371,8 @@ enabled=PoolStringArray( "model_manager" )
 
 [ess]
 
+level/max_character_level=60
+level/max_class_level=60
 data/ess_resource_db_path="res://data/resource_db.tres"
 data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"
 enums/stats="Agility,Strength,Stamina,Intellect,Spirit,Health,Mana,Speed,Global Cooldown,Haste,Haste Rating,Resilience,Armor,Attack Power,Spell Power,Melee Crit,Melee Crit bonus,Spell Crit,Spell Crit Bonus,Block,Parry,Damage Reduction,Melee Damage Reduction,Spell Damage Reduction,Damage Taken,Heal Taken,Melee Damage,Spell Damage,Holy Resist,Shadow Resist,Nature Resist,Fire Resist,Frost Resist,Lightning Resist,Chaos Resist,Silence Resist,Fear Resist,Stun Resist,Energy,Rage,XP Rate"
