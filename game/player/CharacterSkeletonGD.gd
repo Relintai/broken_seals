@@ -207,10 +207,10 @@ func build_mesh(data) -> void:
 		for j in range(get_model_entry_count(skele_point)):
 			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
 
-			if entry.entry.get_mesh(gender) != null:
+			if entry.entry.get_mesh(model_index) != null:
 				var bt : Transform = skeleton.get_bone_global_pose(bone_idx)
 				
-				var arrays : Array = entry.entry.get_mesh(gender).array
+				var arrays : Array = entry.entry.get_mesh(model_index).array
 	
 				var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PoolVector3Array
 				var normals : PoolVector3Array = arrays[ArrayMesh.ARRAY_NORMAL] as PoolVector3Array
@@ -299,8 +299,8 @@ func prepare_textures() -> void:
 		for j in range(get_model_entry_count(bone_idx)):
 			var entry : SkeletonModelEntry = get_model_entry(bone_idx, j)
 			
-			if entry.entry.get_texture(gender) != null:
-				texture = _texture_packer.add_texture(entry.entry.get_texture(gender))
+			if entry.entry.get_texture(model_index) != null:
+				texture = _texture_packer.add_texture(entry.entry.get_texture(model_index))
 #				print(texture)
 				break
 			

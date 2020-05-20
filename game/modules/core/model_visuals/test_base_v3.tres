@@ -24,154 +24,104 @@
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_fingers.gltf" type="MeshDataResource" id=24]
 
 [sub_resource type="ModelVisualEntry" id=1]
-mesh_male = ExtResource( 17 )
-mesh_female = ExtResource( 17 )
-texture_male = ExtResource( 6 )
-texture_female = ExtResource( 6 )
+mesh = ExtResource( 17 )
+texture = ExtResource( 6 )
 
 [sub_resource type="ModelVisualEntry" id=2]
-mesh_male = ExtResource( 4 )
-mesh_female = ExtResource( 4 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 4 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=3]
-mesh_male = ExtResource( 24 )
-mesh_female = ExtResource( 24 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 24 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=4]
-mesh_male = ExtResource( 24 )
-mesh_female = ExtResource( 24 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 24 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=5]
-mesh_male = ExtResource( 9 )
-mesh_female = ExtResource( 9 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 9 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=6]
-mesh_male = ExtResource( 22 )
-mesh_female = ExtResource( 22 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 22 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=7]
-mesh_male = ExtResource( 13 )
-mesh_female = ExtResource( 13 )
-texture_male = ExtResource( 15 )
-texture_female = ExtResource( 15 )
+mesh = ExtResource( 13 )
+texture = ExtResource( 15 )
 
 [sub_resource type="ModelVisualEntry" id=8]
-mesh_male = ExtResource( 2 )
-mesh_female = ExtResource( 2 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 2 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=9]
-mesh_male = ExtResource( 23 )
-mesh_female = ExtResource( 23 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 23 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=10]
-mesh_male = ExtResource( 23 )
-mesh_female = ExtResource( 23 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 23 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=11]
-mesh_male = ExtResource( 21 )
-mesh_female = ExtResource( 21 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 21 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=12]
-mesh_male = ExtResource( 14 )
-mesh_female = ExtResource( 14 )
-texture_male = ExtResource( 15 )
-texture_female = ExtResource( 15 )
+mesh = ExtResource( 14 )
+texture = ExtResource( 15 )
 
 [sub_resource type="ModelVisualEntry" id=13]
-mesh_male = ExtResource( 1 )
-mesh_female = ExtResource( 1 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 1 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=14]
-mesh_male = ExtResource( 10 )
-mesh_female = ExtResource( 10 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 10 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=15]
-mesh_male = ExtResource( 24 )
-mesh_female = ExtResource( 24 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 24 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=16]
-mesh_male = ExtResource( 24 )
-mesh_female = ExtResource( 24 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 24 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=17]
-mesh_male = ExtResource( 11 )
-mesh_female = ExtResource( 11 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 11 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=18]
-mesh_male = ExtResource( 22 )
-mesh_female = ExtResource( 22 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 22 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=19]
-mesh_male = ExtResource( 7 )
-mesh_female = ExtResource( 7 )
-texture_male = ExtResource( 15 )
-texture_female = ExtResource( 15 )
+mesh = ExtResource( 7 )
+texture = ExtResource( 15 )
 
 [sub_resource type="ModelVisualEntry" id=20]
-mesh_male = ExtResource( 8 )
-mesh_female = ExtResource( 8 )
-texture_male = ExtResource( 16 )
-texture_female = ExtResource( 16 )
+mesh = ExtResource( 8 )
+texture = ExtResource( 16 )
 
 [sub_resource type="ModelVisualEntry" id=21]
-mesh_male = ExtResource( 23 )
-mesh_female = ExtResource( 23 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 23 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=22]
-mesh_male = ExtResource( 23 )
-mesh_female = ExtResource( 23 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 23 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=23]
-mesh_male = ExtResource( 21 )
-mesh_female = ExtResource( 21 )
-texture_male = ExtResource( 18 )
-texture_female = ExtResource( 18 )
+mesh = ExtResource( 21 )
+texture = ExtResource( 18 )
 
 [sub_resource type="ModelVisualEntry" id=24]
-mesh_male = ExtResource( 20 )
-mesh_female = ExtResource( 20 )
-texture_male = ExtResource( 3 )
-texture_female = ExtResource( 3 )
+mesh = ExtResource( 20 )
+texture = ExtResource( 3 )
 
 [sub_resource type="ModelVisualEntry" id=25]
-mesh_male = ExtResource( 5 )
-mesh_female = ExtResource( 5 )
-texture_male = ExtResource( 3 )
-texture_female = ExtResource( 3 )
+mesh = ExtResource( 5 )
+texture = ExtResource( 3 )
 
 [resource]
 layer = 1
