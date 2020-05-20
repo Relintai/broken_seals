@@ -376,6 +376,7 @@ level/max_class_level=60
 data/ess_resource_db_path="res://data/resource_db.tres"
 data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"
 enums/stats="Agility,Strength,Stamina,Intellect,Spirit,Health,Mana,Speed,Global Cooldown,Haste,Haste Rating,Resilience,Armor,Attack Power,Spell Power,Melee Crit,Melee Crit bonus,Spell Crit,Spell Crit Bonus,Block,Parry,Damage Reduction,Melee Damage Reduction,Spell Damage Reduction,Damage Taken,Heal Taken,Melee Damage,Spell Damage,Holy Resist,Shadow Resist,Nature Resist,Fire Resist,Frost Resist,Lightning Resist,Chaos Resist,Silence Resist,Fear Resist,Stun Resist,Energy,Rage,XP Rate"
+enums/skeletons_bones=PoolStringArray( "", "root,pelvis,spine,spine_1,spine_2,neck,head,left_clavicle,left_upper_arm,left_forearm,left_hand,left_thumb_base,left_thumb_end,left_fingers_base,left_fingers_end,right_clavicle,right_upper_arm,right_forearm,right_hand,right_thumb_base,right_thumb_end,right_fingers_base,right_fingers_end,left_thigh,left_calf,left_foot,right_thigh,right_calf,right_foot" )
 profiles/automatic_save=true
 
 [importer_defaults]

@@ -22,36 +22,36 @@
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarfv2.png" type="Texture" id=20]
 
 [sub_resource type="ModelVisualEntry" id=1]
+mesh = ExtResource( 4 )
+texture = ExtResource( 20 )
+
+[sub_resource type="ModelVisualEntry" id=2]
+mesh = ExtResource( 14 )
+texture = ExtResource( 6 )
+
+[sub_resource type="ModelVisualEntry" id=3]
+mesh = ExtResource( 7 )
+texture = ExtResource( 6 )
+
+[sub_resource type="ModelVisualEntry" id=4]
+mesh = ExtResource( 1 )
+texture = ExtResource( 20 )
+
+[sub_resource type="ModelVisualEntry" id=5]
 mesh = ExtResource( 11 )
 texture = ExtResource( 8 )
 
-[sub_resource type="ModelVisualEntry" id=2]
-mesh = ExtResource( 2 )
-texture = ExtResource( 19 )
-
-[sub_resource type="ModelVisualEntry" id=3]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
-
-[sub_resource type="ModelVisualEntry" id=4]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
-
-[sub_resource type="ModelVisualEntry" id=5]
-mesh = ExtResource( 9 )
-texture = ExtResource( 19 )
-
 [sub_resource type="ModelVisualEntry" id=6]
+mesh = ExtResource( 16 )
+texture = ExtResource( 12 )
+
+[sub_resource type="ModelVisualEntry" id=7]
 mesh = ExtResource( 5 )
 texture = ExtResource( 19 )
 
-[sub_resource type="ModelVisualEntry" id=7]
+[sub_resource type="ModelVisualEntry" id=8]
 mesh = ExtResource( 17 )
 texture = ExtResource( 15 )
-
-[sub_resource type="ModelVisualEntry" id=8]
-mesh = ExtResource( 3 )
-texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=9]
 mesh = ExtResource( 13 )
@@ -62,89 +62,65 @@ mesh = ExtResource( 13 )
 texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=11]
-mesh = ExtResource( 16 )
+mesh = ExtResource( 10 )
 texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=12]
-mesh = ExtResource( 1 )
-texture = ExtResource( 20 )
+mesh = ExtResource( 10 )
+texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=13]
-mesh = ExtResource( 4 )
-texture = ExtResource( 20 )
+mesh = ExtResource( 16 )
+texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=14]
-mesh = ExtResource( 2 )
-texture = ExtResource( 19 )
-
-[sub_resource type="ModelVisualEntry" id=15]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
-
-[sub_resource type="ModelVisualEntry" id=16]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
-
-[sub_resource type="ModelVisualEntry" id=17]
-mesh = ExtResource( 9 )
-texture = ExtResource( 19 )
-
-[sub_resource type="ModelVisualEntry" id=18]
 mesh = ExtResource( 5 )
 texture = ExtResource( 19 )
 
-[sub_resource type="ModelVisualEntry" id=19]
+[sub_resource type="ModelVisualEntry" id=15]
 mesh = ExtResource( 18 )
 texture = ExtResource( 20 )
+
+[sub_resource type="ModelVisualEntry" id=16]
+mesh = ExtResource( 13 )
+texture = ExtResource( 12 )
+
+[sub_resource type="ModelVisualEntry" id=17]
+mesh = ExtResource( 13 )
+texture = ExtResource( 12 )
+
+[sub_resource type="ModelVisualEntry" id=18]
+mesh = ExtResource( 10 )
+texture = ExtResource( 12 )
+
+[sub_resource type="ModelVisualEntry" id=19]
+mesh = ExtResource( 10 )
+texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=20]
 mesh = ExtResource( 3 )
 texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=21]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+mesh = ExtResource( 2 )
+texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=22]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+mesh = ExtResource( 9 )
+texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=23]
-mesh = ExtResource( 16 )
-texture = ExtResource( 12 )
+mesh = ExtResource( 3 )
+texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=24]
-mesh = ExtResource( 14 )
-texture = ExtResource( 6 )
+mesh = ExtResource( 2 )
+texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=25]
-mesh = ExtResource( 7 )
-texture = ExtResource( 6 )
+mesh = ExtResource( 9 )
+texture = ExtResource( 19 )
 
 [resource]
 layer = 1
-visual_pelvis = SubResource( 13 )
-visual_spine_1 = SubResource( 24 )
-visual_spine_2 = SubResource( 25 )
-visual_neck = SubResource( 12 )
-visual_head = SubResource( 1 )
-visual_left_upper_arm = SubResource( 11 )
-visual_left_forearm = SubResource( 6 )
-visual_left_hand = SubResource( 7 )
-visual_left_thumb_base = SubResource( 9 )
-visual_left_thumb_end = SubResource( 10 )
-visual_left_fingers_base = SubResource( 3 )
-visual_left_fingers_end = SubResource( 4 )
-visual_right_upper_arm = SubResource( 23 )
-visual_right_forearm = SubResource( 18 )
-visual_right_hand = SubResource( 19 )
-visual_right_thumb_base = SubResource( 21 )
-visual_right_thumb_end = SubResource( 22 )
-visual_right_fingers_base = SubResource( 15 )
-visual_right_fingers_end = SubResource( 16 )
-visual_left_thigh = SubResource( 8 )
-visual_left_calf = SubResource( 2 )
-visual_left_foot = SubResource( 5 )
-visual_right_thigh = SubResource( 20 )
-visual_right_calf = SubResource( 14 )
-visual_right_foot = SubResource( 17 )
+get_visual_entries = [ null, SubResource( 1 ), null, SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), null, SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), null, SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ) ]

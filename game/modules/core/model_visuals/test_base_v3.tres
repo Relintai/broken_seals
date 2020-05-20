@@ -1,152 +1,31 @@
-[gd_resource type="ModelVisual" load_steps=48 format=2]
+[gd_resource type="ModelVisual" load_steps=26 format=2]
 
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_pelvis.gltf" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf" type="MeshDataResource" id=2]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf_v3.png" type="Texture" id=3]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_left.gltf" type="MeshDataResource" id=4]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine2.gltf" type="MeshDataResource" id=5]
-[ext_resource path="res://modules/species/Human/Female/character_textures/head_v3.png" type="Texture" id=6]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_hand.gltf" type="MeshDataResource" id=7]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_right.gltf" type="MeshDataResource" id=8]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_left.gltf" type="MeshDataResource" id=9]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_right.gltf" type="MeshDataResource" id=10]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_right.gltf" type="MeshDataResource" id=11]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=13]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_neck.gltf" type="MeshDataResource" id=14]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf_v3.png" type="Texture" id=15]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_simple_v3.png" type="Texture" id=16]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_head.gltf" type="MeshDataResource" id=17]
-[ext_resource path="res://modules/species/Human/Female/character_textures/skin_v3.png" type="Texture" id=18]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.gltf" type="MeshDataResource" id=20]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_upperarm.gltf" type="MeshDataResource" id=21]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_forearm.gltf" type="MeshDataResource" id=22]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_finger.gltf" type="MeshDataResource" id=23]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_fingers.gltf" type="MeshDataResource" id=24]
-
-[sub_resource type="ModelVisualEntry" id=1]
-mesh = ExtResource( 17 )
-texture = ExtResource( 6 )
-
-[sub_resource type="ModelVisualEntry" id=2]
-mesh = ExtResource( 4 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=3]
-mesh = ExtResource( 24 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=4]
-mesh = ExtResource( 24 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=5]
-mesh = ExtResource( 9 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=6]
-mesh = ExtResource( 22 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=7]
-mesh = ExtResource( 13 )
-texture = ExtResource( 15 )
-
-[sub_resource type="ModelVisualEntry" id=8]
-mesh = ExtResource( 2 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=9]
-mesh = ExtResource( 23 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=10]
-mesh = ExtResource( 23 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=11]
-mesh = ExtResource( 21 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=12]
-mesh = ExtResource( 14 )
-texture = ExtResource( 15 )
-
-[sub_resource type="ModelVisualEntry" id=13]
-mesh = ExtResource( 1 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=14]
-mesh = ExtResource( 10 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=15]
-mesh = ExtResource( 24 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=16]
-mesh = ExtResource( 24 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=17]
-mesh = ExtResource( 11 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=18]
-mesh = ExtResource( 22 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=19]
-mesh = ExtResource( 7 )
-texture = ExtResource( 15 )
-
-[sub_resource type="ModelVisualEntry" id=20]
-mesh = ExtResource( 8 )
-texture = ExtResource( 16 )
-
-[sub_resource type="ModelVisualEntry" id=21]
-mesh = ExtResource( 23 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=22]
-mesh = ExtResource( 23 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=23]
-mesh = ExtResource( 21 )
-texture = ExtResource( 18 )
-
-[sub_resource type="ModelVisualEntry" id=24]
-mesh = ExtResource( 20 )
-texture = ExtResource( 3 )
-
-[sub_resource type="ModelVisualEntry" id=25]
-mesh = ExtResource( 5 )
-texture = ExtResource( 3 )
+[ext_resource path="res://modules/species/Human/Female/left_upper_arm.tres" type="ModelVisualEntry" id=1]
+[ext_resource path="res://modules/species/Human/Female/right_fingers_end.tres" type="ModelVisualEntry" id=2]
+[ext_resource path="res://modules/species/Human/Female/head.tres" type="ModelVisualEntry" id=3]
+[ext_resource path="res://modules/species/Human/Female/left_foot.tres" type="ModelVisualEntry" id=4]
+[ext_resource path="res://modules/species/Human/Female/neck.tres" type="ModelVisualEntry" id=5]
+[ext_resource path="res://modules/species/Human/Female/pelvis.tres" type="ModelVisualEntry" id=6]
+[ext_resource path="res://modules/species/Human/Female/right_forearm.tres" type="ModelVisualEntry" id=7]
+[ext_resource path="res://modules/species/Human/Female/right_thigh.tres" type="ModelVisualEntry" id=8]
+[ext_resource path="res://modules/species/Human/Female/left_calf.tres" type="ModelVisualEntry" id=9]
+[ext_resource path="res://modules/species/Human/Female/right_calf.tres" type="ModelVisualEntry" id=10]
+[ext_resource path="res://modules/species/Human/Female/right_foot.tres" type="ModelVisualEntry" id=11]
+[ext_resource path="res://modules/species/Human/Female/spine_2.tres" type="ModelVisualEntry" id=12]
+[ext_resource path="res://modules/species/Human/Female/left_thunm_base.tres" type="ModelVisualEntry" id=13]
+[ext_resource path="res://modules/species/Human/Female/spine_1.tres" type="ModelVisualEntry" id=14]
+[ext_resource path="res://modules/species/Human/Female/right_upper_arm.tres" type="ModelVisualEntry" id=15]
+[ext_resource path="res://modules/species/Human/Female/left_forearm.tres" type="ModelVisualEntry" id=17]
+[ext_resource path="res://modules/species/Human/Female/left_thigh.tres" type="ModelVisualEntry" id=18]
+[ext_resource path="res://modules/species/Human/Female/left_hand.tres" type="ModelVisualEntry" id=19]
+[ext_resource path="res://modules/species/Human/Female/left_thumb_end.tres" type="ModelVisualEntry" id=20]
+[ext_resource path="res://modules/species/Human/Female/right_hand.tres" type="ModelVisualEntry" id=21]
+[ext_resource path="res://modules/species/Human/Female/left_fingers_base.tres" type="ModelVisualEntry" id=22]
+[ext_resource path="res://modules/species/Human/Female/right_fingers_base.tres" type="ModelVisualEntry" id=23]
+[ext_resource path="res://modules/species/Human/Female/left_fingers_end.tres" type="ModelVisualEntry" id=25]
+[ext_resource path="res://modules/species/Human/Female/right_thumb_end.tres" type="ModelVisualEntry" id=26]
+[ext_resource path="res://modules/species/Human/Female/right_thumb_base.tres" type="ModelVisualEntry" id=27]
 
 [resource]
 layer = 1
-visual_pelvis = SubResource( 13 )
-visual_spine_1 = SubResource( 24 )
-visual_spine_2 = SubResource( 25 )
-visual_neck = SubResource( 12 )
-visual_head = SubResource( 1 )
-visual_left_upper_arm = SubResource( 11 )
-visual_left_forearm = SubResource( 6 )
-visual_left_hand = SubResource( 7 )
-visual_left_thumb_base = SubResource( 9 )
-visual_left_thumb_end = SubResource( 10 )
-visual_left_fingers_base = SubResource( 3 )
-visual_left_fingers_end = SubResource( 4 )
-visual_right_upper_arm = SubResource( 23 )
-visual_right_forearm = SubResource( 18 )
-visual_right_hand = SubResource( 19 )
-visual_right_thumb_base = SubResource( 21 )
-visual_right_thumb_end = SubResource( 22 )
-visual_right_fingers_base = SubResource( 15 )
-visual_right_fingers_end = SubResource( 16 )
-visual_left_thigh = SubResource( 8 )
-visual_left_calf = SubResource( 2 )
-visual_left_foot = SubResource( 5 )
-visual_right_thigh = SubResource( 20 )
-visual_right_calf = SubResource( 14 )
-visual_right_foot = SubResource( 17 )
+get_visual_entries = [ null, ExtResource( 6 ), null, ExtResource( 14 ), ExtResource( 12 ), ExtResource( 5 ), ExtResource( 3 ), null, ExtResource( 1 ), ExtResource( 17 ), ExtResource( 19 ), ExtResource( 13 ), ExtResource( 20 ), ExtResource( 22 ), ExtResource( 25 ), null, ExtResource( 15 ), ExtResource( 7 ), ExtResource( 21 ), ExtResource( 27 ), ExtResource( 26 ), ExtResource( 23 ), ExtResource( 2 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ]
