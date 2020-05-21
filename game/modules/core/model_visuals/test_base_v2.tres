@@ -22,104 +22,104 @@
 [ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarfv2.png" type="Texture" id=20]
 
 [sub_resource type="ModelVisualEntry" id=1]
-mesh = ExtResource( 4 )
-texture = ExtResource( 20 )
+entry_0/mesh = ExtResource( 4 )
+entry_0/texture = ExtResource( 20 )
 
 [sub_resource type="ModelVisualEntry" id=2]
-mesh = ExtResource( 14 )
-texture = ExtResource( 6 )
+entry_0/mesh = ExtResource( 14 )
+entry_0/texture = ExtResource( 6 )
 
 [sub_resource type="ModelVisualEntry" id=3]
-mesh = ExtResource( 7 )
-texture = ExtResource( 6 )
+entry_0/mesh = ExtResource( 7 )
+entry_0/texture = ExtResource( 6 )
 
 [sub_resource type="ModelVisualEntry" id=4]
-mesh = ExtResource( 1 )
-texture = ExtResource( 20 )
+entry_0/mesh = ExtResource( 1 )
+entry_0/texture = ExtResource( 20 )
 
 [sub_resource type="ModelVisualEntry" id=5]
-mesh = ExtResource( 11 )
-texture = ExtResource( 8 )
+entry_0/mesh = ExtResource( 11 )
+entry_0/texture = ExtResource( 8 )
 
 [sub_resource type="ModelVisualEntry" id=6]
-mesh = ExtResource( 16 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 16 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=7]
-mesh = ExtResource( 5 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 5 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=8]
-mesh = ExtResource( 17 )
-texture = ExtResource( 15 )
+entry_0/mesh = ExtResource( 17 )
+entry_0/texture = ExtResource( 15 )
 
 [sub_resource type="ModelVisualEntry" id=9]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 13 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=10]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 13 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=11]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 10 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=12]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 10 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=13]
-mesh = ExtResource( 16 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 16 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=14]
-mesh = ExtResource( 5 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 5 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=15]
-mesh = ExtResource( 18 )
-texture = ExtResource( 20 )
+entry_0/mesh = ExtResource( 18 )
+entry_0/texture = ExtResource( 20 )
 
 [sub_resource type="ModelVisualEntry" id=16]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 13 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=17]
-mesh = ExtResource( 13 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 13 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=18]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 10 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=19]
-mesh = ExtResource( 10 )
-texture = ExtResource( 12 )
+entry_0/mesh = ExtResource( 10 )
+entry_0/texture = ExtResource( 12 )
 
 [sub_resource type="ModelVisualEntry" id=20]
-mesh = ExtResource( 3 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 3 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=21]
-mesh = ExtResource( 2 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 2 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=22]
-mesh = ExtResource( 9 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 9 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=23]
-mesh = ExtResource( 3 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 3 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=24]
-mesh = ExtResource( 2 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 2 )
+entry_0/texture = ExtResource( 19 )
 
 [sub_resource type="ModelVisualEntry" id=25]
-mesh = ExtResource( 9 )
-texture = ExtResource( 19 )
+entry_0/mesh = ExtResource( 9 )
+entry_0/texture = ExtResource( 19 )
 
 [resource]
 layer = 1
