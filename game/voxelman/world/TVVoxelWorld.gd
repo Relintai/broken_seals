@@ -82,7 +82,7 @@ func _process(delta):
 			
 			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
 			
-			if l > chunk_spawn_range + 2:
+			if l > chunk_spawn_range + 3:
 #				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
 				remove_chunk_index(i)
 				i -= 1

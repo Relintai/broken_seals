@@ -16,77 +16,86 @@
 [ext_resource path="res://modules/species/Human/models/run-right-loop.tres" type="ProceduralAnimation" id=14]
 [ext_resource path="res://modules/species/Human/models/run-loop.tres" type="ProceduralAnimation" id=15]
 
-[sub_resource type="AnimationNodeAnimation" id=4]
+[sub_resource type="AnimationNodeAnimation" id=1]
 animation = "cast-end"
 
-[sub_resource type="AnimationNodeAnimation" id=5]
+[sub_resource type="AnimationNodeAnimation" id=2]
 animation = "cast-end"
 
-[sub_resource type="AnimationNodeAnimation" id=6]
+[sub_resource type="AnimationNodeAnimation" id=3]
 animation = "casting-loop"
 
-[sub_resource type="AnimationNodeAnimation" id=7]
+[sub_resource type="AnimationNodeAnimation" id=4]
 animation = "dead"
 
-[sub_resource type="AnimationNodeAnimation" id=8]
+[sub_resource type="AnimationNodeAnimation" id=5]
 animation = "idle-loop"
 
-[sub_resource type="AnimationNodeAnimation" id=9]
+[sub_resource type="AnimationNodeAnimation" id=6]
 animation = "run-left-loop"
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=7]
 animation = "run-loop"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=8]
 animation = "run-loop"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=9]
 animation = "run-right-loop"
 
-[sub_resource type="AnimationNodeBlendSpace2D" id=13]
-blend_point_0/node = SubResource( 9 )
+[sub_resource type="AnimationNodeBlendSpace2D" id=10]
+blend_point_0/node = SubResource( 6 )
 blend_point_0/pos = Vector2( -1, 0 )
-blend_point_1/node = SubResource( 10 )
+blend_point_1/node = SubResource( 7 )
 blend_point_1/pos = Vector2( 0, 1 )
-blend_point_2/node = SubResource( 11 )
+blend_point_2/node = SubResource( 8 )
 blend_point_2/pos = Vector2( 0, -1 )
-blend_point_3/node = SubResource( 12 )
+blend_point_3/node = SubResource( 9 )
 blend_point_3/pos = Vector2( 1, 0 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+[sub_resource type="AnimationNodeStateMachineTransition" id=11]
 xfade_time = 0.09
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
 xfade_time = 0.09
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
 xfade_time = 0.05
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
 auto_advance = true
 xfade_time = 0.15
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
 auto_advance = true
 xfade_time = 0.14
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+xfade_time = 0.09
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=19]
 xfade_time = 0.09
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=20]
-xfade_time = 0.1
+xfade_time = 0.09
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=21]
-xfade_time = 0.1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=22]
-xfade_time = 0.09
+xfade_time = 0.12
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=23]
-xfade_time = 0.09
+xfade_time = 0.12
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=24]
+xfade_time = 0.12
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=25]
 xfade_time = 0.12
@@ -94,33 +103,24 @@ xfade_time = 0.12
 [sub_resource type="AnimationNodeStateMachineTransition" id=26]
 xfade_time = 0.12
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
-xfade_time = 0.12
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=28]
-xfade_time = 0.12
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
-xfade_time = 0.12
-
-[sub_resource type="AnimationNodeStateMachine" id=30]
-states/cast-end/node = SubResource( 5 )
+[sub_resource type="AnimationNodeStateMachine" id=27]
+states/cast-end/node = SubResource( 2 )
 states/cast-end/position = Vector2( 117.871, -197.811 )
-"states/cast-end 2/node" = SubResource( 4 )
+"states/cast-end 2/node" = SubResource( 1 )
 "states/cast-end 2/position" = Vector2( 317.871, -197.811 )
-states/casting-loop/node = SubResource( 6 )
+states/casting-loop/node = SubResource( 3 )
 states/casting-loop/position = Vector2( -76.129, -197.811 )
-states/dead/node = SubResource( 7 )
+states/dead/node = SubResource( 4 )
 states/dead/position = Vector2( -129.129, 73.189 )
-states/idle-loop/node = SubResource( 8 )
+states/idle-loop/node = SubResource( 5 )
 states/idle-loop/position = Vector2( -255.566, -317.817 )
-states/run-loop/node = SubResource( 13 )
+states/run-loop/node = SubResource( 10 )
 states/run-loop/position = Vector2( 31.871, -340.817 )
-transitions = [ "idle-loop", "casting-loop", SubResource( 14 ), "casting-loop", "idle-loop", SubResource( 15 ), "casting-loop", "cast-end", SubResource( 16 ), "cast-end", "cast-end 2", SubResource( 17 ), "cast-end 2", "idle-loop", SubResource( 18 ), "idle-loop", "cast-end", SubResource( 19 ), "idle-loop", "run-loop", SubResource( 20 ), "run-loop", "idle-loop", SubResource( 21 ), "casting-loop", "run-loop", SubResource( 22 ), "run-loop", "casting-loop", SubResource( 23 ), "run-loop", "cast-end", SubResource( 24 ), "idle-loop", "dead", SubResource( 25 ), "casting-loop", "dead", SubResource( 26 ), "cast-end 2", "dead", SubResource( 27 ), "run-loop", "dead", SubResource( 28 ), "dead", "idle-loop", SubResource( 29 ) ]
+transitions = [ "idle-loop", "casting-loop", SubResource( 11 ), "casting-loop", "idle-loop", SubResource( 12 ), "casting-loop", "cast-end", SubResource( 13 ), "cast-end", "cast-end 2", SubResource( 14 ), "cast-end 2", "idle-loop", SubResource( 15 ), "idle-loop", "cast-end", SubResource( 16 ), "idle-loop", "run-loop", SubResource( 17 ), "run-loop", "idle-loop", SubResource( 18 ), "casting-loop", "run-loop", SubResource( 19 ), "run-loop", "casting-loop", SubResource( 20 ), "run-loop", "cast-end", SubResource( 21 ), "idle-loop", "dead", SubResource( 22 ), "casting-loop", "dead", SubResource( 23 ), "cast-end 2", "dead", SubResource( 24 ), "run-loop", "dead", SubResource( 25 ), "dead", "idle-loop", SubResource( 26 ) ]
 start_node = "idle-loop"
 graph_offset = Vector2( -567.129, -394.651 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=31]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=28]
 
 [node name="character" type="CharacterSkeleton3D"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00126277, 0, -0.000325084 )
@@ -142,7 +142,7 @@ viss = [ ExtResource( 1 ) ]
 [node name="armature" parent="." instance=ExtResource( 6 )]
 
 [node name="Skeleton" parent="armature/Armature" index="0"]
-transform = Transform( 1, -1.01578e-21, -4.39279e-26, 1.01578e-21, 1, 4.11982e-43, 4.39279e-26, -4.11982e-43, 1, 0, -1.1043e-15, 0 )
+transform = Transform( 1, -6.84064e-18, 1.54087e-25, 6.84064e-18, 1, 1.05378e-42, -1.54087e-25, 0, 1, 0, 0, 0 )
 bones/0/bound_children = [ NodePath("RootAttachment") ]
 bones/1/bound_children = [ NodePath("RightHipAttachment") ]
 bones/10/bound_children = [ NodePath("BoneAttachment") ]
@@ -153,7 +153,7 @@ bones/24/bound_children = [ NodePath("RightHandAttachment") ]
 [node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton" index="0"]
 
 [node name="LeftHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="1"]
-transform = Transform( 0.103218, 0.115983, -0.987848, 0.0567391, -0.992186, -0.110534, -0.993033, -0.0446434, -0.108996, 0.250148, 0.765296, -0.00952603 )
+transform = Transform( 0.102742, 0.121361, -0.987264, 0.0573268, -0.991557, -0.115914, -0.99305, -0.0446887, -0.108835, 0.228346, 0.771445, -0.0102045 )
 bone_name = "left_hand"
 
 [node name="LeftHandAP" type="Spatial" parent="armature/Armature/Skeleton/LeftHandAttachment"]
@@ -161,7 +161,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.09 )
 script = ExtResource( 2 )
 
 [node name="RightHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="2"]
-transform = Transform( -0.0412849, -0.0336484, -0.998552, -0.126625, -0.991117, 0.0386176, -0.991107, 0.128043, 0.0366705, -0.251425, 0.766814, -0.00718369 )
+transform = Transform( -0.0400955, -0.0242102, -0.998884, -0.127471, -0.991364, 0.0291306, -0.991041, 0.128501, 0.0366712, -0.226341, 0.768569, -0.00640216 )
 bone_name = "right_hand"
 
 [node name="RightHandAP" type="Spatial" parent="armature/Armature/Skeleton/RightHandAttachment"]
@@ -177,7 +177,7 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0
 script = ExtResource( 2 )
 
 [node name="NeckAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="4"]
-transform = Transform( 0.999958, -0.00909584, -0.00108191, 0.00914584, 0.997191, 0.0731033, 0.00041396, -0.0731162, 0.997323, 0.00114794, 1.31412, 8.89837e-05 )
+transform = Transform( 0.99998, -0.00629028, -0.000312272, 0.00629784, 0.997246, 0.0731527, -0.000148758, -0.0731576, 0.99732, 0.00103962, 1.31823, 5.39595e-05 )
 bone_name = "neck"
 
 [node name="TorsoAP" type="Spatial" parent="armature/Armature/Skeleton/NeckAttachment"]
@@ -185,7 +185,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.09 )
 script = ExtResource( 2 )
 
 [node name="RightHipAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="5"]
-transform = Transform( 0.999812, 0.0193847, 9.19462e-09, -0.0193847, 0.999812, 4.71765e-07, -4.78515e-11, -4.71855e-07, 1, 0.00479446, 0.772615, 0 )
+transform = Transform( 0.999504, 0.0314799, 1.49316e-08, -0.0314799, 0.999504, 4.7162e-07, -7.76685e-11, -4.71856e-07, 1, 0, 0.776724, 0 )
 bone_name = "pelvis"
 
 [node name="Spatial" type="Spatial" parent="armature/Armature/Skeleton/RightHipAttachment"]
@@ -198,7 +198,7 @@ material/0 = null
 material/1 = null
 
 [node name="BoneAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="6"]
-transform = Transform( 0.999955, -0.00942271, -0.00028621, 0.00941761, 0.999864, -0.00108487, 0.000296412, 0.00108284, 0.999999, 0.00291562, 1.12654, -0.000114145 )
+transform = Transform( 0.999978, -0.00656778, 0.000273144, 0.00656962, 0.999923, -0.00103998, -0.000266317, 0.00104151, 0.999999, 0.00227172, 1.13064, -0.000141409 )
 bone_name = "spine_2"
 
 [node name="Spatial" type="Spatial" parent="armature/Armature/Skeleton/BoneAttachment"]
@@ -220,10 +220,10 @@ anims/run-loop = ExtResource( 15 )
 anims/run-right-loop = ExtResource( 14 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 30 )
+tree_root = SubResource( 27 )
 anim_player = NodePath("../armature/AnimationPlayer")
 active = true
-parameters/playback = SubResource( 31 )
+parameters/playback = SubResource( 28 )
 parameters/run-loop/blend_position = Vector2( 0, -0.0172414 )
 
 [editable path="armature"]
