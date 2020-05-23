@@ -87,6 +87,8 @@ func _process(delta):
 				remove_chunk_index(i)
 				i -= 1
 				count -= 1
+			else:
+				update_lods()
 #			else:
 #				var dx : int = abs(ppx - c.position_x)
 #				var dy : int = abs(ppy - c.position_y)
@@ -132,7 +134,7 @@ func _process(delta):
 func _generation_finished():
 	if not Engine.editor_hint:
 		max_frame_chunk_build_steps = _max_frame_chunk_build_temp
-	
+
 	initial_generation = false
 	
 #	for i in range(get_chunk_count()):
