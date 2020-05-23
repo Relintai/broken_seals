@@ -78,6 +78,7 @@ var moving : bool = false
 var casting_anim : bool = false
 
 var sleep : bool = false
+var sleep_recheck_timer : float = 0
 var dead : bool = false
 var death_timer : float = 0
 
@@ -88,6 +89,8 @@ var world : VoxelWorld = null
 var entity : Entity
 var model_rotation_node : Spatial
 var character_skeleton : CharacterSkeleton3D 
+
+var visibility_update_timer : float = 0
 
 func _ready() -> void:
 	camera = get_node_or_null("CameraPivot/Camera") as Camera
@@ -125,6 +128,13 @@ func _enter_tree():
 func _process(delta : float) -> void:
 	if entity.ai_state == EntityEnums.AI_STATE_OFF:
 		return
+		
+	visibility_update_timer += delta
+	
+	if visibility_update_timer < 1:
+		return
+		
+	visibility_update_timer = 0
 	
 	var camera : Camera = get_tree().get_root().get_camera() as Camera
 	
@@ -167,10 +177,18 @@ func _physics_process(delta : float) -> void:
 	if dead:
 		return
 		
-	if entity.ai_state == EntityEnums.AI_STATE_OFF:
+	if entity.c_is_controlled:
 		process_input(delta)
 		process_movement_player(delta)
 	else:
+		if sleep:
+			sleep_recheck_timer += delta
+			
+			if sleep_recheck_timer < 0.5:
+				return
+				
+			sleep_recheck_timer = 0
+		
 		if world != null:
 			if not world.is_position_walkable(transform.origin):
 				return
@@ -319,7 +337,7 @@ func process_movement_mob(delta : float) -> void:
 		
 	if not moving and sleep:
 		return
-		
+
 	if moving and sleep:
 		sleep = false
 
