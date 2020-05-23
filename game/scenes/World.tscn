@@ -56,7 +56,7 @@ glow_hdr_luminance_cap = 1.0
 "save",
 ]]
 data_margin_end = 2
-max_concurrent_generations = 4
+max_concurrent_generations = 8
 max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
