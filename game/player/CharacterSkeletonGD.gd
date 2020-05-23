@@ -256,6 +256,7 @@ func build_mesh(data) -> void:
 
 					st.add_color(Color(0.7, 0.7, 0.7))
 					st.add_vertex(bt.xform(vertices[i]))
+#					st.add_vertex(vertices[i])
 	
 				for i in range(len(indices)):
 					st.add_index(vertex_count + indices[i])
