@@ -98,7 +98,6 @@ var _textures : Array
 var _texture : Texture
 
 #var mesh : ArrayMesh = null
-var st : SurfaceTool = null
 
 var _thread_done : bool = false
 var _thread : Thread = null
@@ -106,7 +105,6 @@ var _thread : Thread = null
 var _editor_built : bool = false
 
 func _enter_tree():
-	st = SurfaceTool.new()
 	_texture_packer = TexturePacker.new()
 	_texture_packer.texture_flags = 0
 #	_texture_packer.texture_flags = Texture.FLAG_FILTER
@@ -190,11 +188,14 @@ func build_mesh(data) -> void:
 
 	meshes.clear()
 
-	st.clear()
-	st.set_material(_materials[0])
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var vertex_count : int = 0
-	
+	var vertices : PoolVector3Array = PoolVector3Array()
+	var normals : PoolVector3Array = PoolVector3Array()
+	var uvs : PoolVector2Array = PoolVector2Array()
+	var colors : PoolColorArray = PoolColorArray()
+	var indices : PoolIntArray = PoolIntArray()
+	var bone_array : PoolIntArray = PoolIntArray()	
+	var weights_array : PoolRealArray = PoolRealArray()
+
 	for skele_point in range(EntityEnums.SKELETON_POINTS_MAX):
 		var bone_name : String = get_bone_name(skele_point)
 		
@@ -212,18 +213,11 @@ func build_mesh(data) -> void:
 				
 				var arrays : Array = entry.entry.get_mesh(model_index).array
 	
-				var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PoolVector3Array
-				var normals : PoolVector3Array = arrays[ArrayMesh.ARRAY_NORMAL] as PoolVector3Array
-				var uvs : PoolVector2Array = arrays[ArrayMesh.ARRAY_TEX_UV] as PoolVector2Array
-				
-				var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX] as PoolIntArray
-	
-				var bone_array : PoolIntArray = PoolIntArray()
-				bone_array.append(bone_idx)
-				
-				var weights_array : PoolRealArray = PoolRealArray()
-				weights_array.append(1.0)
-				
+				var cvertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PoolVector3Array
+				var cnormals : PoolVector3Array = arrays[ArrayMesh.ARRAY_NORMAL] as PoolVector3Array
+				var cuvs : PoolVector2Array = arrays[ArrayMesh.ARRAY_TEX_UV] as PoolVector2Array
+				var cindices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX] as PoolIntArray
+
 				var ta : AtlasTexture = _textures[skele_point]
 				
 				var tx : float = 0
@@ -240,38 +234,55 @@ func build_mesh(data) -> void:
 					tw = ta.region.size.x / otw
 					th = ta.region.size.y / oth
 					
-				
-				for i in range(len(vertices)):
-					st.add_normal(bt.basis.xform(normals[i]))
+				var orig_vert_size : int = vertices.size()
 					
-					var uv : Vector2 = uvs[i]
+				vertices.resize(orig_vert_size + cvertices.size())
+				normals.resize(orig_vert_size + cvertices.size())
+				uvs.resize(orig_vert_size + cvertices.size())
+				colors.resize(orig_vert_size+ cvertices.size())
+				bone_array.resize(bone_array.size() + cvertices.size() * 4)
+				weights_array.resize(weights_array.size() + cvertices.size() * 4)
+				
+				for i in range(len(cvertices)):
+					normals[orig_vert_size + i] = bt.basis.xform(normals[i])
+					
+					var uv : Vector2 = cuvs[i]
 					
 					uv.x = tw * uv.x + tx
 					uv.y = th * uv.y + ty
 					
-					st.add_uv(uv)
-						
-					st.add_bones(bone_array)
-					st.add_weights(weights_array)
+					uvs[orig_vert_size + i] = uv
+					
+					bone_array[(orig_vert_size + i) * 4] = bone_idx
+					weights_array[(orig_vert_size + i) * 4] = 1
+					for j in range(1, 4):
+						bone_array[(orig_vert_size + i) * 4 + j] = 0
+						weights_array[(orig_vert_size + i) * 4 + j] = 0
 
-					st.add_color(Color(0.7, 0.7, 0.7))
-					st.add_vertex(bt.xform(vertices[i]))
-#					st.add_vertex(vertices[i])
+					colors[orig_vert_size + i] = Color(0.7, 0.7, 0.7)
+					vertices[orig_vert_size + i] = bt.xform(cvertices[i])
+					
+				var orig_indices_count = indices.size()
+				indices.resize(indices.size() + cindices.size())
+				for i in range(len(cindices)):
+					indices[orig_indices_count + i] = orig_vert_size + cindices[i]
 	
-				for i in range(len(indices)):
-					st.add_index(vertex_count + indices[i])
-	
-				vertex_count += len(vertices)
-	
-	var arr : Array = st.commit_to_arrays()
-	
+	var arr : Array = Array()
+	arr.resize(Mesh.ARRAY_MAX)
+	arr[Mesh.ARRAY_VERTEX] = vertices
+	arr[Mesh.ARRAY_NORMAL] = normals
+	arr[Mesh.ARRAY_TEX_UV] = uvs
+	arr[Mesh.ARRAY_COLOR] = colors
+	arr[Mesh.ARRAY_INDEX] = indices
+	arr[Mesh.ARRAY_BONES] = bone_array
+	arr[Mesh.ARRAY_WEIGHTS] = weights_array
+
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	mesh.surface_set_material(0, _materials[0])
 	meshes.append(mesh)
 	
 	if use_lod:
-		
 		arr = merge_mesh_array(arr)
 		var meshl2 : ArrayMesh = ArrayMesh.new()
 		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
@@ -356,9 +367,6 @@ func editor_build(val : bool) -> void:
 	if not is_inside_tree():
 		return
 
-	if st == null:
-		st = SurfaceTool.new()
-		
 	skeleton = get_node(skeleton_path) as Skeleton
 	mesh_instance = get_node(mesh_instance_path) as MeshInstance
 	
