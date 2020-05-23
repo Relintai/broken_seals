@@ -325,6 +325,9 @@ func prepare_textures() -> void:
 
 
 func setup_build_mesh() -> void:
+	if mesh_instance != null:
+		mesh_instance.hide()
+	
 	if get_animation_tree() != null:
 		get_animation_tree().active = false
 	
@@ -337,6 +340,9 @@ func finish_build_mesh() -> void:
 		
 	if get_animation_tree() != null:
 		get_animation_tree().active = true
+		
+	if mesh_instance != null:
+		mesh_instance.show()
 	
 	_generating = false	
 
