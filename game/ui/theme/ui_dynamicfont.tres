@@ -2,7 +2,6 @@
 
 [ext_resource path="res://fonts/VT323-Regular.ttf" type="DynamicFontData" id=1]
 
-
 [resource]
 size = 14
 font_data = ExtResource( 1 )

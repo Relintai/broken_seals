@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://ui/theme/bag_icon.tres" type="Texture" id=24]
 [ext_resource path="res://ui/theme/locked_icon.tres" type="Texture" id=25]
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
+[ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=27]
 [ext_resource path="res://ui/player_ui/player_ui.gd" type="Script" id=28]
 
 [node name="GUILayer" type="CanvasLayer"]
@@ -54,8 +55,7 @@ custom_constants/margin_top = 481
 custom_constants/margin_left = 60
 custom_constants/margin_bottom = 41
 __meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
+"_edit_group_": true
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GUI/TouchTargetControls"]
@@ -98,7 +98,6 @@ mouse_filter = 2
 custom_constants/margin_top = 200
 __meta__ = {
 "_edit_group_": true,
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -405,6 +404,15 @@ visible = false
 
 [node name="Map" parent="GUI/Windows" instance=ExtResource( 6 )]
 visible = false
+
+[node name="TrainerWindow" parent="GUI/Windows" instance=ExtResource( 27 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 84.0
+margin_top = 59.0
+margin_right = 430.0
+margin_bottom = 504.0
 
 [node name="Unitframes" type="Control" parent="GUI"]
 anchor_right = 1.0
