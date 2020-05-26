@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
 [ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=27]
 [ext_resource path="res://ui/player_ui/player_ui.gd" type="Script" id=28]
+[ext_resource path="res://ui/windows/CharacterWindow.tscn" type="PackedScene" id=29]
 
 [node name="GUILayer" type="CanvasLayer"]
 script = ExtResource( 28 )
@@ -40,7 +41,6 @@ mouse_filter = 2
 theme = ExtResource( 10 )
 script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_lock_": true
 }
 child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow") ]
@@ -200,8 +200,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SpellBookButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
+[node name="CharacterButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
 margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 45, 45 )
+hint_tooltip = "Inventory"
+focus_mode = 0
+toggle_mode = true
+enabled_focus_mode = 0
+keep_pressed_outside = true
+text = "Char"
+
+[node name="SpellBookButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
+margin_left = 45.0
+margin_right = 90.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 hint_tooltip = "SpellBook"
@@ -227,8 +239,8 @@ __meta__ = {
 }
 
 [node name="BagButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 45.0
-margin_right = 90.0
+margin_left = 90.0
+margin_right = 135.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 hint_tooltip = "Inventory"
@@ -254,8 +266,8 @@ __meta__ = {
 }
 
 [node name="TalentButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 90.0
-margin_right = 135.0
+margin_left = 135.0
+margin_right = 181.626
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 hint_tooltip = "Inventory"
@@ -263,11 +275,11 @@ focus_mode = 0
 toggle_mode = true
 enabled_focus_mode = 0
 keep_pressed_outside = true
-text = "T"
+text = "Talent"
 
 [node name="CraftingButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 135.0
-margin_right = 180.0
+margin_left = 181.0
+margin_right = 226.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 hint_tooltip = "Inventory"
@@ -275,7 +287,19 @@ focus_mode = 0
 toggle_mode = true
 enabled_focus_mode = 0
 keep_pressed_outside = true
-text = "Cr"
+text = "Craft"
+
+[node name="Trainer" type="Button" parent="GUI/Buttons/HBoxContainer"]
+margin_left = 226.0
+margin_right = 271.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 45, 45 )
+hint_tooltip = "Inventory"
+focus_mode = 0
+toggle_mode = true
+enabled_focus_mode = 0
+keep_pressed_outside = true
+text = "Train"
 
 [node name="MapButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
 visible = false
@@ -291,8 +315,8 @@ keep_pressed_outside = true
 text = "Map"
 
 [node name="LockButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 180.0
-margin_right = 225.0
+margin_left = 271.0
+margin_right = 316.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -334,14 +358,14 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 225.0
-margin_right = 270.0
+margin_left = 316.0
+margin_right = 361.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
 enabled_focus_mode = 0
 keep_pressed_outside = true
-text = "M"
+text = "Menu"
 
 [node name="Actionbars" type="HBoxContainer" parent="GUI"]
 anchor_right = 1.0
@@ -360,6 +384,15 @@ actionbar_scene = ExtResource( 14 )
 [node name="Windows" type="CanvasLayer" parent="GUI"]
 layer = 2
 
+[node name="CharacterWindow" parent="GUI/Windows" instance=ExtResource( 29 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 66.0
+margin_top = 44.0
+margin_right = 681.0
+margin_bottom = 474.0
+
 [node name="SpellBookWindow" parent="GUI/Windows" instance=ExtResource( 17 )]
 visible = false
 margin_left = 60.0
@@ -370,10 +403,10 @@ margin_right = 561.0
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 61.685
-margin_top = 54.195
-margin_right = 430.685
-margin_bottom = 513.195
+margin_left = 62.0
+margin_top = 54.0
+margin_right = 656.0
+margin_bottom = 513.0
 
 [node name="CraftingWindow" parent="GUI/Windows" instance=ExtResource( 20 )]
 visible = false
@@ -458,8 +491,10 @@ mouse_filter = 2
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/CharacterButton" to="GUI/Windows/CharacterWindow" method="_on_CharacterButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/SpellBookButton" to="GUI/Windows/SpellBookWindow" method="_on_SpellBookButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/BagButton" to="GUI/Windows/Inventory" method="_on_BagButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/TalentButton" to="GUI/Windows/TalentWindow" method="_on_TalentButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/CraftingButton" to="GUI/Windows/CraftingWindow" method="_on_CraftingButton_toggled"]
+[connection signal="toggled" from="GUI/Buttons/HBoxContainer/Trainer" to="GUI/Windows/TrainerWindow" method="_on_Trainer_toggled"]
 [connection signal="pressed" from="GUI/Buttons/HBoxContainer/Menu" to="GUI/IngameMenu" method="show"]

@@ -16,8 +16,12 @@ func _ready():
 #	pass
 
 
-func _on_Trainer_toggled(button_pressed):
+func _on_CharacterButton_toggled(button_pressed):
 	if button_pressed:
 		show()
 	else:
 		hide()
+
+
+func _on_Button_pressed():
+	hide()
