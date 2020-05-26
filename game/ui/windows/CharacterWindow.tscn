@@ -48,19 +48,20 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
-margin_right = 506.0
+margin_right = 387.0
 margin_bottom = 554.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.62
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 502.0
+margin_right = 383.0
 margin_bottom = 550.0
 
 [node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 510.0
+margin_left = 391.0
 margin_right = 1016.0
 margin_bottom = 554.0
 size_flags_horizontal = 3
@@ -69,6 +70,6 @@ size_flags_vertical = 3
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2/PanelContainer2"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 502.0
+margin_right = 621.0
 margin_bottom = 550.0
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_Button_pressed"]
