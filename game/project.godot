@@ -371,7 +371,12 @@ enabled=PoolStringArray( "model_manager" )
 
 [ess]
 
-level/max_character_level=60
+spells/allow_class_spell_learning=true
+spells/allow_class_recipe_learning=true
+level/use_class_xp=true
+level/automatic_class_levelups=true
+level/use_global_class_level=true
+level/max_character_level=10
 level/max_class_level=60
 data/ess_resource_db_path="res://data/resource_db.tres"
 data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"
