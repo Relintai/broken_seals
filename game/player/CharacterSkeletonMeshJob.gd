@@ -89,7 +89,7 @@ func _execute():
 		mm.add_mesh_data_resource_bone(mesh, bones, bonew, transform, rect)
 	
 	var arr : Array = mm.build_mesh()
-
+	
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	mesh.surface_set_material(0, materials[0])
@@ -108,8 +108,10 @@ func _execute():
 		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 		meshl3.surface_set_material(0, materials[2])
 		meshes.append(meshl3)
-
+	
 	emit_signal("finished")
+#	call_deferred("emit_signal", "finished")
+	complete = true
 
 func prepare_textures() -> void:
 	_texture_packer.clear()

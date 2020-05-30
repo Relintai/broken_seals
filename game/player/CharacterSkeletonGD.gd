@@ -186,8 +186,7 @@ func build():
 	
 	_mesh_job.data = data
 	ThreadPool.add_job(_mesh_job)
-	
-#	build_mesh("")
+
 	finish_build_mesh()
 
 func setup_build_mesh() -> void:
