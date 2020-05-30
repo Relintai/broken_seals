@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/module_manager/previews/ControlPreview.gd" type="Script" id=1]
+
+
+[node name="ControlPreview" type="ViewportContainer"]
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+rect_pivot_offset = Vector2( -198.876, -96.6558 )
+stretch = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+container_path = NodePath("Viewport")
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 500, 500 )
+own_world = true
+handle_input_locally = false
+render_target_update_mode = 3

@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/module_manager/previews/SpatialPreview.gd" type="Script" id=1]
+
+
+[node name="SpatialPreview" type="ViewportContainer"]
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+rect_pivot_offset = Vector2( -198.876, -96.6558 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+container_path = NodePath("Viewport")
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 60, 60 )
+size_override_stretch = true
+own_world = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10.9828 )
+current = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Viewport"]
+transform = Transform( 0.276929, 0, -0.96089, 0, 1, 0, 0.96089, 0, 0.276929, -13.093, 0, 6.67786 )

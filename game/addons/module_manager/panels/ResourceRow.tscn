@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://addons/module_manager/previews/TexturePreview.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/module_manager/previews/ControlPreview.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/module_manager/previews/Node2DPreview.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/module_manager/previews/SpatialPreview.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/module_manager/panels/ResourceRowMainButton.gd" type="Script" id=5]
+[ext_resource path="res://addons/module_manager/panels/EntryButton.gd" type="Script" id=6]
+[ext_resource path="res://addons/module_manager/icons/icon_duplicate.png" type="Texture" id=7]
+[ext_resource path="res://addons/module_manager/icons/icon_remove.png" type="Texture" id=8]
+
+
+[node name="ResourceRow" type="HBoxContainer"]
+margin_right = 634.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+spatial_preview = ExtResource( 4 )
+node2d_preview = ExtResource( 3 )
+control_preview = ExtResource( 2 )
+texture_preview = ExtResource( 1 )
+main_button_path = NodePath("ResourceRowMainButton")
+
+[node name="ResourceRowMainButton" type="Button" parent="."]
+margin_right = 570.0
+margin_bottom = 37.0
+size_flags_horizontal = 3
+script = ExtResource( 5 )
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 574.0
+margin_right = 602.0
+margin_bottom = 37.0
+icon = ExtResource( 7 )
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 606.0
+margin_right = 634.0
+margin_bottom = 37.0
+icon = ExtResource( 8 )
+[connection signal="pressed" from="ResourceRowMainButton" to="." method="inspect"]
+[connection signal="pressed" from="Button2" to="." method="duplicate_data"]
+[connection signal="pressed" from="Button3" to="." method="delete"]

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/module_manager/previews/TexturePreview.gd" type="Script" id=1]
+
+
+[node name="TexturePreview" type="TextureRect"]
+margin_bottom = 37.0
+rect_min_size = Vector2( 50, 50 )
+expand = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

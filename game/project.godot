@@ -365,10 +365,6 @@ window/stretch/aspect="expand"
 mouse_cursor/sensitivity=0.9
 window/size/viewport_scale=100
 
-[editor_plugins]
-
-enabled=PoolStringArray( "model_manager" )
-
 [ess]
 
 spells/allow_class_spell_learning=true

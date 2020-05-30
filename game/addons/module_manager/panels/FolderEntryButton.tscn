@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/module_manager/panels/FolderEntryButton.gd" type="Script" id=1]
+
+
+[node name="FolderEntryButton" type="Button"]
+margin_right = 210.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
