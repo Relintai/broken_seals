@@ -187,14 +187,21 @@ func build_mesh(data) -> void:
 	prepare_textures()
 
 	meshes.clear()
-
-	var vertices : PoolVector3Array = PoolVector3Array()
-	var normals : PoolVector3Array = PoolVector3Array()
-	var uvs : PoolVector2Array = PoolVector2Array()
-	var colors : PoolColorArray = PoolColorArray()
-	var indices : PoolIntArray = PoolIntArray()
-	var bone_array : PoolIntArray = PoolIntArray()	
-	var weights_array : PoolRealArray = PoolRealArray()
+	
+	var mm : MeshMerger = MeshMerger.new()
+	mm.format = ArrayMesh.ARRAY_FORMAT_VERTEX | ArrayMesh.ARRAY_FORMAT_COLOR | ArrayMesh.ARRAY_FORMAT_BONES | ArrayMesh.ARRAY_FORMAT_INDEX | ArrayMesh.ARRAY_FORMAT_NORMAL | ArrayMesh.ARRAY_FORMAT_TEX_UV | ArrayMesh.ARRAY_FORMAT_WEIGHTS
+	var bones : PoolIntArray = PoolIntArray()
+	bones.resize(4)
+	bones[0] = 1
+	bones[1] = 0
+	bones[2] = 0
+	bones[3] = 0
+	var bonew : PoolRealArray = PoolRealArray()
+	bonew.resize(4)
+	bonew[0] = 1
+	bonew[1] = 0
+	bonew[2] = 0
+	bonew[3] = 0
 
 	for skele_point in range(EntityEnums.SKELETON_POINTS_MAX):
 		var bone_name : String = get_bone_name(skele_point)
@@ -211,71 +218,24 @@ func build_mesh(data) -> void:
 			if entry.entry.get_mesh(model_index) != null:
 				var bt : Transform = skeleton.get_bone_global_pose(bone_idx)
 				
-				var arrays : Array = entry.entry.get_mesh(model_index).array
+				var mdr : MeshDataResource = entry.entry.get_mesh(model_index)
 	
-				var cvertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX] as PoolVector3Array
-				var cnormals : PoolVector3Array = arrays[ArrayMesh.ARRAY_NORMAL] as PoolVector3Array
-				var cuvs : PoolVector2Array = arrays[ArrayMesh.ARRAY_TEX_UV] as PoolVector2Array
-				var cindices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX] as PoolIntArray
-
 				var ta : AtlasTexture = _textures[skele_point]
 				
-				var tx : float = 0
-				var ty : float = 0
-				var tw : float = 1
-				var th : float = 1
+				var rect : Rect2 = Rect2(0, 0, 1, 1)
 				
 				if ta != null and _texture != null:
 					var otw : float = _texture.get_width()
 					var oth : float = _texture.get_height()
 					
-					tx = ta.region.position.x / otw
-					ty = ta.region.position.y / oth
-					tw = ta.region.size.x / otw
-					th = ta.region.size.y / oth
-					
-				var orig_vert_size : int = vertices.size()
-					
-				vertices.resize(orig_vert_size + cvertices.size())
-				normals.resize(orig_vert_size + cvertices.size())
-				uvs.resize(orig_vert_size + cvertices.size())
-				colors.resize(orig_vert_size+ cvertices.size())
-				bone_array.resize(bone_array.size() + cvertices.size() * 4)
-				weights_array.resize(weights_array.size() + cvertices.size() * 4)
-				
-				for i in range(len(cvertices)):
-					normals[orig_vert_size + i] = bt.basis.xform(normals[i])
-					
-					var uv : Vector2 = cuvs[i]
-					
-					uv.x = tw * uv.x + tx
-					uv.y = th * uv.y + ty
-					
-					uvs[orig_vert_size + i] = uv
-					
-					bone_array[(orig_vert_size + i) * 4] = bone_idx
-					weights_array[(orig_vert_size + i) * 4] = 1
-					for j in range(1, 4):
-						bone_array[(orig_vert_size + i) * 4 + j] = 0
-						weights_array[(orig_vert_size + i) * 4 + j] = 0
-
-					colors[orig_vert_size + i] = Color(0.7, 0.7, 0.7)
-					vertices[orig_vert_size + i] = bt.xform(cvertices[i])
-					
-				var orig_indices_count = indices.size()
-				indices.resize(indices.size() + cindices.size())
-				for i in range(len(cindices)):
-					indices[orig_indices_count + i] = orig_vert_size + cindices[i]
+					rect.position.x = ta.region.position.x / otw
+					rect.position.y = ta.region.position.y / oth
+					rect.size.x = ta.region.size.x / otw
+					rect.size.y = ta.region.size.y / oth
+				bones[0] = bone_idx
+				mm.add_mesh_data_resource_bone(mdr, bones, bonew, bt, rect)
 	
-	var arr : Array = Array()
-	arr.resize(Mesh.ARRAY_MAX)
-	arr[Mesh.ARRAY_VERTEX] = vertices
-	arr[Mesh.ARRAY_NORMAL] = normals
-	arr[Mesh.ARRAY_TEX_UV] = uvs
-	arr[Mesh.ARRAY_COLOR] = colors
-	arr[Mesh.ARRAY_INDEX] = indices
-	arr[Mesh.ARRAY_BONES] = bone_array
-	arr[Mesh.ARRAY_WEIGHTS] = weights_array
+	var arr : Array = mm.build_mesh()
 
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
