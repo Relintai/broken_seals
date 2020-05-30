@@ -24,10 +24,10 @@ extends CharacterSkeleton3D
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+var job_script = preload("res://player/CharacterSkeletonMeshJob.gd")
+
 export(bool) var refresh_in_editor : bool = false setget editor_build
 export(bool) var automatic_build : bool = false
-export(bool) var use_threads : bool = false
-
 export(bool) var use_lod : bool = true
 
 export(NodePath) var mesh_instance_path : NodePath
@@ -55,6 +55,8 @@ var meshes : Array
 var _current_lod_level : int = 0
 
 var _generating : bool = false
+
+var _mesh_job : ThreadPoolJob = null
 
 var bone_names = {
 	0: "root",
@@ -93,22 +95,17 @@ var bone_names = {
 }
 
 
-var _texture_packer : TexturePacker
 var _textures : Array
 var _texture : Texture
-
-#var mesh : ArrayMesh = null
-
-var _thread_done : bool = false
-var _thread : Thread = null
 
 var _editor_built : bool = false
 
 func _enter_tree():
-	_texture_packer = TexturePacker.new()
-	_texture_packer.texture_flags = 0
-#	_texture_packer.texture_flags = Texture.FLAG_FILTER
-	_texture_packer.max_atlas_size = 512
+	_mesh_job = job_script.new()
+	_mesh_job.use_lod = use_lod
+	_mesh_job.connect("finished", self, "job_finished")
+	
+	meshes.resize(3)
 	
 	skeleton = get_node(skeleton_path) as Skeleton
 	mesh_instance = get_node(mesh_instance_path) as MeshInstance
@@ -121,9 +118,8 @@ func _enter_tree():
 	if _materials.size() != materials.size():
 		for m in materials:
 			_materials.append(m.duplicate())
-	
-	if not OS.can_use_threads():
-		use_threads = false
+			
+		_mesh_job.materials = _materials
 
 	set_process(false)
 			
@@ -131,19 +127,11 @@ func _enter_tree():
 	for iv in viss:
 		add_model_visual(iv as ModelVisual)
 			
-func _exit_tree():
-	if _thread != null:
-		_thread.wait_to_finish()
-		_thread = null
-		
-func _process(delta):
-	if use_threads and _thread_done:
-		_thread.wait_to_finish()
-		_thread = null
-		finish_build_mesh()
-		set_process(false)
-		_thread_done = false
-		_generating = false
+#func _exit_tree():
+#	_mesh_job.
+	
+	if automatic_build:
+		build_model()
 		
 
 func _build_model():
@@ -160,48 +148,15 @@ func _build_model():
 		set_process(false)
 		return
 	
-	if use_threads:
-		build_threaded()
-	else:
-		build()
-		set_process(false)
+	build()
+	set_process(false)
 		
 	model_dirty = false
 	
 func build():
 	setup_build_mesh()
-	build_mesh("")
-	finish_build_mesh()
 	
-func build_threaded():
-	if _thread == null:
-		_thread = Thread.new()
-	
-	setup_build_mesh()
-	_thread.start(self, "build_mesh")
-	set_process(true)
-	
-func build_mesh(data) -> void:
-	sort_layers()
-
-	prepare_textures()
-
-	meshes.clear()
-	
-	var mm : MeshMerger = MeshMerger.new()
-	mm.format = ArrayMesh.ARRAY_FORMAT_VERTEX | ArrayMesh.ARRAY_FORMAT_COLOR | ArrayMesh.ARRAY_FORMAT_BONES | ArrayMesh.ARRAY_FORMAT_INDEX | ArrayMesh.ARRAY_FORMAT_NORMAL | ArrayMesh.ARRAY_FORMAT_TEX_UV | ArrayMesh.ARRAY_FORMAT_WEIGHTS
-	var bones : PoolIntArray = PoolIntArray()
-	bones.resize(4)
-	bones[0] = 1
-	bones[1] = 0
-	bones[2] = 0
-	bones[3] = 0
-	var bonew : PoolRealArray = PoolRealArray()
-	bonew.resize(4)
-	bonew[0] = 1
-	bonew[1] = 0
-	bonew[2] = 0
-	bonew[3] = 0
+	var data : Array = Array()
 
 	for skele_point in range(EntityEnums.SKELETON_POINTS_MAX):
 		var bone_name : String = get_bone_name(skele_point)
@@ -214,86 +169,26 @@ func build_mesh(data) -> void:
 
 		for j in range(get_model_entry_count(skele_point)):
 			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
-
+			
 			if entry.entry.get_mesh(model_index) != null:
-				var bt : Transform = skeleton.get_bone_global_pose(bone_idx)
+				var ddict : Dictionary = Dictionary()
 				
-				var mdr : MeshDataResource = entry.entry.get_mesh(model_index)
-	
-				var ta : AtlasTexture = _textures[skele_point]
+				ddict["bone_name"] = bone_name
+				ddict["bone_idx"] = bone_idx
 				
-				var rect : Rect2 = Rect2(0, 0, 1, 1)
-				
-				if ta != null and _texture != null:
-					var otw : float = _texture.get_width()
-					var oth : float = _texture.get_height()
-					
-					rect.position.x = ta.region.position.x / otw
-					rect.position.y = ta.region.position.y / oth
-					rect.size.x = ta.region.size.x / otw
-					rect.size.y = ta.region.size.y / oth
-				bones[0] = bone_idx
-				mm.add_mesh_data_resource_bone(mdr, bones, bonew, bt, rect)
-	
-	var arr : Array = mm.build_mesh()
-
-	var mesh : ArrayMesh = ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-	mesh.surface_set_material(0, _materials[0])
-	meshes.append(mesh)
-	
-	if use_lod:
-		arr = merge_mesh_array(arr)
-		var meshl2 : ArrayMesh = ArrayMesh.new()
-		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-		meshl2.surface_set_material(0, _materials[1])
-		meshes.append(meshl2)
-
-		arr = bake_mesh_array_uv(arr, _texture)
-		arr[VisualServer.ARRAY_TEX_UV] = null
-		var meshl3 : ArrayMesh = ArrayMesh.new()
-		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-		meshl3.surface_set_material(0, _materials[2])
-		meshes.append(meshl3)
-
-#	finish_build_mesh()
-	_thread_done = true
-
-func prepare_textures() -> void:
-	_texture_packer.clear()
-	
-	_textures.clear()
-	_textures.resize(EntityEnums.SKELETON_POINTS_MAX)
-	
-	for bone_idx in range(EntityEnums.SKELETON_POINTS_MAX):
-		var texture : Texture
-		
-		for j in range(get_model_entry_count(bone_idx)):
-			var entry : SkeletonModelEntry = get_model_entry(bone_idx, j)
+				if entry.entry.get_texture(model_index) != null:
+					ddict["texture"] = entry.entry.get_texture(model_index)
 			
-			if entry.entry.get_texture(model_index) != null:
-				texture = _texture_packer.add_texture(entry.entry.get_texture(model_index))
-#				print(texture)
-				break
-			
-		_textures[bone_idx] = texture
-		
-	_texture_packer.merge()
-
-	var tex : Texture = _texture_packer.get_generated_texture(0)
+				ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
+				ddict["mesh"] = entry.entry.get_mesh(model_index)
+				
+				data.append(ddict)
 	
-#	var mat : SpatialMaterial = _material as SpatialMaterial
-#	mat.albedo_texture = tex
-	var mat : ShaderMaterial = _materials[0] as ShaderMaterial
-	mat.set_shader_param("texture_albedo", tex)
+	_mesh_job.data = data
+	ThreadPool.add_job(_mesh_job)
 	
-	if use_lod:
-		var mat2 : ShaderMaterial = _materials[1] as ShaderMaterial
-		mat2.set_shader_param("texture_albedo", tex)
-	
-#	mat.albedo_texture = tex
-	_texture = tex
-
+#	build_mesh("")
+	finish_build_mesh()
 
 func setup_build_mesh() -> void:
 	if mesh_instance != null:
@@ -316,9 +211,15 @@ func finish_build_mesh() -> void:
 		mesh_instance.show()
 	
 	_generating = false	
+	
+func job_finished():
+	meshes = _mesh_job.meshes
+	_texture = _mesh_job._texture
+	mesh_instance.mesh = meshes[_current_lod_level]
 
 func clear_mesh() -> void:
 	meshes.clear()
+	meshes.resize(3)
 	
 	if mesh_instance != null:
 		mesh_instance.mesh = null
