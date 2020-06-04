@@ -1,11 +1,10 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Unitframes.gd" type="Script" id=3]
 [ext_resource path="res://ui/errorframe/ErrorFrame.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/auraframe/AuraFrame.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ui/map/Map.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/touch_pad/TurnPanel.gd" type="Script" id=7]
 [ext_resource path="res://ui/actionbars/Actionbars.gd" type="Script" id=8]
 [ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=9]
@@ -21,12 +20,10 @@
 [ext_resource path="res://ui/loot_window/LootWindow.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/windows/CraftingWindow.tscn" type="PackedScene" id=20]
 [ext_resource path="res://ui/unitframes/UnitframeBase.tscn" type="PackedScene" id=21]
-[ext_resource path="res://ui/starmap/StarMap.tscn" type="PackedScene" id=22]
 [ext_resource path="res://ui/theme/spellbook_icon.tres" type="Texture" id=23]
 [ext_resource path="res://ui/theme/bag_icon.tres" type="Texture" id=24]
 [ext_resource path="res://ui/theme/locked_icon.tres" type="Texture" id=25]
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
-[ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=27]
 [ext_resource path="res://ui/player_ui/player_ui.gd" type="Script" id=28]
 [ext_resource path="res://ui/windows/CharacterWindow.tscn" type="PackedScene" id=29]
 
@@ -278,6 +275,7 @@ keep_pressed_outside = true
 text = "Talent"
 
 [node name="CraftingButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
+visible = false
 margin_left = 181.0
 margin_right = 226.0
 margin_bottom = 45.0
@@ -289,34 +287,9 @@ enabled_focus_mode = 0
 keep_pressed_outside = true
 text = "Craft"
 
-[node name="Trainer" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 226.0
-margin_right = 271.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 45, 45 )
-hint_tooltip = "Inventory"
-focus_mode = 0
-toggle_mode = true
-enabled_focus_mode = 0
-keep_pressed_outside = true
-text = "Train"
-
-[node name="MapButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-visible = false
-margin_left = 180.0
-margin_right = 225.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 45, 45 )
-hint_tooltip = "Inventory"
-focus_mode = 0
-toggle_mode = true
-enabled_focus_mode = 0
-keep_pressed_outside = true
-text = "Map"
-
 [node name="LockButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 271.0
-margin_right = 316.0
+margin_left = 181.0
+margin_right = 226.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -358,8 +331,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 316.0
-margin_right = 361.0
+margin_left = 226.0
+margin_right = 271.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -432,21 +405,6 @@ margin_top = 85.0
 margin_right = 242.0
 margin_bottom = 315.0
 
-[node name="StarMap" parent="GUI/Windows" instance=ExtResource( 22 )]
-visible = false
-
-[node name="Map" parent="GUI/Windows" instance=ExtResource( 6 )]
-visible = false
-
-[node name="TrainerWindow" parent="GUI/Windows" instance=ExtResource( 27 )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 84.0
-margin_top = 59.0
-margin_right = 430.0
-margin_bottom = 504.0
-
 [node name="Unitframes" type="Control" parent="GUI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -496,5 +454,4 @@ visible = false
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/BagButton" to="GUI/Windows/Inventory" method="_on_BagButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/TalentButton" to="GUI/Windows/TalentWindow" method="_on_TalentButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/HBoxContainer/CraftingButton" to="GUI/Windows/CraftingWindow" method="_on_CraftingButton_toggled"]
-[connection signal="toggled" from="GUI/Buttons/HBoxContainer/Trainer" to="GUI/Windows/TrainerWindow" method="_on_Trainer_toggled"]
 [connection signal="pressed" from="GUI/Buttons/HBoxContainer/Menu" to="GUI/IngameMenu" method="show"]
