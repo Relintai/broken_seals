@@ -37,10 +37,10 @@ func _ready():
 
 func c_on_damage_taken(entity, dpd):
 	print("c " + str(dpd.damage))
-#	print("ch " + str(get_health().ccurrent) + "/" + str(get_health().cmax))
+#	print("ch " + str(heal_getth().ccurrent) + "/" + str(heal_getth().cmax))
 	pass
 
 func s_on_damage_taken(entity, dpd):
 	print("s " + str(dpd.damage))
-	#print("ch " + str(get_health().scurrent) + "/" + str(get_health().smax))
+	#print("ch " + str(heal_getth().scurrent) + "/" + str(heal_getth().smax))
 	pass

@@ -65,16 +65,16 @@ func refresh() -> void:
 	for ch in _entry_container.get_children():
 		ch.queue_free()
 	
-	var d : Directory = Directory.new()
+	var dir : Directory = Directory.new()
 	
-	if d.open(_folder) == OK:
-		d.list_dir_begin()
+	if dir.open(_folder) == OK:
+		dir.list_dir_begin()
 		var data_array : Array = Array()
 		
-		var file_name = d.get_next()
+		var file_name = dir.get_next()
 		
 		while (file_name != ""):
-			if not d.current_is_dir():
+			if not dir.current_is_dir():
 				
 				if ResourceLoader.exists(_folder + file_name, _resource_type):
 					
@@ -95,7 +95,7 @@ func refresh() -> void:
 						ftext = ftext.to_lower()
 						
 						if ftext.find(_filter_term) == -1:
-							file_name = d.get_next()
+							file_name = dir.get_next()
 							continue
 							
 					var id : int = 0
@@ -108,7 +108,7 @@ func refresh() -> void:
 						"resource": res
 					})
 				
-			file_name = d.get_next()
+			file_name = dir.get_next()
 			
 		data_array.sort_custom(self, "sort_entries")
 		
