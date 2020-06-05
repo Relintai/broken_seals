@@ -1,11 +1,9 @@
-[gd_resource type="EntityClassData" load_steps=29 format=2]
+[gd_resource type="EntityClassData" load_steps=25 format=2]
 
 [ext_resource path="res://modules/entity_classes/naturalist/spells/16_close_wounds_rank_1.tres" type="Spell" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/19_uproot_rank_1.tres" type="Spell" id=2]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/11_aspect_of_wasps_rank_1.tres" type="Spell" id=3]
-[ext_resource path="res://modules/entity_classes/naturalist/auras/15_close_wounds_rank_1.tres" type="Aura" id=4]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/13_aspect_of_bees_rank_1.tres" type="Spell" id=5]
-[ext_resource path="res://modules/entity_classes/naturalist/auras/13_aspect_of_bees_rank_1.tres" type="Aura" id=6]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/10_aspect_of_scorpions_rank_1.tres" type="Spell" id=7]
 [ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResourceData" id=8]
 [ext_resource path="res://scripts/ai/EntityAIGD.gd" type="Script" id=9]
@@ -28,22 +26,15 @@
 [sub_resource type="EntityAI" id=1]
 script = ExtResource( 9 )
 
-[sub_resource type="TalentRowData" id=2]
-Talent_0_0 = ExtResource( 6 )
-
-[sub_resource type="TalentRowData" id=3]
-Talent_2_0 = ExtResource( 4 )
-
-[sub_resource type="CharacterSpec" id=4]
+[sub_resource type="CharacterSpec" id=2]
 id = 1
-talent_rows = [ SubResource( 2 ), SubResource( 3 ) ]
 
 [resource]
 resource_name = "Naturalist"
 id = 1
 text_name = "Naturalist"
 entity_resources = [ ExtResource( 8 ) ]
-specs = [ SubResource( 4 ) ]
+specs = [ SubResource( 2 ) ]
 spells = [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 5 ), ExtResource( 12 ), ExtResource( 23 ), ExtResource( 1 ), ExtResource( 10 ), ExtResource( 24 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 11 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 21 ), ExtResource( 14 ) ]
 start_spells = [ ExtResource( 7 ), ExtResource( 21 ), ExtResource( 14 ) ]
 ais = [ SubResource( 1 ) ]

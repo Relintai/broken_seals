@@ -73,17 +73,15 @@ func set_player(player : Entity, spec : CharacterSpec, spec_index : int, row : i
 
 		
 func refresh() -> void:
-	var tr : TalentRowData = _spec.get_talent_row(_row)
-	
-	if tr.get_talent(culomn, 0) == null:
+	if _spec.get_talent(_row, culomn, 0) == null:
 		_main_container.hide()
 		return
 	
 	var rank_count : int = 0
 	var known_rank_count : int = 0
 	
-	for i in range(TalentRowData.MAX_TALENTS_PER_ENTRY):
-		var a : Aura = tr.get_talent(culomn, i)
+	for i in range(_spec.get_num_ranks(_row, culomn)):
+		var a : Aura = _spec.get_talent(_row, culomn, i)
 		
 		if a == null:
 			break
@@ -102,7 +100,7 @@ func refresh() -> void:
 	
 		_upgrade_button.show()
 	
-	var aura : Aura = tr.get_talent(culomn, ridx)
+	var aura : Aura = _spec.get_talent(_row, culomn, ridx)
 		
 	_aura_name_label.text = aura.text_name
 	_aura_description_label.text = aura.text_description

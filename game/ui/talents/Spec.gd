@@ -43,7 +43,7 @@ func set_spec(player : Entity, spec : CharacterSpec, spec_index: int) -> void:
 	if _player == null or _spec == null:
 		return
 	
-	for i in range(spec.get_num_talent_rows()):
+	for i in range(spec.num_rows):
 		var r : Node = talent_row_scene.instance()
 		_container.add_child(r)
 		r.owner = self

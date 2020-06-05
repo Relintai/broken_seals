@@ -129,7 +129,7 @@ func _notification_scharacter_level_up(value: int) -> void:
 	refresh_spells(value)
 		
 func refresh_spells(value: int):
-	if gets_free_spell_points() == 0 and gets_free_talent_points() == 0:
+	if gets_free_spell_points() == 0 and gets_free_class_talent_points() == 0:
 		return
 	
 	var ecd : EntityClassData = sentity_data.entity_class_data
