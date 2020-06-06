@@ -58,9 +58,8 @@ func _sapply(info : AuraApplyInfo) -> void:
 		
 		setup_aura_data(ad, info);
 
-		for i in range(get_aura_stat_attribute_count()):
-			var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
-			info.target.stat_mod(id, stat_attribute.base_mod, stat_attribute.bonus_mod, stat_attribute.percent_mod)
+		for i in range(stat_attribute_get_count()):
+			info.target.stat_mod(id, stat_attribute_get_base_mod(i), stat_attribute_get_bonus_mod(i), stat_attribute_get_percent_mod(i))
 
 		if states_add != 0:
 			for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
@@ -76,10 +75,9 @@ func _sapply(info : AuraApplyInfo) -> void:
 		
 	
 func _sdeapply(data : AuraData) -> void:
-	for i in range(get_aura_stat_attribute_count()):
-		var stat_attribute : AuraStatAttribute = get_aura_stat_attribute(i)
-		data.owner.stat_mod(id, -stat_attribute.base_mod, -stat_attribute.bonus_mod, -stat_attribute.percent_mod)
-		
+	for i in range(stat_attribute_get_count()):
+		data.owner.stat_mod(id, stat_attribute_get_base_mod(i), stat_attribute_get_bonus_mod(i), stat_attribute_get_percent_mod(i))
+
 	if states_add != 0:
 		for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
 			var t : int = 1 << i
