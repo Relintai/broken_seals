@@ -47,7 +47,7 @@ module_repositories = [
     [ ['https://github.com/Relintai/props.git', 'git@github.com:Relintai/props.git'], 'props', '' ],
     [ ['https://github.com/Relintai/mesh_utils.git', 'git@github.com:Relintai/mesh_utils.git'], 'mesh_utils', '' ],
     [ ['https://github.com/Relintai/broken_seals_module.git', 'git@github.com:Relintai/broken_seals_module.git'], 'broken_seals_module', '' ],
-    [ ['git@github.com:Relintai/thread_pool.git', 'https://github.com/Relintai/thread_pool.git'], 'thread_pool', '' ],
+    [ ['https://github.com/Relintai/thread_pool.git', 'git@github.com:Relintai/thread_pool.git'], 'thread_pool', '' ],
 ]
 
 addon_repositories = [
