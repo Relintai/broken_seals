@@ -359,7 +359,8 @@ if len(sys.argv) > 1:
         exit()
     elif arg[0] == 'p':
         if arg == 'p':
-            print("Applies a patch. Append c for the compilation database patch. For example: pc")
+            #print("Applies a patch. Append c for the compilation database patch. For example: pc")
+            print("Applies a patch. No Patches right now.")
             exit()
 
         cwd = os.getcwd()
@@ -373,8 +374,8 @@ if len(sys.argv) > 1:
 
         #apply the patch to just the working directory, without creating a commit
 
-        if 'c' in arg:
-            subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
+        #if 'c' in arg:
+        #    subprocess.call('git apply --index ../patches/compilation_db.patch', shell=True)
 
         #unstage all files
         subprocess.call('git reset', shell=True)
