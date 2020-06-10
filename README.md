@@ -101,7 +101,7 @@ Mac OSX: Not yet finished, use `build_osx.sh`
 
 #### Target abbreviations
 
-By default ther system builds in release_debug.
+By default the system builds in release_debug.
 
 Append `d` for debug, or `r` for release.
 
@@ -133,11 +133,11 @@ Example:
 
 build editor linux shared (Entity Spell System) with 4 threads
 
-Note: to easily run the editor while it's build like this, you can use the `editor.sh` or `editor.bat` in the root of the project.
+Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in the root of the project.
 
 #### Scons cache, and sdk locations
 
-Unfortunately the sdk locations and the scons cache location is hardcoded atm, as I kind of forgot about it. This will be fixed very soon.
+Unfortunately the sdk locations and the scons cache location is hardcoded at the moment, as I kind of forgot about it. This will be fixed very soon.
 
 In the meantime you can always just go into the engine directory,
 
