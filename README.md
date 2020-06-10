@@ -92,11 +92,11 @@ This will be the `release_debug` windows export template.
 
 #### Platform abbreviations
 
-`l`: linux
-`w`: windows
-`a`: android
-`j`: Javascript
-`i`: iphone (Not yet finished, use `build_ios.sh`, and `build_ios_release.sh`)
+`l`: linux \
+`w`: windows \
+`a`: android \
+`j`: Javascript \
+`i`: iphone (Not yet finished, use `build_ios.sh`, and `build_ios_release.sh`) \
 Mac OSX: Not yet finished, use `build_osx.sh`
 
 #### Target abbreviations
