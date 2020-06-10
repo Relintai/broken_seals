@@ -285,8 +285,6 @@ if len(sys.argv) > 1:
             target += 'bin/libworld_generator.x11.opt.tools.64.so'
         elif 'P' in arg:
             target += 'bin/libprocedural_animations.x11.opt.tools.64.so'
-        elif 'M' in arg:
-            target += 'bin/libfqms.x11.opt.tools.64.so'
 
         print('Running command: ' + build_string)
 
