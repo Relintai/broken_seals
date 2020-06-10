@@ -167,7 +167,7 @@ def copytree(src, dst):
             if os.path.isdir(dp):
                 shutil.rmtree(dp, onerror=onerror)
 
-                shutil.copytree(sp, dp)
+            shutil.copytree(sp, dp)
         else:
             if not os.path.isdir(dst):
                 os.makedirs(dst)
