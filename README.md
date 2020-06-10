@@ -6,7 +6,7 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
-### In order to open the game project in Godot, you need a custom built Godot editor! [See](#editing-the-game)
+### In order to open the game project in Godot, you need a custom built Godot editor! [See here.](#editing-the-game)
 
 Screenshot:
 
@@ -17,7 +17,7 @@ Screenshot:
 In order for you to open the game in the editor you will need a custom built version, with a few engine modules built in, 
 and unfortunately for now, you will need to build it yourself. (Binary releases will be available eventually!)
 
-But don't worry, Godot is surpisingly easy and hassle free to compile! [See](#compiling)
+But don't worry, Godot is surpisingly easy and hassle free to compile! [See here.](#compiling)
 
 After you have the engine with the required modules, you can go ahead, and just open the project inside the `game` folder.
 
