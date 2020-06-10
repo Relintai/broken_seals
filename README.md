@@ -121,10 +121,10 @@ append `s` to the build string.
 
 Optionally you can also make the build system only build a target module, by appending one of these:
 
-`E`: Entity Spell System
-`T`: Texture Packer
-`V`: Voxelman
-`W`: World Generator
+`E`: Entity Spell System \
+`T`: Texture Packer \
+`V`: Voxelman \
+`W`: World Generator \
 `P`: Procedural Animations
 
 Example:
