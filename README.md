@@ -1,10 +1,8 @@
 # Broken Seals
 
-### In order to open the game project in Godot, you need  [See Here](#editing-the-game)
+### In order to open the game project in Godot, you need a custom build Godot editor! [See](#editing-the-game)
 
-Binary releases will be available eventually.
-
-Keep in mind, that most of the work went into the engine modules so far, and the style itself.
+![Broken Seals as of 2020.01.10.](pictures/screen.jpg)
 
 A 3D third person RPG. With both multiplayer, and singleplayer capabilities.
 
@@ -12,50 +10,21 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, without sacrificing from the gameplay. From the testing I've done this is not even an issue.
 
-This game (with the engine modules) was ported from unity, because it kind of hit the limits of that engine. (Not rendering-wise)
-
-* Basically imagine having about 20 assembly definitions, a main assembly definition, which are just a bunch of interfaces, and everything 
-* dependency-injecting itself into it, and still having a 30-ish second compile time, while constantly running into unfixable bugs, and 
-* having to work around "simple" problems, like implementing a networking solution on top of LLAPI. Alone.
-
-And the reason for me to tell you is:
-
--Implementing spells did not get too much priority in this version, meaning like half of them doesn't work at all.
--In the other version I tried to have bindings for controllers, so that they can use lots of spells, it works, and it's not bad at all, but it's not yet implemented into this one. (It was pretty much implemented as bindable control keys)
--Sounds were not implemented at all yet.
--With the graphics I only worked to get the style itself right.
-
-Except for these features however, this version is way more advanced, than the unity one! c++, and godot conventions allowed me to change the code design into something that is pretty much on an another level feature-potential wise.
-
-So it will not take long to implement most if the missing features themselves, as the basic scaffolding is there already.
-
-Now all of these will get higher priority.
-
-## Screenshots
-
-Currently the game looks like this:
-
-![Broken Seals as of 2020.01.10.](pictures/screen.jpg)
-
 ## Editing the game
 
-In order for you to open the game in the editor you will need a custom built version, which can be downloaded from the releases tab, or if you want to build it, chech the Compiling section.
+In order for you to open the game in the editor you will need a custom built version, with a few engine modules built int, 
+and unfortunately for now, you will need to build it yourself. (Binary releases will be available eventually!)
 
-Once you have the proper editor, you should also grab the addons.
+But don't worry, Godot is surpisingly easy and hassle free to compile! [See](#compiling)
 
-You will need scons installed. Scons is required to build godot aswell, so the official godot docs already contain information on how to set it up [here](https://docs.godotengine.org/en/latest/development/compiling/index.html).
+After you have the engine with the required modules, you can go ahead, run it, and just open the project inside the `game` folder.
 
-in the project's folder call:
+Usually after the initial import it will need a restart, however everything should work after that.
 
-``` scons t=all_addons ```
+## The required engine modules
 
-Note that if you built the editor yourself (a.k.a you already ran the command `scons`), you will already have these, and you can skip this step.
-
-## Project architecture
-
-This is the main game, it has scripts so compiling, and setting up the engine is really easy.
-
-To be able to open this project you will need a few engine modules compiled into godot, (The setup script will grab these) namely:
+These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically
+int the [Compiling](#compiling) section.
 
 https://github.com/Relintai/world_generator.git
 
