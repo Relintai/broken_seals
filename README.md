@@ -38,7 +38,7 @@ https://github.com/Relintai/procedural_animations.git \
 https://github.com/Relintai/props.git \
 https://github.com/Relintai/mesh_utils.git \
 https://github.com/Relintai/broken_seals_module.git \
-https://github.com/Relintai/thread_pool.git \
+https://github.com/Relintai/thread_pool.git
 
 ## Compiling
 
