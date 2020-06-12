@@ -20,3 +20,5 @@ game/android/build/*
 
 *.blend1
 .dir-locals.el
+
+build.config

@@ -33,6 +33,18 @@ repository_index = 0
 module_clone_path  = '/modules/' 
 clone_command = 'git clone {0} {1}'
 
+visual_studio_call_vcvarsall = False
+visual_studio_vcvarsall_path = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat'
+visual_studio_arch = 'amd64'
+
+exports = {
+    'global': [],
+    'linux': [],
+    'windows': [],
+    'android': [],
+    'javascript': [],
+}
+
 engine_repository = [ ['https://github.com/godotengine/godot.git', 'git@github.com:godotengine/godot.git'], 'engine', '' ]
 
 module_repositories = [
@@ -225,6 +237,67 @@ def setup_all():
     setup_addons()
     setup_addons_third_party_addons()
 
+def format_path(path):
+    if 'win' in sys.platform:
+        path = path.replace('/', '\\')
+        path = path.replace('~', '%userprofile%')
+
+    return path
+
+def get_exports_for(platform):
+    export_command = 'export '
+    command_separator = ';'
+
+    if 'win' in sys.platform:
+        export_command = '&'
+        export_command = 'set '
+
+    command = ''
+
+    for p in exports[platform]:
+        command += export_command + p + command_separator
+
+    return command
+
+
+def parse_config():
+    global visual_studio_vcvarsall_path
+    global visual_studio_arch
+    global visual_studio_call_vcvarsall
+    global exports
+
+    if not os.path.isfile('build.config'):
+        return
+
+    with open('build.config', 'r') as f:
+
+        for line in f:
+            ls = line.strip()
+            if ls == '' or ls.startswith('#'):
+                continue
+
+            words = line.split()
+
+            if (len(words) < 2):
+                print('This build.config line is malformed, and got ignored: ' + ls)
+                continue
+
+            if words[0] == 'visual_studio_vcvarsall_path':
+                visual_studio_vcvarsall_path = format_path(ls[29:])
+            elif words[0] == 'visual_studio_arch':
+                visual_studio_arch = format_path(ls[19:])
+            elif words[0] == 'visual_studio_call_vcvarsall':
+                visual_studio_call_vcvarsall = words[1].lower() in [ 'true', '1', 't', 'y', 'yes' ]
+            elif words[0] == 'export':
+                if (len(words) < 3) or not words[1] in exports:
+                    print('This build.config line is malformed, and got ignored: ' + ls)
+                    continue
+
+                export_path = format_path(ls[8 + len(words[1]):])
+
+                exports[words[1]].append(export_path)
+
+parse_config()
 
 env = Environment()
 
@@ -233,7 +306,7 @@ if len(sys.argv) > 1:
     arg = sys.argv[1]
 
     if arg[0] == 'b':
-        build_string = 'scons '
+        build_string = get_exports_for('global') + 'scons '
 
         build_string += 'tools='
         if 'e' in arg:
@@ -261,8 +334,8 @@ if len(sys.argv) > 1:
         if 'm' in arg:
             build_string += 'use_mingw=yes'
         else:
-            if 'win' in sys.platform:
-                build_string = 'call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" amd64&' + build_string
+            if 'win' in sys.platform and visual_studio_call_vcvarsall:
+                build_string = 'call "{0}" {1}&'.format(visual_studio_vcvarsall_path, visual_studio_arch) + build_string
 
         if 'o' in arg:
             build_string += 'use_llvm=yes'
@@ -286,8 +359,6 @@ if len(sys.argv) > 1:
         elif 'P' in arg:
             target += 'bin/libprocedural_animations.x11.opt.tools.64.so'
 
-        print('Running command: ' + build_string)
-
         cwd = os.getcwd()
         full_path = cwd + '/engine/'
 
@@ -297,43 +368,50 @@ if len(sys.argv) > 1:
 
         os.chdir(full_path)
 
-        cache_exports_str = 'export SCONS_CACHE=~/.scons_cache;export SCONS_CACHE_LIMIT=5000;'
-
-        if 'win' in sys.platform:
-            cache_exports_str = 'set SCONS_CACHE=%userprofile%\\.scons_cache\\&set SCONS_CACHE_LIMIT=5000&'
-
         if 'l' in arg:
             build_string += 'platform=x11'
 
-            subprocess.call(cache_exports_str + build_string + target, shell=True)
+            build_string = get_exports_for('linux') + build_string + target
+
+            print('Running command: ' + build_string)
+
+            subprocess.call(build_string, shell=True)
         elif 'w' in arg:
             build_string += 'platform=windows'
 
-            subprocess.call(cache_exports_str + build_string, shell=True)
+            build_string = get_exports_for('windows') + build_string
+
+            print('Running command: ' + build_string)
+
+            subprocess.call(build_string, shell=True)
         elif 'a' in arg:
             build_string += 'platform=android'
 
-            android_exports_str = 'export ANDROID_NDK_ROOT=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_NDK_HOME=~/SDKs/Android/NDK/android-ndk-r20b;export ANDROID_HOME=~/SDKs/Android/SDK;'
+            build_string = get_exports_for('android') + build_string
 
-            if 'win' in sys.platform:
-                android_exports_str = 'set ANDROID_NDK_ROOT=%userprofile%/SDKs/Android/NDK/android-ndk-r20b&set ANDROID_NDK_HOME=%userprofile%/SDKs/Android/NDK/android-ndk-r20b&set ANDROID_HOME=%userprofile%/SDKs/Android/SDK&'
-
-            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=armv7', shell=True)
-            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=arm64v8', shell=True)
-            subprocess.call(cache_exports_str + android_exports_str + build_string + ' android_arch=x86', shell=True)
+            print('Running command: ' + build_string + ' android_arch=armv7')
+            subprocess.call(build_string + ' android_arch=armv7', shell=True)
+            print('Running command: ' + build_string + ' android_arch=arm64v8')
+            subprocess.call(build_string + ' android_arch=arm64v8', shell=True)
+            print('Running command: ' + build_string + ' android_arch=x86')
+            subprocess.call(build_string + ' android_arch=x86', shell=True)
 
             os.chdir(full_path + 'platform/android/java/')
 
-            subprocess.call(cache_exports_str + android_exports_str + './gradlew generateGodotTemplates', shell=True)
+            print('Running command: ' + get_exports_for('global') + get_exports_for('android') + './gradlew generateGodotTemplates')
+            subprocess.call(get_exports_for('global') + get_exports_for('android') + './gradlew generateGodotTemplates', shell=True)
         elif 'j' in arg:
             build_string += 'platform=javascript'
 
-            subprocess.call(cache_exports_str + build_string, shell=True)
+            build_string = get_exports_for('javascript') + build_string
+
+            print('Running command: ' + build_string)
+            subprocess.call(build_string, shell=True)
         elif 'i' in arg:
             build_string += 'platform=iphone'
 
-            subprocess.call(cache_exports_str + build_string + ' arch=arm', shell=True)
-            subprocess.call(cache_exports_str + build_string + ' arch=arm64', shell=True)
+            subprocess.call(build_string + ' arch=arm', shell=True)
+            subprocess.call(build_string + ' arch=arm64', shell=True)
 
             #subprocess.call('lipo -create bin/libgodot.iphone.{0}.arm.a bin/libgodot.iphone.{0}.arm64.a -output bin/libgodot.iphone.{1}.fat.a'.fomat(), shell=True)
 
@@ -347,7 +425,7 @@ if len(sys.argv) > 1:
 
             subprocess.call('rm bin/iphone.zip', shell=True)
             #cd bin/ios_xcode
-            subprocess.call(cache_exports_str + build_string + ' arch=arm64', shell=True)
+            subprocess.call(build_string + ' arch=arm64', shell=True)
             subprocess.call('zip -r -X ../iphone.zip .', shell=True)
 
         else:

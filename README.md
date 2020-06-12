@@ -137,13 +137,15 @@ Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in th
 
 #### Scons cache, and sdk locations
 
-Unfortunately the sdk locations and the scons cache location is hardcoded at the moment, as I kind of forgot about it. This will be fixed very soon.
+In order to use scons cache and to tell the build system where some of the required sdks are located you usually 
+have to use environment variables. Most of the time you might just want to add them as globally, 
+howewer this is sometimes unfeasible (e.g. you don't have administrator access, or you just want to have
+multiple sdk versions installed).
 
-In the meantime you can always just go into the engine directory,
+In order to solve this a build config file was added.
 
-``` cd engine ```
-
-and compile godot using the [official docs](https://docs.godotengine.org/en/latest/development/compiling/).
+If you want to use the config simply rename the provided `build.config.example` to `build.config`, and customize 
+the settings inside.
 
 ## Pulling upstream changes
 
