@@ -249,7 +249,7 @@ def get_exports_for(platform):
     command_separator = ';'
 
     if 'win' in sys.platform:
-        export_command = '&'
+        command_separator = '&'
         export_command = 'set '
 
     command = ''
