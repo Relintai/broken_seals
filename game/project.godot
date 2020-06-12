@@ -259,12 +259,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/spells/gd_spell_script.gd"
 }, {
-"base": "VoxelChunkDefault",
+"base": "VoxelChunkMarchingCubes",
 "class": "TVVoxelChunk",
 "language": "GDScript",
 "path": "res://voxelman/world/TVVoxelChunk.gd"
 }, {
-"base": "VoxelMesherUVTransvoxel",
+"base": "VoxelMesherMarchingCubes",
 "class": "TVVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/world/TVVoxelMesher.gd"

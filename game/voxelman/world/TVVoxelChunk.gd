@@ -1,5 +1,5 @@
 tool
-extends VoxelChunkDefault
+extends VoxelChunkMarchingCubes
 class_name TVVoxelChunk
 
 # Copyright Péter Magyar relintai@gmail.com
