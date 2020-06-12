@@ -138,7 +138,7 @@ Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in th
 #### Scons cache, and sdk locations
 
 In order to use scons cache and to tell the build system where some of the required sdks are located you usually 
-have to use environment variables. Most of the time you might just want to add them as globally, 
+have to use environment variables. Most of the time you might just want to add them globally, 
 howewer this is sometimes unfeasible (e.g. you don't have administrator access, or you just want to have
 multiple sdk versions installed).
 
