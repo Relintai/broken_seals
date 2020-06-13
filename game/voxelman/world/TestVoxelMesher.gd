@@ -1,4 +1,4 @@
-extends VoxelMesherUVTransvoxel
+extends VoxelMesherMarchingCubes
 class_name TestVoxelMesher
 
 # Copyright Péter Magyar relintai@gmail.com
@@ -388,7 +388,7 @@ func _add_chunk(buffer : VoxelChunk) -> void:
 				
 				var regular_cell_class : int = get_regular_cell_class(case_code)
 
-				var cell_data : TransvoxelCellData = get_regular_cell_data(regular_cell_class)
+				var cell_data : MarchingCubesCellData = get_regular_cell_data(regular_cell_class)
 
 				var index_count : int = cell_data.get_triangle_count() * 3
 				var vertex_count : int = cell_data.get_vertex_count()
