@@ -91,6 +91,7 @@ var model_rotation_node : Spatial
 var character_skeleton : CharacterSkeleton3D 
 
 var visibility_update_timer : float = 0
+var placed : bool = false
 
 func _ready() -> void:
 	camera = get_node_or_null("CameraPivot/Camera") as Camera
@@ -176,6 +177,22 @@ func _physics_process(delta : float) -> void:
 		
 	if dead:
 		return
+		
+	if not placed:
+		if world != null:
+			if not world.is_position_walkable(transform.origin):
+				return
+			
+			var space : PhysicsDirectSpaceState = get_world().direct_space_state
+			
+			var res : Dictionary = space.intersect_ray(transform.origin, transform.origin + Vector3(0, -100, 0), [ self ])
+
+			if not res.empty():
+				var pos : Vector3 = res["position"]
+				transform.origin = pos + Vector3(0, 0.2, 0)
+				
+			placed = true
+			return
 		
 	if entity.c_is_controlled:
 		process_input(delta)
