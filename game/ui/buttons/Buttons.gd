@@ -28,7 +28,7 @@ var spell_book_button
 export (NodePath) var lock_button_path
 var lock_button
 
-var player 
+var player : Entity
 
 func _ready():
 	lock_button = get_node(lock_button_path)
@@ -47,7 +47,7 @@ func _lock_button_click():
 	if cls == null:
 		return
 		
-	var profile = ProfileManager.get_class_profile(cls.id)
+	var profile = ProfileManager.getc_player_profile().get_class_profile(cls.resource_path)
 	
 	profile.actionbar_locked = not profile.actionbar_locked
 	
