@@ -43,7 +43,7 @@ var player : Entity
 var spell_id : int = 0
 #var spell_type : int = 0
 
-var cd : Cooldown = null
+var cd : float = 0
 
 var has_gcd : bool = false
 var gcd : float = 0.0
@@ -64,7 +64,13 @@ func _ready() -> void:
 #		item.disconnect("stack_size_changed", self, "stack_size_changed")
 
 func _process(delta : float) -> void:
-	if cd == null and gcd < 0.001:
+	if cd > 0:
+		cd -= delta
+		
+		if cd < 0:
+			cd = 0
+	
+	if cd < 0.02 and gcd < 0.001:
 		set_process(false)
 		hide_cooldown_timer()
 		return
@@ -77,8 +83,8 @@ func _process(delta : float) -> void:
 		
 	var value : float = gcd
 		
-	if cd != null and cd.remaining > value:
-		value = cd.remaining
+	if cd > value:
+		value = cd
 	
 	set_cooldown_time(value) 
 
@@ -215,15 +221,15 @@ func set_player(p_player: Entity) -> void:
 	player.connect("cgcd_finished", self, "_cgcd_finished")
 
 
-func _ccooldown_added(cooldown : Cooldown) -> void:
-	if cooldown.spell_id == spell_id:
-		cd = cooldown
+func _ccooldown_added(id : int, value : float) -> void:
+	if id == spell_id:
+		cd = value
 		set_process(true)
-		show_cooldown_timer(cooldown.remaining)
+		show_cooldown_timer(value)
 
-func _ccooldown_removed(cooldown : Cooldown) -> void:
-	if cooldown.spell_id == spell_id:
-		cd = null
+func _ccooldown_removed(id : int, value : float) -> void:
+	if id == spell_id:
+		cd = 0
 	
 func _cgcd_started(value :float) -> void:
 	if not has_gcd:
