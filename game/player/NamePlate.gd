@@ -123,11 +123,11 @@ func set_max_distance(var value : float) -> void:
 	max_distance = value
 
 func c_health_changed(stat : EntityResource) -> void:
-	if stat.current_value != 0:
-		health_bar.max_value = stat.max_value
-	else:
+	if stat.max_value == 0:
 		health_bar.max_value = 1
+		health_bar.value = 0
 		
+	health_bar.max_value = stat.max_value
 	health_bar.value = stat.current_value
 	
 	
@@ -173,3 +173,4 @@ func on_centity_resource_added(resorce) -> void:
 	
 	health = entity.getc_health()
 	health.connect("changed", self, "c_health_changed")
+	c_health_changed(health)
