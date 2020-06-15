@@ -431,11 +431,7 @@ margin_left = -331.0
 margin_bottom = 123.0
 
 [node name="Castbar" parent="GUI" instance=ExtResource( 16 )]
-visible = false
-margin_left = 382.0
-margin_top = 461.0
-margin_right = 607.0
-margin_bottom = 480.0
+margin_top = 0.0
 mouse_filter = 2
 
 [node name="ErrorFrame" parent="GUI" instance=ExtResource( 4 )]
