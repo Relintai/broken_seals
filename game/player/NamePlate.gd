@@ -46,7 +46,7 @@ var health_bar_label : Label = null
 var entity : Entity = null
 var health : EntityResource = null
 
-func _ready():
+func _enter_tree():
 	name_label = get_node(name_label_path) as Label
 	health_bar = get_node(health_bar_path) as TextureProgress
 	health_bar_label = get_node(health_bar_label_path) as Label
@@ -126,6 +126,7 @@ func c_health_changed(stat : EntityResource) -> void:
 	if stat.max_value == 0:
 		health_bar.max_value = 1
 		health_bar.value = 0
+		return
 		
 	health_bar.max_value = stat.max_value
 	health_bar.value = stat.current_value

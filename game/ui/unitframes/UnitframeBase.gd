@@ -133,8 +133,16 @@ func cname_changed(entity: Entity) -> void:
 func clevel_changed(entity: Entity, value : int) -> void:
 	_level_text.text = str(_player.ccharacter_level)
 	
+	var xpreq : int = ESS.get_resource_db().get_xp_data().get_character_xp(_player.ccharacter_level)
+	
+	if xpreq == 0:
+		_xp_range.value = 0
+		_xp_range.min_value = 0
+		_xp_range.max_value = 1
+		return
+	
 	_xp_range.min_value = 0
-	_xp_range.max_value = ESS.get_resource_db().get_xp_data().get_character_xp(_player.ccharacter_level)
+	_xp_range.max_value = xpreq
 
 func notification_cxp_gained(entity: Entity, val: int) -> void:
 	_xp_range.value = _player.ccharacter_xp
