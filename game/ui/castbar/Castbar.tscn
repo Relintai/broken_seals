@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://ui/castbar/Castbar.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue.tres" type="StyleBox" id=2]
 
 [node name="Castbar" type="MarginContainer"]
 margin_left = 339.0
@@ -8,6 +9,9 @@ margin_top = 416.0
 margin_right = 691.0
 margin_bottom = 441.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 progress_bar_path = NodePath("ProgressBar")
 label_path = NodePath("Label")
 
@@ -16,6 +20,7 @@ margin_right = 352.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/fg = ExtResource( 2 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="."]
