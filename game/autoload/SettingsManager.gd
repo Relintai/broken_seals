@@ -36,6 +36,9 @@ var _settings : Dictionary = {
 		"use_vsync" : ProjectSettings.get("display/window/vsync/use_vsync"),
 		"vsync_via_compositor" : ProjectSettings.get("display/window/vsync/vsync_via_compositor"),
 	},
+	"ui" : {
+		"touchscreen_mode" : OS.has_touchscreen_ui_hint(),
+	},
 	"debug" : {
 		"debug_info" : false
 	}
@@ -132,3 +135,4 @@ func set_rendering_vsync_via_compositor(value : bool) -> void:
 	ProjectSettings.set("display/window/vsync/vsync_via_compositor", value)
 	
 	OS.vsync_via_compositor = value
+	

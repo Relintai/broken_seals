@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/player_ui/RemoveProfile.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://ui/options/OptionCheckboxRow.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/options/OptionCheckBox.gd" type="Script" id=5]
 [ext_resource path="res://ui/options/OptionEnumRow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/ui/AdaptiveButton.gd" type="Script" id=7]
 [ext_resource path="res://ui/options/OptionsSpinboxRow.tscn" type="PackedScene" id=8]
 
 [node name="Options" type="Control"]
@@ -47,7 +48,7 @@ tab_align = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 30.0
+margin_top = 31.0
 margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
@@ -69,7 +70,9 @@ property_category = "rendering"
 property_name = "viewport_scale"
 property_label = "Viewport Scale"
 min_value = 20
+max_value = 100
 step = 5
+prefix = ""
 suffix = "%"
 
 [node name="Borderless" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
@@ -122,12 +125,29 @@ property_category = "rendering"
 property_name = "vsync_via_compositor"
 property_label = "VSync Via Compositor"
 
+[node name="Interface" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="OptionToggleRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 4 )]
+margin_top = 0.0
+margin_bottom = 26.0
+property_category = "ui"
+property_name = "touchscreen_mode"
+property_label = "Touchscreen Mode"
+
 [node name="Debug" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 30.0
+margin_top = 31.0
 margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
@@ -153,4 +173,5 @@ margin_top = 439.0
 margin_right = 535.0
 margin_bottom = 465.269
 text = "Close"
+script = ExtResource( 7 )
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Close" to="." method="hide"]
