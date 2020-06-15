@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/unitframes/UnitframeBase.gd" type="Script" id=1]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=2]
+[ext_resource path="res://ui/theme/scrollbar_grabber_red.tres" type="StyleBox" id=3]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue.tres" type="StyleBox" id=4]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue_xp.tres" type="StyleBox" id=5]
 
 [node name="UnitFrame" type="PanelContainer"]
 margin_right = 150.0
@@ -52,6 +55,7 @@ margin_right = 142.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/fg = ExtResource( 3 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer"]
@@ -72,6 +76,7 @@ margin_right = 142.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/fg = ExtResource( 4 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2"]
@@ -88,4 +93,5 @@ margin_right = 142.0
 margin_bottom = 53.6018
 rect_min_size = Vector2( 20, 5 )
 size_flags_horizontal = 3
+custom_styles/fg = ExtResource( 5 )
 percent_visible = false

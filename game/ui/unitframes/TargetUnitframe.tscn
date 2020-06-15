@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/unitframes/TargetUnitframe.gd" type="Script" id=1]
 [ext_resource path="res://ui/auraframe/AuraEntry.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
+[ext_resource path="res://ui/theme/scrollbar_grabber_red.tres" type="StyleBox" id=4]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue.tres" type="StyleBox" id=5]
 
 [node name="TargetUnitframe" type="VBoxContainer"]
 margin_left = 151.0
@@ -53,6 +55,7 @@ margin_right = 141.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/fg = ExtResource( 4 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
@@ -74,6 +77,7 @@ margin_right = 141.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_styles/fg = ExtResource( 5 )
 percent_visible = false
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
