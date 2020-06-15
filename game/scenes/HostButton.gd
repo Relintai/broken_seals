@@ -25,9 +25,6 @@ extends Button
 # var b = "text"
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	if Settings.get_value("ui", "touchscreen_mode"):
-		rect_min_size = Vector2(rect_min_size.x, 40)
 
 #func _pressed():
 #	Server.start_hosting()

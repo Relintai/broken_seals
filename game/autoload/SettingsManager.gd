@@ -21,8 +21,11 @@ extends Node
 # SOFTWARE.
 
 signal setting_changed(section, key, value)
+signal settings_loaded()
 
 const SAVE_PATH : String = "user://settings.cfg"
+
+var loaded : bool = false
 
 var _config_file : ConfigFile = ConfigFile.new()
 var _settings : Dictionary = {
@@ -100,6 +103,8 @@ func load_settings() -> void:
 		for key in _settings[section]:
 			_set_value(section, key, _config_file.get_value(section, key, _settings[section][key]))
 			
+	loaded = true
+	emit_signal("settings_loaded")
 
 func set_rendering_thread_model(value : int) -> void:
 	ProjectSettings.set("rendering/threads/thread_model", value)

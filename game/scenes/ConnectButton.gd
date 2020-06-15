@@ -21,9 +21,6 @@ extends Button
 # SOFTWARE.
 
 func _ready():
-	if Settings.get_value("ui", "touchscreen_mode"):
-		rect_min_size = Vector2(rect_min_size.x, 40)
-		
 	get_tree().connect("connected_to_server", self, "connected_to_server")
 	get_tree().connect("server_disconnected", self, "server_disconnected")
 	

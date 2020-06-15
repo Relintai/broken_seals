@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/options/Options.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/ingame_menu/ExitButton.gd" type="Script" id=3]
 [ext_resource path="res://ui/keybinds/Keybinds.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/ui/AdaptiveButton.gd" type="Script" id=5]
 
 [node name="IngameMenu" type="Control"]
 anchor_right = 1.0
@@ -36,28 +35,25 @@ margin_bottom = 132.0
 
 [node name="Resume" type="Button" parent="Menu/VBoxContainer"]
 margin_right = 147.0
-margin_bottom = 26.269
+margin_bottom = 26.5702
 text = "Resume"
-script = ExtResource( 5 )
 
 [node name="Keybinds" type="Button" parent="Menu/VBoxContainer"]
 margin_top = 34.0
 margin_right = 147.0
-margin_bottom = 60.269
+margin_bottom = 60.5702
 text = "Keybinds"
-script = ExtResource( 5 )
 
 [node name="Options" type="Button" parent="Menu/VBoxContainer"]
 margin_top = 68.0
 margin_right = 147.0
-margin_bottom = 94.269
+margin_bottom = 94.5702
 text = "Options"
-script = ExtResource( 5 )
 
 [node name="Exit" type="Button" parent="Menu/VBoxContainer"]
 margin_top = 102.0
 margin_right = 147.0
-margin_bottom = 128.269
+margin_bottom = 128.57
 text = "Exit"
 script = ExtResource( 3 )
 

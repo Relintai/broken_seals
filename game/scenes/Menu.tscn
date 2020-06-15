@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -19,7 +19,6 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=17]
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
-[ext_resource path="res://scripts/ui/AdaptiveButton.gd" type="Script" id=20]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
@@ -160,27 +159,24 @@ size_flags_horizontal = 3
 [node name="Continue" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 8.0
 margin_right = 261.0
-margin_bottom = 34.269
+margin_bottom = 34.5702
 text = "Continue"
-script = ExtResource( 20 )
 
 [node name="Renounce" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 42.0
 margin_right = 261.0
-margin_bottom = 68.269
+margin_bottom = 68.5702
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Renounce"
-script = ExtResource( 20 )
 
 [node name="New" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 76.0
 margin_right = 261.0
-margin_bottom = 102.269
+margin_bottom = 102.57
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "New"
-script = ExtResource( 20 )
 
 [node name="PlayerDisplays" type="Node" parent="CharacterSelectorMenu"]
 
@@ -262,10 +258,9 @@ margin_bottom = 47.3413
 [node name="Create" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 55.0
 margin_right = 253.0
-margin_bottom = 81.269
+margin_bottom = 81.5702
 size_flags_horizontal = 3
 text = "Create"
-script = ExtResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -273,9 +268,8 @@ __meta__ = {
 [node name="Back" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 89.0
 margin_right = 253.0
-margin_bottom = 115.269
+margin_bottom = 115.57
 text = "Back"
-script = ExtResource( 20 )
 
 [node name="ConnectMenu" type="Control" parent="."]
 visible = false
@@ -339,7 +333,7 @@ text = "23223"
 [node name="CheckBox" type="CheckBox" parent="ConnectMenu/PanelContainer/VBoxContainer"]
 margin_top = 133.0
 margin_right = 244.0
-margin_bottom = 159.269
+margin_bottom = 159.57
 text = "Use WebSockets"
 
 [node name="Status" type="Label" parent="ConnectMenu/PanelContainer/VBoxContainer"]
@@ -352,7 +346,7 @@ valign = 1
 [node name="ConnectButton" type="Button" parent="ConnectMenu/PanelContainer/VBoxContainer"]
 margin_top = 190.0
 margin_right = 244.0
-margin_bottom = 216.269
+margin_bottom = 216.57
 text = "Connect"
 script = ExtResource( 14 )
 container_path = NodePath("../../..")
@@ -364,9 +358,8 @@ port_line_edit_path = NodePath("../LineEdit2")
 [node name="Button2" type="Button" parent="ConnectMenu/PanelContainer/VBoxContainer"]
 margin_top = 224.0
 margin_right = 244.0
-margin_bottom = 250.269
+margin_bottom = 250.57
 text = "Cancel"
-script = ExtResource( 20 )
 
 [node name="HostMenu" type="Control" parent="."]
 visible = false
@@ -418,7 +411,7 @@ text = "23223"
 [node name="CheckBox" type="CheckBox" parent="HostMenu/PanelContainer/VBoxContainer"]
 margin_top = 78.0
 margin_right = 244.0
-margin_bottom = 104.269
+margin_bottom = 104.57
 text = "Use WebSockets"
 
 [node name="Status" type="Label" parent="HostMenu/PanelContainer/VBoxContainer"]
@@ -431,7 +424,7 @@ valign = 1
 [node name="HostButton" type="Button" parent="HostMenu/PanelContainer/VBoxContainer"]
 margin_top = 135.0
 margin_right = 244.0
-margin_bottom = 161.269
+margin_bottom = 161.57
 text = "Host"
 script = ExtResource( 15 )
 container_path = NodePath("../../..")
@@ -442,9 +435,8 @@ port_line_edit_path = NodePath("../LineEdit2")
 [node name="Button2" type="Button" parent="HostMenu/PanelContainer/VBoxContainer"]
 margin_top = 169.0
 margin_right = 244.0
-margin_bottom = 195.269
+margin_bottom = 195.57
 text = "Cancel"
-script = ExtResource( 20 )
 
 [node name="OptionsButton" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -494,7 +486,7 @@ __meta__ = {
 [node name="Connect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 81.0
 margin_right = 120.0
-margin_bottom = 107.269
+margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
 text = "Connect"
 script = ExtResource( 11 )
@@ -505,7 +497,7 @@ __meta__ = {
 [node name="Host" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 115.0
 margin_right = 120.0
-margin_bottom = 141.269
+margin_bottom = 141.57
 rect_min_size = Vector2( 120, 0 )
 text = "Host"
 script = ExtResource( 12 )
@@ -515,9 +507,9 @@ __meta__ = {
 
 [node name="Button2" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
-margin_top = 81.0
+margin_top = 115.0
 margin_right = 120.0
-margin_bottom = 107.269
+margin_bottom = 141.57
 rect_min_size = Vector2( 120, 0 )
 text = "Login"
 __meta__ = {
@@ -528,7 +520,7 @@ __meta__ = {
 visible = false
 margin_top = 115.0
 margin_right = 120.0
-margin_bottom = 141.269
+margin_bottom = 141.57
 rect_min_size = Vector2( 120, 0 )
 text = "Register"
 __meta__ = {
@@ -538,10 +530,9 @@ __meta__ = {
 [node name="Button" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 149.0
 margin_right = 120.0
-margin_bottom = 175.269
+margin_bottom = 175.57
 rect_min_size = Vector2( 120, 0 )
 text = "Options"
-script = ExtResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
