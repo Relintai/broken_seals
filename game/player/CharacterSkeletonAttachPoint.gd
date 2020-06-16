@@ -27,12 +27,9 @@ class_name CharacterSkeketonAttachPoint
 var effects : Dictionary
 var timed_effects : Dictionary
 
+var follow : int = -1
 export(Array, NodePath) var positions : Array
-var position_nodes : Array 
-
-func load_positions():
-	for p in positions:
-		position_nodes.append(get_node(p))
+var follow_node : Spatial = null
 
 func add(effect : PackedScene) -> void:
 	if effects.has(effect):
@@ -71,6 +68,9 @@ func remove(effect : PackedScene) -> void:
 			
 
 func _process(delta : float) -> void:
+	if follow_node != null:
+		global_transform = follow_node.global_transform
+	
 	for k in timed_effects.keys():
 		var data : Array = timed_effects[k]
 		
@@ -82,8 +82,11 @@ func _process(delta : float) -> void:
 			timed_effects.erase(k)
 
 func set_node_position(index : int) -> void:
-	if positions.size() != position_nodes.size():
-		load_positions()
+	follow = index
 	
-	get_parent().remove_child(self)
-	position_nodes[index].add_child(self)
+	if index >= positions.size():
+		index = -1
+	
+	if follow != -1:
+		follow_node = get_node(positions[follow]) as Spatial
+
