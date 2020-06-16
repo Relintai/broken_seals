@@ -144,7 +144,7 @@ viss = [ ExtResource( 1 ) ]
 [node name="armature" parent="." instance=ExtResource( 6 )]
 
 [node name="Skeleton" parent="armature/Armature" index="0"]
-transform = Transform( 1, 3.94046e-18, -1.58038e-25, -3.94046e-18, 1, 6.5861e-43, 1.58038e-25, -3.64338e-44, 1, 0, -1.74067e-15, 0 )
+transform = Transform( 1, -6.70125e-18, 1.50051e-25, 6.70125e-18, 1, 1.02995e-42, -1.50051e-25, -2.38221e-44, 1, 0, -2.25061e-17, 0 )
 bones/0/bound_children = [ NodePath("RootAttachment") ]
 bones/1/bound_children = [ NodePath("RightHipAttachment") ]
 bones/10/bound_children = [ NodePath("BoneAttachment") ]
@@ -155,7 +155,7 @@ bones/24/bound_children = [ NodePath("RightHandAttachment") ]
 [node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton" index="0"]
 
 [node name="LeftHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="1"]
-transform = Transform( 0.103444, 0.11288, -0.988177, 0.0561493, -0.992545, -0.107459, -0.993042, -0.0443731, -0.109016, 0.231563, 0.765486, -0.00916495 )
+transform = Transform( 0.102751, 0.121251, -0.987277, 0.0573114, -0.99157, -0.115804, -0.99305, -0.0446844, -0.108838, 0.228388, 0.771368, -0.0101909 )
 bone_name = "left_hand"
 
 [node name="LeftHandAP" type="Spatial" parent="armature/Armature/Skeleton/LeftHandAttachment"]
@@ -163,7 +163,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.04, -0.09 )
 script = ExtResource( 2 )
 
 [node name="RightHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="2"]
-transform = Transform( -0.0418932, -0.0390964, -0.998322, -0.126374, -0.990903, 0.044093, -0.991117, 0.128017, 0.0365875, -0.235683, 0.769553, -0.00763279 )
+transform = Transform( -0.0401201, -0.0244025, -0.998879, -0.127455, -0.99136, 0.0293239, -0.991043, 0.128493, 0.0366715, -0.226465, 0.768581, -0.00641895 )
 bone_name = "right_hand"
 
 [node name="RightHandAP" type="Spatial" parent="armature/Armature/Skeleton/RightHandAttachment"]
@@ -179,7 +179,7 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0
 script = ExtResource( 2 )
 
 [node name="NeckAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="4"]
-transform = Transform( 0.999941, -0.0107129, -0.00152455, 0.0107866, 0.997156, 0.0730707, 0.000737471, -0.0730899, 0.997325, 0.00121043, 1.31172, 0.000109647 )
+transform = Transform( 0.99998, -0.00634746, -0.000327975, 0.0063559, 0.997245, 0.0731518, -0.000137274, -0.0731568, 0.99732, 0.00104182, 1.31814, 5.46634e-05 )
 bone_name = "neck"
 
 [node name="TorsoAP" type="Spatial" parent="armature/Armature/Skeleton/NeckAttachment"]
@@ -187,7 +187,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -0.09 )
 script = ExtResource( 2 )
 
 [node name="RightHipAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="5"]
-transform = Transform( 0.999923, 0.0124132, 5.88791e-09, -0.0124132, 0.999923, 4.71818e-07, -3.06648e-11, -4.71855e-07, 1, 0.00755737, 0.770247, 0 )
+transform = Transform( 0.999512, 0.0312334, 1.48147e-08, -0.0312334, 0.999512, 4.71623e-07, -7.70601e-11, -4.71856e-07, 1, 9.77133e-05, 0.776641, 0 )
 bone_name = "pelvis"
 
 [node name="Spatial" type="Spatial" parent="armature/Armature/Skeleton/RightHipAttachment"]
@@ -200,7 +200,7 @@ material/0 = null
 material/1 = null
 
 [node name="BoneAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="6"]
-transform = Transform( 0.999938, -0.0110682, -0.000607649, 0.0110583, 0.999826, -0.00111457, 0.00061993, 0.00110907, 0.999999, 0.00328679, 1.12416, -9.84036e-05 )
+transform = Transform( 0.999978, -0.00662597, 0.000261727, 0.00662768, 0.999922, -0.00104081, -0.000254833, 0.0010423, 1, 0.00228484, 1.13056, -0.000140854 )
 bone_name = "spine_2"
 
 [node name="Spine2AP" type="Spatial" parent="armature/Armature/Skeleton/BoneAttachment"]
