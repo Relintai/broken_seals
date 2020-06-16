@@ -215,20 +215,20 @@ func add_spell_cast_effect(info : SpellCastInfo) -> void:
 		
 	if basic_spell_effect != null:
 		if basic_spell_effect.spell_cast_effect_left_hand != null:
-			info.caster.get_character_skeleton().left_hand_attach_point.add_effect(basic_spell_effect.spell_cast_effect_left_hand)
+			info.caster.get_character_skeleton().common_attach_point_add_effect(EntityEnums.COMMON_SKELETON_POINT_LEFT_HAND, basic_spell_effect.spell_cast_effect_left_hand)
 		
 		if basic_spell_effect.spell_cast_effect_right_hand != null:
-			info.caster.get_character_skeleton().right_hand_attach_point.add_effect(basic_spell_effect.spell_cast_effect_right_hand)
+			info.caster.get_character_skeleton().common_attach_point_add_effect(EntityEnums.COMMON_SKELETON_POINT_RIGHT_HAND, basic_spell_effect.spell_cast_effect_right_hand)
 		
 func remove_spell_cast_effect(info : SpellCastInfo) -> void:
 	var basic_spell_effect : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
 		
 	if basic_spell_effect != null:
 		if basic_spell_effect.spell_cast_effect_left_hand != null:
-			info.caster.get_character_skeleton().left_hand_attach_point.remove_effect(basic_spell_effect.spell_cast_effect_left_hand)
+			info.caster.get_character_skeleton().common_attach_point_remove_effect(EntityEnums.COMMON_SKELETON_POINT_LEFT_HAND, basic_spell_effect.spell_cast_effect_left_hand)
 		
 		if basic_spell_effect.spell_cast_effect_right_hand != null:
-			info.caster.get_character_skeleton().right_hand_attach_point.remove_effect(basic_spell_effect.spell_cast_effect_right_hand)
+			info.caster.get_character_skeleton().common_attach_point_remove_effect(EntityEnums.COMMON_SKELETON_POINT_RIGHT_HAND, basic_spell_effect.spell_cast_effect_right_hand)
 		
 func _notification_ccast(what, info):
 	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
@@ -249,10 +249,10 @@ func _notification_ccast(what, info):
 			
 		if bse != null:
 			if bse.torso_spell_cast_finish_effect != null:
-				info.target.get_character_skeleton().torso_attach_point.add_effect_timed(bse.torso_spell_cast_finish_effect, bse.torso_spell_cast_finish_effect_time)
-	
+				info.target.get_character_skeleton().common_attach_point_add_effect_timed(EntityEnums.COMMON_SKELETON_POINT_TORSO, bse.torso_spell_cast_finish_effect_time)
+
 			if bse.root_spell_cast_finish_effect != null:
-				info.target.get_character_skeleton().root_attach_point.add_effect_timed(bse.root_spell_cast_finish_effect, bse.root_spell_cast_finish_effect_time)
+				info.target.get_character_skeleton().common_attach_point_add_effect_timed(EntityEnums.COMMON_SKELETON_POINT_ROOT, bse.root_spell_cast_finish_effect_time)
 
 
 func _son_spell_hit(info):

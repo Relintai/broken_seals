@@ -39,15 +39,6 @@ var skeleton : Skeleton
 export(Array, Material) var materials : Array
 var _materials : Array = Array()
 
-export (NodePath) var left_hand_attach_point_path : NodePath
-var left_hand_attach_point : CharacterSkeketonAttachPoint
-export (NodePath) var right_hand_attach_point_path : NodePath
-var right_hand_attach_point : CharacterSkeketonAttachPoint
-export (NodePath) var torso_attach_point_path : NodePath
-var torso_attach_point : CharacterSkeketonAttachPoint
-export (NodePath) var root_attach_point_path : NodePath
-var root_attach_point : CharacterSkeketonAttachPoint
-
 export(Array, ModelVisual) var viss : Array
 
 var meshes : Array
@@ -110,11 +101,6 @@ func _enter_tree():
 	skeleton = get_node(skeleton_path) as Skeleton
 	mesh_instance = get_node(mesh_instance_path) as MeshInstance
 
-	left_hand_attach_point = get_node(left_hand_attach_point_path) as CharacterSkeketonAttachPoint
-	right_hand_attach_point = get_node(right_hand_attach_point_path) as CharacterSkeketonAttachPoint
-	torso_attach_point = get_node(torso_attach_point_path) as CharacterSkeketonAttachPoint
-	root_attach_point = get_node(root_attach_point_path) as CharacterSkeketonAttachPoint
-
 	if _materials.size() != materials.size():
 		for m in materials:
 			_materials.append(m.duplicate())
@@ -158,9 +144,9 @@ func build():
 	
 	var data : Array = Array()
 
-	for skele_point in range(EntityEnums.SKELETON_POINTS_MAX):
+	for skele_point in range(ESS.skeletons_bones_index_get(entity_type).count(',') + 1):
 		var bone_name : String = get_bone_name(skele_point)
-		
+
 		if bone_name == "":
 			print("Bone name error")
 			continue
@@ -244,6 +230,22 @@ func get_bone_name(skele_point : int) -> String:
 		return bone_names[skele_point]
 		
 	return ""
+	
+func _common_attach_point_index_get(point):
+	if point == EntityEnums.COMMON_SKELETON_POINT_LEFT_HAND:
+		return 0
+	elif point == EntityEnums.COMMON_SKELETON_POINT_ROOT:
+		return 3
+	elif point == EntityEnums.COMMON_SKELETON_POINT_SPINE_2:
+		return 6
+	elif point == EntityEnums.COMMON_SKELETON_POINT_RIGHT_HAND:
+		return 1
+	elif point == EntityEnums.COMMON_SKELETON_POINT_BACK:
+		return 6
+	elif point == EntityEnums.COMMON_SKELETON_POINT_RIGHT_HIP:
+		return 4
+		
+	return 3
 	
 func set_lod_level(level : int) -> void:
 	if _current_lod_level == level:
