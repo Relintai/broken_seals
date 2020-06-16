@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=17]
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
+[ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
@@ -484,9 +485,9 @@ __meta__ = {
 }
 
 [node name="Connect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
-margin_top = 81.0
+margin_top = 47.0
 margin_right = 120.0
-margin_bottom = 107.57
+margin_bottom = 73.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Connect"
 script = ExtResource( 11 )
@@ -495,9 +496,9 @@ __meta__ = {
 }
 
 [node name="Host" type="Button" parent="OptionsButton/Control/VBoxContainer"]
-margin_top = 115.0
+margin_top = 81.0
 margin_right = 120.0
-margin_bottom = 141.57
+margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
 text = "Host"
 script = ExtResource( 12 )
@@ -527,6 +528,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="About" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 115.0
+margin_right = 120.0
+margin_bottom = 141.57
+rect_min_size = Vector2( 120, 0 )
+text = "About"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Button" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 149.0
 margin_right = 120.0
@@ -538,6 +549,9 @@ __meta__ = {
 }
 
 [node name="Options" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="About" parent="." instance=ExtResource( 20 )]
 visible = false
 
 [node name="Login" parent="." instance=ExtResource( 10 )]
@@ -572,6 +586,8 @@ voxel_scale = 1.6
 chunk_spawn_range = 1
 build_flags = 255
 script = ExtResource( 16 )
+meshes = [  ]
+editor_generate = false
 show_loading_screen = false
 generate_on_ready = true
 
@@ -600,4 +616,5 @@ script = ExtResource( 19 )
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Host" to="HostMenu" method="show"]
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button2" to="Login" method="show"]
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button3" to="Register" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/About" to="About" method="show"]
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button" to="Options" method="show"]

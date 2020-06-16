@@ -1,3 +1,4 @@
+
 extends Control
 class_name Menu
 
@@ -44,3 +45,7 @@ func switch_to_menu(menu : int) -> void:
 	else:
 		get_node(charcer_creation_scenes).hide()
 
+
+
+func _on_About_pressed():
+	pass # Replace with function body.

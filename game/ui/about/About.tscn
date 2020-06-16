@@ -1,0 +1,262 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://ui/about/GodotAuthors.gd" type="Script" id=1]
+[ext_resource path="res://ui/about/GodotDonors.gd" type="Script" id=2]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
+[ext_resource path="res://ui/about/GodotLicense.gd" type="Script" id=4]
+[ext_resource path="res://ui/about/GodotThirdPartyLicenses.gd" type="Script" id=5]
+[ext_resource path="res://ui/about/Authors.gd" type="Script" id=6]
+[ext_resource path="res://ui/about/Third-Party Licenses.gd" type="Script" id=7]
+
+[node name="About" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -368.0
+margin_top = -236.5
+margin_right = 368.0
+margin_bottom = 236.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 732.0
+margin_bottom = 469.0
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 728.0
+margin_bottom = 431.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+tab_align = 0
+
+[node name="Authors" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Authors"]
+margin_right = 720.0
+size_flags_horizontal = 3
+script = ExtResource( 6 )
+
+[node name="License" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/License"]
+margin_right = 720.0
+margin_bottom = 396.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Copyright (c) 2019-2020 Péter Magyar
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the \"Software\"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE."
+
+[node name="Third-Party Licenses" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 62.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+script = ExtResource( 7 )
+tree_path = NodePath("HBoxContainer/Tree")
+rtl_path = NodePath("HBoxContainer/PanelContainer/RichTextLabel")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses"]
+margin_right = 712.0
+margin_bottom = 51.0
+text = "This project relies on a number of third-party free and open source assets/components, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."
+autowrap = true
+
+[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses"]
+margin_top = 59.0
+margin_right = 712.0
+margin_bottom = 361.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = -88
+
+[node name="Tree" type="Tree" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer"]
+margin_right = 262.0
+margin_bottom = 302.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+hide_folding = true
+hide_root = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer"]
+margin_left = 274.0
+margin_right = 712.0
+margin_bottom = 302.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 434.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Godot" type="TabContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Authors" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Authors"]
+margin_right = 712.0
+size_flags_horizontal = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Donors" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Donors"]
+margin_right = 712.0
+size_flags_horizontal = 3
+script = ExtResource( 2 )
+
+[node name="License" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/Godot/License"]
+margin_right = 712.0
+margin_bottom = 361.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "
+"
+script = ExtResource( 4 )
+
+[node name="Third-Party Licenses" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+script = ExtResource( 5 )
+tree_path = NodePath("HBoxContainer/Tree")
+rtl_path = NodePath("HBoxContainer/PanelContainer/RichTextLabel")
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Third-Party Licenses"]
+margin_right = 712.0
+margin_bottom = 51.0
+text = "Godot Engine relies on a number of third-party free and open source libraries, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."
+autowrap = true
+
+[node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Third-Party Licenses"]
+margin_top = 59.0
+margin_right = 712.0
+margin_bottom = 361.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = -88
+
+[node name="Tree" type="Tree" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Third-Party Licenses/HBoxContainer"]
+margin_right = 262.0
+margin_bottom = 302.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+hide_folding = true
+hide_root = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Third-Party Licenses/HBoxContainer"]
+margin_left = 274.0
+margin_right = 712.0
+margin_bottom = 302.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/Godot/Third-Party Licenses/HBoxContainer/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 434.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Close" type="Button" parent="PanelContainer/VBoxContainer"]
+margin_top = 439.0
+margin_right = 728.0
+margin_bottom = 465.57
+text = "Close"
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Close" to="." method="hide"]
