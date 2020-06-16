@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://test_weapons/sword_i.mesh" type="ArrayMesh" id=1]
+
+[node name="MeshInstance" type="MeshInstance"]
+transform = Transform( 0.0566188, -0.29807, 0, 0.386498, 0.0264298, 0.31413, -0.31211, -0.0213429, 0.389, 0, 0, 0 )
+mesh = ExtResource( 1 )
+material/0 = null
+material/1 = null

@@ -1,0 +1,8 @@
+[gd_resource type="ModelVisualEntry" load_steps=2 format=2]
+
+[ext_resource path="res://test_weapons/TestOnehander.tscn" type="PackedScene" id=1]
+
+[resource]
+type = 1
+bone = 13
+entry_0/attachment = ExtResource( 1 )

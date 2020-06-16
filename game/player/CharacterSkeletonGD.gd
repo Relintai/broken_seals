@@ -109,6 +109,9 @@ func _enter_tree():
 		_mesh_job.materials = _materials
 
 	set_process(false)
+	
+	if Engine.editor_hint:
+		return
 			
 #	if not Engine.is_editor_hint():
 	for iv in viss:
@@ -116,17 +119,8 @@ func _enter_tree():
 
 	if automatic_build:
 		build_model()
-	
-	if not Engine.editor_hint:
-		sheath(sheathed)
-		
 
-func _process(delta):
-	if not Engine.editor_hint:
-		if Input.is_action_just_pressed("sheath"):
-			sheathed = not sheathed
-			sheath(sheathed)
-		
+	sheath(sheathed)
 
 func _build_model():
 	if _generating:
@@ -255,11 +249,13 @@ func _common_attach_point_index_get(point):
 	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_LEFT:
 		return 7
 	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_LEFT_BACK:
-		return 8
-	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_RIGHT:
 		return 9
+	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_RIGHT:
+		return 8
 	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_RIGHT_BACK:
 		return 10
+	elif point == EntityEnums.COMMON_SKELETON_POINT_WEAPON_LEFT_SHIELD:
+		return 11
 		
 	return 3
 	
@@ -279,6 +275,14 @@ func set_lod_level(level : int) -> void:
 	_current_lod_level = level
 	
 	mesh_instance.mesh = meshes[_current_lod_level]
+	
+		
+
+func toggle_sheath():
+	sheathed = not sheathed
+	sheath(sheathed)
+		
+
 	
 func sheath(on : bool) -> void:
 	var pos = 0
