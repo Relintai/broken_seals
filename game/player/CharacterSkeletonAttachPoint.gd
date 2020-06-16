@@ -27,6 +27,13 @@ class_name CharacterSkeketonAttachPoint
 var effects : Dictionary
 var timed_effects : Dictionary
 
+export(Array, NodePath) var positions : Array
+var position_nodes : Array 
+
+func load_positions():
+	for p in positions:
+		position_nodes.append(get_node(p))
+
 func add(effect : PackedScene) -> void:
 	if effects.has(effect):
 		effects[effect][0] = effects[effect][0] + 1
@@ -73,3 +80,10 @@ func _process(delta : float) -> void:
 			data[1].queue_free()
 			
 			timed_effects.erase(k)
+
+func set_node_position(index : int) -> void:
+	if positions.size() != position_nodes.size():
+		load_positions()
+	
+	get_parent().remove_child(self)
+	position_nodes[index].add_child(self)
