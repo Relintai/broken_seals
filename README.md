@@ -135,6 +135,10 @@ build editor linux shared (Entity Spell System) with 4 threads
 
 Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in the root of the project.
 
+#### Other
+
+Append `v` to pass the `vsproj=yes` parameter to the build script. This will generate Visual Studio project files.
+
 #### Scons cache, and sdk locations
 
 In order to use scons cache and to tell the build system where some of the required sdks are located you usually 
