@@ -189,7 +189,8 @@ func setup_build_mesh() -> void:
 		get_animation_player().seek(0, true)
 	
 func finish_build_mesh() -> void:
-	mesh_instance.mesh = meshes[_current_lod_level]
+	mesh_instance.mesh = null
+#	mesh_instance.mesh = meshes[_current_lod_level]
 		
 	if get_animation_tree() != null:
 		get_animation_tree().active = true
