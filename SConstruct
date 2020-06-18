@@ -155,7 +155,9 @@ def setup_repository(data, clone_path, branch = 'master'):
     subprocess.call('git reset --hard', shell=True)
     subprocess.call('git clean -f -d', shell=True)
     subprocess.call('git checkout -B ' + branch + ' origin/' + branch, shell=True)
-    subprocess.call('git pull origin master', shell=True)
+    subprocess.call('git pull origin ' + branch, shell=True)
+    subprocess.call('git reset', shell=True)
+    subprocess.call('git reset --hard', shell=True)
 
     if data[1] in target_commits:
         target = target_commits[data[1]][branch]
