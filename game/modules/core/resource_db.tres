@@ -6,7 +6,7 @@
 [ext_resource path="res://modules/core/entity_skills/1_test.tres" type="EntitySkillData" id=4]
 [ext_resource path="res://modules/core/item_templates/1_gold.tres" type="ItemTemplate" id=5]
 [ext_resource path="res://modules/core/crafting/1_test_craft.tres" type="CraftRecipe" id=6]
-[ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResourceData" id=7]
+[ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResource" id=7]
 [ext_resource path="res://modules/core/xp/xp_data.tres" type="XPData" id=8]
 
 [resource]

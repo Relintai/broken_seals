@@ -38,6 +38,7 @@ var _aura_grid : GridContainer
 
 var _player : Entity
 var _mana : ManaResource
+var _health : EntityResourceHealth
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -84,9 +85,9 @@ func set_player(p_player : Entity) -> void:
 	for i in range(_player.resource_getc_count()):
 		centity_resource_added(_player.resource_getc_index(i))
 	
-	var health = _player.getc_health()
-	_on_player_health_changed(health)
-	health.connect("changed", self, "_on_player_health_changed")
+	_health = _player.getc_health()
+	_on_player_health_changed()
+	_health.connect("changed", self, "_on_player_health_changed")
 	
 	_name_text.text = _player.centity_name
 	
@@ -95,13 +96,12 @@ func set_player(p_player : Entity) -> void:
 	
 func centity_resource_added(res : EntityResource):
 	if res is ManaResource:
-		_mana= res as ManaResource
-
+		_mana = res as ManaResource
 		_mana.connect("changed", self, "_on_mana_changed")
-		_on_mana_changed(_mana)
+		_on_mana_changed()
 	
-func _on_mana_changed(resource: EntityResource) -> void:
-	if resource.max_value == 0:
+func _on_mana_changed() -> void:
+	if _mana.max_value == 0:
 		_resource_range.min_value = 0
 		_resource_range.max_value = 1
 		_resource_range.value = 0
@@ -111,10 +111,10 @@ func _on_mana_changed(resource: EntityResource) -> void:
 		return
 		
 	_resource_range.min_value = 0
-	_resource_range.max_value = resource.max_value
-	_resource_range.value = resource.current_value
+	_resource_range.max_value = _mana.max_value
+	_resource_range.value = _mana.current_value
 	
-	_resource_text.text = str(resource.current_value) + "/" + str(resource.max_value)
+	_resource_text.text = str(_mana.current_value) + "/" + str(_mana.max_value)
 
 func on_notification_caura(what : int, aura_data : AuraData) -> void:
 	if what == SpellEnums.NOTIFICATION_AURA_ADDED:
@@ -131,8 +131,8 @@ func on_notification_caura(what : int, aura_data : AuraData) -> void:
 				bn.queue_free()
 				return
 	
-func _on_player_health_changed(health : EntityResource) -> void:
-	if health.max_value == 0:
+func _on_player_health_changed() -> void:
+	if _health.max_value == 0:
 		_health_range.min_value = 0
 		_health_range.max_value = 1
 		_health_range.value = 0
@@ -142,10 +142,10 @@ func _on_player_health_changed(health : EntityResource) -> void:
 		return
 	
 	_health_range.min_value = 0
-	_health_range.max_value = health.max_value
-	_health_range.value = health.current_value
+	_health_range.max_value = _health.max_value
+	_health_range.value = _health.current_value
 	
-	_health_text.text = str(health.current_value) + "/" + str(health.max_value)
+	_health_text.text = str(_health.current_value) + "/" + str(_health.max_value)
 	
 func diecd(entity : Entity) -> void:
 	set_player(null)

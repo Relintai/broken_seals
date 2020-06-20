@@ -46,6 +46,8 @@ var health_bar_label : Label = null
 var entity : Entity = null
 var health : EntityResource = null
 
+var _health : EntityResource
+
 func _enter_tree():
 	name_label = get_node(name_label_path) as Label
 	health_bar = get_node(health_bar_path) as TextureProgress
@@ -122,14 +124,14 @@ func set_max_distance(var value : float) -> void:
 	
 	max_distance = value
 
-func c_health_changed(stat : EntityResource) -> void:
-	if stat.max_value == 0:
+func c_health_changed() -> void:
+	if _health.max_value == 0:
 		health_bar.max_value = 1
 		health_bar.value = 0
 		return
 		
-	health_bar.max_value = stat.max_value
-	health_bar.value = stat.current_value
+	health_bar.max_value = _health.max_value
+	health_bar.value = _health.current_value
 	
 	
 #	if stat.cmax != 0:
@@ -172,6 +174,6 @@ func on_centity_resource_added(resorce) -> void:
 	if health != null:
 		return
 	
-	health = entity.getc_health()
-	health.connect("changed", self, "c_health_changed")
-	c_health_changed(health)
+	_health = entity.getc_health()
+	_health.connect("changed", self, "c_health_changed")
+	c_health_changed()
