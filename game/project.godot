@@ -500,6 +500,10 @@ sheath={
 3d_physics/layer_1="World"
 3d_physics/layer_2="Entities"
 
+[memory]
+
+limits/message_queue/max_size_kb=2048
+
 [physics]
 
 2d/default_gravity=0
