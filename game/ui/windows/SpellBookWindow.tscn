@@ -16,7 +16,6 @@ spell_entry_container_path = NodePath("PagedContent/GridContainer")
 prev_button_path = NodePath("PagedContent/Controls/HBoxContainer/Button2")
 next_button_path = NodePath("PagedContent/Controls/HBoxContainer/Button")
 spell_points_label_path = NodePath("PagedContent/Controls/HBoxContainer/SpellPoints")
-show_not_learned = false
 
 [node name="PagedContent" type="VBoxContainer" parent="."]
 margin_left = 4.0
@@ -29,13 +28,13 @@ margin_right = 876.0
 margin_bottom = 30.0
 
 [node name="Label" type="Label" parent="PagedContent/Header"]
-margin_top = 6.0
-margin_right = 63.0
-margin_bottom = 23.0
+margin_top = 7.0
+margin_right = 54.0
+margin_bottom = 22.0
 text = "Spellbook"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PagedContent/Header"]
-margin_left = 67.0
+margin_left = 58.0
 margin_right = 832.0
 margin_bottom = 30.0
 size_flags_horizontal = 3
@@ -43,8 +42,8 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Button" type="Button" parent="PagedContent/Header/HBoxContainer"]
-margin_left = 332.0
-margin_right = 432.0
+margin_left = 337.0
+margin_right = 437.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 100, 0 )
 text = "Nature"
@@ -59,7 +58,7 @@ text = "X"
 [node name="GridContainer" type="GridContainer" parent="PagedContent"]
 margin_top = 38.0
 margin_right = 876.0
-margin_bottom = 462.0
+margin_bottom = 464.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
@@ -137,7 +136,7 @@ margin_right = 876.0
 margin_bottom = 422.0
 
 [node name="Controls" type="MarginContainer" parent="PagedContent"]
-margin_top = 470.0
+margin_top = 472.0
 margin_right = 876.0
 margin_bottom = 502.0
 custom_constants/margin_right = 2
@@ -149,13 +148,13 @@ custom_constants/margin_bottom = 2
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 874.0
-margin_bottom = 30.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Button2" type="Button" parent="PagedContent/Controls/HBoxContainer"]
 margin_right = 434.0
-margin_bottom = 28.269
+margin_bottom = 26.5702
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "< Previous page"
@@ -173,7 +172,7 @@ valign = 1
 [node name="Button" type="Button" parent="PagedContent/Controls/HBoxContainer"]
 margin_left = 438.0
 margin_right = 872.0
-margin_bottom = 28.269
+margin_bottom = 26.5702
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Next page >"
