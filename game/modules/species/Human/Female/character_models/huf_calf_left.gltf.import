@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_calf_left.gltf-8e616bf74161c9cc3335bb03a6585c30.
 
 [params]
 
+collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 0.011, 0.011, 0.011 )
