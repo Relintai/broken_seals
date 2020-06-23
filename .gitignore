@@ -5,6 +5,7 @@ modules/*
 *.o
 *.meta
 game/.import/**
+game/.prop_tool_temp/**
 .sconsign.dblite
 .DS_Store
 
