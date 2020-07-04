@@ -342,10 +342,10 @@ config/version="0.2"
 [autoload]
 
 Logger="*res://autoload/Logger.tscn"
-Settings="*res://autoload/SettingsManager.gd"
-CursorManager="*res://autoload/CursorManager.tscn"
-WorldNumbers="*res://autoload/WorldNumbers.tscn"
-ThemeAtlas="*res://autoload/ThemeAtlas.tscn"
+Settings="*res://ui/autoload/SettingsManager.gd"
+CursorManager="*res://cursors/autoload/CursorManager.tscn"
+WorldNumbers="*res://ui/autoload/WorldNumbers.tscn"
+ThemeAtlas="*res://ui/autoload/ThemeAtlas.tscn"
 Server="*res://autoload/Server.tscn"
 
 [debug]

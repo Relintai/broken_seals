@@ -108,7 +108,7 @@ size_flags_horizontal = 3
 [node name="Button" type="Button" parent="SpellEntryPopup/VBoxContainer/HBoxContainer"]
 margin_left = 258.0
 margin_right = 288.0
-margin_bottom = 26.269
+margin_bottom = 26.5702
 rect_min_size = Vector2( 30, 0 )
 text = "X"
 
@@ -121,13 +121,14 @@ margin_bottom = 38.0
 visible = false
 margin_top = 46.0
 margin_right = 288.0
-margin_bottom = 66.0
+margin_bottom = 69.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="KnownLabel" type="Label" parent="SpellEntryPopup/VBoxContainer/PanelContainer"]
-margin_top = 2.0
-margin_right = 288.0
-margin_bottom = 17.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 284.0
+margin_bottom = 19.0
 text = "Known"
 align = 1
 valign = 1
@@ -136,7 +137,7 @@ valign = 1
 visible = false
 margin_top = 46.0
 margin_right = 288.0
-margin_bottom = 72.269
+margin_bottom = 72.5702
 text = "Learn"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SpellEntryPopup/VBoxContainer"]

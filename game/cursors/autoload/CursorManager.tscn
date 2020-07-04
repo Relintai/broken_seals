@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://autoload/CursorManager.gd" type="Script" id=1]
+[ext_resource path="res://cursors/autoload/CursorManager.gd" type="Script" id=1]
 [ext_resource path="res://cursors/arrow16.png" type="Texture" id=2]
 [ext_resource path="res://cursors/loot16.png" type="Texture" id=3]
 [ext_resource path="res://cursors/attack16.png" type="Texture" id=4]
@@ -8,6 +8,7 @@
 [ext_resource path="res://cursors/drag_drop.png" type="Texture" id=6]
 [ext_resource path="res://cursors/forbidden.png" type="Texture" id=7]
 [ext_resource path="res://cursors/ibeam.png" type="Texture" id=8]
+
 
 
 
