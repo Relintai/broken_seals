@@ -8,6 +8,7 @@
 resource_name = "Aspect of Bees"
 id = 3
 spell_type = 8
+level = 4
 rank = 1
 icon = ExtResource( 3 )
 needs_target = true

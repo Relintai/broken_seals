@@ -26,7 +26,7 @@
 [sub_resource type="EntityAI" id=1]
 script = ExtResource( 9 )
 
-[sub_resource type="CharacterSpec" id=3]
+[sub_resource type="CharacterSpec" id=2]
 id = 1
 
 [resource]
@@ -34,7 +34,7 @@ resource_name = "Naturalist"
 id = 1
 text_name = "Naturalist"
 entity_resources = [ ExtResource( 4 ) ]
-specs = [ SubResource( 3 ) ]
+specs = [ SubResource( 2 ) ]
 spells = [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 5 ), ExtResource( 12 ), ExtResource( 23 ), ExtResource( 1 ), ExtResource( 10 ), ExtResource( 24 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 11 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 21 ), ExtResource( 14 ) ]
 start_spells = [ ExtResource( 7 ), ExtResource( 21 ), ExtResource( 14 ) ]
 ais = [ SubResource( 1 ) ]
