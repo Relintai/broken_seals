@@ -26,7 +26,7 @@ func _setup():
 	sizey = 4
 	sizez = 4
 	
-func _generate_chunk(chunk : VoxelChunk, spawn_mobs: bool) -> void:
+func a_generate_chunk(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 	if chunk.position_x != 0 or chunk.position_z != 0:
 		return
 	
