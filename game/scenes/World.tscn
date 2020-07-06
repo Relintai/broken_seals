@@ -55,6 +55,9 @@ glow_hdr_luminance_cap = 1.0
 [node name="World" type="VoxelWorldDefault" groups=[
 "save",
 ]]
+chunk_size_x = 8
+chunk_size_y = 8
+chunk_size_z = 8
 data_margin_end = 2
 max_concurrent_generations = 8
 max_frame_chunk_build_steps = 4
@@ -62,6 +65,7 @@ library = ExtResource( 2 )
 level_generator = SubResource( 1 )
 voxel_scale = 3.0
 build_flags = 511
+lod_update_interval = 2.0
 script = ExtResource( 8 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

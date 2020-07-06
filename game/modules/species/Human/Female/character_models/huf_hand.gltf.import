@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_hand.gltf-fcf6ee970e736831a55e77cbf1e6bfcd.res" 
 
 [params]
 
+collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 0.011, 0.011, 0.011 )

@@ -33,7 +33,21 @@ var _entities_spawned : bool
 var _prop_mesh_instance_rid : RID
 var _prop_mesh_rid : RID
 
+#func _init():
+#	add_mesh_data_resource(get_transform().scaled(Vector3(10, 10, 10)), ResourceLoader.load("res://modules/species/Human/Female/character_models/huf_calf_left.gltf"))
+#	add_mesh_data_resource(get_transform().translated(Vector3(0, 4, 0)), ResourceLoader.load("res://modules/species/Human/Female/character_models/huf_calf_left.gltf"))
+
+
 func _create_meshers():
+	prop_mesher = TVVoxelMesher.new()
+	prop_mesher.base_light_value = 0.45
+	prop_mesher.ao_strength = 0.2
+	prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+	prop_mesher.lod_size = lod_size
+	prop_mesher.voxel_scale = voxel_scale
+	prop_mesher.build_flags = build_flags
+	prop_mesher.texture_scale = 3
+	
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
@@ -201,8 +215,7 @@ func build_phase_prop_mesh() -> void:
 		
 		VisualServer.instance_geometry_set_material_override(_prop_mesh_instance_rid, _prop_material.get_rid())
 		
-		for i in range(get_prop_mesher_count()):
-			get_prop_mesher(i).material = _prop_material
+		get_prop_mesher().material = _prop_material
 		
 	for i in range(get_prop_count()):
 		var prop : VoxelChunkPropData = get_prop(i)
@@ -225,20 +238,17 @@ func build_phase_prop_mesh() -> void:
 		if prop.mesh != null:
 			var t : Transform = get_prop_transform(prop, prop.snap_to_mesh, prop.snap_axis)
 			
-			for j in range(get_prop_mesher_count()):
-				prop.prop.add_meshes_into(get_prop_mesher(j), _prop_texture_packer, t, get_voxel_world())
+			prop.prop.add_meshes_into(get_prop_mesher(), _prop_texture_packer, t, get_voxel_world())
 			
 		if prop.prop != null:
 			var vmanpp : PropData = prop.prop as PropData
 			var t : Transform = get_prop_transform(prop, vmanpp.snap_to_mesh, vmanpp.snap_axis)
 			
-			for j in range(get_prop_mesher_count()):
-				prop.prop.add_meshes_into(get_prop_mesher(j), _prop_texture_packer, t, get_voxel_world())
+			prop.prop.add_meshes_into(get_prop_mesher(), _prop_texture_packer, t, get_voxel_world())
 
-	for i in range(get_prop_mesher_count()):
-		get_prop_mesher(i).bake_colors(self)
-		get_prop_mesher(i).build_mesh_into(_prop_mesh_rid)
-		get_prop_mesher(i).material = null
+	get_prop_mesher().bake_colors(self)
+	get_prop_mesher().build_mesh_into(_prop_mesh_rid)
+	get_prop_mesher().material = null
 		
 	if not _entities_spawned:
 		for i in range(get_prop_count()):
@@ -282,27 +292,27 @@ func get_prop_mesh_transform(base_transform : Transform, snap_to_mesh: bool, sna
 
 	return base_transform
 
-func _build_phase(phase):
-	if phase == VoxelChunkDefault.BUILD_PHASE_PROP_SETUP:
-		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
-		return
-	elif phase == VoxelChunkDefault.BUILD_PHASE_PROP_MESH:
-		next_phase()
-		return
-		
-	._build_phase(phase)
+#func _build_phase(phase):
+#	if phase == VoxelChunkDefault.BUILD_PHASE_COLLIDER:
+#		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_PHYSICS_PROCESS
+#		return
+#	elif phase == VoxelChunkDefault.BUILD_PHASE_PROP_MESH:
+#		next_phase()
+#		return
+#
+#	._build_phase(phase)
 
 
-func _build_phase_physics_process(phase):
-	if phase == VoxelChunkDefault.BUILD_PHASE_PROP_SETUP:
-#		add_prop(ResourceLoader.load("res://prop_tool/ToolTes2at.tres"))
-		build_phase_prop_mesh()
-		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_NORMAL
-		next_phase()
-		return
-		
-	._build_phase_physics_process(phase)
-		
+#func _build_phase_physics_process(phase):
+#	if phase == VoxelChunkDefault.BUILD_PHASE_PROP_SETUP:
+##		add_prop(ResourceLoader.load("res://prop_tool/ToolTes2at.tres"))
+#		build_phase_prop_mesh()
+#		active_build_phase_type = VoxelChunkDefault.BUILD_PHASE_TYPE_NORMAL
+#		next_phase()
+#		return
+#
+#	._build_phase_physics_process(phase)
+#
 
 func build_phase_lights() -> void:
 	var vl : VoxelLight = VoxelLight.new()

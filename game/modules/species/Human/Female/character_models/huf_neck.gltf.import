@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_neck.gltf-d56952b61ff8a42dece5b949ad0f9a7f.res" 
 
 [params]
 
+collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 0.011, 0.011, 0.011 )
