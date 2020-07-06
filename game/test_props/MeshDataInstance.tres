@@ -1,0 +1,34 @@
+[gd_resource type="PropData" load_steps=12 format=2]
+
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=1]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.gltf" type="MeshDataResource" id=2]
+[ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=3]
+[ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf.png" type="Texture" id=4]
+[ext_resource path="res://test_props/MeshDataInstance2.tres" type="PropData" id=5]
+[ext_resource path="res://test_props/MeshDataInstance2.tscn" type="PackedScene" id=6]
+
+[sub_resource type="PropDataMeshData" id=1]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 0.182433 )
+mesh = ExtResource( 1 )
+texture = ExtResource( 4 )
+
+[sub_resource type="PropDataMeshData" id=2]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 2.33732 )
+mesh = ExtResource( 2 )
+texture = ExtResource( 3 )
+
+[sub_resource type="PropDataLight" id=3]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 1.18272 )
+light_color = Color( 0.643137, 0.376471, 0.376471, 1 )
+light_size = 6
+
+[sub_resource type="PropDataProp" id=4]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.55294, 0, 1.18272 )
+prop = ExtResource( 5 )
+
+[sub_resource type="PropDataScene" id=5]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 1.18272 )
+scene = ExtResource( 6 )
+
+[resource]
+props = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
