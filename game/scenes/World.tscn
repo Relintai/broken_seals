@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=1]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=2]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=3]
+[ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=4]
 [ext_resource path="res://voxelman/world/TVVoxelWorld.gd" type="Script" id=8]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
@@ -67,6 +68,7 @@ voxel_scale = 3.0
 build_flags = 511
 lod_update_interval = 2.0
 script = ExtResource( 8 )
+test_prop = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 3 )

@@ -23,11 +23,11 @@ light_color = Color( 0.643137, 0.376471, 0.376471, 1 )
 light_size = 6
 
 [sub_resource type="PropDataProp" id=4]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.55294, 0, 1.18272 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.55294, 0, 2.9085 )
 prop = ExtResource( 5 )
 
 [sub_resource type="PropDataScene" id=5]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 1.18272 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0194, 0, 1.18272 )
 scene = ExtResource( 6 )
 
 [resource]

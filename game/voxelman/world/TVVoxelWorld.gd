@@ -30,6 +30,8 @@ export(bool) var editor_generate : bool = false setget set_editor_generate, get_
 export(bool) var show_loading_screen : bool = true
 export(bool) var generate_on_ready : bool = false
 
+export(PropData) var test_prop : PropData
+
 var initial_generation : bool = true
 
 var spawned : bool = false
@@ -175,6 +177,8 @@ func spawn() -> void:
 		for z in range(-chunk_spawn_range, chunk_spawn_range):
 			for y in range(-1, 2):
 				create_chunk(x, y, z)
+				
+#	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)
 
 	set_process(true)
 	
