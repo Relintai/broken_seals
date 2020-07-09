@@ -6,8 +6,6 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
-### In order to open the game project in Godot, you need a custom built Godot editor! [See here.](#editing-the-game)
-
 Screenshot:
 
 ![Broken Seals](pictures/screen.jpg)
