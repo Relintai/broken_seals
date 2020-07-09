@@ -14,10 +14,15 @@ Screenshot:
 
 ## Editing the game
 
-In order for you to open the game in the editor you will need a custom built version, with a few engine modules built in, 
-and unfortunately for now, you will need to build it yourself. (Binary releases will be available eventually!)
+In order for you to open the game in the editor you will need a custom built version, with a few engine modules built in.
 
-But don't worry, Godot is surpisingly easy and hassle free to compile! [See here.](#compiling)
+You can check the releases tab to grab one, but since the project still changes a lot on the c++ side,
+if you get it there, also get the relevant game project.
+
+At the moment I don't have nightlies, I do plan on setting up something that could create them (github actions maybe?) eventually.
+
+If you want to use master, you will need to build the project yourself for now, but don't worry, Godot is surpisingly easy and 
+hassle free to compile! [See here.](#compiling)
 
 After you have the engine with the required modules, you can go ahead, and just open the project inside the `game` folder.
 
