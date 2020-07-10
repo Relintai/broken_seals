@@ -173,9 +173,11 @@ func build():
 				data.append(ddict)
 	
 	_mesh_job.data = data
-	ThreadPool.add_job(_mesh_job)
-
+	
 	finish_build_mesh()
+	
+	ThreadPool.add_job(_mesh_job)
+#	_mesh_job.execute()
 
 func setup_build_mesh() -> void:
 	if mesh_instance != null:
