@@ -29,7 +29,7 @@ _spawn_mobs = false
 
 [sub_resource type="ProceduralSky" id=2]
 sky_top_color = Color( 0.447059, 0.780392, 0.854902, 1 )
-sky_horizon_color = Color( 0.273637, 0.277344, 0.206924, 1 )
+sky_horizon_color = Color( 0.27451, 0.278431, 0.207843, 1 )
 sky_curve = 0.263535
 sky_energy = 0.3
 ground_bottom_color = Color( 0.196078, 0.152941, 0.152941, 1 )

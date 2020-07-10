@@ -13,15 +13,15 @@ _level_seed = 0
 _spawn_mobs = false
 
 [sub_resource type="ProceduralSky" id=2]
-sky_top_color = Color( 0.678431, 0.831373, 0.984314, 1 )
-sky_horizon_color = Color( 0.486275, 0.74902, 0.921569, 1 )
+sky_top_color = Color( 0.34902, 0.643137, 0.705882, 1 )
+sky_horizon_color = Color( 0.27451, 0.278431, 0.207843, 1 )
 sky_curve = 0.263535
 sky_energy = 0.3
 ground_bottom_color = Color( 0.196078, 0.152941, 0.152941, 1 )
 ground_horizon_color = Color( 0.223529, 0.192157, 0.164706, 1 )
 ground_curve = 0.101965
 ground_energy = 0.4
-sun_color = Color( 0.356863, 0.313726, 0.219608, 1 )
+sun_color = Color( 0.45098, 0.352941, 0.113725, 1 )
 sun_latitude = 39.71
 sun_longitude = -8.09
 sun_angle_min = 0.0
