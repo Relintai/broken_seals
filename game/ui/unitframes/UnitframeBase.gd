@@ -134,7 +134,7 @@ func cname_changed(entity: Entity) -> void:
 func clevel_changed(entity: Entity, value : int) -> void:
 	_level_text.text = str(_player.clevel)
 	
-	var xpreq : int = ESS.get_resource_db().get_xp_data().get_character_xp(_player.clevel)
+	var xpreq : int = ESS.get_character_xp(_player.clevel)
 	
 	if xpreq == 0:
 		_xp_range.value = 0

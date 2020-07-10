@@ -1,4 +1,4 @@
-[gd_resource type="ESSResourceDBStatic" load_steps=9 format=2]
+[gd_resource type="ESSResourceDBStatic" load_steps=8 format=2]
 
 [ext_resource path="res://modules/core/item_templates/2_test.tres" type="ItemTemplate" id=1]
 [ext_resource path="res://modules/core/item_templates/3_chest_of_the_infinite_wisdom.tres" type="ItemTemplate" id=2]
@@ -7,10 +7,8 @@
 [ext_resource path="res://modules/core/item_templates/1_gold.tres" type="ItemTemplate" id=5]
 [ext_resource path="res://modules/core/crafting/1_test_craft.tres" type="CraftRecipe" id=6]
 [ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResource" id=7]
-[ext_resource path="res://modules/core/xp/xp_data.tres" type="XPData" id=8]
 
 [resource]
-xp_data = ExtResource( 8 )
 entity_resources = [ ExtResource( 7 ) ]
 entity_skills = [ ExtResource( 4 ) ]
 craft_recipes = [ ExtResource( 6 ), ExtResource( 3 ) ]

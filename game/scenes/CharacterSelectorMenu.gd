@@ -159,18 +159,16 @@ func renounce_character() -> void:
 	if ESS.use_class_xp:
 		var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.sentity_data.resource_path)
 		
-		var xp_data : XPData = ESS.get_resource_db().get_xp_data()
-		
-		if xp_data.can_class_level_up(class_profile.level):
+		if ESS.can_class_level_up(class_profile.level):
 			class_profile.xp += b.entity.sclass_xp
 			
-			var xpr : int = xp_data.get_class_xp(class_profile.level)
+			var xpr : int = ESS.get_class_xp(class_profile.level)
 			
-			while xp_data.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
+			while ESS.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
 				class_profile.level += 1
 				class_profile.xp -= xpr
 				
-				xpr = xp_data.get_class_xp(class_profile.level)
+				xpr = ESS.get_class_xp(class_profile.level)
 				
 			ProfileManager.save()
 
