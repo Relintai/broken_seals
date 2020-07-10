@@ -117,10 +117,10 @@ func _enter_tree():
 	for iv in viss:
 		add_model_visual(iv as ModelVisual)
 
+	sheath(sheathed)
+	
 	if automatic_build:
 		build_model()
-
-	sheath(sheathed)
 
 func _build_model():
 	if _generating:
