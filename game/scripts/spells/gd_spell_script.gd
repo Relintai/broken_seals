@@ -21,6 +21,10 @@ class_name SpellGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+var gcd_id : int = 0
+
+func _init():
+	gcd_id = ESS.stat_get_id("Global Cooldown")
 
 func _cast_starts(info : SpellCastInfo) -> void:
 	if needs_target and info.target == null:
@@ -208,7 +212,7 @@ func handle_cooldown(info : SpellCastInfo) -> void:
 		
 func handle_gcd(info : SpellCastInfo) -> void:
 	if cooldown_global_cooldown_enabled and cast_cast_time < 0.01:
-		info.caster.gcd_starts(info.caster.get_gcd().scurrent)
+		info.caster.gcd_starts(info.caster.stat_gets_current(gcd_id))
 
 func add_spell_cast_effect(info : SpellCastInfo) -> void:
 	var basic_spell_effect : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
