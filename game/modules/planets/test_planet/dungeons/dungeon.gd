@@ -28,18 +28,8 @@ func _setup():
 	var drd : DungeonRoomData = data.get_dungeon_start_room_data(0)
 	
 	var dung : DungeonRoom
-	if drd.target_script != null:
-		dung = drd.target_script.new()
-		
-		if dung == null:
-			print("drd is null. wrong type? " + drd.resource_path)
-			return
-	elif drd.target_class_name != "":
-		if not ClassDB.class_exists(drd.target_class_name):
-			print("class doesnt exists" + drd.resource_path)
-			return
-		
-		dung = ClassDB.instance(drd.target_class_name)
+	if drd.dungeon_room != null:
+		dung = drd.dungeon_room.duplicate()
 	else:
 		dung = DungeonRoom.new()
 	

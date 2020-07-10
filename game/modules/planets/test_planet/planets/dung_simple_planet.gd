@@ -32,18 +32,8 @@ func _setup():
 		
 	var b : Biome
 	
-	if bdata.target_script != null:
-		b = bdata.target_script.new()
-		
-		if b == null:
-			print("biome is null. wrong type? " + bdata.resource_path)
-			return
-	elif bdata.target_class_name != "":
-		if not ClassDB.class_exists(bdata.target_class_name):
-			print("class doesnt exists" + bdata.resource_path)
-			return
-		
-		b = ClassDB.instance(bdata.target_class_name)
+	if bdata.biome != null:
+		b = bdata.biome.duplicate()
 	else:
 		b = Biome.new()
 	
@@ -58,18 +48,8 @@ func _setup():
 	var dd : DungeonData = bdata.get_dungeon_data(0)
 	
 	var dung : Dungeon
-	if dd.target_script != null:
-		dung = dd.target_script.new()
-		
-		if dung == null:
-			print("dd is null. wrong type? " + dd.resource_path)
-			return
-	elif dd.target_class_name != "":
-		if not ClassDB.class_exists(dd.target_class_name):
-			print("class doesnt exists" + dd.resource_path)
-			return
-		
-		dung = ClassDB.instance(dd.target_class_name)
+	if dd.dungeon != null:
+		dung = dd.dungeon.duplicate()
 	else:
 		dung = Dungeon.new()
 	

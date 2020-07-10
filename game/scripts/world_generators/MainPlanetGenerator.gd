@@ -67,18 +67,8 @@ func create_planet():
 		
 	print("planet loaded: " + planet_data.resource_path)
 		
-	if planet_data.target_script != null:
-		_planet = planet_data.target_script.new()
-		
-		if _planet == null:
-			print("_planet is null. wrong type? " + planet_data.resource_path)
-			return
-	elif planet_data.target_class_name != "":
-		if not ClassDB.class_exists(planet_data.target_class_name):
-			print("class doesnt exists" + planet_data.resource_path)
-			return
-		
-		_planet = ClassDB.instance(planet_data.target_class_name)
+	if planet_data.planet != null:
+		_planet = planet_data.planet.duplicate()
 	else:
 		_planet = Planet.new()
 		
