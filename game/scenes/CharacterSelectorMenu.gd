@@ -106,7 +106,7 @@ func refresh():
 				centry.pressed = true
 				centry.connect("pressed", self, "character_selection_changed")
 				
-				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.characterclass_id).text_name, display.scharacter_level, display.sclass_level, display)
+				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.characterclass_id).text_name, display.slevel, display.slevel, display)
 				
 				if first_entry == null:
 					first_entry = centry

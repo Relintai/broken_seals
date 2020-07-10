@@ -72,7 +72,7 @@ func _notification_sdeath():
 	
 	dead = true
 	
-	var ldiff : float = scharacter_level - starget.scharacter_level + 10.0
+	var ldiff : float = slevel - starget.slevel + 10.0
 	
 	if ldiff < 0:
 		ldiff = 0
@@ -82,7 +82,7 @@ func _notification_sdeath():
 		
 	ldiff /= 10.0
 	
-	starget.xp_adds(int(5.0 * scharacter_level * ldiff))
+	starget.xp_adds(int(5.0 * slevel * ldiff))
 		
 	starget = null
 	
@@ -111,14 +111,14 @@ func _notification_cheal(what, info):
 		WorldNumbers.heal(get_body().translation, 1.6, info.heal, info.crit)
 
 func _notification_sxp_gained(value : int) -> void:
-	if not ESS.get_resource_db().get_xp_data().can_character_level_up(gets_character_level()):
+	if not ESS.get_resource_db().get_xp_data().can_character_level_up(slevel):
 		return
 	
-	var xpr : int = ESS.get_resource_db().get_xp_data().get_character_xp(gets_character_level());
+	var xpr : int = ESS.get_resource_db().get_xp_data().get_character_xp(slevel);
 	
-	if xpr <= scharacter_xp:
-		levelup_scharacter(1)
-		scharacter_xp = 0
+	if xpr <= sxp:
+		levelups(1)
+		sxp = 0
 
 func _notification_sclass_level_up(value: int):
 	._notification_sclass_level_up(value)

@@ -71,8 +71,8 @@ func set_player(p_player: Entity) -> void:
 	_player = p_player
 	
 	_player.connect("cname_changed", self, "cname_changed")
-	_player.connect("notification_ccharacter_level_up", self, "clevel_changed")
-	_player.connect("con_character_level_changed", self, "clevel_changed")
+	_player.connect("notification_clevel_up", self, "clevel_changed")
+	_player.connect("con_level_changed", self, "clevel_changed")
 	_player.connect("notification_cxp_gained", self, "notification_cxp_gained")
 	_player.connect("centity_resource_added", self, "centity_resource_added")
 	
@@ -84,7 +84,7 @@ func set_player(p_player: Entity) -> void:
 	_health.connect("changed", self, "_on_player_health_changed")
 	
 	_name_text.text = _player.centity_name
-	_level_text.text = str(_player.ccharacter_level)
+	_level_text.text = str(_player.clevel)
 	
 	clevel_changed(_player, 0)
 	notification_cxp_gained(_player, 0)
@@ -132,9 +132,9 @@ func cname_changed(entity: Entity) -> void:
 	_name_text.text = _player.centity_name
 
 func clevel_changed(entity: Entity, value : int) -> void:
-	_level_text.text = str(_player.ccharacter_level)
+	_level_text.text = str(_player.clevel)
 	
-	var xpreq : int = ESS.get_resource_db().get_xp_data().get_character_xp(_player.ccharacter_level)
+	var xpreq : int = ESS.get_resource_db().get_xp_data().get_character_xp(_player.clevel)
 	
 	if xpreq == 0:
 		_xp_range.value = 0
@@ -146,5 +146,5 @@ func clevel_changed(entity: Entity, value : int) -> void:
 	_xp_range.max_value = xpreq
 
 func notification_cxp_gained(entity: Entity, val: int) -> void:
-	_xp_range.value = _player.ccharacter_xp
+	_xp_range.value = _player.cxp
 
