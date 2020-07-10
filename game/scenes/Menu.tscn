@@ -114,7 +114,7 @@ player_display_container_path = NodePath("../Char/CharacterDisplay")
 character_button_group = ExtResource( 4 )
 character_entry = ExtResource( 2 )
 character_folder = "characters"
-load_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Continue")
+load_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
 renounce_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Delete")
 create_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/New")
 
@@ -163,11 +163,11 @@ size_flags_vertical = 3
 margin_right = 261.0
 size_flags_horizontal = 3
 
-[node name="Continue" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
+[node name="Load" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 458.0
 margin_right = 261.0
 margin_bottom = 484.57
-text = "Continue"
+text = "Load"
 
 [node name="New" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 492.0
@@ -605,7 +605,7 @@ light_energy = 0.87
 light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 19 )
-[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Continue" to="CharacterSelectorMenu" method="load_character"]
+[connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/New" to="." method="switch_to_menu" binds= [ 1 ]]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Delete" to="CharacterSelectorMenu" method="renounce_character"]
 [connection signal="pressed" from="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer/Create" to="CharacterCreationMenu" method="create"]

@@ -69,10 +69,6 @@ chunk_spawn_range = 6
 build_flags = 511
 lod_update_interval = 2.0
 script = ExtResource( 8 )
-meshes = [  ]
-editor_generate = false
-show_loading_screen = true
-generate_on_ready = false
 test_prop = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
