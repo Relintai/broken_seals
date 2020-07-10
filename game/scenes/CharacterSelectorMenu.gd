@@ -32,6 +32,7 @@ export(NodePath) var renounce_button_path : NodePath
 export(NodePath) var create_button_path : NodePath
 
 export(bool) var automatic_character_load : bool = false
+export(bool) var only_one_character : bool = false
 
 var container : Node
 var player_display_container_node : Node
@@ -114,24 +115,31 @@ func refresh():
 			first_entry.pressed = true
 			
 		if first_entry != null:
-			get_node(container_path).show()
+			#note that this just disables the create button, and 
+			#will still allow character creation otherwise
+			if only_one_character:
+				get_node(create_button_path).hide()
+				get_node(container_path).show()
+			
 			get_node(load_button_path).show()
-			get_node(create_button_path).hide()
 			get_node(renounce_button_path).show()
 			
 			if (automatic_character_load):
 				load_character()
 		else:
-			get_node(container_path).hide()
+			if only_one_character:
+				get_node(create_button_path).show()
+				get_node(container_path).hide()
+				
 			get_node(load_button_path).hide()
-			get_node(create_button_path).show()
 			get_node(renounce_button_path).hide()
 	else:
 		dir.make_dir("user://" + character_folder)
-		
-		get_node(container_path).hide()
+		if only_one_character:
+			get_node(container_path).hide()
+			get_node(create_button_path).show()
+			
 		get_node(load_button_path).hide()
-		get_node(create_button_path).show()
 		get_node(renounce_button_path).hide()
 
 func clear() -> void:
@@ -148,22 +156,23 @@ func renounce_character() -> void:
 	if b == null:
 		return
 		
-	var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.sentity_data.resource_path)
-	
-	var xp_data : XPData = ESS.get_resource_db().get_xp_data()
-	
-	if xp_data.can_class_level_up(class_profile.level):
-		class_profile.xp += b.entity.sclass_xp
+	if ESS.use_class_xp:
+		var class_profile : ClassProfile = ProfileManager.getc_player_profile().get_class_profile(b.entity.sentity_data.resource_path)
 		
-		var xpr : int = xp_data.get_class_xp(class_profile.level)
+		var xp_data : XPData = ESS.get_resource_db().get_xp_data()
 		
-		while xp_data.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
-			class_profile.level += 1
-			class_profile.xp -= xpr
+		if xp_data.can_class_level_up(class_profile.level):
+			class_profile.xp += b.entity.sclass_xp
 			
-			xpr = xp_data.get_class_xp(class_profile.level)
+			var xpr : int = xp_data.get_class_xp(class_profile.level)
 			
-		ProfileManager.save()
+			while xp_data.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
+				class_profile.level += 1
+				class_profile.xp -= xpr
+				
+				xpr = xp_data.get_class_xp(class_profile.level)
+				
+			ProfileManager.save()
 
 	var file_name : String = "user://" + character_folder + "/" + b.file_name
 	
