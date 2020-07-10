@@ -327,7 +327,7 @@ func _ccategory_cooldown_removed(id : int, value : float) -> void:
 		categ_cd = 0
 		
 	
-func _cgcd_started(value :float) -> void:
+func _cgcd_started(e : Entity, value :float) -> void:
 	if not has_gcd:
 		return
 	
