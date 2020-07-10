@@ -120,7 +120,7 @@ func _enter_tree():
 	sheath(sheathed)
 	
 	if automatic_build:
-		build_model()
+		call_deferred("build_model")
 
 func _build_model():
 	if _generating:
