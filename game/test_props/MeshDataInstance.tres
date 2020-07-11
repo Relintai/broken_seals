@@ -2,10 +2,11 @@
 
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=1]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.gltf" type="MeshDataResource" id=2]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=3]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf.png" type="Texture" id=4]
+[ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf.png" type="Texture" id=3]
+[ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_red_scarf.png" type="Texture" id=4]
 [ext_resource path="res://test_props/MeshDataInstance2.tres" type="PropData" id=5]
 [ext_resource path="res://test_props/MeshDataInstance2.tscn" type="PackedScene" id=6]
+
 
 [sub_resource type="PropDataMeshData" id=1]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 0.182433 )

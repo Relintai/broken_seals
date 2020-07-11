@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/armor_red_scarf_v3.png-bbb226f54555f1036802f546bac2b87d.stex"
+path="res://.import/armor_green_scarf_v3.png-65b0d0907d90f6f53dbb261fce8ce5c1.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/species/Human/Female/character_textures/armor_red_scarf_v3.png"
-dest_files=[ "res://.import/armor_red_scarf_v3.png-bbb226f54555f1036802f546bac2b87d.stex" ]
+source_file="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf_v3.png"
+dest_files=[ "res://.import/armor_green_scarf_v3.png-65b0d0907d90f6f53dbb261fce8ce5c1.stex" ]
 
 [params]
 

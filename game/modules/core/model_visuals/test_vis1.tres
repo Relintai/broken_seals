@@ -15,10 +15,11 @@
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_left.gltf" type="MeshDataResource" id=13]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf" type="MeshDataResource" id=14]
 [ext_resource path="res://modules/species/Human/Female/character_textures/skin.png" type="Texture" id=15]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_simple.png" type="Texture" id=16]
+[ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_simple.png" type="Texture" id=16]
 [ext_resource path="res://modules/species/Human/Female/character_textures/head.png" type="Texture" id=17]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_green_scarf.png" type="Texture" id=18]
-[ext_resource path="res://modules/species/Human/Female/character_textures/armor_red_scarf.png" type="Texture" id=19]
+[ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf.png" type="Texture" id=18]
+[ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_red_scarf.png" type="Texture" id=19]
+
 
 [sub_resource type="ModelVisualEntry" id=1]
 entry_0/mesh = ExtResource( 1 )

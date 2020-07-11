@@ -1,0 +1,37 @@
+<Attributions>
+<Module>
+<Name>Test Character Textures</Name>
+<URL></URL>
+<Description></Description>
+<Licenses>
+MIT
+</Licenses>
+</Module>
+
+<Attribution>
+<Name>100 Seamless Textures</Name>
+<URL>https://opengameart.org/content/100-seamless-textures</URL>
+<Description>
+The original assets have been modified!
+
+Public domain seamless textures, 750x750px each.
+
+Source: http://pdtextures.blogspot.com/
+
+Metadata notes:
+
+This work is hereby released into the Public Domain. To view a copy of the public domain dedication, 
+visit http://creativecommons.org/licenses/publicdomain/ or send a letter to Creative Commons, 
+559 Nathan Abbott Way, Stanford, California 94305, USA.
+
+Author: 
+Mitch Featherston
+(Submitted by Clint Bellanger)
+</Description>
+<Licenses>
+CC0
+</Licenses>
+<Files>species/Human/Female/character_textures/100_seamless/*</Files>
+</Attribution>
+
+</Attributions>
