@@ -15,6 +15,8 @@ enum AttibutionIndex {
 	ATTRIBUTION_INDEX_URL = 1,
 	ATTRIBUTION_INDEX_DESCRIPTION = 2,
 	ATTRIBUTION_INDEX_LICENSES = 3,
+	ATTRIBUTION_INDEX_FILES = 4,
+	ATTRIBUTION_INDEX_MAX = 5,
 }
 
 func _enter_tree():
@@ -55,29 +57,6 @@ func populate():
 			curr.set_text(0, entry[i][0])
 			curr.set_metadata(0, data_arr_to_string(entry[i]))
 		
-	
-#	tree.create_item()
-#
-#	for info in Engine.get_copyright_info():
-#		var ti : TreeItem = tree.create_item()
-#
-#		var st : String = info["name"] + "\n\n"
-#
-#		for p in info["parts"]:
-#			for k in p:
-#				st += k + ":\n\n"
-#
-#				if p[k] is Array:
-#					for it in p[k]:
-#						st += String(it) + "\n"
-#				else:
-#					st += String(p[k]) + "\n"
-#
-#			st += "\n\n"
-#
-#		ti.set_metadata(0, st)
-#		ti.set_text(0, info["name"])
-
 func load_all_xmls(path : String) -> void:
 	var dir = Directory.new()
 	if dir.open(path) == OK:
@@ -115,7 +94,7 @@ func load_xml(path : String) -> void:
 	var attributions : Array = Array()
 	attributions.resize(1)
 	var attrib : PoolStringArray = PoolStringArray()
-	attrib.resize(4)
+	attrib.resize(AttibutionIndex.ATTRIBUTION_INDEX_MAX)
 	var curr_element : String = ""
 	while parser.read() == OK:
 		if parser.get_node_type() == XMLParser.NODE_ELEMENT:
@@ -130,16 +109,18 @@ func load_xml(path : String) -> void:
 				attrib[AttibutionIndex.ATTRIBUTION_INDEX_LICENSES] = parser.get_node_data()
 			elif curr_element == "URL":
 				attrib[AttibutionIndex.ATTRIBUTION_INDEX_URL] = parser.get_node_data()
+			elif curr_element == "Files":
+				attrib[AttibutionIndex.ATTRIBUTION_INDEX_FILES] = parser.get_node_data()
 				
 		elif parser.get_node_type() == XMLParser.NODE_ELEMENT_END:
 			if parser.get_node_name() == "Attribution":
 				attributions.push_back(attrib)
 				attrib = PoolStringArray()
-				attrib.resize(4)
+				attrib.resize(AttibutionIndex.ATTRIBUTION_INDEX_MAX)
 			elif parser.get_node_name() == "Module":
 				attributions[0] = attrib
 				attrib = PoolStringArray()
-				attrib.resize(4)
+				attrib.resize(AttibutionIndex.ATTRIBUTION_INDEX_MAX)
 				
 	if attributions[0] == null:
 		print("Attributions file does not have a Module tag! Path: " + path)
@@ -151,12 +132,16 @@ func data_arr_to_string(arr : Array) -> String:
 	
 	s += arr[AttibutionIndex.ATTRIBUTION_INDEX_NAME] + "\n\n"
 	
-	if  arr[AttibutionIndex.ATTRIBUTION_INDEX_URL] != "":
+	if arr[AttibutionIndex.ATTRIBUTION_INDEX_URL] != "":
 		s += "url: " + arr[AttibutionIndex.ATTRIBUTION_INDEX_URL] + "\n\n"
 		
 	s += arr[AttibutionIndex.ATTRIBUTION_INDEX_DESCRIPTION] + "\n\n"
 	
-	s += "License(s):\n\n"
-	s += arr[AttibutionIndex.ATTRIBUTION_INDEX_LICENSES]
+	s += "License(s):\n"
+	s += arr[AttibutionIndex.ATTRIBUTION_INDEX_LICENSES] + "\n\n"
+	
+	if arr[AttibutionIndex.ATTRIBUTION_INDEX_FILES] != "":
+		s += "File(s):\n\n"
+		s += arr[AttibutionIndex.ATTRIBUTION_INDEX_FILES]
 	
 	return s
