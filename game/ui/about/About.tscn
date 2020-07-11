@@ -96,48 +96,49 @@ SOFTWARE."
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 62.0
-margin_bottom = 27.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
 size_flags_horizontal = 3
 script = ExtResource( 7 )
 tree_path = NodePath("HBoxContainer/Tree")
 rtl_path = NodePath("HBoxContainer/PanelContainer/RichTextLabel")
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses"]
-margin_right = 712.0
+margin_right = 720.0
 margin_bottom = 51.0
 text = "This project relies on a number of third-party free and open source assets/components, all compatible with the terms of its MIT license. The following is an exhaustive list of all such third-party components with their respective copyright statements and license terms."
 autowrap = true
 
 [node name="HBoxContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses"]
 margin_top = 59.0
-margin_right = 712.0
-margin_bottom = 361.0
+margin_right = 720.0
+margin_bottom = 396.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 split_offset = -88
 
 [node name="Tree" type="Tree" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer"]
-margin_right = 262.0
-margin_bottom = 302.0
+margin_right = 266.0
+margin_bottom = 337.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 hide_folding = true
 hide_root = true
 
 [node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer"]
-margin_left = 274.0
-margin_right = 712.0
-margin_bottom = 302.0
+margin_left = 278.0
+margin_right = 720.0
+margin_bottom = 337.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/VBoxContainer/TabContainer/Third-Party Licenses/HBoxContainer/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 434.0
-margin_bottom = 298.0
+margin_right = 438.0
+margin_bottom = 333.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
