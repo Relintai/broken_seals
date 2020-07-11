@@ -22,6 +22,7 @@ stat/intellect = 13.0
 stat/spirit = 10.0
 stat/health = 20.0
 stat/mana = 20.0
+stat/global_cooldown = 1.5
 
 [resource]
 resource_name = "Naturalist"

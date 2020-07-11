@@ -3,7 +3,6 @@
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_foot_left.gltf" type="MeshDataResource" id=1]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_simple_v3.png" type="Texture" id=2]
 
-
 [resource]
 entity_type = 1
 bone = 25
