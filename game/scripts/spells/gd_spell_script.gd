@@ -211,7 +211,6 @@ func handle_cooldown(info : SpellCastInfo) -> void:
 		info.caster.cooldown_adds(id, cooldown_cooldown)
 		
 func handle_gcd(info : SpellCastInfo) -> void:
-	print(cast_cast_time)
 	if cooldown_global_cooldown_enabled and not cast_enabled:
 		info.caster.gcd_starts(info.caster.stat_gets_current(gcd_id))
 
