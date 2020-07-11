@@ -91,7 +91,7 @@ func _cast_starts(info : SpellCastInfo) -> void:
 
 	if info.target:
 		info.target.notification_scast(SpellEnums.NOTIFICATION_CAST_FINISHED_TARGET, info)
-
+	
 	handle_cooldown(info)
 		
 #	if projectile != null:
@@ -152,8 +152,8 @@ func handle_effect(info : SpellCastInfo) -> void:
 #		if not ok:
 #			return
 			
-	elif target_type == SPELL_TARGET_TYPE_SELF:
-		info.target = info.caster
+#	elif target_type == SPELL_TARGET_TYPE_SELF:
+#		info.target = info.caster
 		
 	if damage_enabled and info.target:
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
