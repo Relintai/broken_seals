@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Menu.gd" type="Script" id=3]
+[ext_resource path="res://menu/Menu.gd" type="Script" id=3]
 [ext_resource path="res://ui/menu/menu_character_button_group.tres" type="ButtonGroup" id=4]
 [ext_resource path="res://scenes/CharacterSelectorMenu.gd" type="Script" id=5]
 [ext_resource path="res://scenes/CharacterCreationMenu.gd" type="Script" id=6]
@@ -20,6 +20,7 @@
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
+
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )

@@ -162,6 +162,7 @@ func renounce_character() -> void:
 		if ESS.can_class_level_up(class_profile.level):
 			class_profile.xp += b.entity.sclass_xp
 			
+			
 			var xpr : int = ESS.get_class_xp(class_profile.level)
 			
 			while ESS.can_class_level_up(class_profile.level) and class_profile.xp >= xpr:
