@@ -51,6 +51,7 @@ class Logfile:
 		var base_dir = ppath.get_base_dir()
 		if not dir.dir_exists(base_dir):
 			# TODO: Move directory creation to the function that will actually *write*
+			dir.open(base_dir)
 			var err = dir.make_dir_recursive(base_dir)
 			if err:
 				print("[ERROR] [logger] Could not create the '%s' directory; exited with error %d." \
