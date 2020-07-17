@@ -335,5 +335,5 @@ func _cgcd_started(e : Entity, value :float) -> void:
 	show_cooldown_timer(value)
 	set_process(true)
 	
-func _cgcd_finished() -> void:
+func _cgcd_finished(val) -> void:
 	gcd = 0
