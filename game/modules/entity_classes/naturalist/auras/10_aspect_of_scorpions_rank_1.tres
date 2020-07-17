@@ -18,5 +18,5 @@ text_description = "Deals %%damage_min  to %%damage_max  damage every %%tick  se
 damage_enabled = true
 damage_type = 8
 damage_min = 4
-damage_max = 5
+damage_max = 6
 script = ExtResource( 1 )

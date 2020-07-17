@@ -21,33 +21,6 @@ class_name AuraGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#
-#func _handle_aura_damage(aura_data : AuraData, damage_info : SpellDamageInfo) -> void:
-#	randomize()
-#
-#	if  damage_info.dealer == null:
-#		printerr("_handle_aura_damage: damage_info.dealer is null! ")
-#		return
-#
-#	damage_info.damage = damage_min + (randi() % (damage_max - damage_min))
-#
-#	if scale_with_level:
-#		damage_info.damage *= int(float(damage_info.dealer.scharacter_level) / float(EntityEnums.MAX_CHARACTER_LEVEL))
-#
-#	damage_info.damage_source_type = aura_data.aura.damage_type
-#
-#	if (is_instance_valid(damage_info.dealer)):
-#		damage_info.dealer.sdeal_damage_to(damage_info)
-#
-#func _handle_aura_heal(aura_data : AuraData, shi : SpellHealInfo) -> void:
-#	randomize()
-#
-#	shi.heal = heal_min + (randi() % (heal_max - heal_min))
-#	shi.damage *= shi.dealer.scharacter_level / float(EntityEnums.MAX_CHARACTER_LEVEL)
-#	shi.heal_source_type = aura_data.aura.aura_type
-#
-#	shi.dealer.sdeal_heal_to(shi)
-#
 #func _sapply(info : AuraApplyInfo) -> void:
 ##	var add : bool = false
 #	var ad : AuraData = info.target.aura_gets_by(info.caster, info.aura.id)
