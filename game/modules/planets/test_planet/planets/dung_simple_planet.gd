@@ -29,16 +29,10 @@ func _setup():
 		return
 		
 	var bdata : BiomeData = data.get_biome_data(0)
-		
-	var b : Biome
 	
-	if bdata.biome != null:
-		b = bdata.biome.duplicate()
-	else:
-		b = Biome.new()
-	
+	var b : Biome = bdata.instance()
+
 	b.current_seed = current_seed
-	b.data = bdata
 	b.setup()
 	add_biome(b)
 	
@@ -47,17 +41,12 @@ func _setup():
 		
 	var dd : DungeonData = bdata.get_dungeon_data(0)
 	
-	var dung : Dungeon
-	if dd.dungeon != null:
-		dung = dd.dungeon.duplicate()
-	else:
-		dung = Dungeon.new()
-	
+	var dung : Dungeon = dd.instance()
+
 	dung.posx = 0
 	dung.posy = -4
 	dung.posz = 0
 	dung.current_seed = current_seed
-	dung.data = dd
 	dung.setup()
 	
 	add_dungeon(dung)

@@ -30,25 +30,9 @@ func _setup():
 		
 	var bdata : BiomeData = data.get_biome_data(0)
 		
-	var b : Biome
-	
-	if bdata.target_script != null:
-		b = bdata.target_script.new()
-		
-		if b == null:
-			print("biome is null. wrong type? " + bdata.resource_path)
-			return
-	elif bdata.target_class_name != "":
-		if not ClassDB.class_exists(bdata.target_class_name):
-			print("class doesnt exists" + bdata.resource_path)
-			return
-		
-		b = ClassDB.instance(bdata.target_class_name)
-	else:
-		b = Biome.new()
+	var b : Biome = bdata.instance()
 	
 	b.current_seed = current_seed
-	b.data = bdata
 	b.setup()
 	add_biome(b)
 
