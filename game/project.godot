@@ -337,7 +337,5 @@ quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 quality/directional_shadow/size.mobile=1024
 quality/shading/force_vertex_shading=true
-batching/options/use_batching=false
-batching/options/use_batching_in_editor=false
 quality/2d/use_batching=true
 quality/shadows/enabled=false
