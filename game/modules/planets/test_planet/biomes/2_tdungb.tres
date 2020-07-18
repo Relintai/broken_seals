@@ -6,4 +6,3 @@
 [resource]
 biome = ExtResource( 2 )
 dungeon_datas = [ ExtResource( 1 ) ]
-voxel_surfaces = [ null, null, null, null ]

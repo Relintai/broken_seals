@@ -3,4 +3,11 @@
 [ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.gd" type="Script" id=1]
 
 [resource]
+sizex = 40
+sizey = 3
+sizez = 40
 script = ExtResource( 1 )
+level_room_count = 9
+min_room_dimension = 5
+max_room_dimension = 8
+enemy_count = 14

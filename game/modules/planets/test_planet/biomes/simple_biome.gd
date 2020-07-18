@@ -20,11 +20,30 @@ extends BiomeBase
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+func _setup():
+	if !data:
+		return
+	
+	for i in range(data.get_dungeon_data_count()):
+		var dd : DungeonData = data.get_dungeon_data(i)
+		
+		if !dd:
+			continue
+			
+		var d : Dungeon = dd.instance()
+		d.posx = 0
+		d.posz = 0
+		d.posy = -20
+		d.current_seed = current_seed
+		d.setup()
+		add_dungeon(d)
+		return
+
 func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
 	
 #	generate_terrarin(chunk, spawn_mobs)
-	
+
 	generate_simple_terrarin(chunk, spawn_mobs)
 	
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs and randi() % 4 == 0:

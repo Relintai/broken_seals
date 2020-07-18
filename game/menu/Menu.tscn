@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -20,12 +20,14 @@
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
+[ext_resource path="res://modules/planets/test_planet/DungeonPlanetData.tres" type="PlanetData" id=21]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
 _force_planet = -1
 _level_seed = 0
 _spawn_mobs = false
+planet = ExtResource( 21 )
 
 [sub_resource type="ProceduralSky" id=2]
 sky_top_color = Color( 0.447059, 0.780392, 0.854902, 1 )

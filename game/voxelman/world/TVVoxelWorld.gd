@@ -45,13 +45,18 @@ const VIS_UPDATE_INTERVAL = 5
 var vis_update : float = 0
 var _max_frame_chunk_build_temp : int
 
+var rc : int = 0
+
 func _enter_tree():
 	if generate_on_ready and not Engine.is_editor_hint():
+#		call_deferred("generate")
+		generate()
+	
+func generate():
+	if level_generator != null:
+		level_generator.setup(self, 80, false, library)
 		
-		if level_generator != null:
-			level_generator.setup(self, 80, false, library)
-		
-		spawn()
+	spawn()
 		
 func _process(delta):
 	if initial_generation:

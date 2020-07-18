@@ -36,20 +36,20 @@ func _setup():
 	b.setup()
 	add_biome(b)
 	
-	if bdata.get_dungeon_data_count() == 0:
-		return
-		
-	var dd : DungeonData = bdata.get_dungeon_data(0)
-	
-	var dung : Dungeon = dd.instance()
-
-	dung.posx = 0
-	dung.posy = -4
-	dung.posz = 0
-	dung.current_seed = current_seed
-	dung.setup()
-	
-	add_dungeon(dung)
+#	if bdata.get_dungeon_data_count() == 0:
+#		return
+#
+#	var dd : DungeonData = bdata.get_dungeon_data(0)
+#
+#	var dung : Dungeon = dd.instance()
+#
+#	dung.posx = 0
+#	dung.posy = -4
+#	dung.posz = 0
+#	dung.current_seed = current_seed
+#	dung.setup()
+#
+#	add_dungeon(dung)
 
 func _setup_library(library):
 	._setup_library(library)
