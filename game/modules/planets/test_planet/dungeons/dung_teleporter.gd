@@ -2,6 +2,7 @@ extends StaticBody
 
 export(Color) var default_albedo : Color = Color(0.494118, 0.494118, 0.494118)
 export(Color) var hover_albedo : Color = Color(0.65098, 0.65098, 0.65098)
+export(float) var use_range : float = 3
 
 var teleport_to : Vector3 = Vector3()
 
@@ -36,5 +37,8 @@ func teleport():
 	
 	if world && world._player:
 		var p : Entity = world._player
+		
+		if (p.get_body().transform.origin - transform.origin).length() > use_range:
+			return
 		
 		p.get_body().transform.origin = teleport_to

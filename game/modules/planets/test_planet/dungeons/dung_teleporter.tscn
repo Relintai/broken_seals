@@ -17,7 +17,6 @@ extents = Vector3( 0.5, 0.5, 0.5 )
 [node name="DungeonTeleporter" type="StaticBody"]
 script = ExtResource( 1 )
 default_albedo = Color( 0.521569, 0.521569, 0.521569, 1 )
-hover_albedo = Color( 0.65098, 0.65098, 0.65098, 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
