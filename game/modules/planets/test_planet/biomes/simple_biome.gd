@@ -42,6 +42,9 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
 	
 #	generate_terrarin(chunk, spawn_mobs)
+	
+	for i in range(get_dungeon_count()):
+		get_dungeon(i).generate_chunk(chunk, spawn_mobs)
 
 	generate_simple_terrarin(chunk, spawn_mobs)
 	

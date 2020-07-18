@@ -49,7 +49,7 @@ var rc : int = 0
 
 func _enter_tree():
 	if generate_on_ready and not Engine.is_editor_hint():
-#		This crases pretty reliably, when duplicatiog BiomeBase, not yet sure why exactly
+#		This crashes pretty reliably, when duplicatiog BiomeBase, not yet sure why exactly
 #		call_deferred("generate")
 		generate()
 	

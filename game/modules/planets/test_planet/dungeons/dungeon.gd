@@ -26,11 +26,15 @@ export(int) var min_room_dimension : int = 5
 export(int) var max_room_dimension : int = 8
 export(int) var enemy_count : int = 14
 
+export(MeshDataResource) var dung_entrance_mdr : MeshDataResource = null
+export(PackedScene) var dung_entrance_scene : PackedScene = null
+
 var map : Array = []
 var rooms : Array = []
 var enemies : Array = []
 #var nav_graph : AStar2D
 var entrance_position : Transform = Transform()
+var inner_entrance_position : Vector3 = Vector3()
 
 enum Tile { None, Floor, Wall, Door }
 
@@ -38,7 +42,10 @@ func _setup():
 	if sizex == 0 || sizey == 0 || sizez == 0:
 		print("Dungeon size is 0!")
 		return
-
+	
+	entrance_position.origin = Vector3(7, 5, 7)
+	inner_entrance_position = Vector3(10,10,10)
+	
 #	if data.get_dungeon_start_room_data_count() == 0:
 #		return
 #
@@ -54,19 +61,38 @@ func _setup():
 #	dung.setup()
 #
 #	add_dungeon_start_room(dung)
-#	build()
-	pass
 
-func _setup_library(library):
-	._setup_library(library)
-	
-	for i in range(get_dungeon_start_room_count()):
-		get_dungeon_start_room(i).setup_library(library)
+	build()
+#
+#func _setup_library(library):
+#	._setup_library(library)
+#
+#	for i in range(get_dungeon_start_room_count()):
+#		get_dungeon_start_room(i).setup_library(library)
 
 func _generate_chunk(chunk, spawn_mobs):
-	for i in range(get_dungeon_start_room_count()):
-		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
-		
+	var aabb : AABB = AABB(Vector3(posx, posy, posz) * chunk.get_voxel_scale(), Vector3(sizex, sizey, sizez) * chunk.get_voxel_scale())
+	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
+	
+#	if dung_entrance_mdr && chunk_aabb.has_point(entrance_position.origin):
+		#todo chunk needs an add func that takes global coords
+#		chunk.add_mesh_data_resource(entrance_position, dung_entrance_mdr)
+	
+	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
+		call_deferred("spawn_teleporter_scene", dung_entrance_scene, entrance_position, chunk, inner_entrance_position)
+	
+	if !aabb.intersects(chunk_aabb):
+		return
+	
+#	for i in range(get_dungeon_start_room_count()):
+#		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
+
+func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : VoxelChunk, teleports_to : Vector3):
+	var s = scene.instance()
+	chunk.get_voxel_world().add_child(s)
+	s.transform = transform
+	s.teleport_to = teleports_to
+
 func build():
 #	randomize()
 	build_level()
@@ -76,6 +102,7 @@ func build():
 #	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x  - 2)
 #	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y  - 2)
 	
+	#inner_entrance_position!
 #	entrance_position.origin = Vector2(player_x * tile_size + tile_size / 2, player_y * tile_size + tile_size / 2)
 #	_player = ESS.entity_spawner.load_player(_player_file_name, pos, 1) as Entity
 	#Server.sset_seed(_player.sseed)
