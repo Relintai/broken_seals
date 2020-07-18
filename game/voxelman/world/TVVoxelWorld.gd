@@ -49,14 +49,16 @@ var rc : int = 0
 
 func _enter_tree():
 	if generate_on_ready and not Engine.is_editor_hint():
+#		This crases pretty reliably, when duplicatiog BiomeBase, not yet sure why exactly
 #		call_deferred("generate")
 		generate()
 	
 func generate():
 	if level_generator != null:
 		level_generator.setup(self, 80, false, library)
-		
+
 	spawn()
+
 		
 func _process(delta):
 	if initial_generation:

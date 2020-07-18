@@ -3,11 +3,7 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/1_main_lib_merger_empty.tres" type="VoxelmanLibraryMerger" id=1]
 [ext_resource path="res://voxelman/world/TVVoxelWorld.gd" type="Script" id=2]
 
-
-
-
-
-[node name="World" type="VoxelWorld"]
+[node name="World" type="VoxelWorldDefault"]
 library = ExtResource( 1 )
 voxel_scale = 2.0
 player_path = NodePath("Camera")

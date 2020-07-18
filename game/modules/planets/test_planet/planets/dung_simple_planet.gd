@@ -27,15 +27,17 @@ func _setup():
 		
 	if data.get_biome_data_count() == 0:
 		return
-		
+
 	var bdata : BiomeData = data.get_biome_data(0)
 	
+	if !bdata:
+		return
+	
 	var b : Biome = bdata.instance()
-
 	b.current_seed = current_seed
 	b.setup()
 	add_biome(b)
-	
+
 #	if bdata.get_dungeon_data_count() == 0:
 #		return
 #

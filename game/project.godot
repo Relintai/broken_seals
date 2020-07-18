@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "VoxelMesherCubic",
 "class": "GDCubicVoxelMesher",
 "language": "GDScript",
-"path": "res://voxelman/world/CubicVoxelMesher.gd"
+"path": "res://voxelman/debug/CubicVoxelMesher.gd"
 }, {
 "base": "Resource",
 "class": "GameModule",
@@ -127,7 +127,7 @@ _global_script_classes=[ {
 "base": "VoxelMesherMarchingCubes",
 "class": "TestVoxelMesher",
 "language": "GDScript",
-"path": "res://voxelman/world/TestVoxelMesher.gd"
+"path": "res://voxelman/debug/TestVoxelMesher.gd"
 } ]
 _global_script_class_icons={
 "AuraGD": "",

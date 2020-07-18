@@ -29,7 +29,7 @@ func _setup():
 		
 		if !dd:
 			continue
-			
+
 		var d : Dungeon = dd.instance()
 		d.posx = 0
 		d.posz = 0
@@ -37,7 +37,6 @@ func _setup():
 		d.current_seed = current_seed
 		d.setup()
 		add_dungeon(d)
-		return
 
 func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
