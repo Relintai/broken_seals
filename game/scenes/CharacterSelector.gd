@@ -44,9 +44,8 @@ func refresh():
 		while (file_name != ""):
 			if dir.current_is_dir():
 				file_name = dir.get_next()
-				
-			
-				
 	else:
+		#workaround for https://github.com/godotengine/godot/issues/40509
+		dir.open("user://")
 		dir.make_dir("user://" + character_folder)
 

@@ -134,6 +134,8 @@ func refresh():
 			get_node(load_button_path).hide()
 			get_node(renounce_button_path).hide()
 	else:
+		#workaround for https://github.com/godotengine/godot/issues/40509
+		dir.open("user://")
 		dir.make_dir("user://" + character_folder)
 		if only_one_character:
 			get_node(container_path).hide()
@@ -179,6 +181,7 @@ func renounce_character() -> void:
 			
 	if f.file_exists(file_name):
 		var d : Directory = Directory.new()
+		d.open(file_name.get_base_dir())
 		if d.remove(file_name) == OK:
 			refresh()
 	
