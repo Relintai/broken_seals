@@ -1,0 +1,17 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/ceiling.gltf-31931818101359c78d30eea12b4d98c6.res"
+
+[deps]
+
+source_file="res://modules/core_models/ceiling.gltf"
+dest_files=[ "res://.import/ceiling.gltf-31931818101359c78d30eea12b4d98c6.res" ]
+
+[params]
+
+collider_type=0
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 1, 1, 1 )

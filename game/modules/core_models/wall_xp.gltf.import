@@ -1,0 +1,17 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/wall_xp.gltf-a08b64506fd911056171688cd8aaff18.res"
+
+[deps]
+
+source_file="res://modules/core_models/wall_xp.gltf"
+dest_files=[ "res://.import/wall_xp.gltf-a08b64506fd911056171688cd8aaff18.res" ]
+
+[params]
+
+collider_type=0
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 1, 1, 1 )

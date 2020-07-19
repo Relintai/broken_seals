@@ -1,0 +1,17 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/floor.gltf-c87d2b449be23a2fbf8be35d435399f4.res"
+
+[deps]
+
+source_file="res://modules/core_models/floor.gltf"
+dest_files=[ "res://.import/floor.gltf-c87d2b449be23a2fbf8be35d435399f4.res" ]
+
+[params]
+
+collider_type=0
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 1, 1, 1 )
