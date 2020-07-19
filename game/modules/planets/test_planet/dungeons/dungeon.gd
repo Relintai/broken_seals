@@ -26,6 +26,13 @@ export(int) var min_room_dimension : int = 5
 export(int) var max_room_dimension : int = 8
 export(int) var enemy_count : int = 14
 
+export(MeshDataResource) var dung_floor : MeshDataResource = null
+export(MeshDataResource) var dung_ceiling : MeshDataResource = null
+export(MeshDataResource) var dung_wall_xp : MeshDataResource = null
+export(MeshDataResource) var dung_wall_xn : MeshDataResource = null
+export(MeshDataResource) var dung_wall_zp : MeshDataResource = null
+export(MeshDataResource) var dung_wall_zn : MeshDataResource = null
+
 export(MeshDataResource) var dung_entrance_mdr : MeshDataResource = null
 export(PackedScene) var dung_entrance_scene : PackedScene = null
 
@@ -71,6 +78,11 @@ func _setup():
 #		get_dungeon_start_room(i).setup_library(library)
 
 func _generate_chunk(chunk, spawn_mobs):
+#	if chunk.position_y == 1:
+#		for x in range(chunk.size_x):
+#			for z in range(chunk.size_z):
+#				chunk.add_mesh_data_resourcev(Vector3(x, 5, z), dung_ceiling)
+	
 	var aabb : AABB = AABB(Vector3(posx, posy, posz) * chunk.get_voxel_scale(), Vector3(sizex, sizey, sizez) * chunk.get_voxel_scale())
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
 	
