@@ -26,6 +26,8 @@ export(int) var min_room_dimension : int = 5
 export(int) var max_room_dimension : int = 8
 export(int) var enemy_count : int = 14
 
+export(bool) var spawn_mobs : bool = false
+
 export(MeshDataResource) var dung_floor : MeshDataResource = null
 export(MeshDataResource) var dung_ceiling : MeshDataResource = null
 export(MeshDataResource) var dung_wall_xp : MeshDataResource = null
@@ -48,6 +50,8 @@ var entrance_position : Transform = Transform()
 var inner_entrance_position : Vector3 = Vector3()
 var player_inner_entrance_position_x : int = 0
 var player_inner_entrance_position_z : int = 0
+
+var enemy_data : Array = []
 
 # in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
 enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
@@ -162,6 +166,14 @@ func _generate_chunk(chunk, spawn_mobs):
 			zz += 1
 		xx += 1
 		zz = 0
+		
+	if spawn_mobs:
+		for enemy in enemy_data:
+			var bp = enemy[0]
+			var pos : Vector3 = Vector3(bp.x * chunk.voxel_scale, floor_pos, bp.y * chunk.voxel_scale)
+			
+			ESS.entity_spawner.spawn_mob(enemy[1], enemy[2], pos)
+	#		entities.app
 
 #	for i in range(get_dungeon_start_room_count()):
 #		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
@@ -192,28 +204,22 @@ func build():
 	#Server.sset_seed(_player.sseed)
 	
 	#Place enemies
-#	for i in range(enemy_count):
-#		var room = rooms[1 + randi() % (rooms.size() - 1)]
-#		var x = room.position.x + 1 + randi() % int (room.size.x - 2)
-#		var y = room.position.y + 1 + randi() % int (room.size.y - 2)
-#
-#		var blocked = false
-#		for enemy in enemies:
-#			var body = enemy.get_body()
-#			var bp = body.get_tile_position()
-#			if bp.x == x && bp.y == y:
-#				blocked = true
-#				break
-#
-#		if !blocked:
-#			var t = tile_to_pixel_center(x, y)
-#			var enemy = ESS.entity_spawner.spawn_mob(1, 1, Vector3(t.x, t.y, 0), get_path())
-#
-#			enemies.append(enemy)
-#
-#	tile_map.update_dirty_quadrants()
-#
-#	generated = true
+	if spawn_mobs:
+		for i in range(enemy_count):
+			var room = rooms[1 + randi() % (rooms.size() - 1)]
+			var x = room.position.x + 1 + randi() % int (room.size.x - 2)
+			var y = room.position.y + 1 + randi() % int (room.size.y - 2)
+	
+			var blocked = false
+			for enemy in enemy_data:
+				var bp = enemy[0]
+				if bp.x == x && bp.y == y:
+					blocked = true
+					break
+	
+			if !blocked:
+				enemy_data.append([Vector2(x, y), 1, 1])
+	#			var enemy = ESS.entity_spawner.spawn_mob(1, 1, Vector3(t.x, t.y, 0), get_path())
 
 func build_level():
 	rooms.clear()

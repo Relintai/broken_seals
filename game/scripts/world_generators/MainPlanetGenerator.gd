@@ -44,6 +44,7 @@ func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: Vox
 		_planet.current_seed = _level_seed
 		_planet.setup()
 		_planet.setup_library(_library)
+		_library.refresh_rects()
 	
 #	create_planet()
 	
