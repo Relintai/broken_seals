@@ -11,7 +11,7 @@ dest_files=[ "res://.import/wall_xn.gltf-fb5dd2da9017722351efa0181f866a6e.res" ]
 
 [params]
 
-collider_type=0
+collider_type=4
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 1, 1, 1 )
