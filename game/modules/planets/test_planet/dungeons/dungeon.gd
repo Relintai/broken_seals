@@ -46,6 +46,8 @@ var enemies : Array = []
 #var nav_graph : AStar2D
 var entrance_position : Transform = Transform()
 var inner_entrance_position : Vector3 = Vector3()
+var player_inner_entrance_position_x : int = 0
+var player_inner_entrance_position_z : int = 0
 
 # in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
 enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
@@ -57,7 +59,6 @@ func _setup():
 		return
 	
 	entrance_position.origin = Vector3(7, 5, 7)
-	inner_entrance_position = Vector3(10,10,10)
 	
 #	if data.get_dungeon_start_room_data_count() == 0:
 #		return
@@ -92,6 +93,7 @@ func _generate_chunk(chunk, spawn_mobs):
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
+		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 2) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
 		call_deferred("spawn_teleporter_scene", dung_entrance_scene, entrance_position, chunk, inner_entrance_position)
 	
 	if !aabb.intersects(chunk_aabb):
@@ -179,9 +181,10 @@ func build():
 	build_level()
 
 	#Place player
-#	var start_room = rooms.front()
-#	var player_x = start_room.position.x + 1 + randi() % int(start_room.size.x  - 2)
-#	var player_y = start_room.position.y + 1 + randi() % int(start_room.size.y  - 2)
+	var start_room = rooms.front()
+	player_inner_entrance_position_x = start_room.position.x + 1 + randi() % int(start_room.size.x  - 2)
+	player_inner_entrance_position_z = start_room.position.y + 1 + randi() % int(start_room.size.y  - 2)
+	inner_entrance_position = Vector3(10,10,10)
 	
 	#inner_entrance_position!
 #	entrance_position.origin = Vector2(player_x * tile_size + tile_size / 2, player_y * tile_size + tile_size / 2)
