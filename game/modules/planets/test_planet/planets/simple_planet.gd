@@ -36,14 +36,14 @@ func _setup():
 	b.setup()
 	add_biome(b)
 
-func _setup_library(library):
-	._setup_library(library)
-	
-	for i in range(get_biome_count()):
-		var b : Biome = get_biome(i)
-		
-		if b != null:
-			b.setup_library(library)
+#func _setup_library(library):
+#	._setup_library(library)
+#
+#	for i in range(get_biome_count()):
+#		var b : Biome = get_biome(i)
+#
+#		if b != null:
+#			b.setup_library(library)
 
 func _generate_chunk(chunk, spawn_mobs):
 	if (get_biome_count() == 0):

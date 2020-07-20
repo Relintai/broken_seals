@@ -33,6 +33,10 @@ export(MeshDataResource) var dung_wall_xn : MeshDataResource = null
 export(MeshDataResource) var dung_wall_zp : MeshDataResource = null
 export(MeshDataResource) var dung_wall_zn : MeshDataResource = null
 
+export(Texture) var wall_texture : Texture
+export(Texture) var floor_texture : Texture
+export(Texture) var ceiling_texture : Texture
+
 export(MeshDataResource) var dung_entrance_mdr : MeshDataResource = null
 export(PackedScene) var dung_entrance_scene : PackedScene = null
 
@@ -74,25 +78,18 @@ func _setup():
 	posy = 7
 
 	build()
-#
-#func _setup_library(library):
-#	._setup_library(library)
-#
-#	for i in range(get_dungeon_start_room_count()):
-#		get_dungeon_start_room(i).setup_library(library)
+
+func _setup_library(library):
+	._setup_library(library)
+	
+	if library is VoxelmanLibraryMerger:
+		library.get_prop_packer().add_texture(wall_texture)
+		library.get_prop_packer().add_texture(floor_texture)
+		library.get_prop_packer().add_texture(ceiling_texture)
 
 func _generate_chunk(chunk, spawn_mobs):
-#	if chunk.position_y == 1:
-#		for x in range(chunk.size_x):
-#			for z in range(chunk.size_z):
-#				chunk.add_mesh_data_resourcev(Vector3(x, 5, z), dung_ceiling)
-
 	var aabb : AABB = AABB(Vector3(posx, posy, posz) * chunk.get_voxel_scale(), Vector3(sizex, sizey, sizez) * chunk.get_voxel_scale())
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
-	
-#	if dung_entrance_mdr && chunk_aabb.has_point(entrance_position.origin):
-		#todo chunk needs an add func that takes global coords
-#		chunk.add_mesh_data_resource(entrance_position, dung_entrance_mdr)
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
 		call_deferred("spawn_teleporter_scene", dung_entrance_scene, entrance_position, chunk, inner_entrance_position)
@@ -131,7 +128,7 @@ func _generate_chunk(chunk, spawn_mobs):
 	for x in range(px, tox):
 		for z in range(pz, toz):
 			var tile : int = map[x][z]
-			#we can safely check like this as wall is 0
+			#we can safely check like this
 			if tile > Tile.Wall:
 				#grab the wall data, by just right shifting it back. (binary) XXXXYYYY -> 0000XXXX
 				var walls : int = tile >> 4
@@ -139,26 +136,26 @@ func _generate_chunk(chunk, spawn_mobs):
 				if walls > 0:
 					#(binary) XXXX & 0001 -> 000X
 					if walls & NeighbourCaseCodeFlags.WallXP != 0:
-						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_xp)
+						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_xp, wall_texture)
 						
 					#(binary) XXXX & 0010 -> 00X0
 					if walls & NeighbourCaseCodeFlags.WallXN != 0:
 						#+ 1 offsets it to be at the proper place
-						add_wall(chunk, xx + 1, zz, floor_pos, ceiling_pos, dung_wall_xn)
+						add_wall(chunk, xx + 1, zz, floor_pos, ceiling_pos, dung_wall_xn, wall_texture)
 						
 					#etc
 					if walls & NeighbourCaseCodeFlags.WallZP != 0:
-						add_wall(chunk, xx, zz - 1, floor_pos, ceiling_pos, dung_wall_zp)
+						add_wall(chunk, xx, zz - 1, floor_pos, ceiling_pos, dung_wall_zp, wall_texture)
 						
 					if walls & NeighbourCaseCodeFlags.WallZN != 0:
 						#+ 1 offsets it to be at the proper place
-						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_zn)
+						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_zn, wall_texture)
 						
 				if draw_floor:
-					chunk.add_mesh_data_resourcev(Vector3(xx, floor_pos, zz), dung_floor)
+					chunk.add_mesh_data_resourcev(Vector3(xx, floor_pos, zz), dung_floor, floor_texture)
 					
 				if draw_ceiling:
-					chunk.add_mesh_data_resourcev(Vector3(xx, ceiling_pos, zz), dung_ceiling)
+					chunk.add_mesh_data_resourcev(Vector3(xx, ceiling_pos, zz), dung_ceiling, ceiling_texture)
 				
 			zz += 1
 		xx += 1
@@ -167,10 +164,9 @@ func _generate_chunk(chunk, spawn_mobs):
 #	for i in range(get_dungeon_start_room_count()):
 #		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
 
-func add_wall(chunk : VoxelChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource):
+func add_wall(chunk : VoxelChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
 	for y in range(floor_pos, ceiling_pos):
-		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall)
-	
+		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall, tex)
 
 func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : VoxelChunk, teleports_to : Vector3):
 	var s = scene.instance()
@@ -225,8 +221,6 @@ func build_level():
 		
 	enemies.clear()
 	
-#	nav_graph = AStar2D.new()
-	
 	for x in range(sizex):
 		map.append([])
 		for y in range(sizez):
@@ -243,10 +237,6 @@ func build_level():
 	connect_rooms()
 	
 	#post process walls, so they have the correct type
-	#0 : xn
-	#1 : xp
-	#2 : zn
-	#3 : zp
 	var neighbours : int = 0
 	for x in range(sizex):
 		for z in range(sizez):
@@ -472,30 +462,7 @@ func cut_regions(free_regions, region_to_remove):
 	
 	for region in addition_queue:
 		free_regions.append(region)
-#
-#func clear_path(tile):
-#	var new_point = nav_graph.get_available_point_id()
-#	nav_graph.add_point(new_point, Vector2(tile.x, tile.y))
-#
-#	var points_to_conect = []
-#
-#	if tile.x > 0 && map[tile.x - 1][tile.y] == Tile.Floor:
-#		points_to_conect.append(nav_graph.get_closest_point(Vector2(tile.x - 1, tile.y)))
-#
-#	if tile.y > 0 && map[tile.x][tile.y - 1] == Tile.Floor:
-#		points_to_conect.append(nav_graph.get_closest_point(Vector2(tile.x, tile.y - 1)))
-#
-#	if tile.x < 0 && map[tile.x + 1][tile.y] == Tile.Floor:
-#		points_to_conect.append(nav_graph.get_closest_point(Vector2(tile.x + 1, tile.y)))
-#
-#	if tile.y < 0 && map[tile.x][tile.y + 1] == Tile.Floor:
-#		points_to_conect.append(nav_graph.get_closest_point(Vector2(tile.x, tile.y + 1)))
-#
-#	for point in points_to_conect:
-#		nav_graph.connect_points(point, new_point)
 
 func set_tile(x, y, type):
 	map[x][y] = type
 	
-#	if type == Tile.Floor:
-#		clear_path(Vector2(x, y))

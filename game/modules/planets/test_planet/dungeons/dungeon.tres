@@ -1,4 +1,4 @@
-[gd_resource type="Dungeon" load_steps=10 format=2]
+[gd_resource type="Dungeon" load_steps=12 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_left.gltf" type="MeshDataResource" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://modules/core_models/floor.gltf" type="MeshDataResource" id=7]
 [ext_resource path="res://modules/core_models/wall_zn.gltf" type="MeshDataResource" id=8]
 [ext_resource path="res://modules/core_models/wall_zp.gltf" type="MeshDataResource" id=9]
+[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_1_albedo.png" type="Texture" id=10]
+[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=11]
 
 [resource]
 sizex = 40
@@ -25,5 +27,8 @@ dung_wall_xp = ExtResource( 5 )
 dung_wall_xn = ExtResource( 6 )
 dung_wall_zp = ExtResource( 9 )
 dung_wall_zn = ExtResource( 8 )
+wall_texture = ExtResource( 11 )
+floor_texture = ExtResource( 10 )
+ceiling_texture = ExtResource( 10 )
 dung_entrance_mdr = ExtResource( 2 )
 dung_entrance_scene = ExtResource( 3 )

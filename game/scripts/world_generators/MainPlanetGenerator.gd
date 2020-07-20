@@ -43,9 +43,7 @@ func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: Vox
 		_planet = planet.instance()
 		_planet.current_seed = _level_seed
 		_planet.setup()
-		
-#		This crashes, still need to figure out why
-#		_planet.setup_library(_library)
+		_planet.setup_library(_library)
 	
 #	create_planet()
 	
