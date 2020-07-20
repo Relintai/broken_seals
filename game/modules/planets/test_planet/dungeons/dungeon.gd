@@ -43,7 +43,9 @@ var enemies : Array = []
 var entrance_position : Transform = Transform()
 var inner_entrance_position : Vector3 = Vector3()
 
-enum Tile { None, Floor, Wall, Door }
+# in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
+enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
+enum Tile { Wall, Floor, Door, Empty }
 
 func _setup():
 	if sizex == 0 || sizey == 0 || sizez == 0:
@@ -69,6 +71,8 @@ func _setup():
 #
 #	add_dungeon_start_room(dung)
 
+	posy = 7
+
 	build()
 #
 #func _setup_library(library):
@@ -82,7 +86,7 @@ func _generate_chunk(chunk, spawn_mobs):
 #		for x in range(chunk.size_x):
 #			for z in range(chunk.size_z):
 #				chunk.add_mesh_data_resourcev(Vector3(x, 5, z), dung_ceiling)
-	
+
 	var aabb : AABB = AABB(Vector3(posx, posy, posz) * chunk.get_voxel_scale(), Vector3(sizex, sizey, sizez) * chunk.get_voxel_scale())
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
 	
@@ -95,9 +99,78 @@ func _generate_chunk(chunk, spawn_mobs):
 	
 	if !aabb.intersects(chunk_aabb):
 		return
+		
+	var px : int = chunk.position_x * chunk.size_x - posx
+	var pz : int = chunk.position_z * chunk.size_z - posz
 	
+	var tox : int = px + chunk.size_x
+	var toz : int = pz + chunk.size_z
+	
+	if tox > sizex:
+		tox = sizex
+
+	if toz > sizez:
+		toz = sizez
+	
+	var floor_pos : int = chunk.position_y * chunk.size_y - posy
+	var ceiling_pos : int = floor_pos + sizey
+	
+	var draw_floor : bool = true
+	var draw_ceiling : bool = true
+	
+	if floor_pos < 0: 
+		floor_pos = 0
+		draw_floor = false
+		
+	if ceiling_pos > chunk.size_y:
+		ceiling_pos = chunk.size_y
+		draw_ceiling = false
+
+	var xx : int = 0
+	var zz : int = 0
+	for x in range(px, tox):
+		for z in range(pz, toz):
+			var tile : int = map[x][z]
+			#we can safely check like this as wall is 0
+			if tile > Tile.Wall:
+				#grab the wall data, by just right shifting it back. (binary) XXXXYYYY -> 0000XXXX
+				var walls : int = tile >> 4
+
+				if walls > 0:
+					#(binary) XXXX & 0001 -> 000X
+					if walls & NeighbourCaseCodeFlags.WallXP != 0:
+						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_xp)
+						
+					#(binary) XXXX & 0010 -> 00X0
+					if walls & NeighbourCaseCodeFlags.WallXN != 0:
+						#+ 1 offsets it to be at the proper place
+						add_wall(chunk, xx + 1, zz, floor_pos, ceiling_pos, dung_wall_xn)
+						
+					#etc
+					if walls & NeighbourCaseCodeFlags.WallZP != 0:
+						add_wall(chunk, xx, zz - 1, floor_pos, ceiling_pos, dung_wall_zp)
+						
+					if walls & NeighbourCaseCodeFlags.WallZN != 0:
+						#+ 1 offsets it to be at the proper place
+						add_wall(chunk, xx, zz, floor_pos, ceiling_pos, dung_wall_zn)
+						
+				if draw_floor:
+					chunk.add_mesh_data_resourcev(Vector3(xx, floor_pos, zz), dung_floor)
+					
+				if draw_ceiling:
+					chunk.add_mesh_data_resourcev(Vector3(xx, ceiling_pos, zz), dung_ceiling)
+				
+			zz += 1
+		xx += 1
+		zz = 0
+
 #	for i in range(get_dungeon_start_room_count()):
 #		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
+
+func add_wall(chunk : VoxelChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource):
+	for y in range(floor_pos, ceiling_pos):
+		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall)
+	
 
 func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : VoxelChunk, teleports_to : Vector3):
 	var s = scene.instance()
@@ -168,6 +241,38 @@ func build_level():
 			break
 			
 	connect_rooms()
+	
+	#post process walls, so they have the correct type
+	#0 : xn
+	#1 : xp
+	#2 : zn
+	#3 : zp
+	var neighbours : int = 0
+	for x in range(sizex):
+		for z in range(sizez):
+			if map[x][z] == Tile.Floor:
+				if x != 0:
+					if map[x - 1][z] <= Tile.Wall:
+						neighbours |= NeighbourCaseCodeFlags.WallXP
+					
+				if x != sizex - 1:
+					if map[x + 1][z] <= Tile.Wall:
+						neighbours |= NeighbourCaseCodeFlags.WallXN
+					
+				if z != 0:
+					if map[x][z - 1] <= Tile.Wall:
+						neighbours |= NeighbourCaseCodeFlags.WallZP
+					
+				if z != sizez - 1:
+					if map[x][z + 1] <= Tile.Wall:
+						neighbours |= NeighbourCaseCodeFlags.WallZN
+					
+				#left shift all bits by 4 -> (binary) 0000XXXX -> XXXX0000
+				neighbours = neighbours << 4
+				#bitwise or them together -> (Tile.Floor = 1 = 00000001) -> (binary) 000000001 | XXXX0000 -> XXXX0001
+				map[x][z] = Tile.Floor | neighbours
+				neighbours = 0
+			
 
 func connect_rooms():
 	var stone_graph : AStar2D = AStar2D.new()
@@ -199,9 +304,8 @@ func connect_rooms():
 		point_id += 1
 		
 	#Add random connections until everything is connected
-		
-		while !is_everything_connected(room_graph):
-			add_random_connection(stone_graph, room_graph)
+	while !is_everything_connected(room_graph):
+		add_random_connection(stone_graph, room_graph)
 			
 func is_everything_connected(graph : AStar2D):
 	var points = graph.get_points()
