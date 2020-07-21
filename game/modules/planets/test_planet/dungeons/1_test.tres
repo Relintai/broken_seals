@@ -1,8 +1,3 @@
-[gd_resource type="DungeonData" load_steps=3 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.tres" type="Dungeon" id=1]
-[ext_resource path="res://modules/planets/test_planet/dungeon_rooms/2_test_start_room.tres" type="DungeonRoomData" id=2]
+[gd_resource type="Dungeon" format=2]
 
 [resource]
-dungeon = ExtResource( 1 )
-dungeon_start_room_datas = [ ExtResource( 2 ) ]

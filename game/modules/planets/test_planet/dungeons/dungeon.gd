@@ -57,6 +57,33 @@ var enemy_data : Array = []
 enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
 enum Tile { Wall, Floor, Door, Empty }
 
+func _instance(p_seed, p_instance):
+	if !p_instance:
+		p_instance = ._instance(p_seed, p_instance)
+		
+	p_instance.level_room_count = level_room_count
+	p_instance.min_room_dimension = min_room_dimension
+	p_instance.max_room_dimension = max_room_dimension
+	p_instance.enemy_count = enemy_count
+	
+	p_instance.spawn_mobs = spawn_mobs
+	
+	p_instance.dung_floor = dung_floor
+	p_instance.dung_ceiling = dung_ceiling
+	p_instance.dung_wall_xp = dung_wall_xp
+	p_instance.dung_wall_xn = dung_wall_xn
+	p_instance.dung_wall_zp = dung_wall_zp
+	p_instance.dung_wall_zn = dung_wall_zn
+	
+	p_instance.wall_texture = wall_texture
+	p_instance.floor_texture = floor_texture
+	p_instance.ceiling_texture = ceiling_texture
+	
+	p_instance.dung_entrance_mdr = dung_entrance_mdr
+	p_instance.dung_entrance_scene = dung_entrance_scene
+	
+	return p_instance
+
 func _setup():
 	if sizex == 0 || sizey == 0 || sizez == 0:
 		print("Dungeon size is 0!")
@@ -67,7 +94,7 @@ func _setup():
 #	if data.get_dungeon_start_room_data_count() == 0:
 #		return
 #
-#	var drd : DungeonRoomData = data.get_dungeon_start_room_data(0)
+#	var drd : DungeonRoom = data.get_dungeon_start_room_data(0)
 #
 #	var dung : DungeonRoom = drd.instance()
 #
@@ -80,7 +107,7 @@ func _setup():
 #
 #	add_dungeon_start_room(dung)
 
-	posy = 7
+	posy = 5
 
 	build()
 
@@ -93,8 +120,8 @@ func _setup_library(library):
 		library.get_prop_packer().add_texture(ceiling_texture)
 
 func _generate_chunk(chunk, spawn_mobs):
-	var aabb : AABB = AABB(Vector3(posx, posy, posz) * chunk.get_voxel_scale(), Vector3(sizex, sizey, sizez) * chunk.get_voxel_scale())
-	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale(), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * chunk.get_voxel_scale())
+	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1), Vector3(sizex + 2, sizey + 2, sizez + 2))
+	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z), Vector3(chunk.size_x, chunk.size_y, chunk.size_z))
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
 		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 2) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
@@ -102,7 +129,10 @@ func _generate_chunk(chunk, spawn_mobs):
 	
 	if !aabb.intersects(chunk_aabb):
 		return
-		
+
+	if chunk.position_y != 0:
+		return
+
 	var px : int = chunk.position_x * chunk.size_x - posx
 	var pz : int = chunk.position_z * chunk.size_z - posz
 	
@@ -115,7 +145,7 @@ func _generate_chunk(chunk, spawn_mobs):
 	if toz > sizez:
 		toz = sizez
 	
-	var floor_pos : int = chunk.position_y * chunk.size_y - posy
+	var floor_pos : int = posy - chunk.position_y * chunk.size_y
 	var ceiling_pos : int = floor_pos + sizey
 	
 	var draw_floor : bool = true

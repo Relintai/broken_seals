@@ -1,4 +1,4 @@
-extends BiomeBase
+extends Biome
 
 # Copyright (c) 2019-2020 Péter Magyar
 #
@@ -20,34 +20,25 @@ extends BiomeBase
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _setup():
-	if !data:
-		return
-	
-	for i in range(data.get_dungeon_data_count()):
-		var dd : DungeonData = data.get_dungeon_data(i)
-		
-		if !dd:
-			continue
+var terrarin_gen : BiomeTerrarinGenerator = BiomeTerrarinGenerator.new()
 
-		var d : Dungeon = dd.instance()
-		d.posx = 0
-		d.posz = 0
-		d.posy = -20
-		d.current_seed = current_seed
+func _setup():
+	terrarin_gen.set_current_seed(current_seed)
+	
+	for i in range(get_dungeon_count()):
+		var d : Dungeon = get_dungeon(i)
 		d.setup()
-		add_dungeon(d)
 
 func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
 	
-#	generate_terrarin(chunk, spawn_mobs)
+#	generate_terrarin(chunk, spawn_mobs)\
+
+	terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 	
 	for i in range(get_dungeon_count()):
 		get_dungeon(i).generate_chunk(chunk, spawn_mobs)
 
-	generate_simple_terrarin(chunk, spawn_mobs)
-	
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs and randi() % 4 == 0:
 		ESS.entity_spawner.spawn_mob(0, randi() % 3, Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \

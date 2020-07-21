@@ -22,19 +22,11 @@ extends Planet
 # SOFTWARE.
 
 func _setup():
-	if data == null:
+	if get_biome_count() == 0:
 		return
 		
-	if data.get_biome_data_count() == 0:
-		return
-		
-	var bdata : BiomeData = data.get_biome_data(0)
-		
-	var b : Biome = bdata.instance()
-	
-	b.current_seed = current_seed
+	var b : Biome = get_biome(0)
 	b.setup()
-	add_biome(b)
 
 #func _setup_library(library):
 #	._setup_library(library)

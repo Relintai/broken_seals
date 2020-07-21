@@ -21,27 +21,24 @@ extends Planet
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+
+
 func _setup():
-	if data == null:
-		return
-		
-	if data.get_biome_data_count() == 0:
+	if get_biome_count() == 0:
 		return
 
-	var bdata : BiomeData = data.get_biome_data(0)
+	var b : Biome = get_biome(0)
 	
-	if !bdata:
+	if !b:
 		return
 	
-	var b : Biome = bdata.instance()
 	b.current_seed = current_seed
 	b.setup()
-	add_biome(b)
 
 #	if bdata.get_dungeon_data_count() == 0:
 #		return
 #
-#	var dd : DungeonData = bdata.get_dungeon_data(0)
+#	var dd : Dungeon = bdata.get_dungeon_data(0)
 #
 #	var dung : Dungeon = dd.instance()
 #
@@ -56,7 +53,7 @@ func _setup():
 func _generate_chunk(chunk, spawn_mobs):
 	if (get_biome_count() == 0):
 		return
-		
+
 	var b : Biome = get_biome(0)
 	
 	b.generate_chunk(chunk, spawn_mobs)

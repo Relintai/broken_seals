@@ -20,7 +20,7 @@
 [ext_resource path="res://scripts/world_generators/MainPlanetGenerator.gd" type="Script" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
-[ext_resource path="res://modules/planets/test_planet/SimplePlanetData.tres" type="PlanetData" id=21]
+[ext_resource path="res://modules/planets/test_planet/SimplePlanetData.tres" type="Planet" id=21]
 
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )

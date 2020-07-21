@@ -1,6 +1,0 @@
-[gd_resource type="BiomeBase" load_steps=2 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome.gd" type="Script" id=1]
-
-[resource]
-script = ExtResource( 1 )

@@ -1,9 +1,9 @@
-[gd_resource type="PlanetData" load_steps=3 format=2]
+[gd_resource type="Planet" load_steps=3 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/planets/simple_planet.tres" type="Planet" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/1_test.tres" type="BiomeData" id=2]
+[ext_resource path="res://modules/planets/test_planet/planets/dung_simple_planet.gd" type="Script" id=1]
+[ext_resource path="res://modules/planets/test_planet/biomes/1_test.tres" type="Biome" id=2]
 
 [resource]
 id = 1
-planet = ExtResource( 1 )
-biome_datas = [ ExtResource( 2 ) ]
+biomes = [ ExtResource( 2 ) ]
+script = ExtResource( 1 )

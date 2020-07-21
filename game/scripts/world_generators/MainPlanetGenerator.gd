@@ -27,7 +27,7 @@ const planet_folder : String = "res://modules/planets"
 export(int) var _force_planet : int = -1
 export(int) var _level_seed : int
 export(bool) var _spawn_mobs : bool
-export(PlanetData) var planet : PlanetData = null
+export(Planet) var planet : Planet = null
 
 var _world : VoxelWorld
 var _planet : Planet
@@ -40,7 +40,7 @@ func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: Vox
 	_library = library
 	
 	if planet != null:
-		_planet = planet.instance()
+		_planet = planet.instance(_level_seed)
 		_planet.current_seed = _level_seed
 		_planet.setup()
 		_planet.setup_library(_library)
@@ -67,7 +67,7 @@ func create_planet():
 	else:
 		ind = _force_planet
 	
-	var planet_data : PlanetData = ResourceLoader.load(planet_files[ind], "PlanetData")
+	var planet_data : Planet = ResourceLoader.load(planet_files[ind], "Planet")
 	
 	if planet_data == null:
 		print("planet_data is null!")
@@ -75,7 +75,7 @@ func create_planet():
 		
 	print("planet loaded: " + planet_data.resource_path)
 
-	_planet = planet_data.instance()
+	_planet = planet_data.instance(_level_seed)
 		
 	_planet.current_seed = _level_seed
 	_planet.data = planet_data

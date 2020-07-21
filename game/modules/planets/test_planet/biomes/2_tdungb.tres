@@ -1,8 +1,8 @@
-[gd_resource type="BiomeData" load_steps=3 format=2]
+[gd_resource type="Biome" load_steps=3 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/dungeons/1_test.tres" type="DungeonData" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/biome1.tres" type="BiomeBase" id=2]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome.gd" type="Script" id=1]
+[ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.tres" type="Dungeon" id=2]
 
 [resource]
-biome = ExtResource( 2 )
-dungeon_datas = [ ExtResource( 1 ) ]
+dungeons = [ ExtResource( 2 ) ]
+script = ExtResource( 1 )
