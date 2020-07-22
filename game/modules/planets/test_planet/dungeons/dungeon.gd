@@ -58,8 +58,7 @@ enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
 enum Tile { Wall, Floor, Door, Empty }
 
 func _instance(p_seed, p_instance):
-	if !p_instance:
-		p_instance = ._instance(p_seed, p_instance)
+	._instance(p_seed, p_instance)
 		
 	p_instance.level_room_count = level_room_count
 	p_instance.min_room_dimension = min_room_dimension
