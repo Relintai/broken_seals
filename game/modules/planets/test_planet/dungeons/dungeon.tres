@@ -13,7 +13,7 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=11]
 
 [resource]
-posy = -50
+posy = -45
 sizex = 40
 sizey = 3
 sizez = 40
@@ -22,7 +22,7 @@ level_room_count = 9
 min_room_dimension = 5
 max_room_dimension = 8
 enemy_count = 14
-spawn_mobs = false
+spawn_mobs = true
 dung_floor = ExtResource( 7 )
 dung_ceiling = ExtResource( 4 )
 dung_wall_xp = ExtResource( 5 )

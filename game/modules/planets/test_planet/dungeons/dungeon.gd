@@ -121,7 +121,7 @@ func _generate_chunk(chunk, spawn_mobs):
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z), Vector3(chunk.size_x, chunk.size_y, chunk.size_z))
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
-		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 2) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
+		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 4) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
 		call_deferred("spawn_teleporter_scene", dung_entrance_scene, entrance_position, chunk, inner_entrance_position)
 	
 	if !aabb.intersects(chunk_aabb):
@@ -198,11 +198,14 @@ func _generate_chunk(chunk, spawn_mobs):
 		zz = 0
 		
 	if spawn_mobs:
+		var chunk_world_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
+		
 		for enemy in enemy_data:
 			var bp = enemy[0]
-			var pos : Vector3 = Vector3(bp.x * chunk.voxel_scale, floor_pos, bp.y * chunk.voxel_scale)
-			
-			ESS.entity_spawner.spawn_mob(enemy[1], enemy[2], pos)
+			var pos : Vector3 = Vector3(bp.x * chunk.voxel_scale, (posy + 4) * chunk.voxel_scale, bp.y * chunk.voxel_scale)
+
+			if chunk_world_aabb.has_point(pos):
+				ESS.entity_spawner.spawn_mob(enemy[1], enemy[2], pos)
 	#		entities.app
 
 #	for i in range(get_dungeon_start_room_count()):

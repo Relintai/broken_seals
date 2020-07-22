@@ -385,7 +385,7 @@ func process_movement_mob(delta : float) -> void:
 	if vel.length_squared() < 0.12:
 		sleep = true
 	
-	if translation.y < -50.0:
+	if translation.y < -200.0:
 		print("killed mob with fall damage")
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
 		sdi.damage_source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN
@@ -653,3 +653,7 @@ func set_max_visible_distance(var value : float) -> void:
 	
 	max_visible_distance = value
 
+func teleport(teleport_to : Vector3):
+	world.spawn(teleport_to.x / world.chunk_size_x / world.voxel_scale, teleport_to.y/ world.chunk_size_y / world.voxel_scale, teleport_to.z/ world.chunk_size_z / world.voxel_scale)
+	transform.origin = teleport_to
+	placed = false

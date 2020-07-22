@@ -41,4 +41,5 @@ func teleport():
 		if (p.get_body().transform.origin - transform.origin).length() > use_range:
 			return
 		
-		p.get_body().transform.origin = teleport_to
+		p.get_body().teleport(teleport_to)
+#		p.get_body().transform.origin = teleport_to

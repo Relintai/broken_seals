@@ -56,7 +56,7 @@ func generate():
 	if level_generator != null:
 		level_generator.setup(self, 80, false, library)
 
-	spawn()
+	spawn(0, 0, 0)
 
 		
 func _process(delta):
@@ -174,14 +174,14 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 #	print("added " + str(Vector3(x, y, z)))
 	return ._create_chunk(x, y, z, chunk)
 	
-func spawn() -> void:
+func spawn(start_x : int, start_y : int, start_z : int) -> void:
 	if not Engine.editor_hint:
 		_max_frame_chunk_build_temp = max_frame_chunk_build_steps
 		max_frame_chunk_build_steps = 0
 	
-	for x in range(-chunk_spawn_range, chunk_spawn_range):
-		for z in range(-chunk_spawn_range, chunk_spawn_range):
-			for y in range(-1, 2):
+	for x in range(-chunk_spawn_range + start_x, chunk_spawn_range + start_x):
+		for z in range(-chunk_spawn_range + start_z, chunk_spawn_range + start_z):
+			for y in range(-1 + start_y, 2 + start_y):
 				create_chunk(x, y, z)
 				
 #	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)
@@ -197,7 +197,7 @@ func set_editor_generate(value : bool) -> void:
 		library.refresh_rects()
 		
 		level_generator.setup(self, current_seed, false, library)
-		spawn()
+		spawn(0, 0, 0)
 #	else:
 #		spawned = false
 #		clear()
@@ -226,7 +226,7 @@ func setup_client_seed(pseed : int) -> void:
 	if level_generator != null:
 		level_generator.setup(self, pseed, false, library)
 	
-	spawn()
+	spawn(0, 0, 0)
 
 func load_character(file_name : String) -> void:
 	_player_file_name = file_name
@@ -241,7 +241,7 @@ func load_character(file_name : String) -> void:
 	if level_generator != null:
 		level_generator.setup(self, _player.sseed, true, library)
 	
-	spawn()
+	spawn(0, 0, 0)
 	
 	set_process(true)
 	
