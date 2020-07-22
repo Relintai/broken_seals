@@ -106,8 +106,6 @@ func _setup():
 #
 #	add_dungeon_start_room(dung)
 
-	posy = 5
-
 	build()
 
 func _setup_library(library):
@@ -129,9 +127,6 @@ func _generate_chunk(chunk, spawn_mobs):
 	if !aabb.intersects(chunk_aabb):
 		return
 
-	if chunk.position_y != 0:
-		return
-
 	var px : int = chunk.position_x * chunk.size_x - posx
 	var pz : int = chunk.position_z * chunk.size_z - posz
 	
@@ -149,6 +144,12 @@ func _generate_chunk(chunk, spawn_mobs):
 	
 	var draw_floor : bool = true
 	var draw_ceiling : bool = true
+	
+	if floor_pos > chunk.size_y:
+		return
+		
+	if ceiling_pos < 0:
+		return
 	
 	if floor_pos < 0: 
 		floor_pos = 0

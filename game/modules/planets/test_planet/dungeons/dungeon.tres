@@ -13,6 +13,7 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=11]
 
 [resource]
+posy = -50
 sizex = 40
 sizey = 3
 sizez = 40
