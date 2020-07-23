@@ -222,7 +222,7 @@ func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : 
 	s.transform = transform
 	s.teleport_to = teleports_to
 	
-	print("spawn_teleporter_scene at: " + str(transform.origin) + " points to: " + str(teleports_to))
+#	print("spawn_teleporter_scene at: " + str(transform.origin) + " points to: " + str(teleports_to))
 
 func build():
 #	randomize()
