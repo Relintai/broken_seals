@@ -385,7 +385,7 @@ func process_movement_mob(delta : float) -> void:
 	if vel.length_squared() < 0.12:
 		sleep = true
 	
-	if translation.y < -200.0:
+	if translation.y < -2000.0:
 		print("killed mob with fall damage")
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
 		sdi.damage_source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN

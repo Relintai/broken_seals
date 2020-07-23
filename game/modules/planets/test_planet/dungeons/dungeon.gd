@@ -51,6 +51,9 @@ var inner_entrance_position : Vector3 = Vector3()
 var player_inner_entrance_position_x : int = 0
 var player_inner_entrance_position_z : int = 0
 
+var entrance_position_data_space : Vector3 = Vector3()
+var next_level_teleporter_position_data_space : Vector3 = Vector3()
+
 var enemy_data : Array = []
 
 # in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
@@ -88,7 +91,7 @@ func _setup():
 		print("Dungeon size is 0!")
 		return
 	
-	entrance_position.origin = Vector3(7, 5, 7)
+#	entrance_position.origin = Vector3(7, 5, 7)
 	
 #	if data.get_dungeon_start_room_data_count() == 0:
 #		return
@@ -117,8 +120,8 @@ func _setup_library(library):
 		library.get_prop_packer().add_texture(ceiling_texture)
 
 func _generate_chunk(chunk, spawn_mobs):
-	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1), Vector3(sizex + 2, sizey + 2, sizez + 2))
-	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z), Vector3(chunk.size_x, chunk.size_y, chunk.size_z))
+	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(sizex + 2, sizey + 2, sizez + 2) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
+	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
 		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 4) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
@@ -198,13 +201,11 @@ func _generate_chunk(chunk, spawn_mobs):
 		zz = 0
 		
 	if spawn_mobs:
-		var chunk_world_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
-		
 		for enemy in enemy_data:
 			var bp = enemy[0]
 			var pos : Vector3 = Vector3(bp.x * chunk.voxel_scale, (posy + 4) * chunk.voxel_scale, bp.y * chunk.voxel_scale)
 
-			if chunk_world_aabb.has_point(pos):
+			if chunk_aabb.has_point(pos):
 				ESS.entity_spawner.spawn_mob(enemy[1], enemy[2], pos)
 	#		entities.app
 
@@ -220,6 +221,8 @@ func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : 
 	chunk.get_voxel_world().add_child(s)
 	s.transform = transform
 	s.teleport_to = teleports_to
+	
+	print("spawn_teleporter_scene at: " + str(transform.origin) + " points to: " + str(teleports_to))
 
 func build():
 #	randomize()
@@ -235,6 +238,11 @@ func build():
 #	entrance_position.origin = Vector2(player_x * tile_size + tile_size / 2, player_y * tile_size + tile_size / 2)
 #	_player = ESS.entity_spawner.load_player(_player_file_name, pos, 1) as Entity
 	#Server.sset_seed(_player.sseed)
+	
+	var end_room = rooms[rooms.size() - 1]
+	var erx = start_room.position.x + 1 + randi() % int(start_room.size.x  - 2)
+	var erz = start_room.position.y + 1 + randi() % int(start_room.size.y  - 2)
+	next_level_teleporter_position_data_space = Vector3(erx, posy, erz)
 	
 	#Place enemies
 	if spawn_mobs:

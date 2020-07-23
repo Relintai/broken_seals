@@ -22,6 +22,8 @@ extends Biome
 
 var terrarin_gen : BiomeTerrarinGenerator = BiomeTerrarinGenerator.new()
 
+var voxel_scale : float = -1
+
 func _setup():
 	terrarin_gen.set_current_seed(current_seed)
 	
@@ -33,6 +35,22 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
 	
 #	generate_terrarin(chunk, spawn_mobs)\
+
+	if voxel_scale < 0:
+		voxel_scale = chunk.voxel_scale
+	
+		#todo generate this properly
+		var entrance_position : Vector3 = Vector3(7, 5, 7)
+	
+		for i in range(get_dungeon_count()):
+			var d : Dungeon = get_dungeon(i)
+			
+			d.entrance_position.origin = entrance_position
+			
+#			print(entrance_position)
+			
+			entrance_position = d.next_level_teleporter_position_data_space
+			entrance_position *= voxel_scale
 
 	terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 	

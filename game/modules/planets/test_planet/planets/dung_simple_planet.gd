@@ -21,8 +21,6 @@ extends Planet
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
-
 func _setup():
 	if get_biome_count() == 0:
 		return
