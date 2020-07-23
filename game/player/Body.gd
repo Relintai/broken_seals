@@ -182,7 +182,7 @@ func _physics_process(delta : float) -> void:
 		if world != null:
 			if not world.is_position_walkable(transform.origin):
 				return
-			
+				
 			var space : PhysicsDirectSpaceState = get_world().direct_space_state
 			
 			var res : Dictionary = space.intersect_ray(transform.origin, transform.origin + Vector3(0, -100, 0), [ self ])
@@ -190,8 +190,8 @@ func _physics_process(delta : float) -> void:
 			if not res.empty():
 				var pos : Vector3 = res["position"]
 				transform.origin = pos + Vector3(0, 0.2, 0)
+				placed = true
 				
-			placed = true
 			return
 		
 	if entity.c_is_controlled:
