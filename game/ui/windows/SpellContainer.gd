@@ -106,9 +106,9 @@ func spell_button_pressed() -> void:
 	_popup.popup(Rect2(pos, _popup.rect_size))
 
 func update_spell_indicators():
-	if _spell_known:
-#		get_node(known_label_path).show()
-#		get_node(learn_button_path).hide()
+	if _spell_known && ESS.use_spell_points:
+		get_node(known_label_path).show()
+		get_node(learn_button_path).hide()
 		
 		modulate = known_color
 	else:
@@ -116,17 +116,17 @@ func update_spell_indicators():
 			if _spell.training_required_spell:
 				if not _player.spell_hasc(_spell.training_required_spell):
 					
-#					get_node(known_label_path).hide()
-#					get_node(learn_button_path).show()
+					if ESS.use_spell_points:
+						get_node(known_label_path).hide()
+						get_node(learn_button_path).show()
 		
 					modulate = unlearnable_color
 					
 					return
 		
-#		get_node(known_label_path).hide()
-#		get_node(learn_button_path).show()
-		
-		modulate = not_known_color
+		if ESS.use_spell_points:
+			get_node(known_label_path).hide()
+			get_node(learn_button_path).show()
 		
 		modulate = not_known_color
 		

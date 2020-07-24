@@ -118,7 +118,6 @@ margin_right = 288.0
 margin_bottom = 38.0
 
 [node name="PanelContainer" type="PanelContainer" parent="SpellEntryPopup/VBoxContainer"]
-visible = false
 margin_top = 46.0
 margin_right = 288.0
 margin_bottom = 69.0
@@ -135,13 +134,13 @@ valign = 1
 
 [node name="LearnButton" type="Button" parent="SpellEntryPopup/VBoxContainer"]
 visible = false
-margin_top = 46.0
+margin_top = 77.0
 margin_right = 288.0
-margin_bottom = 72.5702
+margin_bottom = 103.57
 text = "Learn"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="SpellEntryPopup/VBoxContainer"]
-margin_top = 46.0
+margin_top = 77.0
 margin_right = 288.0
 margin_bottom = 195.0
 size_flags_horizontal = 3
