@@ -1,0 +1,5 @@
+[gd_resource type="CharacterSpec" format=2]
+
+[resource]
+resource_name = "Melee"
+text_name = "Melee"

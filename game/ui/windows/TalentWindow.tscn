@@ -96,12 +96,12 @@ margin_right = 676.0
 margin_bottom = 550.0
 
 [node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+visible = false
 margin_right = 672.0
 margin_bottom = 15.0
-text = "Astral"
+text = "Class"
 
 [node name="TabContainer2" type="TabContainer" parent="VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
-margin_top = 23.0
 margin_right = 672.0
 margin_bottom = 546.0
 size_flags_horizontal = 3
