@@ -56,18 +56,23 @@ func _ready() -> void:
 	_rank_label = get_node(rank_label_path) as Label
 	_upgrade_button = get_node(upgrade_button_path) as Button
 
-func set_player(player : Entity, spec : CharacterSpec, spec_index : int, row : int) -> void:
+func set_player(player : Entity, spec : CharacterSpec, spec_index : int, row : int, pculomn : int) -> void:
 	if _player != null:
-		_player.disconnect("ctalent_learned", self, "ctalent_learned")
-		_player.disconnect("ctalent_reset", self, "ctalent_reset")
+		_player.disconnect("cclass_talent_learned", self, "ctalent_learned")
+		_player.disconnect("ccharacter_talent_learned", self, "ctalent_learned")
+		_player.disconnect("cclass_talent_reset", self, "ctalent_reset")
+		_player.disconnect("ccharacter_talent_reset", self, "ctalent_reset")
 	
 	_row = row
 	_spec = spec
 	_player = player
 	_spec_index = spec_index
+	culomn = pculomn
 	
-	_player.connect("ctalent_learned", self, "ctalent_learned")
-	_player.connect("ctalent_reset", self, "ctalent_reset")
+	_player.connect("cclass_talent_learned", self, "ctalent_learned")
+	_player.connect("ccharacter_talent_learned", self, "ctalent_learned")
+	_player.connect("cclass_talent_reset", self, "ctalent_reset")
+	_player.connect("ccharacter_talent_reset", self, "ctalent_reset")
 	
 	refresh()
 
@@ -86,7 +91,7 @@ func refresh() -> void:
 		if a == null:
 			break
 		
-		if _player.talent_hasc(a.id):
+		if _player.class_talent_hasc(a.id):
 			known_rank_count += 1
 			
 		rank_count += 1
@@ -114,7 +119,7 @@ func open_popup() -> void:
 	_popup.popup(Rect2(p, _popup.rect_size))
 	
 func upgrade():
-	_player.talent_crequest_learn(_spec_index, _row, culomn)
+	_player.class_talent_crequest_learn(_spec_index, _row, culomn)
 	
 func ctalent_learned(entity: Entity, talent_id: int) -> void:
 	refresh()

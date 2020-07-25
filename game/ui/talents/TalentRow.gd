@@ -20,6 +20,10 @@ extends HBoxContainer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export(PackedScene) var entry_scene : PackedScene
+
 func set_player(player : Entity, spec : CharacterSpec, spec_index: int, row : int) -> void:
-	for ch in get_children():
-		ch.set_player(player, spec, spec_index, row)
+	for i in range(spec.get_num_columns(row)):
+		var ch : Node = entry_scene.instance()
+		add_child(ch)
+		ch.set_player(player, spec, spec_index, row, i)

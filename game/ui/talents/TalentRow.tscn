@@ -14,31 +14,4 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="TalentEntry" parent="." instance=ExtResource( 1 )]
-margin_right = 198.0
-margin_bottom = 600.0
-
-[node name="TalentEntry2" parent="." instance=ExtResource( 1 )]
-margin_left = 206.0
-margin_right = 404.0
-margin_bottom = 600.0
-culomn = 1
-
-[node name="TalentEntry3" parent="." instance=ExtResource( 1 )]
-margin_left = 412.0
-margin_right = 610.0
-margin_bottom = 600.0
-culomn = 2
-
-[node name="TalentEntry4" parent="." instance=ExtResource( 1 )]
-margin_left = 618.0
-margin_right = 816.0
-margin_bottom = 600.0
-culomn = 3
-
-[node name="TalentEntry5" parent="." instance=ExtResource( 1 )]
-margin_left = 824.0
-margin_right = 1024.0
-margin_bottom = 600.0
-culomn = 4
+entry_scene = ExtResource( 1 )
