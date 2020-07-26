@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_pelvis.gltf-baa4b0d9142b08da9d67512c62b46f55.res
 
 [params]
 
+import_type=0
 collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )

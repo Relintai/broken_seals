@@ -237,6 +237,13 @@ texture={
 "stream": false,
 "svg/scale": 1.0
 }
+gltf_mdr={
+"collider_type": 0,
+"import_type": 0,
+"offset": Vector3( 0, 0, 0 ),
+"rotation": Vector3( 0, 0, 0 ),
+"scale": Vector3( 0.011, 0.011, 0.011 )
+}
 
 [input]
 

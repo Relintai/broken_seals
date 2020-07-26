@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_foot_left.gltf-f05ae177d93fd866b85bdc979f084a3e.
 
 [params]
 
+import_type=0
 collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )

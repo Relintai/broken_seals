@@ -11,6 +11,7 @@ dest_files=[ "res://.import/huf_spine2.gltf-c26b5ef93a0effb389f435f55f147f23.res
 
 [params]
 
+import_type=0
 collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
