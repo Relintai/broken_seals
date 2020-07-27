@@ -20,6 +20,9 @@ extends PanelContainer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export(NodePath) var opener_button_path : NodePath
+var opener_button : BaseButton
+
 export(PackedScene) var inventory_item_scene : PackedScene
 export(NodePath) var inventory_item_container_path : NodePath
 export(NodePath) var item_tooltip_path : NodePath
@@ -33,6 +36,8 @@ var _player : Entity = null
 var _bag : Bag = null
 
 func _ready() -> void:
+	opener_button = get_node_or_null(opener_button_path) as BaseButton
+	
 	_inventory_item_container = get_node(inventory_item_container_path)
 	_tooltip = get_node(item_tooltip_path)
 	
@@ -122,12 +127,21 @@ func item_removed(bag: Bag, item: ItemInstance, slot_id: int) -> void:
 func item_swapped(bag: Bag, item1_slot : int, item2_slot: int) -> void:
 	refresh_bags()
 
-func on_visibility_changed() -> void:
+func on_visibility_changed():
 	refresh_bags()
-
+	
+	if opener_button:
+		if visible && !opener_button.pressed:
+			opener_button.pressed = true
+			return
+			
+		if !visible && opener_button.pressed:
+			opener_button.pressed = false
 
 func _on_BagButton_toggled(button_pressed):
 	if button_pressed:
-		show()
+		if !visible:
+			show()
 	else:
-		hide()
+		if visible:
+			hide()

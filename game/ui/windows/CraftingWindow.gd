@@ -20,6 +20,9 @@ extends PanelContainer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export(NodePath) var opener_button_path : NodePath
+var opener_button : BaseButton
+
 export(PackedScene) var item_entry_scene : PackedScene
 export(PackedScene) var recipe_selector_scene : PackedScene
 
@@ -48,6 +51,9 @@ var _materials_container_main_on : Node
 var _materials_container_main_off : Node
 
 func _ready():
+	opener_button = get_node_or_null(opener_button_path) as BaseButton
+	connect("visibility_changed", self, "on_visibility_changed")
+	
 	_item_container = get_node(item_container_path)
 	_tools_container = get_node(tools_container_path)
 	_materials_container = get_node(materials_container_path)
@@ -140,8 +146,19 @@ func select_recipe(recipe : CraftRecipe) -> void:
 		ie.set_item(_player, ih)
 
 
+func on_visibility_changed():
+	if opener_button:
+		if visible && !opener_button.pressed:
+			opener_button.pressed = true
+			return
+			
+		if !visible && opener_button.pressed:
+			opener_button.pressed = false
+
 func _on_CraftingButton_toggled(button_pressed):
 	if button_pressed:
-		show()
+		if !visible:
+			show()
 	else:
-		hide()
+		if visible:
+			hide()

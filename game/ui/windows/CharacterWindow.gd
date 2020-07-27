@@ -1,19 +1,10 @@
 extends PanelContainer
 
+export(NodePath) var opener_button_path : NodePath
+var opener_button : BaseButton
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+	opener_button = get_node_or_null(opener_button_path) as BaseButton
 
 
 func _on_CharacterButton_toggled(button_pressed):
@@ -24,4 +15,7 @@ func _on_CharacterButton_toggled(button_pressed):
 
 
 func _on_Button_pressed():
+	if opener_button:
+		opener_button.pressed = false
+		
 	hide()

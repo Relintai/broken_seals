@@ -20,6 +20,9 @@ extends PanelContainer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export(NodePath) var opener_button_path : NodePath
+var opener_button : BaseButton
+
 export(PackedScene) var spec_scene : PackedScene
 export(PackedScene) var spec_switcher_scene : PackedScene
 export(NodePath) var spec_container_path : NodePath
@@ -32,6 +35,9 @@ var _data : EntityData
 var _player : Entity
 
 func _ready():
+	opener_button = get_node_or_null(opener_button_path) as BaseButton
+	connect("visibility_changed", self, "on_visibility_changed")
+	
 	_spec_container = get_node(spec_container_path)
 	_spec_switcher_container = get_node(spec_switcher_path)
 
@@ -96,10 +102,19 @@ func centity_data_changed(data: EntityData) -> void:
 		
 		s.set_spec(_player, spec, i)
 
-
+func on_visibility_changed():
+	if opener_button:
+		if visible && !opener_button.pressed:
+			opener_button.pressed = true
+			return
+			
+		if !visible && opener_button.pressed:
+			opener_button.pressed = false
 
 func _on_TalentButton_toggled(button_pressed):
 	if button_pressed:
-		show()
+		if !visible:
+			show()
 	else:
-		hide()
+		if visible:
+			hide()

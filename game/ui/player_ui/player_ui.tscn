@@ -275,7 +275,6 @@ keep_pressed_outside = true
 text = "Talent"
 
 [node name="CraftingButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-visible = false
 margin_left = 181.0
 margin_right = 226.0
 margin_bottom = 45.0
@@ -288,8 +287,8 @@ keep_pressed_outside = true
 text = "Craft"
 
 [node name="LockButton" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 181.0
-margin_right = 226.0
+margin_left = 226.0
+margin_right = 271.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -331,8 +330,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons/HBoxContainer"]
-margin_left = 226.0
-margin_right = 271.0
+margin_left = 271.0
+margin_right = 316.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 45, 45 )
 focus_mode = 0
@@ -365,12 +364,14 @@ margin_left = 66.0
 margin_top = 44.0
 margin_right = 681.0
 margin_bottom = 474.0
+opener_button_path = NodePath("../../Buttons/HBoxContainer/CharacterButton")
 
 [node name="SpellBookWindow" parent="GUI/Windows" instance=ExtResource( 17 )]
 visible = false
 margin_left = 60.0
 margin_top = 50.0
 margin_right = 561.0
+opener_button_path = NodePath("../../Buttons/HBoxContainer/SpellBookButton")
 
 [node name="TalentWindow" parent="GUI/Windows" instance=ExtResource( 11 )]
 visible = false
@@ -380,6 +381,7 @@ margin_left = 62.0
 margin_top = 54.0
 margin_right = 656.0
 margin_bottom = 513.0
+opener_button_path = NodePath("../../Buttons/HBoxContainer/TalentButton")
 
 [node name="CraftingWindow" parent="GUI/Windows" instance=ExtResource( 20 )]
 visible = false
@@ -387,6 +389,7 @@ margin_left = 31.0
 margin_top = 23.0
 margin_right = -345.0
 margin_bottom = -67.0
+opener_button_path = NodePath("../../Buttons/HBoxContainer/CraftingButton")
 
 [node name="Inventory" parent="GUI/Windows" instance=ExtResource( 15 )]
 visible = false
@@ -394,6 +397,7 @@ margin_left = 56.0
 margin_top = 69.0
 margin_right = -422.0
 margin_bottom = -109.0
+opener_button_path = NodePath("../../Buttons/HBoxContainer/BagButton")
 inventory_item_container_path = NodePath("../Inventory/VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/ScrollContainer/GridContainer")
 
 [node name="LootWindow" parent="GUI/Windows" instance=ExtResource( 19 )]
