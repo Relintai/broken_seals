@@ -420,17 +420,23 @@ func _input(event: InputEvent) -> void:
 				camera_pivot.rotate_delta(-relx, -rely)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		var ievkey : InputEventKey = event as InputEventKey
-		
-		if ievkey.scancode == KEY_W:
-			key_up = ievkey.pressed
-		if ievkey.scancode == KEY_S:
-			key_down = ievkey.pressed
-		if ievkey.scancode == KEY_A:
-			key_left = ievkey.pressed
-		if ievkey.scancode == KEY_D:
-			key_right = ievkey.pressed
+	if event.is_action_type():
+		if event.is_action("move_forward"):
+			key_up = event.pressed
+			get_tree().set_input_as_handled()
+			return
+		elif event.is_action("move_backward"):
+			key_down = event.pressed
+			get_tree().set_input_as_handled()
+			return
+		elif event.is_action("move_left"):
+			key_left = event.pressed
+			get_tree().set_input_as_handled()
+			return
+		elif event.is_action("move_right"):
+			key_right = event.pressed
+			get_tree().set_input_as_handled()
+			return
 			
 	if event is InputEventMouseMotion and not (mouse_right_down or mouse_left_down) and event.device != -1:
 		cmouseover(event)
@@ -464,10 +470,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not event.pressed and event.button_index == BUTTON_LEFT and event.device != -1:
 			if mouse_down_delta.length() < MOUSE_TARGET_MAX_OFFSET:
 				target(event.position)
+
 			
 	if event is InputEventScreenTouch and event.pressed:
 		target(event.position)
-			
+
 	update_cursor_mode()
 			
 func update_cursor_mode():
