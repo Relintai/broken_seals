@@ -231,7 +231,7 @@ func _ccooldown_removed(id : int, value : float) -> void:
 	if id == spell_id:
 		cd = 0
 	
-func _cgcd_started(value :float) -> void:
+func _cgcd_started(entity: Entity, value :float) -> void:
 	if not has_gcd:
 		return
 	
