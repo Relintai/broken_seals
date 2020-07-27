@@ -239,7 +239,7 @@ func _cgcd_started(value :float) -> void:
 	show_cooldown_timer(value)
 	set_process(true)
 	
-func _cgcd_finished() -> void:
+func _cgcd_finished(entity) -> void:
 	gcd = 0
 
 func _on_button_pressed() -> void:
