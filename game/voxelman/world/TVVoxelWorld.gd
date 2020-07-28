@@ -90,13 +90,11 @@ func _process(delta):
 			
 			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
 			
-			if l > chunk_spawn_range + 2:
+			if l > chunk_spawn_range + 3:
 #				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
 				remove_chunk_index(i)
 				i -= 1
 				count -= 1
-			else:
-				update_lods()
 #			else:
 #				var dx : int = abs(ppx - c.position_x)
 #				var dy : int = abs(ppy - c.position_y)
@@ -115,12 +113,15 @@ func _process(delta):
 
 			i += 1
 			
+			
 		for x in range(-chunk_spawn_range + int(cpos.x), chunk_spawn_range + int(cpos.x)):
 			for z in range(-chunk_spawn_range + int(cpos.z), chunk_spawn_range + int(cpos.z)):
 				for y in range(-1, 2):
 					if not has_chunk(x, y, z):
 #						print("spawn " + str(Vector3(x, y, z)))
 						create_chunk(x, y, z)
+						
+		update_lods()
 
 #func _process(delta : float) -> void:
 #	if not generation_queue.empty():
