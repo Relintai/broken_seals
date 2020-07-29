@@ -158,7 +158,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 	if damage_enabled and info.target:
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
 		
-		sdi.damage_source = self
+		sdi.spell_source = self
 		sdi.dealer = info.caster
 		sdi.receiver = info.target
 		
@@ -167,7 +167,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 	if heal_enabled and info.target:
 		var shi : SpellHealInfo = SpellHealInfo.new()
 		
-		shi.heal_source = self
+		shi.spell_source = self
 		shi.dealer = info.caster
 		shi.receiver = info.target
 		
