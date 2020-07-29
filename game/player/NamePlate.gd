@@ -44,9 +44,15 @@ var health_bar : TextureProgress = null
 var health_bar_label : Label = null
 
 var entity : Entity = null
+var entity_body : Node = null
 var health : EntityResource = null
 
 var _health : EntityResource
+
+var body_visibility : bool = true
+
+func _init():
+	set_process(false)
 
 func _enter_tree():
 	name_label = get_node(name_label_path) as Label
@@ -55,7 +61,8 @@ func _enter_tree():
 	
 	entity = get_node("../..") as Entity
 	entity.connect("centity_resource_added", self, "on_centity_resource_added")
-	
+	entity_body = entity.get_body()
+
 	name_label.text = entity.centity_name
 	
 	entity.connect("cname_changed", self, "cname_changed")
@@ -63,6 +70,7 @@ func _enter_tree():
 	entity.connect("notification_cmouse_exited", self, "onc_entity_mouse_exited")
 	entity.connect("notification_ctargeted", self, "notification_ctargeted")
 	entity.connect("notification_cuntargeted", self, "notification_cuntargeted")
+	entity.connect("body_changed", self, "_body_changed")
 	
 	modulate = normal_color
 	set_scale(normal_scale)
@@ -70,9 +78,11 @@ func _enter_tree():
 	target_scale = normal_scale
 	interpolating = false
 	
-	set_process(true)
+	_on_body_visibility_changed()
 
 func _process(delta):
+	assert(body_visibility)
+	
 	if interpolating:
 		var d : Vector2 = ((target_scale - get_scale()).normalized() * delta) + get_scale()
 		
@@ -177,3 +187,19 @@ func on_centity_resource_added(resorce) -> void:
 	_health = entity.getc_health()
 	_health.connect("changed", self, "c_health_changed")
 	c_health_changed()
+
+func _body_changed(ent):
+	entity_body = entity.get_body()
+	
+	if entity_body && entity_body.has_signal("visibility_changed"):
+		entity_body.connect("visibility_changed", self, "_on_body_visibility_changed")
+	else:
+		_on_body_visibility_changed()
+
+func _on_body_visibility_changed():
+	if entity_body:
+		body_visibility = entity_body.visible
+	else:
+		body_visibility = true
+	
+	set_process(body_visibility)

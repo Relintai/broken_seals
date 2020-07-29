@@ -93,6 +93,8 @@ var character_skeleton : CharacterSkeleton3D
 var visibility_update_timer : float = 0
 var placed : bool = false
 
+#var los : bool = false
+
 func _ready() -> void:
 	camera = get_node_or_null("CameraPivot/Camera") as Camera
 	camera_pivot = get_node_or_null("CameraPivot") as Spatial
@@ -198,6 +200,16 @@ func _physics_process(delta : float) -> void:
 		process_input(delta)
 		process_movement_player(delta)
 	else:
+#		var camera : Camera = get_tree().get_root().get_camera() as Camera
+#
+#		if camera != null:
+#			var res = get_world().get_direct_space_state().intersect_ray(get_transform().origin, camera.transform.origin, [ self ], 1)
+#
+#			if res:
+#				los = true
+#			else:
+#				los = false
+
 		if sleep:
 			sleep_recheck_timer += delta
 			

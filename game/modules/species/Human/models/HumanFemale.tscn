@@ -11,6 +11,8 @@ height = 0.927641
 extents = Vector3( 0.216228, 0.0681041, 0.183397 )
 
 [node name="HumanFemale" type="KinematicBody"]
+collision_layer = 2147483650
+collision_mask = 3
 script = ExtResource( 1 )
 max_visible_distance = 70.0
 model_path = NodePath("../HumanFemale/Rotation_Helper/Model")
