@@ -7,7 +7,7 @@
 [ext_resource path="res://modules/entity_classes/naturalist/icons/aspect_of_scorpions.tres" type="Texture" id=5]
 
 [sub_resource type="EntityResourceCostDataResource" id=1]
-cost = 100
+cost = 34
 entity_resource_data = ExtResource( 1 )
 
 [resource]

@@ -1,4 +1,4 @@
-[gd_resource type="ESSResourceDBStatic" load_steps=42 format=2]
+[gd_resource type="ESSResourceDBStatic" load_steps=45 format=2]
 
 [ext_resource path="res://modules/entity_classes/naturalist/spells/16_close_wounds_rank_1.tres" type="Spell" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/auras/16_ironbark_rank_1.tres" type="Aura" id=2]
@@ -41,8 +41,11 @@
 [ext_resource path="res://modules/entity_classes/naturalist/specs/aspects/talent_aspect_of_scorpions_r1.tres" type="Aura" id=39]
 [ext_resource path="res://modules/entity_classes/naturalist/specs/aspects/talent_aspect_of_scorpions_r3.tres" type="Aura" id=40]
 [ext_resource path="res://modules/entity_classes/naturalist/specs/aspects/talent_aspect_of_scorpions_r2.tres" type="Aura" id=41]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r3.tres" type="Aura" id=42]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r1.tres" type="Aura" id=43]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r2.tres" type="Aura" id=44]
 
 [resource]
 entity_datas = [ ExtResource( 36 ), ExtResource( 35 ) ]
 spells = [ ExtResource( 11 ), ExtResource( 5 ), ExtResource( 25 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 33 ), ExtResource( 1 ), ExtResource( 13 ), ExtResource( 34 ), ExtResource( 4 ), ExtResource( 30 ), ExtResource( 28 ), ExtResource( 27 ), ExtResource( 31 ), ExtResource( 14 ), ExtResource( 32 ), ExtResource( 26 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 22 ), ExtResource( 37 ), ExtResource( 38 ) ]
-auras = [ ExtResource( 12 ), ExtResource( 8 ), ExtResource( 29 ), ExtResource( 10 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 21 ), ExtResource( 24 ), ExtResource( 39 ), ExtResource( 41 ), ExtResource( 40 ) ]
+auras = [ ExtResource( 12 ), ExtResource( 8 ), ExtResource( 29 ), ExtResource( 10 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 6 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 21 ), ExtResource( 24 ), ExtResource( 39 ), ExtResource( 41 ), ExtResource( 40 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 42 ) ]

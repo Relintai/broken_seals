@@ -5,7 +5,7 @@
 [ext_resource path="res://modules/entity_classes/naturalist/icons/root.tres" type="Texture" id=3]
 
 [sub_resource type="EntityResourceCostDataResource" id=1]
-cost = 100
+cost = 90
 entity_resource_data = ExtResource( 1 )
 
 [resource]
@@ -22,8 +22,8 @@ range_range = 30.0
 cast_enabled = true
 cast_cast_time = 2.0
 heal_enabled = true
-heal_min = 12
-heal_max = 18
+heal_min = 89
+heal_max = 102
 heal_scale_stat = 14
 heal_scale_coeff = 0.1
 resource_cost = SubResource( 1 )
