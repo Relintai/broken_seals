@@ -24,6 +24,24 @@ export(PackedScene) var keybind_category_scene : PackedScene
 
 export(NodePath) var content_container_path : NodePath
 
+var _player : Entity
+
+func set_player(player : Entity):
+	if _player:
+		_player.disconnect("centity_data_changed", self, "on_data_changed")
+	
+	_player = player
+	
+	on_data_changed(_player.getc_entity_data())
+		
+	_player.connect("centity_data_changed", self, "on_data_changed")
+	
+	
+func on_data_changed(data):
+	if data:
+		ProfileManager.on_keybinds_changed(data.get_path())
+		InputMap.load_from_globals()
+
 
 # Note for the reader:
 #
@@ -127,3 +145,12 @@ func a_ready():
 	
 	# Do not start processing input until a button is pressed
 	set_process_input(false)
+
+func close():
+	InputMap.load_from_globals()
+	
+	if _player:
+		ProfileManager.on_keybinds_changed(_player.getc_entity_data().get_path())
+		
+	hide()
+	

@@ -345,6 +345,266 @@ move_right={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
  ]
 }
+actionbar_2_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_4={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_5={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_6={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_7={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_8={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_9={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_10={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_11={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_2_12={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_4={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_5={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_6={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_7={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_8={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_9={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_10={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_11={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_3_12={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_4={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_5={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_6={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_7={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_8={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_9={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_10={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_11={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_4_12={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_4={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_5={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_6={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_7={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_8={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_9={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_10={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_11={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_5_12={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_0={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_1={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_2={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_3={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_4={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_5={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_6={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_7={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_8={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_9={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_10={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_11={
+"deadzone": 0.5,
+"events": [  ]
+}
+actionbar_6_12={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [layer_names]
 

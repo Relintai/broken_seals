@@ -53,6 +53,8 @@ func _ready() -> void:
 	keybind_text = get_node(keybind_text_path) as Label
 	
 	button.connect("pressed", self, "_on_button_pressed")
+	
+	ProfileManager.connect("keybinds_changed", self, "on_keybinds_changed")
 
 func _exit_tree():
 	if icon_rect.texture != null:
@@ -116,7 +118,27 @@ func set_button_entry(action_bar_button_entry: ActionBarButtonEntry, p_player: E
 	if not InputMap.has_action(action_name):
 		InputMap.add_action(action_name)
 		
+	on_keybinds_changed()
+	
+	iea.action = action_name
+	iea.pressed = true
+	var sc : ShortCut = ShortCut.new()
+	sc.shortcut = iea
+	shortcut = sc
+	
+	setup_icon()
+	
+func on_keybinds_changed():
+	var action_name : String = "actionbar_" + str(button_entry.action_bar_id) + "_" + str(button_entry.slot_id)
+	
+	keybind_text.text = ""
+	
+	if not InputMap.has_action(action_name):
+		return
+	
 	var action_list : Array = InputMap.get_action_list(action_name)
+	
+	keybind_text.text = ""
 	
 	for action in action_list:
 		if action is InputEventKey:
@@ -140,14 +162,6 @@ func set_button_entry(action_bar_button_entry: ActionBarButtonEntry, p_player: E
 			s += char(action.scancode)
 			
 			keybind_text.text = s
-	
-	iea.action = action_name
-	iea.pressed = true
-	var sc : ShortCut = ShortCut.new()
-	sc.shortcut = iea
-	shortcut = sc
-	
-	setup_icon()
 	
 func setup_icon() -> void:
 	if (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_NONE):
