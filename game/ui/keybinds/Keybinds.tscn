@@ -3,13 +3,13 @@
 [ext_resource path="res://ui/keybinds/Keybinds.gd" type="Script" id=1]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=2]
 [ext_resource path="res://ui/keybinds/KeybindCategory.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ui/icons/icon_mouse.svg" type="Texture" id=4]
-[ext_resource path="res://ui/icons/icon_joy_axis.svg" type="Texture" id=5]
-[ext_resource path="res://ui/icons/icon_keyboard.svg" type="Texture" id=6]
-[ext_resource path="res://ui/icons/icon_edit.svg" type="Texture" id=7]
-[ext_resource path="res://ui/icons/icon_add.svg" type="Texture" id=8]
-[ext_resource path="res://ui/icons/icon_remove.svg" type="Texture" id=9]
-[ext_resource path="res://ui/icons/icon_joy_button.svg" type="Texture" id=10]
+[ext_resource path="res://ui/icons/icon_mouse.png" type="Texture" id=4]
+[ext_resource path="res://ui/icons/icon_keyboard.png" type="Texture" id=5]
+[ext_resource path="res://ui/icons/icon_joy_button.png" type="Texture" id=6]
+[ext_resource path="res://ui/icons/icon_remove.png" type="Texture" id=7]
+[ext_resource path="res://ui/icons/icon_add.png" type="Texture" id=8]
+[ext_resource path="res://ui/icons/icon_edit.png" type="Texture" id=9]
+[ext_resource path="res://ui/icons/icon_joy_axis.png" type="Texture" id=10]
 
 [node name="KeybindWindow" type="PanelContainer"]
 anchor_right = 1.0
@@ -52,11 +52,11 @@ margin_bottom = 554.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 add_texture = ExtResource( 8 )
-remove_texture = ExtResource( 9 )
-edit_texture = ExtResource( 7 )
-keyboard_texture = ExtResource( 6 )
-joybutton_texture = ExtResource( 10 )
-joyaxis_texture = ExtResource( 5 )
+remove_texture = ExtResource( 7 )
+edit_texture = ExtResource( 9 )
+keyboard_texture = ExtResource( 5 )
+joybutton_texture = ExtResource( 6 )
+joyaxis_texture = ExtResource( 10 )
 mouse_texture = ExtResource( 4 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]

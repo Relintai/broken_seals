@@ -11,6 +11,7 @@ dest_files=[ "res://.import/wall_zn.gltf-08602f55eaf79f19f3aed3d2b3757b33.res" ]
 
 [params]
 
+import_type=0
 collider_type=4
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )

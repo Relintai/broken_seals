@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_add.svg-8d234c23ab44bacb67bdfe3f0ee81a47.stex"
+path="res://.import/icon_keyboard.png-58b4ebdc3868706f0d2ebc63fcba3a74.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/icons/icon_add.svg"
-dest_files=[ "res://.import/icon_add.svg-8d234c23ab44bacb67bdfe3f0ee81a47.stex" ]
+source_file="res://ui/icons/icon_keyboard.png"
+dest_files=[ "res://.import/icon_keyboard.png-58b4ebdc3868706f0d2ebc63fcba3a74.stex" ]
 
 [params]
 

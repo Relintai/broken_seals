@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_joy_button.svg-90efe2841da127b700c9fe4f1211a539.stex"
+path="res://.import/icon_joy_axis.png-d24cf014cc6938689bf543968d165c5a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/icons/icon_joy_button.svg"
-dest_files=[ "res://.import/icon_joy_button.svg-90efe2841da127b700c9fe4f1211a539.stex" ]
+source_file="res://ui/icons/icon_joy_axis.png"
+dest_files=[ "res://.import/icon_joy_axis.png-d24cf014cc6938689bf543968d165c5a.stex" ]
 
 [params]
 
