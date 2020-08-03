@@ -26,9 +26,10 @@ export(String) var property_name : String
 
 export(String) var property_label : String
 
-export(int) var min_value : int = 0
-export(int) var max_value : int = 100
-export(int) var step : int = 1
+export(float) var min_value : float = 0
+export(float) var max_value : float = 100
+export(float) var step : float = 1
+export(bool) var rounded : bool = true
 
 export(String) var prefix : String = ""
 export(String) var suffix : String = ""
@@ -46,6 +47,8 @@ func _ready():
 	
 	_sb.prefix = prefix
 	_sb.suffix = suffix
+	
+	_sb.rounded = rounded
 	
 	if Engine.editor_hint:
 		return

@@ -68,10 +68,8 @@ margin_bottom = 70.0
 property_category = "rendering"
 property_name = "viewport_scale"
 property_label = "Viewport Scale"
-min_value = 20
-max_value = 100
-step = 5
-prefix = ""
+min_value = 20.0
+step = 5.0
 suffix = "%"
 
 [node name="Borderless" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
@@ -140,6 +138,28 @@ margin_bottom = 26.0
 property_category = "ui"
 property_name = "touchscreen_mode"
 property_label = "Touchscreen Mode"
+
+[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
+margin_top = 58.0
+margin_bottom = 82.0
+property_category = "ui"
+property_name = "ui_scale"
+property_label = "UI Scale"
+min_value = 0.2
+max_value = 2.4
+step = 0.01
+rounded = false
+
+[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
+margin_top = 90.0
+margin_bottom = 114.0
+property_category = "ui"
+property_name = "ui_scale_touch"
+property_label = "UI Scale Touch"
+min_value = 0.2
+max_value = 2.4
+step = 0.01
+rounded = false
 
 [node name="Debug" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false
