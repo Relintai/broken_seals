@@ -30,6 +30,10 @@ export(bool) var editor_generate : bool = false setget set_editor_generate, get_
 export(bool) var show_loading_screen : bool = true
 export(bool) var generate_on_ready : bool = false
 
+export(int) var spawn_height : int = 5
+
+export(bool) var use_global_chunk_settings : bool = true
+
 export(PropData) var test_prop : PropData
 
 var initial_generation : bool = true
@@ -48,9 +52,32 @@ var _max_frame_chunk_build_temp : int
 var rc : int = 0
 
 func _enter_tree():
+	if !Engine.is_editor_hint() && use_global_chunk_settings:
+		Settings.connect("setting_changed", self, "on_setting_changed")
+		Settings.connect("settings_loaded", self, "on_settings_loaded")
+		
+		if Settings.loaded:
+			on_settings_loaded()
+		
 	if generate_on_ready and not Engine.is_editor_hint():
 #		call_deferred("generate")
 		generate()
+
+func on_setting_changed(section, key, value):
+	if section == "game":
+		if key == "chunk_spawn_range":
+			chunk_spawn_range = value
+			
+		if key == "chunk_lod_falloff":
+			chunk_lod_falloff = value
+		
+	
+func on_settings_loaded():
+	chunk_spawn_range = Settings.get_value("game", "chunk_spawn_range")
+	chunk_lod_falloff = Settings.get_value("game", "chunk_lod_falloff")
+	
+
+	vis_update += VIS_UPDATE_INTERVAL
 	
 func generate():
 	if level_generator != null:
@@ -72,7 +99,7 @@ func _process(delta):
 	if vis_update >= VIS_UPDATE_INTERVAL:
 		vis_update = 0
 		
-		var ppos : Vector3 = _player.get_transform_3d().origin
+		var ppos : Vector3 = _player.get_body_3d().transform.origin
 		
 		var cpos : Vector3 = ppos
 		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))
@@ -114,9 +141,15 @@ func _process(delta):
 			i += 1
 			
 			
-		for x in range(-chunk_spawn_range + int(cpos.x), chunk_spawn_range + int(cpos.x)):
-			for z in range(-chunk_spawn_range + int(cpos.z), chunk_spawn_range + int(cpos.z)):
-				for y in range(-1, 2):
+		for x in range(int(cpos.x) - chunk_spawn_range, chunk_spawn_range + int(cpos.x)):
+			for z in range(int(cpos.z) - chunk_spawn_range, chunk_spawn_range + int(cpos.z)):
+				
+				var l : float = (Vector2(cpos.x, cpos.z) - Vector2(x, z)).length()
+			
+				if l > chunk_spawn_range:
+					continue
+				
+				for y in range(-1 + cpos.y, spawn_height + cpos.y):
 					if not has_chunk(x, y, z):
 #						print("spawn " + str(Vector3(x, y, z)))
 						create_chunk(x, y, z)
@@ -179,10 +212,18 @@ func spawn(start_x : int, start_y : int, start_z : int) -> void:
 	if not Engine.editor_hint:
 		_max_frame_chunk_build_temp = max_frame_chunk_build_steps
 		max_frame_chunk_build_steps = 0
+		
+	var spv : Vector2 = Vector2(start_x, start_z)
 	
-	for x in range(-chunk_spawn_range + start_x, chunk_spawn_range + start_x):
-		for z in range(-chunk_spawn_range + start_z, chunk_spawn_range + start_z):
-			for y in range(-1 + start_y, 2 + start_y):
+	for x in range(start_x - chunk_spawn_range, chunk_spawn_range + start_x):
+		for z in range(start_z - chunk_spawn_range, chunk_spawn_range + start_z):
+			
+			var l : float = (spv - Vector2(x, z)).length()
+			
+			if l > chunk_spawn_range:
+				continue
+			
+			for y in range(-1 + start_y, spawn_height + start_y):
 				create_chunk(x, y, z)
 				
 #	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)

@@ -584,11 +584,14 @@ max_concurrent_generations = 1
 library = ExtResource( 17 )
 level_generator = SubResource( 1 )
 voxel_scale = 1.6
-chunk_spawn_range = 1
+chunk_spawn_range = 2
 build_flags = 255
+chunk_lod_falloff = 1
 script = ExtResource( 16 )
 show_loading_screen = false
 generate_on_ready = true
+spawn_height = 2
+use_global_chunk_settings = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource( 3 )

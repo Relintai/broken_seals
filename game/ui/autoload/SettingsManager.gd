@@ -42,6 +42,10 @@ var _settings : Dictionary = {
 		"use_vsync" : ProjectSettings.get("display/window/vsync/use_vsync"),
 		"vsync_via_compositor" : ProjectSettings.get("display/window/vsync/vsync_via_compositor"),
 	},
+	"game" : {
+		"chunk_spawn_range" : ProjectSettings.get("game/chunk_spawn_range"),
+		"chunk_lod_falloff" : ProjectSettings.get("game/chunk_lod_falloff"),
+	},
 	"ui" : {
 		"touchscreen_mode" : OS.has_touchscreen_ui_hint(),
 		"ui_scale" : ProjectSettings.get("display/window/size/ui_scale"),

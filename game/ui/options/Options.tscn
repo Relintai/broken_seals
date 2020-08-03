@@ -122,6 +122,35 @@ property_category = "rendering"
 property_name = "vsync_via_compositor"
 property_label = "VSync Via Compositor"
 
+[node name="Game" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 31.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_horizontal = 3
+
+[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+margin_top = 0.0
+margin_bottom = 24.0
+property_category = "game"
+property_name = "chunk_spawn_range"
+property_label = "Chunk Spawn Range"
+min_value = 2.0
+max_value = 30.0
+step = 1.0
+
+[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+margin_top = 32.0
+margin_bottom = 56.0
+property_category = "game"
+property_name = "chunk_lod_falloff"
+property_label = "Chunk Lod Falloff"
+max_value = 30.0
+step = 1.0
+
 [node name="Interface" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 visible = false
 anchor_right = 1.0

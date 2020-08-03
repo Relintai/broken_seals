@@ -207,6 +207,11 @@ profiles/automatic_save=true
 level/max_character_level=60
 level/max_class_level=60
 
+[game]
+
+chunk_lod_falloff=2
+chunk_spawn_range=8
+
 [importer_defaults]
 
 texture_array={

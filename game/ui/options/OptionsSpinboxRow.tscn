@@ -11,7 +11,15 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+property_category = ""
+property_name = ""
+property_label = ""
+min_value = 0.0
+max_value = 100.0
 step = 0.0
+rounded = true
+prefix = ""
+suffix = ""
 
 [node name="Label" type="Label" parent="."]
 margin_top = 5.0
