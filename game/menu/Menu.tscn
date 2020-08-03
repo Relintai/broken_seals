@@ -122,12 +122,9 @@ create_button_path = NodePath("CharacterSelector/VBoxContainer/CharacterSelector
 
 [node name="CharacterSelector" type="MarginContainer" parent="CharacterSelectorMenu"]
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -289.0
-margin_top = -300.0
-margin_bottom = 300.0
+anchor_bottom = 1.0
+margin_left = -305.0
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_bottom = 20
@@ -137,12 +134,12 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector"]
 margin_top = 20.0
-margin_right = 269.0
+margin_right = 285.0
 margin_bottom = 580.0
 alignment = 2
 
 [node name="CharacterSelector" type="PanelContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer"]
-margin_right = 269.0
+margin_right = 285.0
 margin_bottom = 560.0
 size_flags_vertical = 3
 __meta__ = {
@@ -152,34 +149,34 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 265.0
+margin_right = 281.0
 margin_bottom = 556.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 450.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Container" type="VBoxContainer" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/ScrollContainer"]
-margin_right = 261.0
+margin_right = 277.0
 size_flags_horizontal = 3
 
 [node name="Load" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 458.0
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 484.57
 text = "Load"
 
 [node name="New" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 492.0
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 518.57
 text = "New"
 
 [node name="Delete" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 526.0
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 552.57
 text = "Delete"
 
