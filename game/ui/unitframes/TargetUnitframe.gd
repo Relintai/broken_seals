@@ -23,6 +23,7 @@ extends VBoxContainer
 export (PackedScene) var aura_entry_scene : PackedScene
 
 export (NodePath) var name_text_path : NodePath
+export (NodePath) var level_text_path : NodePath
 export (NodePath) var health_range_path : NodePath
 export (NodePath) var health_text_path : NodePath
 export (NodePath) var resource_range_path : NodePath
@@ -30,6 +31,7 @@ export (NodePath) var resource_text_path : NodePath
 export (NodePath) var aura_grid_path : NodePath
 
 var _name_text : Label
+var _level_text : Label
 var _health_range : Range
 var _health_text : Label
 var _resource_range : Range
@@ -43,6 +45,7 @@ var _health : EntityResourceHealth
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_name_text = get_node(name_text_path) as Label
+	_level_text = get_node(level_text_path) as Label
 	_health_range = get_node(health_range_path) as Range
 	_health_text = get_node(health_text_path) as Label
 	_resource_range = get_node(resource_range_path) as Range
@@ -55,7 +58,8 @@ func set_player(p_player : Entity) -> void:
 		_player.disconnect("notification_caura", self, "on_notification_caura")
 		_player.disconnect("diecd", self, "diecd")
 		_player.disconnect("centity_resource_added", self, "centity_resource_added")
-		
+		_player.disconnect("con_level_changed", self, "con_level_changed")
+
 		if _mana != null:
 			_mana.disconnect("changed", self, "_on_mana_changed")
 			_mana = null
@@ -81,6 +85,7 @@ func set_player(p_player : Entity) -> void:
 	_player.connect("notification_caura", self, "on_notification_caura")
 	_player.connect("diecd", self, "diecd", [], CONNECT_DEFERRED)
 	_player.connect("centity_resource_added", self, "centity_resource_added")
+	_player.connect("con_level_changed", self, "con_level_changed")
 	
 	for i in range(_player.resource_getc_count()):
 		centity_resource_added(_player.resource_getc_index(i))
@@ -90,6 +95,7 @@ func set_player(p_player : Entity) -> void:
 	_health.connect("changed", self, "_on_player_health_changed")
 	
 	_name_text.text = _player.centity_name
+	_level_text.text = str(_player.clevel)
 	
 	set_process(true)
 	show()
@@ -149,3 +155,6 @@ func _on_player_health_changed() -> void:
 	
 func diecd(entity : Entity) -> void:
 	set_player(null)
+
+func con_level_changed(entity: Entity, level: int):
+	_level_text.text = str(entity.clevel)

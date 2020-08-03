@@ -16,7 +16,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 aura_entry_scene = ExtResource( 2 )
-name_text_path = NodePath("MarginContainer/VBoxContainer/Label")
+name_text_path = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Label")
+level_text_path = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Label2")
 health_range_path = NodePath("MarginContainer/VBoxContainer/MarginContainer/ProgressBar")
 health_text_path = NodePath("MarginContainer/VBoxContainer/MarginContainer/Label")
 resource_range_path = NodePath("MarginContainer/VBoxContainer/MarginContainer2/ProgressBar")
@@ -36,10 +37,24 @@ margin_bottom = 49.0
 size_flags_horizontal = 3
 custom_constants/separation = 0
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 margin_right = 141.0
 margin_bottom = 15.0
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 137.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+valign = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 141.0
+margin_right = 141.0
+margin_bottom = 15.0
+size_flags_horizontal = 0
 valign = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
