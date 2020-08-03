@@ -30,6 +30,9 @@ var loaded : bool = false
 var _config_file : ConfigFile = ConfigFile.new()
 var _settings : Dictionary = {
 	"rendering" : {
+		"window_size" : OS.window_size,
+		"window_position" : OS.window_position,
+
 		"viewport_scale" : ProjectSettings.get("display/window/size/viewport_scale"),
 		"thread_model" : ProjectSettings.get("rendering/threads/thread_model"),
 		"borderless" : ProjectSettings.get("display/window/size/borderless"),
@@ -68,8 +71,29 @@ func _ready():
 				InputMap.action_add_event(action, nie)
 				
 	set_stretch()
-				
+	setup_window()
+
+func _exit_tree():
+	if OS.window_fullscreen:
+		return
 	
+	var wp : Vector2 = OS.window_position
+	var ws : Vector2 = OS.window_size
+	
+	var wpr = get_value("rendering", "window_position")
+	var wsr = get_value("rendering", "window_size")
+	
+	if int(wp.x) != int(wpr.x) || \
+		int(wp.y) != int(wpr.y) || \
+		int(ws.x) != int(wsr.x) || \
+		int(ws.y) != int(wsr.y):
+			
+		#don't use set_value() here, as the app is quitting
+		_settings["rendering"]["window_size"] = ws
+		_settings["rendering"]["window_position"] = wp
+		
+		save_settings()
+
 func set_value(section, key, value) -> void:
 	_settings[section][key] = value
 	
@@ -120,6 +144,9 @@ func set_rendering_borderless(value : bool) -> void:
 func set_rendering_fullscreen(value : bool) -> void:
 	ProjectSettings.set("display/window/size/fullscreen", value)
 	OS.window_fullscreen = value
+	
+	if !value:
+		setup_window()
 	
 func set_rendering_always_on_top(value : bool) -> void:
 	ProjectSettings.set("display/window/size/always_on_top", value)
@@ -191,3 +218,10 @@ func set_stretch():
 		sml_aspect = SceneTree.STRETCH_ASPECT_EXPAND;
 	
 	get_tree().set_screen_stretch(sml_sm, sml_aspect, stretch_size, stretch_shrink)
+
+func setup_window():
+	if OS.window_fullscreen:
+		return
+	
+	OS.window_position = get_value("rendering", "window_position")
+	OS.window_size = get_value("rendering", "window_size")
