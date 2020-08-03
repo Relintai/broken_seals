@@ -278,6 +278,8 @@ func load_character(file_name : String) -> void:
 	#TODO hack, do this properly
 	_player.set_physics_process(false)
 	
+	mob_level = _player.clevel
+	
 	set_player(_player.get_body())
 
 	Server.sset_seed(_player.sseed)

@@ -24,8 +24,6 @@ class_name PlayerGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-		
-
 func _process(delta):
 	if Input.is_action_just_pressed("sheath"):
 		get_character_skeleton().toggle_sheath()
