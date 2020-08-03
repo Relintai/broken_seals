@@ -58,7 +58,13 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 		get_dungeon(i).generate_chunk(chunk, spawn_mobs)
 
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs and randi() % 4 == 0:
-		ESS.entity_spawner.spawn_mob(0, randi() % 3, Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
+		var level : int = 1
+		
+		if chunk.get_voxel_world().has_method("get_mob_level"):
+			level  = chunk.get_voxel_world().get_mob_level()
+
+		ESS.entity_spawner.spawn_mob(0, level, \
+					Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \
 							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
 
@@ -133,7 +139,13 @@ func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
 #	chunk.build()
 	
 	if not Engine.editor_hint and chunk.position_y == 0 and spawn_mobs:
-		ESS.entity_spawner.spawn_mob(0, randi() % 3, Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
+		var level : int = 1
+		
+		if chunk.get_voxel_world().has_method("get_mob_level"):
+			level  = chunk.get_voxel_world().mob_level
+		
+		ESS.entity_spawner.spawn_mob(0, level, \
+					Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \
 							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
 

@@ -30,7 +30,14 @@ func _process(delta):
 	if Input.is_action_just_pressed("sheath"):
 		get_character_skeleton().toggle_sheath()
 		
-
+func _notification_slevel_up(value):
+	._notification_slevel_up(value)
+	
+	var world : Node = get_node_or_null("..")
+	
+	if world:
+		if world.has_method("set_mob_level"):
+			world.set_mob_level(gets_level())
 
 func _from_dict(dict):
 	._from_dict(dict)

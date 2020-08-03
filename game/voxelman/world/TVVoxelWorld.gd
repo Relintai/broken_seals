@@ -36,6 +36,8 @@ export(bool) var use_global_chunk_settings : bool = true
 
 export(PropData) var test_prop : PropData
 
+var mob_level : int = 1
+
 var initial_generation : bool = true
 
 var spawned : bool = false
@@ -295,3 +297,9 @@ func save() -> void:
 		return
 
 	ESS.entity_spawner.save_player(_player, _player_file_name)
+	
+func get_mob_level() -> int:
+	return mob_level
+	
+func set_mob_level(level : int) -> void:
+	mob_level = level
