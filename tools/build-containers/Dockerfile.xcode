@@ -1,0 +1,42 @@
+FROM godot-fedora:${img_version}
+
+RUN dnf -y install --setopt=install_weak_deps=False \
+      autoconf automake libtool clang cmake fuse fuse-devel libxml2-devel libicu-devel compat-openssl10-devel bzip2-devel kmod cpio && \
+    git clone --progress https://github.com/mackyle/xar.git && \
+    cd xar/xar && \
+    git checkout 66d451dab1ef859dd0c83995f2379335d35e53c9 && \
+    ./autogen.sh --prefix=/usr && \
+    make -j && make install && \
+    cd /root && \
+    git clone --progress https://github.com/NiklasRosenstein/pbzx && \
+    cd pbzx && \
+    git checkout 2a4d7c3300c826d918def713a24d25c237c8ed53 && \
+    clang -O3 -llzma -lxar -I /usr/local/include pbzx.c -o pbzx
+
+CMD mkdir -p /root/xcode && \
+    cd /root/xcode && \
+    xar -xf /root/files/Xcode_10.3.xip && \
+    /root/pbzx/pbzx -n Content | cpio -i && \
+    cp -r Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk /tmp/MacOSX10.14.sdk && \
+    mkdir -p /tmp/MacOSX10.14.sdk/usr/include/c++ && \
+    cp -r Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 /tmp/MacOSX10.14.sdk/usr/include/c++/ && \
+    mkdir -p mkdir -p /tmp/MacOSX10.14.sdk/usr/share/man && \
+    cp -rf Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man/man1 \
+           Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man/man3 \
+           Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man/man5 /tmp/MacOSX10.14.sdk/usr/share/man/ && \
+    cd /tmp && \
+    tar -cJf /root/files/MacOSX10.14.sdk.tar.xz MacOSX10.14.sdk && \
+    rm -rf MacOSX10.14 && \
+    cd /root/xcode && \
+    cp -r Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk /tmp/iPhoneOS12.4.sdk && \
+    mkdir -p /tmp/iPhoneOS12.4.sdk/usr/include/c++ && \
+    cp -r Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 /tmp/iPhoneOS12.4.sdk/usr/include/c++/ && \
+    cd /tmp && \
+    tar -cJf /root/files/iPhoneOS12.4.sdk.tar.xz iPhoneOS12.4.sdk && \
+    rm -rf iPhoneOS12.4.sdk && \
+    cd /root/xcode && \
+    cp -r Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk /tmp/iPhoneOS12.4.sdk && \
+    mkdir -p /tmp/iPhoneOS12.4.sdk/usr/include/c++ && \
+    cp -r Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 /tmp/iPhoneOS12.4.sdk/usr/include/c++/ && \
+    cd /tmp && \
+    tar -cJf /root/files/iPhoneSimulator12.4.sdk.tar.xz iPhoneOS12.4.sdk

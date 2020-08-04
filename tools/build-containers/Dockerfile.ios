@@ -1,0 +1,30 @@
+ARG img_version
+FROM godot-osx:${img_version}
+
+RUN dnf -y install --setopt=install_weak_deps=False \
+      automake autoconf clang gcc gcc-c++ gcc-objc gcc-objc++ cmake libicu-devel libtool libxml2-devel llvm-devel openssl-devel perl python yasm && \
+    git clone --progress https://github.com/tpoechtrager/cctools-port.git && \
+    cd /root/cctools-port && \
+    git checkout 8239a5211bcf07d6b9d359782e1a889ec1d7cce5 && \
+    sed -i 's#./autogen.sh#libtoolize -c -i --force\n./autogen.sh#' usage_examples/ios_toolchain/build.sh && \
+    usage_examples/ios_toolchain/build.sh /root/files/iPhoneOS12.4.sdk.tar.xz arm64 && \
+    mkdir -p /root/ioscross/arm64 && \
+    mv usage_examples/ios_toolchain/target/* /root/ioscross/arm64 && \
+    mkdir /root/ioscross/arm64/usr && \
+    ln -s /root/ioscross/arm64/bin /root/ioscross/arm64/usr/bin && \
+    sed -i 's#^TRIPLE=.*#TRIPLE="x86_64-apple-darwin11"#' usage_examples/ios_toolchain/build.sh && \
+    usage_examples/ios_toolchain/build.sh /root/files/iPhoneSimulator12.4.sdk.tar.xz x86_64 && \
+    mkdir -p /root/ioscross/x86_64 && \
+    mv usage_examples/ios_toolchain/target/* /root/ioscross/x86_64 && \
+    mkdir /root/ioscross/x86_64/usr && \
+    ln -s /root/ioscross/x86_64/bin /root/ioscross/x86_64/usr/bin
+
+ENV OSXCROSS_IOS=not_nothing
+ENV IOSCROSS_ROOT=/root/ioscross
+ENV PATH="/root/ioscross/arm64/bin:/root/ioscross/x86_64/bin:${PATH}"
+
+# Until we can build the cross-compiler, we include a pre-made build in the container.
+RUN mkdir -p /root/aot-compilers/iphone-arm64 && \
+    tar xvf /root/files/aarch64-apple-darwin-mono-sgen.tar.xz -C /root/aot-compilers/iphone-arm64
+
+CMD /bin/bash

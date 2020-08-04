@@ -1,0 +1,16 @@
+ARG img_version
+FROM godot-mono:${img_version}
+
+RUN dnf -y install --setopt=install_weak_deps=False \
+      gcc gcc-c++ java-1.8.0-openjdk-devel ncurses-compat-libs && \
+    mkdir sdk && cd sdk && \
+    curl -LO https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
+    unzip sdk-tools-linux-4333796.zip && \
+    rm sdk-tools-linux-4333796.zip && \
+    yes | tools/bin/sdkmanager --licenses && \
+    tools/bin/sdkmanager ndk-bundle 'build-tools;28.0.3' 'platforms;android-28' 'cmake;3.10.2.4988404'
+
+ENV ANDROID_HOME=/root/sdk/
+ENV ANDROID_NDK_ROOT=/root/sdk/ndk-bundle/
+
+CMD /bin/bash
