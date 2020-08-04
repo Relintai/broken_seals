@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/character/SingleStatRow.gd" type="Script" id=1]
+
+[node name="SingleStatRow" type="HBoxContainer"]
+margin_right = 1016.0
+margin_bottom = 15.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StatName" type="Label" parent="."]
+margin_right = 506.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+valign = 1
+
+[node name="Stat" type="Label" parent="."]
+margin_left = 510.0
+margin_right = 1016.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+align = 2
+valign = 1

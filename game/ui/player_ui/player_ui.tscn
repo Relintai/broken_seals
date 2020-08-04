@@ -44,7 +44,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow"), NodePath("IngameMenu/KeybindWindow") ]
+child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow"), NodePath("IngameMenu/KeybindWindow"), NodePath("Windows/CharacterWindow") ]
 
 [node name="TouchTargetControls" type="MarginContainer" parent="GUI"]
 visible = false
