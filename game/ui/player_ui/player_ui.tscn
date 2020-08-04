@@ -368,7 +368,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 66.0
 margin_top = 44.0
-margin_right = 681.0
+margin_right = 323.0
 margin_bottom = 474.0
 opener_button_path = NodePath("../../Buttons/CharacterButton")
 
