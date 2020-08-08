@@ -1,0 +1,8 @@
+ARG img_version
+FROM godot-fedora:${img_version}
+
+RUN dnf -y install --setopt=install_weak_deps=False \
+      gcc-c++ xorg-x11-server-Xvfb libX11-devel libXcursor-devel libXrandr-devel libXinerama-devel libXi-devel alsa-lib-devel pulseaudio-libs-devel libudev-devel mesa-libGL-devel mesa-libGLU-devel mesa-dri-drivers yasm
+
+
+CMD /bin/bash

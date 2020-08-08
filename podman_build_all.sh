@@ -11,17 +11,18 @@ fi
 project_root=$(pwd)/
 img_version=bs
 
-mkdir -p logs
+#mkdir -p logs
 
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bew -j4
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bewd -j4
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bw -j4
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bwr -j4
 
-$podman run -v ${project_root}:/root/project -w /root/project godot-ubuntu-64:${img_version} scons bel -j4
-$podman run -v ${project_root}:/root/project -w /root/project godot-ubuntu-64:${img_version} scons beld -j4
-$podman run -v ${project_root}:/root/project -w /root/project godot-ubuntu-64:${img_version} scons bl -j4
-$podman run -v ${project_root}:/root/project -w /root/project godot-ubuntu-64:${img_version} scons blr -j4
+$podman run -v ${project_root}:/root/project -w /root/project godot-linux:${img_version} scons bel -j4
+$podman run -v ${project_root}:/root/project -w /root/project godot-linux:${img_version} scons beld -j4
+$podman run -v ${project_root}:/root/project -w /root/project godot-linux:${img_version} scons bl -j4
+$podman run -v ${project_root}:/root/project -w /root/project godot-linux:${img_version} scons blr -j4
+
 
 $podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} scons bj -j4
 $podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} scons bjr -j4

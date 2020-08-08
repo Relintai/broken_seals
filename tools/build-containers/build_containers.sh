@@ -16,7 +16,7 @@ mkdir -p logs
 export podman_build="$podman build --build-arg img_version=${img_version}"
 
 $podman build -v ${files_root}:/root/files -t godot-fedora:${img_version} -f Dockerfile.base . 2>&1 | tee logs/base.log
-$podman_build -t godot-export:${img_version} -f Dockerfile.export . 2>&1 | tee logs/export.log
+$podman_build -t godot-linux:${img_version} -f Dockerfile.linux . 2>&1 | tee logs/linux.log
 
 $podman_build -t godot-mono:${img_version} -f Dockerfile.mono . 2>&1 | tee logs/mono.log
 $podman_build -t godot-mono-glue:${img_version} -f Dockerfile.mono-glue . 2>&1 | tee logs/mono-glue.log
