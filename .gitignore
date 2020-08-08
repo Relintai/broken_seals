@@ -1,5 +1,6 @@
 engine
 modules/*
+logs/*
 
 *.d
 *.o
