@@ -21,8 +21,6 @@ $podman_build -t godot-linux:${img_version} -f Dockerfile.linux . 2>&1 | tee log
 $podman_build -t godot-mono:${img_version} -f Dockerfile.mono . 2>&1 | tee logs/mono.log
 $podman_build -t godot-mono-glue:${img_version} -f Dockerfile.mono-glue . 2>&1 | tee logs/mono-glue.log
 $podman_build -t godot-windows:${img_version} -f Dockerfile.windows --ulimit nofile=65536 . 2>&1 | tee logs/windows.log
-#$podman_build -t godot-ubuntu-64:${img_version} -f Dockerfile.ubuntu-64 . 2>&1 | tee logs/ubuntu-64.log
-#$podman_build -t godot-ubuntu-32:${img_version} -f Dockerfile.ubuntu-32 . 2>&1 | tee logs/ubuntu-32.log
 $podman_build -t godot-javascript:${img_version} -f Dockerfile.javascript . 2>&1 | tee logs/javascript.log
 $podman_build -t godot-android:${img_version} -f Dockerfile.android . 2>&1 | tee logs/android.log
 
