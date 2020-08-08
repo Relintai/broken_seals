@@ -1,7 +1,5 @@
 ARG img_version
-FROM godot-mono:${img_version}
-
-ARG mono_version
+FROM godot-fedora:${img_version}
 
 RUN dnf -y install --setopt=install_weak_deps=False \
       automake autoconf bzip2-devel clang libicu-devel libtool libxml2-devel llvm-devel openssl-devel yasm && \
