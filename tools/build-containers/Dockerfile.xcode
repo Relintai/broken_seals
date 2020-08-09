@@ -1,3 +1,4 @@
+ARG img_version
 FROM godot-fedora:${img_version}
 
 RUN dnf -y install --setopt=install_weak_deps=False \
