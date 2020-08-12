@@ -24,6 +24,13 @@ class_name PlayerGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+signal player_moved()
+
+func _moved():
+	._moved()
+	
+	emit_signal("player_moved")
+
 func _process(delta):
 	if Input.is_action_just_pressed("sheath"):
 		get_character_skeleton().toggle_sheath()

@@ -59,6 +59,10 @@ func set_player(p_player : Entity) -> void:
 	player.connect("ctarget_bag_changed", self, "ctarget_bag_changed")
 	player.connect("onc_open_loot_winow_request", self, "onc_open_loot_winow_request")
 
+func on_player_moved():
+	if visible:
+		hide()
+
 func on_visibility_changed():
 	if visible:
 		refresh()
@@ -66,7 +70,7 @@ func on_visibility_changed():
 		if target_bag != null:
 			target_bag.disconnect("item_removed", self, "on_item_removed")
 			target_bag = null
-		
+
 func on_item_removed(bag: Bag, item: ItemInstance, slot_id: int) -> void:
 	refresh()
 
@@ -84,3 +88,6 @@ func ctarget_bag_changed(entity: Entity, bag: Bag) -> void:
 	
 func onc_open_loot_winow_request() -> void:
 	show()
+
+	if player.has_signal("player_moved") && !player.is_connected("player_moved", self, "on_player_moved"):
+		player.connect("player_moved", self, "on_player_moved", [], CONNECT_ONESHOT)

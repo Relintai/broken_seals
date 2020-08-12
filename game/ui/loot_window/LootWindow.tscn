@@ -45,6 +45,6 @@ size_flags_horizontal = 3
 [node name="Button" type="Button" parent="VBoxContainer"]
 margin_top = 566.0
 margin_right = 1016.0
-margin_bottom = 592.269
+margin_bottom = 592.57
 text = "close"
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="hide"]
