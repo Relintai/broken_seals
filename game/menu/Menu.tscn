@@ -199,12 +199,9 @@ character_folder = "characters"
 
 [node name="CharacterSelector2" type="MarginContainer" parent="CharacterCreationMenu"]
 anchor_left = 1.0
-anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 0.5
-margin_left = -289.0
-margin_top = -300.0
-margin_bottom = 300.0
+anchor_bottom = 1.0
+margin_left = -305.0
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_bottom = 20
@@ -214,7 +211,7 @@ __meta__ = {
 
 [node name="CharacterSelector" type="PanelContainer" parent="CharacterCreationMenu/CharacterSelector2"]
 margin_top = 20.0
-margin_right = 269.0
+margin_right = 285.0
 margin_bottom = 580.0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -223,43 +220,43 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 265.0
+margin_right = 281.0
 margin_bottom = 556.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer"]
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 421.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Container" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/ScrollContainer"]
-margin_right = 261.0
+margin_right = 277.0
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer"]
 margin_top = 429.0
-margin_right = 261.0
+margin_right = 277.0
 margin_bottom = 552.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 257.0
+margin_right = 273.0
 margin_bottom = 119.0
 
 [node name="Label" type="Label" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
-margin_right = 253.0
+margin_right = 269.0
 margin_bottom = 15.0
 text = "Character name"
 
 [node name="LineEdit" type="LineEdit" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 23.0
-margin_right = 253.0
+margin_right = 269.0
 margin_bottom = 47.3413
 
 [node name="Create" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 55.0
-margin_right = 253.0
+margin_right = 269.0
 margin_bottom = 81.5702
 size_flags_horizontal = 3
 text = "Create"
@@ -269,7 +266,7 @@ __meta__ = {
 
 [node name="Back" type="Button" parent="CharacterCreationMenu/CharacterSelector2/CharacterSelector/VBoxContainer/PanelContainer/VBoxContainer"]
 margin_top = 89.0
-margin_right = 253.0
+margin_right = 269.0
 margin_bottom = 115.57
 text = "Back"
 
