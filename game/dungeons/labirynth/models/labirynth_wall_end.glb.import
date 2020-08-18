@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_wall_end.glb-63fa50da65148ff062440dceccc2ed39.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_wall_end.glb"
+dest_files=[ "res://.import/labirynth_wall_end.glb-63fa50da65148ff062440dceccc2ed39.res" ]
+
+[params]
+
+import_type=0
+collider_type=0
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 2, 2, 2 )

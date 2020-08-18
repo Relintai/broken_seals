@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_shield.glb-e92b4bf3502f7c44fe0ab05ea6e588e6.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_shield.glb"
+dest_files=[ "res://.import/labirynth_shield.glb-e92b4bf3502f7c44fe0ab05ea6e588e6.res" ]
+
+[params]
+
+import_type=0
+collider_type=4
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 2, 2, 2 )

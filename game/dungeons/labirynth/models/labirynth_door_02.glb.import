@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_door_02.glb-bd536b29eb5c08b4114a2eb2820f33e4.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_door_02.glb"
+dest_files=[ "res://.import/labirynth_door_02.glb-bd536b29eb5c08b4114a2eb2820f33e4.res" ]
+
+[params]
+
+import_type=0
+collider_type=4
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 1, 1, 1 )

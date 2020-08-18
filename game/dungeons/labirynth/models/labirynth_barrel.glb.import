@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_barrel.glb-70e43c25fc469f3f2c8e7f0cec929eab.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_barrel.glb"
+dest_files=[ "res://.import/labirynth_barrel.glb-70e43c25fc469f3f2c8e7f0cec929eab.res" ]
+
+[params]
+
+import_type=0
+collider_type=6
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 1, 1, 1 )

@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_cross.glb-4dcd0f35e06c5007a1e4240bb4be1112.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_cross.glb"
+dest_files=[ "res://.import/labirynth_cross.glb-4dcd0f35e06c5007a1e4240bb4be1112.res" ]
+
+[params]
+
+import_type=0
+collider_type=1
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 2, 2, 2 )

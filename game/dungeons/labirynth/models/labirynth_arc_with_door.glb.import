@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_arc_with_door.glb-a41dfba8aa5978a97ba1c15abb0fc633.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_arc_with_door.glb"
+dest_files=[ "res://.import/labirynth_arc_with_door.glb-a41dfba8aa5978a97ba1c15abb0fc633.res" ]
+
+[params]
+
+import_type=0
+collider_type=1
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 2, 2, 2 )

@@ -1,0 +1,18 @@
+[remap]
+
+importer="gltf_mdr"
+type="MeshDataResource"
+path="res://.import/labirynth_column.glb-ebdccc716575f18660bfa3a2ed68ef33.res"
+
+[deps]
+
+source_file="res://dungeons/labirynth/models/labirynth_column.glb"
+dest_files=[ "res://.import/labirynth_column.glb-ebdccc716575f18660bfa3a2ed68ef33.res" ]
+
+[params]
+
+import_type=0
+collider_type=4
+offset=Vector3( 0, 0, 0 )
+rotation=Vector3( 0, 0, 0 )
+scale=Vector3( 2, 2, 2 )
