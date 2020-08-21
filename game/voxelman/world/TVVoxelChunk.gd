@@ -48,6 +48,7 @@ func _create_meshers():
 	prop_mesher.build_flags = build_flags
 	prop_mesher.texture_scale = 3
 	
+
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
@@ -56,9 +57,20 @@ func _create_meshers():
 	mesher.voxel_scale = voxel_scale
 	mesher.build_flags = build_flags
 	mesher.texture_scale = 3
+	mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
+	mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 	add_mesher(mesher)
-	
-	#add_mesher(VoxelMesherCubic.new())
+
+	var cmesher : VoxelMesherCubic = VoxelMesherCubic.new()
+	cmesher.base_light_value = 0.45
+	cmesher.ao_strength = 0.2
+	cmesher.lod_size = lod_size
+	cmesher.voxel_scale = voxel_scale
+	cmesher.build_flags = build_flags
+	cmesher.texture_scale = 3
+	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
+	cmesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_ISOLEVEL
+	add_mesher(cmesher)
 	
 	_prop_texture_packer = TexturePacker.new()
 	_prop_texture_packer.max_atlas_size = 1024
