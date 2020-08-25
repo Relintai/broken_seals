@@ -60,16 +60,23 @@ func _create_meshers():
 	mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 	add_mesher(mesher)
-
-	var cmesher : VoxelMesherCubic = VoxelMesherCubic.new()
+	
+	
+	var cmesher : VoxelMesherBlocky = VoxelMesherBlocky.new()
+	cmesher.texture_scale = 3
 	cmesher.base_light_value = 0.45
 	cmesher.ao_strength = 0.2
 	cmesher.lod_size = lod_size
 	cmesher.voxel_scale = voxel_scale
 	cmesher.build_flags = build_flags
-	cmesher.texture_scale = 3
+	
+	if cmesher.build_flags & VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING != 0:
+		cmesher.build_flags = cmesher.build_flags ^ VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING
+		
+	cmesher.always_add_colors = true
+	
+#	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
-	cmesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_ISOLEVEL
 	add_mesher(cmesher)
 	
 	_prop_texture_packer = TexturePacker.new()
