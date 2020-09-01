@@ -215,4 +215,5 @@ keyframe/0/animation_keyframe_index = 0
 keyframe/0/next_keyframe = -1
 keyframe/0/transition = 1.0
 keyframe/0/time = 0.0
+keyframe/0/method_name = ""
 keyframe/0/position = Vector2( 360, -60 )
