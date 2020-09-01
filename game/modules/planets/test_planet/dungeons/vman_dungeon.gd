@@ -28,6 +28,10 @@ export(int) var enemy_count : int = 14
 
 export(bool) var spawn_mobs : bool = false
 
+export(Texture) var wall_texture : Texture
+export(Texture) var floor_texture : Texture
+export(Texture) var ceiling_texture : Texture
+
 export(MeshDataResource) var dung_entrance_mdr : MeshDataResource = null
 export(PackedScene) var dung_entrance_scene : PackedScene = null
 
@@ -45,8 +49,6 @@ var next_level_teleporter_position_data_space : Vector3 = Vector3()
 
 var enemy_data : Array = []
 
-# in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
-enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
 enum Tile { Wall, Floor, Door, Empty }
 
 func _instance(p_seed, p_instance):
@@ -88,10 +90,6 @@ func _setup():
 #	add_dungeon_start_room(dung)
 
 	build()
-
-func _setup_library(library):
-	._setup_library(library)
-	
 
 func _generate_chunk(chunk, spawn_mobs):
 	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(sizex + 2, sizey + 2, sizez + 2) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
@@ -135,6 +133,25 @@ func _generate_chunk(chunk, spawn_mobs):
 	if ceiling_pos > chunk.size_y:
 		ceiling_pos = chunk.size_y
 		draw_ceiling = false
+
+	var xx : int = 0
+	var zz : int = 0
+	for x in range(px, tox):
+		for z in range(pz, toz):
+			var tile : int = map[x][z]
+			#we can safely check like this
+			if tile > Tile.Wall:
+				add_wall(chunk, xx, zz, floor_pos, ceiling_pos, null, wall_texture)
+
+#				if draw_floor:
+#					chunk.add_mesh_data_resourcev(Vector3(xx, floor_pos, zz), dung_floor, floor_texture)
+#
+#				if draw_ceiling:
+#					chunk.add_mesh_data_resourcev(Vector3(xx, ceiling_pos, zz), dung_ceiling, ceiling_texture)
+				
+			zz += 1
+		xx += 1
+		zz = 0
 		
 	if spawn_mobs:
 		for enemy in enemy_data:
@@ -221,34 +238,6 @@ func build_level():
 			break
 			
 	connect_rooms()
-	
-	#post process walls, so they have the correct type
-	var neighbours : int = 0
-	for x in range(sizex):
-		for z in range(sizez):
-			if map[x][z] == Tile.Floor:
-				if x != 0:
-					if map[x - 1][z] <= Tile.Wall:
-						neighbours |= NeighbourCaseCodeFlags.WallXP
-					
-				if x != sizex - 1:
-					if map[x + 1][z] <= Tile.Wall:
-						neighbours |= NeighbourCaseCodeFlags.WallXN
-					
-				if z != 0:
-					if map[x][z - 1] <= Tile.Wall:
-						neighbours |= NeighbourCaseCodeFlags.WallZP
-					
-				if z != sizez - 1:
-					if map[x][z + 1] <= Tile.Wall:
-						neighbours |= NeighbourCaseCodeFlags.WallZN
-					
-				#left shift all bits by 4 -> (binary) 0000XXXX -> XXXX0000
-				neighbours = neighbours << 4
-				#bitwise or them together -> (Tile.Floor = 1 = 00000001) -> (binary) 000000001 | XXXX0000 -> XXXX0001
-				map[x][z] = Tile.Floor | neighbours
-				neighbours = 0
-			
 
 func connect_rooms():
 	var stone_graph : AStar2D = AStar2D.new()
