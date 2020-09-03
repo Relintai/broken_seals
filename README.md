@@ -6,9 +6,13 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
-Screenshot:
+#### On Desktop
 
-![Broken Seals](pictures/screen.jpg)
+![Broken Seals desktop](pictures/screenshot_desktop.jpg.jpg)
+
+#### On Touchscreens
+
+![Broken Seals on touchscreen](pictures/screenshot_touchscreen.jpg)
 
 ## Editing the game
 
