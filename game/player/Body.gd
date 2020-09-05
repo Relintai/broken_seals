@@ -92,6 +92,7 @@ var character_skeleton : CharacterSkeleton3D
 
 var visibility_update_timer : float = 0
 var placed : bool = false
+var just_place : bool = false
 
 #var los : bool = false
 
@@ -181,20 +182,27 @@ func _physics_process(delta : float) -> void:
 		return
 		
 	if not placed:
-		if world != null:
-			if not world.is_position_walkable(transform.origin):
-				return
-				
-			var space : PhysicsDirectSpaceState = get_world().direct_space_state
-			
-			var res : Dictionary = space.intersect_ray(transform.origin + Vector3(0, 100, 0), transform.origin + Vector3(0, -100, 0), [ self ])
-
-			if not res.empty():
-				var pos : Vector3 = res["position"]
-				transform.origin = pos + Vector3(0, 0.2, 0)
+		if just_place:
+			if world.is_position_walkable(transform.origin):
 				placed = true
-				
-			return
+				return
+			else:
+				return
+		else:
+			if world != null:
+				if not world.is_position_walkable(transform.origin):
+					return
+					
+				var space : PhysicsDirectSpaceState = get_world().direct_space_state
+					
+				var res : Dictionary = space.intersect_ray(transform.origin + Vector3(0, 100, 0), transform.origin + Vector3(0, -100, 0), [ self ])
+		
+				if not res.empty():
+					var pos : Vector3 = res["position"]
+					transform.origin = pos + Vector3(0, 0.2, 0)
+					placed = true
+						
+				return
 		
 	if entity.c_is_controlled:
 		process_input(delta)
@@ -676,3 +684,6 @@ func teleport(teleport_to : Vector3):
 	world.spawn(teleport_to.x / world.chunk_size_x / world.voxel_scale, teleport_to.y/ world.chunk_size_y / world.voxel_scale, teleport_to.z/ world.chunk_size_z / world.voxel_scale)
 	transform.origin = teleport_to
 	placed = false
+#	just_place = true
+	
+	

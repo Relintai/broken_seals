@@ -1,9 +1,10 @@
-[gd_resource type="Dungeon" load_steps=2 format=2]
+[gd_resource type="Dungeon" load_steps=3 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/dungeons/vman_dungeon.gd" type="Script" id=1]
+[ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=2]
 
 [resource]
-posy = -79
+posy = -45
 sizex = 40
 sizey = 3
 sizez = 40
@@ -12,4 +13,6 @@ level_room_count = 9
 min_room_dimension = 5
 max_room_dimension = 8
 enemy_count = 14
+fill_tile = 1
 spawn_mobs = false
+dung_entrance_scene = ExtResource( 2 )

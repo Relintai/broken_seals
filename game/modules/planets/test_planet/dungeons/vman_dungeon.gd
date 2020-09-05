@@ -26,6 +26,8 @@ export(int) var min_room_dimension : int = 5
 export(int) var max_room_dimension : int = 8
 export(int) var enemy_count : int = 14
 
+export(int) var fill_tile : int = 1
+
 export(bool) var spawn_mobs : bool = false
 
 export(Texture) var wall_texture : Texture
@@ -58,6 +60,8 @@ func _instance(p_seed, p_instance):
 	p_instance.min_room_dimension = min_room_dimension
 	p_instance.max_room_dimension = max_room_dimension
 	p_instance.enemy_count = enemy_count
+	
+	p_instance.fill_tile = fill_tile
 	
 	p_instance.spawn_mobs = spawn_mobs
 
@@ -96,11 +100,13 @@ func _generate_chunk(chunk, spawn_mobs):
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	
 	if dung_entrance_scene && chunk_aabb.has_point(entrance_position.origin):
-		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, (posy + 4) * chunk.voxel_scale + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
+		inner_entrance_position = Vector3(player_inner_entrance_position_x * chunk.voxel_scale, ((posy + 4) * chunk.voxel_scale) + 0.3, player_inner_entrance_position_z * chunk.voxel_scale)
 		call_deferred("spawn_teleporter_scene", dung_entrance_scene, entrance_position, chunk, inner_entrance_position)
 	
 	if !aabb.intersects(chunk_aabb):
 		return
+		
+	chunk.ensure_channel_allocated(VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE, 1)
 
 	var px : int = chunk.position_x * chunk.size_x - posx
 	var pz : int = chunk.position_z * chunk.size_z - posz
@@ -167,7 +173,8 @@ func _generate_chunk(chunk, spawn_mobs):
 
 func add_wall(chunk : VoxelChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
 	for y in range(floor_pos, ceiling_pos):
-		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall, tex)
+		chunk.set_voxel(0, x, y, z, VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE)
+#		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall, tex)
 
 func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : VoxelChunk, teleports_to : Vector3):
 	var s = scene.instance()
