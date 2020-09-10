@@ -195,7 +195,6 @@ window/size/ui_scale_touch=1.0
 
 [ess]
 
-spells/use_spell_points=true
 level/auto_learn_spells=false
 data/ess_resource_db_path="res://data/resource_db.tres"
 data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"

@@ -64,6 +64,9 @@ func _ready() -> void:
 	
 	_prev_button.connect("pressed", self, "dec_page")
 	_next_button.connect("pressed", self, "inc_page")
+	
+	if ESS.use_spell_points:
+		_spell_points_label.text = ""
 		
 	connect("visibility_changed", self, "_visibility_changed")
 
@@ -135,7 +138,8 @@ func refresh_all() -> void:
 	if _page > _max_pages:
 		_page = _max_pages
 
-	_spell_points_label.text = "Free spell points: " + str(_player.getc_free_spell_points())
+	if ESS.use_spell_points:
+		_spell_points_label.text = "Free spell points: " + str(_player.getc_free_spell_points())
 
 	refresh_entries()
 	
