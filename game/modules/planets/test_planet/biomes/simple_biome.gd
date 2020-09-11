@@ -45,12 +45,11 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 		for i in range(get_dungeon_count()):
 			var d : Dungeon = get_dungeon(i)
 			
-			d.entrance_position.origin = entrance_position
-			
-#			print(entrance_position)
-			
-			entrance_position = d.next_level_teleporter_position_data_space
-			entrance_position *= voxel_scale
+			if d.has_method("has_entrance_position"):
+				d.entrance_position.origin = entrance_position
+
+				entrance_position = d.next_level_teleporter_position_data_space
+				entrance_position *= voxel_scale
 
 	terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 

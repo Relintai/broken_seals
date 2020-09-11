@@ -1,0 +1,34 @@
+[gd_resource type="EntityData" load_steps=6 format=2]
+
+[ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=1]
+[ext_resource path="res://modules/species/species_human.tres" type="EntitySpeciesData" id=2]
+[ext_resource path="res://modules/entity_classes/naturalist/1_naturalist.tres" type="EntityClassData" id=3]
+
+[sub_resource type="SimpleLevelStatData" id=1]
+agility = 3
+strength = 2
+stamina = 3
+intellect = 4
+spirit = 5
+
+[sub_resource type="StatData" id=2]
+level_stat_data = SubResource( 1 )
+stat/agility = 14.0
+stat/strength = 15.0
+stat/stamina = 13.0
+stat/intellect = 13.0
+stat/spirit = 10.0
+stat/health = 20.0
+stat/mana = 20.0
+stat/global_cooldown = 1.5
+
+[resource]
+resource_name = "Naturalist Trainer"
+id = 3
+entity_type = 4
+entity_interaction_type = 4
+text_name = "Naturalist Trainer"
+stat_data = SubResource( 2 )
+entity_species_data = ExtResource( 2 )
+entity_class_data = ExtResource( 3 )
+script = ExtResource( 1 )

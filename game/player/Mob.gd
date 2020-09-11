@@ -26,12 +26,11 @@ class_name MobGD
 
 var dead : bool = false
 var death_timer : float = 0
-
-func _ready() -> void:
-	ai_state = EntityEnums.AI_STATE_PATROL
 	
 func _enter_tree():
 	set_process(true)
+	
+	ai_state = EntityEnums.AI_STATE_PATROL
 
 func _process(delta : float) -> void:
 	if dead:
@@ -52,6 +51,8 @@ func _notification_cmouse_enter() -> void:
 		Input.set_default_cursor_shape(Input.CURSOR_CROSS)
 	elif centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_NONE:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	elif centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_TRAIN:
+		Input.set_default_cursor_shape(Input.CURSOR_HELP)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_MOVE)
 		

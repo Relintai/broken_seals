@@ -448,3 +448,5 @@ func cut_regions(free_regions, region_to_remove):
 func set_tile(x, y, type):
 	map[x][y] = type
 	
+func has_entrance_position():
+	return true

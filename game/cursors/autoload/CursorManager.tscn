@@ -9,9 +9,6 @@
 [ext_resource path="res://cursors/forbidden.png" type="Texture" id=7]
 [ext_resource path="res://cursors/ibeam.png" type="Texture" id=8]
 
-
-
-
 [node name="CursorManager" type="Node"]
 script = ExtResource( 1 )
 default_cursor = ExtResource( 2 )

@@ -51,6 +51,8 @@ func _sinteract(entity: Entity) -> void:
 		entity.starget_bag = target.sbag
 			
 		entity.ssend_open_window(EntityEnums.ENTITY_WINDOW_LOOT)
+	elif target.sentity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_TRAIN:
+		entity.ssend_open_window(EntityEnums.ENTITY_WINDOW_TRAINER)
 
 func _cans_interact(entity):
 	var target : Entity = entity.gets_target()
