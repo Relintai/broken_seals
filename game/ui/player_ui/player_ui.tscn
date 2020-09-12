@@ -417,6 +417,7 @@ margin_right = 242.0
 margin_bottom = 315.0
 
 [node name="TrainerWindow" parent="GUI/Windows" instance=ExtResource( 31 )]
+visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 58.7329
