@@ -127,6 +127,7 @@ func set_button_entry(action_bar_button_entry: ActionBarButtonEntry, p_player: E
 	shortcut = sc
 	
 	setup_icon()
+	refresh_known()
 	
 func on_keybinds_changed():
 	var action_name : String = "actionbar_" + str(button_entry.action_bar_id) + "_" + str(button_entry.slot_id)
@@ -290,6 +291,27 @@ func drop_data(pos, esd) -> void:
 			
 	
 	setup_icon()
+	refresh_known()
+	
+func refresh_known():
+	if !player:
+		set_known(true)
+		return
+	
+	if (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_NONE):
+		set_known(true)
+	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL):
+		var spell = ESS.resource_db.get_spell_path(button_entry.item_path)
+
+		set_known(player.spell_hasc(spell))
+	elif (button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_ITEM):
+		set_known(true)
+	
+func set_known(val : bool):
+	if val:
+		icon_rect.modulate = Color(1, 1, 1, 1)
+	else:
+		icon_rect.modulate = Color(0.5, 0.5, 0.5, 1)
 	
 func set_player(p_player: Entity) -> void:
 	if not player == null:
@@ -300,6 +322,9 @@ func set_player(p_player: Entity) -> void:
 		
 		player.disconnect("cgcd_started", self, "_cgcd_started")
 		player.disconnect("cgcd_finished", self, "_cgcd_finished")
+		
+		player.disconnect("cspell_added", self, "_cspell_added")
+		player.disconnect("cspell_removed", self, "_cspell_removed")
 		
 		player = null
 
@@ -318,7 +343,17 @@ func set_player(p_player: Entity) -> void:
 	
 	player.connect("cgcd_started", self, "_cgcd_started")
 	player.connect("cgcd_finished", self, "_cgcd_finished")
+	
+	player.connect("cspell_added", self, "_cspell_added")
+	player.connect("cspell_removed", self, "_cspell_removed")
+	
+func _cspell_added(entity: Entity, spell: Spell):
+	if button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL && button_entry.item_path == spell.resource_path:
+		set_known(true)
 
+func _cspell_removed(entity: Entity, spell: Spell):
+	if button_entry.type == ActionBarButtonEntry.ACTION_BAR_BUTTON_ENTRY_TYPE_SPELL && button_entry.item_path == spell.resource_path:
+		set_known(false)
 
 func _ccooldown_added(id : int, value : float) -> void:
 	if id == spell_id:
