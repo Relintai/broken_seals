@@ -417,11 +417,12 @@ margin_right = 242.0
 margin_bottom = 315.0
 
 [node name="TrainerWindow" parent="GUI/Windows" instance=ExtResource( 31 )]
-visible = false
-margin_left = 99.6561
-margin_top = 88.3755
-margin_right = -704.344
-margin_bottom = -200.624
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 58.7329
+margin_top = 50.7239
+margin_right = 446.733
+margin_bottom = 542.724
 
 [node name="Unitframes" type="Control" parent="GUI"]
 anchor_right = 1.0
