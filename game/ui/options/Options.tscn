@@ -44,6 +44,7 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
