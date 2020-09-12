@@ -15,7 +15,7 @@ __meta__ = {
 }
 spell_entry_container_path = NodePath("VBoxContainer/PanelContainer3/ScrollContainer/Spells")
 learn_button_path = NodePath("VBoxContainer/HBoxContainer/Train")
-cost_points_label_path = NodePath("VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2/Price")
+cost_label_path = NodePath("VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2/Price")
 spell_icon_path = NodePath("VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer/Icon")
 spell_name_label_path = NodePath("VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2/Name")
 spell_description_label_path = NodePath("VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2/Description")

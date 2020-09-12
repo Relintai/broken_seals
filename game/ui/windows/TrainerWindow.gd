@@ -22,7 +22,7 @@ extends PanelContainer
 
 export(NodePath) var spell_entry_container_path : NodePath
 export(NodePath) var learn_button_path : NodePath
-export(NodePath) var cost_points_label_path : NodePath
+export(NodePath) var cost_label_path : NodePath
 
 export(NodePath) var spell_icon_path : NodePath
 export(NodePath) var spell_name_label_path : NodePath
@@ -33,7 +33,7 @@ var _spell_entry_container : Node
 var _spell_entries : Array
 
 var _learn_button : Button
-var _cost_points_label : Label
+var _cost_label : Label
 
 var _spell_icon : TextureRect
 var _spell_name_label : Label
@@ -60,7 +60,7 @@ func _ready() -> void:
 	_spell_requirements_label = get_node(spell_requirements_label_path) as Label
 
 	_learn_button = get_node(learn_button_path)
-	_cost_points_label = get_node(cost_points_label_path)
+	_cost_label = get_node(cost_label_path)
 
 	_learn_button.connect("pressed", self, "learn")
 
@@ -122,8 +122,6 @@ func refresh_all() -> void:
 	if _character_class == null:
 		return
 
-	_cost_points_label.text = str(_player.getc_money())
-
 	refresh_entries()
 	
 
@@ -178,15 +176,26 @@ func _button_pressed():
 		_spell_name_label.text = spell.text_name
 		_spell_description_label.text = spell.text_description
 		
+		var req_str = "Required: "
+		
 		if spell.training_required_spell:
-			_spell_requirements_label.text = spell.training_required_spell.text_name + " (rank " +  str(spell.training_required_spell.rank) + ")"
-		else:
-			_spell_requirements_label.text = ""
+			req_str += spell.training_required_spell.text_name + " (rank " +  str(spell.training_required_spell.rank) + ") "
+			
+		if spell.level > 0:
+			req_str += "level " + str(spell.level)
+			
+		_spell_requirements_label.text = req_str
+		
+		_cost_label.text = str(spell.get_training_cost())
+
 	else:
 		_spell_icon.texture = null
 		_spell_name_label.text = ""
 		_spell_description_label.text = ""
 		_spell_requirements_label.text = ""
+		
+		_cost_label.text = "0"
+
 		
 	
 class CustomSpellSorter:
