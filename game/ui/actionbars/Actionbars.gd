@@ -50,8 +50,6 @@ func _centity_data_changed(cls: EntityData) -> void:
 
 	_abp = _player.get_action_bar_profile()
 	
-	_abp.connect("changed", self, "on_changed")
-
 	for i in range(_abp.get_action_bar_count()):
 		var abe = _abp.get_action_bar(i)
 		var s = actionbar_scene.instance()
@@ -62,8 +60,6 @@ func _centity_data_changed(cls: EntityData) -> void:
 		
 		s.owner = self
 		
-func on_changed():
-	ProfileManager.save()
 		
 func clear_actionbars() -> void:
 	var children = get_children()
