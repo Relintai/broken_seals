@@ -20,17 +20,17 @@ extends Button
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-var spell
+var item : VendorItemDataEntry
 
-func set_spell(p_spell):
-	spell = p_spell
+func set_item(p_item):
+	item = p_item
 		
 func get_drag_data(pos):
-	if spell == null:
+	if item == null || item.item:
 		return null
 	
 	var tr = TextureRect.new()
-	tr.texture = spell.icon
+	tr.texture = item.item.icon
 	tr.expand = true
 	
 #	tr.rect_size = rect_size
@@ -39,7 +39,7 @@ func get_drag_data(pos):
 
 	var esd = ESDragAndDrop.new()
 	
-	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_SPELL
-	esd.item_path = spell.resource_path
+	esd.type = ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_ITEM
+	esd.item_path = item.item.resource_path
 
 	return esd

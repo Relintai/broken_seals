@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://ui/windows/CharacterWindow.tscn" type="PackedScene" id=29]
 [ext_resource path="res://ui/theme/character_icon.tres" type="Texture" id=30]
 [ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=31]
+[ext_resource path="res://ui/windows/VendorWindow.tscn" type="PackedScene" id=32]
 
 [node name="GUILayer" type="CanvasLayer"]
 script = ExtResource( 28 )
@@ -45,7 +46,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow"), NodePath("IngameMenu/KeybindWindow"), NodePath("Windows/CharacterWindow"), NodePath("Windows/TrainerWindow"), NodePath("IngameMenu/InterfaceOptions") ]
+child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Windows/SpellBookWindow"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("Windows/Inventory"), NodePath("Windows/LootWindow"), NodePath("Windows/TalentWindow"), NodePath("Windows/CraftingWindow"), NodePath("IngameMenu/KeybindWindow"), NodePath("Windows/CharacterWindow"), NodePath("Windows/TrainerWindow"), NodePath("IngameMenu/InterfaceOptions"), NodePath("Windows/VendorWindow") ]
 
 [node name="TouchTargetControls" type="MarginContainer" parent="GUI"]
 visible = false
@@ -424,6 +425,15 @@ margin_left = 58.7329
 margin_top = 50.7239
 margin_right = 446.733
 margin_bottom = 542.724
+
+[node name="VendorWindow" parent="GUI/Windows" instance=ExtResource( 32 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 43.4182
+margin_top = 69.8467
+margin_right = 524.418
+margin_bottom = 502.847
 
 [node name="Unitframes" type="Control" parent="GUI"]
 anchor_right = 1.0

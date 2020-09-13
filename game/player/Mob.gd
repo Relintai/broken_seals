@@ -53,6 +53,8 @@ func _notification_cmouse_enter() -> void:
 		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	elif centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_TRAIN:
 		Input.set_default_cursor_shape(Input.CURSOR_HELP)
+	elif centity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_VENDOR:
+		Input.set_default_cursor_shape(Input.CURSOR_HELP)
 	else:
 		Input.set_default_cursor_shape(Input.CURSOR_MOVE)
 		
