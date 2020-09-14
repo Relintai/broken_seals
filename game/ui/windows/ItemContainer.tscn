@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ui/windows/SpellDragAndDropSpellBook.gd" type="Script" id=1]
+[ext_resource path="res://ui/windows/ItemDragAndDropVendor.gd" type="Script" id=1]
 [ext_resource path="res://ui/windows/ItemContainer.gd" type="Script" id=2]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
 [ext_resource path="res://ui/vendor_window/VendorEntryPopup.gd" type="Script" id=4]
@@ -162,4 +162,4 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 [connection signal="pressed" from="PanelContainer/HBoxContainer/Button" to="." method="spell_button_pressed"]
 [connection signal="pressed" from="EntryPopup/VBoxContainer/HBoxContainer/Button" to="EntryPopup" method="hide"]
-[connection signal="pressed" from="EntryPopup/VBoxContainer/Container/VBoxContainer/HBoxContainer/LearnButton" to="." method="learn_spell"]
+[connection signal="pressed" from="EntryPopup/VBoxContainer/Container/VBoxContainer/HBoxContainer/LearnButton" to="." method="buy"]

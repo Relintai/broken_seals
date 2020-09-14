@@ -94,7 +94,7 @@ func refresh_entries() -> void:
 		var spindex : int = i + (_page * len(_item_entries))
 
 		if spindex >= _vendor_item_data.get_num_vendor_datas():
-			_item_entries[n].set_vendor_item(_player, null)
+			_item_entries[n].set_vendor_item(_player, null, 0)
 			i += 1
 			n += 1
 			continue
@@ -104,7 +104,7 @@ func refresh_entries() -> void:
 		if !vide:
 			continue
 		
-		_item_entries[n].set_vendor_item(_player, vide)
+		_item_entries[n].set_vendor_item(_player, vide, spindex)
 		i += 1
 		n += 1
 

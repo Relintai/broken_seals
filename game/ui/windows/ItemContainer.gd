@@ -37,9 +37,11 @@ var _name_label : Label
 #var _description_label : RichTextLabel
 var _item_button : Button
 var _popup : Popup
+var _quantity_spinbox : SpinBox
 
 var _vendor_item_data_entry : VendorItemDataEntry
 var _player : Entity
+var _index : int
 
 func _ready() -> void:
 	_icon = get_node(icon_path) as TextureRect
@@ -47,10 +49,12 @@ func _ready() -> void:
 #	_description_label = get_node(description_label_path) as RichTextLabel
 	_item_button = get_node(spell_button_path) as Button
 	_popup = get_node(popup_path) as Popup
+	_quantity_spinbox = get_node(quantity_spinbox_path) as SpinBox
 	
-func set_vendor_item(p_player : Entity, p_vide: VendorItemDataEntry) -> void:
+func set_vendor_item(p_player : Entity, p_vide: VendorItemDataEntry, index : int) -> void:
 	_vendor_item_data_entry = p_vide
 	_player = p_player
+	_index = index
 	
 #	_icon.set_spell(_spell)
 	_item_button.set_item(_vendor_item_data_entry)
@@ -72,6 +76,14 @@ func spell_button_pressed() -> void:
 	pos.x += _item_button.rect_size.x
 	
 	_popup.popup(Rect2(pos, _popup.rect_size))
+	
+func buy():
+	if !_player:
+		return
+	
+	var count : int = _quantity_spinbox.value
+	
+	_player.vendor_item_sbuy(_index, count)
 
 func update_spell_indicators():
 	pass
