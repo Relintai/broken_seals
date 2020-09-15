@@ -43,7 +43,7 @@ align = 1
 [node name="CloseButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 margin_left = 986.0
 margin_right = 1016.0
-margin_bottom = 26.269
+margin_bottom = 26.5702
 rect_min_size = Vector2( 30, 20 )
 text = "X"
 
@@ -246,7 +246,7 @@ align = 2
 [node name="ResizeButton" type="Button" parent="VBoxContainer/HBoxContainer3/PanelContainer2/VBoxContainer/HBoxContainer2"]
 margin_left = 747.0
 margin_right = 777.0
-margin_bottom = 26.269
+margin_bottom = 26.5702
 rect_min_size = Vector2( 30, 20 )
 
 [node name="TooltipContainer" type="Control" parent="."]

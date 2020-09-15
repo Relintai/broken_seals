@@ -50,6 +50,8 @@ func set_player(player: Entity) -> void:
 	
 	_player.connect("equip_con_success", self, "equip_con_success")
 	
+	equip_con_success(player, equip_slot, player.equip_getc_slot(equip_slot), null, 0)
+	
 func drop_data(position, data):
 	if _player == null:
 		return
@@ -98,7 +100,7 @@ func equip_con_success(entity: Entity, pequip_slot: int, item: ItemInstance, old
 		return
 
 	_item_instance = item
-	
+
 	if item == null:
 		_texture.texture = null
 		return

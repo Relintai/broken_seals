@@ -51,6 +51,7 @@ func _ready() -> void:
 func set_player(p_player: Entity) -> void:
 	if _player != null:
 		_player.disconnect("cbag_changed", self, "cbag_changed")
+		_player.disconnect("equip_con_success", self, "equip_con_success")
 		
 		for ie in _inventory_item_container.get_children():
 			ie.queue_free()
@@ -58,6 +59,7 @@ func set_player(p_player: Entity) -> void:
 	_player = p_player
 	
 	_player.connect("cbag_changed", self, "cbag_changed")
+	_player.connect("equip_con_success", self, "equip_con_success")
 	
 	cbag_changed(_player, _player.cbag)
 	
@@ -125,6 +127,9 @@ func item_removed(bag: Bag, item: ItemInstance, slot_id: int) -> void:
 	refresh_bags()
 	
 func item_swapped(bag: Bag, item1_slot : int, item2_slot: int) -> void:
+	refresh_bags()
+	
+func equip_con_success(entity, equip_slot, item, old_item, bag_slot) -> void:
 	refresh_bags()
 
 func on_visibility_changed():

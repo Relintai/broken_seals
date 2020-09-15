@@ -190,7 +190,7 @@ func drop_data(pos, esd) -> void:
 		player.item_crequest_swap(slot_id, esd.get_meta("slot_id"))
 		setup_icon()
 	elif esd.type == ESDragAndDrop.ES_DRAG_AND_DROP_TYPE_EQUIPPED_ITEM:
-		player.equip_crequest(ESS.resource_db.get_item_template_path(esd.item_path).id, slot_id)
+		player.equip_crequest(ESS.resource_db.get_item_template_path(esd.item_path).equip_slot, slot_id)
 		setup_icon()
 
 func set_slot_id(pslot_id : int) -> void:
