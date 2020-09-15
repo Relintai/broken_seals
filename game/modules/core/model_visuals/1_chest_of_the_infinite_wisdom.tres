@@ -2,18 +2,18 @@
 
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf_v3.png" type="Texture" id=1]
 
-[sub_resource type="ModelVisualEntry" id=1]
-override_layer = 5
-entity_type = 1
-bone = 4
-entry_0/texture = ExtResource( 1 )
-
 [sub_resource type="ModelVisualEntry" id=2]
 override_layer = 5
 entity_type = 1
 bone = 3
 entry_0/texture = ExtResource( 1 )
 
+[sub_resource type="ModelVisualEntry" id=3]
+override_layer = 5
+entity_type = 1
+bone = 4
+entry_0/texture = ExtResource( 1 )
+
 [resource]
 layer = 5
-get_visual_entries = [ SubResource( 1 ), SubResource( 2 ) ]
+get_visual_entries = [ SubResource( 2 ), SubResource( 3 ) ]

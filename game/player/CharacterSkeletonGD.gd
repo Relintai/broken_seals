@@ -168,9 +168,27 @@ func build():
 					
 					ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
 					ddict["mesh"] = entry.entry.get_mesh(k)
-					
-				if !ddict.has("texture") && entry.entry.get_texture(k):
-					ddict["texture"] = entry.entry.get_texture(k)
+		
+		var texture_layer_array : Array = Array()
+		texture_layer_array.resize(ESS.texture_layers.count(",") + 1)
+		var texture_used : bool = false
+		
+		for j in range(get_model_entry_count(skele_point)):
+			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
+			
+			var layer : int = entry.entry.override_layer
+			
+			if texture_layer_array.size() <= layer || texture_layer_array[layer]:
+				continue
+			
+			for k in range(entry.entry.size):
+				if entry.entry.get_texture(k):
+					texture_layer_array[layer] = entry.entry.get_texture(k)
+					texture_used = true
+					break
+		
+		if texture_used:
+			ddict["textures"] = texture_layer_array
 			
 		if !ddict.empty():
 			data.append(ddict)

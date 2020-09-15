@@ -116,10 +116,35 @@ func _execute():
 func prepare_textures() -> void:
 	_texture_packer.clear()
 	
+	var lmerger : TextureLayerMerger = TextureLayerMerger.new()
+	
 	for i in range(data.size()):
 		var ddict : Dictionary = data[i]
-		var texture : Texture = ddict["texture"]
+		var textures : Array = ddict["textures"]
 		
+		var texture : Texture = null
+		var tcount : int = 0
+		for j in range(textures.size()):
+			if textures[j]:
+				tcount += 1
+		
+		if tcount > 1:
+			for j in range(textures.size() - 1, -1, -1):
+				if textures[j]:
+					lmerger.add_texture(textures[j])
+					break
+			
+			lmerger.merge()
+			texture = lmerger.get_result_as_texture()
+			lmerger.clear()
+		else:
+			for j in range(textures.size() - 1, -1, -1):
+				if textures[j]:
+					texture = textures[j]
+					break
+
+		ddict["texture"] = texture
+
 		if texture != null:
 			ddict["atlas_texture"] = _texture_packer.add_texture(texture)
 
