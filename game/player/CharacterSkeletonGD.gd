@@ -144,6 +144,8 @@ func _build_model():
 func build():
 	setup_build_mesh()
 	
+	sort_layers()
+	
 	var data : Array = Array()
 
 	for skele_point in range(ESS.skeletons_bones_index_get(entity_type).count(',') + 1):
@@ -155,22 +157,23 @@ func build():
 		
 		var bone_idx : int = skeleton.find_bone(bone_name)
 
+		var ddict : Dictionary = Dictionary()
 		for j in range(get_model_entry_count(skele_point)):
 			var entry : SkeletonModelEntry = get_model_entry(skele_point, j)
 			
-			if entry.entry.get_mesh(model_index) != null:
-				var ddict : Dictionary = Dictionary()
-				
-				ddict["bone_name"] = bone_name
-				ddict["bone_idx"] = bone_idx
-				
-				if entry.entry.get_texture(model_index) != null:
-					ddict["texture"] = entry.entry.get_texture(model_index)
+			for k in range(entry.entry.size):
+				if entry.entry.get_mesh(k):
+					ddict["bone_name"] = bone_name
+					ddict["bone_idx"] = bone_idx
+					
+					ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
+					ddict["mesh"] = entry.entry.get_mesh(k)
+					
+				if !ddict.has("texture") && entry.entry.get_texture(k):
+					ddict["texture"] = entry.entry.get_texture(k)
 			
-				ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
-				ddict["mesh"] = entry.entry.get_mesh(model_index)
-				
-				data.append(ddict)
+		if !ddict.empty():
+			data.append(ddict)
 	
 	_mesh_job.data = data
 	

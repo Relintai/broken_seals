@@ -21,7 +21,6 @@
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_simple_v2.png" type="Texture" id=19]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarfv2.png" type="Texture" id=20]
 
-
 [sub_resource type="ModelVisualEntry" id=1]
 entry_0/mesh = ExtResource( 4 )
 entry_0/texture = ExtResource( 20 )
