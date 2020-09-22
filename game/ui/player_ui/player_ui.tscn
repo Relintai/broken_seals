@@ -1,16 +1,14 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Unitframes.gd" type="Script" id=3]
 [ext_resource path="res://ui/auraframe/AuraFrame.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=6]
-[ext_resource path="res://ui/actionbars/Actionbars.gd" type="Script" id=8]
 [ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=9]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=10]
 [ext_resource path="res://ui/windows/TalentWindow.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ui/unitframes/TargetUnitframe.tscn" type="PackedScene" id=12]
-[ext_resource path="res://ui/actionbars/ActionBar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=15]
 [ext_resource path="res://ui/castbar/Castbar.tscn" type="PackedScene" id=16]
 [ext_resource path="res://ui/windows/SpellBookWindow.tscn" type="PackedScene" id=17]
@@ -196,20 +194,6 @@ stretch_mode = 6
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Actionbars" type="HBoxContainer" parent="GUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 0
-alignment = 2
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-actionbar_scene = ExtResource( 14 )
 
 [node name="Windows" type="CanvasLayer" parent="GUI"]
 layer = 2
