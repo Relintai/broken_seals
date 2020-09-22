@@ -1,9 +1,8 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Unitframes.gd" type="Script" id=3]
-[ext_resource path="res://ui/errorframe/ErrorFrame.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/auraframe/AuraFrame.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=6]
 [ext_resource path="res://ui/actionbars/Actionbars.gd" type="Script" id=8]
@@ -15,7 +14,6 @@
 [ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=15]
 [ext_resource path="res://ui/castbar/Castbar.tscn" type="PackedScene" id=16]
 [ext_resource path="res://ui/windows/SpellBookWindow.tscn" type="PackedScene" id=17]
-[ext_resource path="res://ui/minimap/MiniMap.tscn" type="PackedScene" id=18]
 [ext_resource path="res://ui/loot_window/LootWindow.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/windows/CraftingWindow.tscn" type="PackedScene" id=20]
 [ext_resource path="res://ui/unitframes/UnitframeBase.tscn" type="PackedScene" id=21]
@@ -296,23 +294,12 @@ margin_right = 151.0
 [node name="TargetUnitframe" parent="GUI/Unitframes" instance=ExtResource( 12 )]
 visible = false
 
-[node name="MiniMap" parent="GUI" instance=ExtResource( 18 )]
-
 [node name="AuraFrame" parent="GUI" instance=ExtResource( 5 )]
 margin_left = -331.0
 margin_bottom = 123.0
 
 [node name="Castbar" parent="GUI" instance=ExtResource( 16 )]
 visible = false
-
-[node name="ErrorFrame" parent="GUI" instance=ExtResource( 4 )]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -191.728
-margin_top = 140.333
-margin_right = 180.272
-margin_bottom = 288.333
-mouse_filter = 2
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
