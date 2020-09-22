@@ -18,3 +18,6 @@ func load_module():
 #		for s in r.get_spells():
 #			print(s.resource_name)
 #			print(s.get_id())
+
+func on_request_instance(what : int, node : Node) -> void:
+	return

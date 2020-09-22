@@ -639,8 +639,9 @@ func on_c_controlled_changed(val):
 		add_child(camera_pivot)
 		camera = camera_pivot.get_node("Camera") as Camera
 		
-		var uiscn : PackedScene = ResourceLoader.load("res://ui/player_ui/player_ui.tscn")
-		var ui = uiscn.instance()
+#		var uiscn : PackedScene = ResourceLoader.load("res://ui/player_ui/player_ui.tscn")
+#		var ui = uiscn.instance()
+		var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE)
 		add_child(ui)
 		
 		
