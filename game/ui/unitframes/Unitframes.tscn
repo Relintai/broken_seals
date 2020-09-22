@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://player/Unitframes.gd" type="Script" id=2]
+[ext_resource path="res://ui/unitframes/UnitframeBase.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/unitframes/TargetUnitframe.tscn" type="PackedScene" id=7]
+
+[node name="Unitframes" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_right = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+player_unit_frame_path = NodePath("PlayerUnitFrame")
+target_unit_frame_path = NodePath("TargetUnitframe")
+
+[node name="PlayerUnitFrame" parent="." instance=ExtResource( 6 )]
+margin_right = 151.0
+
+[node name="TargetUnitframe" parent="." instance=ExtResource( 7 )]
+visible = false

@@ -1,18 +1,15 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
-[ext_resource path="res://player/Unitframes.gd" type="Script" id=3]
 [ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=6]
 [ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=9]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=10]
 [ext_resource path="res://ui/windows/TalentWindow.tscn" type="PackedScene" id=11]
-[ext_resource path="res://ui/unitframes/TargetUnitframe.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=15]
 [ext_resource path="res://ui/windows/SpellBookWindow.tscn" type="PackedScene" id=17]
 [ext_resource path="res://ui/loot_window/LootWindow.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/windows/CraftingWindow.tscn" type="PackedScene" id=20]
-[ext_resource path="res://ui/unitframes/UnitframeBase.tscn" type="PackedScene" id=21]
 [ext_resource path="res://ui/theme/talent_icon.tres" type="Texture" id=22]
 [ext_resource path="res://ui/theme/spellbook_icon.tres" type="Texture" id=23]
 [ext_resource path="res://ui/theme/bag_icon.tres" type="Texture" id=24]
@@ -255,25 +252,6 @@ margin_left = 43.4182
 margin_top = 69.8467
 margin_right = 524.418
 margin_bottom = 502.847
-
-[node name="Unitframes" type="Control" parent="GUI"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
-mouse_filter = 2
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
-player_unit_frame_path = NodePath("PlayerUnitFrame")
-target_unit_frame_path = NodePath("TargetUnitframe")
-
-[node name="PlayerUnitFrame" parent="GUI/Unitframes" instance=ExtResource( 21 )]
-margin_right = 151.0
-
-[node name="TargetUnitframe" parent="GUI/Unitframes" instance=ExtResource( 12 )]
-visible = false
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
