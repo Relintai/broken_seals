@@ -20,10 +20,25 @@ extends CanvasLayer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export(NodePath) var gui_base_path : NodePath
+export(NodePath) var buttons_path : NodePath
+export(NodePath) var windows_path : NodePath
+
+var gui_base : Node
+var buttons : Node
+var windows : Node
+
 export(NodePath) var loot_window_path : NodePath
 var loot_window : Control
 
 func _ready():
+	initialize()
+
+func initialize():
+	gui_base = get_node(gui_base_path)
+	buttons = get_node(buttons_path)
+	windows = get_node(windows_path)
+	
 	loot_window = get_node(loot_window_path) as Control
 
 func _on_Player_onc_open_loot_winow_request() -> void:

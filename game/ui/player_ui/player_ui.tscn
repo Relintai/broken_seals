@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -28,13 +28,15 @@
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
 [ext_resource path="res://ui/theme/crafting_icon.tres" type="Texture" id=27]
 [ext_resource path="res://ui/player_ui/player_ui.gd" type="Script" id=28]
-[ext_resource path="res://ui/windows/CharacterWindow.tscn" type="PackedScene" id=29]
-[ext_resource path="res://ui/theme/character_icon.tres" type="Texture" id=30]
+[ext_resource path="res://ui/buttons/ImageButton.tscn" type="PackedScene" id=30]
 [ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=31]
 [ext_resource path="res://ui/windows/VendorWindow.tscn" type="PackedScene" id=32]
 
 [node name="GUILayer" type="CanvasLayer"]
 script = ExtResource( 28 )
+gui_base_path = NodePath("GUI")
+buttons_path = NodePath("GUI/Buttons")
+windows_path = NodePath("GUI/Windows")
 loot_window_path = NodePath("GUI/Windows/LootWindow")
 
 [node name="GUI" type="Control" parent="."]
@@ -189,33 +191,13 @@ __meta__ = {
 "_edit_group_": true,
 "_edit_use_anchors_": false
 }
+image_button = ExtResource( 30 )
 spell_book_path = NodePath("../Windows/SpellBookWindow")
 spell_book_button_path = NodePath("SpellBookButton")
 lock_button_path = NodePath("LockButton")
 
-[node name="CharacterButton" type="Button" parent="GUI/Buttons"]
-margin_right = 25.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 25, 30 )
-hint_tooltip = "Inventory"
-focus_mode = 0
-toggle_mode = true
-enabled_focus_mode = 0
-keep_pressed_outside = true
-
-[node name="TextureRect3" type="TextureRect" parent="GUI/Buttons/CharacterButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 30 )
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="SpellBookButton" type="Button" parent="GUI/Buttons"]
-margin_left = 25.0
-margin_right = 50.0
+margin_right = 25.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "SpellBook"
@@ -235,8 +217,8 @@ __meta__ = {
 }
 
 [node name="BagButton" type="Button" parent="GUI/Buttons"]
-margin_left = 50.0
-margin_right = 75.0
+margin_left = 25.0
+margin_right = 50.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "Inventory"
@@ -256,8 +238,8 @@ __meta__ = {
 }
 
 [node name="TalentButton" type="Button" parent="GUI/Buttons"]
-margin_left = 75.0
-margin_right = 100.0
+margin_left = 50.0
+margin_right = 75.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "Inventory"
@@ -277,8 +259,8 @@ __meta__ = {
 }
 
 [node name="CraftingButton" type="Button" parent="GUI/Buttons"]
-margin_left = 100.0
-margin_right = 125.0
+margin_left = 75.0
+margin_right = 100.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "Inventory"
@@ -298,8 +280,8 @@ __meta__ = {
 }
 
 [node name="LockButton" type="Button" parent="GUI/Buttons"]
-margin_left = 125.0
-margin_right = 150.0
+margin_left = 100.0
+margin_right = 125.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 focus_mode = 0
@@ -329,8 +311,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons"]
-margin_left = 150.0
-margin_right = 175.0
+margin_left = 125.0
+margin_right = 150.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 focus_mode = 0
@@ -363,16 +345,6 @@ actionbar_scene = ExtResource( 14 )
 
 [node name="Windows" type="CanvasLayer" parent="GUI"]
 layer = 2
-
-[node name="CharacterWindow" parent="GUI/Windows" instance=ExtResource( 29 )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 66.0
-margin_top = 44.0
-margin_right = 323.0
-margin_bottom = 474.0
-opener_button_path = NodePath("../../Buttons/CharacterButton")
 
 [node name="SpellBookWindow" parent="GUI/Windows" instance=ExtResource( 17 )]
 visible = false
@@ -474,7 +446,6 @@ mouse_filter = 2
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
-[connection signal="toggled" from="GUI/Buttons/CharacterButton" to="GUI/Windows/CharacterWindow" method="_on_CharacterButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/SpellBookButton" to="GUI/Windows/SpellBookWindow" method="_on_SpellBookButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/BagButton" to="GUI/Windows/Inventory" method="_on_BagButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/TalentButton" to="GUI/Windows/TalentWindow" method="_on_TalentButton_toggled"]

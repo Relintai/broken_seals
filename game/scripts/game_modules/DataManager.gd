@@ -62,6 +62,7 @@ func request_instance(what : int) -> Node:
 	
 	if what == PLAYER_UI_INSTANCE:
 		inst = player_ui.instance()
+		inst.initialize()
 	
 	for module in _modules:
 #		if module.has_method("on_request_instance"):

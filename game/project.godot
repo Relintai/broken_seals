@@ -128,6 +128,11 @@ _global_script_classes=[ {
 "class": "TestVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/debug/TestVoxelMesher.gd"
+}, {
+"base": "GameModule",
+"class": "UIWindowModule",
+"language": "GDScript",
+"path": "res://scripts/game_modules/ui_window_module.gd"
 } ]
 _global_script_class_icons={
 "AuraGD": "",
@@ -153,7 +158,8 @@ _global_script_class_icons={
 "SpellGD": "",
 "TVVoxelChunk": "",
 "TVVoxelMesher": "",
-"TestVoxelMesher": ""
+"TestVoxelMesher": "",
+"UIWindowModule": ""
 }
 Node="input/actionbar_5_11"
 
