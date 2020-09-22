@@ -49,8 +49,9 @@ func load_modules_at(path : String) -> void:
 						res = ResourceLoader.load(path + file_name)
 					else:
 						res = ResourceLoader.load(path + "/" + file_name)
-					
-					_modules.append(res)
+						
+					if res.enabled:
+						_modules.append(res)
 					
 			file_name = dir.get_next()
 	else:

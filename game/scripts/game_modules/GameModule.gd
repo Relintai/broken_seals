@@ -1,6 +1,8 @@
 extends Resource
 class_name GameModule
 
+export(bool) var enabled : bool = true
+
 export(ESSResourceDB) var resource_db : ESSResourceDB
 
 func load_module():

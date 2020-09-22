@@ -28,7 +28,6 @@ func _ready() -> void:
 	if player_path != null:
 		var player = get_node(player_path)
 	
-	
 		for child_path in child_controls:
 			var child = get_node(child_path)
 			

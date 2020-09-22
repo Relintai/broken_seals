@@ -20,6 +20,9 @@ extends CanvasLayer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+export (String) var player_path : String = "../.."
+
+
 export(NodePath) var gui_base_path : NodePath
 export(NodePath) var buttons_path : NodePath
 export(NodePath) var windows_path : NodePath
@@ -33,6 +36,13 @@ var loot_window : Control
 
 func _ready():
 	initialize()
+	
+	if player_path != null:
+		var player = get_node(player_path)
+	
+		for c in windows.get_children():
+			if c.has_method("set_player"):
+				c.set_player(player)
 
 func initialize():
 	gui_base = get_node(gui_base_path)
