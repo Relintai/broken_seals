@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://ui/windows/TalentWindow.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ui/unitframes/TargetUnitframe.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=15]
-[ext_resource path="res://ui/castbar/Castbar.tscn" type="PackedScene" id=16]
 [ext_resource path="res://ui/windows/SpellBookWindow.tscn" type="PackedScene" id=17]
 [ext_resource path="res://ui/loot_window/LootWindow.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/windows/CraftingWindow.tscn" type="PackedScene" id=20]
@@ -274,9 +273,6 @@ target_unit_frame_path = NodePath("TargetUnitframe")
 margin_right = 151.0
 
 [node name="TargetUnitframe" parent="GUI/Unitframes" instance=ExtResource( 12 )]
-visible = false
-
-[node name="Castbar" parent="GUI" instance=ExtResource( 16 )]
 visible = false
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
