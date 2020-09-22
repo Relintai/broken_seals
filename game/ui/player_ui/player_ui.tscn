@@ -42,7 +42,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
 }
-child_controls = [ NodePath("Unitframes"), NodePath("Actionbars"), NodePath("Buttons"), NodePath("Castbar"), NodePath("AuraFrame"), NodePath("IngameMenu/KeybindWindow"), NodePath("IngameMenu/InterfaceOptions") ]
 
 [node name="Buttons" type="HBoxContainer" parent="GUI"]
 anchor_top = 1.0

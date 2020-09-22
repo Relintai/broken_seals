@@ -43,6 +43,10 @@ func _ready():
 		for c in windows.get_children():
 			if c.has_method("set_player"):
 				c.set_player(player)
+				
+		for c in gui_base.get_children():
+			if c.has_method("set_player"):
+				c.set_player(player)
 
 func initialize():
 	gui_base = get_node(gui_base_path)
