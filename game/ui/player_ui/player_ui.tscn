@@ -1,9 +1,8 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Unitframes.gd" type="Script" id=3]
-[ext_resource path="res://ui/auraframe/AuraFrame.tscn" type="PackedScene" id=5]
 [ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=6]
 [ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=9]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=10]
@@ -276,10 +275,6 @@ margin_right = 151.0
 
 [node name="TargetUnitframe" parent="GUI/Unitframes" instance=ExtResource( 12 )]
 visible = false
-
-[node name="AuraFrame" parent="GUI" instance=ExtResource( 5 )]
-margin_left = -331.0
-margin_bottom = 123.0
 
 [node name="Castbar" parent="GUI" instance=ExtResource( 16 )]
 visible = false
