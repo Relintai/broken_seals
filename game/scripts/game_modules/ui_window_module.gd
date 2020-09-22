@@ -3,6 +3,7 @@ class_name UIWindowModule
 
 export(PackedScene) var character_scene : PackedScene
 export(Texture) var opener_button_texture : Texture
+export(int) var index : int = -1
 
 func on_request_instance(what : int, node : Node) -> void:
 	if what == DataManager.PLAYER_UI_INSTANCE:

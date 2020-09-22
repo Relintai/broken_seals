@@ -9,3 +9,4 @@ script = ExtResource( 1 )
 enabled = true
 character_scene = ExtResource( 2 )
 opener_button_texture = ExtResource( 3 )
+index = 0
