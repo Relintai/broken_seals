@@ -75,7 +75,7 @@ remote func creceive_spawn_for(data: String, global_name : String, position: Vec
 	
 remote func creceive_despawn_for(path : NodePath) -> void:
 #	print("recdespawnfor " + path)
-	var ent = get_scene_tree().root.get_node_or_null(path)
+	var ent = get_tree().root.get_node_or_null(path)
 	
 	if ent:
 		ent.queue_free()
@@ -83,7 +83,7 @@ remote func creceive_despawn_for(path : NodePath) -> void:
 puppet func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = get_scene_tree().multiplayer.get_network_unique_id()
+	createinfo.guid = multiplayer.get_network_unique_id()
 #	createinfo.player_name = ""
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
@@ -259,14 +259,14 @@ func _request_entity_spawn(createinfo : EntityCreateInfo):
 
 	if (createinfo.parent_path == ""):
 		if _spawn_parent == null:
-			_spawn_parent = get_scene_tree().root.get_node(spawn_parent_path)
+			_spawn_parent = get_tree().root.get_node(spawn_parent_path)
 		
 		if _spawn_parent.current_scene != null:
 			var spawn_parent = _spawn_parent.current_scene
 
 			spawn_parent.add_child(entity_node)
 	else:
-		get_scene_tree().root.get_node(createinfo.parent_path).add_child(entity_node)
+		get_tree().root.get_node(createinfo.parent_path).add_child(entity_node)
 
 	entity_node.setup(createinfo)
 	

@@ -42,7 +42,6 @@ func _ready() -> void:
 	_loading_screen = get_node(loading_screen_path)
 	
 	ProfileManager.load()
-	ESS.load_entity_spawner()
 #	ESS.resource_db = ESSResourceDBMap.new()
 	ESS.resource_db = ESSResourceDBStatic.new()
 	ESS.resource_db.remap_ids = true
