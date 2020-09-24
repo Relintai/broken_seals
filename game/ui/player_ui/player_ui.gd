@@ -31,7 +31,6 @@ var gui_base : Node
 var buttons : Node
 var windows : Node
 
-export(NodePath) var loot_window_path : NodePath
 var loot_window : Control
 
 func _ready():
@@ -52,8 +51,7 @@ func initialize():
 	gui_base = get_node(gui_base_path)
 	buttons = get_node(buttons_path)
 	windows = get_node(windows_path)
-	
-	loot_window = get_node(loot_window_path) as Control
+
 
 func _on_Player_onc_open_loot_winow_request() -> void:
 	if loot_window != null:

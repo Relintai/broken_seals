@@ -29,6 +29,8 @@ var player : Entity
 var target_bag : Bag
 
 func _ready():
+	get_node("../../../").loot_window = self
+	
 	container = get_node(container_path)
 	
 	connect("visibility_changed", self, "on_visibility_changed")
