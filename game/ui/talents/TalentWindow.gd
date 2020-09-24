@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Control
 
 # Copyright (c) 2019-2020 Péter Magyar
 #
@@ -20,7 +20,6 @@ extends PanelContainer
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-export(NodePath) var opener_button_path : NodePath
 var opener_button : BaseButton
 
 export(PackedScene) var spec_scene : PackedScene
@@ -35,7 +34,6 @@ var _data : EntityData
 var _player : Entity
 
 func _ready():
-	opener_button = get_node_or_null(opener_button_path) as BaseButton
 	connect("visibility_changed", self, "on_visibility_changed")
 	
 	_spec_container = get_node(spec_container_path)
@@ -111,7 +109,7 @@ func on_visibility_changed():
 		if !visible && opener_button.pressed:
 			opener_button.pressed = false
 
-func _on_TalentButton_toggled(button_pressed):
+func _on_button_toggled(button_pressed):
 	if button_pressed:
 		if !visible:
 			show()

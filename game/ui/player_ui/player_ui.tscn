@@ -1,15 +1,13 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=6]
 [ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=9]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=10]
-[ext_resource path="res://ui/windows/TalentWindow.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ui/bags/Bag.tscn" type="PackedScene" id=15]
 [ext_resource path="res://ui/loot_window/LootWindow.tscn" type="PackedScene" id=19]
 [ext_resource path="res://ui/windows/CraftingWindow.tscn" type="PackedScene" id=20]
-[ext_resource path="res://ui/theme/talent_icon.tres" type="Texture" id=22]
 [ext_resource path="res://ui/theme/bag_icon.tres" type="Texture" id=24]
 [ext_resource path="res://ui/theme/locked_icon.tres" type="Texture" id=25]
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
@@ -72,30 +70,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TalentButton" type="Button" parent="GUI/Buttons"]
+[node name="CraftingButton" type="Button" parent="GUI/Buttons"]
 margin_left = 25.0
 margin_right = 50.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 25, 30 )
-hint_tooltip = "Inventory"
-focus_mode = 0
-toggle_mode = true
-enabled_focus_mode = 0
-keep_pressed_outside = true
-
-[node name="TextureRect4" type="TextureRect" parent="GUI/Buttons/TalentButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 22 )
-expand = true
-stretch_mode = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CraftingButton" type="Button" parent="GUI/Buttons"]
-margin_left = 50.0
-margin_right = 75.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "Inventory"
@@ -115,8 +92,8 @@ __meta__ = {
 }
 
 [node name="LockButton" type="Button" parent="GUI/Buttons"]
-margin_left = 75.0
-margin_right = 100.0
+margin_left = 50.0
+margin_right = 75.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 focus_mode = 0
@@ -146,8 +123,8 @@ __meta__ = {
 }
 
 [node name="Menu" type="Button" parent="GUI/Buttons"]
-margin_left = 100.0
-margin_right = 125.0
+margin_left = 75.0
+margin_right = 100.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 focus_mode = 0
@@ -166,16 +143,6 @@ __meta__ = {
 
 [node name="Windows" type="CanvasLayer" parent="GUI"]
 layer = 2
-
-[node name="TalentWindow" parent="GUI/Windows" instance=ExtResource( 11 )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 62.0
-margin_top = 54.0
-margin_right = 656.0
-margin_bottom = 513.0
-opener_button_path = NodePath("../../Buttons/TalentButton")
 
 [node name="CraftingWindow" parent="GUI/Windows" instance=ExtResource( 20 )]
 visible = false
@@ -224,7 +191,6 @@ margin_bottom = 502.847
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
 [connection signal="toggled" from="GUI/Buttons/BagButton" to="GUI/Windows/Inventory" method="_on_BagButton_toggled"]
-[connection signal="toggled" from="GUI/Buttons/TalentButton" to="GUI/Windows/TalentWindow" method="_on_TalentButton_toggled"]
 [connection signal="toggled" from="GUI/Buttons/CraftingButton" to="GUI/Windows/CraftingWindow" method="_on_CraftingButton_toggled"]
 [connection signal="pressed" from="GUI/Buttons/Menu" to="GUI/IngameMenu" method="show"]
 
