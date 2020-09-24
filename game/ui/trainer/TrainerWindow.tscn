@@ -1,0 +1,157 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/trainer/TrainerWindow.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=2]
+
+[node name="TrainerWindow" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 2 )
+script = ExtResource( 1 )
+spell_entry_container_path = NodePath("PanelContainer/VBoxContainer/PanelContainer3/ScrollContainer/Spells")
+learn_button_path = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Train")
+cost_label_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2/Price")
+spell_icon_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer/Icon")
+spell_name_label_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2/Name")
+spell_description_label_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2/Description")
+spell_requirements_label_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2/Requirements")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 49.0
+margin_top = 40.0
+margin_right = 436.0
+margin_bottom = 498.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 383.0
+margin_bottom = 454.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 379.0
+margin_bottom = 26.0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 345.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Trainer"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 349.0
+margin_right = 379.0
+margin_bottom = 26.5702
+rect_min_size = Vector2( 30, 0 )
+text = "X"
+
+[node name="PanelContainer3" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 34.0
+margin_right = 379.0
+margin_bottom = 221.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/PanelContainer3"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 375.0
+margin_bottom = 183.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="Spells" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer3/ScrollContainer"]
+margin_right = 371.0
+size_flags_horizontal = 3
+custom_constants/separation = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 229.0
+margin_right = 379.0
+margin_bottom = 416.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 375.0
+margin_bottom = 183.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+margin_right = 371.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 156.0
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
+expand = true
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 64.0
+margin_right = 371.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Name" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_right = 307.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+
+[node name="Requirements" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 23.0
+margin_right = 307.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+
+[node name="Description" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 46.0
+margin_right = 307.0
+margin_bottom = 156.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+autowrap = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer"]
+margin_top = 164.0
+margin_right = 371.0
+margin_bottom = 179.0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2"]
+margin_right = 36.0
+margin_bottom = 15.0
+text = "Costs "
+
+[node name="Price" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2"]
+margin_left = 40.0
+margin_right = 40.0
+margin_bottom = 15.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 424.0
+margin_right = 379.0
+margin_bottom = 450.0
+alignment = 2
+
+[node name="Train" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 279.0
+margin_right = 379.0
+margin_bottom = 26.5702
+rect_min_size = Vector2( 100, 0 )
+text = "Learn"
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/Button" to="." method="hide"]

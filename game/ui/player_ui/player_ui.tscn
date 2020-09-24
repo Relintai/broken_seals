@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/GUI.gd" type="Script" id=1]
 [ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=26]
 [ext_resource path="res://ui/player_ui/player_ui.gd" type="Script" id=28]
 [ext_resource path="res://ui/buttons/ImageButton.tscn" type="PackedScene" id=30]
-[ext_resource path="res://ui/windows/TrainerWindow.tscn" type="PackedScene" id=31]
 
 [node name="GUILayer" type="CanvasLayer"]
 script = ExtResource( 28 )
@@ -94,15 +93,6 @@ __meta__ = {
 
 [node name="Windows" type="CanvasLayer" parent="GUI"]
 layer = 2
-
-[node name="TrainerWindow" parent="GUI/Windows" instance=ExtResource( 31 )]
-visible = false
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 58.7329
-margin_top = 50.7239
-margin_right = 446.733
-margin_bottom = 542.724
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
