@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/windows/inventory/ItemEntry.tscn" type="PackedScene" id=1]
-[ext_resource path="res://ui/windows/base/BaseWindow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/bags/ItemEntry.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/bags/BaseWindow.tscn" type="PackedScene" id=2]
+
+
 
 [node name="InventoryWindow" type="Control"]
 margin_right = 888.0
