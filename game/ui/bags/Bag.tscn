@@ -260,5 +260,4 @@ margin_left = 4.0
 margin_top = 4.0
 margin_right = 299.0
 margin_bottom = 227.0
-use_button_path = NodePath("../../ItemTooltip/VBoxContainer/UseButton")
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="hide"]
