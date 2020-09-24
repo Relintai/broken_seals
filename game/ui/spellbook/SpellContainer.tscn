@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://ui/windows/SpellDragAndDropSpellBook.gd" type="Script" id=1]
-[ext_resource path="res://ui/windows/SpellContainer.gd" type="Script" id=2]
-[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
-[ext_resource path="res://ui/spellbook/SpellEntryPopup.gd" type="Script" id=5]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/spellbook/SpellDragAndDropSpellBook.gd" type="Script" id=2]
+[ext_resource path="res://ui/spellbook/SpellContainer.gd" type="Script" id=3]
+[ext_resource path="res://ui/spellbook/SpellEntryPopup.gd" type="Script" id=4]
 
 [node name="SpellContainer" type="Control"]
 margin_left = 290.0
@@ -12,8 +12,8 @@ margin_right = 576.0
 margin_bottom = 370.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource( 3 )
-script = ExtResource( 2 )
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -42,7 +42,7 @@ margin_bottom = 60.0
 margin_right = 55.0
 margin_bottom = 56.0
 rect_min_size = Vector2( 55, 55 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 
 [node name="CenterContainer" type="MarginContainer" parent="PanelContainer/HBoxContainer/Button"]
 margin_left = 4.0
@@ -77,7 +77,7 @@ margin_left = 64.0
 margin_top = 4.0
 margin_right = 360.0
 margin_bottom = 207.0
-script = ExtResource( 5 )
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
