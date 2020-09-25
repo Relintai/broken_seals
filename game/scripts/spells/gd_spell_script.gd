@@ -215,7 +215,7 @@ func handle_gcd(info : SpellCastInfo) -> void:
 		info.caster.gcd_starts(info.caster.stat_gets_current(gcd_id))
 
 func add_spell_cast_effect(info : SpellCastInfo) -> void:
-	var basic_spell_effect : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
+	var basic_spell_effect = visual_spell_effects 
 		
 	if basic_spell_effect != null:
 		if basic_spell_effect.spell_cast_effect_left_hand != null:
@@ -225,7 +225,7 @@ func add_spell_cast_effect(info : SpellCastInfo) -> void:
 			info.caster.get_character_skeleton().common_attach_point_add(EntityEnums.COMMON_SKELETON_POINT_RIGHT_HAND, basic_spell_effect.spell_cast_effect_right_hand)
 		
 func remove_spell_cast_effect(info : SpellCastInfo) -> void:
-	var basic_spell_effect : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
+	var basic_spell_effect = visual_spell_effects 
 		
 	if basic_spell_effect != null:
 		if basic_spell_effect.spell_cast_effect_left_hand != null:
