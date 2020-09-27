@@ -46,7 +46,7 @@ func _create_meshers():
 	prop_mesher.lod_size = lod_size
 	prop_mesher.voxel_scale = voxel_scale
 	prop_mesher.build_flags = build_flags
-	prop_mesher.texture_scale = 3
+	prop_mesher.texture_scale = 2
 	
 
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
@@ -56,7 +56,7 @@ func _create_meshers():
 	mesher.lod_size = lod_size
 	mesher.voxel_scale = voxel_scale
 	mesher.build_flags = build_flags
-	mesher.texture_scale = 3
+	mesher.texture_scale = 2
 	mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 	add_mesher(mesher)
