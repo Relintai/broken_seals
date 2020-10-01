@@ -66,17 +66,12 @@ max_concurrent_generations = 8
 max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
 level_generator = SubResource( 1 )
-voxel_scale = 2.6
+voxel_scale = 2.0
 chunk_spawn_range = 6
 build_flags = 511
 lod_update_interval = 2.0
 script = ExtResource( 8 )
-meshes = [  ]
-editor_generate = false
-show_loading_screen = true
-generate_on_ready = false
 spawn_height = 3
-use_global_chunk_settings = true
 test_prop = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
