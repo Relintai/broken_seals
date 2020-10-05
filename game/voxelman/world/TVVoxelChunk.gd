@@ -39,52 +39,57 @@ var _prop_mesh_rid : RID
 
 
 func _create_meshers():
-	prop_mesher = TVVoxelMesher.new()
+	var tj : VoxelTerrarinJob = VoxelTerrarinJob.new()
+	var lj : VoxelLightJob = VoxelLightJob.new()
+	var pj : VoxelPropJob = VoxelPropJob.new()
+	
+	var prop_mesher = TVVoxelMesher.new()
 	prop_mesher.base_light_value = 0.45
 	prop_mesher.ao_strength = 0.2
 	prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
-	prop_mesher.lod_size = lod_size
 	prop_mesher.voxel_scale = voxel_scale
 	prop_mesher.build_flags = build_flags
 	prop_mesher.texture_scale = 3
 	
+	pj.set_prop_mesher(prop_mesher);
 
 	var mesher : TVVoxelMesher = TVVoxelMesher.new()
 	mesher.base_light_value = 0.45
 	mesher.ao_strength = 0.2
 	mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
-	mesher.lod_size = lod_size
 	mesher.voxel_scale = voxel_scale
 	mesher.build_flags = build_flags
 	mesher.texture_scale = 3
 	mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
-	add_mesher(mesher)
-	
-	
+	tj.add_mesher(mesher)
+
+
 	var cmesher : VoxelMesherBlocky = VoxelMesherBlocky.new()
 	cmesher.texture_scale = 3
 	cmesher.base_light_value = 0.45
 	cmesher.ao_strength = 0.2
-	cmesher.lod_size = lod_size
 	cmesher.voxel_scale = voxel_scale
 	cmesher.build_flags = build_flags
-	
+
 	if cmesher.build_flags & VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING != 0:
 		cmesher.build_flags = cmesher.build_flags ^ VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING
-		
+
 	cmesher.always_add_colors = true
-	
+
 #	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
-	add_mesher(cmesher)
-	
+	tj.add_mesher(cmesher)
+
 	_prop_texture_packer = TexturePacker.new()
 	_prop_texture_packer.max_atlas_size = 1024
 	_prop_texture_packer.margin = 1
 	_prop_texture_packer.background_color = Color(0, 0, 0, 1)
 	_prop_texture_packer.texture_flags = Texture.FLAG_MIPMAPS
-
+	
+	add_job(lj);
+	add_job(tj);
+	add_job(pj);
 
 #func _build_phase(phase):
 #	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:

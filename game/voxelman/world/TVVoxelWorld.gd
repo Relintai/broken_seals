@@ -205,8 +205,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 	var chunk : VoxelChunk = TVVoxelChunk.new()
 	
 	#chunk.meshing_create_collider = false
-	
-	chunk.lod_size = 1
+
 #	print("added " + str(Vector3(x, y, z)))
 	return ._create_chunk(x, y, z, chunk)
 	

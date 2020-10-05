@@ -144,6 +144,7 @@ func get_voxel_type(chunk : VoxelChunk, x : int, y : int, z : int, size : int = 
 func n_add_chunk(chunk : VoxelChunk) -> void:
 	chunk.generate_ao()
 	
+	var lod_size : int = 1
 	var x_size : int = chunk.get_size_x()
 	var y_size : int = chunk.get_size_y()
 	var z_size : int = chunk.get_size_z()
