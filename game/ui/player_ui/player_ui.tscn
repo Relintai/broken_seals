@@ -96,6 +96,7 @@ layer = 2
 
 [node name="IngameMenu" parent="GUI" instance=ExtResource( 2 )]
 visible = false
+
 [connection signal="pressed" from="GUI/Buttons/Menu" to="GUI/IngameMenu" method="show"]
 
 [editable path="GUI/IngameMenu"]
