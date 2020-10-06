@@ -30,7 +30,7 @@ func _setup():
 	for i in range(get_dungeon_count()):
 		var d : Dungeon = get_dungeon(i)
 		d.setup()
-
+		
 func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 #	var chunk : VoxelChunk = chunk.get_chunk()
 	
@@ -52,7 +52,7 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 				entrance_position *= voxel_scale
 
 	terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
-
+	
 	for i in range(get_dungeon_count()):
 		get_dungeon(i).generate_chunk(chunk, spawn_mobs)
 

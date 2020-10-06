@@ -87,9 +87,9 @@ func _create_meshers():
 	_prop_texture_packer.background_color = Color(0, 0, 0, 1)
 	_prop_texture_packer.texture_flags = Texture.FLAG_MIPMAPS
 	
-	add_job(lj);
-	add_job(tj);
-	add_job(pj);
+	add_job(lj)
+	add_job(tj)
+	add_job(pj)
 
 #func _build_phase(phase):
 #	if phase == VoxelChunkDefault.BUILD_PHASE_SETUP:

@@ -71,6 +71,7 @@ chunk_spawn_range = 6
 build_flags = 511
 lod_update_interval = 2.0
 script = ExtResource( 8 )
+show_loading_screen = false
 spawn_height = 3
 test_prop = ExtResource( 4 )
 

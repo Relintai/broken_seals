@@ -377,6 +377,7 @@ func _add_chunk(buffer : VoxelChunk) -> void:
 	var x_size : int = buffer.get_size_x() - 1
 	var y_size : int = buffer.get_size_y() - 1
 	var z_size : int = buffer.get_size_z() - 1
+	var lod_size : int = 1
 	
 	for y in range(0, y_size, lod_size):
 		for z in range(0, z_size, lod_size):
