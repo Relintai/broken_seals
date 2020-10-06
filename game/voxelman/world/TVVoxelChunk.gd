@@ -37,6 +37,13 @@ var _prop_mesh_rid : RID
 #	add_mesh_data_resource(get_transform().scaled(Vector3(10, 10, 10)), ResourceLoader.load("res://modules/species/Human/Female/character_models/huf_calf_left.gltf"))
 #	add_mesh_data_resource(get_transform().translated(Vector3(0, 4, 0)), ResourceLoader.load("res://modules/species/Human/Female/character_models/huf_calf_left.gltf"))
 
+#func _init():
+#	_prop_texture_packer = TexturePacker.new()
+#	_prop_texture_packer.max_atlas_size = 1024
+#	_prop_texture_packer.margin = 1
+#	_prop_texture_packer.background_color = Color(0, 0, 0, 1)
+#	_prop_texture_packer.texture_flags = Texture.FLAG_MIPMAPS
+		
 
 func _create_meshers():
 	var tj : VoxelTerrarinJob = VoxelTerrarinJob.new()
@@ -63,7 +70,6 @@ func _create_meshers():
 	mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
 	mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 	tj.add_mesher(mesher)
-
 
 	var cmesher : VoxelMesherBlocky = VoxelMesherBlocky.new()
 	cmesher.texture_scale = 3

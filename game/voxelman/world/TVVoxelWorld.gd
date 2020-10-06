@@ -202,12 +202,56 @@ func get_chunk_lod_level(x : int, y : int, z : int, default : int) -> int:
 	return ch.lod_size
 
 func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk:
-	var chunk : VoxelChunk = TVVoxelChunk.new()
+	if !pchunk:
+		pchunk = TVVoxelChunk.new()
 	
-	#chunk.meshing_create_collider = false
+		var tj : VoxelTerrarinJob = VoxelTerrarinJob.new()
+		var lj : VoxelLightJob = VoxelLightJob.new()
+		var pj : VoxelPropJob = VoxelPropJob.new()
+		
+		var prop_mesher = TVVoxelMesher.new()
+		prop_mesher.base_light_value = 0.45
+		prop_mesher.ao_strength = 0.2
+		prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+		prop_mesher.voxel_scale = voxel_scale
+		prop_mesher.build_flags = build_flags
+		prop_mesher.texture_scale = 3
+		
+		pj.set_prop_mesher(prop_mesher);
 
-#	print("added " + str(Vector3(x, y, z)))
-	return ._create_chunk(x, y, z, chunk)
+		var mesher : TVVoxelMesher = TVVoxelMesher.new()
+		mesher.base_light_value = 0.45
+		mesher.ao_strength = 0.2
+		mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+		mesher.voxel_scale = voxel_scale
+		mesher.build_flags = build_flags
+		mesher.texture_scale = 3
+		mesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
+		mesher.channel_index_isolevel = VoxelChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
+		tj.add_mesher(mesher)
+
+		var cmesher : VoxelMesherBlocky = VoxelMesherBlocky.new()
+		cmesher.texture_scale = 3
+		cmesher.base_light_value = 0.45
+		cmesher.ao_strength = 0.2
+		cmesher.voxel_scale = voxel_scale
+		cmesher.build_flags = build_flags
+
+		if cmesher.build_flags & VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING != 0:
+			cmesher.build_flags = cmesher.build_flags ^ VoxelChunkDefault.BUILD_FLAG_USE_LIGHTING
+
+		cmesher.always_add_colors = true
+
+	#	cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_TYPE
+		cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
+		tj.add_mesher(cmesher)
+
+		pchunk.add_job(lj)
+		pchunk.add_job(tj)
+		pchunk.add_job(pj)
+
+	
+	return ._create_chunk(x, y, z, pchunk)
 	
 func spawn(start_x : int, start_y : int, start_z : int) -> void:
 	if not Engine.editor_hint:
