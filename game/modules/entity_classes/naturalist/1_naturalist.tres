@@ -1,4 +1,4 @@
-[gd_resource type="EntityClassData" load_steps=27 format=2]
+[gd_resource type="EntityClassData" load_steps=28 format=2]
 
 [ext_resource path="res://modules/entity_classes/naturalist/spells/16_close_wounds_rank_1.tres" type="Spell" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/19_uproot_rank_1.tres" type="Spell" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://modules/entity_classes/naturalist/spells/15_rejuvenation_rank_1.tres" type="Spell" id=23]
 [ext_resource path="res://modules/entity_classes/naturalist/spells/18_natures_swiftness_rank_1.tres" type="Spell" id=24]
 [ext_resource path="res://modules/entity_classes/naturalist/specs/melee.tres" type="CharacterSpec" id=25]
+[ext_resource path="res://modules/entity_classes/naturalist/stats/player_statdata.tres" type="StatData" id=26]
 
 [sub_resource type="EntityAI" id=1]
 script = ExtResource( 9 )
@@ -33,6 +34,7 @@ script = ExtResource( 9 )
 resource_name = "Naturalist"
 id = 1
 text_name = "Naturalist"
+stat_data = ExtResource( 26 )
 entity_resources = [ ExtResource( 4 ) ]
 specs = [ ExtResource( 6 ), ExtResource( 25 ), ExtResource( 8 ) ]
 spells = [ ExtResource( 7 ), ExtResource( 3 ), ExtResource( 15 ), ExtResource( 5 ), ExtResource( 12 ), ExtResource( 23 ), ExtResource( 1 ), ExtResource( 10 ), ExtResource( 24 ), ExtResource( 2 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 11 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 21 ), ExtResource( 14 ) ]

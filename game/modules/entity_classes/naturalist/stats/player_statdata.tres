@@ -1,0 +1,19 @@
+[gd_resource type="StatData" load_steps=2 format=2]
+
+[sub_resource type="SimpleLevelStatData" id=1]
+agility = 4
+strength = 3
+stamina = 6
+intellect = 5
+spirit = 3
+
+[resource]
+level_stat_data = SubResource( 1 )
+stat/agility = 23.0
+stat/strength = 14.0
+stat/stamina = 23.0
+stat/intellect = 19.0
+stat/spirit = 3.0
+stat/health = 100.0
+stat/mana = 100.0
+stat/global_cooldown = 1.5
