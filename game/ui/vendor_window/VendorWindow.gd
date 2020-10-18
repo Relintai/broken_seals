@@ -134,7 +134,7 @@ func _visibility_changed() -> void:
 		if !t:
 			return
 			
-		_vendor_item_data = t.getc_entity_data().get_vendor_item_data()
+		_vendor_item_data = t.getc_entity_data().entity_class_data.get_vendor_item_data()
 
 		_page = 0
 		refresh_all()

@@ -5,4 +5,5 @@
 
 [resource]
 script = ExtResource( 1 )
+enabled = true
 resource_db = ExtResource( 2 )

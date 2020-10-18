@@ -1,10 +1,8 @@
-[gd_resource type="EntityData" load_steps=11 format=2]
+[gd_resource type="EntityData" load_steps=6 format=2]
 
 [ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=1]
 [ext_resource path="res://modules/species/species_human.tres" type="EntitySpeciesData" id=2]
-[ext_resource path="res://modules/entity_classes/naturalist/1_naturalist.tres" type="EntityClassData" id=3]
-[ext_resource path="res://modules/core/item_templates/3_chest_of_the_infinite_wisdom.tres" type="ItemTemplate" id=4]
-[ext_resource path="res://modules/core/item_templates/2_test.tres" type="ItemTemplate" id=5]
+[ext_resource path="res://modules/entity_classes/naturalist/1_naturalist_vendor.tres" type="EntityClassData" id=3]
 
 [sub_resource type="SimpleLevelStatData" id=1]
 agility = 3
@@ -24,17 +22,6 @@ stat/health = 20.0
 stat/mana = 20.0
 stat/global_cooldown = 1.5
 
-[sub_resource type="VendorItemDataEntry" id=3]
-item = ExtResource( 5 )
-count = 1
-
-[sub_resource type="VendorItemDataEntry" id=4]
-item = ExtResource( 4 )
-count = 1
-
-[sub_resource type="VendorItemData" id=5]
-vendor_datas = [ SubResource( 3 ), SubResource( 4 ) ]
-
 [resource]
 resource_name = "Naturalist Vendor"
 id = 3
@@ -44,5 +31,4 @@ text_name = "Naturalist Vendor"
 stat_data = SubResource( 2 )
 entity_species_data = ExtResource( 2 )
 entity_class_data = ExtResource( 3 )
-vendor_item_data = SubResource( 5 )
 script = ExtResource( 1 )
