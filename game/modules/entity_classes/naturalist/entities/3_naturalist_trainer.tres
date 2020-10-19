@@ -7,7 +7,6 @@
 [resource]
 resource_name = "Naturalist Trainer"
 id = 3
-entity_type = 4
 entity_interaction_type = 4
 text_name = "Naturalist Trainer"
 entity_species_data = ExtResource( 2 )
