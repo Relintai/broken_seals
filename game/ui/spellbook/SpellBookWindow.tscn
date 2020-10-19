@@ -7,6 +7,7 @@
 [node name="SpellBookWindow" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -173,4 +174,5 @@ margin_bottom = 26.5702
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Next page >"
+
 [connection signal="pressed" from="PanelContainer/PagedContent/Header/Button" to="." method="hide"]

@@ -381,4 +381,5 @@ margin_top = 1051.0
 margin_right = 204.0
 margin_bottom = 1066.0
 stat_name = "Weapon Damage Max"
+
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Button" to="." method="_on_Button_pressed"]

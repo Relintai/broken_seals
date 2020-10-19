@@ -256,8 +256,10 @@ margin_bottom = 26.5702
 rect_min_size = Vector2( 30, 20 )
 
 [node name="ItemTooltip" parent="." instance=ExtResource( 5 )]
+toplevel = false
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 299.0
 margin_bottom = 227.0
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/CloseButton" to="." method="hide"]

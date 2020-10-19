@@ -11,6 +11,7 @@
 [node name="CraftingWindow" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 theme = ExtResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
@@ -307,6 +308,7 @@ margin_bottom = 234.0
 text = "No recipes"
 align = 1
 valign = 1
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Header/Button" to="." method="hide"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Categories/HBoxContainer2/Alchemy" to="." method="set_category" binds= [ 1 ]]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Categories/HBoxContainer2/Smithing" to="." method="set_category" binds= [ 2 ]]
