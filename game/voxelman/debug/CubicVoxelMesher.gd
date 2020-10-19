@@ -33,7 +33,8 @@ func _add_chunk(chunk : VoxelChunk) -> void:
 	var y_size : int = chunk.get_size_y() - 1
 	var z_size : int = chunk.get_size_z() - 1
 	
-	var voxel_size : float = lod_size
+	var lod_size : float = 1
+	var voxel_size : float = 1
 	
 	var cube_points : VoxelCubePoints = VoxelCubePoints.new()
 	
