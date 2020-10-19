@@ -13,7 +13,7 @@ func on_request_instance(what : int, node : Node) -> void:
 		node.windows.add_child(sc)
 		
 		if add_button:
-			var b = node.buttons.add_image_button(opener_button_texture, 0)
+			var b = node.buttons.add_image_button(opener_button_texture, index)
 			
 			b.connect("toggled", sc, "_on_button_toggled")
 			sc.opener_button = b

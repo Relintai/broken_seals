@@ -39,12 +39,20 @@ func _ready():
 func add_image_button(texture : Texture, index : int  = -1) -> Button:
 	var button : Button = image_button.instance() as Button
 	
+	button.set_meta("button_index", index)
+	
 	button.get_child(0).texture = texture
 	
 	add_child(button)
 	
-	if index != -1:
-		move_child(button, index)
+	for ch in get_children():
+		var button_index : int = get_child_count()
+		
+		if ch.has_meta("button_index"):
+			button_index = ch.get_meta("button_index")
+
+		if button_index != -1:
+			move_child(ch, button_index)
 	
 	return button
 
