@@ -70,6 +70,7 @@ voxel_scale = 2.0
 chunk_spawn_range = 6
 build_flags = 511
 lod_update_interval = 2.0
+num_lods = 8
 script = ExtResource( 8 )
 spawn_height = 3
 test_prop = ExtResource( 4 )

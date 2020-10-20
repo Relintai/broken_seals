@@ -249,8 +249,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 		pchunk.add_job(lj)
 		pchunk.add_job(tj)
 		pchunk.add_job(pj)
-
-	
+		
 	return ._create_chunk(x, y, z, pchunk)
 	
 func spawn(start_x : int, start_y : int, start_z : int) -> void:

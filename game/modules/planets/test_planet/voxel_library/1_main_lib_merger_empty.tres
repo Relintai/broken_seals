@@ -10,7 +10,7 @@
 [ext_resource path="res://modules/core/materials/10_standard_vman_mdr_material.tres" type="Material" id=8]
 
 [resource]
-materials = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 7 ) ]
+materials = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ) ]
 prop_materials = [ ExtResource( 8 ), ExtResource( 8 ), ExtResource( 8 ), ExtResource( 8 ) ]
 texture_flags = 1
 voxel_surfaces = [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ) ]
