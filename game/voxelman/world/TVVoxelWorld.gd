@@ -60,7 +60,7 @@ func _enter_tree():
 		
 		if Settings.loaded:
 			on_settings_loaded()
-		
+				
 	if generate_on_ready and not Engine.is_editor_hint():
 #		call_deferred("generate")
 		generate()
@@ -205,6 +205,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 	if !pchunk:
 		pchunk = TVVoxelChunk.new()
 	
+	if pchunk.get_job_count() == 0:
 		var tj : VoxelTerrarinJob = VoxelTerrarinJob.new()
 		var lj : VoxelLightJob = VoxelLightJob.new()
 		var pj : VoxelPropJob = VoxelPropJob.new()
