@@ -205,7 +205,7 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 	if !pchunk:
 		pchunk = TVVoxelChunk.new()
 	
-	if pchunk.get_job_count() == 0:
+	if pchunk.job_get_count() == 0:
 		var tj : VoxelTerrarinJob = VoxelTerrarinJob.new()
 		var lj : VoxelLightJob = VoxelLightJob.new()
 		var pj : VoxelPropJob = VoxelPropJob.new()
@@ -247,9 +247,9 @@ func _create_chunk(x : int, y : int, z : int, pchunk : VoxelChunk) -> VoxelChunk
 		cmesher.channel_index_type = VoxelChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
 		tj.add_mesher(cmesher)
 
-		pchunk.add_job(lj)
-		pchunk.add_job(tj)
-		pchunk.add_job(pj)
+		pchunk.job_add(lj)
+		pchunk.job_add(tj)
+		pchunk.job_add(pj)
 		
 	return ._create_chunk(x, y, z, pchunk)
 	
