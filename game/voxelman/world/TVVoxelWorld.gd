@@ -112,16 +112,16 @@ func _process(delta):
 		cpos.y = ppy
 		cpos.z = ppz
 		
-		var count : int = get_chunk_count()
+		var count : int = chunk_get_count()
 		var i : int = 0
 		while i < count:
-			var c : VoxelChunk = get_chunk_index(i)
+			var c : VoxelChunk = chunk_get_index(i)
 			
 			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
 			
 			if l > chunk_spawn_range + 3:
 #				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
-				remove_chunk_index(i)
+				chunk_remove_index(i)
 				i -= 1
 				count -= 1
 #			else:
@@ -152,9 +152,9 @@ func _process(delta):
 					continue
 				
 				for y in range(-1 + cpos.y, spawn_height + cpos.y):
-					if not has_chunk(x, y, z):
+					if not chunk_has(x, y, z):
 #						print("spawn " + str(Vector3(x, y, z)))
-						create_chunk(x, y, z)
+						chunk_create(x, y, z)
 						
 		update_lods()
 
@@ -194,7 +194,7 @@ func _generation_finished():
 func get_chunk_lod_level(x : int, y : int, z : int, default : int) -> int:
 #	var key : String = str(x) + "," + str(y) + "," + str(z)
 	
-	var ch : VoxelChunk = get_chunk(x, y, z)
+	var ch : VoxelChunk = chunk_get(x, y, z)
 	
 	if ch == null:
 		return default
@@ -269,7 +269,7 @@ func spawn(start_x : int, start_y : int, start_z : int) -> void:
 				continue
 			
 			for y in range(-1 + start_y, spawn_height + start_y):
-				create_chunk(x, y, z)
+				chunk_create(x, y, z)
 				
 #	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)
 
@@ -301,7 +301,7 @@ func create_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 	light.size = size
 	light.set_world_position(x, y, z)
 	
-	add_light(light)
+	light_add(light)
 
 				
 func setup_client_seed(pseed : int) -> void:
