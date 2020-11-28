@@ -25,7 +25,7 @@
 [sub_resource type="VoxelmanLevelGenerator" id=1]
 script = ExtResource( 18 )
 _force_planet = -1
-_level_seed = 0
+_level_seed = 4
 _spawn_mobs = false
 planet = ExtResource( 21 )
 
@@ -563,7 +563,10 @@ margin_bottom = 127.5
 visible = false
 
 [node name="Char" type="Spatial" parent="."]
-transform = Transform( 0.359313, 0, 0.933217, 0, 1, 0, -0.933217, 0, 0.359313, -2.44425, 0.926699, 0 )
+transform = Transform( -0.999545, 0, 0.0301548, 0, 1, 0, -0.0301548, 0, -0.999545, 1.59087, 0.958899, 3.64338 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="CharacterDisplay" type="Spatial" parent="Char"]
 transform = Transform( 1, 1.49012e-08, 0, 0, 0.990268, -0.139173, -2.98023e-08, 0.139173, 0.990268, -5.96046e-08, 0.578123, 0.08125 )
@@ -577,7 +580,6 @@ current = true
 ]]
 data_margin_end = 2
 use_threads = false
-max_concurrent_generations = 1
 library = ExtResource( 17 )
 level_generator = SubResource( 1 )
 voxel_scale = 1.6
@@ -604,6 +606,7 @@ light_energy = 0.87
 light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 19 )
+
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load" to="CharacterSelectorMenu" method="load_character"]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/New" to="." method="switch_to_menu" binds= [ 1 ]]
 [connection signal="pressed" from="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Delete" to="CharacterSelectorMenu" method="renounce_character"]
