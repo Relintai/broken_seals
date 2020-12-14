@@ -58,9 +58,6 @@ glow_hdr_luminance_cap = 1.0
 [node name="World" type="VoxelWorldDefault" groups=[
 "save",
 ]]
-chunk_size_x = 8
-chunk_size_y = 8
-chunk_size_z = 8
 data_margin_end = 2
 max_concurrent_generations = 8
 max_frame_chunk_build_steps = 4
