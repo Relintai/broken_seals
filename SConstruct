@@ -308,6 +308,9 @@ if len(sys.argv) > 1:
 
     arg = sys.argv[1]
 
+    arg_split = arg.split('_')
+    arg = arg_split[0]
+
     if arg[0] == 'b':
         build_string = get_exports_for('global') + 'scons '
 
@@ -348,6 +351,10 @@ if len(sys.argv) > 1:
 
         for i in range(2, len(sys.argv)):
             build_string += ' ' + sys.argv[i] + ' '
+
+        if '_slim' in arg:
+            build_string += 'module_webm_enabled=no module_webp_enabled=no module_arkit_enabled=no module_visual_script_enabled=no module_gdnative_enabled=no module_mobile_vr_enabled=no module_theora_enabled=no module_xatlas_unwrap_enabled=no'
+            build_string += ' '
 
         target = ' '
 
