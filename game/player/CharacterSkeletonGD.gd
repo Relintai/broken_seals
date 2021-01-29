@@ -156,6 +156,15 @@ func build():
 			continue
 		
 		var bone_idx : int = skeleton.find_bone(bone_name)
+		
+		var abi_dict : Dictionary = Dictionary()
+		
+		for abti in range(bone_additional_mesh_transform_count):
+			var obi : int = bone_additional_mesh_transform_bone_index_get(abti)
+			var bin = get_bone_name(obi)
+			var bi : int = skeleton.find_bone(bin)
+						
+			abi_dict[bi] = bone_additional_mesh_transform_transform_get(abti) * bone_additional_mesh_transform_user_transform_get(abti)
 
 		var ddict : Dictionary = Dictionary()
 		for j in range(get_model_entry_count(skele_point)):
@@ -166,7 +175,23 @@ func build():
 					ddict["bone_name"] = bone_name
 					ddict["bone_idx"] = bone_idx
 					
+					var global_pose = skeleton.get_bone_global_pose(bone_idx)
+					
 					ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
+					
+					if abi_dict.has(bone_idx):
+						global_pose *= abi_dict[bone_idx]
+					
+#					for abti in range(bone_model_additional_mesh_transform_count):
+#						var bin = get_bone_name(bone_model_additional_mesh_transform_bone_index_get(abti))
+#						var bi : int = skeleton.find_bone(bin)
+#
+#						if bone_idx == bi:
+#							global_pose *= bone_model_additional_mesh_transform_bone_transform_get(abti)
+#							break
+#
+					ddict["transform"] = global_pose
+									
 					ddict["mesh"] = entry.entry.get_mesh(k)
 		
 		var texture_layer_array : Array = Array()
