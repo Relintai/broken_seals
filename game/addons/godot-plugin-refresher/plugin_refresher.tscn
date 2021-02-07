@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-plugin-refresher/plugin_refresher.gd" type="Script" id=1]
+
+[node name="HBoxContainer" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+
+[node name="VSeparator" type="VSeparator" parent="."]
+margin_right = 4.0
+margin_bottom = 40.0
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 8.0
+margin_right = 158.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="RefreshButton" type="ToolButton" parent="."]
+margin_left = 162.0
+margin_right = 174.0
+margin_bottom = 40.0
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+margin_right = 278.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 300, 70 )
+window_title = "Plugin Refresher"
+dialog_autowrap = true
+[connection signal="pressed" from="RefreshButton" to="." method="_on_RefreshButton_pressed"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_ConfirmationDialog_confirmed"]
