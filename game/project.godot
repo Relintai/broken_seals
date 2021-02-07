@@ -14,6 +14,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/auras/aura_script.gd"
 }, {
+"base": "EditorSpatialGizmo",
+"class": "BoneSpatialGizmo",
+"language": "GDScript",
+"path": "res://addons/gdpose/bonegizmo.gd"
+}, {
+"base": "Reference",
+"class": "BrushPrefabs",
+"language": "GDScript",
+"path": "res://addons/Godoxel/BrushPrefabs.gd"
+}, {
 "base": "Spatial",
 "class": "CharacterSkeketonAttachPoint",
 "language": "GDScript",
@@ -38,6 +48,81 @@ _global_script_classes=[ {
 "class": "GDCubicVoxelMesher",
 "language": "GDScript",
 "path": "res://voxelman/debug/CubicVoxelMesher.gd"
+}, {
+"base": "Node",
+"class": "GEAction",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Action.gd"
+}, {
+"base": "GEAction",
+"class": "GEBrighten",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Brighten.gd"
+}, {
+"base": "GEAction",
+"class": "GEBrush",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Brush.gd"
+}, {
+"base": "GEAction",
+"class": "GEBucket",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Bucket.gd"
+}, {
+"base": "Control",
+"class": "GECanvas",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Canvas.gd"
+}, {
+"base": "GEAction",
+"class": "GECut",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Cut.gd"
+}, {
+"base": "GEAction",
+"class": "GEDarken",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Darken.gd"
+}, {
+"base": "Reference",
+"class": "GELayer",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Layer.gd"
+}, {
+"base": "GEAction",
+"class": "GELine",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Line.gd"
+}, {
+"base": "GEAction",
+"class": "GEMultiLine",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/MultiLine.gd"
+}, {
+"base": "GEAction",
+"class": "GEPasteCut",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/PasteCut.gd"
+}, {
+"base": "GEAction",
+"class": "GEPencil",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Pencil.gd"
+}, {
+"base": "GEAction",
+"class": "GERainbow",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Rainbow.gd"
+}, {
+"base": "GEAction",
+"class": "GERect",
+"language": "GDScript",
+"path": "res://addons/Godoxel/actions/Rect.gd"
+}, {
+"base": "Node",
+"class": "GEUtils",
+"language": "GDScript",
+"path": "res://addons/Godoxel/Util.gd"
 }, {
 "base": "Resource",
 "class": "GameModule",
@@ -141,11 +226,28 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AuraGD": "",
+"BoneSpatialGizmo": "",
+"BrushPrefabs": "",
 "CharacterSkeketonAttachPoint": "",
 "DisplayPlayerGD": "",
 "EntityAIGD": "",
 "EntityDataGD": "",
 "GDCubicVoxelMesher": "",
+"GEAction": "",
+"GEBrighten": "",
+"GEBrush": "",
+"GEBucket": "",
+"GECanvas": "",
+"GECut": "",
+"GEDarken": "",
+"GELayer": "",
+"GELine": "",
+"GEMultiLine": "",
+"GEPasteCut": "",
+"GEPencil": "",
+"GERainbow": "",
+"GERect": "",
+"GEUtils": "",
 "GameModule": "",
 "HealthResource": "",
 "ItemTemplateGD": "",
@@ -206,6 +308,10 @@ mouse_cursor/sensitivity=0.9
 window/size/viewport_scale=100
 window/size/ui_scale=1.2
 window/size/ui_scale_touch=1.0
+
+[editor_plugins]
+
+enabled=PoolStringArray( "Godoxel" )
 
 [ess]
 

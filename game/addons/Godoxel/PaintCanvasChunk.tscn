@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/Godoxel/PaintCanvasChunk.gd" type="Script" id=1]
+
+
+[node name="PaintCanvasChunk" type="TextureRect"]
+margin_right = 10.0
+margin_bottom = 10.0
+rect_scale = Vector2( 16, 16 )
+mouse_filter = 2
+expand = true
+stretch_mode = 1
+script = ExtResource( 1 )

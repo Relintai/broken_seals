@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends ConfirmationDialog
+
+func _ready():
+	get_ok().connect(\"pressed\", self, \"hide\")
+	get_cancel().connect(\"pressed\", self, \"hide\")
+
+
+
+"
+
+[node name="LoadFileDialog" type="FileDialog"]
+margin_right = 604.0
+margin_bottom = 367.0
+window_title = "Open a File"
+mode = 0
+access = 2
+current_dir = "/Projects/BitBucket/GraphicsEditor"
+current_path = "/Projects/BitBucket/GraphicsEditor/"
+script = SubResource( 1 )

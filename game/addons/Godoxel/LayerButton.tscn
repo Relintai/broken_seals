@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/Godoxel/assets/minidotta_invis.png" type="Texture" id=1]
+[ext_resource path="res://addons/Godoxel/assets/minidotta.png" type="Texture" id=2]
+[ext_resource path="res://addons/Godoxel/assets/arrow_down.png" type="Texture" id=3]
+[ext_resource path="res://addons/Godoxel/assets/arrow_up.png" type="Texture" id=4]
+[ext_resource path="res://addons/Godoxel/assets/lock_layer_1.png" type="Texture" id=5]
+[ext_resource path="res://addons/Godoxel/assets/unlock_layer.png" type="Texture" id=6]
+
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.180392, 0.176471, 0.176471, 1 )
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.25098, 0.25098, 0.25098, 0 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="Layer1" type="Panel"]
+show_behind_parent = true
+anchor_right = 0.113281
+anchor_bottom = 0.0416667
+margin_bottom = -1.90735e-06
+rect_min_size = Vector2( 0, 32 )
+mouse_filter = 2
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Select" type="Button" parent="." groups=[
+"layer_button",
+]]
+anchor_right = 0.827586
+anchor_bottom = 1.0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/disabled = SubResource( 1 )
+custom_styles/normal = SubResource( 1 )
+text = "Layer 1"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Visible" type="CheckButton" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 3.0
+margin_top = -8.5
+margin_right = 19.0
+margin_bottom = 7.5
+custom_icons/off = ExtResource( 1 )
+custom_icons/on = ExtResource( 2 )
+custom_styles/normal = SubResource( 2 )
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lock" type="CheckButton" parent="."]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 22.0
+margin_top = -11.0
+margin_right = 46.0
+margin_bottom = 11.0
+custom_icons/off = ExtResource( 6 )
+custom_icons/on = ExtResource( 5 )
+custom_styles/normal = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Up" type="TextureButton" parent="VBoxContainer"]
+margin_right = 20.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 2 )
+expand = true
+stretch_mode = 3
+
+[node name="Down" type="TextureButton" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 20.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 20, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 3 )
+texture_pressed = ExtResource( 2 )
+expand = true
+stretch_mode = 3
