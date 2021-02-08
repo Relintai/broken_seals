@@ -7,4 +7,7 @@
 !godot-plugin-refresher/**
 !gdpose
 !gdpose/**
+!mesh_data_resource_editor
+!mesh_data_resource_editor/**
 !addon_versions
+
