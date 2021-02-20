@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://test_world_generator/WorldGeneratorTest.gd" type="Script" id=1]
+
+[node name="WorldGeneratorTest" type="Sprite"]
+script = ExtResource( 1 )
+continent_height = 2024
+biome_vertex_count = 60
+biome_count = 20
