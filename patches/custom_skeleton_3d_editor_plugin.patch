@@ -1,0 +1,3273 @@
+From dba67e552f3ded667d287aee3c2d24abf454db82 Mon Sep 17 00:00:00 2001
+From: Saracen <SaracenOne@gmail.com>
+Date: Sat, 2 May 2020 10:11:48 +0100
+Subject: [PATCH] Custom Skeleton3DEditorPlugin
+
+Add fallthrough hint
+
+Add missing semicolon
+
+Fix regression from Skeleton3D Inspector redesign
+
+It can be reproduced by reimporting many FBX files with a skeleton.
+
+A change in commit f7fdc87 [Merged on May 27] mistakenly changed the Skeleton3D "pose" property from PROPERTY_USAGE_EDITOR to PROPERTY_USAGE_NOEDITOR.
+
+skel edit
+
+fix selection
+---
+ doc/classes/EditorPlugin.xml                  |   10 +-
+ editor/animation_track_editor.cpp             |   20 +
+ editor/animation_track_editor.h               |    2 +
+ editor/editor_node.cpp                        |    4 +-
+ editor/editor_node.h                          |    2 +-
+ editor/editor_plugin.cpp                      |    6 +-
+ editor/editor_plugin.h                        |    2 +-
+ editor/editor_themes.cpp                      |    1 +
+ editor/icons/icon_editor_bone_handle.svg      |    1 +
+ editor/icons/icon_tool_bone_move.svg          |    1 +
+ editor/icons/icon_tool_bone_rest.svg          |    1 +
+ editor/icons/icon_tool_bone_rotate.svg        |    1 +
+ editor/icons/icon_tool_bone_scale.svg         |    1 +
+ editor/icons/icon_tool_bone_select.svg        |    1 +
+ .../collision_polygon_editor_plugin.cpp       |    2 +-
+ .../plugins/collision_polygon_editor_plugin.h |    4 +-
+ editor/plugins/path_editor_plugin.cpp         |    2 +-
+ editor/plugins/path_editor_plugin.h           |    2 +-
+ editor/plugins/skeleton_editor_plugin.cpp     | 1705 ++++++++++++++++-
+ editor/plugins/skeleton_editor_plugin.h       |  234 ++-
+ editor/plugins/spatial_editor_plugin.cpp      |  173 +-
+ editor/plugins/spatial_editor_plugin.h        |   99 +-
+ editor/spatial_editor_gizmos.cpp              |   94 +-
+ editor/spatial_editor_gizmos.h                |    5 +
+ modules/gridmap/grid_map_editor_plugin.h      |    2 +-
+ scene/3d/skeleton.cpp                         |   37 +-
+ scene/3d/skeleton.h                           |    6 +
+ 27 files changed, 2223 insertions(+), 195 deletions(-)
+ create mode 100644 editor/icons/icon_editor_bone_handle.svg
+ create mode 100644 editor/icons/icon_tool_bone_move.svg
+ create mode 100644 editor/icons/icon_tool_bone_rest.svg
+ create mode 100644 editor/icons/icon_tool_bone_rotate.svg
+ create mode 100644 editor/icons/icon_tool_bone_scale.svg
+ create mode 100644 editor/icons/icon_tool_bone_select.svg
+
+diff --git a/doc/classes/EditorPlugin.xml b/doc/classes/EditorPlugin.xml
+index 3f741d3e76..585580261b 100644
+--- a/doc/classes/EditorPlugin.xml
++++ b/doc/classes/EditorPlugin.xml
+@@ -278,22 +278,24 @@
+ 		<method name="forward_spatial_gui_input" qualifiers="virtual">
+ 			<return type="bool">
+ 			</return>
+-			<argument index="0" name="camera" type="Camera">
++			<argument index="0" name="index" type="int">
+ 			</argument>
+-			<argument index="1" name="event" type="InputEvent">
++			<argument index="1" name="camera" type="Camera">
++			</argument>
++			<argument index="2" name="event" type="InputEvent">
+ 			</argument>
+ 			<description>
+ 				Called when there is a root node in the current edited scene, [method handles] is implemented and an [InputEvent] happens in the 3D viewport. Intercepts the [InputEvent], if [code]return true[/code] [EditorPlugin] consumes the [code]event[/code], otherwise forwards [code]event[/code] to other Editor classes. Example:
+ 				[codeblock]
+ 				# Prevents the InputEvent to reach other Editor classes
+-				func forward_spatial_gui_input(camera, event):
++				func forward_spatial_gui_input(index, camera, event):
+ 				    var forward = true
+ 				    return forward
+ 				[/codeblock]
+ 				Must [code]return false[/code] in order to forward the [InputEvent] to other Editor classes. Example:
+ 				[codeblock]
+ 				# Consumes InputEventMouseMotion and forwards other InputEvent types
+-				func forward_spatial_gui_input(camera, event):
++				func forward_spatial_gui_input(index, camera, event):
+ 				    var forward = false
+ 				    if event is InputEventMouseMotion:
+ 				        forward = true
+diff --git a/editor/animation_track_editor.cpp b/editor/animation_track_editor.cpp
+index b5792034cf..cc9725d0bc 100644
+--- a/editor/animation_track_editor.cpp
++++ b/editor/animation_track_editor.cpp
+@@ -3562,6 +3562,26 @@ void AnimationTrackEditor::_insert_delay() {
+ 	insert_queue = false;
+ }
+ 
++bool AnimationTrackEditor::has_transform_key(Spatial *p_node, const String &p_sub) {
++
++	if (!keying)
++		return false;
++	if (!animation.is_valid())
++		return false;
++	if (!root)
++		return false;
++
++	//let's build a node path
++	String path = root->get_path_to(p_node);
++	if (p_sub != "")
++		path += ":" + p_sub;
++
++	if (animation->find_track(path) >= 0) {
++		return true;
++	}
++	return false;
++}
++
+ void AnimationTrackEditor::insert_transform_key(Spatial *p_node, const String &p_sub, const Transform &p_xform) {
+ 
+ 	if (!keying)
+diff --git a/editor/animation_track_editor.h b/editor/animation_track_editor.h
+index e1798affa9..fa8ac3ff69 100644
+--- a/editor/animation_track_editor.h
++++ b/editor/animation_track_editor.h
+@@ -514,6 +514,8 @@ public:
+ 	void insert_value_key(const String &p_property, const Variant &p_value, bool p_advance);
+ 	void insert_transform_key(Spatial *p_node, const String &p_sub, const Transform &p_xform);
+ 
++	bool has_transform_key(Spatial *p_node, const String &p_sub);
++
+ 	void show_select_node_warning(bool p_show);
+ 
+ 	bool is_key_selected(int p_track, int p_key) const;
+diff --git a/editor/editor_node.cpp b/editor/editor_node.cpp
+index 1db054c26f..d99598f817 100644
+--- a/editor/editor_node.cpp
++++ b/editor/editor_node.cpp
+@@ -7151,7 +7151,7 @@ bool EditorPluginList::forward_gui_input(const Ref<InputEvent> &p_event) {
+ 	return discard;
+ }
+ 
+-bool EditorPluginList::forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled) {
++bool EditorPluginList::forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled) {
+ 	bool discard = false;
+ 
+ 	for (int i = 0; i < plugins_list.size(); i++) {
+@@ -7159,7 +7159,7 @@ bool EditorPluginList::forward_spatial_gui_input(Camera *p_camera, const Ref<Inp
+ 			continue;
+ 		}
+ 
+-		if (plugins_list[i]->forward_spatial_gui_input(p_camera, p_event)) {
++		if (plugins_list[i]->forward_spatial_gui_input(p_index, p_camera, p_event)) {
+ 			discard = true;
+ 		}
+ 	}
+diff --git a/editor/editor_node.h b/editor/editor_node.h
+index cddc0c84e4..b8d247abc9 100644
+--- a/editor/editor_node.h
++++ b/editor/editor_node.h
+@@ -907,7 +907,7 @@ public:
+ 	bool forward_gui_input(const Ref<InputEvent> &p_event);
+ 	void forward_canvas_draw_over_viewport(Control *p_overlay);
+ 	void forward_canvas_force_draw_over_viewport(Control *p_overlay);
+-	bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled);
++	bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event, bool serve_when_force_input_enabled);
+ 	void forward_spatial_draw_over_viewport(Control *p_overlay);
+ 	void forward_spatial_force_draw_over_viewport(Control *p_overlay);
+ 	void add_plugin(EditorPlugin *p_plugin);
+diff --git a/editor/editor_plugin.cpp b/editor/editor_plugin.cpp
+index d4c16ee042..89e3316680 100644
+--- a/editor/editor_plugin.cpp
++++ b/editor/editor_plugin.cpp
+@@ -617,10 +617,10 @@ int EditorPlugin::update_overlays() const {
+ 	}
+ }
+ 
+-bool EditorPlugin::forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) {
++bool EditorPlugin::forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) {
+ 
+ 	if (get_script_instance() && get_script_instance()->has_method("forward_spatial_gui_input")) {
+-		return get_script_instance()->call("forward_spatial_gui_input", p_camera, p_event);
++		return get_script_instance()->call("forward_spatial_gui_input", p_index, p_camera, p_event);
+ 	}
+ 
+ 	return false;
+@@ -903,7 +903,7 @@ void EditorPlugin::_bind_methods() {
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo(Variant::BOOL, "forward_canvas_gui_input", PropertyInfo(Variant::OBJECT, "event", PROPERTY_HINT_RESOURCE_TYPE, "InputEvent")));
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo("forward_canvas_draw_over_viewport", PropertyInfo(Variant::OBJECT, "overlay", PROPERTY_HINT_RESOURCE_TYPE, "Control")));
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo("forward_canvas_force_draw_over_viewport", PropertyInfo(Variant::OBJECT, "overlay", PROPERTY_HINT_RESOURCE_TYPE, "Control")));
+-	ClassDB::add_virtual_method(get_class_static(), MethodInfo(Variant::BOOL, "forward_spatial_gui_input", PropertyInfo(Variant::OBJECT, "camera", PROPERTY_HINT_RESOURCE_TYPE, "Camera"), PropertyInfo(Variant::OBJECT, "event", PROPERTY_HINT_RESOURCE_TYPE, "InputEvent")));
++	ClassDB::add_virtual_method(get_class_static(), MethodInfo(Variant::BOOL, "forward_spatial_gui_input", PropertyInfo(Variant::INT, "index"), PropertyInfo(Variant::OBJECT, "camera", PROPERTY_HINT_RESOURCE_TYPE, "Camera"), PropertyInfo(Variant::OBJECT, "event", PROPERTY_HINT_RESOURCE_TYPE, "InputEvent")));
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo("forward_spatial_draw_over_viewport", PropertyInfo(Variant::OBJECT, "overlay", PROPERTY_HINT_RESOURCE_TYPE, "Control")));
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo("forward_spatial_force_draw_over_viewport", PropertyInfo(Variant::OBJECT, "overlay", PROPERTY_HINT_RESOURCE_TYPE, "Control")));
+ 	ClassDB::add_virtual_method(get_class_static(), MethodInfo(Variant::STRING, "get_plugin_name"));
+diff --git a/editor/editor_plugin.h b/editor/editor_plugin.h
+index 21293cbbfc..af6732b867 100644
+--- a/editor/editor_plugin.h
++++ b/editor/editor_plugin.h
+@@ -193,7 +193,7 @@ public:
+ 	virtual void forward_canvas_draw_over_viewport(Control *p_overlay);
+ 	virtual void forward_canvas_force_draw_over_viewport(Control *p_overlay);
+ 
+-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event);
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event);
+ 	virtual void forward_spatial_draw_over_viewport(Control *p_overlay);
+ 	virtual void forward_spatial_force_draw_over_viewport(Control *p_overlay);
+ 
+diff --git a/editor/editor_themes.cpp b/editor/editor_themes.cpp
+index 2864ed652a..7b164c6223 100644
+--- a/editor/editor_themes.cpp
++++ b/editor/editor_themes.cpp
+@@ -213,6 +213,7 @@ void editor_register_and_generate_icons(Ref<Theme> p_theme, bool p_dark_theme =
+ 		exceptions.insert("EditorPivot");
+ 		exceptions.insert("EditorHandle");
+ 		exceptions.insert("Editor3DHandle");
++		exceptions.insert("EditorBoneHandle");
+ 		exceptions.insert("Godot");
+ 		exceptions.insert("PanoramaSky");
+ 		exceptions.insert("ProceduralSky");
+diff --git a/editor/icons/icon_editor_bone_handle.svg b/editor/icons/icon_editor_bone_handle.svg
+new file mode 100644
+index 0000000000..7658b90f7e
+--- /dev/null
++++ b/editor/icons/icon_editor_bone_handle.svg
+@@ -0,0 +1 @@
++<svg height="8" viewBox="0 0 8 8" width="8" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" fill="#fff" r="4"/><circle cx="4" cy="4" fill="#000" r="2.5"/></svg>
+\ No newline at end of file
+diff --git a/editor/icons/icon_tool_bone_move.svg b/editor/icons/icon_tool_bone_move.svg
+new file mode 100644
+index 0000000000..b9b15eee3f
+--- /dev/null
++++ b/editor/icons/icon_tool_bone_move.svg
+@@ -0,0 +1 @@
++<svg enable-background="new 0 0 16 16" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#e0e0e0" fill-opacity=".9961"><path d="m11.5 14.448-.831-.831-.909.909 1.286 1.285c.251.251.657.251.908 0l1.286-1.285-.909-.909z"/><circle cx="11.5" cy="11.5" r="1.286"/><path d="m8.753 10.038-.278-.278-1.286 1.286c-.251.251-.251.657 0 .908l.824.824.462.462.909-.909-.832-.831.832-.831z"/><path d="m15.812 11.046-1.286-1.286-.909.909.831.831-.831.831.909.909 1.285-1.286c.252-.251.252-.657.001-.908z"/><path d="m11.954 7.188c-.061-.061-.133-.107-.21-.139-.028-.012-.059-.01-.088-.018-.051-.013-.1-.03-.151-.03-.005 0-.01 0-.015 0-.167.002-.327.069-.444.187l-1.286 1.287.278.278.631.63.831-.831.831.831.909-.908-.465-.465z"/><path d="m6.128 9.985 1.286-1.286c.241-.242.545-.384.859-.426.044-.323.193-.626.426-.859l1.286-1.286c.396-.397.925-.619 1.47-.625h.05c.562 0 1.112.228 1.51.626l1.215 1.215c.016-.015.033-.025.048-.04.964-.963.964-2.524 0-3.488-.378-.378-.868-.623-1.397-.698-.074-.529-.318-1.019-.695-1.397-.455-.453-1.067-.711-1.707-.721-.667-.01-1.309.25-1.782.72-.828.829-.96 2.126-.314 3.105l-3.558 3.561c-.978-.646-2.274-.515-3.103.312-.963.962-.963 2.524 0 3.487.378.377.868.621 1.396.695.075.529.319 1.02.696 1.396.963.964 2.525.964 3.488 0 .015-.015.025-.032.04-.048l-1.215-1.215c-.835-.833-.835-2.193.001-3.028z"/></g></svg>
+\ No newline at end of file
+diff --git a/editor/icons/icon_tool_bone_rest.svg b/editor/icons/icon_tool_bone_rest.svg
+new file mode 100644
+index 0000000000..ab4f915e3d
+--- /dev/null
++++ b/editor/icons/icon_tool_bone_rest.svg
+@@ -0,0 +1 @@
++<svg height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m16 8c0 1.409-.72 2.641-1.824 3.345l1.824 1.823v2.832h-2.832l-4-4h-5.168v4h-4v-16h12c2.208 0 4 1.792 4 4zm-12 0h8v-4h-8z" fill="#e0e0e0"/></svg>
+\ No newline at end of file
+diff --git a/editor/icons/icon_tool_bone_rotate.svg b/editor/icons/icon_tool_bone_rotate.svg
+new file mode 100644
+index 0000000000..1c81687245
+--- /dev/null
++++ b/editor/icons/icon_tool_bone_rotate.svg
+@@ -0,0 +1 @@
++<svg enable-background="new 0 0 16 16" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#e0e0e0" fill-opacity=".9961"><circle cx="11.501" cy="11.5" r="1.286"/><path d="m15.536 9.51c-.568-1.152-1.591-1.985-2.79-2.331-.027-.008-.056-.011-.084-.019-.163-.043-.327-.084-.496-.109-.199-.03-.402-.048-.608-.05-.027 0-.054 0-.081 0-.039 0-.077 0-.115.001-.149.004-.299.017-.448.037-1.911.251-3.45 1.693-3.826 3.584-.049.248-.069.497-.076.745-.002.062-.002.123-.001.185.004.496.092.983.256 1.447.019.054.04.106.061.16.091.228.194.45.321.661.001.001.001.003.002.004.194.321.429.62.704.889h-.71v1.286h2.571c.355 0 .643-.287.643-.643 0-.053-.006-.105-.019-.156l-.643-2.571-1.248.313.181.721c-.54-.591-.841-1.362-.843-2.163 0-.442.09-.863.251-1.246.08-.189.178-.369.291-.537.001-.005.003-.009.005-.013.348-.516.841-.924 1.42-1.168.384-.162.805-.251 1.247-.251 1.775 0 3.214 1.439 3.214 3.214-.001.853-.34 1.669-.942 2.271l.91.91c1.363-1.363 1.706-3.442.853-5.171z"/><path d="m5.616 10.33c.502-2.522 2.553-4.443 5.103-4.778.199-.026.399-.043.598-.049l.16-.002h.1c1.182.015 2.294.375 3.236 1 .369-.894.191-1.959-.535-2.686-.378-.377-.868-.622-1.397-.697-.074-.529-.318-1.019-.695-1.397-.455-.453-1.067-.711-1.707-.721-.667-.01-1.309.25-1.782.72-.828.829-.96 2.126-.314 3.105l-3.558 3.561c-.978-.646-2.274-.515-3.103.312-.963.962-.963 2.524 0 3.487.378.377.868.621 1.396.695.075.529.319 1.02.696 1.396.632.633 1.52.842 2.329.645v-.208c0-.14.019-.275.055-.403-.639-1.202-.856-2.601-.582-3.98z"/></g></svg>
+\ No newline at end of file
+diff --git a/editor/icons/icon_tool_bone_scale.svg b/editor/icons/icon_tool_bone_scale.svg
+new file mode 100644
+index 0000000000..b1facc4049
+--- /dev/null
++++ b/editor/icons/icon_tool_bone_scale.svg
+@@ -0,0 +1 @@
++<svg enable-background="new 0 0 16 16" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#e0e0e0" fill-opacity=".9961"><path d="m10.857 14.714h-1.662l.83-.831-.908-.909-.832.832v-1.663c0-.355-.288-.643-.643-.643s-.642.287-.642.643v2.383.832c0 .355.288.642.643.642h3.214c.355 0 .643-.287.643-.643s-.287-.643-.643-.643z"/><path d="m15.357 7h-.832-2.383c-.355 0-.642.288-.642.643s.287.643.643.643h1.663l-.832.832.909.908.831-.83v1.662c0 .355.288.643.644.643s.642-.288.642-.644v-3.214c0-.355-.287-.643-.643-.643z"/><circle cx="11.5" cy="11.5" r="1.286"/><path d="m8.573 10.218 1.645-1.645c-.137-.282-.218-.596-.218-.93 0-1.182.961-2.143 2.143-2.143h2.852c-.014-.611-.25-1.218-.717-1.685-.378-.377-.868-.622-1.397-.697-.074-.529-.318-1.019-.695-1.397-.455-.453-1.067-.711-1.707-.721-.667-.01-1.309.25-1.782.72-.828.829-.96 2.126-.314 3.105l-3.558 3.561c-.978-.646-2.274-.515-3.103.312-.963.962-.963 2.524 0 3.487.378.377.868.621 1.396.695.075.529.319 1.02.696 1.396.467.467 1.074.703 1.685.717v-2.852c.001-1.18.962-2.141 2.144-2.141.334 0 .648.081.93.218z"/></g></svg>
+\ No newline at end of file
+diff --git a/editor/icons/icon_tool_bone_select.svg b/editor/icons/icon_tool_bone_select.svg
+new file mode 100644
+index 0000000000..73e79a191d
+--- /dev/null
++++ b/editor/icons/icon_tool_bone_select.svg
+@@ -0,0 +1 @@
++<svg enable-background="new 0 0 16 16" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#e0e0e0" fill-opacity=".9961"><path d="m16 11.46-6.142-2.527-1.572-.647.647 1.572 2.527 6.142.913-2.72 1.815 1.817.91-.909-1.818-1.815z"/><path d="m7.784 11.008-.886-2.152c-.23-.56-.102-1.203.327-1.631.287-.287.67-.439 1.061-.439.192 0 .386.037.57.113l2.151.885.17-.17c.977.645 2.271.516 3.1-.311.964-.963.964-2.524 0-3.488-.377-.377-.867-.622-1.396-.697-.074-.529-.318-1.019-.695-1.397-.455-.453-1.067-.711-1.707-.721-.667-.01-1.309.25-1.782.72-.828.829-.96 2.126-.314 3.105l-3.558 3.561c-.978-.646-2.274-.515-3.103.312-.963.962-.963 2.524 0 3.487.378.377.868.621 1.396.695.075.529.319 1.02.696 1.396.963.964 2.525.964 3.488 0 .828-.828.96-2.125.314-3.104z"/></g></svg>
+\ No newline at end of file
+diff --git a/editor/plugins/collision_polygon_editor_plugin.cpp b/editor/plugins/collision_polygon_editor_plugin.cpp
+index 9cd7a60946..b207590996 100644
+--- a/editor/plugins/collision_polygon_editor_plugin.cpp
++++ b/editor/plugins/collision_polygon_editor_plugin.cpp
+@@ -109,7 +109,7 @@ void Polygon3DEditor::_wip_close() {
+ 	undo_redo->commit_action();
+ }
+ 
+-bool Polygon3DEditor::forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) {
++bool Polygon3DEditor::forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) {
+ 
+ 	if (!node)
+ 		return false;
+diff --git a/editor/plugins/collision_polygon_editor_plugin.h b/editor/plugins/collision_polygon_editor_plugin.h
+index 26e0a22713..ed2bf8cee6 100644
+--- a/editor/plugins/collision_polygon_editor_plugin.h
++++ b/editor/plugins/collision_polygon_editor_plugin.h
+@@ -90,7 +90,7 @@ protected:
+ 	static void _bind_methods();
+ 
+ public:
+-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event);
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event);
+ 	void edit(Node *p_collision_polygon);
+ 	Polygon3DEditor(EditorNode *p_editor);
+ 	~Polygon3DEditor();
+@@ -104,7 +104,7 @@ class Polygon3DEditorPlugin : public EditorPlugin {
+ 	EditorNode *editor;
+ 
+ public:
+-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) { return collision_polygon_editor->forward_spatial_gui_input(p_camera, p_event); }
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) { return collision_polygon_editor->forward_spatial_gui_input(p_index, p_camera, p_event); }
+ 
+ 	virtual String get_name() const { return "Polygon3DEditor"; }
+ 	bool has_main_screen() const { return false; }
+diff --git a/editor/plugins/path_editor_plugin.cpp b/editor/plugins/path_editor_plugin.cpp
+index 35eef6102e..e5221fc17e 100644
+--- a/editor/plugins/path_editor_plugin.cpp
++++ b/editor/plugins/path_editor_plugin.cpp
+@@ -292,7 +292,7 @@ PathSpatialGizmo::PathSpatialGizmo(Path *p_path) {
+ 	set_spatial_node(p_path);
+ }
+ 
+-bool PathEditorPlugin::forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) {
++bool PathEditorPlugin::forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) {
+ 
+ 	if (!path)
+ 		return false;
+diff --git a/editor/plugins/path_editor_plugin.h b/editor/plugins/path_editor_plugin.h
+index ea908b654a..f9e736ea56 100644
+--- a/editor/plugins/path_editor_plugin.h
++++ b/editor/plugins/path_editor_plugin.h
+@@ -101,7 +101,7 @@ public:
+ 	Path *get_edited_path() { return path; }
+ 
+ 	static PathEditorPlugin *singleton;
+-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event);
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event);
+ 
+ 	//virtual bool forward_gui_input(const InputEvent& p_event) { return collision_polygon_editor->forward_gui_input(p_event); }
+ 	//virtual Ref<SpatialEditorGizmo> create_spatial_gizmo(Spatial *p_spatial);
+diff --git a/editor/plugins/skeleton_editor_plugin.cpp b/editor/plugins/skeleton_editor_plugin.cpp
+index 92d396b903..5cd989efce 100644
+--- a/editor/plugins/skeleton_editor_plugin.cpp
++++ b/editor/plugins/skeleton_editor_plugin.cpp
+@@ -30,27 +30,523 @@
+ 
+ #include "skeleton_editor_plugin.h"
+ 
++#include "core/io/resource_saver.h"
++#include "editor/editor_file_dialog.h"
++#include "editor/editor_properties.h"
++#include "editor/editor_scale.h"
++#include "editor/plugins/animation_player_editor_plugin.h"
+ #include "scene/3d/collision_shape.h"
++#include "scene/3d/mesh_instance.h"
+ #include "scene/3d/physics_body.h"
+ #include "scene/3d/physics_joint.h"
+ #include "scene/resources/capsule_shape.h"
+ #include "scene/resources/sphere_shape.h"
+ #include "spatial_editor_plugin.h"
+ 
++#define DISTANCE_DEFAULT 4
++
++#define GIZMO_ARROW_SIZE 0.35
++#define GIZMO_RING_HALF_WIDTH 0.1
++#define GIZMO_SCALE_DEFAULT 0.15
++#define GIZMO_PLANE_SIZE 0.2
++#define GIZMO_PLANE_DST 0.3
++#define GIZMO_CIRCLE_SIZE 1.1
++#define GIZMO_SCALE_OFFSET (GIZMO_CIRCLE_SIZE + 0.3)
++#define GIZMO_ARROW_OFFSET (GIZMO_CIRCLE_SIZE + 0.3)
++
++#define ZOOM_MIN_DISTANCE 0.001
++#define ZOOM_MULTIPLIER 1.08
++#define ZOOM_INDICATOR_DELAY_S 1.5
++
++#define FREELOOK_MIN_SPEED 0.01
++#define FREELOOK_SPEED_MULTIPLIER 1.08
++
++#define MIN_Z 0.01
++#define MAX_Z 1000000.0
++
++#define MIN_FOV 0.01
++#define MAX_FOV 179
++
++void BoneTransformEditor::create_editors() {
++	const Color section_color = get_color("prop_subsection", "Editor");
++
++	section = memnew(EditorInspectorSection);
++	section->setup("trf_properties", label, this, section_color, true);
++	add_child(section);
++
++	key_button = memnew(Button);
++	key_button->set_text(TTR("Key Transform"));
++	key_button->set_visible(keyable);
++	key_button->set_icon(get_icon("Key", "EditorIcons"));
++	key_button->set_flat(true);
++	section->get_vbox()->add_child(key_button);
++
++	enabled_checkbox = memnew(CheckBox(TTR("Pose Enabled")));
++	enabled_checkbox->set_flat(true);
++	enabled_checkbox->set_visible(toggle_enabled);
++	section->get_vbox()->add_child(enabled_checkbox);
++
++	Label *l1 = memnew(Label(TTR("Translation")));
++	section->get_vbox()->add_child(l1);
++
++	translation_grid = memnew(GridContainer());
++	translation_grid->set_columns(TRANSLATION_COMPONENTS);
++	section->get_vbox()->add_child(translation_grid);
++
++	Label *l2 = memnew(Label(TTR("Rotation Degrees")));
++	section->get_vbox()->add_child(l2);
++
++	rotation_grid = memnew(GridContainer());
++	rotation_grid->set_columns(ROTATION_DEGREES_COMPONENTS);
++	section->get_vbox()->add_child(rotation_grid);
++
++	Label *l3 = memnew(Label(TTR("Scale")));
++	section->get_vbox()->add_child(l3);
++
++	scale_grid = memnew(GridContainer());
++	scale_grid->set_columns(SCALE_COMPONENTS);
++	section->get_vbox()->add_child(scale_grid);
++
++	Label *l4 = memnew(Label(TTR("Transform")));
++	section->get_vbox()->add_child(l4);
++
++	transform_grid = memnew(GridContainer());
++	transform_grid->set_columns(TRANSFORM_CONTROL_COMPONENTS);
++	section->get_vbox()->add_child(transform_grid);
++
++	static const char *desc[TRANSFORM_COMPONENTS] = { "x", "y", "z", "x", "y", "z", "x", "y", "z", "x", "y", "z" };
++	float snap = EDITOR_GET("interface/inspector/default_float_step");
++
++	for (int i = 0; i < TRANSFORM_CONTROL_COMPONENTS; ++i) {
++		translation_slider[i] = memnew(EditorSpinSlider());
++		translation_slider[i]->set_label(desc[i]);
++		translation_slider[i]->set_step(snap);
++		setup_spinner(translation_slider[i], false);
++		translation_grid->add_child(translation_slider[i]);
++
++		rotation_slider[i] = memnew(EditorSpinSlider());
++		rotation_slider[i]->set_label(desc[i]);
++		rotation_slider[i]->set_step(snap);
++		setup_spinner(rotation_slider[i], false);
++		rotation_grid->add_child(rotation_slider[i]);
++
++		scale_slider[i] = memnew(EditorSpinSlider());
++		scale_slider[i]->set_label(desc[i]);
++		scale_slider[i]->set_step(snap);
++		setup_spinner(scale_slider[i], false);
++		scale_grid->add_child(scale_slider[i]);
++	}
++
++	for (int i = 0; i < TRANSFORM_COMPONENTS; ++i) {
++		transform_slider[i] = memnew(EditorSpinSlider());
++		transform_slider[i]->set_label(desc[i]);
++		transform_slider[i]->set_step(snap);
++		setup_spinner(transform_slider[i], true);
++		transform_grid->add_child(transform_slider[i]);
++	}
++}
++
++void BoneTransformEditor::setup_spinner(EditorSpinSlider *spinner, const bool is_transform_spinner) {
++	spinner->set_flat(true);
++	spinner->set_min(-10000);
++	spinner->set_max(10000);
++	spinner->set_hide_slider(true);
++	spinner->set_allow_greater(true);
++	spinner->set_allow_lesser(true);
++	spinner->set_h_size_flags(SIZE_EXPAND_FILL);
++
++	spinner->connect("value_changed", this, "_value_changed", varray(is_transform_spinner));
++}
++
++void BoneTransformEditor::_notification(int p_what) {
++	switch (p_what) {
++		case NOTIFICATION_ENTER_TREE: {
++			create_editors();
++			key_button->connect("pressed", this, "_key_button_pressed");
++			enabled_checkbox->connect("toggled", this, "_checkbox_toggled");
++			FALLTHROUGH;
++		}
++		case NOTIFICATION_THEME_CHANGED: {
++			const Color base = get_color("accent_color", "Editor");
++			const Color bg_color = get_color("property_color", "Editor");
++			const Color bg_lbl_color(bg_color.r, bg_color.g, bg_color.b, 0.5);
++
++			for (int i = 0; i < TRANSLATION_COMPONENTS; i++) {
++				Color c = base;
++				c.set_hsv(float(i % TRANSLATION_COMPONENTS) / TRANSLATION_COMPONENTS + 0.05, c.get_s() * 0.75, c.get_v());
++				if (!translation_slider[i]) {
++					continue;
++				}
++				translation_slider[i]->set_custom_label_color(true, c);
++			}
++
++			for (int i = 0; i < ROTATION_DEGREES_COMPONENTS; i++) {
++				Color c = base;
++				c.set_hsv(float(i % ROTATION_DEGREES_COMPONENTS) / ROTATION_DEGREES_COMPONENTS + 0.05, c.get_s() * 0.75, c.get_v());
++				if (!rotation_slider[i]) {
++					continue;
++				}
++				rotation_slider[i]->set_custom_label_color(true, c);
++			}
++
++			for (int i = 0; i < SCALE_COMPONENTS; i++) {
++				Color c = base;
++				c.set_hsv(float(i % SCALE_COMPONENTS) / SCALE_COMPONENTS + 0.05, c.get_s() * 0.75, c.get_v());
++				if (!scale_slider[i]) {
++					continue;
++				}
++				scale_slider[i]->set_custom_label_color(true, c);
++			}
++
++			for (int i = 0; i < TRANSFORM_COMPONENTS; i++) {
++				Color c = base;
++				c.set_hsv(float(i % TRANSFORM_COMPONENTS) / TRANSFORM_COMPONENTS + 0.05, c.get_s() * 0.75, c.get_v());
++				if (!transform_slider[i]) {
++					continue;
++				}
++				transform_slider[i]->set_custom_label_color(true, c);
++			}
++
++			break;
++		}
++		case NOTIFICATION_SORT_CHILDREN: {
++			const Ref<Font> font = get_font("font", "Tree");
++
++			Point2 buffer;
++			buffer.x += get_constant("inspector_margin", "Editor");
++			buffer.y += font->get_height();
++			buffer.y += get_constant("vseparation", "Tree");
++
++			const float vector_height = translation_grid->get_size().y;
++			const float transform_height = transform_grid->get_size().y;
++			const float button_height = key_button->get_size().y;
++
++			const float width = get_size().x - get_constant("inspector_margin", "Editor");
++			Vector<Rect2> input_rects;
++			if (keyable && section->get_vbox()->is_visible()) {
++				input_rects.push_back(Rect2(key_button->get_position() + buffer, Size2(width, button_height)));
++			} else {
++				input_rects.push_back(Rect2(0, 0, 0, 0));
++			}
++
++			if (section->get_vbox()->is_visible()) {
++				input_rects.push_back(Rect2(translation_grid->get_position() + buffer, Size2(width, vector_height)));
++				input_rects.push_back(Rect2(rotation_grid->get_position() + buffer, Size2(width, vector_height)));
++				input_rects.push_back(Rect2(scale_grid->get_position() + buffer, Size2(width, vector_height)));
++				input_rects.push_back(Rect2(transform_grid->get_position() + buffer, Size2(width, transform_height)));
++			} else {
++				const int32_t start = input_rects.size();
++				const int32_t empty_input_rect_elements = 4;
++				const int32_t end = start + empty_input_rect_elements;
++				for (int i = start; i < end; ++i) {
++					input_rects.push_back(Rect2(0, 0, 0, 0));
++				}
++			}
++
++			for (int32_t i = 0; i < input_rects.size(); i++) {
++				background_rects[i] = input_rects[i];
++			}
++
++			update();
++			break;
++		}
++		case NOTIFICATION_DRAW: {
++			const Color dark_color = get_color("dark_color_2", "Editor");
++
++			for (int i = 0; i < 5; ++i) {
++				draw_rect(background_rects[i], dark_color);
++			}
++
++			break;
++		}
++	}
++}
++
++void BoneTransformEditor::_value_changed(const double p_value, const bool p_from_transform) {
++	if (updating)
++		return;
++
++	if (property.get_slicec('/', 0) == "bones" && property.get_slicec('/', 2) == "custom_pose") {
++		const Transform tform = compute_transform(p_from_transform);
++
++		undo_redo->create_action(TTR("Set Custom Bone Pose Transform"), UndoRedo::MERGE_ENDS);
++		undo_redo->add_undo_method(skeleton, "set_bone_custom_pose", property.get_slicec('/', 1).to_int(), skeleton->get_bone_custom_pose(property.get_slicec('/', 1).to_int()));
++		undo_redo->add_do_method(skeleton, "set_bone_custom_pose", property.get_slicec('/', 1).to_int(), tform);
++		undo_redo->commit_action();
++	} else if (property.get_slicec('/', 0) == "bones") {
++		const Transform tform = compute_transform(p_from_transform);
++
++		undo_redo->create_action(TTR("Set Bone Transform"), UndoRedo::MERGE_ENDS);
++		undo_redo->add_undo_property(skeleton, property, skeleton->get(property));
++		undo_redo->add_do_property(skeleton, property, tform);
++		undo_redo->commit_action();
++	}
++}
++
++Transform BoneTransformEditor::compute_transform(const bool p_from_transform) const {
++
++	// Last modified was a raw transform column...
++	if (p_from_transform) {
++		Transform tform;
++
++		for (int i = 0; i < BASIS_COMPONENTS; ++i) {
++			tform.basis[i / BASIS_SPLIT_COMPONENTS][i % BASIS_SPLIT_COMPONENTS] = transform_slider[i]->get_value();
++		}
++
++		for (int i = 0; i < TRANSLATION_COMPONENTS; ++i) {
++			tform.origin[i] = transform_slider[i + BASIS_COMPONENTS]->get_value();
++		}
++
++		return tform;
++	}
++
++	return Transform(
++			Basis(Vector3(Math::deg2rad(rotation_slider[0]->get_value()), Math::deg2rad(rotation_slider[1]->get_value()), Math::deg2rad(rotation_slider[2]->get_value())),
++					Vector3(scale_slider[0]->get_value(), scale_slider[1]->get_value(), scale_slider[2]->get_value())),
++			Vector3(translation_slider[0]->get_value(), translation_slider[1]->get_value(), translation_slider[2]->get_value()));
++}
++
++void BoneTransformEditor::update_enabled_checkbox() {
++	if (enabled_checkbox) {
++		const String path = "bones/" + property.get_slicec('/', 1) + "/enabled";
++		const bool is_enabled = skeleton->get(path);
++		enabled_checkbox->set_pressed(is_enabled);
++	}
++}
++
++void BoneTransformEditor::_bind_methods() {
++	ClassDB::bind_method(D_METHOD("_value_changed", "value"), &BoneTransformEditor::_value_changed);
++	ClassDB::bind_method(D_METHOD("_key_button_pressed"), &BoneTransformEditor::_key_button_pressed);
++	ClassDB::bind_method(D_METHOD("_checkbox_toggled", "toggled"), &BoneTransformEditor::_checkbox_toggled);
++}
++
++void BoneTransformEditor::_update_properties() {
++	if (updating)
++		return;
++
++	if (skeleton == nullptr)
++		return;
++
++	updating = true;
++
++	Transform tform = skeleton->get(property);
++	_update_transform_properties(tform);
++}
++
++void BoneTransformEditor::_update_custom_pose_properties() {
++	if (updating)
++		return;
++
++	if (skeleton == nullptr)
++		return;
++
++	updating = true;
++
++	Transform tform = skeleton->get_bone_custom_pose(property.to_int());
++	_update_transform_properties(tform);
++}
++
++void BoneTransformEditor::_update_transform_properties(Transform tform) {
++
++	Quat rot = tform.get_basis().orthonormalized();
++	Vector3 rot_rad = rot.get_euler();
++	Vector3 rot_degrees = Vector3(Math::rad2deg(rot_rad.x), Math::rad2deg(rot_rad.y), Math::rad2deg(rot_rad.z));
++	Vector3 tr = tform.get_origin();
++	Vector3 scale = tform.basis.get_scale();
++
++	for (int i = 0; i < TRANSLATION_COMPONENTS; i++) {
++		translation_slider[i]->set_value(tr[i]);
++	}
++
++	for (int i = 0; i < ROTATION_DEGREES_COMPONENTS; i++) {
++		rotation_slider[i]->set_value(rot_degrees[i]);
++	}
++
++	for (int i = 0; i < SCALE_COMPONENTS; i++) {
++		scale_slider[i]->set_value(scale[i]);
++	}
++
++	transform_slider[0]->set_value(tform.get_basis()[Vector3::AXIS_X].x);
++	transform_slider[1]->set_value(tform.get_basis()[Vector3::AXIS_X].y);
++	transform_slider[2]->set_value(tform.get_basis()[Vector3::AXIS_X].z);
++	transform_slider[3]->set_value(tform.get_basis()[Vector3::AXIS_Y].x);
++	transform_slider[4]->set_value(tform.get_basis()[Vector3::AXIS_Y].y);
++	transform_slider[5]->set_value(tform.get_basis()[Vector3::AXIS_Y].z);
++	transform_slider[6]->set_value(tform.get_basis()[Vector3::AXIS_Z].x);
++	transform_slider[7]->set_value(tform.get_basis()[Vector3::AXIS_Z].y);
++	transform_slider[8]->set_value(tform.get_basis()[Vector3::AXIS_Z].z);
++
++	for (int i = 0; i < TRANSLATION_COMPONENTS; i++) {
++		transform_slider[BASIS_COMPONENTS + i]->set_value(tform.get_origin()[i]);
++	}
++
++	update_enabled_checkbox();
++	updating = false;
++}
++
++BoneTransformEditor::BoneTransformEditor(Skeleton *p_skeleton) :
++		translation_slider(),
++		rotation_slider(),
++		scale_slider(),
++		transform_slider(),
++		skeleton(p_skeleton),
++		key_button(nullptr),
++		enabled_checkbox(nullptr),
++		keyable(false),
++		toggle_enabled(false),
++		updating(false) {
++
++	undo_redo = EditorNode::get_undo_redo();
++}
++
++void BoneTransformEditor::set_target(const String &p_prop) {
++	property = p_prop;
++}
++
++void BoneTransformEditor::set_keyable(const bool p_keyable) {
++	keyable = p_keyable;
++	if (key_button) {
++		key_button->set_visible(p_keyable);
++	}
++}
++
++void BoneTransformEditor::set_toggle_enabled(const bool p_enabled) {
++	toggle_enabled = p_enabled;
++	if (enabled_checkbox) {
++		enabled_checkbox->set_visible(p_enabled);
++	}
++}
++
++void BoneTransformEditor::_key_button_pressed() {
++	if (skeleton == nullptr)
++		return;
++
++	const BoneId bone_id = property.get_slicec('/', 1).to_int();
++	const String name = skeleton->get_bone_name(bone_id);
++
++	if (name.empty())
++		return;
++
++	// Need to normalize the basis before you key it
++	Transform tform = compute_transform(true);
++	tform.orthonormalize();
++	AnimationPlayerEditor::singleton->get_track_editor()->insert_transform_key(skeleton, name, tform);
++}
++
++void BoneTransformEditor::_checkbox_toggled(const bool p_toggled) {
++	if (enabled_checkbox) {
++		const String path = "bones/" + property.get_slicec('/', 1) + "/enabled";
++		skeleton->set(path, p_toggled);
++	}
++}
++
++void BoneTransformEditor::set_read_only(const bool p_read_only) {
++	for (int i = 0; i < TRANSLATION_COMPONENTS; i++) {
++		translation_slider[i]->set_read_only(p_read_only);
++	}
++	for (int i = 0; i < ROTATION_DEGREES_COMPONENTS; i++) {
++		rotation_slider[i]->set_read_only(p_read_only);
++	}
++	for (int i = 0; i < SCALE_COMPONENTS; i++) {
++		scale_slider[i]->set_read_only(p_read_only);
++	}
++	for (int i = 0; i < TRANSFORM_COMPONENTS; i++) {
++		transform_slider[i]->set_read_only(p_read_only);
++	}
++}
++
++
++void SkeletonEditor::set_keyable(const bool p_keyable) {
++	keyable = p_keyable;
++	options->get_popup()->set_item_disabled(MENU_OPTION_INSERT_KEYS, !p_keyable);
++	options->get_popup()->set_item_disabled(MENU_OPTION_INSERT_KEYS_EXISTED, !p_keyable);
++};
++
+ void SkeletonEditor::_on_click_option(int p_option) {
+ 	if (!skeleton) {
+ 		return;
+ 	}
+ 
+ 	switch (p_option) {
++		case MENU_OPTION_INIT_POSE: {
++			init_pose();
++		} break;
++		case MENU_OPTION_INSERT_KEYS: {
++			insert_keys(true);
++		} break;
++		case MENU_OPTION_INSERT_KEYS_EXISTED: {
++			insert_keys(false);
++		} break;
++		case MENU_OPTION_POSE_TO_REST: {
++			pose_to_rest();
++		} break;
+ 		case MENU_OPTION_CREATE_PHYSICAL_SKELETON: {
+ 			create_physical_skeleton();
+ 		} break;
+ 	}
+ }
+ 
++void SkeletonEditor::init_pose() {
++	const int bone_len = skeleton->get_bone_count();
++	if (!bone_len) {
++		return;
++	}
++	UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
++	ur->create_action(TTR("Set Bone Transform"), UndoRedo::MERGE_ENDS);
++	for (int i = 0; i < bone_len; i++) {
++		ur->add_do_method(skeleton, "set_bone_pose", i, Transform());
++		ur->add_undo_method(skeleton, "set_bone_pose", i, skeleton->get_bone_pose(i));
++	}
++	ur->commit_action();
++}
++
++void SkeletonEditor::insert_keys(bool p_all_bones) {
++	if (skeleton == nullptr)
++		return;
++
++	int bone_len = skeleton->get_bone_count();
++	Node *root = EditorNode::get_singleton()->get_tree()->get_root();
++	String path = root->get_path_to(skeleton);
++
++	for (int i = 0; i < bone_len; i++) {
++		const String name = skeleton->get_bone_name(i);
++
++		if (name.empty())
++			continue;
++
++		if (!p_all_bones && !AnimationPlayerEditor::singleton->get_track_editor()->has_transform_key(skeleton, name)) {
++			continue;
++		}
++
++		// Need to normalize the basis before you key it
++		Transform tform = skeleton->get_bone_pose(i);
++		tform.orthonormalize();
++		AnimationPlayerEditor::singleton->get_track_editor()->insert_transform_key(skeleton, name, tform);
++	}
++
++}
++
++void SkeletonEditor::pose_to_rest() {
++	const int bone_len = skeleton->get_bone_count();
++	if (!bone_len) {
++		return;
++	}
++	UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
++	ur->create_action(TTR("Set Bone Transform"), UndoRedo::MERGE_ENDS);
++	for (int i = 0; i < bone_len; i++) {
++		ur->add_do_method(skeleton, "set_bone_pose", i, Transform());
++		ur->add_undo_method(skeleton, "set_bone_pose", i, skeleton->get_bone_pose(i));
++		ur->add_do_method(skeleton, "set_bone_custom_pose", i, Transform());
++		ur->add_undo_method(skeleton, "set_bone_custom_pose", i, skeleton->get_bone_custom_pose(i));
++		ur->add_do_method(skeleton, "set_bone_rest", i, skeleton->get_bone_rest(i) * skeleton->get_bone_custom_pose(i) * skeleton->get_bone_pose(i));
++		ur->add_undo_method(skeleton, "set_bone_rest", i, skeleton->get_bone_rest(i));
++	}
++	ur->commit_action();
++}
++
+ void SkeletonEditor::create_physical_skeleton() {
+ 	UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
++	ERR_FAIL_COND(!get_tree());
+ 	Node *owner = skeleton == get_tree()->get_edited_scene_root() ? skeleton : skeleton->get_owner();
+ 
+ 	const int bc = skeleton->get_bone_count();
+@@ -131,68 +627,1213 @@ PhysicalBone *SkeletonEditor::create_physical_bone(int bone_id, int bone_child_i
+ 	return physical_bone;
+ }
+ 
+-void SkeletonEditor::edit(Skeleton *p_node) {
++Variant SkeletonEditor::get_drag_data_fw(const Point2 &p_point, Control *p_from) {
++	TreeItem *selected = joint_tree->get_selected();
++
++	if (!selected)
++		return Variant();
++
++	Ref<Texture> icon = selected->get_icon(0);
++
++	VBoxContainer *vb = memnew(VBoxContainer);
++	HBoxContainer *hb = memnew(HBoxContainer);
++	TextureRect *tf = memnew(TextureRect);
++	tf->set_texture(icon);
++	tf->set_stretch_mode(TextureRect::STRETCH_KEEP_CENTERED);
++	hb->add_child(tf);
++	Label *label = memnew(Label(selected->get_text(0)));
++	hb->add_child(label);
++	vb->add_child(hb);
++	hb->set_modulate(Color(1, 1, 1, 1));
++
++	set_drag_preview(vb);
++	Dictionary drag_data;
++	drag_data["type"] = "nodes";
++	drag_data["node"] = selected;
++
++	return drag_data;
++}
++
++bool SkeletonEditor::can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const {
++
++	TreeItem *target = joint_tree->get_item_at_position(p_point);
++	if (!target)
++		return false;
++
++	const String path = target->get_metadata(0);
++	if (!path.begins_with("bones/"))
++		return false;
+ 
+-	skeleton = p_node;
++	TreeItem *selected = Object::cast_to<TreeItem>(Dictionary(p_data)["node"]);
++	if (target == selected)
++		return false;
++
++	const String path2 = target->get_metadata(0);
++	if (!path2.begins_with("bones/"))
++		return false;
++
++	return true;
+ }
+ 
+-void SkeletonEditor::_notification(int p_what) {
+-	if (p_what == NOTIFICATION_ENTER_TREE) {
+-		get_tree()->connect("node_removed", this, "_node_removed");
++void SkeletonEditor::drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) {
++	if (!can_drop_data_fw(p_point, p_data, p_from))
++		return;
++
++	TreeItem *target = joint_tree->get_item_at_position(p_point);
++	TreeItem *selected = Object::cast_to<TreeItem>(Dictionary(p_data)["node"]);
++
++	const BoneId target_boneidx = String(target->get_metadata(0)).get_slicec('/', 1).to_int();
++	const BoneId selected_boneidx = String(selected->get_metadata(0)).get_slicec('/', 1).to_int();
++
++	move_skeleton_bone(skeleton->get_path(), selected_boneidx, target_boneidx);
++}
++
++void SkeletonEditor::move_skeleton_bone(NodePath p_skeleton_path, int32_t p_selected_boneidx, int32_t p_target_boneidx) {
++	Node *node = get_node_or_null(p_skeleton_path);
++	Skeleton *skeleton = Object::cast_to<Skeleton>(node);
++	ERR_FAIL_NULL(skeleton);
++	UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
++	ur->create_action(TTR("Set Bone Parentage"));
++	// If the target is a child of ourselves, we move only *us* and not our children
++	if (skeleton->is_bone_parent_of(p_target_boneidx, p_selected_boneidx)) {
++		const BoneId parent_idx = skeleton->get_bone_parent(p_selected_boneidx);
++		const int bone_count = skeleton->get_bone_count();
++		for (BoneId i = 0; i < bone_count; ++i) {
++			if (skeleton->get_bone_parent(i) == p_selected_boneidx) {
++				ur->add_undo_method(skeleton, "set_bone_parent", i, skeleton->get_bone_parent(i));
++				ur->add_do_method(skeleton, "set_bone_parent", i, parent_idx);
++				skeleton->set_bone_parent(i, parent_idx);
++			}
++		}
+ 	}
++	ur->add_undo_method(skeleton, "set_bone_parent", p_selected_boneidx, skeleton->get_bone_parent(p_selected_boneidx));
++	ur->add_do_method(skeleton, "set_bone_parent", p_selected_boneidx, p_target_boneidx);
++	skeleton->set_bone_parent(p_selected_boneidx, p_target_boneidx);
++
++	update_joint_tree();
++	ur->commit_action();
+ }
+ 
+-void SkeletonEditor::_node_removed(Node *p_node) {
++void SkeletonEditor::_update_spatial_transform_gizmo() {
++	SpatialEditor::get_singleton()->clear_externals();
++	if (skeleton->get_selected_bone() >= 0) {
++		SpatialEditor::get_singleton()->append_to_externals(skeleton->get_global_transform() * skeleton->get_bone_global_pose(skeleton->get_selected_bone()));
++	}
++	SpatialEditor::get_singleton()->update_transform_gizmo();
++};
+ 
+-	if (p_node == skeleton) {
+-		skeleton = NULL;
+-		options->hide();
++void SkeletonEditor::_joint_tree_selection_changed() {
++	TreeItem *selected = joint_tree->get_selected();
++	const String path = selected->get_metadata(0);
++
++	if (path.begins_with("bones/")) {
++		const int b_idx = path.get_slicec('/', 1).to_int();
++		const String bone_path = "bones/" + itos(b_idx) + "/";
++
++		pose_editor->set_target(bone_path + "pose");
++		rest_editor->set_target(bone_path + "rest");
++		custom_pose_editor->set_target(bone_path + "custom_pose");
++
++		pose_editor->set_visible(true);
++		rest_editor->set_visible(true);
++		custom_pose_editor->set_visible(true);
++
++		skeleton->set_selected_bone(b_idx);
+ 	}
++
++	_update_properties();
+ }
+ 
+-void SkeletonEditor::_bind_methods() {
+-	ClassDB::bind_method("_on_click_option", &SkeletonEditor::_on_click_option);
+-	ClassDB::bind_method("_node_removed", &SkeletonEditor::_node_removed);
++void SkeletonEditor::_joint_tree_rmb_select(const Vector2 &p_pos) {
++	skeleton->set_selected_bone(-1);
++	_update_spatial_transform_gizmo();
++}
++
++void SkeletonEditor::_update_properties() {
++	if (rest_editor)
++		rest_editor->_update_properties();
++	if (pose_editor)
++		pose_editor->_update_properties();
++	if (custom_pose_editor)
++		custom_pose_editor->_update_custom_pose_properties();
++	_update_spatial_transform_gizmo();
++}
++
++void SkeletonEditor::update_joint_tree() {
++	joint_tree->clear();
++
++	if (skeleton == nullptr)
++		return;
++
++	TreeItem *root = joint_tree->create_item();
++
++	Map<int, TreeItem *> items;
++
++	items.insert(-1, root);
++
++	const Vector<int> &joint_porder = skeleton->get_bone_process_order();
++
++	Ref<Texture> bone_icon = get_icon("Bone", "EditorIcons");
++
++	for (int i = 0; i < joint_porder.size(); ++i) {
++		const int b_idx = joint_porder[i];
++
++		const int p_idx = skeleton->get_bone_parent(b_idx);
++		TreeItem *p_item = items.find(p_idx)->get();
++
++		TreeItem *joint_item = joint_tree->create_item(p_item);
++		items.insert(b_idx, joint_item);
++
++		joint_item->set_text(0, skeleton->get_bone_name(b_idx));
++		joint_item->set_icon(0, bone_icon);
++		joint_item->set_selectable(0, true);
++		joint_item->set_metadata(0, "bones/" + itos(b_idx));
++	}
+ }
+ 
+-SkeletonEditor::SkeletonEditor() {
+-	skeleton = NULL;
++void SkeletonEditor::update_editors() {
++}
++
++void SkeletonEditor::create_editors() {
++
++	set_h_size_flags(SIZE_EXPAND_FILL);
++	add_constant_override("separation", 0);
++
++	set_focus_mode(FOCUS_ALL);
++
++	// Create Top Menu Bar
++	separators[0] = memnew(VSeparator);
++	separators[1] = memnew(VSeparator);
++
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(separators[0]);
++
+ 	options = memnew(MenuButton);
+ 	SpatialEditor::get_singleton()->add_control_to_menu_panel(options);
+-
+ 	options->set_text(TTR("Skeleton"));
+ 	options->set_icon(EditorNode::get_singleton()->get_gui_base()->get_icon("Skeleton", "EditorIcons"));
+-
++	options->get_popup()->add_item(TTR("Init pose"), MENU_OPTION_INIT_POSE);
++	options->get_popup()->add_item(TTR("Insert key of all bone poses"), MENU_OPTION_INSERT_KEYS);
++	options->get_popup()->add_item(TTR("Insert key of bone poses already exist track"), MENU_OPTION_INSERT_KEYS_EXISTED);
++	options->get_popup()->add_item(TTR("Apply current pose to rest"), MENU_OPTION_POSE_TO_REST);
+ 	options->get_popup()->add_item(TTR("Create physical skeleton"), MENU_OPTION_CREATE_PHYSICAL_SKELETON);
+-
+ 	options->get_popup()->connect("id_pressed", this, "_on_click_option");
+-	options->hide();
++
++	Vector<Variant> button_binds;
++	button_binds.resize(1);
++
++	tool_button[TOOL_MODE_BONE_SELECT] = memnew(ToolButton);
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(tool_button[TOOL_MODE_BONE_SELECT]);
++	tool_button[TOOL_MODE_BONE_SELECT]->set_tooltip(TTR("Transform Bone Mode"));
++	tool_button[TOOL_MODE_BONE_SELECT]->set_toggle_mode(true);
++	tool_button[TOOL_MODE_BONE_SELECT]->set_flat(true);
++	button_binds.write[0] = MENU_TOOL_BONE_SELECT;
++	tool_button[TOOL_MODE_BONE_SELECT]->connect("pressed", this, "_menu_tool_item_pressed", button_binds);
++
++	tool_button[TOOL_MODE_BONE_MOVE] = memnew(ToolButton);
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(tool_button[TOOL_MODE_BONE_MOVE]);
++	tool_button[TOOL_MODE_BONE_MOVE]->set_tooltip(TTR("Move Bone Mode"));
++	tool_button[TOOL_MODE_BONE_MOVE]->set_toggle_mode(true);
++	tool_button[TOOL_MODE_BONE_MOVE]->set_flat(true);
++	button_binds.write[0] = MENU_TOOL_BONE_MOVE;
++	tool_button[TOOL_MODE_BONE_MOVE]->connect("pressed", this, "_menu_tool_item_pressed", button_binds);
++
++	tool_button[TOOL_MODE_BONE_ROTATE] = memnew(ToolButton);
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(tool_button[TOOL_MODE_BONE_ROTATE]);
++	tool_button[TOOL_MODE_BONE_ROTATE]->set_tooltip(TTR("Rotate Bone Mode"));
++	tool_button[TOOL_MODE_BONE_ROTATE]->set_toggle_mode(true);
++	tool_button[TOOL_MODE_BONE_ROTATE]->set_flat(true);
++	button_binds.write[0] = MENU_TOOL_BONE_ROTATE;
++	tool_button[TOOL_MODE_BONE_ROTATE]->connect("pressed", this, "_menu_tool_item_pressed", button_binds);
++
++	tool_button[TOOL_MODE_BONE_SCALE] = memnew(ToolButton);
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(tool_button[TOOL_MODE_BONE_SCALE]);
++	tool_button[TOOL_MODE_BONE_SCALE]->set_tooltip(TTR("Scale Bone Mode"));
++	tool_button[TOOL_MODE_BONE_SCALE]->set_toggle_mode(true);
++	tool_button[TOOL_MODE_BONE_SCALE]->set_flat(true);
++	button_binds.write[0] = MENU_TOOL_BONE_SCALE;
++	tool_button[TOOL_MODE_BONE_SCALE]->connect("pressed", this, "_menu_tool_item_pressed", button_binds);
++
++	tool_button[TOOL_MODE_BONE_NONE] = memnew(ToolButton);
++	button_binds.write[0] = MENU_TOOL_BONE_NONE;
++	tool_button[TOOL_MODE_BONE_NONE]->connect("pressed", this, "_menu_tool_item_pressed", button_binds);
++	SpatialEditor::get_singleton()->connect("change_tool_mode", this, "_menu_tool_item_pressed", button_binds);
++
++	tool_mode = TOOL_MODE_BONE_NONE;
++
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(separators[1]);
++
++	rest_mode_button = memnew(ToolButton);
++	SpatialEditor::get_singleton()->add_control_to_menu_panel(rest_mode_button);
++	rest_mode_button->set_tooltip(TTR("Rest Mode\nNote: Bone poses are disabled during Rest Mode."));
++	rest_mode_button->set_toggle_mode(true);
++	rest_mode_button->set_flat(true);
++	rest_mode_button->connect("toggled", this, "rest_mode_toggled");
++
++	rest_mode = false;
++
++	set_keyable(AnimationPlayerEditor::singleton->get_track_editor()->has_keying());
++
++	if (skeleton) {
++		skeleton->add_child(pointsm);
++		pointsm->set_skeleton_path(NodePath(""));
++		skeleton->connect("pose_updated", this, "_draw_handles");
++	}
++
++	const Color section_color = get_color("prop_subsection", "Editor");
++
++	EditorInspectorSection *bones_section = memnew(EditorInspectorSection);
++	bones_section->setup("bones", "Bones", skeleton, section_color, true);
++	add_child(bones_section);
++	bones_section->unfold();
++
++	ScrollContainer *s_con = memnew(ScrollContainer);
++	s_con->set_h_size_flags(SIZE_EXPAND_FILL);
++	s_con->set_custom_minimum_size(Size2(1, 350) * EDSCALE);
++	bones_section->get_vbox()->add_child(s_con);
++
++	joint_tree = memnew(Tree);
++	joint_tree->set_columns(1);
++	joint_tree->set_focus_mode(Control::FocusMode::FOCUS_NONE);
++	joint_tree->set_select_mode(Tree::SELECT_SINGLE);
++	joint_tree->set_hide_root(true);
++	joint_tree->set_v_size_flags(SIZE_EXPAND_FILL);
++	joint_tree->set_h_size_flags(SIZE_EXPAND_FILL);
++	joint_tree->set_allow_rmb_select(true);
++	joint_tree->set_drag_forwarding(this);
++	s_con->add_child(joint_tree);
++
++	pose_editor = memnew(BoneTransformEditor(skeleton));
++	pose_editor->set_label(TTR("Bone Pose"));
++	pose_editor->set_keyable(AnimationPlayerEditor::singleton->get_track_editor()->has_keying());
++	// pose_editor->set_toggle_enabled(true);
++	pose_editor->set_visible(false);
++	add_child(pose_editor);
++
++	rest_editor = memnew(BoneTransformEditor(skeleton));
++	rest_editor->set_label(TTR("Bone Rest"));
++	rest_editor->set_visible(false);
++	add_child(rest_editor);
++
++	custom_pose_editor = memnew(BoneTransformEditor(skeleton));
++	custom_pose_editor->set_label(TTR("Bone Custom Pose"));
++	custom_pose_editor->set_visible(false);
++	add_child(custom_pose_editor);
++
++	skeleton->set_selected_bone(-1);
+ }
+ 
+-SkeletonEditor::~SkeletonEditor() {}
++void SkeletonEditor::_notification(int p_what) {
++
++	switch (p_what) {
++		case NOTIFICATION_READY: {
++			tool_button[TOOL_MODE_BONE_SELECT]->set_icon(get_icon("ToolBoneSelect", "EditorIcons"));
++			tool_button[TOOL_MODE_BONE_MOVE]->set_icon(get_icon("ToolBoneMove", "EditorIcons"));
++			tool_button[TOOL_MODE_BONE_ROTATE]->set_icon(get_icon("ToolBoneRotate", "EditorIcons"));
++			tool_button[TOOL_MODE_BONE_SCALE]->set_icon(get_icon("ToolBoneScale", "EditorIcons"));
++			rest_mode_button->set_icon(get_icon("ToolBoneRest", "EditorIcons"));
++		} break;
++		case NOTIFICATION_ENTER_TREE: {
++			create_editors();
++			update_joint_tree();
++			update_editors();
++
++			get_tree()->connect("node_removed", this, "_node_removed", Vector<Variant>(), Object::CONNECT_ONESHOT);
++			joint_tree->connect("item_selected", this, "_joint_tree_selection_changed");
++			joint_tree->connect("item_rmb_selected", this, "_joint_tree_rmb_select");
++			
++#ifdef TOOLS_ENABLED
++			skeleton->connect("pose_updated", this, "_update_properties");
++#endif // TOOLS_ENABLED
+ 
+-void SkeletonEditorPlugin::edit(Object *p_object) {
+-	skeleton_editor->edit(Object::cast_to<Skeleton>(p_object));
++			break;
++		}
++	}
+ }
+ 
+-bool SkeletonEditorPlugin::handles(Object *p_object) const {
+-	return p_object->is_class("Skeleton");
++void SkeletonEditor::_node_removed(Node *p_node) {
++	if (skeleton && p_node == skeleton) {
++		skeleton = nullptr;
++	}
++}
++
++void SkeletonEditor::_bind_methods() {
++	ClassDB::bind_method(D_METHOD("_node_removed"), &SkeletonEditor::_node_removed);
++	ClassDB::bind_method(D_METHOD("_joint_tree_selection_changed"), &SkeletonEditor::_joint_tree_selection_changed);
++	ClassDB::bind_method(D_METHOD("_joint_tree_rmb_select"), &SkeletonEditor::_joint_tree_rmb_select);
++	ClassDB::bind_method(D_METHOD("_update_properties"), &SkeletonEditor::_update_properties);
++	ClassDB::bind_method(D_METHOD("_on_click_option"), &SkeletonEditor::_on_click_option);
++	ClassDB::bind_method(D_METHOD("_menu_tool_item_pressed"), &SkeletonEditor::_menu_tool_item_pressed);
++	ClassDB::bind_method(D_METHOD("rest_mode_toggled"), &SkeletonEditor::rest_mode_toggled);
++	ClassDB::bind_method(D_METHOD("set_rest_mode_toggled"), &SkeletonEditor::set_rest_mode_toggled);
++
++	ClassDB::bind_method(D_METHOD("get_drag_data_fw"), &SkeletonEditor::get_drag_data_fw);
++	ClassDB::bind_method(D_METHOD("can_drop_data_fw"), &SkeletonEditor::can_drop_data_fw);
++	ClassDB::bind_method(D_METHOD("drop_data_fw"), &SkeletonEditor::drop_data_fw);
++	ClassDB::bind_method(D_METHOD("move_skeleton_bone"), &SkeletonEditor::move_skeleton_bone);
++
++	ClassDB::bind_method(D_METHOD("_draw_handles"), &SkeletonEditor::_draw_handles);
++}
++
++void SkeletonEditor::_menu_tool_item_pressed(int p_option) {
++
++	if (p_option != TOOL_MODE_BONE_NONE && !SpatialEditor::get_singleton()->is_tool_external()) {
++		SpatialEditor::get_singleton()->set_tool_mode(SpatialEditor::TOOL_MODE_EXTERNAL);
++	}
++	for (int i = 0; i < TOOL_MODE_BONE_MAX; i++)
++		tool_button[i]->set_pressed(i == p_option);
++	tool_mode = (ToolMode)p_option;
++	if (skeleton) {
++		if (p_option == TOOL_MODE_BONE_NONE) {
++			_hide_handles();
++		} else {
++			_draw_handles();
++			if (skeleton->get_selected_bone() >= 0) {
++				SpatialEditor::get_singleton()->clear_externals();
++				SpatialEditor::get_singleton()->append_to_externals(skeleton->get_global_transform() * skeleton->get_bone_global_pose(skeleton->get_selected_bone()));
++			}
++		}
++	}
++
++	switch (p_option) {
++		case TOOL_MODE_BONE_SELECT: {
++			SpatialEditor::get_singleton()->set_external_tool_mode(SpatialEditor::EX_TOOL_MODE_SELECT);
++		} break;
++		case TOOL_MODE_BONE_MOVE: {
++			SpatialEditor::get_singleton()->set_external_tool_mode(SpatialEditor::EX_TOOL_MODE_MOVE);
++		} break;
++		case TOOL_MODE_BONE_ROTATE: {
++			SpatialEditor::get_singleton()->set_external_tool_mode(SpatialEditor::EX_TOOL_MODE_ROTATE);
++		} break;
++		case TOOL_MODE_BONE_SCALE: {
++			SpatialEditor::get_singleton()->set_external_tool_mode(SpatialEditor::EX_TOOL_MODE_SCALE);
++		} break;
++		case TOOL_MODE_BONE_NONE:
++			break;
++	}
++
++	_update_spatial_transform_gizmo();
++}
++
++void SkeletonEditor::rest_mode_toggled(const bool pressed) {
++	bool before_val = rest_mode;
++
++	// Prevent that bone pose will be undo during rest mode.
++	// However SkeletonEditor will be memdeleted,
++	// so it need to record in SpatialEditor with calling method in
++	// EditorInspectorPluginSkeleton and it will not be memdeleted.
++	UndoRedo *ur = SpatialEditor::get_singleton()->get_undo_redo();
++	ur->create_action(TTR("Toggled Rest Mode"));
++	set_rest_mode_toggled(pressed);
++	ur->add_undo_method(editor_plugin, "set_rest_mode_toggled", before_val);
++	ur->add_do_method(editor_plugin, "set_rest_mode_toggled", pressed);
++	ur->commit_action();
++}
++
++void SkeletonEditor::set_rest_mode_toggled(const bool pressed) {
++	rest_mode_button->disconnect("toggled", this, "rest_mode_toggled");
++	rest_mode_button->set_pressed(pressed);
++	rest_mode_button->connect("toggled", this, "rest_mode_toggled");
++
++	rest_mode = pressed;
++	const int bone_len = skeleton->get_bone_count();
++	for (int i = 0; i < bone_len; i++) {
++		skeleton->set_bone_enabled(i, !rest_mode);
++	}
++	if (pose_editor) {
++		pose_editor->set_read_only(rest_mode);
++	}
++	if (custom_pose_editor) {
++		custom_pose_editor->set_read_only(rest_mode);
++	}
++	set_keyable(AnimationPlayerEditor::singleton->get_track_editor()->has_keying() && !rest_mode);
++}
++
++SkeletonEditor::SkeletonEditor(EditorInspectorPluginSkeleton *e_plugin, EditorNode *p_editor, Skeleton *p_skeleton) :
++		editor(p_editor),
++		editor_plugin(e_plugin),
++		skeleton(p_skeleton) {
++				handle_material = Ref<ShaderMaterial>(memnew(ShaderMaterial));
++				handle_shader = Ref<Shader>(memnew(Shader));
++				handle_shader->set_code(" \
++					shader_type spatial; \
++					render_mode unshaded; \
++					uniform vec4 albedo : hint_color = vec4(1,1,1,1); \
++					uniform sampler2D texture_albedo : hint_albedo; \
++					uniform float point_size : hint_range(0,128) = 32; \
++					void vertex() { \
++						if (!OUTPUT_IS_SRGB) { \
++							COLOR.rgb = mix( pow((COLOR.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), COLOR.rgb* (1.0 / 12.92), lessThan(COLOR.rgb,vec3(0.04045)) ); \
++						} \
++						POINT_SIZE=point_size; \
++						VERTEX = VERTEX; \
++						POSITION=PROJECTION_MATRIX*INV_CAMERA_MATRIX*WORLD_MATRIX*vec4(VERTEX.xyz,1.0); \
++						POSITION.z = mix(POSITION.z, -POSITION.w, 0.999); \
++					} \
++					void fragment() { \
++						vec4 albedo_tex = texture(texture_albedo,POINT_COORD); \
++						if (albedo.a * albedo_tex.a < 0.5) { discard; } \
++						vec3 col = albedo_tex.rgb + COLOR.rgb; \
++						col = vec3(min(col.r,1.0),min(col.g,1.0),min(col.b,1.0)); \
++						ALBEDO = albedo.rgb * col; \
++					} \
++				");
++				handle_material->set_shader(handle_shader);
++				// handle_material->set_flag(SpatialMaterial::FLAG_DISABLE_DEPTH_TEST, true);
++				handle_material->set_render_priority(SpatialMaterial::RENDER_PRIORITY_MIN);
++				// handle_material->set_flag(SpatialMaterial::FLAG_UNSHADED, true);
++				// handle_material->set_flag(SpatialMaterial::FLAG_USE_POINT_SIZE, true);
++				// handle_material->set_feature(SpatialMaterial::FEATURE_TRANSPARENT, true);
++				Ref<Texture> handle = editor->get_gui_base()->get_icon("EditorBoneHandle", "EditorIcons");
++				handle_material->set_shader_param("point_size", handle->get_width());
++				handle_material->set_shader_param("texture_albedo", handle);
++				//handle_material->set_texture(SpatialMaterial::TEXTURE_ALBEDO, handle);
++
++				pointsm = memnew(MeshInstance);
++				am.instance();
++				pointsm->set_mesh(am);
++				pointsm->set_transform(Transform(Basis(), Vector3(0, 0, 0.00001)));
++}
++
++SkeletonEditor::~SkeletonEditor() {
++	set_rest_mode_toggled(false);
++	SpatialEditor::get_singleton()->disconnect("change_tool_mode", this, "_menu_tool_item_pressed");
++	if (skeleton) {
++		pointsm->get_parent()->remove_child(pointsm);
++		skeleton->set_selected_bone(-1);
++		skeleton->disconnect("pose_updated", this, "_draw_handles");
++		memdelete(pointsm);
++	}
++	for (int i = 0; i < 2; i++) {
++		if (separators[i]) {
++			SpatialEditor::get_singleton()->remove_control_from_menu_panel(separators[i]);
++			memdelete(separators[i]);
++		}
++	}
++	if (options) {
++		SpatialEditor::get_singleton()->remove_control_from_menu_panel(options);
++		memdelete(options);
++	}
++	SpatialEditor::get_singleton()->remove_control_from_menu_panel(tool_button[TOOL_MODE_BONE_SELECT]);
++	SpatialEditor::get_singleton()->remove_control_from_menu_panel(tool_button[TOOL_MODE_BONE_MOVE]);
++	SpatialEditor::get_singleton()->remove_control_from_menu_panel(tool_button[TOOL_MODE_BONE_ROTATE]);
++	SpatialEditor::get_singleton()->remove_control_from_menu_panel(tool_button[TOOL_MODE_BONE_SCALE]);
++	for (int i = 0; i < TOOL_MODE_BONE_MAX; i++) {
++		if (tool_button[i]) {
++			memdelete(tool_button[i]);
++		}
++	}
++	SpatialEditor::get_singleton()->remove_control_from_menu_panel(rest_mode_button);
++	if (rest_mode_button) {
++		memdelete(rest_mode_button);
++	}
++	if (SpatialEditor::get_singleton()->is_tool_external()) {
++		SpatialEditor::get_singleton()->set_tool_mode(SpatialEditor::TOOL_MODE_SELECT);
++		SpatialEditor::get_singleton()->set_external_tool_mode(SpatialEditor::EX_TOOL_MODE_SELECT);
++	}
++
++}
++
++void SkeletonEditor::_hide_handles() {
++	if (!skeleton)
++		return;
++	
++	pointsm->hide();
++}
++
++void SkeletonEditor::_draw_handles() {
++
++	if (!skeleton || tool_mode == TOOL_MODE_BONE_NONE)
++		return;
++
++	while (am->get_surface_count()) {
++		am->surface_remove(0);
++	}
++
++	pointsm->show();
++
++	Array a;
++	a.resize(Mesh::ARRAY_MAX);
++	PoolVector<Vector3> va;
++	PoolVector<Color> ca;
++	{
++		const int bone_len = skeleton->get_bone_count();
++		va.resize(bone_len);
++		ca.resize(bone_len);
++		PoolVector<Vector3>::Write vaw = va.write();
++		PoolVector<Color>::Write caw = ca.write();
++		
++		for (int i = 0; i < bone_len; i++) {
++			Vector3 point = skeleton->get_bone_global_pose(i).origin;
++			vaw[i] = point;
++			Color c;
++			if (i == skeleton->get_selected_bone()) {
++				c = Color(1,1,0);
++			} else {
++				c = Color(0,0,1);
++			}
++			caw[i] = c;
++		}
++		
++	}
++	a[Mesh::ARRAY_VERTEX] = va;
++	a[Mesh::ARRAY_COLOR] = ca;
++	am->add_surface_from_arrays(Mesh::PRIMITIVE_POINTS, a);
++	am->surface_set_material(0, handle_material);
++}
++
++bool SkeletonEditor::forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) {
++
++	if (!skeleton || tool_mode == TOOL_MODE_BONE_NONE)
++		return false;
++	
++	SpatialEditor *se = SpatialEditor::get_singleton();
++	SpatialEditorViewport *sev = se->get_editor_viewport(p_index);
++
++	Ref<InputEventMouseButton> mb = p_event;
++	if (mb.is_valid()) {
++
++		Transform gt = skeleton->get_global_transform();
++		Vector3 ray_from = p_camera->get_global_transform().origin;
++		Vector2 gpoint = mb->get_position();
++		real_t grab_threshold = 4 * EDSCALE;
++
++		switch (mb->get_button_index()) {
++			case BUTTON_LEFT: {
++				if (mb->is_pressed()) {
++
++					_edit.mouse_pos = mb->get_position();
++					_edit.snap = se->is_snap_enabled();
++					_edit.mode = SpatialEditorViewport::TRANSFORM_NONE;
++
++					// check gizmo
++					if (_gizmo_select(p_index, _edit.mouse_pos)) {
++						return true;
++					}
++
++					// select bone
++					int closest_idx = -1;
++					real_t closest_dist = 1e10;
++					const int bone_len = skeleton->get_bone_count();
++					for (int i = 0; i < bone_len; i++) {
++						
++						Vector3 joint_pos_3d = gt.xform(skeleton->get_bone_global_pose(i).origin);
++						Vector2 joint_pos_2d = p_camera->unproject_position(joint_pos_3d);
++						real_t dist_3d = ray_from.distance_to(joint_pos_3d);
++						real_t dist_2d = gpoint.distance_to(joint_pos_2d);
++						if (dist_2d < grab_threshold && dist_3d < closest_dist) {
++							closest_dist = dist_3d;
++							closest_idx = i;
++						}
++					}
++					if (closest_idx >= 0) {
++						TreeItem *ti = _find(joint_tree->get_root(), "bones/" + itos(closest_idx));
++						if (ti) {
++							// make visible when it's collapsed
++							TreeItem *node = ti->get_parent();
++							while (node && node != joint_tree->get_root()) {
++								node->set_collapsed(false);
++								node = node->get_parent();
++							}
++							ti->select(0);
++							joint_tree->scroll_to_item(ti);
++						}
++					} else {
++						skeleton->set_selected_bone(-1);
++						joint_tree->deselect_all();
++					}
++
++				} else {
++					if (_edit.mode != SpatialEditorViewport::TRANSFORM_NONE) {
++						if (skeleton && (skeleton->get_selected_bone() >= 0)) {
++							UndoRedo *ur = EditorNode::get_singleton()->get_undo_redo();
++							ur->create_action(TTR("Set Bone Transform"), UndoRedo::MERGE_ENDS);
++							if (rest_mode) {
++								ur->add_do_method(skeleton, "set_bone_rest", skeleton->get_selected_bone(), skeleton->get_bone_rest(skeleton->get_selected_bone()));
++								ur->add_undo_method(skeleton, "set_bone_rest", skeleton->get_selected_bone(), original_local);
++							} else {
++								ur->add_do_method(skeleton, "set_bone_pose", skeleton->get_selected_bone(), skeleton->get_bone_pose(skeleton->get_selected_bone()));
++								ur->add_undo_method(skeleton, "set_bone_pose", skeleton->get_selected_bone(), original_local);
++							}
++							ur->commit_action();
++							_edit.mode = SpatialEditorViewport::TRANSFORM_NONE;
++						}
++					}
++				}
++				return true;
++			} break;
++			default:
++				break;
++		}
++		
++	}
++
++	Ref<InputEventMouseMotion> mm = p_event;
++	if (mm.is_valid()) {
++		_edit.mouse_pos = mm->get_position();
++		if (!(mm->get_button_mask() & 1)) {
++			_gizmo_select(p_index, _edit.mouse_pos, true);
++		}
++		if (mm->get_button_mask() & BUTTON_MASK_LEFT) {
++			if (_edit.mode == SpatialEditorViewport::TRANSFORM_NONE)
++				return true;
++
++			Vector3 ray_pos = sev->get_ray_pos(mm->get_position());
++			Vector3 ray = sev->get_ray(mm->get_position());
++			float snap = EDITOR_GET("interface/inspector/default_float_step");
++
++			switch (_edit.mode) {
++
++				case SpatialEditorViewport::TRANSFORM_SCALE: {
++
++					Vector3 motion_mask;
++					Plane plane;
++					bool plane_mv = false;
++
++					switch (_edit.plane) {
++						case SpatialEditorViewport::TRANSFORM_VIEW:
++							motion_mask = Vector3(0, 0, 0);
++							plane = Plane(_edit.center, sev->get_camera_normal());
++							break;
++						case SpatialEditorViewport::TRANSFORM_X_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(0);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_Y_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(1);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_Z_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(2);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_YZ:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(2) + se->get_gizmo_transform().basis.get_axis(1);
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(0));
++							plane_mv = true;
++							break;
++						case SpatialEditorViewport::TRANSFORM_XZ:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(2) + se->get_gizmo_transform().basis.get_axis(0);
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(1));
++							plane_mv = true;
++							break;
++						case SpatialEditorViewport::TRANSFORM_XY:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(0) + se->get_gizmo_transform().basis.get_axis(1);
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(2));
++							plane_mv = true;
++							break;
++					}
++
++					Vector3 intersection;
++					if (!plane.intersects_ray(ray_pos, ray, &intersection))
++						break;
++
++					Vector3 click;
++					if (!plane.intersects_ray(_edit.click_ray_pos, _edit.click_ray, &click))
++						break;
++
++					Vector3 motion = intersection - click;
++					if (_edit.plane != SpatialEditorViewport::TRANSFORM_VIEW) {
++						motion = motion_mask.dot(motion) * motion_mask;
++					} else {
++						float center_click_dist = click.distance_to(_edit.center);
++						float center_inters_dist = intersection.distance_to(_edit.center);
++						if (center_click_dist == 0)
++							break;
++
++						float scale = center_inters_dist - center_click_dist;
++						motion = Vector3(scale, scale, scale);
++					}
++
++					bool local_coords = (se->are_local_coords_enabled() && _edit.plane != SpatialEditorViewport::TRANSFORM_VIEW);
++
++					if (_edit.snap || se->is_snap_enabled()) {
++						snap = se->get_scale_snap() / 100;
++					}
++
++					Transform t;
++
++					if (local_coords) {
++						Basis g = original_global.basis;
++						motion = g.inverse().xform(motion);
++						if (_edit.snap || se->is_snap_enabled()) {
++							motion.snap(Vector3(snap, snap, snap));
++						}
++						Vector3 local_scale = original_local.basis.get_scale() * (motion + Vector3(1, 1, 1));
++						// Prevent scaling to 0 it would break the gizmo
++						Basis check = original_local.basis;
++						check.scale(local_scale);
++						if (check.determinant() != 0) {
++							t = original_local;
++							t.basis = t.basis.scaled_local(motion + Vector3(1, 1, 1));
++						}
++					} else {
++						if (_edit.snap || se->is_snap_enabled()) {
++							motion.snap(Vector3(snap, snap, snap));
++						}
++						t = original_local;
++						Transform r;
++						r.basis.scale(motion + Vector3(1, 1, 1));
++						Basis base = original_to_local.get_basis().orthonormalized().inverse();
++						t.basis = base * (r.get_basis() * (base.inverse() * original_local.get_basis()));
++					}
++
++					// Apply scale
++					if (rest_mode) {
++						skeleton->set_bone_rest(skeleton->get_selected_bone(), t);
++					} else {
++						skeleton->set_bone_pose(skeleton->get_selected_bone(), t);
++					}
++
++					sev->update_surface();
++
++				} break;
++
++				case SpatialEditorViewport::TRANSFORM_TRANSLATE: {
++
++					Vector3 motion_mask;
++					Plane plane;
++					bool plane_mv = false;
++
++					switch (_edit.plane) {
++						case SpatialEditorViewport::TRANSFORM_VIEW:
++							plane = Plane(_edit.center, sev->get_camera_normal());
++							break;
++						case SpatialEditorViewport::TRANSFORM_X_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(0);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_Y_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(1);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_Z_AXIS:
++							motion_mask = se->get_gizmo_transform().basis.get_axis(2);
++							plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(sev->get_camera_normal())).normalized());
++							break;
++						case SpatialEditorViewport::TRANSFORM_YZ:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(0));
++							plane_mv = true;
++							break;
++						case SpatialEditorViewport::TRANSFORM_XZ:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(1));
++							plane_mv = true;
++							break;
++						case SpatialEditorViewport::TRANSFORM_XY:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(2));
++							plane_mv = true;
++							break;
++					}
++
++					Vector3 intersection;
++					if (!plane.intersects_ray(ray_pos, ray, &intersection))
++						break;
++
++					Vector3 click;
++					if (!plane.intersects_ray(_edit.click_ray_pos, _edit.click_ray, &click))
++						break;
++
++					Vector3 motion = intersection - click;
++					if (_edit.plane != SpatialEditorViewport::TRANSFORM_VIEW) {
++						if (!plane_mv) {
++							motion = motion_mask.dot(motion) * motion_mask;
++						}
++					}
++
++					if (_edit.snap || se->is_snap_enabled()) {
++						snap = se->get_translate_snap();
++					}
++
++					motion = original_to_local.basis.inverse().xform(motion);
++					if (_edit.snap || se->is_snap_enabled()) {
++						motion.snap(Vector3(snap, snap, snap));
++					}
++
++					Transform t;
++					// Apply translation
++					t = original_local;
++					t.origin += motion;
++
++					if (rest_mode) {
++						skeleton->set_bone_rest(skeleton->get_selected_bone(), t);
++					} else {
++						skeleton->set_bone_pose(skeleton->get_selected_bone(), t);
++					}
++
++					sev->update_surface();
++
++				} break;
++
++				case SpatialEditorViewport::TRANSFORM_ROTATE: {
++
++					Plane plane;
++					Vector3 axis;
++
++					switch (_edit.plane) {
++						case SpatialEditorViewport::TRANSFORM_VIEW:
++							plane = Plane(_edit.center, sev->get_camera_normal());
++							break;
++						case SpatialEditorViewport::TRANSFORM_X_AXIS:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(0));
++							axis = Vector3(1, 0, 0);
++							break;
++						case SpatialEditorViewport::TRANSFORM_Y_AXIS:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(1));
++							axis = Vector3(0, 1, 0);
++							break;
++						case SpatialEditorViewport::TRANSFORM_Z_AXIS:
++							plane = Plane(_edit.center, se->get_gizmo_transform().basis.get_axis(2));
++							axis = Vector3(0, 0, 1);
++							break;
++						case SpatialEditorViewport::TRANSFORM_YZ:
++						case SpatialEditorViewport::TRANSFORM_XZ:
++						case SpatialEditorViewport::TRANSFORM_XY:
++							break;
++					}
++
++					Vector3 intersection;
++					if (!plane.intersects_ray(ray_pos, ray, &intersection))
++						break;
++
++					Vector3 click;
++					if (!plane.intersects_ray(_edit.click_ray_pos, _edit.click_ray, &click))
++						break;
++
++					Vector3 y_axis = (click - _edit.center).normalized();
++					Vector3 x_axis = plane.normal.cross(y_axis).normalized();
++
++					float angle = Math::atan2(x_axis.dot(intersection - _edit.center), y_axis.dot(intersection - _edit.center));
++
++					if (_edit.snap || se->is_snap_enabled()) {
++						snap = se->get_rotate_snap();
++					}
++					angle = Math::rad2deg(angle) + snap * 0.5; //else it won't reach +180
++					angle -= Math::fmod(angle, snap);
++					// set_message(vformat(TTR("Rotating %s degrees."), String::num(angle, snap_step_decimals)));
++					angle = Math::deg2rad(angle);
++
++					bool local_coords = (se->are_local_coords_enabled() && _edit.plane != SpatialEditorViewport::TRANSFORM_VIEW); // Disable local transformation for TRANSFORM_VIEW
++
++					Transform t;
++
++					if (local_coords) {
++						Basis rot = Basis(axis, angle);
++						t.basis = original_local.get_basis().orthonormalized() * rot;
++						t.basis = t.basis.scaled_local(original_local.basis.get_scale());
++						t.origin = original_local.origin;
++					} else {
++						Transform r;
++						Basis base = original_to_local.get_basis().orthonormalized().inverse();
++						r.basis.rotate(plane.normal, angle);
++						t.basis = base * r.get_basis() * base.inverse() * original_local.get_basis();
++						// t.basis = t.basis.scaled(original_local.basis.get_scale());
++						t.origin = original_local.origin;
++					}
++
++					// Apply rotation
++					if (rest_mode) {
++						skeleton->set_bone_rest(skeleton->get_selected_bone(), t);
++					} else {
++						skeleton->set_bone_pose(skeleton->get_selected_bone(), t);
++					}
++
++					sev->update_surface();
++
++				} break;
++				default: {
++				}
++			}
++
++			return true;
++		}
++	}
++
++	return false;
++}
++
++void EditorInspectorPluginSkeleton::_bind_methods() {
++	ClassDB::bind_method(D_METHOD("set_rest_mode_toggled"), &EditorInspectorPluginSkeleton::set_rest_mode_toggled);
++}
++
++bool EditorInspectorPluginSkeleton::can_handle(Object *p_object) {
++	return Object::cast_to<Skeleton>(p_object) != nullptr;
+ }
+ 
+-void SkeletonEditorPlugin::make_visible(bool p_visible) {
+-	if (p_visible) {
+-		skeleton_editor->options->show();
+-	} else {
++void EditorInspectorPluginSkeleton::parse_begin(Object *p_object) {
++	Skeleton *skeleton = Object::cast_to<Skeleton>(p_object);
++	ERR_FAIL_COND(!skeleton);
+ 
+-		skeleton_editor->options->hide();
+-		skeleton_editor->edit(NULL);
++	skel_editor = memnew(SkeletonEditor(this, editor, skeleton));
++	add_custom_control(skel_editor);
++}
++
++void EditorInspectorPluginSkeleton::set_rest_mode_toggled(const bool p_pressed) {
++	if (SpatialEditor::get_singleton()->get_selected()->get_class() == "Skeleton" && skel_editor) {
++		skel_editor->set_rest_mode_toggled(p_pressed);
+ 	}
+ }
+ 
+ SkeletonEditorPlugin::SkeletonEditorPlugin(EditorNode *p_node) {
+ 	editor = p_node;
+-	skeleton_editor = memnew(SkeletonEditor);
+-	editor->get_viewport()->add_child(skeleton_editor);
++
++	skeleton_plugin = memnew(EditorInspectorPluginSkeleton);
++	skeleton_plugin->editor = editor;
++
++	EditorInspector::add_inspector_plugin(skeleton_plugin);
++}
++
++bool SkeletonEditorPlugin::handles(Object *p_object) const {
++	return p_object->is_class("Skeleton");
+ }
+ 
+-SkeletonEditorPlugin::~SkeletonEditorPlugin() {}
++void SkeletonEditor::_compute_edit(int p_index, const Point2 &p_point) {
++
++	SpatialEditor *se = SpatialEditor::get_singleton();
++	SpatialEditorViewport *sev = se->get_editor_viewport(p_index);
++
++	_edit.click_ray = sev->get_ray(Vector2(p_point.x, p_point.y));
++	_edit.click_ray_pos = sev->get_ray_pos(Vector2(p_point.x, p_point.y));
++	_edit.plane = SpatialEditorViewport::TRANSFORM_VIEW;
++	_update_spatial_transform_gizmo();
++	_edit.center = se->get_gizmo_transform().origin;
++
++	if (skeleton->get_selected_bone() != -1) {
++		original_global = skeleton->get_global_transform() * skeleton->get_bone_global_pose(skeleton->get_selected_bone());
++		if (rest_mode) {
++			original_local = skeleton->get_bone_rest(skeleton->get_selected_bone());
++		} else {
++			original_local = skeleton->get_bone_pose(skeleton->get_selected_bone());
++		}
++		original_to_local = skeleton->get_global_transform();
++		int parent_idx = skeleton->get_bone_parent(skeleton->get_selected_bone());
++		if (parent_idx >= 0) {
++			original_to_local = original_to_local * skeleton->get_bone_global_pose(parent_idx);
++		}
++		if (!rest_mode) {
++			original_to_local = original_to_local * skeleton->get_bone_rest(skeleton->get_selected_bone()) * skeleton->get_bone_custom_pose(skeleton->get_selected_bone());
++		}
++	}
++}
++
++bool SkeletonEditor::_gizmo_select(int p_index, const Vector2 &p_screenpos, bool p_highlight_only) {
++
++	SpatialEditor *se = SpatialEditor::get_singleton();
++	SpatialEditorViewport *sev = se->get_editor_viewport(p_index);
++
++	if (!se->is_gizmo_visible())
++		return false;
++	if (skeleton->get_selected_bone() == -1) {
++		if (p_highlight_only)
++			se->select_gizmo_highlight_axis(-1);
++		return false;
++	}
++
++	Vector3 ray_pos = sev->get_ray_pos(Vector2(p_screenpos.x, p_screenpos.y));
++	Vector3 ray = sev->get_ray(Vector2(p_screenpos.x, p_screenpos.y));
++
++	Transform gt = se->get_gizmo_transform();
++	float gs = sev->get_gizmo_scale();
++
++	if (se->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SELECT || se->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_MOVE) {
++
++		int col_axis = -1;
++		float col_d = 1e20;
++
++		for (int i = 0; i < 3; i++) {
++
++			Vector3 grabber_pos = gt.origin + gt.basis.get_axis(i) * gs * (GIZMO_ARROW_OFFSET + (GIZMO_ARROW_SIZE * 0.5));
++			float grabber_radius = gs * GIZMO_ARROW_SIZE;
++
++			Vector3 r;
++
++			if (Geometry::segment_intersects_sphere(ray_pos, ray_pos + ray * MAX_Z, grabber_pos, grabber_radius, &r)) {
++				float d = r.distance_to(ray_pos);
++				if (d < col_d) {
++					col_d = d;
++					col_axis = i;
++				}
++			}
++		}
++
++		bool is_plane_translate = false;
++		// plane select
++		if (col_axis == -1) {
++			col_d = 1e20;
++
++			for (int i = 0; i < 3; i++) {
++
++				Vector3 ivec2 = gt.basis.get_axis((i + 1) % 3).normalized();
++				Vector3 ivec3 = gt.basis.get_axis((i + 2) % 3).normalized();
++
++				Vector3 grabber_pos = gt.origin + (ivec2 + ivec3) * gs * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST);
++
++				Vector3 r;
++				Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
++
++				if (plane.intersects_ray(ray_pos, ray, &r)) {
++
++					float dist = r.distance_to(grabber_pos);
++					if (dist < (gs * GIZMO_PLANE_SIZE)) {
++
++						float d = ray_pos.distance_to(r);
++						if (d < col_d) {
++							col_d = d;
++							col_axis = i;
++
++							is_plane_translate = true;
++						}
++					}
++				}
++			}
++		}
++
++		if (col_axis != -1) {
++
++			if (p_highlight_only) {
++
++				se->select_gizmo_highlight_axis(col_axis + (is_plane_translate ? 6 : 0));
++
++			} else {
++				//handle plane translate
++				_edit.mode = SpatialEditorViewport::TRANSFORM_TRANSLATE;
++				_compute_edit(p_index, Point2(p_screenpos.x, p_screenpos.y));
++				_edit.plane = SpatialEditorViewport::TransformPlane(SpatialEditorViewport::TRANSFORM_X_AXIS + col_axis + (is_plane_translate ? 3 : 0));
++			}
++			return true;
++		}
++	}
++
++	if (se->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SELECT || se->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_ROTATE) {
++
++		int col_axis = -1;
++		float col_d = 1e20;
++
++		for (int i = 0; i < 3; i++) {
++
++			Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
++			Vector3 r;
++			if (!plane.intersects_ray(ray_pos, ray, &r))
++				continue;
++
++			float dist = r.distance_to(gt.origin);
++
++			if (dist > gs * (GIZMO_CIRCLE_SIZE - GIZMO_RING_HALF_WIDTH) && dist < gs * (GIZMO_CIRCLE_SIZE + GIZMO_RING_HALF_WIDTH)) {
++
++				float d = ray_pos.distance_to(r);
++				if (d < col_d) {
++					col_d = d;
++					col_axis = i;
++				}
++			}
++		}
++
++		if (col_axis != -1) {
++
++			if (p_highlight_only) {
++
++				se->select_gizmo_highlight_axis(col_axis + 3);
++			} else {
++				//handle rotate
++				_edit.mode = SpatialEditorViewport::TRANSFORM_ROTATE;
++				_compute_edit(p_index, Point2(p_screenpos.x, p_screenpos.y));
++				_edit.plane = SpatialEditorViewport::TransformPlane(SpatialEditorViewport::TRANSFORM_X_AXIS + col_axis);
++			}
++			return true;
++		}
++	}
++
++	if (se->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SCALE) {
++
++		int col_axis = -1;
++		float col_d = 1e20;
++
++		for (int i = 0; i < 3; i++) {
++
++			Vector3 grabber_pos = gt.origin + gt.basis.get_axis(i) * gs * GIZMO_SCALE_OFFSET;
++			float grabber_radius = gs * GIZMO_ARROW_SIZE;
++
++			Vector3 r;
++
++			if (Geometry::segment_intersects_sphere(ray_pos, ray_pos + ray * MAX_Z, grabber_pos, grabber_radius, &r)) {
++				float d = r.distance_to(ray_pos);
++				if (d < col_d) {
++					col_d = d;
++					col_axis = i;
++				}
++			}
++		}
++
++		bool is_plane_scale = false;
++		// plane select
++		if (col_axis == -1) {
++			col_d = 1e20;
++
++			for (int i = 0; i < 3; i++) {
++
++				Vector3 ivec2 = gt.basis.get_axis((i + 1) % 3).normalized();
++				Vector3 ivec3 = gt.basis.get_axis((i + 2) % 3).normalized();
++
++				Vector3 grabber_pos = gt.origin + (ivec2 + ivec3) * gs * (GIZMO_PLANE_SIZE + GIZMO_PLANE_DST);
++
++				Vector3 r;
++				Plane plane(gt.origin, gt.basis.get_axis(i).normalized());
++
++				if (plane.intersects_ray(ray_pos, ray, &r)) {
++
++					float dist = r.distance_to(grabber_pos);
++					if (dist < (gs * GIZMO_PLANE_SIZE)) {
++
++						float d = ray_pos.distance_to(r);
++						if (d < col_d) {
++							col_d = d;
++							col_axis = i;
++
++							is_plane_scale = true;
++						}
++					}
++				}
++			}
++		}
++
++		if (col_axis != -1) {
++
++			if (p_highlight_only) {
++
++				se->select_gizmo_highlight_axis(col_axis + (is_plane_scale ? 12 : 9));
++
++			} else {
++				//handle scale
++				_edit.mode = SpatialEditorViewport::TRANSFORM_SCALE;
++				_compute_edit(p_index, Point2(p_screenpos.x, p_screenpos.y));
++				_edit.plane = SpatialEditorViewport::TransformPlane(SpatialEditorViewport::TRANSFORM_X_AXIS + col_axis + (is_plane_scale ? 3 : 0));
++			}
++			return true;
++		}
++	}
++
++	if (p_highlight_only)
++		se->select_gizmo_highlight_axis(-1);
++
++	return false;
++}
++
++TreeItem *SkeletonEditor::_find(TreeItem *p_node, const NodePath &p_path) {
++	if (!p_node) {
++		return NULL;
++	}
++
++	NodePath np = p_node->get_metadata(0);
++	if (np == p_path) {
++		return p_node;
++	}
++
++	TreeItem *children = p_node->get_children();
++	while (children) {
++		TreeItem *n = _find(children, p_path);
++		if (n) {
++			return n;
++		}
++		children = children->get_next();
++	}
++
++	return NULL;
++}
+\ No newline at end of file
+diff --git a/editor/plugins/skeleton_editor_plugin.h b/editor/plugins/skeleton_editor_plugin.h
+index de3f752af6..b701d1af1e 100644
+--- a/editor/plugins/skeleton_editor_plugin.h
++++ b/editor/plugins/skeleton_editor_plugin.h
+@@ -31,20 +31,133 @@
+ #ifndef SKELETON_EDITOR_PLUGIN_H
+ #define SKELETON_EDITOR_PLUGIN_H
+ 
++#include "core/os/input_event.h"
+ #include "editor/editor_node.h"
+ #include "editor/editor_plugin.h"
++#include "spatial_editor_plugin.h"
++#include "scene/3d/camera.h"
++#include "scene/3d/mesh_instance.h"
+ #include "scene/3d/skeleton.h"
+ 
+-class PhysicalBone;
++class EditorInspectorPluginSkeleton;
+ class Joint;
++class PhysicalBone;
++class SkeletonEditorPlugin;
++class Button;
++class CheckBox;
++
++class BoneTransformEditor : public VBoxContainer {
++	GDCLASS(BoneTransformEditor, VBoxContainer);
++
++	static const int32_t TRANSLATION_COMPONENTS = 3;
++	static const int32_t ROTATION_DEGREES_COMPONENTS = 3;
++	static const int32_t SCALE_COMPONENTS = 3;
++	static const int32_t BASIS_COMPONENTS = 9;
++	static const int32_t BASIS_SPLIT_COMPONENTS = 3;
++	static const int32_t TRANSFORM_COMPONENTS = 12;
++	static const int32_t TRANSFORM_SPLIT_COMPONENTS = 3;
++	static const int32_t TRANSFORM_CONTROL_COMPONENTS = 3;
++
++	EditorInspectorSection *section;
++
++	GridContainer *translation_grid;
++	GridContainer *rotation_grid;
++	GridContainer *scale_grid;
++	GridContainer *transform_grid;
++
++	EditorSpinSlider *translation_slider[TRANSLATION_COMPONENTS];
++	EditorSpinSlider *rotation_slider[ROTATION_DEGREES_COMPONENTS];
++	EditorSpinSlider *scale_slider[SCALE_COMPONENTS];
++	EditorSpinSlider *transform_slider[TRANSFORM_COMPONENTS];
++
++	Rect2 background_rects[5];
++
++	Skeleton *skeleton;
++	String property;
++
++	UndoRedo *undo_redo;
++
++	Button *key_button;
++	CheckBox *enabled_checkbox;
++
++	bool keyable;
++	bool toggle_enabled;
++	bool updating;
++
++	String label;
++
++	void create_editors();
++	void setup_spinner(EditorSpinSlider *spinner, const bool is_transform_spinner);
++
++	void _value_changed(const double p_value, const bool p_from_transform);
++
++	Transform compute_transform(const bool p_from_transform) const;
++
++	void update_enabled_checkbox();
++
++protected:
++	void _notification(int p_what);
++	static void _bind_methods();
++
++public:
++	BoneTransformEditor(Skeleton *p_skeleton);
++
++	// Which transform target to modify
++	void set_target(const String &p_prop);
++	void set_label(const String &p_label) { label = p_label; }
++
++	void _update_properties();
++	void _update_custom_pose_properties();
++	void _update_transform_properties(Transform p_transform);
++
++	// Can/cannot modify the spinner values for the Transform
++	void set_read_only(const bool p_read_only);
++
++	// Transform can be keyed, whether or not to show the button
++	void set_keyable(const bool p_keyable);
++
++	// Bone can be toggled enabled or disabled, whether or not to show the checkbox
++	void set_toggle_enabled(const bool p_enabled);
++
++	// Key Transform Button pressed
++	void _key_button_pressed();
+ 
+-class SkeletonEditor : public Node {
+-	GDCLASS(SkeletonEditor, Node);
++	// Bone Enabled Checkbox toggled
++	void _checkbox_toggled(const bool p_toggled);
++};
++
++class SkeletonEditor : public VBoxContainer {
++
++	GDCLASS(SkeletonEditor, VBoxContainer);
++
++	friend class SkeletonEditorPlugin;
+ 
+ 	enum Menu {
++		MENU_OPTION_INIT_POSE,
++		MENU_OPTION_INSERT_KEYS,
++		MENU_OPTION_INSERT_KEYS_EXISTED,
++		MENU_OPTION_POSE_TO_REST,
+ 		MENU_OPTION_CREATE_PHYSICAL_SKELETON
+ 	};
+ 
++	enum ToolMode {
++		TOOL_MODE_BONE_SELECT,
++		TOOL_MODE_BONE_MOVE,
++		TOOL_MODE_BONE_ROTATE,
++		TOOL_MODE_BONE_SCALE,
++		TOOL_MODE_BONE_NONE,
++		TOOL_MODE_BONE_MAX
++	};
++
++	enum MenuToolOption {
++		MENU_TOOL_BONE_SELECT,
++		MENU_TOOL_BONE_MOVE,
++		MENU_TOOL_BONE_ROTATE,
++		MENU_TOOL_BONE_SCALE,
++		MENU_TOOL_BONE_NONE,
++		MENU_TOOL_BONE_MAX
++	};
++
+ 	struct BoneInfo {
+ 		PhysicalBone *physical_bone;
+ 		Transform relative_rest; // Relative to skeleton node
+@@ -52,45 +165,134 @@ class SkeletonEditor : public Node {
+ 				physical_bone(NULL) {}
+ 	};
+ 
++	EditorNode *editor;
++	EditorInspectorPluginSkeleton *editor_plugin;
++
+ 	Skeleton *skeleton;
+ 
++	Tree *joint_tree;
++	BoneTransformEditor *rest_editor;
++	BoneTransformEditor *pose_editor;
++	BoneTransformEditor *custom_pose_editor;
++
++	VSeparator *separators[2];
+ 	MenuButton *options;
++	ToolButton *tool_button[TOOL_MODE_BONE_MAX];
++	ToolButton *rest_mode_button;
++
++	ToolMode tool_mode = TOOL_MODE_BONE_NONE;
++	bool rest_mode = false;
++
++	EditorFileDialog *file_dialog;
++
++	UndoRedo *undo_redo;
++
++	bool keyable;
+ 
+ 	void _on_click_option(int p_option);
++	void _file_selected(const String &p_file);
++	void _menu_tool_item_pressed(int p_option);
++	TreeItem *_find(TreeItem *p_node, const NodePath &p_path);
++	void rest_mode_toggled(const bool pressed);
+ 
+-	friend class SkeletonEditorPlugin;
++	EditorFileDialog *file_export_lib;
++
++	void update_joint_tree();
++	void update_editors();
++
++	void create_editors();
++
++	void init_pose();
++	void insert_keys(bool p_all_bones);
++	void pose_to_rest();
++	void create_physical_skeleton();
++	PhysicalBone *create_physical_bone(int bone_id, int bone_child_id, const Vector<BoneInfo> &bones_infos);
++
++	Variant get_drag_data_fw(const Point2 &p_point, Control *p_from);
++	bool can_drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from) const;
++	void drop_data_fw(const Point2 &p_point, const Variant &p_data, Control *p_from);
++
++	Ref<ShaderMaterial> handle_material;
++	Ref<Shader> handle_shader;
++	MeshInstance *pointsm;
++	Ref<ArrayMesh> am;
++	void _hide_handles();
++	void _draw_handles();
++
++	SpatialEditorViewport::EditData _edit;
++	void _compute_edit(int p_index, const Point2 &p_point);
++	bool _gizmo_select(int p_index, const Vector2 &p_screenpos, bool p_highlight_only = false);
++
++	Transform original_local;
++	Transform original_global;
++	Transform original_to_local;
++
++	void _update_spatial_transform_gizmo();
+ 
+ protected:
+ 	void _notification(int p_what);
+ 	void _node_removed(Node *p_node);
+ 	static void _bind_methods();
+ 
+-	void create_physical_skeleton();
+-	PhysicalBone *create_physical_bone(int bone_id, int bone_child_id, const Vector<BoneInfo> &bones_infos);
+-
+ public:
+-	void edit(Skeleton *p_node);
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event);
++	void move_skeleton_bone(NodePath p_skeleton_path, int32_t p_selected_boneidx, int32_t p_target_boneidx);
+ 
+-	SkeletonEditor();
++	// Transform can be keyed, whether or not to show the button
++	void set_keyable(const bool p_keyable);
++
++	Skeleton *get_skeleton() const { return skeleton; };
++
++	void set_rest_mode_toggled(const bool pressed);
++
++	void _joint_tree_selection_changed();
++	void _joint_tree_rmb_select(const Vector2 &p_pos);
++
++	void _update_properties();
++
++	SkeletonEditor(EditorInspectorPluginSkeleton *e_plugin, EditorNode *p_editor, Skeleton *skeleton);
+ 	~SkeletonEditor();
+ };
+ 
+-class SkeletonEditorPlugin : public EditorPlugin {
++class EditorInspectorPluginSkeleton : public EditorInspectorPlugin {
++	GDCLASS(EditorInspectorPluginSkeleton, EditorInspectorPlugin);
++
++	friend class SkeletonEditorPlugin;
++
++	SkeletonEditor *skel_editor;
++	EditorNode *editor;
++	UndoRedo *undo_redo;
+ 
++	void set_rest_mode_toggled (const bool p_pressed);
++
++protected:
++	static void _bind_methods();
++public:
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) { return skel_editor->forward_spatial_gui_input(p_index, p_camera, p_event); }
++	virtual bool can_handle(Object *p_object);
++	virtual void parse_begin(Object *p_object);
++	UndoRedo *get_undo_redo() { return undo_redo; }
++};
++
++class SkeletonEditorPlugin : public EditorPlugin {
+ 	GDCLASS(SkeletonEditorPlugin, EditorPlugin);
+ 
++	EditorInspectorPluginSkeleton *skeleton_plugin;
+ 	EditorNode *editor;
+-	SkeletonEditor *skeleton_editor;
+ 
+ public:
+-	virtual String get_name() const { return "Skeleton"; }
+-	virtual bool has_main_screen() const { return false; }
+-	virtual void edit(Object *p_object);
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) {
++		if (SpatialEditor::get_singleton()->get_tool_mode() != SpatialEditor::TOOL_MODE_EXTERNAL) {
++			return false;
++		}
++		return skeleton_plugin->forward_spatial_gui_input(p_index, p_camera, p_event);
++	}
++	bool has_main_screen() const { return false; }
+ 	virtual bool handles(Object *p_object) const;
+-	virtual void make_visible(bool p_visible);
++
++	virtual String get_name() const { return "Skeleton"; }
+ 
+ 	SkeletonEditorPlugin(EditorNode *p_node);
+-	~SkeletonEditorPlugin();
+ };
+ 
+ #endif // SKELETON_EDITOR_PLUGIN_H
+diff --git a/editor/plugins/spatial_editor_plugin.cpp b/editor/plugins/spatial_editor_plugin.cpp
+index 483dff7616..4ff84c658c 100644
+--- a/editor/plugins/spatial_editor_plugin.cpp
++++ b/editor/plugins/spatial_editor_plugin.cpp
+@@ -422,18 +422,15 @@ Point2 SpatialEditorViewport::_point_to_screen(const Vector3 &p_point) {
+ 	return camera->unproject_position(p_point) * viewport_container->get_stretch_shrink();
+ }
+ 
+-Vector3 SpatialEditorViewport::_get_ray_pos(const Vector2 &p_pos) const {
+-
++Vector3 SpatialEditorViewport::get_ray_pos(const Vector2 &p_pos) const {
+ 	return camera->project_ray_origin(p_pos / viewport_container->get_stretch_shrink());
+ }
+ 
+-Vector3 SpatialEditorViewport::_get_camera_normal() const {
+-
++Vector3 SpatialEditorViewport::get_camera_normal() const {
+ 	return -_get_camera_transform().basis.get_axis(2);
+ }
+ 
+-Vector3 SpatialEditorViewport::_get_ray(const Vector2 &p_pos) const {
+-
++Vector3 SpatialEditorViewport::get_ray(const Vector2 &p_pos) const {
+ 	return camera->project_ray_normal(p_pos / viewport_container->get_stretch_shrink());
+ }
+ 
+@@ -490,8 +487,8 @@ ObjectID SpatialEditorViewport::_select_ray(const Point2 &p_pos, bool p_append,
+ 	if (r_gizmo_handle)
+ 		*r_gizmo_handle = -1;
+ 
+-	Vector3 ray = _get_ray(p_pos);
+-	Vector3 pos = _get_ray_pos(p_pos);
++	Vector3 ray = get_ray(p_pos);
++	Vector3 pos = get_ray_pos(p_pos);
+ 	Vector2 shrinked_pos = p_pos / viewport_container->get_stretch_shrink();
+ 
+ 	Vector<ObjectID> instances = VisualServer::get_singleton()->instances_cull_ray(pos, ray, get_tree()->get_root()->get_world()->get_scenario());
+@@ -554,8 +551,8 @@ ObjectID SpatialEditorViewport::_select_ray(const Point2 &p_pos, bool p_append,
+ 
+ void SpatialEditorViewport::_find_items_at_pos(const Point2 &p_pos, bool &r_includes_current, Vector<_RayResult> &results, bool p_alt_select) {
+ 
+-	Vector3 ray = _get_ray(p_pos);
+-	Vector3 pos = _get_ray_pos(p_pos);
++	Vector3 ray = get_ray(p_pos);
++	Vector3 pos = get_ray_pos(p_pos);
+ 
+ 	Vector<ObjectID> instances = VisualServer::get_singleton()->instances_cull_ray(pos, ray, get_tree()->get_root()->get_world()->get_scenario());
+ 	Set<Ref<EditorSpatialGizmo> > found_gizmos;
+@@ -668,7 +665,7 @@ void SpatialEditorViewport::_select_region() {
+ 		}
+ 	}
+ 
+-	Plane near(cam_pos, -_get_camera_normal());
++	Plane near(cam_pos, -get_camera_normal());
+ 	near.d -= get_znear();
+ 	frustum.push_back(near);
+ 
+@@ -740,8 +737,8 @@ void SpatialEditorViewport::_update_name() {
+ 
+ void SpatialEditorViewport::_compute_edit(const Point2 &p_point) {
+ 
+-	_edit.click_ray = _get_ray(Vector2(p_point.x, p_point.y));
+-	_edit.click_ray_pos = _get_ray_pos(Vector2(p_point.x, p_point.y));
++	_edit.click_ray = get_ray(Vector2(p_point.x, p_point.y));
++	_edit.click_ray_pos = get_ray_pos(Vector2(p_point.x, p_point.y));
+ 	_edit.plane = TRANSFORM_VIEW;
+ 	spatial_editor->update_transform_gizmo();
+ 	_edit.center = spatial_editor->get_gizmo_transform().origin;
+@@ -798,8 +795,8 @@ bool SpatialEditorViewport::_gizmo_select(const Vector2 &p_screenpos, bool p_hig
+ 		return false;
+ 	}
+ 
+-	Vector3 ray_pos = _get_ray_pos(Vector2(p_screenpos.x, p_screenpos.y));
+-	Vector3 ray = _get_ray(Vector2(p_screenpos.x, p_screenpos.y));
++	Vector3 ray_pos = get_ray_pos(Vector2(p_screenpos.x, p_screenpos.y));
++	Vector3 ray = get_ray(Vector2(p_screenpos.x, p_screenpos.y));
+ 
+ 	Transform gt = spatial_editor->get_gizmo_transform();
+ 	float gs = gizmo_scale;
+@@ -887,7 +884,7 @@ bool SpatialEditorViewport::_gizmo_select(const Vector2 &p_screenpos, bool p_hig
+ 			float dist = r.distance_to(gt.origin);
+ 			Vector3 r_dir = (r - gt.origin).normalized();
+ 
+-			if (_get_camera_normal().dot(r_dir) <= 0.005) {
++			if (get_camera_normal().dot(r_dir) <= 0.005) {
+ 				if (dist > gs * (GIZMO_CIRCLE_SIZE - GIZMO_RING_HALF_WIDTH) && dist < gs * (GIZMO_CIRCLE_SIZE + GIZMO_RING_HALF_WIDTH)) {
+ 					float d = ray_pos.distance_to(r);
+ 					if (d < col_d) {
+@@ -982,7 +979,7 @@ bool SpatialEditorViewport::_gizmo_select(const Vector2 &p_screenpos, bool p_hig
+ 		}
+ 	}
+ 
+-	if (p_highlight_only)
++	if (p_highlight_only && spatial_editor->get_tool_mode() != SpatialEditor::TOOL_MODE_EXTERNAL)
+ 		spatial_editor->select_gizmo_highlight_axis(-1);
+ 
+ 	return false;
+@@ -1071,7 +1068,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 		EditorNode *en = editor;
+ 		EditorPluginList *force_input_forwarding_list = en->get_editor_plugins_force_input_forwarding();
+ 		if (!force_input_forwarding_list->empty()) {
+-			bool discard = force_input_forwarding_list->forward_spatial_gui_input(camera, p_event, true);
++			bool discard = force_input_forwarding_list->forward_spatial_gui_input(index, camera, p_event, true);
+ 			if (discard)
+ 				return;
+ 		}
+@@ -1080,7 +1077,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 		EditorNode *en = editor;
+ 		EditorPluginList *over_plugin_list = en->get_editor_plugins_over();
+ 		if (!over_plugin_list->empty()) {
+-			bool discard = over_plugin_list->forward_spatial_gui_input(camera, p_event, false);
++			bool discard = over_plugin_list->forward_spatial_gui_input(index, camera, p_event, false);
+ 			if (discard)
+ 				return;
+ 		}
+@@ -1462,8 +1459,8 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 				if (_edit.mode == TRANSFORM_NONE)
+ 					return;
+ 
+-				Vector3 ray_pos = _get_ray_pos(m->get_position());
+-				Vector3 ray = _get_ray(m->get_position());
++				Vector3 ray_pos = get_ray_pos(m->get_position());
++				Vector3 ray = get_ray(m->get_position());
+ 				float snap = EDITOR_GET("interface/inspector/default_float_step");
+ 				int snap_step_decimals = Math::range_step_decimals(snap);
+ 
+@@ -1478,19 +1475,19 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 						switch (_edit.plane) {
+ 							case TRANSFORM_VIEW:
+ 								motion_mask = Vector3(0, 0, 0);
+-								plane = Plane(_edit.center, _get_camera_normal());
++								plane = Plane(_edit.center, get_camera_normal());
+ 								break;
+ 							case TRANSFORM_X_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(0);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_Y_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(1);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_Z_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(2);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_YZ:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(2) + spatial_editor->get_gizmo_transform().basis.get_axis(1);
+@@ -1625,19 +1622,19 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 
+ 						switch (_edit.plane) {
+ 							case TRANSFORM_VIEW:
+-								plane = Plane(_edit.center, _get_camera_normal());
++								plane = Plane(_edit.center, get_camera_normal());
+ 								break;
+ 							case TRANSFORM_X_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(0);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_Y_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(1);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_Z_AXIS:
+ 								motion_mask = spatial_editor->get_gizmo_transform().basis.get_axis(2);
+-								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(_get_camera_normal())).normalized());
++								plane = Plane(_edit.center, motion_mask.cross(motion_mask.cross(get_camera_normal())).normalized());
+ 								break;
+ 							case TRANSFORM_YZ:
+ 								plane = Plane(_edit.center, spatial_editor->get_gizmo_transform().basis.get_axis(0));
+@@ -1734,7 +1731,7 @@ void SpatialEditorViewport::_sinput(const Ref<InputEvent> &p_event) {
+ 
+ 						switch (_edit.plane) {
+ 							case TRANSFORM_VIEW:
+-								plane = Plane(_edit.center, _get_camera_normal());
++								plane = Plane(_edit.center, get_camera_normal());
+ 								break;
+ 							case TRANSFORM_X_AXIS:
+ 								plane = Plane(_edit.center, spatial_editor->get_gizmo_transform().basis.get_axis(0));
+@@ -3215,7 +3212,6 @@ void SpatialEditorViewport::update_transform_gizmo_view() {
+ 		return;
+ 
+ 	Transform xform = spatial_editor->get_gizmo_transform();
+-
+ 	Transform camera_xform = camera->get_transform();
+ 
+ 	if (xform.origin.distance_squared_to(camera_xform.origin) < 0.01) {
+@@ -3254,17 +3250,32 @@ void SpatialEditorViewport::update_transform_gizmo_view() {
+ 
+ 	xform.basis.scale(scale);
+ 
+-	for (int i = 0; i < 3; i++) {
+-		VisualServer::get_singleton()->instance_set_transform(move_gizmo_instance[i], xform);
+-		VisualServer::get_singleton()->instance_set_visible(move_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_MOVE));
+-		VisualServer::get_singleton()->instance_set_transform(move_plane_gizmo_instance[i], xform);
+-		VisualServer::get_singleton()->instance_set_visible(move_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_MOVE));
+-		VisualServer::get_singleton()->instance_set_transform(rotate_gizmo_instance[i], xform);
+-		VisualServer::get_singleton()->instance_set_visible(rotate_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_ROTATE));
+-		VisualServer::get_singleton()->instance_set_transform(scale_gizmo_instance[i], xform);
+-		VisualServer::get_singleton()->instance_set_visible(scale_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SCALE));
+-		VisualServer::get_singleton()->instance_set_transform(scale_plane_gizmo_instance[i], xform);
+-		VisualServer::get_singleton()->instance_set_visible(scale_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SCALE));
++	if (spatial_editor->is_tool_external()) {
++		for (int i = 0; i < 3; i++) {
++			VisualServer::get_singleton()->instance_set_transform(move_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(move_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SELECT || spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_MOVE));
++			VisualServer::get_singleton()->instance_set_transform(move_plane_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(move_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SELECT || spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_MOVE));
++			VisualServer::get_singleton()->instance_set_transform(rotate_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(rotate_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SELECT || spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_ROTATE));
++			VisualServer::get_singleton()->instance_set_transform(scale_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(scale_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SCALE));
++			VisualServer::get_singleton()->instance_set_transform(scale_plane_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(scale_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_external_tool_mode() == SpatialEditor::EX_TOOL_MODE_SCALE));
++		}
++	} else {
++		for (int i = 0; i < 3; i++) {
++			VisualServer::get_singleton()->instance_set_transform(move_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(move_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_MOVE));
++			VisualServer::get_singleton()->instance_set_transform(move_plane_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(move_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_MOVE));
++			VisualServer::get_singleton()->instance_set_transform(rotate_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(rotate_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SELECT || spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_ROTATE));
++			VisualServer::get_singleton()->instance_set_transform(scale_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(scale_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SCALE));
++			VisualServer::get_singleton()->instance_set_transform(scale_plane_gizmo_instance[i], xform);
++			VisualServer::get_singleton()->instance_set_visible(scale_plane_gizmo_instance[i], spatial_editor->is_gizmo_visible() && (spatial_editor->get_tool_mode() == SpatialEditor::TOOL_MODE_SCALE));
++		}
+ 	}
+ 	// Rotation white outline
+ 	VisualServer::get_singleton()->instance_set_transform(rotate_gizmo_instance[3], xform);
+@@ -3498,8 +3509,8 @@ void SpatialEditorViewport::assign_pending_data_pointers(Spatial *p_preview_node
+ Vector3 SpatialEditorViewport::_get_instance_position(const Point2 &p_pos) const {
+ 	const float MAX_DISTANCE = 10;
+ 
+-	Vector3 world_ray = _get_ray(p_pos);
+-	Vector3 world_pos = _get_ray_pos(p_pos);
++	Vector3 world_ray = get_ray(p_pos);
++	Vector3 world_pos = get_ray_pos(p_pos);
+ 
+ 	Vector<ObjectID> instances = VisualServer::get_singleton()->instances_cull_ray(world_pos, world_ray, get_tree()->get_root()->get_world()->get_scenario());
+ 	Set<Ref<EditorSpatialGizmo> > found_gizmos;
+@@ -4410,42 +4421,60 @@ void SpatialEditor::select_gizmo_highlight_axis(int p_axis) {
+ 
+ void SpatialEditor::update_transform_gizmo() {
+ 
+-	List<Node *> &selection = editor_selection->get_selected_node_list();
+ 	AABB center;
+ 	bool first = true;
+ 
+ 	Basis gizmo_basis;
+ 	bool local_gizmo_coords = are_local_coords_enabled();
+ 
+-	for (List<Node *>::Element *E = selection.front(); E; E = E->next()) {
++	if (is_tool_external()) {
++		Vector<Transform> transforms = get_externals();
++		for (int i=0; i < transforms.size(); i++) {
++			Transform xf = transforms[i];
++			if (first) {
++				center.position = xf.origin;
++				first = false;
++				if (local_gizmo_coords) {
++					gizmo_basis = xf.basis;
++					gizmo_basis.orthonormalize();
++				}
++			} else {
++				center.expand_to(xf.origin);
++				gizmo_basis = Basis();
++			}
++		}
++	} else {
++		List<Node *> &selection = editor_selection->get_selected_node_list();
++		for (List<Node *>::Element *E = selection.front(); E; E = E->next()) {
+ 
+-		Spatial *sp = Object::cast_to<Spatial>(E->get());
+-		if (!sp)
+-			continue;
++			Spatial *sp = Object::cast_to<Spatial>(E->get());
++			if (!sp)
++				continue;
+ 
+-		SpatialEditorSelectedItem *se = editor_selection->get_node_editor_data<SpatialEditorSelectedItem>(sp);
+-		if (!se)
+-			continue;
++			SpatialEditorSelectedItem *se = editor_selection->get_node_editor_data<SpatialEditorSelectedItem>(sp);
++			if (!se)
++				continue;
+ 
+-		Transform xf = se->sp->get_global_gizmo_transform();
++			Transform xf = se->sp->get_global_gizmo_transform();
+ 
+-		if (first) {
+-			center.position = xf.origin;
+-			first = false;
+-			if (local_gizmo_coords) {
+-				gizmo_basis = xf.basis;
+-				gizmo_basis.orthonormalize();
++			if (first) {
++				center.position = xf.origin;
++				first = false;
++				if (local_gizmo_coords) {
++					gizmo_basis = xf.basis;
++					gizmo_basis.orthonormalize();
++				}
++			} else {
++				center.expand_to(xf.origin);
++				gizmo_basis = Basis();
+ 			}
+-		} else {
+-			center.expand_to(xf.origin);
+-			gizmo_basis = Basis();
+ 		}
+ 	}
+ 
+ 	Vector3 pcenter = center.position + center.size * 0.5;
+-	gizmo.visible = !first;
+ 	gizmo.transform.origin = pcenter;
+ 	gizmo.transform.basis = gizmo_basis;
++	gizmo.visible = !first;
+ 
+ 	for (uint32_t i = 0; i < VIEWPORTS_COUNT; i++) {
+ 		viewports[i]->update_transform_gizmo_view();
+@@ -4880,12 +4909,15 @@ void SpatialEditor::_menu_item_pressed(int p_option) {
+ 		case MENU_TOOL_MOVE:
+ 		case MENU_TOOL_ROTATE:
+ 		case MENU_TOOL_SCALE:
+-		case MENU_TOOL_LIST_SELECT: {
+-
+-			for (int i = 0; i < TOOL_MAX; i++)
++		case MENU_TOOL_LIST_SELECT:
++		case MENU_TOOL_EXTERNAL: {
++			for (int i = 0; i < TOOL_MAX; i++) {
+ 				tool_button[i]->set_pressed(i == p_option);
++			}
+ 			tool_mode = (ToolMode)p_option;
++			clear_externals();
+ 			update_transform_gizmo();
++			emit_signal("change_tool_mode");
+ 
+ 		} break;
+ 		case MENU_TRANSFORM_CONFIGURE_SNAP: {
+@@ -6233,6 +6265,7 @@ void SpatialEditor::_bind_methods() {
+ 	ADD_SIGNAL(MethodInfo("transform_key_request"));
+ 	ADD_SIGNAL(MethodInfo("item_lock_status_changed"));
+ 	ADD_SIGNAL(MethodInfo("item_group_status_changed"));
++	ADD_SIGNAL(MethodInfo("change_tool_mode"));
+ }
+ 
+ void SpatialEditor::clear() {
+@@ -6326,6 +6359,10 @@ SpatialEditor::SpatialEditor(EditorNode *p_editor) {
+ 	tool_button[TOOL_MODE_SCALE]->connect("pressed", this, "_menu_item_pressed", button_binds);
+ 	tool_button[TOOL_MODE_SCALE]->set_shortcut(ED_SHORTCUT("spatial_editor/tool_scale", TTR("Scale Mode"), KEY_R));
+ 
++	tool_button[TOOL_MODE_EXTERNAL] = memnew(ToolButton);
++	button_binds.write[0] = MENU_TOOL_EXTERNAL;
++	tool_button[TOOL_MODE_EXTERNAL]->connect("pressed", this, "_menu_item_pressed", button_binds);
++
+ 	hbc_menu->add_child(memnew(VSeparator));
+ 
+ 	tool_button[TOOL_MODE_LIST_SELECT] = memnew(ToolButton);
+@@ -6625,6 +6662,10 @@ SpatialEditor::~SpatialEditor() {
+ 	memdelete(preview_node);
+ }
+ 
++void SpatialEditor::set_tool_mode(ToolMode p_tool_mode) {
++	_menu_item_pressed(p_tool_mode);
++}
++
+ void SpatialEditorPlugin::make_visible(bool p_visible) {
+ 
+ 	if (p_visible) {
+diff --git a/editor/plugins/spatial_editor_plugin.h b/editor/plugins/spatial_editor_plugin.h
+index 4644144a58..351063ed47 100644
+--- a/editor/plugins/spatial_editor_plugin.h
++++ b/editor/plugins/spatial_editor_plugin.h
+@@ -233,6 +233,40 @@ public:
+ 		FREELOOK_FULLY_AXIS_LOCKED,
+ 	};
+ 
++	enum TransformMode {
++		TRANSFORM_NONE,
++		TRANSFORM_ROTATE,
++		TRANSFORM_TRANSLATE,
++		TRANSFORM_SCALE
++	};
++
++	enum TransformPlane {
++		TRANSFORM_VIEW,
++		TRANSFORM_X_AXIS,
++		TRANSFORM_Y_AXIS,
++		TRANSFORM_Z_AXIS,
++		TRANSFORM_YZ,
++		TRANSFORM_XZ,
++		TRANSFORM_XY,
++	};
++
++	struct EditData {
++		TransformMode mode;
++		TransformPlane plane;
++		Transform original;
++		Vector3 click_ray;
++		Vector3 click_ray_pos;
++		Vector3 center;
++		Vector3 orig_gizmo_pos;
++		int edited_gizmo;
++		Point2 mouse_pos;
++		bool snap;
++		Ref<EditorSpatialGizmo> gizmo;
++		int gizmo_handle;
++		Variant gizmo_initial_value;
++		Vector3 gizmo_initial_pos;
++	};
++
+ private:
+ 	int index;
+ 	String name;
+@@ -292,14 +326,11 @@ private:
+ 	void _select(Node *p_node, bool p_append, bool p_single);
+ 	ObjectID _select_ray(const Point2 &p_pos, bool p_append, bool &r_includes_current, int *r_gizmo_handle = NULL, bool p_alt_select = false);
+ 	void _find_items_at_pos(const Point2 &p_pos, bool &r_includes_current, Vector<_RayResult> &results, bool p_alt_select = false);
+-	Vector3 _get_ray_pos(const Vector2 &p_pos) const;
+-	Vector3 _get_ray(const Vector2 &p_pos) const;
+ 	Point2 _point_to_screen(const Vector3 &p_point);
+ 	Transform _get_camera_transform() const;
+ 	int get_selected_count() const;
+ 
+ 	Vector3 _get_camera_position() const;
+-	Vector3 _get_camera_normal() const;
+ 	Vector3 _get_screen_to_space(const Vector3 &p_vector3);
+ 
+ 	void _select_region();
+@@ -333,39 +364,8 @@ private:
+ 		NAVIGATION_ORBIT,
+ 		NAVIGATION_LOOK
+ 	};
+-	enum TransformMode {
+-		TRANSFORM_NONE,
+-		TRANSFORM_ROTATE,
+-		TRANSFORM_TRANSLATE,
+-		TRANSFORM_SCALE
+ 
+-	};
+-	enum TransformPlane {
+-		TRANSFORM_VIEW,
+-		TRANSFORM_X_AXIS,
+-		TRANSFORM_Y_AXIS,
+-		TRANSFORM_Z_AXIS,
+-		TRANSFORM_YZ,
+-		TRANSFORM_XZ,
+-		TRANSFORM_XY,
+-	};
+-
+-	struct EditData {
+-		TransformMode mode;
+-		TransformPlane plane;
+-		Transform original;
+-		Vector3 click_ray;
+-		Vector3 click_ray_pos;
+-		Vector3 center;
+-		Vector3 orig_gizmo_pos;
+-		int edited_gizmo;
+-		Point2 mouse_pos;
+-		bool snap;
+-		Ref<EditorSpatialGizmo> gizmo;
+-		int gizmo_handle;
+-		Variant gizmo_initial_value;
+-		Vector3 gizmo_initial_pos;
+-	} _edit;
++	EditData _edit;
+ 
+ 	struct Cursor {
+ 
+@@ -451,6 +451,8 @@ public:
+ 	void update_surface() { surface->update(); }
+ 	void update_transform_gizmo_view();
+ 
++	ViewportContainer *get_viewport_container() const { return viewport_container; }
++
+ 	void set_can_preview(Camera *p_preview);
+ 	void set_state(const Dictionary &p_state);
+ 	Dictionary get_state() const;
+@@ -466,6 +468,11 @@ public:
+ 
+ 	Viewport *get_viewport_node() { return viewport; }
+ 	Camera *get_camera() { return camera; } // return the default camera object.
++	float get_gizmo_scale() { return gizmo_scale; };
++
++	Vector3 get_camera_normal() const;
++	Vector3 get_ray_pos(const Vector2 &p_pos) const;
++	Vector3 get_ray(const Vector2 &p_pos) const;
+ 
+ 	SpatialEditorViewport(SpatialEditor *p_spatial_editor, EditorNode *p_editor, int p_index);
+ };
+@@ -545,6 +552,7 @@ public:
+ 		TOOL_MODE_MOVE,
+ 		TOOL_MODE_ROTATE,
+ 		TOOL_MODE_SCALE,
++		TOOL_MODE_EXTERNAL,
+ 		TOOL_MODE_LIST_SELECT,
+ 		TOOL_LOCK_SELECTED,
+ 		TOOL_UNLOCK_SELECTED,
+@@ -559,7 +567,15 @@ public:
+ 		TOOL_OPT_USE_SNAP,
+ 		TOOL_OPT_OVERRIDE_CAMERA,
+ 		TOOL_OPT_MAX
++	};
++
++	enum ExternalToolMode {
+ 
++		EX_TOOL_MODE_SELECT,
++		EX_TOOL_MODE_MOVE,
++		EX_TOOL_MODE_ROTATE,
++		EX_TOOL_MODE_SCALE,
++		EX_TOOL_MAX
+ 	};
+ 
+ private:
+@@ -574,6 +590,7 @@ private:
+ 	/////
+ 
+ 	ToolMode tool_mode;
++	ExternalToolMode external_tool_mode = EX_TOOL_MODE_SELECT;
+ 
+ 	VisualServer::ScenarioDebugMode scenario_debug;
+ 
+@@ -626,6 +643,7 @@ private:
+ 		MENU_TOOL_MOVE,
+ 		MENU_TOOL_ROTATE,
+ 		MENU_TOOL_SCALE,
++		MENU_TOOL_EXTERNAL,
+ 		MENU_TOOL_LIST_SELECT,
+ 		MENU_TOOL_LOCAL_COORDS,
+ 		MENU_TOOL_USE_SNAP,
+@@ -728,6 +746,8 @@ private:
+ 
+ 	void _refresh_menu_icons();
+ 
++	Vector<Transform> externals;
++
+ protected:
+ 	void _notification(int p_what);
+ 	//void _gui_input(InputEvent p_event);
+@@ -748,7 +768,11 @@ public:
+ 	Transform get_gizmo_transform() const { return gizmo.transform; }
+ 	bool is_gizmo_visible() const { return gizmo.visible; }
+ 
++	void set_tool_mode(ToolMode p_tool_mode);
+ 	ToolMode get_tool_mode() const { return tool_mode; }
++	bool is_tool_external() const { return tool_mode == TOOL_MODE_EXTERNAL; }
++	ExternalToolMode get_external_tool_mode() const { return external_tool_mode; }
++	void set_external_tool_mode(ExternalToolMode p_external_tool_mode) { external_tool_mode = p_external_tool_mode; }
+ 	bool are_local_coords_enabled() const { return tool_option_button[SpatialEditor::TOOL_OPT_LOCAL_COORDS]->is_pressed(); }
+ 	bool is_snap_enabled() const { return snap_enabled ^ snap_key_enabled; }
+ 	float get_translate_snap() const;
+@@ -800,6 +824,11 @@ public:
+ 	void edit(Spatial *p_spatial);
+ 	void clear();
+ 
++	void append_to_externals(Transform p_transform) { externals.push_back(p_transform); }
++	void append_array_to_externals(Vector<Transform> p_transforms) { externals.append_array(p_transforms); }
++	void clear_externals() { externals.clear(); }
++	Vector<Transform> get_externals() const { return externals; }
++
+ 	SpatialEditor(EditorNode *p_editor);
+ 	~SpatialEditor();
+ };
+diff --git a/editor/spatial_editor_gizmos.cpp b/editor/spatial_editor_gizmos.cpp
+index c60952e5a6..ddecd103f4 100644
+--- a/editor/spatial_editor_gizmos.cpp
++++ b/editor/spatial_editor_gizmos.cpp
+@@ -32,6 +32,7 @@
+ 
+ #include "core/math/geometry.h"
+ #include "core/math/quick_hull.h"
++#include "editor/plugins/skeleton_editor_plugin.h"
+ #include "scene/3d/audio_stream_player_3d.h"
+ #include "scene/3d/baked_lightmap.h"
+ #include "scene/3d/collision_polygon.h"
+@@ -1611,8 +1612,35 @@ void Position3DSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 
+ SkeletonSpatialGizmoPlugin::SkeletonSpatialGizmoPlugin() {
+ 
+-	Color gizmo_color = EDITOR_DEF("editors/3d_gizmos/gizmo_colors/skeleton", Color(1, 0.8, 0.4));
+-	create_material("skeleton_material", gizmo_color);
++	skeleton_color = EDITOR_DEF("editors/3d_gizmos/gizmo_colors/skeleton", Color(1, 0.8, 0.4));
++	selected_bone_color = EDITOR_DEF("editors/3d_gizmos/gizmo_colors/selected_bone", Color(1, 0, 0));
++	bone_axis_length = EDITOR_DEF("editors/3d_gizmos/gizmo_settings/bone_axis_length", (float)0.015);
++	create_material("skeleton_material", skeleton_color);
++	selected_mat = Ref<ShaderMaterial>(memnew(ShaderMaterial));
++	selected_sh = Ref<Shader>(memnew(Shader));
++	selected_sh->set_code(" \
++					shader_type spatial; \
++					render_mode unshaded; \
++					uniform vec4 albedo : hint_color = vec4(1,1,1,1); \
++					uniform sampler2D texture_albedo : hint_albedo; \
++					uniform float point_size : hint_range(0,128) = 32; \
++					void vertex() { \
++						if (!OUTPUT_IS_SRGB) { \
++							COLOR.rgb = mix( pow((COLOR.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), COLOR.rgb* (1.0 / 12.92), lessThan(COLOR.rgb,vec3(0.04045)) ); \
++						} \
++						VERTEX = VERTEX; \
++						POSITION=PROJECTION_MATRIX*INV_CAMERA_MATRIX*WORLD_MATRIX*vec4(VERTEX.xyz,1.0); \
++						POSITION.z = mix(POSITION.z, -POSITION.w, 0.998); \
++					} \
++					void fragment() { \
++						vec2 base_uv = UV; \
++						vec4 albedo_tex = texture(texture_albedo,base_uv); \
++						albedo_tex *= COLOR; \
++						if (albedo.a * albedo_tex.a < 0.5) { discard; } \
++						ALBEDO = albedo.rgb * albedo_tex.rgb; \
++					} \
++				");
++	selected_mat->set_shader(selected_sh);
+ }
+ 
+ bool SkeletonSpatialGizmoPlugin::has_gizmo(Spatial *p_spatial) {
+@@ -1633,7 +1661,12 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 
+ 	p_gizmo->clear();
+ 
+-	Ref<Material> material = get_material("skeleton_material", p_gizmo);
++	Ref<Material> material;
++	if (p_gizmo->is_selected()) {
++		material = selected_mat;
++	} else {
++		material = get_material("skeleton_material", p_gizmo);
++	}
+ 
+ 	Ref<SurfaceTool> surface_tool(memnew(SurfaceTool));
+ 
+@@ -1654,12 +1687,15 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 
+ 	weights.write[0] = 1;
+ 
++	Color bone_color;
+ 	AABB aabb;
+ 
+-	Color bonecolor = Color(1.0, 0.4, 0.4, 0.3);
+-	Color rootcolor = Color(0.4, 1.0, 0.4, 0.1);
+-
+ 	for (int i_bone = 0; i_bone < skel->get_bone_count(); i_bone++) {
++		if (skel->get_bone_parent(i_bone) == skel->get_selected_bone()) {
++			bone_color = selected_bone_color;
++		} else {
++			bone_color = skeleton_color;
++		}
+ 
+ 		int i = skel->get_process_order(i_bone);
+ 
+@@ -1687,17 +1723,33 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 			Vector3 first;
+ 			Vector3 points[4];
+ 			int pointidx = 0;
++			Color axis_color[3];
++			axis_color[0] = Color(1,0,0);
++			axis_color[1] = Color(0,1,0);
++			axis_color[2] = Color(0,0,1);
+ 			for (int j = 0; j < 3; j++) {
+ 
+-				bones.write[0] = parent;
+-				surface_tool->add_bones(bones);
+-				surface_tool->add_weights(weights);
+-				surface_tool->add_color(rootcolor);
+-				surface_tool->add_vertex(v0 - grests[parent].basis[j].normalized() * dist * 0.05);
+-				surface_tool->add_bones(bones);
+-				surface_tool->add_weights(weights);
+-				surface_tool->add_color(rootcolor);
+-				surface_tool->add_vertex(v0 + grests[parent].basis[j].normalized() * dist * 0.05);
++				if (p_gizmo->is_selected()) {
++					bones.write[0] = i;
++					surface_tool->add_bones(bones);
++					surface_tool->add_weights(weights);
++					surface_tool->add_color(axis_color[j]);
++					surface_tool->add_vertex(v1);
++					surface_tool->add_bones(bones);
++					surface_tool->add_weights(weights);
++					surface_tool->add_color(axis_color[j]);
++					surface_tool->add_vertex(v1 + grests[i].basis[j].normalized() * bone_axis_length);
++				} else {
++					bones.write[0] = i;
++					surface_tool->add_bones(bones);
++					surface_tool->add_weights(weights);
++					surface_tool->add_color(axis_color[j]);
++					surface_tool->add_vertex(v1 - grests[i].basis[j].normalized() * dist * 0.05);
++					surface_tool->add_bones(bones);
++					surface_tool->add_weights(weights);
++					surface_tool->add_color(axis_color[j]);
++					surface_tool->add_vertex(v1 + grests[i].basis[j].normalized() * dist * 0.05);
++				}
+ 
+ 				if (j == closest)
+ 					continue;
+@@ -1720,22 +1772,22 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 					bones.write[0] = parent;
+ 					surface_tool->add_bones(bones);
+ 					surface_tool->add_weights(weights);
+-					surface_tool->add_color(bonecolor);
++					surface_tool->add_color(bone_color);
+ 					surface_tool->add_vertex(v0);
+ 					surface_tool->add_bones(bones);
+ 					surface_tool->add_weights(weights);
+-					surface_tool->add_color(bonecolor);
++					surface_tool->add_color(bone_color);
+ 					surface_tool->add_vertex(point);
+ 
+ 					bones.write[0] = parent;
+ 					surface_tool->add_bones(bones);
+ 					surface_tool->add_weights(weights);
+-					surface_tool->add_color(bonecolor);
++					surface_tool->add_color(bone_color);
+ 					surface_tool->add_vertex(point);
+ 					bones.write[0] = i;
+ 					surface_tool->add_bones(bones);
+ 					surface_tool->add_weights(weights);
+-					surface_tool->add_color(bonecolor);
++					surface_tool->add_color(bone_color);
+ 					surface_tool->add_vertex(v1);
+ 					points[pointidx++] = point;
+ 				}
+@@ -1747,11 +1799,11 @@ void SkeletonSpatialGizmoPlugin::redraw(EditorSpatialGizmo *p_gizmo) {
+ 				bones.write[0] = parent;
+ 				surface_tool->add_bones(bones);
+ 				surface_tool->add_weights(weights);
+-				surface_tool->add_color(bonecolor);
++				surface_tool->add_color(bone_color);
+ 				surface_tool->add_vertex(points[j]);
+ 				surface_tool->add_bones(bones);
+ 				surface_tool->add_weights(weights);
+-				surface_tool->add_color(bonecolor);
++				surface_tool->add_color(bone_color);
+ 				surface_tool->add_vertex(points[(j + 1) % 4]);
+ 			}
+ 
+diff --git a/editor/spatial_editor_gizmos.h b/editor/spatial_editor_gizmos.h
+index 58598d1ff3..36070116d9 100644
+--- a/editor/spatial_editor_gizmos.h
++++ b/editor/spatial_editor_gizmos.h
+@@ -137,6 +137,11 @@ public:
+ class SkeletonSpatialGizmoPlugin : public EditorSpatialGizmoPlugin {
+ 
+ 	GDCLASS(SkeletonSpatialGizmoPlugin, EditorSpatialGizmoPlugin);
++	Color skeleton_color = Color(1, 0.8, 0.4);
++	Color selected_bone_color = Color(1, 0, 0);
++	float bone_axis_length = 0.015;
++	Ref<ShaderMaterial> selected_mat;
++	Ref<Shader> selected_sh;
+ 
+ public:
+ 	bool has_gizmo(Spatial *p_spatial);
+diff --git a/modules/gridmap/grid_map_editor_plugin.h b/modules/gridmap/grid_map_editor_plugin.h
+index 941f3c52f4..6de4061ca9 100644
+--- a/modules/gridmap/grid_map_editor_plugin.h
++++ b/modules/gridmap/grid_map_editor_plugin.h
+@@ -261,7 +261,7 @@ protected:
+ 	void _notification(int p_what);
+ 
+ public:
+-	virtual bool forward_spatial_gui_input(Camera *p_camera, const Ref<InputEvent> &p_event) { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
++	virtual bool forward_spatial_gui_input(int p_index, Camera *p_camera, const Ref<InputEvent> &p_event) { return grid_map_editor->forward_spatial_input_event(p_camera, p_event); }
+ 	virtual String get_name() const { return "GridMap"; }
+ 	bool has_main_screen() const { return false; }
+ 	virtual void edit(Object *p_object);
+diff --git a/scene/3d/skeleton.cpp b/scene/3d/skeleton.cpp
+index ec6d4dceef..2c77bec64a 100644
+--- a/scene/3d/skeleton.cpp
++++ b/scene/3d/skeleton.cpp
+@@ -158,17 +158,17 @@ bool Skeleton::_get(const StringName &p_path, Variant &r_ret) const {
+ 
+ 	return true;
+ }
+-void Skeleton::_get_property_list(List<PropertyInfo> *p_list) const {
+ 
++void Skeleton::_get_property_list(List<PropertyInfo> *p_list) const {
+ 	for (int i = 0; i < bones.size(); i++) {
+ 
+ 		String prep = "bones/" + itos(i) + "/";
+-		p_list->push_back(PropertyInfo(Variant::STRING, prep + "name"));
+-		p_list->push_back(PropertyInfo(Variant::INT, prep + "parent", PROPERTY_HINT_RANGE, "-1," + itos(bones.size() - 1) + ",1"));
+-		p_list->push_back(PropertyInfo(Variant::TRANSFORM, prep + "rest"));
+-		p_list->push_back(PropertyInfo(Variant::BOOL, prep + "enabled"));
++		p_list->push_back(PropertyInfo(Variant::STRING, prep + "name", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR));
++		p_list->push_back(PropertyInfo(Variant::INT, prep + "parent", PROPERTY_HINT_RANGE, "-1," + itos(bones.size() - 1) + ",1", PROPERTY_USAGE_NOEDITOR));
++		p_list->push_back(PropertyInfo(Variant::TRANSFORM, prep + "rest", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR));
++		p_list->push_back(PropertyInfo(Variant::BOOL, prep + "enabled", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR));
+ 		p_list->push_back(PropertyInfo(Variant::TRANSFORM, prep + "pose", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_EDITOR));
+-		p_list->push_back(PropertyInfo(Variant::ARRAY, prep + "bound_children"));
++		p_list->push_back(PropertyInfo(Variant::ARRAY, prep + "bound_children", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NOEDITOR));
+ 	}
+ }
+ 
+@@ -375,7 +375,11 @@ void Skeleton::_notification(int p_what) {
+ 			}
+ 
+ 			dirty = false;
+-			emit_signal("skeleton_updated");
++
++#ifdef TOOLS_ENABLED
++			emit_signal("pose_updated");
++#endif // TOOLS_ENABLED
++
+ 		} break;
+ 	}
+ }
+@@ -624,7 +628,6 @@ int Skeleton::get_process_order(int p_idx) {
+ }
+ 
+ void Skeleton::localize_rests() {
+-
+ 	_update_process_order();
+ 
+ 	for (int i = bones.size() - 1; i >= 0; i--) {
+@@ -849,6 +852,16 @@ Ref<SkinReference> Skeleton::register_skin(const Ref<Skin> &p_skin) {
+ 	return skin_ref;
+ }
+ 
++void Skeleton::set_selected_bone(int p_bone) {
++	selected_bone = p_bone;
++	update_gizmo();
++	return;
++}
++
++int Skeleton::get_selected_bone() const {
++	return selected_bone;
++}
++
+ void Skeleton::_bind_methods() {
+ 
+ 	ClassDB::bind_method(D_METHOD("add_bone", "name"), &Skeleton::add_bone);
+@@ -897,7 +910,10 @@ void Skeleton::_bind_methods() {
+ 
+ #endif // _3D_DISABLED
+ 
++#ifdef TOOLS_ENABLED
++	ADD_SIGNAL(MethodInfo("pose_updated"));
+ 	ADD_SIGNAL(MethodInfo("skeleton_updated"));
++#endif // TOOLS_ENABLED
+ 
+ 	BIND_CONSTANT(NOTIFICATION_UPDATE_SKELETON);
+ }
+@@ -916,3 +932,8 @@ Skeleton::~Skeleton() {
+ 		E->get()->skeleton_node = nullptr;
+ 	}
+ }
++
++Vector<int> Skeleton::get_bone_process_order() {
++	_update_process_order();
++	return process_order;
++}
+\ No newline at end of file
+diff --git a/scene/3d/skeleton.h b/scene/3d/skeleton.h
+index fb5d1367d4..73df15ec98 100644
+--- a/scene/3d/skeleton.h
++++ b/scene/3d/skeleton.h
+@@ -144,6 +144,8 @@ private:
+ 
+ 	void _update_process_order();
+ 
++	int selected_bone = -1;
++
+ protected:
+ 	bool _get(const StringName &p_path, Variant &r_ret) const;
+ 	bool _set(const StringName &p_path, const Variant &p_value);
+@@ -200,9 +202,13 @@ public:
+ 
+ 	void localize_rests(); // used for loaders and tools
+ 	int get_process_order(int p_idx);
++	Vector<int> get_bone_process_order();
+ 
+ 	Ref<SkinReference> register_skin(const Ref<Skin> &p_skin);
+ 
++	void set_selected_bone(int p_bone);
++	int get_selected_bone() const;
++
+ #ifndef _3D_DISABLED
+ 	// Physical bone API
+ 
+-- 
+2.30.1
+
