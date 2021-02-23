@@ -146,6 +146,23 @@ Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in th
 
 Append `v` to pass the `vsproj=yes` parameter to the build script. This will generate Visual Studio project files.
 
+#### Patches
+
+The build script can apply optional pacthes. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patches characters.
+
+Like `scons ps`
+
+They will not create new commits to the engine repository, so they can easily be removed.
+
+##### SkeletonEditor
+
+To apply the SkeletonEditor patch append s after the p, like `scons ps`.
+
+This is a patch made from the skeleton editor backport. See:
+
+https://github.com/TokageItLab/godot/commits/pose-edit-mode-fixedup
+https://github.com/godotengine/godot/pull/45699
+
 #### Scons cache, and sdk locations
 
 In order to use scons cache and to tell the build system where some of the required sdks are located you usually 
