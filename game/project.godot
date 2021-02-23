@@ -14,11 +14,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/auras/aura_script.gd"
 }, {
-"base": "EditorSpatialGizmo",
-"class": "BoneSpatialGizmo",
-"language": "GDScript",
-"path": "res://addons/gdpose/bonegizmo.gd"
-}, {
 "base": "Reference",
 "class": "BrushPrefabs",
 "language": "GDScript",
@@ -226,7 +221,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "AuraGD": "",
-"BoneSpatialGizmo": "",
 "BrushPrefabs": "",
 "CharacterSkeketonAttachPoint": "",
 "DisplayPlayerGD": "",
@@ -311,7 +305,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/gdpose/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg" )
 
 [ess]
 
