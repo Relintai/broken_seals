@@ -158,9 +158,7 @@ They will not create new commits to the engine repository, so they can easily be
 
 To apply the SkeletonEditor patch append s after the p, like `scons ps`.
 
-This is a patch made from the skeleton editor backport. See:
-
-https://github.com/TokageItLab/godot/commits/pose-edit-mode-fixedup
+This is a patch made from the skeleton editor backport. See: https://github.com/TokageItLab/godot/commits/pose-edit-mode-fixedup and 
 https://github.com/godotengine/godot/pull/45699
 
 #### Scons cache, and sdk locations
