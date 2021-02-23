@@ -148,11 +148,11 @@ Append `v` to pass the `vsproj=yes` parameter to the build script. This will gen
 
 #### Patches
 
-The build script can apply optional pacthes. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patches characters.
+The build script can apply optional patches. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patch characters.
 
 Like `scons ps`
 
-They will not create new commits to the engine repository, so they can easily be removed.
+They will not create new commits to the engine, so they can easily be removed.
 
 ##### SkeletonEditor
 
