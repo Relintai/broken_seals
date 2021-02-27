@@ -3,17 +3,15 @@ extends EditorSpatialGizmo
 
 var gizmo_size = 3.0
 
+var plugin
+
+var vertices : PoolVector3Array
+var indices : PoolIntArray
+
 func set_handle(index: int, camera: Camera, point: Vector2):
-	#print(index)
-	#print(point)
-	
-	
-	
 	pass
 
 func redraw():
-	#print("MIDGizmo redraw")
-		
 	clear()
 	
 	var node : MeshDataInstance = get_spatial_node()
@@ -28,25 +26,68 @@ func redraw():
 	
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	
-	var handles : PoolVector3Array = mdr.array[ArrayMesh.ARRAY_VERTEX]
-	add_handles(handles, handles_material)
+	vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
+	#add_handles(vertices, handles_material)
 	
 	var material = get_plugin().get_material("main", self)
-	var lines : PoolVector3Array = PoolVector3Array()
 	var indices : PoolIntArray = mdr.array[ArrayMesh.ARRAY_INDEX]
 	
-	if indices.size() % 3 == 0:
-		for i in range(0, len(indices), 3):
-			lines.append(handles[i])
-			lines.append(handles[i + 1])
+	var lines : PoolVector3Array = PoolVector3Array()
+	
+	if vertices.size() % 3 == 0:
+		for i in range(0, len(vertices), 3):
+			lines.append(vertices[i])
+			lines.append(vertices[i + 1])
 			
-			lines.append(handles[i + 1])
-			lines.append(handles[i + 2])
+			lines.append(vertices[i + 1])
+			lines.append(vertices[i + 2])
 			
-			lines.append(handles[i + 2])
-			lines.append(handles[i])
+			lines.append(vertices[i + 2])
+			lines.append(vertices[i])
 			
 		
 	
 	add_lines(lines, material, false)
 
+func forward_spatial_gui_input(index, camera, event):
+	if event is InputEventMouseButton:
+		var gt : Transform = get_spatial_node().global_transform
+		var ray_from : Vector3 = camera.global_transform.origin
+		var gpoint : Vector2 = event.get_position()
+		var grab_threshold : float = 4
+#		var grab_threshold : float = 4 * EDSCALE;
+
+		if event.get_button_index() == BUTTON_LEFT:
+			if event.is_pressed():
+
+				var mouse_pos = event.get_position()
+				
+#				if (_gizmo_select(p_index, _edit.mouse_pos)) 
+#					return true;
+
+				# select vertex
+				var closest_idx : int = -1
+				var closest_dist : float = 1e10
+				
+				var vertices_size : int = vertices.size()
+				for i in range(vertices_size):
+					var joint_pos_3d : Vector3 = gt.xform(vertices[i])
+					var joint_pos_2d : Vector2 = camera.unproject_position(joint_pos_3d)
+					var dist_3d : float = ray_from.distance_to(joint_pos_3d)
+					var dist_2d : float = gpoint.distance_to(joint_pos_2d)
+					
+					if (dist_2d < grab_threshold && dist_3d < closest_dist):
+						closest_dist = dist_3d;
+						closest_idx = i;
+
+				if (closest_idx >= 0):
+					print("f")
+				else:
+					print("nf")
+
+	return false
+
+
+func _notification(what):
+	if what == NOTIFICATION_PREDELETE:
+		plugin.unregister_gizmo(self)
