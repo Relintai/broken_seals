@@ -7,6 +7,8 @@ var plugin
 
 var vertices : PoolVector3Array
 var indices : PoolIntArray
+var selected_indices : PoolIntArray
+var selected_vertices : PoolVector3Array
 
 func set_handle(index: int, camera: Camera, point: Vector2):
 	pass
@@ -45,16 +47,16 @@ func redraw():
 			lines.append(vertices[i + 2])
 			lines.append(vertices[i])
 			
-		
-	
 	add_lines(lines, material, false)
+	
+	add_handles(selected_vertices, handles_material)
 
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
 		var gt : Transform = get_spatial_node().global_transform
 		var ray_from : Vector3 = camera.global_transform.origin
 		var gpoint : Vector2 = event.get_position()
-		var grab_threshold : float = 4
+		var grab_threshold : float = 8
 #		var grab_threshold : float = 4 * EDSCALE;
 
 		if event.get_button_index() == BUTTON_LEFT:
@@ -71,23 +73,29 @@ func forward_spatial_gui_input(index, camera, event):
 				
 				var vertices_size : int = vertices.size()
 				for i in range(vertices_size):
-					var joint_pos_3d : Vector3 = gt.xform(vertices[i])
-					var joint_pos_2d : Vector2 = camera.unproject_position(joint_pos_3d)
-					var dist_3d : float = ray_from.distance_to(joint_pos_3d)
-					var dist_2d : float = gpoint.distance_to(joint_pos_2d)
+					var vert_pos_3d : Vector3 = gt.xform(vertices[i])
+					var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
+					var dist_3d : float = ray_from.distance_to(vert_pos_3d)
+					var dist_2d : float = gpoint.distance_to(vert_pos_2d)
 					
 					if (dist_2d < grab_threshold && dist_3d < closest_dist):
 						closest_dist = dist_3d;
 						closest_idx = i;
 
 				if (closest_idx >= 0):
-					print("f")
-				else:
-					print("nf")
+					selected_indices.append(closest_idx)
+					selected_vertices.append(vertices[closest_idx])
 
+					redraw()
+				else:
+					selected_indices.resize(0)
+					selected_vertices.resize(0)
+					
+					redraw()
 	return false
 
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
-		plugin.unregister_gizmo(self)
+		if plugin:
+			plugin.unregister_gizmo(self)
