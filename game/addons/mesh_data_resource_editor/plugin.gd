@@ -14,6 +14,7 @@ func _enter_tree():
 	
 	gizmo_plugin = MdiGizmoPlugin.new()
 	mdi_ed_gui = MDIEdGui.instance()
+	mdi_ed_gui.plugin = self
 	active_gizmos = []
 	
 	gizmo_plugin.plugin = self
@@ -76,6 +77,30 @@ func unregister_gizmo(gizmo):
 			active_gizmos.remove(i)
 			return
 
+func translate_request(on : bool) -> void:
+	for g in active_gizmos:
+		g.translate_request(on)
+	
+func scale_request(on : bool) -> void:
+	for g in active_gizmos:
+		g.scale_request(on)
+	
+func rotate_request(on : bool) -> void:
+	for g in active_gizmos:
+		g.rotate_request(on)
+	
+func axis_key_x(on : bool) -> void:
+	for g in active_gizmos:
+		g.axis_key_x(on)
+	
+func axis_key_y(on : bool) -> void:
+	for g in active_gizmos:
+		g.axis_key_y(on)
+	
+func axis_key_z(on : bool) -> void:
+	for g in active_gizmos:
+		g.axis_key_z(on)
+	
 func forward_spatial_gui_input(camera, event):
 	for g in active_gizmos:
 		if g.forward_spatial_gui_input(0, camera, event):

@@ -1,19 +1,32 @@
 tool
 extends PanelContainer
 
-func _ready():
-	pass # Replace with function body.
+var plugin
 
 func _unhandled_key_input(event : InputEventKey) -> void:
+	if event.echo:
+		return
+	
 	#if event.key
 	if event.scancode == KEY_G:
+		
 		#translate
-		pass
+		if plugin:
+			plugin.translate_request(event.pressed)
 	elif event.scancode == KEY_S:
 		#scale? probably needs a differrent key
-		pass
+		if plugin:
+			plugin.scale_request(event.pressed)
 	elif event.scancode == KEY_R:
 		#rotate
-		pass
-
-	pass
+		if plugin:
+			plugin.rotate_request(event.pressed)
+	elif event.scancode == KEY_X:
+		if plugin:
+			plugin.axis_key_x(event.pressed)
+	elif event.scancode == KEY_Y:
+		if plugin:
+			plugin.axis_key_y(event.pressed)
+	elif event.scancode == KEY_Z:
+		if plugin:
+			plugin.axis_key_z(event.pressed)

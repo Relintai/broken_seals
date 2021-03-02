@@ -1,6 +1,14 @@
 tool
 extends EditorSpatialGizmo
 
+enum EditMode {
+	NONE, TRANSLATE, SCALE, ROTATE
+}
+
+enum AxisConstraint {
+	X, Y, Z
+}
+
 var gizmo_size = 3.0
 
 var plugin
@@ -9,9 +17,15 @@ var vertices : PoolVector3Array
 var indices : PoolIntArray
 var selected_indices : PoolIntArray
 var selected_vertices : PoolVector3Array
+var selected_vertices_original : PoolVector3Array
+
+var edit_mode = EditMode.NONE
+var axis_constraint = AxisConstraint.NONE
 
 func set_handle(index: int, camera: Camera, point: Vector2):
-	pass
+	print("set_handle")
+	
+	edit_mode = EditMode.NONE
 
 func redraw():
 	clear()
@@ -28,7 +42,8 @@ func redraw():
 	
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	
-	vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
+	if vertices.size() == 0:
+		vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
 	#add_handles(vertices, handles_material)
 	
 	var material = get_plugin().get_material("main", self)
@@ -83,17 +98,83 @@ func forward_spatial_gui_input(index, camera, event):
 						closest_idx = i;
 
 				if (closest_idx >= 0):
+					for si in selected_indices:
+						if si == closest_idx:
+							return false
+					
+					var cv : Vector3 = vertices[closest_idx]
+					selected_vertices.append(cv)
 					selected_indices.append(closest_idx)
-					selected_vertices.append(vertices[closest_idx])
+					
+					selected_vertices_original.append(cv)
+					
+					#also find and mark duplicate vertices, but not as handles
+					for k in range(vertices.size()):
+						if k == closest_idx:
+							continue
+							
+						var vn : Vector3 = vertices[k]
+						
+						if is_equal_approx(cv.x, vn.x) && is_equal_approx(cv.y, vn.y) && is_equal_approx(cv.z, vn.z):
+							selected_indices.append(k)
+							selected_vertices_original.append(vn)
 
 					redraw()
 				else:
 					selected_indices.resize(0)
 					selected_vertices.resize(0)
 					
+					selected_vertices_original.resize(0)
+					
 					redraw()
+					
+	elif event is InputEventMouseMotion:
+		if edit_mode == EditMode.NONE:
+			return false
+		elif edit_mode == EditMode.TRANSLATE:
+			for i in selected_indices:
+				var v : Vector3 = vertices[i]
+					
+				if axis_constraint == AxisConstraint.X:
+					v.x += event.relative.x * -0.001
+				elif axis_constraint == AxisConstraint.Y:
+					v.y += event.relative.y * 0.001
+				elif axis_constraint == AxisConstraint.Z:
+					v.z += event.relative.x * 0.001
+					
+				vertices.set(i, v)
+				
+			redraw()
+		elif edit_mode == EditMode.SCALE:
+			print("SCALE")
+		elif edit_mode == EditMode.ROTATE:
+			print("ROTATE")
+					
 	return false
 
+func translate_request(on : bool) -> void:
+	if on:
+		edit_mode = EditMode.TRANSLATE
+	
+func scale_request(on : bool) -> void:
+	if on:
+		edit_mode = EditMode.SCALE
+	
+func rotate_request(on : bool) -> void:
+	if on:
+		edit_mode = EditMode.ROTATE
+	
+func axis_key_x(on : bool) -> void:
+	if on:
+		axis_constraint = AxisConstraint.X
+	
+func axis_key_y(on : bool) -> void:
+	if on:
+		axis_constraint = AxisConstraint.Y
+	
+func axis_key_z(on : bool) -> void:
+	if on:
+		axis_constraint = AxisConstraint.Z
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
