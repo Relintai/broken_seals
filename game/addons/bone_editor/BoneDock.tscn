@@ -1,0 +1,64 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends CenterContainer
+
+var bone_editor
+
+func _on_Button_pressed( ):
+	if self.bone_editor == null:
+		return
+
+	self.bone_editor.save_poses( )
+
+func _on_Button2_pressed():
+	if self.bone_editor == null:
+		return
+
+	self.bone_editor.init_poses( )
+
+func _on_Button3_pressed():
+	if self.bone_editor == null:
+		return
+
+	self.bone_editor.load_poses( )
+
+"
+
+[node name="CenterContainer" type="CenterContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 44.0
+margin_top = 10.0
+margin_right = 324.0
+margin_bottom = 30.0
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Insert Keys"
+flat = true
+
+[node name="Button3" type="Button" parent="HBoxContainer"]
+margin_left = 88.0
+margin_right = 198.0
+margin_bottom = 20.0
+text = "Load from Keys"
+flat = true
+
+[node name="Button2" type="Button" parent="HBoxContainer"]
+margin_left = 202.0
+margin_right = 280.0
+margin_bottom = 20.0
+text = "Init Bones"
+flat = true
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="HBoxContainer/Button2" to="." method="_on_Button2_pressed"]
