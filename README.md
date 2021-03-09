@@ -146,6 +146,31 @@ Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in th
 
 Append `v` to pass the `vsproj=yes` parameter to the build script. This will generate Visual Studio project files.
 
+#### Postfixes
+
+There are a few postfixes for the build words. These are more complex options. You have to append them to your build word with an underscore.
+
+You can use as many as you want.
+
+For example:
+
+``` scons bel_slim_latomic -j4 ```
+
+##### slim
+
+With this postfix you can build a slimmed down version of the engine. This disables quite a few unneeded modules.
+
+``` scons bel_slim -j4 ```
+
+##### latomic
+
+If you get linker errors while building the game/editor about undefined referenced with atomic related functions you can use this postfix.
+It will add the ` -latomic ` command line switch to the linker flags.
+
+I ran into this issue while building on a raspberry pi 4 with the x11 platform. It might be related to the recent reworks to threading.
+
+``` scons bel_latomic -j4 ```
+
 #### Patches
 
 The build script can apply optional patches. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patch characters.
