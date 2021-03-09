@@ -359,7 +359,7 @@ if len(sys.argv) > 1:
 
         if 'latomic' in arg_split:
             build_string += 'LINKFLAGS="-latomic"'
-            build_string += ' 
+            build_string += ' '
 
         target = ' '
 
