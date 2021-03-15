@@ -6,7 +6,9 @@ enum EditMode {
 }
 
 enum AxisConstraint {
-	X, Y, Z
+	X = 1 << 0, 
+	Y = 1 << 1, 
+	Z = 1 << 2,
 }
 
 var gizmo_size = 3.0
@@ -19,13 +21,48 @@ var selected_indices : PoolIntArray
 var selected_vertices : PoolVector3Array
 var selected_vertices_original : PoolVector3Array
 
-var edit_mode = EditMode.NONE
-var axis_constraint = AxisConstraint.NONE
+var edit_mode = EditMode.TRANSLATE
+var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
+var previous_point : Vector2
+var is_dragging : bool = false
 
 func set_handle(index: int, camera: Camera, point: Vector2):
-	print("set_handle")
+	var relative : Vector2 = point - previous_point
 	
-	edit_mode = EditMode.NONE
+	if !is_dragging:
+		relative = Vector2()
+		is_dragging = true
+	
+	if edit_mode == EditMode.NONE:
+		return
+	elif edit_mode == EditMode.TRANSLATE:
+		for i in selected_indices:
+			var v : Vector3 = vertices[i]
+
+			if (axis_constraint & AxisConstraint.X) != 0:
+				v.x += relative.x * -0.001
+				
+			if (axis_constraint & AxisConstraint.Y) != 0:
+				v.y += relative.y * 0.001
+				
+			if (axis_constraint & AxisConstraint.Z) != 0:
+				v.z += relative.x * 0.001
+
+			vertices.set(i, v)
+
+		redraw()
+	elif edit_mode == EditMode.SCALE:
+		print("SCALE")
+	elif edit_mode == EditMode.ROTATE:
+		print("ROTATE")
+		
+		
+	previous_point = point
+
+func commit_handle(index: int, restore, cancel: bool = false) -> void:
+	previous_point = Vector2()
+	
+	print("commit")
 
 func redraw():
 	clear()
@@ -44,8 +81,7 @@ func redraw():
 	
 	if vertices.size() == 0:
 		vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
-	#add_handles(vertices, handles_material)
-	
+
 	var material = get_plugin().get_material("main", self)
 	var indices : PoolIntArray = mdr.array[ArrayMesh.ARRAY_INDEX]
 	
@@ -64,7 +100,12 @@ func redraw():
 			
 	add_lines(lines, material, false)
 	
-	add_handles(selected_vertices, handles_material)
+	var vs : PoolVector3Array = PoolVector3Array()
+	
+	for i in selected_indices:
+		vs.append(vertices[i])
+	
+	add_handles(vs, handles_material)
 
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
@@ -76,7 +117,6 @@ func forward_spatial_gui_input(index, camera, event):
 
 		if event.get_button_index() == BUTTON_LEFT:
 			if event.is_pressed():
-
 				var mouse_pos = event.get_position()
 				
 #				if (_gizmo_select(p_index, _edit.mouse_pos)) 
@@ -127,54 +167,65 @@ func forward_spatial_gui_input(index, camera, event):
 					selected_vertices_original.resize(0)
 					
 					redraw()
+			else:
+				is_dragging = false
 					
-	elif event is InputEventMouseMotion:
-		if edit_mode == EditMode.NONE:
-			return false
-		elif edit_mode == EditMode.TRANSLATE:
-			for i in selected_indices:
-				var v : Vector3 = vertices[i]
-					
-				if axis_constraint == AxisConstraint.X:
-					v.x += event.relative.x * -0.001
-				elif axis_constraint == AxisConstraint.Y:
-					v.y += event.relative.y * 0.001
-				elif axis_constraint == AxisConstraint.Z:
-					v.z += event.relative.x * 0.001
-					
-				vertices.set(i, v)
-				
-			redraw()
-		elif edit_mode == EditMode.SCALE:
-			print("SCALE")
-		elif edit_mode == EditMode.ROTATE:
-			print("ROTATE")
+#	elif event is InputEventMouseMotion:
+#		if edit_mode == EditMode.NONE:
+#			return false
+#		elif edit_mode == EditMode.TRANSLATE:
+#			for i in selected_indices:
+#				var v : Vector3 = vertices[i]
+#
+#				if axis_constraint == AxisConstraint.X:
+#					v.x += event.relative.x * -0.001
+#				elif axis_constraint == AxisConstraint.Y:
+#					v.y += event.relative.y * 0.001
+#				elif axis_constraint == AxisConstraint.Z:
+#					v.z += event.relative.x * 0.001
+#
+#				vertices.set(i, v)
+#
+#			redraw()
+#		elif edit_mode == EditMode.SCALE:
+#			print("SCALE")
+#		elif edit_mode == EditMode.ROTATE:
+#			print("ROTATE")
 					
 	return false
 
-func translate_request(on : bool) -> void:
+func translate_key_pressed(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.TRANSLATE
 	
-func scale_request(on : bool) -> void:
+func scale_key_pressed(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.SCALE
 	
-func rotate_request(on : bool) -> void:
+func rotate_key_pressed(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.ROTATE
 	
 func axis_key_x(on : bool) -> void:
 	if on:
-		axis_constraint = AxisConstraint.X
+		if (axis_constraint & AxisConstraint.X) != 0:
+			axis_constraint ^= AxisConstraint.X
+		else:
+			axis_constraint |= AxisConstraint.X
 	
 func axis_key_y(on : bool) -> void:
 	if on:
-		axis_constraint = AxisConstraint.Y
+		if (axis_constraint & AxisConstraint.Y) != 0:
+			axis_constraint ^= AxisConstraint.Y
+		else:
+			axis_constraint |= AxisConstraint.Y
 	
 func axis_key_z(on : bool) -> void:
 	if on:
-		axis_constraint = AxisConstraint.Z
+		if (axis_constraint & AxisConstraint.Z) != 0:
+			axis_constraint ^= AxisConstraint.Z
+		else:
+			axis_constraint |= AxisConstraint.Z
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:

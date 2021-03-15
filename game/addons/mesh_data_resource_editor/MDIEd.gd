@@ -12,15 +12,15 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 		
 		#translate
 		if plugin:
-			plugin.translate_request(event.pressed)
+			plugin.translate_key_pressed(event.pressed)
 	elif event.scancode == KEY_S:
 		#scale? probably needs a differrent key
 		if plugin:
-			plugin.scale_request(event.pressed)
+			plugin.scale_key_pressed(event.pressed)
 	elif event.scancode == KEY_R:
 		#rotate
 		if plugin:
-			plugin.rotate_request(event.pressed)
+			plugin.rotate_key_pressed(event.pressed)
 	elif event.scancode == KEY_X:
 		if plugin:
 			plugin.axis_key_x(event.pressed)

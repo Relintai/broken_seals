@@ -77,17 +77,17 @@ func unregister_gizmo(gizmo):
 			active_gizmos.remove(i)
 			return
 
-func translate_request(on : bool) -> void:
+func translate_key_pressed(on : bool) -> void:
 	for g in active_gizmos:
-		g.translate_request(on)
+		g.translate_key_pressed(on)
 	
-func scale_request(on : bool) -> void:
+func scale_key_pressed(on : bool) -> void:
 	for g in active_gizmos:
-		g.scale_request(on)
+		g.scale_key_pressed(on)
 	
-func rotate_request(on : bool) -> void:
+func rotate_key_pressed(on : bool) -> void:
 	for g in active_gizmos:
-		g.rotate_request(on)
+		g.rotate_key_pressed(on)
 	
 func axis_key_x(on : bool) -> void:
 	for g in active_gizmos:
