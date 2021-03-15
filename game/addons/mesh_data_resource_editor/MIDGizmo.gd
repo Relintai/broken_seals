@@ -40,13 +40,13 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 			var v : Vector3 = vertices[i]
 
 			if (axis_constraint & AxisConstraint.X) != 0:
-				v.x += relative.x * -0.001
+				v.x += relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
 				
 			if (axis_constraint & AxisConstraint.Y) != 0:
-				v.y += relative.y * 0.001
+				v.y += relative.y * -0.001
 				
 			if (axis_constraint & AxisConstraint.Z) != 0:
-				v.z += relative.x * 0.001
+				v.z += relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
 
 			vertices.set(i, v)
 
