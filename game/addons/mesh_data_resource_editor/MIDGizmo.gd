@@ -52,7 +52,29 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 
 		redraw()
 	elif edit_mode == EditMode.SCALE:
-		print("SCALE")
+		var r : float = 1.0 + ((relative.x + relative.y) * 0.05)
+		
+		var vs : Vector3 = Vector3()
+		
+		if (axis_constraint & AxisConstraint.X) != 0:
+			vs.x = r
+				
+		if (axis_constraint & AxisConstraint.Y) != 0:
+			vs.y = r
+				
+		if (axis_constraint & AxisConstraint.Z) != 0:
+			vs.z = r
+		
+		var b : Basis = Basis().scaled(vs) 
+		
+		for i in selected_indices:
+			var v : Vector3 = vertices[i]
+			
+			v = b * v
+
+			vertices.set(i, v)
+
+		redraw()
 	elif edit_mode == EditMode.ROTATE:
 		print("ROTATE")
 		
