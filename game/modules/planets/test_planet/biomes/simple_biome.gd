@@ -1,3 +1,4 @@
+tool
 extends Biome
 
 # Copyright (c) 2019-2020 Péter Magyar

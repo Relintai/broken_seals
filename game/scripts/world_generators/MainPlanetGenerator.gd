@@ -49,6 +49,7 @@ func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: Vox
 #	create_planet()
 	
 func _generate_chunk(chunk : VoxelChunk) -> void:
+	
 	if _planet == null:
 		return
 	

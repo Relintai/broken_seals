@@ -1,3 +1,4 @@
+tool
 extends Dungeon
 
 export (EntityData) var trainer : EntityData
