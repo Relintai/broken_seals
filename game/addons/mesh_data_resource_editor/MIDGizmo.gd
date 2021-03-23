@@ -111,16 +111,16 @@ func redraw():
 	
 	var lines : PoolVector3Array = PoolVector3Array()
 	
-	if vertices.size() % 3 == 0:
-		for i in range(0, len(vertices), 3):
-			lines.append(vertices[i])
-			lines.append(vertices[i + 1])
+	if indices.size() % 3 == 0:
+		for i in range(0, len(indices), 3):
+			lines.append(vertices[indices[i]])
+			lines.append(vertices[indices[i + 1]])
 			
-			lines.append(vertices[i + 1])
-			lines.append(vertices[i + 2])
+			lines.append(vertices[indices[i + 1]])
+			lines.append(vertices[indices[i + 2]])
 			
-			lines.append(vertices[i + 2])
-			lines.append(vertices[i])
+			lines.append(vertices[indices[i + 2]])
+			lines.append(vertices[indices[i]])
 			
 	add_lines(lines, material, false)
 	
