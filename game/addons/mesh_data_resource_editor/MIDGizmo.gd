@@ -51,6 +51,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 			vertices.set(i, v)
 
 		redraw()
+		apply()
 	elif edit_mode == EditMode.SCALE:
 		var r : float = 1.0 + ((relative.x + relative.y) * 0.05)
 		
@@ -75,6 +76,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 			vertices.set(i, v)
 
 		redraw()
+		apply()
 	elif edit_mode == EditMode.ROTATE:
 		print("ROTATE")
 		
@@ -129,6 +131,25 @@ func redraw():
 	
 	add_handles(vs, handles_material)
 
+func apply() -> void:
+	var node : MeshDataInstance = get_spatial_node()
+	
+	if !node:
+		return
+		
+	var mdr : MeshDataResource = node.mesh_data
+	
+	if !mdr:
+		return
+		
+	var arrs : Array = mdr.array
+
+	arrs[ArrayMesh.ARRAY_VERTEX] = vertices
+	
+	mdr.array = arrs
+	
+	node.refresh()
+
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
 		var gt : Transform = get_spatial_node().global_transform
@@ -182,6 +203,7 @@ func forward_spatial_gui_input(index, camera, event):
 							selected_vertices_original.append(vn)
 
 					redraw()
+					apply()
 				else:
 					selected_indices.resize(0)
 					selected_vertices.resize(0)
@@ -189,6 +211,7 @@ func forward_spatial_gui_input(index, camera, event):
 					selected_vertices_original.resize(0)
 					
 					redraw()
+					apply()
 			else:
 				is_dragging = false
 					
