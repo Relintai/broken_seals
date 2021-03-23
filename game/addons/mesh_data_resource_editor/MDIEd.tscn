@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
+[ext_resource path="res://addons/mesh_data_resource_editor/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -20,21 +21,35 @@ margin_bottom = 593.0
 margin_right = 1010.0
 margin_bottom = 20.0
 
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 8.0
+margin_bottom = 17.0
+text = "V"
+
 [node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_right = 19.0
+margin_left = 12.0
+margin_right = 31.0
 margin_bottom = 20.0
+toggle_mode = true
+pressed = true
+group = ExtResource( 2 )
 text = "T"
 
 [node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 23.0
-margin_right = 43.0
+margin_left = 35.0
+margin_right = 55.0
 margin_bottom = 20.0
+toggle_mode = true
+group = ExtResource( 2 )
 text = "R"
 
 [node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 47.0
-margin_right = 66.0
+margin_left = 59.0
+margin_right = 78.0
 margin_bottom = 20.0
+toggle_mode = true
+group = ExtResource( 2 )
 text = "S"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
@@ -42,19 +57,61 @@ margin_top = 24.0
 margin_right = 1010.0
 margin_bottom = 44.0
 
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_top = 3.0
+margin_right = 7.0
+margin_bottom = 17.0
+text = "L"
+
 [node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_right = 19.0
+margin_left = 11.0
+margin_right = 30.0
 margin_bottom = 20.0
+toggle_mode = true
+pressed = true
 text = "x"
 
 [node name="Button5" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 23.0
-margin_right = 42.0
+margin_left = 34.0
+margin_right = 53.0
 margin_bottom = 20.0
+toggle_mode = true
+pressed = true
 text = "y"
 
 [node name="Button6" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 46.0
-margin_right = 65.0
+margin_left = 57.0
+margin_right = 76.0
 margin_bottom = 20.0
+toggle_mode = true
+pressed = true
 text = "z"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 48.0
+margin_right = 1010.0
+margin_bottom = 68.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_top = 3.0
+margin_right = 7.0
+margin_bottom = 17.0
+text = "F"
+
+[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 11.0
+margin_right = 31.0
+margin_bottom = 20.0
+text = "C"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 35.0
+margin_right = 55.0
+margin_bottom = 20.0
+text = "R"
+
+[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 59.0
+margin_right = 78.0
+margin_bottom = 20.0
+text = "F"
