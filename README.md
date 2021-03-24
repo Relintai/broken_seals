@@ -171,6 +171,12 @@ I ran into this issue while building on a raspberry pi 4 with the x11 platform. 
 
 ``` scons bel_latomic -j4 ```
 
+##### strip
+
+Appends `debug_symbols=no` to the build command, which will strip the resulting binary from debug symbols.
+
+``` scons bel_strip -j4 ```
+
 #### Patches
 
 The build script can apply optional patches. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patch characters.

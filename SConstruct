@@ -361,6 +361,10 @@ if len(sys.argv) > 1:
             build_string += 'LINKFLAGS="-latomic"'
             build_string += ' '
 
+        if 'strip' in arg_split:
+            build_string += 'debug_symbols=no'
+            build_string += ' '
+
         target = ' '
 
         if 'E' in arg:
