@@ -239,33 +239,33 @@ func forward_spatial_gui_input(index, camera, event):
 					
 	return false
 
-func translate_key_pressed(on : bool) -> void:
+func set_translate(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.TRANSLATE
 	
-func scale_key_pressed(on : bool) -> void:
+func set_scale(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.SCALE
 	
-func rotate_key_pressed(on : bool) -> void:
+func set_rotate(on : bool) -> void:
 	if on:
 		edit_mode = EditMode.ROTATE
 	
-func axis_key_x(on : bool) -> void:
+func set_axis_x(on : bool) -> void:
 	if on:
 		if (axis_constraint & AxisConstraint.X) != 0:
 			axis_constraint ^= AxisConstraint.X
 		else:
 			axis_constraint |= AxisConstraint.X
 	
-func axis_key_y(on : bool) -> void:
+func set_axis_y(on : bool) -> void:
 	if on:
 		if (axis_constraint & AxisConstraint.Y) != 0:
 			axis_constraint ^= AxisConstraint.Y
 		else:
 			axis_constraint |= AxisConstraint.Y
 	
-func axis_key_z(on : bool) -> void:
+func set_axis_z(on : bool) -> void:
 	if on:
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			axis_constraint ^= AxisConstraint.Z

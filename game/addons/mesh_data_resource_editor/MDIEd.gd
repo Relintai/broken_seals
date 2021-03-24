@@ -3,30 +3,36 @@ extends PanelContainer
 
 var plugin
 
+export var uv_editor_path : NodePath
+
+var uv_editor : Node
+
+func _init():
+	uv_editor = get_node(uv_editor_path)
+
 func _unhandled_key_input(event : InputEventKey) -> void:
 	if event.echo:
 		return
 	
 	#if event.key
 	if event.scancode == KEY_G:
-		
 		#translate
 		if plugin:
-			plugin.translate_key_pressed(event.pressed)
+			plugin.set_translate(event.pressed)
 	elif event.scancode == KEY_S:
 		#scale? probably needs a differrent key
 		if plugin:
-			plugin.scale_key_pressed(event.pressed)
+			plugin.set_scale(event.pressed)
 	elif event.scancode == KEY_R:
 		#rotate
 		if plugin:
-			plugin.rotate_key_pressed(event.pressed)
+			plugin.set_rotate(event.pressed)
 	elif event.scancode == KEY_X:
 		if plugin:
-			plugin.axis_key_x(event.pressed)
+			plugin.set_axis_x(event.pressed)
 	elif event.scancode == KEY_Y:
 		if plugin:
-			plugin.axis_key_y(event.pressed)
+			plugin.set_axis_y(event.pressed)
 	elif event.scancode == KEY_Z:
 		if plugin:
-			plugin.axis_key_z(event.pressed)
+			plugin.set_axis_z(event.pressed)

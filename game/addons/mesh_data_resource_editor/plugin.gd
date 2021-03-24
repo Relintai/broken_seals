@@ -77,29 +77,29 @@ func unregister_gizmo(gizmo):
 			active_gizmos.remove(i)
 			return
 
-func translate_key_pressed(on : bool) -> void:
+func set_translate(on : bool) -> void:
 	for g in active_gizmos:
-		g.translate_key_pressed(on)
+		g.set_translate(on)
 	
-func scale_key_pressed(on : bool) -> void:
+func set_scale(on : bool) -> void:
 	for g in active_gizmos:
-		g.scale_key_pressed(on)
+		g.set_scale(on)
 	
-func rotate_key_pressed(on : bool) -> void:
+func set_rotate(on : bool) -> void:
 	for g in active_gizmos:
-		g.rotate_key_pressed(on)
+		g.set_rotate(on)
 	
-func axis_key_x(on : bool) -> void:
+func set_axis_x(on : bool) -> void:
 	for g in active_gizmos:
-		g.axis_key_x(on)
+		g.set_axis_x(on)
 	
-func axis_key_y(on : bool) -> void:
+func set_axis_y(on : bool) -> void:
 	for g in active_gizmos:
-		g.axis_key_y(on)
+		g.set_axis_y(on)
 	
-func axis_key_z(on : bool) -> void:
+func set_axis_z(on : bool) -> void:
 	for g in active_gizmos:
-		g.axis_key_z(on)
+		g.set_axis_z(on)
 	
 func forward_spatial_gui_input(camera, event):
 	for g in active_gizmos:
