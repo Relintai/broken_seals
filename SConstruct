@@ -72,7 +72,7 @@ third_party_addon_repositories = [
 
 target_commits = {}
 
-godot_branch = '3.2'
+godot_branch = '3.x'
 
 def onerror(func, path, exc_info):
     """
