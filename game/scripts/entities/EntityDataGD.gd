@@ -4,7 +4,7 @@ class_name EntityDataGD
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, functionality from this class needs to be protable to the entity spell system
 
-# Copyright (c) 2019-2020 Péter Magyar
+# Copyright (c) 2019-2021 Péter Magyar
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
