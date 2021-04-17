@@ -176,9 +176,6 @@ func _process(delta):
 #				get_node("..").hide_loading_screen()
 
 func _generation_finished():
-	if not Engine.editor_hint:
-		max_frame_chunk_build_steps = _max_frame_chunk_build_temp
-
 	initial_generation = false
 	
 #	for i in range(get_chunk_count()):
@@ -271,9 +268,6 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 	return ._create_chunk(x, z, pchunk)
 	
 func spawn(start_x : int, start_z : int) -> void:
-	if not Engine.editor_hint:
-		_max_frame_chunk_build_temp = max_frame_chunk_build_steps
-		max_frame_chunk_build_steps = 0
 		
 	var spv : Vector2 = Vector2(start_x, start_z)
 	

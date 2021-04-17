@@ -5,7 +5,6 @@
 [ext_resource path="res://tw/new_terramanlevelgenerator.tres" type="TerramanLevelGenerator" id=3]
 
 [node name="TerraWorldBlocky" type="TerraWorldBlocky"]
-editable = true
 library = ExtResource( 1 )
 level_generator = ExtResource( 3 )
 voxel_scale = 2.0
