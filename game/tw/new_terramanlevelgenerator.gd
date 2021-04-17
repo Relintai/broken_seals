@@ -10,4 +10,7 @@ func _generate_chunk(chunk: TerraChunk) -> void:
 	
 	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
-			chunk.set_voxel(s.get_noise_2d(x, z) * 10.0, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			var vx : int = x + (chunk.position_x * chunk.size_x)
+			var vz : int = z + (chunk.position_z * chunk.size_z)
+			
+			chunk.set_voxel((s.get_noise_2d(vx, vz) + 2) * 10.0, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
