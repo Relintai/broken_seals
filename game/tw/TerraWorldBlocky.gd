@@ -227,23 +227,8 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 		mesher.texture_scale = 3
 		mesher.channel_index_type = TerraChunkDefault.DEFAULT_CHANNEL_TYPE
 		mesher.channel_index_isolevel = TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
-		tj.add_mesher(mesher)
-
-		var cmesher : TerraMesherBlocky = TerraMesherBlocky.new()
-		cmesher.texture_scale = 3
-		cmesher.base_light_value = 0.45
-		cmesher.ao_strength = 0.2
-		cmesher.voxel_scale = voxel_scale
-		cmesher.build_flags = build_flags
-
-		if cmesher.build_flags & TerraChunkDefault.BUILD_FLAG_USE_LIGHTING != 0:
-			cmesher.build_flags = cmesher.build_flags ^ TerraChunkDefault.BUILD_FLAG_USE_LIGHTING
-
-		cmesher.always_add_colors = true
-
-	#	cmesher.channel_index_type = TerraChunkDefault.DEFAULT_CHANNEL_TYPE
-		cmesher.channel_index_type = TerraChunkDefault.DEFAULT_CHANNEL_ALT_TYPE
-		tj.add_mesher(cmesher)
+#		mesher.lod_index = 3
+		tj.set_mesher(mesher)
 
 		pchunk.job_add(lj)
 		pchunk.job_add(tj)
