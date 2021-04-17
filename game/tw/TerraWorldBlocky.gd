@@ -53,6 +53,8 @@ var _max_frame_chunk_build_temp : int
 
 var rc : int = 0
 
+export(int)  var test_lod : int = 0 setget set_test_lod
+
 func _enter_tree():
 	if !Engine.is_editor_hint() && use_global_chunk_settings:
 		Settings.connect("setting_changed", self, "on_setting_changed")
@@ -229,6 +231,38 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 		mesher.channel_index_isolevel = TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 #		mesher.lod_index = 3
 		tj.set_mesher(mesher)
+		
+		var s : TerraMesherJobStep = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_NORMAL
+		tj.add_jobs_step(s)
+		
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+#		s.lod_index = 1
+#		tj.add_jobs_step(s)
+#
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+#		s.lod_index = 2
+#		tj.add_jobs_step(s)
+#
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+#		s.lod_index = 3
+#		tj.add_jobs_step(s)
+		
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_DROP_UV2
+#		tj.add_jobs_step(s)
+#
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_MERGE_VERTS
+#		tj.add_jobs_step(s)
+#
+#		s = TerraMesherJobStep.new()
+#		s.job_type = TerraMesherJobStep.TYPE_SIMPLIFY_MESH
+#		s.fqms = FastQuadraticMeshSimplifier.new()
+#		tj.add_jobs_step(s)
 
 		pchunk.job_add(lj)
 		pchunk.job_add(tj)
@@ -329,3 +363,13 @@ func get_mob_level() -> int:
 	
 func set_mob_level(level : int) -> void:
 	mob_level = level
+	
+func set_test_lod(val : int) -> void:
+	test_lod = val
+	
+	for i in range(chunk_get_count()):
+		var c : TerraChunkDefault = chunk_get_index(i)
+		
+		c.current_lod_level = test_lod
+		
+	
