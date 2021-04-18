@@ -111,15 +111,23 @@ func _setup():
 
 	build()
 
-func _setup_library(library):
-	._setup_library(library)
+func _setup_voxel_library(library):
+	._setup_voxel_library(library)
 	
 	if library is VoxelmanLibraryMerger:
 		library.get_prop_packer().add_texture(wall_texture)
 		library.get_prop_packer().add_texture(floor_texture)
 		library.get_prop_packer().add_texture(ceiling_texture)
+		
+func _setup_terra_library(library):
+	._setup_terra_library(library)
+	
+	if library is TerramanLibraryMerger:
+		library.get_prop_packer().add_texture(wall_texture)
+		library.get_prop_packer().add_texture(floor_texture)
+		library.get_prop_packer().add_texture(ceiling_texture)
 
-func _generate_chunk(chunk, spawn_mobs):
+func _generate_voxel_chunk(chunk, spawn_mobs):
 	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(sizex + 2, sizey + 2, sizez + 2) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	

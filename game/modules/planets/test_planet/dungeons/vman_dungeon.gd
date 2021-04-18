@@ -95,7 +95,7 @@ func _setup():
 
 	build()
 
-func _generate_chunk(chunk, spawn_mobs):
+func _generate_voxel_chunk(chunk, spawn_mobs):
 	var aabb : AABB = AABB(Vector3(posx - 1, posy - 1, posz - 1) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(sizex + 2, sizey + 2, sizez + 2) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	var chunk_aabb : AABB = AABB(chunk.get_position() * Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale), Vector3(chunk.size_x, chunk.size_y, chunk.size_z) * Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale))
 	

@@ -1,11 +1,17 @@
 tool
 extends TerramanLevelGenerator
 
+var lseed = 0
+
+func setup(world : TerraWorld, level_seed : int, spawn_mobs : bool, library: TerramanLibrary) -> void:
+	lseed = level_seed
+
 func _generate_chunk(chunk: TerraChunk) -> void:
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
 	
 	var s : OpenSimplexNoise = OpenSimplexNoise.new()
+	s.seed = lseed
 	
 	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):

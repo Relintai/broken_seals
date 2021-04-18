@@ -83,8 +83,8 @@ func on_settings_loaded():
 	vis_update += VIS_UPDATE_INTERVAL
 	
 func generate():
-	#if level_generator != null:
-	#	level_generator.setup(self, 80, false, library)
+	if level_generator != null:
+		level_generator.setup(self, 80, false, library)
 
 	spawn(0, 0)
 
@@ -319,8 +319,8 @@ func setup_client_seed(pseed : int) -> void:
 	
 	Server.sset_seed(pseed)
 	
-	#if level_generator != null:
-		#level_generator.setup(self, pseed, false, library)
+	if level_generator != null:
+		level_generator.setup(self, pseed, false, library)
 	
 	spawn(0, 0)
 
@@ -336,8 +336,8 @@ func load_character(file_name : String) -> void:
 
 	Server.sset_seed(_player.sseed)
 	
-	#if level_generator != null:
-	#	level_generator.setup(self, _player.sseed, true, library)
+	if level_generator != null:
+		level_generator.setup(self, _player.sseed, true, library)
 	
 	spawn(0, 0)
 	

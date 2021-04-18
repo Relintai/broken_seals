@@ -48,14 +48,25 @@ func _setup():
 #
 #	add_dungeon(dung)
 
-func _generate_chunk(chunk, spawn_mobs):
+func _generate_voxel_chunk(chunk, spawn_mobs):
 	if (get_biome_count() == 0):
 		return
 
 	var b : Biome = get_biome(0)
 	
-	b.generate_chunk(chunk, spawn_mobs)
+	b.generate_voxel_chunk(chunk, spawn_mobs)
 	
 	for i in range(get_dungeon_count()):
-		get_dungeon(i).generate_chunk(chunk, spawn_mobs)
+		get_dungeon(i).generate_voxel_chunk(chunk, spawn_mobs)
+	
+func _generate_terra_chunk(chunk, spawn_mobs):
+	if (get_biome_count() == 0):
+		return
+
+	var b : Biome = get_biome(0)
+	
+	b.generate_terra_chunk(chunk, spawn_mobs)
+	
+	for i in range(get_dungeon_count()):
+		get_dungeon(i).generate_terra_chunk(chunk, spawn_mobs)
 	

@@ -1,6 +1,6 @@
 tool
-extends VoxelmanLevelGenerator
-class_name MainPlanetGenerator
+extends TerramanLevelGenerator
+class_name MainTPlanetGenerator
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -29,11 +29,11 @@ export(int) var _level_seed : int
 export(bool) var _spawn_mobs : bool
 export(Planet) var planet : Planet = null
 
-var _world : VoxelWorld
+var _world : TerraWorld
 var _planet : Planet
-var _library : VoxelmanLibrary
+var _library : TerramanLibrary
 
-func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: VoxelmanLibrary) -> void:
+func setup(world : TerraWorld, level_seed : int, spawn_mobs : bool, library: TerramanLibrary) -> void:
 	_level_seed = level_seed
 	_world = world
 	_spawn_mobs = spawn_mobs
@@ -43,17 +43,16 @@ func setup(world : VoxelWorld, level_seed : int, spawn_mobs : bool, library: Vox
 		_planet = planet.instance(_level_seed)
 		_planet.current_seed = _level_seed
 		_planet.setup()
-		_planet.setup_library(_library)
+		_planet.setup_terra_library(_library)
 		_library.refresh_rects()
 	
 #	create_planet()
 	
-func _generate_chunk(chunk : VoxelChunk) -> void:
-	
+func _generate_chunk(chunk : TerraChunk) -> void:
 	if _planet == null:
 		return
 	
-	_planet.generate_voxel_chunk(chunk, _spawn_mobs)
+	_planet.generate_terra_chunk(chunk, _spawn_mobs)
 
 func create_planet():
 	var planet_files : Array = get_planets(planet_folder)

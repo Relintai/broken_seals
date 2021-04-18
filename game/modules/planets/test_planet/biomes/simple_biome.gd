@@ -32,11 +32,7 @@ func _setup():
 		var d : Dungeon = get_dungeon(i)
 		d.setup()
 		
-func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
-#	var chunk : VoxelChunk = chunk.get_chunk()
-	
-#	generate_terrarin(chunk, spawn_mobs)\
-
+func _generate_voxel_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 	if voxel_scale < 0:
 		voxel_scale = chunk.voxel_scale
 	
@@ -66,6 +62,39 @@ func _generate_chunk(chunk: VoxelChunk, spawn_mobs: bool) -> void:
 		ESS.entity_spawner.spawn_mob(0, level, \
 					Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
 							(chunk.position_y + 1) * chunk.size_y * chunk.voxel_scale, \
+							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
+
+func _generate_terra_chunk(chunk, spawn_mobs):
+	if voxel_scale < 0:
+		voxel_scale = chunk.voxel_scale
+	
+		#todo generate this properly
+		var entrance_position : Vector3 = Vector3(7, 5, 7)
+	
+		for i in range(get_dungeon_count()):
+			var d : Dungeon = get_dungeon(i)
+			
+			if d.has_method("has_entrance_position"):
+				d.entrance_position.origin = entrance_position
+
+				entrance_position = d.next_level_teleporter_position_data_space
+				entrance_position *= voxel_scale
+
+	#terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
+	gen_terra_chunk(chunk)
+	
+	for i in range(get_dungeon_count()):
+		get_dungeon(i).generate_terra_chunk(chunk, spawn_mobs)
+
+	if not Engine.editor_hint and spawn_mobs and randi() % 4 == 0:
+		var level : int = 1
+		
+		if chunk.get_voxel_world().has_method("get_mob_level"):
+			level  = chunk.get_voxel_world().get_mob_level()
+
+		ESS.entity_spawner.spawn_mob(0, level, \
+					Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
+							100, \
 							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
 
 func generate_terrarin(chunk : VoxelChunk, spawn_mobs: bool) -> void:
@@ -218,3 +247,26 @@ func box_blur(chunk : VoxelChunk):
 				chunk.set_voxel(aavg, x + 1, y + 1, z, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				chunk.set_voxel(aavg, x, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
 				chunk.set_voxel(aavg, x + 1, y + 1, z + 1, VoxelChunk.DEFAULT_CHANNEL_ISOLEVEL)
+
+func gen_terra_chunk(chunk: TerraChunk) -> void:
+	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+	
+	var s : OpenSimplexNoise = OpenSimplexNoise.new()
+	s.seed = current_seed
+	
+	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+			var vx : int = x + (chunk.position_x * chunk.size_x)
+			var vz : int = z + (chunk.position_z * chunk.size_z)
+			
+			var val : float = (s.get_noise_2d(vx, vz) + 2)
+			val *= val
+			val *= 20.0
+
+			chunk.set_voxel(val, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+
+			if val < 50:
+				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+			elif val > 70:
+				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
