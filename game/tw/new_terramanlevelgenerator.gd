@@ -19,3 +19,5 @@ func _generate_chunk(chunk: TerraChunk) -> void:
 			
 			if val < 33:
 				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+			elif val > 42:
+				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
