@@ -6,7 +6,7 @@
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=4]
 [ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=5]
 
-[sub_resource type="ProceduralSky" id=48]
+[sub_resource type="ProceduralSky" id=1]
 sky_top_color = Color( 0.34902, 0.643137, 0.705882, 1 )
 sky_horizon_color = Color( 0.27451, 0.278431, 0.207843, 1 )
 sky_curve = 0.263535
@@ -23,9 +23,9 @@ sun_angle_max = 23.15
 sun_energy = 9.29
 texture_size = 0
 
-[sub_resource type="Environment" id=49]
+[sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 48 )
+background_sky = SubResource( 1 )
 ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
 ambient_light_energy = 1.67
 ambient_light_sky_contribution = 0.09
@@ -58,7 +58,7 @@ script = ExtResource( 2 )
 test_prop = ExtResource( 5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 49 )
+environment = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
