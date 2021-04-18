@@ -13,4 +13,9 @@ func _generate_chunk(chunk: TerraChunk) -> void:
 			var vx : int = x + (chunk.position_x * chunk.size_x)
 			var vz : int = z + (chunk.position_z * chunk.size_z)
 			
-			chunk.set_voxel((s.get_noise_2d(vx, vz) + 2) * 10.0, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			var val : float = (s.get_noise_2d(vx, vz) + 2) * 20.0
+
+			chunk.set_voxel(val, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			
+			if val < 33:
+				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
