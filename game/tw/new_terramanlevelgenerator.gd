@@ -1,7 +1,6 @@
 tool
 extends TerramanLevelGenerator
 
-
 func _generate_chunk(chunk: TerraChunk) -> void:
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
