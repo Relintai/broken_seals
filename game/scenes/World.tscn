@@ -7,14 +7,14 @@
 [ext_resource path="res://modules/planets/test_planet/DungeonPlanetData.tres" type="Planet" id=5]
 [ext_resource path="res://voxelman/world/TVVoxelWorld.gd" type="Script" id=8]
 
-[sub_resource type="VoxelmanLevelGenerator" id=1]
+[sub_resource type="VoxelmanLevelGenerator" id=50]
 script = ExtResource( 1 )
 _force_planet = -1
 _level_seed = 0
 _spawn_mobs = false
 planet = ExtResource( 5 )
 
-[sub_resource type="ProceduralSky" id=2]
+[sub_resource type="ProceduralSky" id=48]
 sky_top_color = Color( 0.34902, 0.643137, 0.705882, 1 )
 sky_horizon_color = Color( 0.27451, 0.278431, 0.207843, 1 )
 sky_curve = 0.263535
@@ -31,9 +31,9 @@ sun_angle_max = 23.15
 sun_energy = 9.29
 texture_size = 0
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment" id=49]
 background_mode = 2
-background_sky = SubResource( 2 )
+background_sky = SubResource( 48 )
 ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
 ambient_light_energy = 1.67
 ambient_light_sky_contribution = 0.09
@@ -62,7 +62,7 @@ data_margin_end = 2
 max_concurrent_generations = 8
 max_frame_chunk_build_steps = 4
 library = ExtResource( 2 )
-level_generator = SubResource( 1 )
+level_generator = SubResource( 50 )
 voxel_scale = 2.0
 chunk_spawn_range = 6
 build_flags = 511
@@ -73,7 +73,7 @@ spawn_height = 3
 test_prop = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 3 )
+environment = SubResource( 49 )
 __meta__ = {
 "_editor_description_": ""
 }

@@ -1,16 +1,73 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://tw/new_terramanlibrarymerger.tres" type="TerramanLibraryMerger" id=1]
 [ext_resource path="res://tw/TerraWorldBlocky.gd" type="Script" id=2]
 [ext_resource path="res://tw/new_terramanlevelgenerator.tres" type="TerramanLevelGenerator" id=3]
+[ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=4]
+[ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=5]
 
-[node name="TerraWorldBlocky" type="TerraWorldBlocky"]
+[sub_resource type="ProceduralSky" id=48]
+sky_top_color = Color( 0.34902, 0.643137, 0.705882, 1 )
+sky_horizon_color = Color( 0.27451, 0.278431, 0.207843, 1 )
+sky_curve = 0.263535
+sky_energy = 0.3
+ground_bottom_color = Color( 0.196078, 0.152941, 0.152941, 1 )
+ground_horizon_color = Color( 0.223529, 0.192157, 0.164706, 1 )
+ground_curve = 0.101965
+ground_energy = 0.4
+sun_color = Color( 0.45098, 0.352941, 0.113725, 1 )
+sun_latitude = 39.71
+sun_longitude = -8.09
+sun_angle_min = 0.0
+sun_angle_max = 23.15
+sun_energy = 9.29
+texture_size = 0
+
+[sub_resource type="Environment" id=49]
+background_mode = 2
+background_sky = SubResource( 48 )
+ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
+ambient_light_energy = 1.67
+ambient_light_sky_contribution = 0.09
+fog_enabled = true
+fog_color = Color( 0.184314, 0.207843, 0.156863, 1 )
+fog_sun_color = Color( 0.196078, 0.266667, 0.309804, 1 )
+fog_sun_amount = 0.53
+fog_depth_begin = 155.9
+fog_depth_end = 379.9
+fog_depth_curve = 1.18921
+tonemap_mode = 2
+tonemap_exposure = 0.83
+auto_exposure_max_luma = 7.33
+ss_reflections_enabled = true
+ssao_enabled = true
+glow_levels/3 = false
+glow_intensity = 1.6
+glow_strength = 1.1
+glow_bloom = 0.1
+glow_hdr_luminance_cap = 1.0
+
+[node name="World" type="TerraWorldBlocky"]
+world_height = 100.0
 library = ExtResource( 1 )
 level_generator = ExtResource( 3 )
 voxel_scale = 2.0
 build_flags = 510
+num_lods = 1
 script = ExtResource( 2 )
+test_prop = ExtResource( 5 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 49 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( -0.839321, 0.447369, -0.30887, 0.215012, 0.795005, 0.567219, 0.49931, 0.409668, -0.763454, -40.7817, 19.7414, -39.9584 )
-light_energy = 2.5
+transform = Transform( -0.797163, 0.45442, 0.397535, 0.124932, -0.520028, 0.844963, 0.590697, 0.723238, 0.357776, 0, 18.834, 0 )
+layers = 3
+light_color = Color( 1, 0.878431, 0.878431, 1 )
+light_energy = 0.87
+light_specular = 0.65
+shadow_bias = 0.07
+script = ExtResource( 4 )
