@@ -71,14 +71,15 @@ func on_setting_changed(section, key, value):
 	if section == "game":
 		if key == "chunk_spawn_range":
 			chunk_spawn_range = value
-			
-		if key == "chunk_lod_falloff":
+		elif key == "chunk_lod_falloff":
 			chunk_lod_falloff = value
-		
-	
+		elif key == "chunk_lod_first_falloff":
+			chunk_lod_first_falloff = value
+
 func on_settings_loaded():
 	chunk_spawn_range = Settings.get_value("game", "chunk_spawn_range")
 	chunk_lod_falloff = Settings.get_value("game", "chunk_lod_falloff")
+	chunk_lod_first_falloff = Settings.get_value("game", "chunk_lod_first_falloff")
 	
 	vis_update += VIS_UPDATE_INTERVAL
 	

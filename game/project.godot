@@ -306,6 +306,7 @@ level/max_class_level=60
 
 chunk_lod_falloff=2
 chunk_spawn_range=8
+chunk_lod_first_falloff=2
 
 [importer_defaults]
 

@@ -44,7 +44,6 @@ size_flags_vertical = 3
 tab_align = 0
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -147,6 +146,15 @@ step = 1.0
 margin_top = 32.0
 margin_bottom = 56.0
 property_category = "game"
+property_name = "chunk_lod_first_falloff"
+property_label = "Chunk Lod First Falloff"
+max_value = 30.0
+step = 1.0
+
+[node name="OptionsSpinboxRow3" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+margin_top = 64.0
+margin_bottom = 88.0
+property_category = "game"
 property_name = "chunk_lod_falloff"
 property_label = "Chunk Lod Falloff"
 max_value = 30.0
@@ -170,8 +178,8 @@ property_name = "touchscreen_mode"
 property_label = "Touchscreen Mode"
 
 [node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
-margin_top = 58.0
-margin_bottom = 82.0
+margin_top = 34.0
+margin_bottom = 58.0
 property_category = "ui"
 property_name = "ui_scale"
 property_label = "UI Scale"
@@ -181,8 +189,8 @@ step = 0.01
 rounded = false
 
 [node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
-margin_top = 90.0
-margin_bottom = 114.0
+margin_top = 66.0
+margin_bottom = 90.0
 property_category = "ui"
 property_name = "ui_scale_touch"
 property_label = "UI Scale Touch"
@@ -222,4 +230,5 @@ margin_top = 439.0
 margin_right = 535.0
 margin_bottom = 465.57
 text = "Close"
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Close" to="." method="hide"]

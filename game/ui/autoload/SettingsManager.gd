@@ -45,6 +45,7 @@ var _settings : Dictionary = {
 	"game" : {
 		"chunk_spawn_range" : ProjectSettings.get("game/chunk_spawn_range"),
 		"chunk_lod_falloff" : ProjectSettings.get("game/chunk_lod_falloff"),
+		"chunk_lod_first_falloff" : ProjectSettings.get("game/chunk_lod_first_falloff"),
 	},
 	"ui" : {
 		"touchscreen_mode" : OS.has_touchscreen_ui_hint(),
