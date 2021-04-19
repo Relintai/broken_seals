@@ -233,33 +233,24 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 		s.job_type = TerraMesherJobStep.TYPE_NORMAL
 		tj.add_jobs_step(s)
 		
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
-#		s.lod_index = 1
-#		tj.add_jobs_step(s)
-#
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
-#		s.lod_index = 2
-#		tj.add_jobs_step(s)
-#
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
-#		s.lod_index = 3
-#		tj.add_jobs_step(s)
-		
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_DROP_UV2
-#		tj.add_jobs_step(s)
-#
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_MERGE_VERTS
-#		tj.add_jobs_step(s)
-#
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_SIMPLIFY_MESH
-#		s.fqms = FastQuadraticMeshSimplifier.new()
-#		tj.add_jobs_step(s)
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+		s.lod_index = 1
+		tj.add_jobs_step(s)
+
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+		s.lod_index = 2
+		tj.add_jobs_step(s)
+
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_MERGE_VERTS
+		tj.add_jobs_step(s)
+
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_BAKE_TEXTURE
+		tj.add_jobs_step(s)
+
 
 		pchunk.job_add(lj)
 		pchunk.job_add(tj)

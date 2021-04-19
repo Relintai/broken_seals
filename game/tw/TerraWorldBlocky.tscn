@@ -61,7 +61,7 @@ library = ExtResource( 1 )
 level_generator = SubResource( 1 )
 voxel_scale = 2.0
 build_flags = 510
-num_lods = 1
+num_lods = 5
 script = ExtResource( 2 )
 test_prop = ExtResource( 5 )
 
