@@ -52,7 +52,6 @@ module_repositories = [
     [ ['https://github.com/Relintai/world_generator.git', 'git@github.com:Relintai/world_generator.git'], 'world_generator', '' ],
     [ ['https://github.com/Relintai/entity_spell_system.git', 'git@github.com:Relintai/entity_spell_system.git'], 'entity_spell_system', '' ],
     [ ['https://github.com/Relintai/ui_extensions.git', 'git@github.com:Relintai/ui_extensions.git'], 'ui_extensions', '' ],
-    [ ['https://github.com/Relintai/voxelman.git', 'git@github.com:Relintai/voxelman.git'], 'voxelman', '' ],
     [ ['https://github.com/Relintai/texture_packer.git', 'git@github.com:Relintai/texture_packer.git'], 'texture_packer', '' ],
     [ ['https://github.com/Relintai/godot_fastnoise.git', 'git@github.com:Relintai/godot_fastnoise.git'], 'fastnoise', '' ],
     [ ['https://github.com/Relintai/mesh_data_resource.git', 'git@github.com:Relintai/mesh_data_resource.git'], 'mesh_data_resource', '' ],
@@ -62,6 +61,10 @@ module_repositories = [
     [ ['https://github.com/Relintai/broken_seals_module.git', 'git@github.com:Relintai/broken_seals_module.git'], 'broken_seals_module', '' ],
     [ ['https://github.com/Relintai/thread_pool.git', 'git@github.com:Relintai/thread_pool.git'], 'thread_pool', '' ],
     [ ['https://github.com/Relintai/terraman.git', 'git@github.com:Relintai/terraman.git'], 'terraman', '' ],
+]
+
+removed_modules = [
+    [ ['https://github.com/Relintai/voxelman.git', 'git@github.com:Relintai/voxelman.git'], 'voxelman', '' ],
 ]
 
 addon_repositories = [
@@ -190,6 +193,12 @@ def copytree(src, dst):
 
             shutil.copy2(sp, dp)
 
+def remove_repository(data, target_folder):
+    folder = os.path.abspath(target_folder + data[1])
+
+    if os.path.isdir(folder):
+        shutil.rmtree(folder)
+
 def update_engine():
     update_repository(engine_repository, '/', godot_branch)
 
@@ -224,6 +233,10 @@ def setup_modules():
     for rep in module_repositories:
         setup_repository(rep, module_clone_path)
         copy_repository(rep, './engine/modules/', '.' + module_clone_path)
+
+    for rep in removed_modules:
+        remove_repository(rep, './engine/modules/')
+
 
 def setup_addons():
     for rep in addon_repositories:
