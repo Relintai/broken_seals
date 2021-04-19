@@ -1,9 +1,8 @@
-[gd_resource type="Biome" load_steps=4 format=2]
+[gd_resource type="Biome" load_steps=3 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/biomes/simple_biome.gd" type="Script" id=1]
-[ext_resource path="res://modules/planets/test_planet/dungeons/vman_dungeon.tres" type="Dungeon" id=2]
-[ext_resource path="res://modules/planets/test_planet/villages/village.tres" type="Dungeon" id=3]
+[ext_resource path="res://modules/planets/test_planet/villages/village.tres" type="Building" id=2]
 
 [resource]
-dungeons = [ ExtResource( 2 ), ExtResource( 3 ) ]
+buildings = [ ExtResource( 2 ) ]
 script = ExtResource( 1 )

@@ -1,6 +1,0 @@
-[gd_resource type="DungeonRoom" load_steps=2 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/dungeon_start_rooms/start_room.gd" type="Script" id=1]
-
-[resource]
-script = ExtResource( 1 )

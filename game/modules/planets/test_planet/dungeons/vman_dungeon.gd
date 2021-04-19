@@ -1,5 +1,5 @@
 tool
-extends Dungeon
+extends Building
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -72,7 +72,7 @@ func _instance(p_seed, p_instance):
 
 func _setup():
 	if sizex == 0 || sizey == 0 || sizez == 0:
-		print("Dungeon size is 0!")
+		print("Building size is 0!")
 		return
 	
 #	entrance_position.origin = Vector3(7, 5, 7)

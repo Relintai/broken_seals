@@ -1,5 +1,5 @@
 tool
-extends Dungeon
+extends Building
 
 # Copyright (c) 2019-2021 Péter Magyar
 #

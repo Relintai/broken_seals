@@ -1,4 +1,4 @@
-extends Dungeon
+extends Building
 
 
 # Declare member variables here. Examples:

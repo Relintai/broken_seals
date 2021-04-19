@@ -28,8 +28,8 @@ var voxel_scale : float = -1
 func _setup():
 	terrarin_gen.set_current_seed(current_seed)
 	
-	for i in range(get_dungeon_count()):
-		var d : Dungeon = get_dungeon(i)
+	for i in range(get_building_count()):
+		var d : Building = get_building(i)
 		d.setup()
 		
 func _generate_terra_chunk(chunk, spawn_mobs):
@@ -39,8 +39,8 @@ func _generate_terra_chunk(chunk, spawn_mobs):
 		#todo generate this properly
 		var entrance_position : Vector3 = Vector3(7, 5, 7)
 	
-		for i in range(get_dungeon_count()):
-			var d : Dungeon = get_dungeon(i)
+		for i in range(get_building_count()):
+			var d : Building = get_building(i)
 			
 			if d.has_method("has_entrance_position"):
 				d.entrance_position.origin = entrance_position
@@ -51,8 +51,8 @@ func _generate_terra_chunk(chunk, spawn_mobs):
 	#terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 	gen_terra_chunk(chunk)
 	
-	for i in range(get_dungeon_count()):
-		get_dungeon(i).generate_terra_chunk(chunk, spawn_mobs)
+	for i in range(get_building_count()):
+		get_building(i).generate_terra_chunk(chunk, spawn_mobs)
 
 	if not Engine.editor_hint and spawn_mobs and randi() % 4 == 0:
 		var level : int = 1

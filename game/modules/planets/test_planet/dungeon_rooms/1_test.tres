@@ -1,6 +1,0 @@
-[gd_resource type="DungeonRoom" load_steps=2 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/dungeon_rooms/dungeon_room.tres" type="DungeonRoom" id=1]
-
-[resource]
-dungeon_room = ExtResource( 1 )

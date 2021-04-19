@@ -1,5 +1,5 @@
 tool
-extends Dungeon
+extends Building
 
 export (EntityData) var trainer : EntityData
 export (EntityData) var vendor : EntityData
