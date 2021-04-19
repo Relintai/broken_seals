@@ -153,7 +153,7 @@ func _process(delta):
 				
 				for y in range(-1 + cpos.y, spawn_height + cpos.y):
 					if not chunk_has(x, z):
-#						print("spawn " + str(Vector3(x, y, z)))
+						#print("spawn " + str(Vector2(x, z)))
 						chunk_create(x, z)
 						
 		update_lods()
@@ -293,7 +293,7 @@ func set_editor_generate(value : bool) -> void:
 	if value:
 		library.refresh_rects()
 		
-		#level_generator.setup(self, current_seed, false, library)
+		level_generator.setup(self, current_seed, false, library)
 		spawn(0, 0)
 #	else:
 #		spawned = false
@@ -338,7 +338,7 @@ func load_character(file_name : String) -> void:
 	
 	if level_generator != null:
 		level_generator.setup(self, _player.sseed, true, library)
-	
+
 	spawn(0, 0)
 	
 	set_process(true)
