@@ -44,11 +44,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/entities/EntityDataGD.gd"
 }, {
-"base": "VoxelMesherCubic",
-"class": "GDCubicVoxelMesher",
-"language": "GDScript",
-"path": "res://voxelman/debug/CubicVoxelMesher.gd"
-}, {
 "base": "Node",
 "class": "GEAction",
 "language": "GDScript",
@@ -149,11 +144,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/MainScene.gd"
 }, {
-"base": "VoxelmanLevelGenerator",
-"class": "MainPlanetGenerator",
-"language": "GDScript",
-"path": "res://scripts/world_generators/MainPlanetGenerator.gd"
-}, {
 "base": "TerramanLevelGenerator",
 "class": "MainTPlanetGenerator",
 "language": "GDScript",
@@ -204,21 +194,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/spells/gd_spell_script.gd"
 }, {
-"base": "VoxelChunkMarchingCubes",
-"class": "TVVoxelChunk",
-"language": "GDScript",
-"path": "res://voxelman/world/TVVoxelChunk.gd"
-}, {
-"base": "VoxelMesherMarchingCubes",
-"class": "TVVoxelMesher",
-"language": "GDScript",
-"path": "res://voxelman/world/TVVoxelMesher.gd"
-}, {
-"base": "VoxelMesherMarchingCubes",
-"class": "TestVoxelMesher",
-"language": "GDScript",
-"path": "res://voxelman/debug/TestVoxelMesher.gd"
-}, {
 "base": "GameModule",
 "class": "UIGuiChildModule",
 "language": "GDScript",
@@ -237,7 +212,6 @@ _global_script_class_icons={
 "DisplayPlayerGD": "",
 "EntityAIGD": "",
 "EntityDataGD": "",
-"GDCubicVoxelMesher": "",
 "GEAction": "",
 "GEBrighten": "",
 "GEBrush": "",
@@ -258,7 +232,6 @@ _global_script_class_icons={
 "ItemTemplateGD": "",
 "LayeredTextureMaker": "",
 "Main": "",
-"MainPlanetGenerator": "",
 "MainTPlanetGenerator": "",
 "ManaResource": "",
 "Menu": "",
@@ -269,9 +242,6 @@ _global_script_class_icons={
 "SpeedResource": "",
 "SpellEffectVisualBasic": "",
 "SpellGD": "",
-"TVVoxelChunk": "",
-"TVVoxelMesher": "",
-"TestVoxelMesher": "",
 "UIGuiChildModule": "",
 "UIWindowModule": ""
 }
