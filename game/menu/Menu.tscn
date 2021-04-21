@@ -783,7 +783,6 @@ chunk_lod_falloff = 0
 num_lods = 0
 script = ExtResource( 16 )
 show_loading_screen = false
-generate_on_ready = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource( 13 )
