@@ -119,7 +119,7 @@ func load_uploaded_character(data : String, position : Vector3, network_owner : 
 	_next_entity_guid += 1
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
-	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
+	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_NETWORKED
 	createinfo.serialized_data = parse_json(data)
 	createinfo.transform.origin = position
 	createinfo.networked = false
