@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://tw/new_terramanlevelgenerator.tres" type="TerramanLevelGenerator" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
+[ext_resource path="res://menu/ExitButton.gd" type="Script" id=21]
 
 [sub_resource type="TerraChunkBlocky" id=1]
 resource_name = "Chunk[-2,0]"
@@ -654,8 +655,9 @@ __meta__ = {
 
 [node name="Disconnect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
+margin_top = 13.0
 margin_right = 120.0
-margin_bottom = 26.269
+margin_bottom = 39.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Disconnect"
 script = ExtResource( 13 )
@@ -664,9 +666,9 @@ __meta__ = {
 }
 
 [node name="Connect" type="Button" parent="OptionsButton/Control/VBoxContainer"]
-margin_top = 47.0
+margin_top = 13.0
 margin_right = 120.0
-margin_bottom = 73.5702
+margin_bottom = 39.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Connect"
 script = ExtResource( 11 )
@@ -675,9 +677,9 @@ __meta__ = {
 }
 
 [node name="Host" type="Button" parent="OptionsButton/Control/VBoxContainer"]
-margin_top = 81.0
+margin_top = 47.0
 margin_right = 120.0
-margin_bottom = 107.57
+margin_bottom = 73.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Host"
 script = ExtResource( 12 )
@@ -687,9 +689,9 @@ __meta__ = {
 
 [node name="Button2" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
-margin_top = 115.0
+margin_top = 81.0
 margin_right = 120.0
-margin_bottom = 141.57
+margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
 text = "Login"
 __meta__ = {
@@ -698,9 +700,9 @@ __meta__ = {
 
 [node name="Button3" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
-margin_top = 115.0
+margin_top = 81.0
 margin_right = 120.0
-margin_bottom = 141.57
+margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
 text = "Register"
 __meta__ = {
@@ -708,9 +710,9 @@ __meta__ = {
 }
 
 [node name="About" type="Button" parent="OptionsButton/Control/VBoxContainer"]
-margin_top = 115.0
+margin_top = 81.0
 margin_right = 120.0
-margin_bottom = 141.57
+margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
 text = "About"
 __meta__ = {
@@ -718,11 +720,22 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+margin_top = 115.0
+margin_right = 120.0
+margin_bottom = 141.57
+rect_min_size = Vector2( 120, 0 )
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 149.0
 margin_right = 120.0
 margin_bottom = 175.57
 rect_min_size = Vector2( 120, 0 )
-text = "Options"
+text = "Exit"
+script = ExtResource( 21 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
