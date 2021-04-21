@@ -56,6 +56,10 @@ func start_hosting(p_port : int = 0) -> int:
 	
 	var peer : NetworkedMultiplayerENet = NetworkedMultiplayerENet.new()
 	var err : int = peer.create_server(p_port, 32)
+	
+	if err:
+		return err
+	
 	get_tree().set_network_peer(peer)
 	
 	_connected_to_server()
@@ -185,7 +189,7 @@ remotesync func cspawn_player(info : Dictionary, sid : int, pos : Vector3):
 	Logger.verbose("NetworkManager cspawn_player")
 	
 	if sid == get_tree().get_network_unique_id():
-		local_player_master.player =  ESS.get_ess_entity_spawner().spawn_player(info["selected_class"] as int, pos, info["name"] as String, str(sid), sid)
+		local_player_master.player =  ESS.entity_spawner.spawn_player(info["selected_class"] as int, pos, info["name"] as String, str(sid), sid)
 		call_deferred("set_terrarin_player")
 		
 		if get_tree().is_network_server() and not splayers_dict.has(sid):
@@ -195,7 +199,7 @@ remotesync func cspawn_player(info : Dictionary, sid : int, pos : Vector3):
 		var pm : PlayerMaster = PlayerMaster.new()
 		pm.sid = sid
 		
-		pm.player = ESS.get_ess_entity_spawner().spawn_networked_player(info["selected_class"] as int, pos, info["name"] as String, str(sid), sid)
+		pm.player = ESS.entity_spawner.spawn_networked_player(info["selected_class"] as int, pos, info["name"] as String, str(sid), sid)
 			
 		if get_tree().is_network_server() and not splayers_dict.has(sid):
 			splayers_dict[sid] = pm
@@ -209,11 +213,11 @@ func upload_character(data : String) -> void:
 	rpc_id(1, "sreceive_upload_character", data)
 	
 master func sreceive_upload_character(data: String) -> void:
-	ESS.get_ess_entity_spawner().spawn_networked_player_from_data(data, Vector3(0, 10, 0), multiplayer.get_rpc_sender_id())
-	
+	ESS.entity_spawner.load_uploaded_character(data, Vector3(0, 10, 0), multiplayer.get_rpc_sender_id())
+
 func set_terrarin_player():
 	Logger.verbose("NetworkManager cspawn_player")
 	
-	var terrarin : TerraWorld = get_node("/root/GameScene/VoxelWorld")
+	var terrarin : TerraWorld = get_node("/root/main/World")
 	
 	terrarin.set_player(local_player_master.player.get_body() as Spatial)

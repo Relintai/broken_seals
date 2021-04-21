@@ -107,4 +107,6 @@ func show_loading_screen() -> void:
 	
 func hide_loading_screen() -> void:
 	_loading_screen.hide()
-	
+
+func switch_scene_to_world() -> void:
+	switch_scene(StartSceneTypes.WORLD)

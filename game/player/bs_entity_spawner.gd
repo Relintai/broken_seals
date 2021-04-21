@@ -52,11 +52,11 @@ func on_network_peer_packet(id : int, packet : PoolByteArray) ->void:
 	
 func spawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("spawnfor " + target.name)
-#	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.translation)
+	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.translation)
 	
 func despawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("despawnfor " + target.name)
-#	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
+	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
 	
 remote func creceive_spawn_for(data: String, global_name : String, position: Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
@@ -105,6 +105,22 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
 	createinfo.serialized_data = load_file(file_name)
+	createinfo.transform.origin = position
+	createinfo.networked = false
+	Logger.info("Player spawned ")
+	ESS.request_entity_spawn(createinfo)
+
+	return createinfo.created_entity
+	
+func load_uploaded_character(data : String, position : Vector3, network_owner : int) -> Entity:
+	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
+
+	createinfo.guid = _next_entity_guid
+	_next_entity_guid += 1
+#	createinfo.player_name = name
+	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
+	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
+	createinfo.serialized_data = parse_json(data)
 	createinfo.transform.origin = position
 	createinfo.networked = false
 	Logger.info("Player spawned ")
