@@ -327,7 +327,6 @@ func load_character(file_name : String) -> void:
 	set_player(_player.get_body())
 
 	Server.sset_seed(_player.sseed)
-	
 	if level_generator != null:
 		level_generator.setup(self, _player.sseed, true, library)
 
