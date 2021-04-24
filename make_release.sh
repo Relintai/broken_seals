@@ -23,9 +23,13 @@ zip  ../release/broken_seals_android_release.zip  ./broken_seals_android_release
 zip  ../release/broken_seals_javascript.zip  ./broken_seals_javascript/*
 zip  ../release/broken_seals_linux.zip  ./broken_seals_linux/*
 zip  ../release/broken_seals_windows.zip  ./broken_seals_windows/*
+zip  ../release/broken_seals_pi4.zip  ./broken_seals_pi4/*
 
 zip  ../release/editor_windows.zip  ./godot.bs.windows.opt.tools.64.exe
 zip  ../release/editor_linux.zip  ./godot.bs.x11.opt.tools.64
+zip  ../release/editor_pi4.zip  ./godot.bs.x11.pi4.opt.tools.32
+
+zip  ../release/export_templates.zip  ./export_templates/*
 
 zip -r ../release/broken_seals_full_source.zip  ./broken_seals_full_source/*
 zip -r ../release/broken_seals_game_source.zip  ./broken_seals_game_source/*
