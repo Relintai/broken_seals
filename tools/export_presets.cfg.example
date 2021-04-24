@@ -8,48 +8,49 @@ export_filter="all_resources"
 include_filter="*.xml"
 exclude_filter=""
 export_path="../../_bs_export/0.3.1/android_debug/BrokenSeals.apk"
-patch_list=PoolStringArray(  )
 script_export_mode=1
 script_encryption_key=""
 
 [preset.0.options]
 
-graphics/32_bits_framebuffer=true
-xr_features/xr_mode=0
-xr_features/degrees_of_freedom=0
-xr_features/hand_tracking=0
-xr_features/focus_awareness=false
-one_click_deploy/clear_previous_install=false
+custom_template/debug="../engine/bin/android_debug.apk"
+custom_template/release="../engine/bin/android_release.apk"
 custom_template/use_custom_build=false
-command_line/extra_args=""
-version/code=2
-version/name="0.3.2"
-package/unique_name="net.relintai.$genname"
-package/name="Broken Seals"
-package/signed=true
-screen/immersive_mode=true
-screen/orientation=0
-screen/support_small=true
-screen/support_normal=true
-screen/support_large=true
-screen/support_xlarge=true
-screen/opengl_debug=false
-launcher_icons/main_192x192="res://icon.png"
-launcher_icons/adaptive_foreground_432x432="res://icon.png"
-launcher_icons/adaptive_background_432x432="res://icon.png"
+custom_template/export_format=0
+architectures/armeabi-v7a=true
+architectures/arm64-v8a=true
+architectures/x86=false
+architectures/x86_64=false
 keystore/debug=""
 keystore/debug_user=""
 keystore/debug_password=""
 keystore/release=""
 keystore/release_user=""
 keystore/release_password=""
+one_click_deploy/clear_previous_install=false
+version/code=2
+version/name="0.3.2"
+package/unique_name="net.relintai.$genname"
+package/name="Broken Seals"
+package/signed=true
+launcher_icons/main_192x192="res://icon.png"
+launcher_icons/adaptive_foreground_432x432="res://icon.png"
+launcher_icons/adaptive_background_432x432="res://icon.png"
+graphics/32_bits_framebuffer=true
+graphics/opengl_debug=false
+xr_features/xr_mode=0
+xr_features/degrees_of_freedom=0
+xr_features/hand_tracking=0
+xr_features/focus_awareness=false
+screen/immersive_mode=true
+screen/support_small=true
+screen/support_normal=true
+screen/support_large=true
+screen/support_xlarge=true
+command_line/extra_args=""
 apk_expansion/enable=false
 apk_expansion/SALT=""
 apk_expansion/public_key=""
-architectures/armeabi-v7a=true
-architectures/arm64-v8a=true
-architectures/x86=false
-architectures/x86_64=false
 permissions/custom_permissions=PoolStringArray(  )
 permissions/access_checkin_properties=false
 permissions/access_coarse_location=false
@@ -207,19 +208,20 @@ export_filter="all_resources"
 include_filter="*.xml"
 exclude_filter=""
 export_path="../../_bs_export/BrokenSeals.x86_64"
-patch_list=PoolStringArray(  )
 script_export_mode=1
 script_encryption_key=""
 
 [preset.1.options]
 
+custom_template/debug="../engine/bin/godot.x11.opt.debug.64"
+custom_template/release="../engine/bin/godot.x11.opt.64"
+binary_format/64_bits=true
+binary_format/embed_pck=false
 texture_format/bptc=false
 texture_format/s3tc=true
 texture_format/etc=false
 texture_format/etc2=false
 texture_format/no_bptc_fallbacks=true
-binary_format/64_bits=true
-binary_format/embed_pck=false
 
 [preset.2]
 
@@ -231,16 +233,20 @@ export_filter="all_resources"
 include_filter="*.xml"
 exclude_filter=""
 export_path="../../_bs_export/0.3.1/html/BrokenSeals.x86_64.html"
-patch_list=PoolStringArray(  )
 script_export_mode=1
 script_encryption_key=""
 
 [preset.2.options]
 
+custom_template/debug="../engine/bin/godot.javascript.opt.zip"
+custom_template/release="../engine/bin/godot.javascript.opt.debug.zip"
+variant/export_type=0
 vram_texture_compression/for_desktop=true
 vram_texture_compression/for_mobile=true
 html/custom_html_shell=""
 html/head_include=""
+html/canvas_resize_policy=2
+html/experimental_virtual_keyboard=false
 
 [preset.3]
 
@@ -252,19 +258,20 @@ export_filter="all_resources"
 include_filter="*.xml"
 exclude_filter=""
 export_path="../../_bs_export/0.3.1/windows/BrokenSeals.x86_64.exe"
-patch_list=PoolStringArray(  )
 script_export_mode=1
 script_encryption_key=""
 
 [preset.3.options]
 
+custom_template/debug="../engine/bin/godot.windows.opt.debug.64.exe"
+custom_template/release="../engine/bin/godot.windows.opt.64.exe"
+binary_format/64_bits=true
+binary_format/embed_pck=false
 texture_format/bptc=false
 texture_format/s3tc=true
 texture_format/etc=false
 texture_format/etc2=false
 texture_format/no_bptc_fallbacks=true
-binary_format/64_bits=true
-binary_format/embed_pck=false
 codesign/enable=false
 codesign/identity=""
 codesign/password=""
@@ -292,48 +299,49 @@ export_filter="all_resources"
 include_filter="*.xml"
 exclude_filter=""
 export_path=""
-patch_list=PoolStringArray(  )
 script_export_mode=1
 script_encryption_key=""
 
 [preset.4.options]
 
-graphics/32_bits_framebuffer=true
-xr_features/xr_mode=0
-xr_features/degrees_of_freedom=0
-xr_features/hand_tracking=0
-xr_features/focus_awareness=false
-one_click_deploy/clear_previous_install=false
+custom_template/debug="../engine/bin/android_release.apk"
+custom_template/release="../engine/bin/android_release.apk"
 custom_template/use_custom_build=false
-command_line/extra_args=""
-version/code=2
-version/name="0.3.2"
-package/unique_name="net.relintai.$genname"
-package/name="Broken Seals"
-package/signed=true
-screen/immersive_mode=true
-screen/orientation=0
-screen/support_small=true
-screen/support_normal=true
-screen/support_large=true
-screen/support_xlarge=true
-screen/opengl_debug=false
-launcher_icons/main_192x192="res://icon.png"
-launcher_icons/adaptive_foreground_432x432="res://icon.png"
-launcher_icons/adaptive_background_432x432="res://icon.png"
+custom_template/export_format=0
+architectures/armeabi-v7a=true
+architectures/arm64-v8a=true
+architectures/x86=false
+architectures/x86_64=false
 keystore/debug=""
 keystore/debug_user=""
 keystore/debug_password=""
 keystore/release=""
 keystore/release_user=""
 keystore/release_password=""
+one_click_deploy/clear_previous_install=false
+version/code=2
+version/name="0.3.2"
+package/unique_name="net.relintai.$genname"
+package/name="Broken Seals"
+package/signed=true
+launcher_icons/main_192x192="res://icon.png"
+launcher_icons/adaptive_foreground_432x432="res://icon.png"
+launcher_icons/adaptive_background_432x432="res://icon.png"
+graphics/32_bits_framebuffer=true
+graphics/opengl_debug=false
+xr_features/xr_mode=0
+xr_features/degrees_of_freedom=0
+xr_features/hand_tracking=0
+xr_features/focus_awareness=false
+screen/immersive_mode=true
+screen/support_small=true
+screen/support_normal=true
+screen/support_large=true
+screen/support_xlarge=true
+command_line/extra_args=""
 apk_expansion/enable=false
 apk_expansion/SALT=""
 apk_expansion/public_key=""
-architectures/armeabi-v7a=true
-architectures/arm64-v8a=true
-architectures/x86=false
-architectures/x86_64=false
 permissions/custom_permissions=PoolStringArray(  )
 permissions/access_checkin_properties=false
 permissions/access_coarse_location=false
@@ -480,3 +488,28 @@ permissions/write_sms=false
 permissions/write_social_stream=false
 permissions/write_sync_settings=false
 permissions/write_user_dictionary=false
+
+[preset.5]
+
+name="PI4/X11"
+platform="Linux/X11"
+runnable=false
+custom_features=""
+export_filter="all_resources"
+include_filter="*.xml"
+exclude_filter=""
+export_path="../aaa/BrokenSeals.x86_64.x86"
+script_export_mode=1
+script_encryption_key=""
+
+[preset.5.options]
+
+custom_template/debug="../engine/bin/godot.x11.pi4.opt.debug.32"
+custom_template/release="../engine/bin/godot.x11.pi4.opt.32"
+binary_format/64_bits=false
+binary_format/embed_pck=false
+texture_format/bptc=false
+texture_format/s3tc=true
+texture_format/etc=false
+texture_format/etc2=false
+texture_format/no_bptc_fallbacks=true
