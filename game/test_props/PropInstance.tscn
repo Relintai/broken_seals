@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_vertex_lighting = true
+
+[node name="PropInstance" type="PropInstance"]
+prop_data = ExtResource( 1 )
+material = SubResource( 1 )
