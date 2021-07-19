@@ -89,7 +89,7 @@ func _execute():
 		mm.add_mesh_data_resource_bone(mesh, bones, bonew, transform, rect)
 	
 	var arr : Array = mm.build_mesh()
-	
+
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
 	mesh.surface_set_material(0, materials[0])

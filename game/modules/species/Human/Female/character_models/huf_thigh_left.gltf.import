@@ -12,6 +12,7 @@ dest_files=[ "res://.import/huf_thigh_left.gltf-f967ea8aff882be703adaf054058d4f8
 [params]
 
 import_type=0
+optimization_type=2
 collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
