@@ -252,6 +252,9 @@ func job_finished():
 	meshes = _mesh_job.meshes
 	_texture = _mesh_job._texture
 	mesh_instance.mesh = meshes[_current_lod_level]
+	
+	if !mesh_instance.is_software_skinning_enabled():
+		mesh_instance.initialize_skinning(true, true)
 
 func clear_mesh() -> void:
 	meshes.clear()
@@ -324,6 +327,9 @@ func set_lod_level(level : int) -> void:
 	_current_lod_level = level
 	
 	mesh_instance.mesh = meshes[_current_lod_level]
+	
+	if !mesh_instance.is_software_skinning_enabled():
+		mesh_instance.initialize_skinning(true, true)
 	
 		
 
