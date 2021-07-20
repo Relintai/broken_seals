@@ -28,16 +28,30 @@ var max_visible_distance_squared : float = max_visible_distance * max_visible_di
 
 export(float) var MOUSE_SENSITIVITY : float = 0.05
 export(String) var world_path : String = "../.."
+export(NodePath) var contact_path : NodePath = "Contact"
 export(NodePath) var model_path : NodePath = "Rotation_Helper/Model"
 export(NodePath) var character_skeleton_path : NodePath = "Rotation_Helper/Model/character"
 
 const ray_length = 1000
+
+const MAX_SLOPE_ANGLE : float = deg2rad(70.0)
+const MOUSE_TARGET_MAX_OFFSET : int = 10
+
+#flying
+const FLY_ACCEL = 8
+var flying : bool = false
+
+#waling
+const GRAVITY : float = -24.8
+const MAX_SPEED = 10
+const MAX_RUNNING_SPEED = 16
 const ACCEL : float = 100.0
 const DEACCEL : float = 100.0
-const GRAVITY : float = -24.8
-const JUMP_SPEED : float = 3.8
-const MAX_SLOPE_ANGLE : float = 40.0
-const MOUSE_TARGET_MAX_OFFSET : int = 10
+
+#jumping
+var jump_height = 7
+var has_contact : bool = false
+var double_jumped : bool = false
 
 var _on : bool = true
 var _controlled : bool = false
@@ -61,6 +75,7 @@ var key_left : bool = false
 var key_right : bool = false
 var key_up : bool = false
 var key_down : bool = false
+var key_jump : bool = false
 
 var cursor_grabbed : bool = false
 var last_cursor_pos : Vector2 = Vector2()
@@ -94,6 +109,8 @@ var visibility_update_timer : float = 0
 var placed : bool = false
 var just_place : bool = false
 
+var contact : RayCast = null
+
 #var los : bool = false
 
 func _ready() -> void:
@@ -102,6 +119,7 @@ func _ready() -> void:
 	
 	model_rotation_node = get_node(model_path)
 	character_skeleton = get_node(character_skeleton_path)
+	contact = get_node(contact_path)
 	entity = get_node("..")
 	entity.set_character_skeleton(character_skeleton)
 	entity.connect("notification_ccast", self, "on_notification_ccast")
@@ -153,6 +171,8 @@ func _process(delta : float) -> void:
 	if dst > max_visible_distance_squared:
 		if visible:
 			hide()
+			#todo check whether its needed or not
+			#contact.enabled = false
 		return
 	else:
 #		var lod_level : int = int(dst / max_visible_distance_squared * 3.0)
@@ -166,6 +186,7 @@ func _process(delta : float) -> void:
 		
 		if not visible:
 			show()
+			#contact.enabled = true
 
 
 func _physics_process(delta : float) -> void:
@@ -285,8 +306,15 @@ func process_movement_player(delta : float) -> void:
 	
 	if state & EntityEnums.ENTITY_STATE_TYPE_FLAG_ROOT != 0 or state & EntityEnums.ENTITY_STATE_TYPE_FLAG_STUN != 0:
 		moving = false
+		key_jump = false
 		return
-	
+		
+	if flying:
+		player_fly(delta)
+	else:
+		player_walk(delta)
+		
+func player_fly(delta : float) -> void:
 	if input_dir.x > 0.1 or input_dir.y > 0.1 or input_dir.x < -0.1 or input_dir.y < -0.1:
 		var forward : Vector3 = Vector3(0, 0, 1).rotated(Vector3(0, 1, 0), deg2rad(y_rot)) 
 		var right : Vector3 = forward.cross(Vector3(0, 1, 0)) * -input_dir.x
@@ -303,6 +331,66 @@ func process_movement_player(delta : float) -> void:
 	else:
 		dir = Vector3()
 		moving = false
+		return
+
+	if key_jump:
+		dir.y += 1
+		
+#	var hvel : Vector3 = vel
+#	hvel.y = 0
+#
+#	var target : Vector3 = dir
+#	target *= entity.getc_speed().current_value  / 100.0 * 4.2
+#
+#	var accel
+#	if dir.dot(hvel) > 0:
+#		accel = ACCEL
+#	else:
+#		accel = DEACCEL
+#
+#	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
+#	vel.x = hvel.x
+#	vel.z = hvel.z
+#	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
+
+	var target : Vector3 = dir * entity.getc_speed().current_value  / 100.0 * 4.2
+	vel = vel.linear_interpolate(target, FLY_ACCEL * delta)
+	
+	move_and_slide(vel)
+
+	if multiplayer.has_network_peer():
+		if not multiplayer.is_network_server():
+			rpc_id(1, "sset_position", translation, rotation)
+		else:
+			sset_position(translation, rotation)
+
+
+func player_walk(delta : float) -> void:
+	if input_dir.x > 0.1 or input_dir.y > 0.1 or input_dir.x < -0.1 or input_dir.y < -0.1:
+		var forward : Vector3 = Vector3(0, 0, 1).rotated(Vector3(0, 1, 0), deg2rad(y_rot)) 
+		var right : Vector3 = forward.cross(Vector3(0, 1, 0)) * -input_dir.x
+		forward *= input_dir.y #only potentially make it zero after getting the right vector
+	
+		dir = forward
+		dir += right
+		
+		if dir.length_squared() > 0.1:
+			dir = dir.normalized()
+			
+		moving = true
+		entity.moved()
+	else:
+		dir = Vector3()
+		moving = false
+
+	if is_on_floor():
+		has_contact = true
+	else:
+		if !contact.is_colliding():
+			has_contact = false
+			
+	if has_contact and !is_on_floor():
+		move_and_collide(Vector3(0, -1, 0))
 
 	vel.y += delta * GRAVITY
 
@@ -321,7 +409,39 @@ func process_movement_player(delta : float) -> void:
 	hvel = hvel.linear_interpolate(target, accel * delta) as Vector3
 	vel.x = hvel.x
 	vel.z = hvel.z
-	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, deg2rad(MAX_SLOPE_ANGLE))
+	
+	if has_contact and key_jump:
+		key_jump = false
+		
+		vel.y = jump_height
+		has_contact = false
+		
+#		if not foot_audio.playing and last_sound_timer >= MIN_SOUND_TIME_LIMIT:
+#			foot_audio.play()
+#			last_sound_timer = 0
+#
+#		step_timer = 0
+		
+	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, MAX_SLOPE_ANGLE)
+	
+#	if not has_contact and is_on_floor():
+#		if not foot_audio.playing and last_sound_timer >= MIN_SOUND_TIME_LIMIT:
+#			foot_audio.play()
+#			last_sound_timer = 0
+#
+#		step_timer = 0
+	
+#	var v : Vector3 = vel
+#	v.y = 0
+#	if has_contact and v.length() > 1:
+#		step_timer += delta
+#
+#		if step_timer >= WALK_STEP_TIME:
+#			step_timer = 0
+#
+#			if not foot_audio.playing and last_sound_timer >= MIN_SOUND_TIME_LIMIT:
+#				foot_audio.play()
+#				last_sound_timer = 0
 
 	if multiplayer.has_network_peer():
 		if not multiplayer.is_network_server():
@@ -377,6 +497,15 @@ func process_movement_mob(delta : float) -> void:
 
 	if moving and sleep:
 		sleep = false
+		
+	if is_on_floor():
+		has_contact = true
+	else:
+		if !contact.is_colliding():
+			has_contact = false
+			
+	if has_contact and !is_on_floor():
+		move_and_collide(Vector3(0, -1, 0))
 
 	vel.y += delta * GRAVITY
 
@@ -399,7 +528,7 @@ func process_movement_mob(delta : float) -> void:
 	var facing : Vector3 = vel
 	facing.y = 0
 	
-	vel = move_and_slide(vel, Vector3(0,1,0), false, 4, deg2rad(MAX_SLOPE_ANGLE))
+	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, MAX_SLOPE_ANGLE)
 	sset_position(translation, rotation)
 	
 	if vel.length_squared() < 0.12:
@@ -417,7 +546,7 @@ func _input(event: InputEvent) -> void:
 	if not cursor_grabbed:
 		set_process_input(false)
 		return
-	
+		
 	if event is InputEventMouseMotion and event.device != -1:
 		var s : float = ProjectSettings.get("display/mouse_cursor/sensitivity")
 		
@@ -455,6 +584,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		elif event.is_action("move_right"):
 			key_right = event.pressed
+			get_tree().set_input_as_handled()
+			return
+		elif event.is_action("jump"):
+			key_jump = event.pressed
 			get_tree().set_input_as_handled()
 			return
 			
