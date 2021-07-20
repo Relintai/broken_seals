@@ -49,7 +49,7 @@ const ACCEL : float = 100.0
 const DEACCEL : float = 100.0
 
 #jumping
-var jump_height = 7
+var jump_height = 7.6
 var has_contact : bool = false
 var double_jumped : bool = false
 
