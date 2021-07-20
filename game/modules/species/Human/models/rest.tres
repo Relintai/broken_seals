@@ -1,6 +1,4 @@
-[gd_resource type="ProceduralAnimation" load_steps=2 format=2]
-
-[ext_resource path="res://modules/species/Human/models/animations.tres" type="Animation" id=1]
+[gd_resource type="Animation" format=2]
 
 [resource]
 length = 0.001
@@ -207,8 +205,6 @@ tracks/28/loop_wrap = true
 tracks/28/imported = false
 tracks/28/enabled = true
 tracks/28/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
-animation = ExtResource( 1 )
-animation_fps = 30
 start_frame_index = 0
 keyframe/0/name = ""
 keyframe/0/animation_keyframe_index = 0
