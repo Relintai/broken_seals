@@ -9,12 +9,10 @@
 margin_right = 46.0
 margin_bottom = 46.0
 rect_min_size = Vector2( 46, 46 )
-focus_mode = 0
 theme = ExtResource( 3 )
 shortcut_in_tooltip = false
 action_mode = 0
 button_mask = 3
-enabled_focus_mode = 0
 keep_pressed_outside = true
 script = ExtResource( 1 )
 __meta__ = {

@@ -46,9 +46,7 @@ lock_button_path = NodePath("LockButton")
 margin_right = 25.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
-focus_mode = 0
 toggle_mode = true
-enabled_focus_mode = 0
 keep_pressed_outside = true
 
 [node name="locked" type="TextureRect" parent="GUI/Buttons/LockButton"]
@@ -77,8 +75,6 @@ margin_left = 25.0
 margin_right = 50.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
-focus_mode = 0
-enabled_focus_mode = 0
 keep_pressed_outside = true
 
 [node name="TextureRect3" type="TextureRect" parent="GUI/Buttons/Menu"]

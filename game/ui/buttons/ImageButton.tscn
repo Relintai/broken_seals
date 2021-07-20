@@ -7,9 +7,7 @@ margin_right = 25.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 25, 30 )
 hint_tooltip = "Inventory"
-focus_mode = 0
 toggle_mode = true
-enabled_focus_mode = 0
 keep_pressed_outside = true
 __meta__ = {
 "_edit_use_anchors_": false
