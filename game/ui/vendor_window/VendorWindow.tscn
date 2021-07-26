@@ -172,4 +172,5 @@ margin_bottom = 26.5702
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Next page >"
+
 [connection signal="pressed" from="PanelContainer/PagedContent/Header/Button" to="." method="hide"]
