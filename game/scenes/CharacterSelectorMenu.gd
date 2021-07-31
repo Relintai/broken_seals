@@ -207,9 +207,20 @@ func load_character() -> void:
 #	else:
 	get_node("/root/Main").load_character(b.file_name)
 	
+func focus() -> void:
+	var loadb : Control = get_node(load_button_path) as Control
+	
+	if loadb.visible:
+		loadb.grab_focus()
+	else:
+		get_node(create_button_path).grab_focus()
+			
+	
+	
 func visibility_changed() -> void:
 	if visible:
 		refresh()
+		focus()
 		
 func character_selection_changed() -> void:
 	var b : BaseButton = character_button_group.get_pressed_button()

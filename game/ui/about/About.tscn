@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ui/about/GodotAuthors.gd" type="Script" id=1]
 [ext_resource path="res://ui/about/GodotDonors.gd" type="Script" id=2]
@@ -7,15 +7,18 @@
 [ext_resource path="res://ui/about/GodotThirdPartyLicenses.gd" type="Script" id=5]
 [ext_resource path="res://ui/about/Authors.gd" type="Script" id=6]
 [ext_resource path="res://ui/about/Third-Party Licenses.gd" type="Script" id=7]
+[ext_resource path="res://ui/Window.gd" type="Script" id=8]
 
 [node name="About" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 3 )
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+focus_button_path = NodePath("PanelContainer/VBoxContainer/Close")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_left = 0.5
@@ -260,4 +263,5 @@ margin_top = 439.0
 margin_right = 728.0
 margin_bottom = 465.57
 text = "Close"
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Close" to="." method="hide"]

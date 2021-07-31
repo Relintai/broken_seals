@@ -59,6 +59,8 @@ func _ready():
 		
 	if fb != null:
 		fb.pressed = true
+		
+	connect("visibility_changed", self, "on_visibility_changed")
 
 func create() -> void:
 	if name_line_edit.text == "":
@@ -84,3 +86,9 @@ func create() -> void:
 	
 	get_node(menu_path).switch_to_menu(Menu.StartMenuTypes.CHARACTER_SELECT)
 	
+func focus() -> void:
+	name_line_edit.grab_focus()
+
+func on_visibility_changed():
+	if visible:
+		focus()

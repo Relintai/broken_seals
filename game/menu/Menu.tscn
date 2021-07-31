@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/menu/CharacterEntry.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
 [ext_resource path="res://menu/ExitButton.gd" type="Script" id=21]
+[ext_resource path="res://ui/Window.gd" type="Script" id=22]
 
 [sub_resource type="TerraChunkBlocky" id=1]
 resource_name = "Chunk[-2,0]"
@@ -263,6 +264,7 @@ __meta__ = {
 }
 character_selector_scene = NodePath("CharacterSelectorMenu")
 charcer_creation_scenes = NodePath("CharacterCreationMenu")
+option_buttons_path = NodePath("OptionsButton")
 
 [node name="GameName" type="PanelContainer" parent="."]
 anchor_left = 0.5
@@ -348,24 +350,35 @@ size_flags_horizontal = 3
 margin_top = 458.0
 margin_right = 277.0
 margin_bottom = 484.57
+focus_neighbour_left = NodePath("../../../../../../OptionsButton/Control/VBoxContainer/About")
+focus_neighbour_bottom = NodePath("../New")
+focus_next = NodePath("../New")
+focus_previous = NodePath("../../../../../../OptionsButton/Control/VBoxContainer/ExitButton")
 text = "Load"
 
 [node name="New" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 492.0
 margin_right = 277.0
 margin_bottom = 518.57
+focus_neighbour_left = NodePath("../../../../../../OptionsButton/Control/VBoxContainer/OptionsOpen")
+focus_neighbour_top = NodePath("../Load")
+focus_neighbour_bottom = NodePath("../Delete")
+focus_next = NodePath("../Delete")
+focus_previous = NodePath("../Load")
 text = "New"
 
 [node name="Delete" type="Button" parent="CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer"]
 margin_top = 526.0
 margin_right = 277.0
 margin_bottom = 552.57
+focus_neighbour_left = NodePath("../../../../../../OptionsButton/Control/VBoxContainer/ExitButton")
+focus_neighbour_top = NodePath("../New")
+focus_previous = NodePath("../New")
 text = "Delete"
 
 [node name="PlayerDisplays" type="Node" parent="CharacterSelectorMenu"]
 
 [node name="CharacterCreationMenu" type="Control" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 6 )
@@ -457,9 +470,11 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+focus_button_path = NodePath("PanelContainer/VBoxContainer/ConnectButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="ConnectMenu"]
 anchor_left = 0.5
@@ -547,9 +562,11 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
+script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+focus_button_path = NodePath("PanelContainer/VBoxContainer/HostButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="HostMenu"]
 anchor_left = 0.5
@@ -659,6 +676,9 @@ margin_top = 13.0
 margin_right = 120.0
 margin_bottom = 39.5702
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+focus_neighbour_bottom = NodePath("../About")
+focus_next = NodePath("../About")
 text = "Disconnect"
 script = ExtResource( 13 )
 __meta__ = {
@@ -670,6 +690,9 @@ margin_top = 13.0
 margin_right = 120.0
 margin_bottom = 39.5702
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+focus_neighbour_bottom = NodePath("../Host")
+focus_next = NodePath("../Host")
 text = "Connect"
 script = ExtResource( 11 )
 __meta__ = {
@@ -681,6 +704,11 @@ margin_top = 47.0
 margin_right = 120.0
 margin_bottom = 73.5702
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_top = NodePath("../Connect")
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+focus_neighbour_bottom = NodePath("../About")
+focus_next = NodePath("../About")
+focus_previous = NodePath("../Connect")
 text = "Host"
 script = ExtResource( 12 )
 __meta__ = {
@@ -689,9 +717,9 @@ __meta__ = {
 
 [node name="Button2" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
-margin_top = 81.0
+margin_top = 68.0
 margin_right = 120.0
-margin_bottom = 107.57
+margin_bottom = 94.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Login"
 __meta__ = {
@@ -700,9 +728,9 @@ __meta__ = {
 
 [node name="Button3" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 visible = false
-margin_top = 81.0
+margin_top = 68.0
 margin_right = 120.0
-margin_bottom = 107.57
+margin_bottom = 94.5702
 rect_min_size = Vector2( 120, 0 )
 text = "Register"
 __meta__ = {
@@ -714,16 +742,26 @@ margin_top = 81.0
 margin_right = 120.0
 margin_bottom = 107.57
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_top = NodePath("../Host")
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+focus_neighbour_bottom = NodePath("../OptionsOpen")
+focus_next = NodePath("../OptionsOpen")
+focus_previous = NodePath("../Host")
 text = "About"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="OptionsButton/Control/VBoxContainer"]
+[node name="OptionsOpen" type="Button" parent="OptionsButton/Control/VBoxContainer"]
 margin_top = 115.0
 margin_right = 120.0
 margin_bottom = 141.57
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_top = NodePath("../About")
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/New")
+focus_neighbour_bottom = NodePath("../ExitButton")
+focus_next = NodePath("../ExitButton")
+focus_previous = NodePath("../About")
 text = "Options"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -734,6 +772,10 @@ margin_top = 149.0
 margin_right = 120.0
 margin_bottom = 175.57
 rect_min_size = Vector2( 120, 0 )
+focus_neighbour_top = NodePath("../OptionsOpen")
+focus_neighbour_right = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Delete")
+focus_next = NodePath("../../../../CharacterSelectorMenu/CharacterSelector/VBoxContainer/CharacterSelector/VBoxContainer/Load")
+focus_previous = NodePath("../OptionsOpen")
 text = "Exit"
 script = ExtResource( 21 )
 __meta__ = {
@@ -811,4 +853,4 @@ script = ExtResource( 19 )
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button2" to="Login" method="show"]
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button3" to="Register" method="show"]
 [connection signal="pressed" from="OptionsButton/Control/VBoxContainer/About" to="About" method="show"]
-[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/Button" to="Options" method="show"]
+[connection signal="pressed" from="OptionsButton/Control/VBoxContainer/OptionsOpen" to="Options" method="show"]

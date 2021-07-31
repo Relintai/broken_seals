@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/player_ui/RemoveProfile.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://ui/options/OptionCheckboxRow.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/options/OptionCheckBox.gd" type="Script" id=5]
 [ext_resource path="res://ui/options/OptionEnumRow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/Window.gd" type="Script" id=7]
 [ext_resource path="res://ui/options/OptionsSpinboxRow.tscn" type="PackedScene" id=8]
 
 [node name="Options" type="Control"]
@@ -13,9 +14,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 1 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+focus_button_path = NodePath("PanelContainer/VBoxContainer/Close")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_left = 0.5

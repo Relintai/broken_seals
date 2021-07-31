@@ -1,6 +1,4 @@
-
 extends Control
-class_name Menu
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -22,20 +20,16 @@ class_name Menu
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-export(int, "Character Select", "Character Create") var start_menu : int = 0
-export (NodePath) var character_selector_scene : NodePath
-export (NodePath) var charcer_creation_scenes : NodePath
-export (NodePath) var option_buttons_path : NodePath
+export(NodePath) var focus_button_path : NodePath = ""
 
-enum StartMenuTypes {
-	CHARACTER_SELECT, CHARACTER_CREATE
-}
+var _previous : Control = null
+var _current_focus : Control = null
 
-var _menu : int = 0
 var _viewport : Viewport = null
 
-func _ready() -> void:
-	switch_to_menu(start_menu)
+
+func _ready():
+	connect("visibility_changed", self, "on_visibility_changed")
 
 func _enter_tree() -> void:
 	#find the viewport
@@ -56,28 +50,26 @@ func _exit_tree():
 	_viewport =  null
 	
 func _on_control_focus_changed(node : Control) -> void:
-	if !node:
-		if _menu == StartMenuTypes.CHARACTER_SELECT:
-			get_node(character_selector_scene).focus()
-		else:
-			get_node(character_selector_scene).focus()
+	_current_focus = node
 
-func switch_to_menu(menu : int) -> void:
-	_menu = menu
+
+func on_visibility_changed() -> void:
+	if visible:
+		focus()
+	else:
+		unfocus()
+
+func focus():
+	_previous = _current_focus
 	
-	if menu == StartMenuTypes.CHARACTER_SELECT:
-		get_node(character_selector_scene).show()
-		get_node(option_buttons_path).show()
+	var n : Control = get_node(focus_button_path)
+	
+	if n:
+		n.grab_focus()
+	
+func unfocus():
+	if _previous:
+		_previous.grab_focus()
+		_previous = null
 	else:
-		get_node(character_selector_scene).hide()
-		
-	if menu == StartMenuTypes.CHARACTER_CREATE:
-		get_node(charcer_creation_scenes).show()
-		get_node(option_buttons_path).hide()
-	else:
-		get_node(charcer_creation_scenes).hide()
-
-
-
-func _on_About_pressed() -> void:
-	pass # Replace with function body.
+		release_focus()
