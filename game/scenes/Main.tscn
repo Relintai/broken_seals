@@ -63,7 +63,7 @@ Broken Seals
 
 [wave]LOADING[/wave]
 [/center]"
-text = "[center]
+text = "
 
 
 
@@ -90,7 +90,7 @@ Broken Seals
 
 
 
-[wave]LOADING[/wave]
-[/center]"
+LOADING
+"
 
 [node name="DebugInfo" parent="." instance=ExtResource( 5 )]

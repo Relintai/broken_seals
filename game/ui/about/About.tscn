@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ui/about/GodotAuthors.gd" type="Script" id=1]
 [ext_resource path="res://ui/about/GodotDonors.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://ui/about/Authors.gd" type="Script" id=6]
 [ext_resource path="res://ui/about/Third-Party Licenses.gd" type="Script" id=7]
 [ext_resource path="res://ui/Window.gd" type="Script" id=8]
+[ext_resource path="res://ui/KeyboardTabContainer.gd" type="Script" id=9]
 
 [node name="About" type="Control"]
 anchor_right = 1.0
@@ -45,6 +46,8 @@ margin_bottom = 431.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
+script = ExtResource( 9 )
+focus_control_on_tab_change_path = NodePath("../Close")
 
 [node name="Authors" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
 anchor_right = 1.0
@@ -155,6 +158,10 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource( 9 )
+focus_control_on_tab_change_path = NodePath("../../Close")
+prev_tab_action = "ui_prev_page_2"
+next_tab_action = "ui_next_page_2"
 
 [node name="Authors" type="ScrollContainer" parent="PanelContainer/VBoxContainer/TabContainer/Godot"]
 anchor_right = 1.0
