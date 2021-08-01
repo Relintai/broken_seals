@@ -273,6 +273,11 @@ gdscript/warnings/unused_argument=false
 gdscript/warnings/unused_signal=false
 gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
+multirun/number_of_windows=2
+multirun/window_distance=1270
+multirun/add_custom_args=true
+multirun/first_window_args="listen"
+multirun/other_window_args="join"
 
 [display]
 
