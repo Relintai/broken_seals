@@ -11,6 +11,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 2 )
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 spell_entry_container_path = NodePath("PanelContainer/VBoxContainer/PanelContainer3/ScrollContainer/Spells")
 learn_button_path = NodePath("PanelContainer/VBoxContainer/HBoxContainer/Train")
 cost_label_path = NodePath("PanelContainer/VBoxContainer/PanelContainer2/VBoxContainer/HBoxContainer2/Price")
@@ -154,4 +157,5 @@ margin_right = 379.0
 margin_bottom = 26.5702
 rect_min_size = Vector2( 100, 0 )
 text = "Learn"
+
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer2/Button" to="." method="hide"]

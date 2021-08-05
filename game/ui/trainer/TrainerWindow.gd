@@ -41,6 +41,7 @@ var _spell_description_label : Label
 var _spell_requirements_label : Label
 
 var _player : Entity
+var _trainer : Entity
 
 var _entity_data : EntityData
 var _character_class : EntityClassData
@@ -48,6 +49,8 @@ var _character_class : EntityClassData
 var _spells : Array
 
 var _spell_button_group : ButtonGroup
+
+var _timer : float = 0
 
 func _ready() -> void:
 	_spell_button_group = ButtonGroup.new()
@@ -65,6 +68,25 @@ func _ready() -> void:
 	_learn_button.connect("pressed", self, "learn")
 
 	connect("visibility_changed", self, "_visibility_changed")
+	
+	set_process(false)
+
+func _process(delta):
+	_timer += delta
+	
+	if _timer > 1:
+		_timer = 0
+		
+		if _player == null:
+			return
+			
+		var target : Entity = _player.getc_target()
+			
+		if target != _trainer:
+			hide()
+		
+		if (_player.get_body_3d().translation - target.get_body_3d().translation).length_squared() > 16:#INTERACT_RANGE_SQUARED:
+			hide()
 
 func learn() -> void:
 	if _character_class == null:
@@ -128,6 +150,10 @@ func refresh_all() -> void:
 func _visibility_changed() -> void:
 	if visible:
 		refresh_all()
+	else:
+		_trainer = null
+		
+	set_process(visible)
 
 func set_player(p_player: Entity) -> void:
 	if _player != null:
@@ -220,6 +246,8 @@ class CustomSpellSorter:
 func onc_open_winow_request(window_id : int) -> void:
 	if window_id != EntityEnums.ENTITY_WINDOW_TRAINER:
 		return
+		
+	_trainer = _player.getc_target()
 		
 	show()
 
