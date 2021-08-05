@@ -24,15 +24,13 @@ class_name EntityDataGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-const INTERACT_RANGE_SQUARED : int = 4 * 4
-
 func _sinteract(entity: Entity) -> void:
 	var target : Entity = entity.gets_target()
 	
 	if target == null or not is_instance_valid(target):
 		return
 		
-	if (entity.get_body_3d().translation - target.get_body_3d().translation).length_squared() > INTERACT_RANGE_SQUARED:
+	if !entity.iss_target_in_interact_range():
 		return
 		
 	if target.sentity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_LOOT:

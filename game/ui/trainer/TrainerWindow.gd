@@ -85,7 +85,7 @@ func _process(delta):
 		if target != _trainer:
 			hide()
 		
-		if (_player.get_body_3d().translation - target.get_body_3d().translation).length_squared() > 16:#INTERACT_RANGE_SQUARED:
+		if !_player.isc_target_in_interact_range():
 			hide()
 
 func learn() -> void:
