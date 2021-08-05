@@ -37,11 +37,14 @@ var _prev_button : Button
 var _next_button : Button
 
 var _player : Entity
+var _vendor : Entity
 
 var _page : int = 0
 var _max_pages : int = 0
 
 var _vendor_item_data : VendorItemData
+
+var _timer : float = 0
 
 func _ready() -> void:
 	opener_button = get_node_or_null(opener_button_path) as BaseButton
@@ -60,6 +63,25 @@ func _ready() -> void:
 	_next_button.connect("pressed", self, "inc_page")
 		
 	connect("visibility_changed", self, "_visibility_changed")
+	
+	set_process(false)
+
+func _process(delta):
+	_timer += delta
+	
+	if _timer > 1:
+		_timer = 0
+		
+		if _player == null:
+			return
+			
+		var target : Entity = _player.getc_target()
+			
+		if target != _vendor:
+			hide()
+		
+		if (_player.get_body_3d().translation - target.get_body_3d().translation).length_squared() > 16:#INTERACT_RANGE_SQUARED:
+			hide()
 
 func inc_page() -> void:
 	if _vendor_item_data == null:
@@ -138,8 +160,10 @@ func _visibility_changed() -> void:
 
 		_page = 0
 		refresh_all()
+	else:
+		_vendor = null
 		
-		
+	set_process(visible)
 
 func set_player(p_player: Entity) -> void:
 	if _player != null:
@@ -154,6 +178,8 @@ func set_player(p_player: Entity) -> void:
 func onc_open_winow_request(window_id : int) -> void:
 	if window_id != EntityEnums.ENTITY_WINDOW_VENDOR:
 		return
+		
+	_vendor = _player.getc_target()
 		
 	show()
 
