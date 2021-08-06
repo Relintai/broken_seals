@@ -69,15 +69,16 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
 	
-	var s : OpenSimplexNoise = OpenSimplexNoise.new()
-	s.seed = current_seed
+	var s : FastNoise = FastNoise.new()
+	s.set_noise_type(FastNoise.TYPE_SIMPLEX)
+	s.set_seed(current_seed)
 	
 	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 			var vx : int = x + (chunk.position_x * chunk.size_x)
 			var vz : int = z + (chunk.position_z * chunk.size_z)
 			
-			var val : float = (s.get_noise_2d(vx, vz) + 2)
+			var val : float = (s.get_noise_2d(vx * 0.4, vz * 0.4) + 2)
 			val *= val
 			val *= 20.0
 
