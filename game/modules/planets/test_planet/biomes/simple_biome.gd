@@ -73,14 +73,19 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 	s.set_noise_type(FastNoise.TYPE_SIMPLEX)
 	s.set_seed(current_seed)
 	
+	var sdet : FastNoise = FastNoise.new()
+	sdet.set_noise_type(FastNoise.TYPE_SIMPLEX)
+	sdet.set_seed(current_seed)
+	
 	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 			var vx : int = x + (chunk.position_x * chunk.size_x)
 			var vz : int = z + (chunk.position_z * chunk.size_z)
 			
-			var val : float = (s.get_noise_2d(vx * 0.4, vz * 0.4) + 2)
+			var val : float = (s.get_noise_2d(vx * 0.05, vz * 0.05) + 2)
 			val *= val
 			val *= 20.0
+			val += abs(sdet.get_noise_2d(vx * 0.8, vz * 0.8)) * 20
 
 			chunk.set_voxel(val, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 
