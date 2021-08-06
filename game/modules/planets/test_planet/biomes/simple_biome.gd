@@ -91,5 +91,5 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 
 			if val < 50:
 				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
-			elif val > 70:
+			elif val > 90:
 				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
