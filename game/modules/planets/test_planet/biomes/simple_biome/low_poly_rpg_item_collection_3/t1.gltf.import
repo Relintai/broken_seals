@@ -13,7 +13,7 @@ dest_files=[ "res://.import/t1.gltf-6871aa09a356e2c4aa304acdde774265.res" ]
 
 import_type=0
 optimization_type=2
-collider_type=0
+collider_type=1
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 1, 1, 1 )
