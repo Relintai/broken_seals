@@ -22,6 +22,7 @@ extends Biome
 # SOFTWARE.
 
 export(PackedScene) var tree : PackedScene
+export(PropData) var prop_tree : PropData
 
 var terrarin_gen : BiomeTerrarinGenerator = BiomeTerrarinGenerator.new()
 
@@ -36,6 +37,7 @@ func _setup():
 		
 func _instance(p_seed, p_instance):
 	p_instance.tree = tree
+	p_instance.prop_tree = prop_tree
 	
 	return ._instance(p_seed, p_instance)
 		
@@ -103,15 +105,28 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 			else:
 				#Todo use the prop system for this
 				if randf() > 0.992:
-					var t = tree.instance()
-	
-					var spat : Spatial = t as Spatial
+#					var t = tree.instance()
+#
+#					var spat : Spatial = t as Spatial
+#
+#					spat.rotate(Vector3(0, 1, 0), randf() * PI)
+#					spat.rotate(Vector3(1, 0, 0), randf() * 0.2 - 0.1)
+#					spat.rotate(Vector3(0, 0, 1), randf() * 0.2 - 0.1)
+#					spat.transform = spat.transform.scaled(Vector3(0.9 + 0.8 - randf(), 0.9 + 0.8 - randf(), 0.9 + 0.8 - randf()))
+#					spat.transform.origin = Vector3((x + chunk.position_x * chunk.size_x) * chunk.voxel_scale, ((val - 2) / 255.0) * chunk.world_height * chunk.voxel_scale, (z + chunk.position_z * chunk.size_z) * chunk.voxel_scale)
+#					chunk.voxel_world.call_deferred("add_child", spat)
 					
-					spat.rotate(Vector3(0, 1, 0), randf() * PI)
-					spat.rotate(Vector3(1, 0, 0), randf() * 0.2 - 0.1)
-					spat.rotate(Vector3(0, 0, 1), randf() * 0.2 - 0.1)
-					spat.transform = spat.transform.scaled(Vector3(0.9 + 0.8 - randf(), 0.9 + 0.8 - randf(), 0.9 + 0.8 - randf()))
-					spat.transform.origin = Vector3((x + chunk.position_x * chunk.size_x) * chunk.voxel_scale, ((val - 2) / 255.0) * chunk.world_height * chunk.voxel_scale, (z + chunk.position_z * chunk.size_z) * chunk.voxel_scale)
 					
-					chunk.voxel_world.call_deferred("add_child", spat)
+					var tr : Transform = Transform()
+					
+					tr = tr.rotated(Vector3(0, 1, 0), randf() * PI)
+					tr = tr.rotated(Vector3(1, 0, 0), randf() * 0.2 - 0.1)
+					tr = tr.rotated(Vector3(0, 0, 1), randf() * 0.2 - 0.1)
+					tr = tr.scaled(Vector3(0.9 + 0.8 - randf(), 0.9 + 0.8 - randf(), 0.9 + 0.8 - randf()))
+					tr.origin = Vector3((x + chunk.position_x * chunk.size_x) * chunk.voxel_scale, ((val - 2) / 255.0) * chunk.world_height * chunk.voxel_scale, (z + chunk.position_z * chunk.size_z) * chunk.voxel_scale)
+
+					chunk.voxel_world.prop_add(tr, prop_tree, false)
+					
+					
+					
 

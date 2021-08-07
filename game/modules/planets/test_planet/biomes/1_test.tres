@@ -1,8 +1,8 @@
 [gd_resource type="Biome" load_steps=3 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/biomes/simple_biome.gd" type="Script" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="PropData" id=2]
 
 [resource]
 script = ExtResource( 1 )
-tree = ExtResource( 2 )
+prop_tree = ExtResource( 2 )
