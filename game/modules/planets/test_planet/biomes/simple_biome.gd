@@ -122,11 +122,8 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 					tr = tr.rotated(Vector3(0, 1, 0), randf() * PI)
 					tr = tr.rotated(Vector3(1, 0, 0), randf() * 0.2 - 0.1)
 					tr = tr.rotated(Vector3(0, 0, 1), randf() * 0.2 - 0.1)
-					tr = tr.scaled(Vector3(0.9 + 0.8 - randf(), 0.9 + 0.8 - randf(), 0.9 + 0.8 - randf()))
-					tr.origin = Vector3((x + chunk.position_x * chunk.size_x) * chunk.voxel_scale, ((val - 2) / 255.0) * chunk.world_height * chunk.voxel_scale, (z + chunk.position_z * chunk.size_z) * chunk.voxel_scale)
+					tr = tr.scaled(Vector3(0.9 + randf() * 0.2, 0.9 + randf() * 0.2, 0.9 + randf() * 0.2))
+					tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((val - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
 
-					chunk.voxel_world.prop_add(tr, prop_tree, false)
+					chunk.voxel_world.prop_add(tr, prop_tree)
 					
-					
-					
-

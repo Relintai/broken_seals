@@ -16,4 +16,4 @@ optimization_type=2
 collider_type=0
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
-scale=Vector3( 3, 3, 3 )
+scale=Vector3( 1, 1, 1 )
