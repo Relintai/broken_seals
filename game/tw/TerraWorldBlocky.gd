@@ -206,17 +206,6 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 	if pchunk.job_get_count() == 0:
 		var tj : TerraTerrarinJob = TerraTerrarinJob.new()
 		var lj : TerraLightJob = TerraLightJob.new()
-		var pj : TerraPropJob = TerraPropJob.new()
-		
-		var prop_mesher = TerraMesherBlocky.new()
-		prop_mesher.base_light_value = 0.45
-		prop_mesher.ao_strength = 0.2
-		prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
-		prop_mesher.voxel_scale = voxel_scale
-		prop_mesher.build_flags = build_flags
-		prop_mesher.texture_scale = 3
-		
-		pj.set_prop_mesher(prop_mesher);
 
 		var mesher : TerraMesherBlocky = TerraMesherBlocky.new()
 		mesher.base_light_value = 0.45
@@ -252,6 +241,36 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 		s.job_type = TerraMesherJobStep.TYPE_BAKE_TEXTURE
 		tj.add_jobs_step(s)
 
+
+		var pj : TerraPropJob = TerraPropJob.new()
+		
+		var prop_mesher = TerraMesherBlocky.new()
+		prop_mesher.base_light_value = 0.45
+		prop_mesher.ao_strength = 0.2
+		prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+		prop_mesher.voxel_scale = voxel_scale
+		prop_mesher.build_flags = build_flags
+		prop_mesher.texture_scale = 3
+		
+		s.job_type = TerraMesherJobStep.TYPE_NORMAL
+		pj.add_jobs_step(s)
+		
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_MERGE_VERTS
+		pj.add_jobs_step(s)
+
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_BAKE_TEXTURE
+		pj.add_jobs_step(s)
+		
+		s = TerraMesherJobStep.new()
+		s.job_type = TerraMesherJobStep.TYPE_SIMPLIFY_MESH
+		var fqms : FastQuadraticMeshSimplifier = FastQuadraticMeshSimplifier.new()
+		s.fqms = fqms
+		s.simplification_steps = 2
+		pj.add_jobs_step(s)
+		
+		pj.set_prop_mesher(prop_mesher);
 
 		pchunk.job_add(lj)
 		pchunk.job_add(tj)
