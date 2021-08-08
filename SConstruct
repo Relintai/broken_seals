@@ -46,6 +46,14 @@ exports = {
     'javascript': [],
 }
 
+additional_commands = {
+    'global': [],
+    'linux': [],
+    'windows': [],
+    'android': [],
+    'javascript': [],
+}
+
 engine_repository = [ ['https://github.com/godotengine/godot.git', 'git@github.com:godotengine/godot.git'], 'engine', '' ]
 
 module_repositories = [
@@ -276,6 +284,20 @@ def get_exports_for(platform):
 
     return command
 
+def get_additional_commands_for(platform):
+    command_separator = ';'
+
+    if 'win' in sys.platform:
+        command_separator = '&'
+
+    command = ''
+
+    for p in additional_commands[platform]:
+        command += p + command_separator
+
+    return command
+
+
 
 def parse_config():
     global visual_studio_vcvarsall_path
@@ -313,6 +335,14 @@ def parse_config():
                 export_path = format_path(ls[8 + len(words[1]):])
 
                 exports[words[1]].append(export_path)
+            elif words[0] == 'run':
+                if (len(words) < 3) or not words[1] in additional_commands:
+                    print('This build.config line is malformed, and got ignored: ' + ls)
+                    continue
+
+                final_cmd = format_path(ls[5 + len(words[1]):])
+
+                additional_commands[words[1]].append(final_cmd)
 
 parse_config()
 
@@ -327,7 +357,7 @@ if len(sys.argv) > 1:
     arg_split = arg_split[1:]
 
     if arg[0] == 'b':
-        build_string = get_exports_for('global') + 'scons '
+        build_string = get_exports_for('global') + get_additional_commands_for('global') + 'scons '
 
         build_string += 'tools='
         if 'e' in arg:
@@ -404,7 +434,7 @@ if len(sys.argv) > 1:
         if 'l' in arg:
             build_string += 'platform=x11'
 
-            build_string = get_exports_for('linux') + build_string + target
+            build_string = get_exports_for('linux') + get_additional_commands_for('linux') + build_string + target
 
             print('Running command: ' + build_string)
 
@@ -412,7 +442,7 @@ if len(sys.argv) > 1:
         elif 'w' in arg:
             build_string += 'platform=windows'
 
-            build_string = get_exports_for('windows') + build_string
+            build_string = get_exports_for('windows') + get_additional_commands_for('windows') + build_string
 
             print('Running command: ' + build_string)
 
@@ -420,7 +450,7 @@ if len(sys.argv) > 1:
         elif 'a' in arg:
             build_string += 'platform=android'
 
-            build_string = get_exports_for('android') + build_string
+            build_string = get_exports_for('android') + get_additional_commands_for('android') + build_string
 
             print('Running command: ' + build_string + ' android_arch=armv7')
             subprocess.call(build_string + ' android_arch=armv7', shell=True)
@@ -431,12 +461,12 @@ if len(sys.argv) > 1:
 
             os.chdir(full_path + 'platform/android/java/')
 
-            print('Running command: ' + get_exports_for('global') + get_exports_for('android') + './gradlew generateGodotTemplates')
-            subprocess.call(get_exports_for('global') + get_exports_for('android') + './gradlew generateGodotTemplates', shell=True)
+            print('Running command: ' + get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotTemplates')
+            subprocess.call(get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotTemplates', shell=True)
         elif 'j' in arg:
             build_string += 'platform=javascript'
 
-            build_string = get_exports_for('javascript') + build_string
+            build_string = get_exports_for('javascript') + get_additional_commands_for('javascript') + build_string
 
             print('Running command: ' + build_string)
             subprocess.call(build_string, shell=True)
