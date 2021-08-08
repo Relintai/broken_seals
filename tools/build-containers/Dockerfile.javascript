@@ -1,13 +1,13 @@
 ARG img_version
 FROM godot-fedora:${img_version}
 
+ENV EMSCRIPTEN_CLASSICAL=2.0.25
+
 RUN dnf -y install --setopt=install_weak_deps=False \
-      gcc gcc-c++ java-openjdk yasm && \
-    git clone --progress https://github.com/emscripten-core/emsdk && \
-    cd emsdk && \
-    git checkout a5082b232617c762cb65832429f896c838df2483 && \
-    ./emsdk install 1.38.47-upstream && \
-    ./emsdk activate 1.38.47-upstream && \
-    echo "source /root/emsdk/emsdk_env.sh" >> /root/.bashrc
+      java-openjdk && \
+    git clone --branch ${EMSCRIPTEN_CLASSICAL} --progress https://github.com/emscripten-core/emsdk emsdk_${EMSCRIPTEN_CLASSICAL} && \
+    emsdk_${EMSCRIPTEN_CLASSICAL}/emsdk install ${EMSCRIPTEN_CLASSICAL} && \
+    emsdk_${EMSCRIPTEN_CLASSICAL}/emsdk activate ${EMSCRIPTEN_CLASSICAL}
+    echo "source /root/emsdk_${EMSCRIPTEN_CLASSICAL}/emsdk/emsdk_env.sh" >> /root/.bashrc
 
 CMD /bin/bash

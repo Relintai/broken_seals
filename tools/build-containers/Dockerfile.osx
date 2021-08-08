@@ -5,9 +5,12 @@ RUN dnf -y install --setopt=install_weak_deps=False \
       automake autoconf bzip2-devel clang libicu-devel libtool libxml2-devel llvm-devel openssl-devel yasm && \
     git clone --progress https://github.com/tpoechtrager/osxcross.git && \
     cd /root/osxcross && \
-    git checkout 542acc2ef6c21aeb3f109c03748b1015a71fed63 && \
-    ln -s /root/files/MacOSX10.14.sdk.tar.xz /root/osxcross/tarballs && \
-    UNATTENDED=1 ./build.sh
+    git checkout de6c72eff2d6013f5af46fba1fa205654c5cf5e2 && \
+    ln -s /root/files/MacOSX11.1.sdk.tar.xz /root/osxcross/tarballs && \
+    url -LO https://github.com/tpoechtrager/osxcross/pull/286.patch && \
+    patch -p1 < 286.patch && \
+    UNATTENDED=1 ./build.sh && \
+    ./build_compiler_rt.sh
 
 ENV OSXCROSS_ROOT=/root/osxcross
 ENV PATH="/root/osxcross/target/bin:${PATH}"
