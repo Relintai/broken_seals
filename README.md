@@ -8,7 +8,7 @@ I want the game to run on every platform, but the game design is PC first. From 
 
 #### On Desktop
 
-![Broken Seals desktop](pictures/screenshot_desktop.jpg.jpg)
+![Broken Seals desktop](pictures/screenshot_desktop.jpg)
 
 #### On Touchscreens
 
