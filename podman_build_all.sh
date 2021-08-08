@@ -34,9 +34,9 @@ $podman run -v ${project_root}:/root/project -w /root/project godot-linux:${img_
 rm -f engine/modules/modules_enabled.gen.h
 
 
-$podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} scons bj_strip -j4 . 2>&1 | tee logs/bj.log
+$podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} 'source /root/emsdk_2.0.25/emsdk_env.sh;scons bj_strip -j4' -j4 . 2>&1 | tee logs/bj.log
 rm -f engine/modules/modules_enabled.gen.h
-$podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} scons bjr_strip -j4 . 2>&1 | tee logs/bjr.log
+$podman run -v ${project_root}:/root/project -w /root/project godot-javascript:${img_version} 'source /root/emsdk_2.0.25/emsdk_env.sh;scons bjr_strip -j4' . 2>&1 | tee logs/bjr.log
 rm -f engine/modules/modules_enabled.gen.h
 
 $podman run -v ${project_root}:/root/project -w /root/project godot-android:${img_version} scons ba_strip -j4 . 2>&1 | tee logs/ba.log
