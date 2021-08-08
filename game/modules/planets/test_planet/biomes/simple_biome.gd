@@ -23,6 +23,7 @@ extends Biome
 
 export(PackedScene) var tree : PackedScene
 export(PropData) var prop_tree : PropData
+export(PropData) var prop_tree2 : PropData
 
 var terrarin_gen : BiomeTerrarinGenerator = BiomeTerrarinGenerator.new()
 
@@ -38,6 +39,7 @@ func _setup():
 func _instance(p_seed, p_instance):
 	p_instance.tree = tree
 	p_instance.prop_tree = prop_tree
+	p_instance.prop_tree2 = prop_tree2
 	
 	return ._instance(p_seed, p_instance)
 		
@@ -126,4 +128,10 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 					tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((val - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
 
 					chunk.voxel_world.prop_add(tr, prop_tree)
+
+#					Uncomment to test the prop texture merger system:
+#					if randf() > 0.5:
+#						chunk.voxel_world.prop_add(tr, prop_tree)
+#					else:
+#						chunk.voxel_world.prop_add(tr, prop_tree2)
 					

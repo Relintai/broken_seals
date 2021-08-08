@@ -1,9 +1,7 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
 [ext_resource path="res://modules/core/shaders/5_standard_shader_nouv2.tres" type="Shader" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=2]
 
 [resource]
 shader = ExtResource( 1 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/texture_albedo = ExtResource( 2 )
