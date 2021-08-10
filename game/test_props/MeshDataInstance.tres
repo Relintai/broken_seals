@@ -1,11 +1,10 @@
-[gd_resource type="PropData" load_steps=12 format=2]
+[gd_resource type="PropData" load_steps=10 format=2]
 
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=1]
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.gltf" type="MeshDataResource" id=2]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf.png" type="Texture" id=3]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_red_scarf.png" type="Texture" id=4]
 [ext_resource path="res://test_props/MeshDataInstance2.tres" type="PropData" id=5]
-[ext_resource path="res://test_props/MeshDataInstance2.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PropDataMeshData" id=1]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 0.182433 )
@@ -26,9 +25,5 @@ light_size = 6
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.55294, 0, 2.9085 )
 prop = ExtResource( 5 )
 
-[sub_resource type="PropDataScene" id=5]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0194, 0, 1.18272 )
-scene = ExtResource( 6 )
-
 [resource]
-props = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ]
+props = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
