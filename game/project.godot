@@ -292,7 +292,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/bone_editor/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/bone_editor/plugin.cfg" )
 
 [ess]
 
