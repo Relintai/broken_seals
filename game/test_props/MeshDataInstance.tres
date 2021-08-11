@@ -12,17 +12,17 @@ mesh = ExtResource( 1 )
 texture = ExtResource( 4 )
 
 [sub_resource type="PropDataMeshData" id=2]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879526, 0, 2.33732 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014395, 0, 0.318146 )
 mesh = ExtResource( 2 )
 texture = ExtResource( 3 )
 
 [sub_resource type="PropDataLight" id=3]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.84759, 0, 1.18272 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0665, 0, 1.18272 )
 light_color = Color( 0.643137, 0.376471, 0.376471, 1 )
 light_size = 21
 
 [sub_resource type="PropDataProp" id=4]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.96042, 0, 2.9085 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.40238, 0, 2.16996 )
 prop = ExtResource( 5 )
 
 [resource]
