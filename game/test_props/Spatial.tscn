@@ -12,4 +12,5 @@ transform = Transform( 1, 0, 0, 0, 0.828911, 0.559381, 0, -0.559381, 0.828911, 2
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.823889, 0.566751, 0, -0.566751, 0.823889, 0, 2.11892, 3.32613 )
+visible = false
 light_energy = 0.904
