@@ -10,38 +10,28 @@ albedo_texture = ExtResource( 4 )
 [node name="Room" type="Room"]
 points = PoolVector3Array( 5.01, -0.01, -6.01, 5.01, -0.01, 0.00999975, 5.01, 3.01, 0.00999975, 5.01, 3.01, -6.01, -0.0100001, -0.01, -6.01, -0.0100001, 3.01, -6.01, -0.0100001, -0.01, 0.00999975, -0.0100001, 0.745, 0.00999975, -0.0100001, 3.01, 0.00999975, 0.826667, 3.01, 0.00999975, 0.826667, 0.745, 0.00999975 )
 
-[node name="Portal" type="Portal" parent="."]
-transform = Transform( -1, 0, -9.61651e-07, 0, 1, 0, 9.61651e-07, 0, -1, 2, 1, 0 )
-points = PoolVector2Array( -1, 1, -1, -1, 0, -1, 0, 1 )
-
 [node name="WallXP" type="TiledWall" parent="."]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0 )
-width = 6
+width = 10
 heigth = 3
 data = ExtResource( 10 )
 
 [node name="WallXN" type="TiledWall" parent="."]
-transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, -6 )
-width = 6
-heigth = 3
-data = ExtResource( 10 )
-
-[node name="WallZN" type="TiledWall" parent="."]
-transform = Transform( -1, 0, 3.17865e-08, 0, 1, 0, -3.17865e-08, 0, -1, 5, 0, -6 )
-width = 5
+transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, -10 )
+width = 10
 heigth = 3
 data = ExtResource( 10 )
 
 [node name="Floor" type="TiledWall" parent="."]
 transform = Transform( -1, 0, 3.17865e-08, -3.17865e-08, -5.96046e-08, -1, 2.66454e-15, -1, 5.96046e-08, 5, 0, 0 )
 width = 5
-heigth = 6
+heigth = 10
 data = ExtResource( 10 )
 
 [node name="Ceiling" type="TiledWall" parent="."]
-transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636e-15, 1, -5.96046e-08, 5, 3, -6 )
+transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636e-15, 1, -5.96046e-08, 5, 3, -10 )
 width = 5
-heigth = 6
+heigth = 10
 data = ExtResource( 10 )
 
 [node name="wallzp" type="Spatial" parent="."]
@@ -66,3 +56,35 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 mesh_data = ExtResource( 5 )
 texture = ExtResource( 4 )
 material = SubResource( 3 )
+
+[node name="Portal" type="Portal" parent="wallzp"]
+transform = Transform( -1, 0, -9.61651e-07, 0, 1, 0, 9.61651e-07, 0, -1, 2, 1, 0 )
+points = PoolVector2Array( -1, 1, -1, -1, 0, -1, 0, 1 )
+
+[node name="wallzp2" type="Spatial" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, -10 )
+
+[node name="WallZN2" type="TiledWall" parent="wallzp2"]
+transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
+width = 2
+heigth = 3
+data = ExtResource( 10 )
+
+[node name="WallZN3" type="TiledWall" parent="wallzp2"]
+transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
+width = 2
+heigth = 3
+data = ExtResource( 10 )
+
+[node name="wallsegment3" type="Spatial" parent="wallzp2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+
+[node name="MeshDataInstance3" type="MeshDataInstance" parent="wallzp2/wallsegment3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+mesh_data = ExtResource( 5 )
+texture = ExtResource( 4 )
+material = SubResource( 3 )
+
+[node name="Portal" type="Portal" parent="wallzp2"]
+transform = Transform( -1, 0, -9.61651e-07, 0, 1, 0, 9.61651e-07, 0, -1, 2, 1, 0 )
+points = PoolVector2Array( -1, 1, -1, -1, 0, -1, 0, 1 )
