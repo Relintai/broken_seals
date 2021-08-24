@@ -116,29 +116,41 @@ func generate() -> void:
 	spawn_room(Transform(), start_room)
 	
 
-func spawn_room(tf : Transform, room : PropData, level : int = 0, current_portal : PropDataPortal = null) -> void:
-	if level > 2:
+func spawn_room(room_lworld_transform : Transform, room : PropData, level : int = 0, current_portal : PropDataPortal = null) -> void:
+	if level > 4:
 		return
 	
 	var sr : PropInstanceMerger = PropInstanceMerger.new()
-	sr.prop_data = start_room
+	sr.prop_data = room
 	add_child(sr)
-	sr.transform = tf
+	
+	if current_portal:
+		var lworld_curr_portal : Transform = current_portal.transform
+		#portal center should be precalculated
+		#this will only work with the current portals
+		lworld_curr_portal = lworld_curr_portal.translated(Vector3(-0.5, 0, 0))
+		
+		lworld_curr_portal.basis = lworld_curr_portal.basis.rotated(Vector3(0, 1, 0), PI)
+		
+		room_lworld_transform = room_lworld_transform * lworld_curr_portal.inverse()
+
+	
+	sr.transform = room_lworld_transform
 	
 	if Engine.editor_hint and debug:
 		sr.owner = get_tree().edited_scene_root
 		
-	var caabb : AABB = room_aabbs[room]
-	caabb.position = tf.xform(Vector3())
-	current_aabbs.push_back(caabb)
+	#var caabb : AABB = room_aabbs[room]
+	#caabb.position = tf.xform(Vector3())
+	#current_aabbs.push_back(caabb)
 	
 	for pe in room.props:
 		if pe is PropDataPortal:
 			if pe == current_portal:
 				continue
 			
-			var ntf : Transform = pe.transform * tf
-
+			var current_portal_lworld_position : Transform =  room_lworld_transform * pe.transform
+			
 			var d : Array = portal_map[pe]
 			
 			if d.size() == 0:
@@ -154,24 +166,27 @@ func spawn_room(tf : Transform, room : PropData, level : int = 0, current_portal
 			
 			#todo figure out the transforms
 			var poffset : Vector3 = new_room_portal.transform.xform(Vector3())
-			poffset.x += 1
+
+			#middle of the current portal
+			var offset_current_portal_lworld_position : Transform = current_portal_lworld_position
+			#portal center should be precalculated
+			#this will only work with the current portals
+			offset_current_portal_lworld_position = offset_current_portal_lworld_position.translated(Vector3(-0.5, 0, 0))
 			
-			var offsert_ntf : Transform = ntf
-			offsert_ntf = offsert_ntf.translated(-poffset)
+			#var ab : AABB = room_aabbs[new_room]
+			#ab.position = offsert_ntf.xform(Vector3())
 			
-			var ab : AABB = room_aabbs[new_room]
-			ab.position = offsert_ntf.xform(Vector3())
-			
+			test_spawn_pos(offset_current_portal_lworld_position)
 			
 			var can_spawn : bool = true
-			for saab in current_aabbs:
-				if ab.intersects(saab):
-					#todo implement plugs
-					can_spawn = false
-					break
+			#for saab in current_aabbs:
+			#	if ab.intersects(saab):
+			#		#todo implement plugs
+			#		can_spawn = false
+			#		break
 			
 			if can_spawn:
-				spawn_room(offsert_ntf, new_room, level + 1, new_room_portal)
+				spawn_room(offset_current_portal_lworld_position, new_room, level + 1, new_room_portal)
 
 func clear() -> void:
 	if Engine.editor_hint and debug:
@@ -182,6 +197,20 @@ func clear() -> void:
 	else:
 		for c in get_children():
 			c.queue_free()
+
+func test_spawn_pos(lworld_position : Transform):
+	var testspat : ImmediateGeometry = ImmediateGeometry.new()
+	add_child(testspat)
+	testspat.transform = lworld_position
+	testspat.begin(Mesh.PRIMITIVE_LINES)
+	testspat.add_vertex(Vector3(0, -0.5, 0))
+	testspat.add_vertex(Vector3(0, 0.5, 0))
+	testspat.add_vertex(Vector3(-0.5, 0, 0))
+	testspat.add_vertex(Vector3(0.5, 0, 0))
+	testspat.add_vertex(Vector3(0, 0, -0.5))
+	testspat.add_vertex(Vector3(0, 0, 0.5))
+	testspat.end()
+
 
 func set_generate(on) -> void:
 	if on:
