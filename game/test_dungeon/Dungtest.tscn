@@ -1,15 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/dungeons/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://test_rooms/Room1.tres" type="PropData" id=2]
-[ext_resource path="res://test_rooms/Room2.tres" type="PropData" id=3]
 [ext_resource path="res://test_rooms/Room3.tres" type="PropData" id=4]
 [ext_resource path="res://test_rooms/Room5.tres" type="PropData" id=5]
 [ext_resource path="res://test_rooms/Room4.tres" type="PropData" id=6]
 
 [node name="Dungtest" type="Spatial"]
 
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.618285, 0.785954, 0, -0.785954, 0.618285, 0, 7.04604, 18.7882 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.937221, 0.348736, 0, -0.348736, 0.937221, 0, 3.89185, 8.51114 )
+current = true
+
 [node name="Dungeon" type="Spatial" parent="."]
 script = ExtResource( 1 )
 start_room = ExtResource( 2 )
-rooms = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ]
+rooms = [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ) ]
