@@ -36,9 +36,6 @@ var mesh_instance : MeshInstance = null
 export(NodePath) var skeleton_path : NodePath
 var skeleton : Skeleton
 
-export(Array, Material) var materials : Array
-var _materials : Array = Array()
-
 export(Array, ModelVisual) var viss : Array
 
 var meshes : Array
@@ -48,6 +45,7 @@ var _current_lod_level : int = 0
 var _generating : bool = false
 
 var _mesh_job : ThreadPoolJob = null
+var _material_cache : ESSMaterialCache = null
 
 var bone_names = {
 	0: "root",
@@ -101,12 +99,6 @@ func _enter_tree():
 	
 	skeleton = get_node(skeleton_path) as Skeleton
 	mesh_instance = get_node(mesh_instance_path) as MeshInstance
-
-	if _materials.size() != materials.size():
-		for m in materials:
-			_materials.append(m.duplicate())
-			
-		_mesh_job.materials = _materials
 
 	set_process(false)
 	
@@ -219,6 +211,19 @@ func build():
 			data.append(ddict)
 	
 	_mesh_job.data = data
+	_material_cache= ESS.material_cache_get(data.hash())
+	 
+	if _material_cache.material_get_num() == 0:
+		#lock just in case
+		_material_cache.mutex_lock()
+
+		if _material_cache.material_get_num() == 0:
+			#this has to be done on the main thread!
+			_material_cache.initial_setup_default()
+		
+		_material_cache.mutex_unlock()
+	
+	_mesh_job.material_cache = _material_cache
 	
 	finish_build_mesh()
 	
@@ -250,7 +255,6 @@ func finish_build_mesh() -> void:
 	
 func job_finished():
 	meshes = _mesh_job.meshes
-	_texture = _mesh_job._texture
 	mesh_instance.mesh = meshes[_current_lod_level]
 	
 	if !mesh_instance.is_software_skinning_enabled():

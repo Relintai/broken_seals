@@ -30,21 +30,14 @@ var meshes : Array
 
 var _generating : bool = false
 
-var _texture_packer : TexturePacker
 var _textures : Array
-var _texture : Texture
+var material_cache : ESSMaterialCache = null
 var materials : Array = Array()
 
 var data : Array
 
 signal finished
 
-func _init():
-	_texture_packer = TexturePacker.new()
-	_texture_packer.texture_flags = 0
-#	_texture_packer.texture_flags = Texture.FLAG_FILTER
-	_texture_packer.max_atlas_size = 512
-	
 func _execute():
 	prepare_textures()
 
@@ -69,20 +62,11 @@ func _execute():
 		var bone_name : String = ddict["bone_name"]
 		var bone_idx : int = ddict["bone_idx"]
 		var texture : Texture = ddict["texture"]
-		var atlas_texture : AtlasTexture = ddict["atlas_texture"]
+		#var atlas_texture : AtlasTexture = ddict["atlas_texture"]
 		var transform : Transform = ddict["transform"]
 		var mesh : MeshDataResource = ddict["mesh"]
 				
-		var rect : Rect2
-				
-		if atlas_texture != null and texture != null:
-			var otw : float = _texture.get_width()
-			var oth : float = _texture.get_height()
-					
-			rect.position.x = atlas_texture.region.position.x / otw
-			rect.position.y = atlas_texture.region.position.y / oth
-			rect.size.x = atlas_texture.region.size.x / otw
-			rect.size.y = atlas_texture.region.size.y / oth
+		var rect : Rect2 = material_cache.texture_get_uv_rect(texture)
 			
 		bones[0] = bone_idx
 		
@@ -92,21 +76,32 @@ func _execute():
 
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-	mesh.surface_set_material(0, materials[0])
+	mesh.surface_set_material(0, material_cache.material_lod_get(0))
 	meshes.append(mesh)
 	
 	if use_lod:
 		arr = MeshUtils.merge_mesh_array(arr)
 		var meshl2 : ArrayMesh = ArrayMesh.new()
 		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-		meshl2.surface_set_material(0, materials[1])
+		meshl2.surface_set_material(0, material_cache.material_lod_get(1))
 		meshes.append(meshl2)
+		
+		var texture : Texture = null
+		
+		var ml : Material = material_cache.material_lod_get(0)
 
-		arr = MeshUtils.bake_mesh_array_uv(arr, _texture)
+		if ml is SpatialMaterial:
+			var spml : SpatialMaterial = ml
+			texture = spml.get_texture(SpatialMaterial.TEXTURE_ALBEDO)
+		elif ml is ShaderMaterial:
+			var sm : ShaderMaterial = ml
+			texture = sm.get_shader_param("texture_albedo")
+
+		arr = MeshUtils.bake_mesh_array_uv(arr, texture)
 		arr[VisualServer.ARRAY_TEX_UV] = null
 		var meshl3 : ArrayMesh = ArrayMesh.new()
 		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
-		meshl3.surface_set_material(0, materials[2])
+		meshl3.surface_set_material(0, material_cache.material_lod_get(2))
 		meshes.append(meshl3)
 	
 	emit_signal("finished")
@@ -114,7 +109,13 @@ func _execute():
 	complete = true
 
 func prepare_textures() -> void:
-	_texture_packer.clear()
+	if !material_cache.initialized:
+		material_cache.mutex_lock()
+		
+		#got initialized before we got the lock
+		#No need to have the lock anymore
+		if material_cache.initialized:
+			material_cache.mutex_unlock()
 	
 	var lmerger : TextureLayerMerger = TextureLayerMerger.new()
 	
@@ -146,22 +147,11 @@ func prepare_textures() -> void:
 		ddict["texture"] = texture
 
 		if texture != null:
-			ddict["atlas_texture"] = _texture_packer.add_texture(texture)
-
+			if !material_cache.initialized:
+				material_cache.texture_add(texture)
+				
 		data[i] = ddict
 
-	_texture_packer.merge()
-
-	var tex : Texture = _texture_packer.get_generated_texture(0)
-	
-#	var mat : SpatialMaterial = _material as SpatialMaterial
-#	mat.albedo_texture = tex
-	var mat : ShaderMaterial = materials[0] as ShaderMaterial
-	mat.set_shader_param("texture_albedo", tex)
-	
-	if use_lod:
-		var mat2 : ShaderMaterial = materials[1] as ShaderMaterial
-		mat2.set_shader_param("texture_albedo", tex)
-	
-#	mat.albedo_texture = tex
-	_texture = tex
+	if !material_cache.initialized:
+		material_cache.refresh_rects()
+		material_cache.mutex_unlock()
