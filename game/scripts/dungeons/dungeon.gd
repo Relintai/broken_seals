@@ -7,7 +7,7 @@ export(Array, PropData) var rooms : Array
 export(bool) var generate : bool setget set_generate, get_generate
 
 #todo calc aabbs and store in PropData during prop conversion
-var room_aabbs : Dictionary
+var room_hulls : Dictionary
 var portal_map : Dictionary
 var portals : Array
 
@@ -36,18 +36,25 @@ func process_prop(room : PropData) -> void:
 	if !room.is_room:
 		return
 		
-	if room in room_aabbs:
+	if room in room_hulls:
 		return
 		
 	var ps : PoolVector3Array = room.room_bounds
+	
+	#Convert the bounds to 2d
+	#This should probably be done in 3d later
+	#I found no simple way to do it for now
+	#Will look later
 		
-	var aabb : AABB = AABB()
+	var points : PoolVector2Array = PoolVector2Array()
 		
 	for p in ps:
-		aabb.expand(p)
-			
-	room_aabbs[room] = aabb
-		
+		points.push_back(Vector2(p.x, p.z))
+	
+	points = Geometry.convex_hull_2d(points)
+	
+	room_hulls[room] = points
+
 	for i in range(room.props.size()):
 		var pe : PropDataEntry = room.props[i]
 		
@@ -101,12 +108,11 @@ func process_portals() -> void:
 			
 		portal_map[portal] = map_data
 		
-	#print(portal_map)
 
 func clear_room_data() -> void:
 	portal_map.clear()
 	portals.clear()
-	room_aabbs.clear()
+	room_hulls.clear()
 	current_aabbs.clear()
 
 func generate() -> void:
@@ -124,26 +130,33 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 	sr.prop_data = room
 	add_child(sr)
 	
+	var orig_room_lworld_transform : Transform = room_lworld_transform
+	
 	if current_portal:
 		var lworld_curr_portal : Transform = current_portal.transform
 		#portal center should be precalculated
 		#this will only work with the current portals
 		lworld_curr_portal = lworld_curr_portal.translated(Vector3(-0.5, 0, 0))
-		
 		lworld_curr_portal.basis = lworld_curr_portal.basis.rotated(Vector3(0, 1, 0), PI)
-		
 		room_lworld_transform = room_lworld_transform * lworld_curr_portal.inverse()
 
-	
 	sr.transform = room_lworld_transform
+	
+	var cab : PoolVector2Array = room_hulls[room]
+	var ctfab : PoolVector2Array = PoolVector2Array()
+			
+	for a in cab:
+		var v : Vector3 = Vector3(a.x, 0, a.y)
+		v = room_lworld_transform.xform(v)
+		ctfab.push_back(Vector2(v.x, v.z))
+		#v.y = 0
+		#test_spawn_pos(Transform(Basis(), v))
+	
+	current_aabbs.push_back(ctfab)
 	
 	if Engine.editor_hint and debug:
 		sr.owner = get_tree().edited_scene_root
 		
-	#var caabb : AABB = room_aabbs[room]
-	#caabb.position = tf.xform(Vector3())
-	#current_aabbs.push_back(caabb)
-	
 	for pe in room.props:
 		if pe is PropDataPortal:
 			if pe == current_portal:
@@ -173,18 +186,54 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 			#this will only work with the current portals
 			offset_current_portal_lworld_position = offset_current_portal_lworld_position.translated(Vector3(-0.5, 0, 0))
 			
-			#var ab : AABB = room_aabbs[new_room]
-			#ab.position = offsert_ntf.xform(Vector3())
+			var ab : PoolVector2Array = room_hulls[new_room]
+			var tfab : PoolVector2Array = PoolVector2Array()
 			
-			test_spawn_pos(offset_current_portal_lworld_position)
+			for a in ab:
+				var v : Vector3 = Vector3(a.x, 0, a.y)
+				v = offset_current_portal_lworld_position.xform(v)
+				tfab.push_back(Vector2(v.x, v.z))
+#				v.y = 0
+#				test_spawn_pos(Transform(Basis(), v))
+			
+			#test_spawn_pos(offset_current_portal_lworld_position)
 			
 			var can_spawn : bool = true
-			#for saab in current_aabbs:
-			#	if ab.intersects(saab):
-			#		#todo implement plugs
-			#		can_spawn = false
-			#		break
-			
+			for saab in current_aabbs:
+				var ohull : PoolVector2Array = saab
+				
+				var poly_int_res : Array = Geometry.intersect_polygons_2d(ohull, tfab)
+
+				if poly_int_res.size() > 0:
+					for poly in poly_int_res:
+						var indices : PoolIntArray = Geometry.triangulate_polygon(poly)
+
+						for i in range(0, indices.size(), 3):
+							var p1 : Vector2 = poly[indices[i]]
+							var p2 : Vector2 = poly[indices[i + 1]]
+							var p3 : Vector2 = poly[indices[i + 2]]
+							
+							var pp1 : float = (p1.x * p2.y + p2.x * p3.y + p3.x * p1.y)
+							var pp2 : float = (p2.x * p1.y + p3.x * p2.y + p1.x * p3.y)
+							var area : float  = 0.5 * (pp1 - pp2)
+
+							if area > 0.2:
+								#print(area)
+								#print(poly)
+								#print(indices)
+								
+								#for p in poly:
+								#	test_spawn_pos(Transform(Basis(), Vector3(p.x, 0, p.y)))
+								
+								can_spawn = false
+								break
+								
+					if !can_spawn:
+						break
+						
+				if !can_spawn:
+					break
+				
 			if can_spawn:
 				spawn_room(offset_current_portal_lworld_position, new_room, level + 1, new_room_portal)
 
@@ -198,16 +247,22 @@ func clear() -> void:
 		for c in get_children():
 			c.queue_free()
 
-func test_spawn_pos(lworld_position : Transform):
+func test_spawn_pos(lworld_position : Transform, color : Color = Color(1, 1, 1)):
 	var testspat : ImmediateGeometry = ImmediateGeometry.new()
 	add_child(testspat)
 	testspat.transform = lworld_position
 	testspat.begin(Mesh.PRIMITIVE_LINES)
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(0, -0.5, 0))
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(0, 0.5, 0))
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(-0.5, 0, 0))
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(0.5, 0, 0))
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(0, 0, -0.5))
+	testspat.set_color(color)
 	testspat.add_vertex(Vector3(0, 0, 0.5))
 	testspat.end()
 
