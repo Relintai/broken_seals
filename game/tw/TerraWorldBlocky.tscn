@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://tw/new_terramanlibrarymergerpcm.tres" type="TerramanLibraryMergerPCM" id=1]
 [ext_resource path="res://tw/TerraWorldBlocky.gd" type="Script" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=4]
 [ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=5]
 [ext_resource path="res://modules/planets/test_planet/DungeonPlanetData.tres" type="Planet" id=6]
-[ext_resource path="res://test_dungeon/Dungeon.tscn" type="PackedScene" id=7]
 
 [sub_resource type="TerramanLevelGenerator" id=1]
 script = ExtResource( 3 )
@@ -80,6 +79,3 @@ light_energy = 0.87
 light_specular = 0.65
 shadow_bias = 0.07
 script = ExtResource( 4 )
-
-[node name="Dungeon" parent="." instance=ExtResource( 7 )]
-transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 99, 0 )

@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.gd" type="Script" id=1]
+[ext_resource path="res://modules/planets/test_planet/dungeons/dung_back_teleporter.gd" type="Script" id=1]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/test_brick_albedo.png" type="Texture" id=2]
-[ext_resource path="res://test_dungeon/Dungeon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://modules/planets/test_planet/dungeons/dung_back_teleporter.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 1, 1 )
@@ -16,11 +14,8 @@ albedo_texture = ExtResource( 2 )
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[node name="DungeonTeleporter" type="StaticBody"]
+[node name="DungeonBackTeleporter" type="StaticBody"]
 script = ExtResource( 1 )
-default_albedo = Color( 0.521569, 0.521569, 0.521569, 1 )
-dungeon = ExtResource( 3 )
-dungeon_back_teleporter = ExtResource( 4 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )

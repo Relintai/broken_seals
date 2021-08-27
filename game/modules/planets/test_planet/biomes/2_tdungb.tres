@@ -1,12 +1,14 @@
-[gd_resource type="Biome" load_steps=5 format=2]
+[gd_resource type="Biome" load_steps=6 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/biomes/simple_biome.gd" type="Script" id=1]
 [ext_resource path="res://modules/planets/test_planet/villages/village.tres" type="Building" id=2]
 [ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="PropData" id=3]
 [ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t2.tres" type="PropData" id=4]
+[ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=5]
 
 [resource]
 buildings = [ ExtResource( 2 ) ]
 script = ExtResource( 1 )
+dungeon_teleporter = ExtResource( 5 )
 prop_tree = ExtResource( 3 )
 prop_tree2 = ExtResource( 4 )

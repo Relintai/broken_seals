@@ -22,6 +22,7 @@ extends Biome
 # SOFTWARE.
 
 export(PackedScene) var tree : PackedScene
+export(PackedScene) var dungeon_teleporter : PackedScene
 export(PropData) var prop_tree : PropData
 export(PropData) var prop_tree2 : PropData
 
@@ -40,27 +41,35 @@ func _instance(p_seed, p_instance):
 	p_instance.tree = tree
 	p_instance.prop_tree = prop_tree
 	p_instance.prop_tree2 = prop_tree2
+	p_instance.dungeon_teleporter = dungeon_teleporter
 	
 	return ._instance(p_seed, p_instance)
 		
 func _generate_terra_chunk(chunk, spawn_mobs):
 	if voxel_scale < 0:
 		voxel_scale = chunk.voxel_scale
-	
-		#todo generate this properly
-		var entrance_position : Vector3 = Vector3(7, 5, 7)
-	
-		for i in range(get_building_count()):
-			var d : Building = get_building(i)
-			
-			if d.has_method("has_entrance_position"):
-				d.entrance_position.origin = entrance_position
-
-				entrance_position = d.next_level_teleporter_position_data_space
-				entrance_position *= voxel_scale
+		
+#		#todo generate this properly
+#		var entrance_position : Vector3 = Vector3(7, 5, 7)
+#
+#		for i in range(get_building_count()):
+#			var d : Building = get_building(i)
+#
+#			if d.has_method("has_entrance_position"):
+#				d.entrance_position.origin = entrance_position
+#
+#				entrance_position = d.next_level_teleporter_position_data_space
+#				entrance_position *= voxel_scale
 
 	#terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 	gen_terra_chunk(chunk)
+	
+	if chunk.position_x == 0 && chunk.position_z == 0:
+		#test
+		spawn_dungeon(chunk)
+	else:
+		if randi() % 10 == 0:
+			spawn_dungeon(chunk)
 	
 	for i in range(get_building_count()):
 		get_building(i).generate_terra_chunk(chunk, spawn_mobs)
@@ -134,4 +143,16 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 #						chunk.voxel_world.prop_add(tr, prop_tree)
 #					else:
 #						chunk.voxel_world.prop_add(tr, prop_tree2)
-					
+		
+
+func spawn_dungeon(chunk: TerraChunk) -> void:
+	var x : float = chunk.position_x * chunk.voxel_scale * chunk.size_x
+	var z : float = chunk.position_z * chunk.voxel_scale * chunk.size_z
+	
+	var vh : int = chunk.get_voxel(6, 6, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+	var vwh : float = chunk.get_voxel_scale() * chunk.get_world_height() * (vh / 256.0)
+	
+	var dt : Spatial = dungeon_teleporter.instance()
+	chunk.voxel_world.add_child(dt)
+	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
+	

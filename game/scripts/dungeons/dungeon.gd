@@ -126,6 +126,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 	if level > 4:
 		var plugi : PropInstanceMerger = PropInstanceMerger.new()
 		plugi.prop_data = plug
+		plugi.first_lod_distance_squared = 4000
 		add_child(plugi)
 		plugi.transform = room_lworld_transform
 		
@@ -145,6 +146,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 
 	var sr : PropInstanceMerger = PropInstanceMerger.new()
 	sr.prop_data = room
+	sr.first_lod_distance_squared = 4000
 	add_child(sr)
 	sr.transform = room_lworld_transform
 	
