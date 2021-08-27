@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://test_rooms/test2_tiledwalldata.tres" type="TiledWallData" id=10]
+
+[node name="RoomPLug" type="Spatial"]
+
+[node name="Floor" type="TiledWall" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5, -1, 0 )
+heigth = 2
+data = ExtResource( 10 )

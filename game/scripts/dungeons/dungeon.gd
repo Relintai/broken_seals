@@ -4,6 +4,7 @@ extends Spatial
 export(bool) var generate_on_ready : bool = true
 export(PropData) var start_room : PropData
 export(Array, PropData) var rooms : Array
+export(PropData) var plug : PropData
 export(bool) var generate : bool setget set_generate, get_generate
 
 #todo calc aabbs and store in PropData during prop conversion
@@ -121,15 +122,17 @@ func generate() -> void:
 	
 	spawn_room(Transform(), start_room)
 	
-
 func spawn_room(room_lworld_transform : Transform, room : PropData, level : int = 0, current_portal : PropDataPortal = null) -> void:
 	if level > 4:
+		var plugi : PropInstanceMerger = PropInstanceMerger.new()
+		plugi.prop_data = plug
+		add_child(plugi)
+		plugi.transform = room_lworld_transform
+		
+		#test_spawn_pos(room_lworld_transform)
+		
 		return
-	
-	var sr : PropInstanceMerger = PropInstanceMerger.new()
-	sr.prop_data = room
-	add_child(sr)
-	
+
 	var orig_room_lworld_transform : Transform = room_lworld_transform
 	
 	if current_portal:
@@ -140,6 +143,9 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 		lworld_curr_portal.basis = lworld_curr_portal.basis.rotated(Vector3(0, 1, 0), PI)
 		room_lworld_transform = room_lworld_transform * lworld_curr_portal.inverse()
 
+	var sr : PropInstanceMerger = PropInstanceMerger.new()
+	sr.prop_data = room
+	add_child(sr)
 	sr.transform = room_lworld_transform
 	
 	var cab : PoolVector2Array = room_hulls[room]
@@ -154,8 +160,8 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 	
 	current_aabbs.push_back(ctfab)
 	
-	if Engine.editor_hint and debug:
-		sr.owner = get_tree().edited_scene_root
+	#if Engine.editor_hint and debug:
+	#	sr.owner = get_tree().edited_scene_root
 		
 	for pe in room.props:
 		if pe is PropDataPortal:
@@ -236,6 +242,12 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 				
 			if can_spawn:
 				spawn_room(offset_current_portal_lworld_position, new_room, level + 1, new_room_portal)
+			else:
+				var plugi : PropInstanceMerger = PropInstanceMerger.new()
+				plugi.prop_data = plug
+				add_child(plugi)
+				plugi.transform = offset_current_portal_lworld_position
+				#test_spawn_pos(offset_current_portal_lworld_position)
 
 func clear() -> void:
 	if Engine.editor_hint and debug:

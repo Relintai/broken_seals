@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/dungeons/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://test_rooms/Room5.tres" type="PropData" id=2]
 [ext_resource path="res://test_rooms/Room4.tres" type="PropData" id=3]
 [ext_resource path="res://test_rooms/Room3.tres" type="PropData" id=4]
 [ext_resource path="res://test_rooms/Room1.tres" type="PropData" id=5]
+[ext_resource path="res://test_rooms/RoomPlug.tres" type="PropData" id=6]
 
 [node name="Dungeon" type="Spatial"]
 script = ExtResource( 1 )
 start_room = ExtResource( 5 )
 rooms = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 2 ) ]
+plug = ExtResource( 6 )
