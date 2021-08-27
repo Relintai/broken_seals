@@ -33,6 +33,7 @@ transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636
 width = 5
 heigth = 16
 data = ExtResource( 10 )
+collision = false
 
 [node name="wallzp" type="Spatial" parent="."]
 

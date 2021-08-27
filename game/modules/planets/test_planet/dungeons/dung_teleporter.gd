@@ -7,6 +7,9 @@ export(float) var use_range : float = 5
 export(PackedScene) var dungeon : PackedScene
 export(PackedScene) var dungeon_back_teleporter : PackedScene
 
+var min_level : int = 1
+var max_level : int = 2
+
 var owner_chunk : TerraChunk = null
 var _dungeon : Spatial = null
 var _dungeon_back_teleporter : Spatial = null
@@ -69,6 +72,8 @@ func teleport():
 			var t : Transform = global_transform
 			t = t.translated(Vector3(0, -500, 0))
 			_dungeon.transform = t 
+			_dungeon.min_level = min_level
+			_dungeon.max_level = max_level
 			get_parent().add_child(_dungeon)
 			
 			teleport_to = t.xform(Vector3())

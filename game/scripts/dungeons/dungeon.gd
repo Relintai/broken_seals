@@ -6,6 +6,11 @@ export(PropData) var start_room : PropData
 export(Array, PropData) var rooms : Array
 export(PropData) var plug : PropData
 export(bool) var generate : bool setget set_generate, get_generate
+export(bool) var spawn_mobs : bool = true
+
+export(int) var min_level : int = 1
+export(int) var max_level : int = 2
+
 
 #todo calc aabbs and store in PropData during prop conversion
 var room_hulls : Dictionary
@@ -161,6 +166,19 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 		#test_spawn_pos(Transform(Basis(), v))
 	
 	current_aabbs.push_back(ctfab)
+	
+	if spawn_mobs && level > 0 && ctfab.size() > 0:
+		if randi() % 3 == 0:
+			var v2 : Vector2 = ctfab[0]
+			
+			for i in range(1, ctfab.size()):
+				v2 = v2.linear_interpolate(ctfab[i], 0.5)
+				
+			var gt : Transform = global_transform
+			var scale : Vector3 = gt.basis.get_scale()
+			v2 *= Vector2(scale.x, scale.z)
+				
+			ESS.entity_spawner.spawn_mob(0, min_level + (randi() % (max_level - min_level)), Vector3(v2.x, gt.origin.y, v2.y))
 	
 	#if Engine.editor_hint and debug:
 	#	sr.owner = get_tree().edited_scene_root

@@ -39,6 +39,7 @@ transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636
 width = 5
 heigth = 6
 data = ExtResource( 5 )
+collision = false
 
 [sub_resource type="PropDataTiledWall" id=7]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )

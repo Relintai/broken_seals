@@ -155,5 +155,13 @@ func spawn_dungeon(chunk: TerraChunk) -> void:
 	var dt : Spatial = dungeon_teleporter.instance()
 	chunk.voxel_world.add_child(dt)
 	dt.owner_chunk = chunk
+	
+	var level : int = 2
+		
+	if chunk.get_voxel_world().has_method("get_mob_level"):
+		level  = chunk.get_voxel_world().get_mob_level()
+	
+	dt.min_level = level - 1
+	dt.max_level = level + 1
 	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
 	
