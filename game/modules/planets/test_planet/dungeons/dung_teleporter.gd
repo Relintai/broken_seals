@@ -7,10 +7,13 @@ export(float) var use_range : float = 5
 export(PackedScene) var dungeon : PackedScene
 export(PackedScene) var dungeon_back_teleporter : PackedScene
 
+var owner_chunk : TerraChunk = null
 var _dungeon : Spatial = null
 var _dungeon_back_teleporter : Spatial = null
 
 var teleport_to : Vector3 = Vector3()
+
+var _world : TerraWorld = null
 
 func _ready():
 	connect("mouse_entered", self, "on_mouse_entered")
@@ -31,11 +34,16 @@ func on_mouse_exited():
 	
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
-#func _enter_tree():
-#	if get_parent().has_method("get_voxel_scale"):
-#
+func _enter_tree():
+	_world = get_node("..")
+	
+	if _world:
+		_world.connect("chunk_removed", self, "on_chunk_removed")
 
 func _exit_tree():
+	if _world:
+		_world.disconnect("chunk_removed", self, "on_chunk_removed")
+	
 	if _dungeon:
 		_dungeon.queue_free()
 		
@@ -50,10 +58,8 @@ func _input_event(camera: Object, event: InputEvent, click_position: Vector3, cl
 		teleport()
 
 func teleport():
-	var world = get_node("..")
-	
-	if world && world._player:
-		var p : Entity = world._player
+	if _world && _world._player:
+		var p : Entity = _world._player
 
 		if (p.get_body().transform.origin - transform.origin).length() > use_range:
 			return
@@ -78,9 +84,15 @@ func teleport():
 			get_parent().add_child(_dungeon_back_teleporter)
 			
 		#turn off world
-		world.active = false
+		_world.active = false
 		#turn on dungeon
 		_dungeon.show()
 		
 		p.get_body().teleport(teleport_to)
 #		p.get_body().transform.origin = teleport_to
+
+
+func on_chunk_removed(chunk : TerraChunk) -> void:
+	if chunk == owner_chunk:
+		queue_free()
+

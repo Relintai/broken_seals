@@ -154,5 +154,6 @@ func spawn_dungeon(chunk: TerraChunk) -> void:
 	
 	var dt : Spatial = dungeon_teleporter.instance()
 	chunk.voxel_world.add_child(dt)
+	dt.owner_chunk = chunk
 	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
 	
