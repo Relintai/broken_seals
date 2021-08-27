@@ -78,6 +78,7 @@ func teleport():
 			get_parent().add_child(_dungeon_back_teleporter)
 			
 		#turn off world
+		world.active = false
 		#turn on dungeon
 		_dungeon.show()
 		

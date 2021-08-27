@@ -91,6 +91,9 @@ func generate():
 
 		
 func _process(delta):
+	if !active:
+		return
+	
 	if initial_generation:
 		return
 	
@@ -290,7 +293,8 @@ func spawn(start_x : int, start_z : int) -> void:
 			if l > chunk_spawn_range:
 				continue
 			
-			chunk_create(x, z)
+			if !chunk_get(x, z):
+				chunk_create(x, z)
 				
 #	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)
 

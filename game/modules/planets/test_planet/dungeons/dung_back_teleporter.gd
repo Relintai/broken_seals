@@ -56,6 +56,7 @@ func teleport():
 			_dungeon.hide()
 		
 		#turn back on world
+		world.active = true
 		
 		p.get_body().teleport(teleport_to)
 #		p.get_body().transform.origin = teleport_to
