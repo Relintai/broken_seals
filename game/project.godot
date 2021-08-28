@@ -253,7 +253,7 @@ config/name="Broken Seals"
 config/description="An open source third person RPG "
 run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
-config/version="0.3.5"
+config/version="0.3.6"
 
 [autoload]
 
