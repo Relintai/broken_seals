@@ -18,7 +18,12 @@ var teleport_to : Vector3 = Vector3()
 
 var _world : TerraWorld = null
 
+var _is_windows : bool = false
+var _mouse_hover : bool = false
+
 func _ready():
+	_is_windows = OS.get_name() == "Windows"
+	
 	connect("mouse_entered", self, "on_mouse_entered")
 	connect("mouse_exited", self, "on_mouse_exited")
 	
@@ -30,12 +35,16 @@ func on_mouse_entered():
 	mat.albedo_color = hover_albedo
 	
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+	
+	_mouse_hover = true
 
 func on_mouse_exited():
 	var mat = $MeshInstance.get_surface_material(0)
 	mat.albedo_color = default_albedo
 	
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	
+	_mouse_hover = false
 
 func _enter_tree():
 	_world = get_node("..")
@@ -53,8 +62,15 @@ func _exit_tree():
 	if _dungeon_back_teleporter:
 		_dungeon_back_teleporter.queue_free()
 
+# workaround
+func _unhandled_input(event):
+	# _input_event does not get InputEventMouseButtons (on wine) / it only gets them sometimes (on windows)
+	# might be an engine bug
+	if _is_windows && _mouse_hover && event is InputEventMouseButton && !event.pressed:
+		teleport()
+
 func _input_event(camera: Object, event: InputEvent, click_position: Vector3, click_normal: Vector3, shape_idx: int):
-	if event is InputEventMouseButton && !event.pressed:
+	if !_is_windows && event is InputEventMouseButton && !event.pressed:
 		teleport()
 	
 	if event is InputEventScreenTouch && !event.pressed:
