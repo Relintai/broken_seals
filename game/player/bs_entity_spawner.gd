@@ -83,7 +83,9 @@ remote func creceive_despawn_for(path : NodePath) -> void:
 puppet func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = multiplayer.get_network_unique_id()
+	createinfo.guid = _next_entity_guid
+	_next_entity_guid += 1
+	createinfo.network_owner = multiplayer.get_network_unique_id()
 #	createinfo.player_name = ""
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
@@ -101,6 +103,7 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 
 	createinfo.guid = _next_entity_guid
 	_next_entity_guid += 1
+	createinfo.network_owner = network_owner
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_PLAYER
@@ -114,9 +117,10 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	
 func load_uploaded_character(data : String, position : Vector3, network_owner : int) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
-
+	
 	createinfo.guid = _next_entity_guid
 	_next_entity_guid += 1
+	createinfo.network_owner = network_owner
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_NETWORKED
