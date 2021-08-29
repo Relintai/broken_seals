@@ -9,6 +9,7 @@ export(PackedScene) var dungeon_back_teleporter : PackedScene
 
 var min_level : int = 1
 var max_level : int = 2
+var dungeon_seed : int = 0
 
 var owner_chunk : TerraChunk = null
 var _dungeon : Spatial = null
@@ -90,6 +91,7 @@ func teleport():
 			_dungeon.transform = t 
 			_dungeon.min_level = min_level
 			_dungeon.max_level = max_level
+			_dungeon.dungeon_seed = dungeon_seed
 			get_parent().add_child(_dungeon)
 			
 			teleport_to = t.xform(Vector3())

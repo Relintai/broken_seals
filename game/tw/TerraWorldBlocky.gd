@@ -348,6 +348,8 @@ func load_character(file_name : String) -> void:
 	mob_level = _player.clevel
 	
 	set_player(_player.get_body())
+	
+	#_player.sseed = 2
 
 	Server.sset_seed(_player.sseed)
 	if level_generator != null:

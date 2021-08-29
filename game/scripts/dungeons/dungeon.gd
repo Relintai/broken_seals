@@ -11,6 +11,7 @@ export(bool) var spawn_mobs : bool = true
 export(int) var min_level : int = 1
 export(int) var max_level : int = 2
 
+export(int) var dungeon_seed : int = 0
 
 #todo calc aabbs and store in PropData during prop conversion
 var room_hulls : Dictionary
@@ -20,6 +21,8 @@ var portals : Array
 var current_aabbs : Array
 
 var debug : bool = true
+
+var _rng : RandomNumberGenerator = RandomNumberGenerator.new()
 
 func _enter_tree() -> void:
 	if not Engine.editor_hint && generate_on_ready:
@@ -122,6 +125,8 @@ func clear_room_data() -> void:
 	current_aabbs.clear()
 
 func generate() -> void:
+	_rng.seed = dungeon_seed
+	
 	clear()
 	set_up_room_data()
 	
@@ -168,7 +173,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 	current_aabbs.push_back(ctfab)
 	
 	if spawn_mobs && level > 0 && ctfab.size() > 0:
-		if randi() % 3 == 0:
+		if _rng.randi() % 3 == 0:
 			var v2 : Vector2 = ctfab[0]
 			
 			for i in range(1, ctfab.size()):
@@ -178,7 +183,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 			var scale : Vector3 = gt.basis.get_scale()
 			v2 *= Vector2(scale.x, scale.z)
 				
-			ESS.entity_spawner.spawn_mob(0, min_level + (randi() % (max_level - min_level)), Vector3(v2.x, gt.origin.y, v2.y))
+			ESS.entity_spawner.spawn_mob(0, min_level + (_rng.randi() % (max_level - min_level)), Vector3(v2.x, gt.origin.y, v2.y))
 	
 	#if Engine.editor_hint and debug:
 	#	sr.owner = get_tree().edited_scene_root
@@ -195,9 +200,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 			if d.size() == 0:
 				continue
 				
-			randomize()
-			
-			var new_room_data = d[randi() % d.size()]
+			var new_room_data = d[_rng.randi() % d.size()]
 			
 			#[ croom, cportal, cj ]
 			var new_room : PropData = new_room_data[0]
