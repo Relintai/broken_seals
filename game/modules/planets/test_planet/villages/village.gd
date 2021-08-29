@@ -13,6 +13,9 @@ func _instance(p_seed, p_instance):
 	return p_instance
 
 func _generate_terra_chunk(chunk : TerraChunk, spawn_mobs : bool):
+	if !spawn_mobs:
+		return
+	
 	if trainer == null || vendor == null:
 		return
 	

@@ -74,10 +74,10 @@ func _generate_terra_chunk(chunk, spawn_mobs):
 	
 	if chunk.position_x == 0 && chunk.position_z == 0:
 		#test
-		spawn_dungeon(chunk, chunk_seed)
+		spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	else:
 		if rng.randi() % 10 == 0:
-			spawn_dungeon(chunk, chunk_seed)
+			spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	
 	for i in range(get_building_count()):
 		get_building(i).generate_terra_chunk(chunk, spawn_mobs)
@@ -143,7 +143,7 @@ func gen_terra_chunk(chunk: TerraChunk, rng : RandomNumberGenerator) -> void:
 #						chunk.voxel_world.prop_add(tr, prop_tree2)
 		
 
-func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int) -> void:
+func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
 	var x : float = chunk.position_x * chunk.voxel_scale * chunk.size_x
 	var z : float = chunk.position_z * chunk.voxel_scale * chunk.size_z
 	
@@ -162,5 +162,6 @@ func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int) -> void:
 	dt.min_level = level - 1
 	dt.max_level = level + 1
 	dt.dungeon_seed = dungeon_seed
+	dt.spawn_mobs = spawn_mobs
 	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
 	
