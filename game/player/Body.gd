@@ -358,11 +358,7 @@ func player_fly(delta : float) -> void:
 	
 	move_and_slide(vel)
 
-	if multiplayer.has_network_peer():
-		if not multiplayer.is_network_server():
-			rpc_id(1, "sset_position", translation, rotation)
-		else:
-			sset_position(translation, rotation)
+	crequest_set_position(translation, rotation)
 
 
 func player_walk(delta : float) -> void:
@@ -443,11 +439,7 @@ func player_walk(delta : float) -> void:
 #				foot_audio.play()
 #				last_sound_timer = 0
 
-	if multiplayer.has_network_peer():
-		if not multiplayer.is_network_server():
-			rpc_id(1, "sset_position", translation, rotation)
-		else:
-			sset_position(translation, rotation)
+	crequest_set_position(translation, rotation)
 			
 
 func process_movement_mob(delta : float) -> void:
@@ -529,7 +521,7 @@ func process_movement_mob(delta : float) -> void:
 	facing.y = 0
 	
 	vel = move_and_slide(vel, Vector3(0,1,0), true, 4, MAX_SLOPE_ANGLE)
-	sset_position(translation, rotation)
+	crequest_set_position(translation, rotation)
 	
 	if vel.length_squared() < 0.12:
 		sleep = true
@@ -721,18 +713,28 @@ func analog_force_change(vector, touchpad):
 func queue_camera_rotation(rot : Vector2) -> void:
 	queued_camera_rotaions += rot
 
-remote func sset_position(position : Vector3, rotation : Vector3) -> void:
+func sset_position(position : Vector3, rotation : Vector3) -> void:
 	if multiplayer.network_peer and multiplayer.is_network_server():
-		entity.vrpc("cset_position", position, rotation)
+		#todo re-enable after path errors are fixed
+		#entity.vrpc("cset_position", position, rotation)
 		
 		if _controlled:
 			cset_position(position, rotation)
-		
+
+#todo remove, it's only here temporarily for testing
+remote func sset_position_rec(position : Vector3, rotation : Vector3) -> void:
+	sset_position(position, rotation)
+
+remote func crequest_set_position(position : Vector3, rotation : Vector3) -> void:
+	if multiplayer.network_peer && !multiplayer.is_network_server():
+		rpc_id(1, "sset_position_rec", translation, rotation)
+	else:
+		sset_position(position, rotation)
+
 remote func cset_position(position : Vector3, rotation : Vector3) -> void:
 	translation = position
 	rotation = rotation
 	
-
 func on_notification_ccast(what : int, info : SpellCastInfo) -> void:
 	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
 		if anim_node_state_machine != null and not casting_anim:
