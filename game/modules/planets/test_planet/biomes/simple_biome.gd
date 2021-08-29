@@ -114,20 +114,10 @@ func gen_terra_chunk(chunk: TerraChunk) -> void:
 			elif val > 90:
 				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
 			else:
-				#Todo use the prop system for this
+				if chunk.position_x == 0 && chunk.position_z == 0:
+					continue
+					
 				if randf() > 0.992:
-#					var t = tree.instance()
-#
-#					var spat : Spatial = t as Spatial
-#
-#					spat.rotate(Vector3(0, 1, 0), randf() * PI)
-#					spat.rotate(Vector3(1, 0, 0), randf() * 0.2 - 0.1)
-#					spat.rotate(Vector3(0, 0, 1), randf() * 0.2 - 0.1)
-#					spat.transform = spat.transform.scaled(Vector3(0.9 + 0.8 - randf(), 0.9 + 0.8 - randf(), 0.9 + 0.8 - randf()))
-#					spat.transform.origin = Vector3((x + chunk.position_x * chunk.size_x) * chunk.voxel_scale, ((val - 2) / 255.0) * chunk.world_height * chunk.voxel_scale, (z + chunk.position_z * chunk.size_z) * chunk.voxel_scale)
-#					chunk.voxel_world.call_deferred("add_child", spat)
-					
-					
 					var tr : Transform = Transform()
 					
 					tr = tr.rotated(Vector3(0, 1, 0), randf() * PI)
