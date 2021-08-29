@@ -59,10 +59,17 @@ func update_visibility() -> void:
 	for collision in res:
 		var collider = collision["collider"]
 		
-		if collider is Entity and not currenty_sees.has(collider):
-			currenty_sees.append(collider)
-	
-	
+		if !collider.has_method("get_entity"):
+			continue
+			
+		var entity : Entity = collider.get_entity()
+		
+		if !entity:
+			continue
+		
+		if !currenty_sees.has(entity):
+			currenty_sees.append(entity)
+
 	#warning-ignore:unassigned_variable
 	var used_to_see : Array = Array()
 	
@@ -70,8 +77,7 @@ func update_visibility() -> void:
 		var ent : Entity = sees_gets(i)
 		
 		used_to_see.append(ent)
-		
-	
+
 	#warning-ignore:unassigned_variable
 	var currenty_sees_filtered : Array = Array()
 	
@@ -86,7 +92,7 @@ func update_visibility() -> void:
 	for e in used_to_see:
 		var ent : Entity = e as Entity
 		
-		if self.get_network_master() != 1:
+		if get_network_master() != 1:
 			ESS.entity_spawner.despawn_for(self, ent)
 		
 		sees_removes(ent)
@@ -94,7 +100,7 @@ func update_visibility() -> void:
 	for e in currenty_sees_filtered:
 		var ent : Entity = e as Entity
 		
-		if self.get_network_master() != 1:
+		if get_network_master() != 1:
 			ESS.entity_spawner.spawn_for(self, ent)
 		
 		sees_adds(ent)

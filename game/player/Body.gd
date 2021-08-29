@@ -820,4 +820,5 @@ func teleport(teleport_to : Vector3):
 	placed = false
 #	just_place = true
 	
-	
+func get_entity() -> Entity:
+	return entity

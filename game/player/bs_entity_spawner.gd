@@ -52,10 +52,12 @@ func on_network_peer_packet(id : int, packet : PoolByteArray) ->void:
 	
 func spawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("spawnfor " + target.name)
-	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.translation)
+	print("spawnfor " + target.name)
+	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.get_transform_3d())
 	
 func despawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("despawnfor " + target.name)
+	print("despawnfor " + target.name)
 	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
 	
 remote func creceive_spawn_for(data: String, global_name : String, position: Vector3) -> Entity:
