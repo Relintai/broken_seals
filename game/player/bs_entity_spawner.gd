@@ -97,7 +97,6 @@ remote func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	ESS.request_entity_spawn(createinfo)
 	var e : Entity = createinfo.created_entity
 	e.set_network_master(createinfo.network_owner)
-	e.c_is_controlled = true
 
 	Logger.info("Player spawned ")
 	

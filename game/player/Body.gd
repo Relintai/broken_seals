@@ -126,10 +126,10 @@ func _ready() -> void:
 	entity.set_character_skeleton(character_skeleton)
 	entity.connect("notification_ccast", self, "on_notification_ccast")
 	entity.connect("diesd", self, "on_diesd")
-	entity.connect("isc_controlled_changed", self, "on_c_controlled_changed")
+	entity.connect("onc_entity_controller_changed", self, "on_c_controlled_changed")
 	owner = entity
 
-	on_c_controlled_changed(entity.c_is_controlled)
+	on_c_controlled_changed()
 	
 	transform = entity.get_transform_3d(true)
 	
@@ -227,7 +227,7 @@ func _physics_process(delta : float) -> void:
 						
 				return
 		
-	if entity.c_is_controlled:
+	if entity.getc_is_controlled():
 		process_input(delta)
 		process_movement_player(delta)
 	else:
@@ -766,11 +766,11 @@ func on_notification_ccast(what : int, info : SpellCastInfo) -> void:
 				anim_node_state_machine.travel("run-loop")
 	
 	
-func on_c_controlled_changed(val):
+func on_c_controlled_changed():
 	#create camera and pivot if true
-	_controlled = val
+	_controlled = entity.getc_is_controlled()
 	
-	if val:
+	if _controlled:
 		if _nameplate:
 			_nameplate.queue_free()
 		
