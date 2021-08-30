@@ -715,27 +715,33 @@ func analog_force_change(vector, touchpad):
 func queue_camera_rotation(rot : Vector2) -> void:
 	queued_camera_rotaions += rot
 
-func sset_position(position : Vector3, rotation : Vector3) -> void:
+remote func sset_position(position : Vector3, protation : Vector3) -> void:
 	if multiplayer.network_peer and multiplayer.is_network_server():
-		#todo re-enable after path errors are fixed
-		#entity.vrpc("cset_position", position, rotation)
+		for i in range(entity.seen_by_gets_count()):
+			var e : Entity = entity.seen_by_gets(i)
+			
+			if e == entity:
+				#todo make sure this doesn't happen!
+				continue
+			
+			if is_instance_valid(e):
+				var nm : int = e.get_network_master()
+				
+				if nm != 1:
+					rpc_id(nm, "cset_position", position, protation)
 		
-		if _controlled:
-			cset_position(position, rotation)
+		#if _controlled && get_network_master() == 1:
+		cset_position(position, protation)
 
-#todo remove, it's only here temporarily for testing
-remote func sset_position_rec(position : Vector3, rotation : Vector3) -> void:
-	sset_position(position, rotation)
-
-remote func crequest_set_position(position : Vector3, rotation : Vector3) -> void:
+func crequest_set_position(position : Vector3, protation : Vector3) -> void:
 	if multiplayer.network_peer && !multiplayer.is_network_server():
-		rpc_id(1, "sset_position_rec", translation, rotation)
+		rpc_id(1, "sset_position", translation, protation)
 	else:
-		sset_position(position, rotation)
+		sset_position(position, protation)
 
-remote func cset_position(position : Vector3, rotation : Vector3) -> void:
+remote func cset_position(position : Vector3, protation : Vector3) -> void:
 	translation = position
-	rotation = rotation
+	rotation = protation
 	
 func on_notification_ccast(what : int, info : SpellCastInfo) -> void:
 	if what == SpellEnums.NOTIFICATION_CAST_STARTED:
