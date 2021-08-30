@@ -111,6 +111,8 @@ var just_place : bool = false
 
 var contact : RayCast = null
 
+var _nameplate : Node = null
+
 #var los : bool = false
 
 func _ready() -> void:
@@ -769,6 +771,9 @@ func on_c_controlled_changed(val):
 	_controlled = val
 	
 	if val:
+		if _nameplate:
+			_nameplate.queue_free()
+		
 		var cam_scene : PackedScene = ResourceLoader.load("res://player/camera/CameraPivot.tscn")
 		camera_pivot = cam_scene.instance() as Spatial
 		add_child(camera_pivot)
@@ -791,8 +796,8 @@ func on_c_controlled_changed(val):
 		set_process_input(false)
 		set_process_unhandled_input(false)
 		var nameplatescn : PackedScene = ResourceLoader.load("res://ui/nameplates/NamePlate.tscn")
-		var nameplate = nameplatescn.instance()
-		add_child(nameplate)
+		_nameplate = nameplatescn.instance()
+		add_child(_nameplate)
 		
 		
  
