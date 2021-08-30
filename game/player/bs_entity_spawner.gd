@@ -31,6 +31,8 @@ var _spawn_parent : Node = null
 
 var _next_entity_guid : int = 0
 
+var _debug : bool = false
+
 func _ready():
 #	get_scene_tree().multiplayer.connect("network_peer_packet", self, "on_network_peer_packet")
 	
@@ -52,18 +54,29 @@ func on_network_peer_packet(id : int, packet : PoolByteArray) ->void:
 	
 func spawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("spawnfor " + target.name)
-	print("spawnfor " + target.name)
+	
+	if _debug:
+		print("spawnfor " + player.name + " - " + target.name)
+	
+	if player == target:
+		if _debug:
+			print("spawn_for: player == target!")
+		return
+	
 	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.get_transform_3d().origin)
 	
 func despawn_for(player : Entity, target: Entity) -> void:
 	Logger.info("despawnfor " + target.name)
-	print("despawnfor " + target.name)
+	
+	if _debug:
+		print("despawnfor " + target.name)
+	
 	rpc_id(player.get_network_master(), "creceive_despawn_for", target.get_path())
 	
 remote func creceive_spawn_for(data: String, global_name : String, position: Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.player_name = global_name
+	createinfo.node_name = global_name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_NETWORKED
 	createinfo.serialized_data = parse_json(data)
@@ -73,6 +86,9 @@ remote func creceive_spawn_for(data: String, global_name : String, position: Vec
 	
 	Logger.info("Player spawned ")
 	
+	if _debug:
+		print("creceive_spawn_for " + global_name)
+
 	return createinfo.created_entity
 	
 remote func creceive_despawn_for(path : NodePath) -> void:
@@ -85,8 +101,9 @@ remote func creceive_despawn_for(path : NodePath) -> void:
 remote func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = _next_entity_guid
-	_next_entity_guid += 1
+	#createinfo.guid = _next_entity_guid
+	#_next_entity_guid += 1
+	#createinfo.node_name = global_name
 	createinfo.network_owner = multiplayer.get_network_unique_id()
 #	createinfo.player_name = ""
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
@@ -96,8 +113,11 @@ remote func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	
 	ESS.request_entity_spawn(createinfo)
 	var e : Entity = createinfo.created_entity
-	e.set_network_master(createinfo.network_owner)
+	#e.set_network_master(multiplayer.get_network_unique_id())
 
+	if _debug:
+		print("spawn_owned_player " + e.name)
+		
 	Logger.info("Player spawned ")
 	
 	return e
@@ -105,8 +125,8 @@ remote func spawn_owned_player(data : String, position : Vector3) -> Entity:
 func load_player(file_name : String, position : Vector3, network_owner : int) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = _next_entity_guid
-	_next_entity_guid += 1
+	#createinfo.guid = _next_entity_guid
+	#_next_entity_guid += 1
 	createinfo.network_owner = network_owner
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
@@ -116,14 +136,22 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	createinfo.networked = false
 	Logger.info("Player spawned ")
 	ESS.request_entity_spawn(createinfo)
+	
+	if _debug:
+		print("load_player " + file_name)
 
 	return createinfo.created_entity
 	
 func load_uploaded_character(data : String, position : Vector3, network_owner : int) -> Entity:
+	if _debug:
+		print("load_uploaded_character ")
+	
+	rpc_id(network_owner, "spawn_owned_player", data, position)
+	
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 	
-	createinfo.guid = _next_entity_guid
-	_next_entity_guid += 1
+	#createinfo.guid = _next_entity_guid
+	#_next_entity_guid += 1
 	createinfo.network_owner = network_owner
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
@@ -134,8 +162,9 @@ func load_uploaded_character(data : String, position : Vector3, network_owner : 
 	Logger.info("Player spawned ")
 	ESS.request_entity_spawn(createinfo)
 	var e : Entity = createinfo.created_entity
-	e.set_network_master(network_owner)
-	rpc_id(network_owner, "spawn_owned_player", data, position)
+	
+	#e.set_network_master(network_owner)
+	#e.centity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	
 	return e
 	
@@ -169,8 +198,8 @@ func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Enti
 func spawn_display_player(file_name : String, node_path : NodePath) -> Entity:
 	var createinfo : EntityCreateInfo = EntityCreateInfo.new()
 
-	createinfo.guid = _next_entity_guid
-	_next_entity_guid += 1
+	#createinfo.guid = _next_entity_guid
+	#_next_entity_guid += 1
 #	createinfo.player_name = name
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_PLAYER
 	createinfo.entity_player_type = EntityEnums.ENTITY_PLAYER_TYPE_DISPLAY
@@ -195,7 +224,7 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 	
 	createinfo.class_id = class_id
 	createinfo.entity_data = cls
-	createinfo.player_name = name
+	createinfo.node_name = node_name
 	createinfo.level = 1
 #	createinfo.class_level = level
 	createinfo.xp = 0
@@ -225,7 +254,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 	
 	createinfo.class_id = class_id
 	createinfo.entity_data = cls
-	createinfo.player_name = name
+	createinfo.node_name = node_name
 	createinfo.level = 1
 #	createinfo.class_level = level
 	createinfo.xp = 0
@@ -250,7 +279,7 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	
 	createinfo.class_id = class_id
 	createinfo.entity_data = cls
-	createinfo.player_name = "Mob"
+	#createinfo.node_name = "Mob"
 	createinfo.level = level
 #	createinfo.class_level = level
 	createinfo.entity_controller = EntityEnums.ENITIY_CONTROLLER_AI
@@ -283,7 +312,7 @@ func _request_entity_spawn(createinfo : EntityCreateInfo):
 		return null
 		
 	entity_node.set_transform_3d(createinfo.transform)
-
+	
 	if (createinfo.parent_path == ""):
 		if _spawn_parent == null:
 			_spawn_parent = get_tree().root.get_node(spawn_parent_path)
@@ -294,7 +323,20 @@ func _request_entity_spawn(createinfo : EntityCreateInfo):
 			spawn_parent.add_child(entity_node)
 	else:
 		get_tree().root.get_node(createinfo.parent_path).add_child(entity_node)
-
+	
+	#print(entity_node.name)
+	
+	if createinfo.network_owner == 0:
+		if createinfo.node_name == "":
+			entity_node.name = "Entity_" + str(_next_entity_guid)
+			_next_entity_guid += 1
+		else:
+			entity_node.name = createinfo.node_name
+	else:
+		entity_node.name = "Player_" + str(createinfo.network_owner)
+	
+	#print(entity_node.name)
+	
 	entity_node.setup(createinfo)
 	
 	createinfo.created_entity = entity_node
