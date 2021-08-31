@@ -49,6 +49,7 @@ func _centity_data_changed(cls: EntityData) -> void:
 		return
 
 	_abp = _player.get_action_bar_profile()
+	_abp.connect("changed", self, "on_changed")
 	
 	for i in range(_abp.get_action_bar_count()):
 		var abe = _abp.get_action_bar(i)
