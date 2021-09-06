@@ -371,7 +371,7 @@ if len(sys.argv) > 1:
             build_string += ' ' + sys.argv[i] + ' '
 
         if 'slim' in arg_split:
-            build_string += 'module_webm_enabled=no module_arkit_enabled=no module_visual_script_enabled=no module_gdnative_enabled=no module_mobile_vr_enabled=no module_theora_enabled=no module_xatlas_unwrap_enabled=no'
+            build_string += module_config.slim_args
             build_string += ' '
 
         if 'latomic' in arg_split:
