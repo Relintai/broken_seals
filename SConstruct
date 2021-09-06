@@ -30,6 +30,8 @@ import json
 import shutil
 import traceback
 
+import module_config
+
 repository_index = 0
 module_clone_path  = '/modules/' 
 clone_command = 'git clone {0} {1}'
@@ -54,36 +56,7 @@ additional_commands = {
     'javascript': [],
 }
 
-engine_repository = [ ['https://github.com/godotengine/godot.git', 'git@github.com:godotengine/godot.git'], 'engine', '' ]
-
-module_repositories = [
-    [ ['https://github.com/Relintai/world_generator.git', 'git@github.com:Relintai/world_generator.git'], 'world_generator', '' ],
-    [ ['https://github.com/Relintai/entity_spell_system.git', 'git@github.com:Relintai/entity_spell_system.git'], 'entity_spell_system', '' ],
-    [ ['https://github.com/Relintai/ui_extensions.git', 'git@github.com:Relintai/ui_extensions.git'], 'ui_extensions', '' ],
-    [ ['https://github.com/Relintai/texture_packer.git', 'git@github.com:Relintai/texture_packer.git'], 'texture_packer', '' ],
-    [ ['https://github.com/Relintai/godot_fastnoise.git', 'git@github.com:Relintai/godot_fastnoise.git'], 'fastnoise', '' ],
-    [ ['https://github.com/Relintai/mesh_data_resource.git', 'git@github.com:Relintai/mesh_data_resource.git'], 'mesh_data_resource', '' ],
-    [ ['https://github.com/Relintai/props.git', 'git@github.com:Relintai/props.git'], 'props', '' ],
-    [ ['https://github.com/Relintai/mesh_utils.git', 'git@github.com:Relintai/mesh_utils.git'], 'mesh_utils', '' ],
-    [ ['https://github.com/Relintai/broken_seals_module.git', 'git@github.com:Relintai/broken_seals_module.git'], 'broken_seals_module', '' ],
-    [ ['https://github.com/Relintai/thread_pool.git', 'git@github.com:Relintai/thread_pool.git'], 'thread_pool', '' ],
-    [ ['https://github.com/Relintai/terraman.git', 'git@github.com:Relintai/terraman.git'], 'terraman', '' ],
-]
-
-removed_modules = [
-    [ ['https://github.com/Relintai/voxelman.git', 'git@github.com:Relintai/voxelman.git'], 'voxelman', '' ],
-    [ ['https://github.com/Relintai/procedural_animations.git', 'git@github.com:Relintai/procedural_animations.git'], 'procedural_animations', '' ],
-]
-
-addon_repositories = [
-]
-
-third_party_addon_repositories = [
-]
-
 target_commits = {}
-
-godot_branch = '3.x'
 
 def onerror(func, path, exc_info):
     """
@@ -208,20 +181,20 @@ def remove_repository(data, target_folder):
         shutil.rmtree(folder)
 
 def update_engine():
-    update_repository(engine_repository, '/', godot_branch)
+    update_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def update_modules():
-    for rep in module_repositories:
+    for rep in module_config.module_repositories:
         update_repository(rep, module_clone_path)
         copy_repository(rep, './engine/modules/', '.' + module_clone_path)
 
 def update_addons():
-    for rep in addon_repositories:
+    for rep in module_config.addon_repositories:
         update_repository(rep, module_clone_path)
         copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def update_addons_third_party_addons():
-    for rep in third_party_addon_repositories:
+    for rep in module_config.third_party_addon_repositories:
         update_repository(rep, module_clone_path)
         copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
@@ -235,24 +208,24 @@ def update_all():
 
 
 def setup_engine():
-    setup_repository(engine_repository, '/', godot_branch)
+    setup_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def setup_modules():
-    for rep in module_repositories:
+    for rep in module_config.module_repositories:
         setup_repository(rep, module_clone_path)
         copy_repository(rep, './engine/modules/', '.' + module_clone_path)
 
-    for rep in removed_modules:
+    for rep in module_config.removed_modules:
         remove_repository(rep, './engine/modules/')
 
 
 def setup_addons():
-    for rep in addon_repositories:
+    for rep in module_config.addon_repositories:
         setup_repository(rep, module_clone_path)
         copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
 def setup_addons_third_party_addons():
-    for rep in third_party_addon_repositories:
+    for rep in module_config.third_party_addon_repositories:
         setup_repository(rep, module_clone_path)
         copy_repository(rep, './game/addons/', '.' + module_clone_path)
 
