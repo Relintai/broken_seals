@@ -5,6 +5,8 @@ export(NodePath) var control_skeleton:NodePath setget set_control_skeleton
 export(NodePath) var edit_animation_player:NodePath setget set_edit_animation_player
 export(bool) var enabled:bool = true
 
+export(bool) var edit_bone_hierarchy : bool = false
+
 export(String) var add_bone_name : String = ""
 export(bool) var add_bone : bool = false setget set_add_bone, get_add_bone
 
@@ -171,6 +173,14 @@ func _save_poses_to_animation( animation:Animation ):
 		)
 		print( "* added new key for ", target_bone.name )
 
+func set_bone_parent(bone_id, parent_bone_id):
+	ensure_nodes()
+	
+	if !skeleton:
+		return
+		
+	skeleton.set_bone_parent(bone_id, parent_bone_id)
+
 func ensure_nodes():
 	if !skeleton:
 		skeleton = get_node(control_skeleton)
@@ -220,3 +230,6 @@ func set_add_bone(val):
 	
 func get_add_bone():
 	return false
+
+func is_done_editor():
+	return true
