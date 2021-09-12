@@ -4,6 +4,10 @@ extends Spatial
 export(NodePath) var control_skeleton:NodePath setget set_control_skeleton
 export(NodePath) var edit_animation_player:NodePath setget set_edit_animation_player
 export(bool) var enabled:bool = true
+
+export(String) var add_bone_name : String = ""
+export(bool) var add_bone : bool = false setget set_add_bone, get_add_bone
+
 var skeleton:Skeleton = null
 var animation_player:AnimationPlayer = null
 var first_call:bool = true
@@ -166,3 +170,53 @@ func _save_poses_to_animation( animation:Animation ):
 			target_bone.pose.basis.get_scale( )
 		)
 		print( "* added new key for ", target_bone.name )
+
+func ensure_nodes():
+	if !skeleton:
+		skeleton = get_node(control_skeleton)
+	
+	if !animation_player:
+		animation_player = get_node(edit_animation_player)
+
+func set_add_bone(val):
+	if val:
+		if add_bone_name == "":
+			return
+			
+		ensure_nodes()
+			
+		if skeleton == null:
+			return
+		
+		skeleton.add_bone(add_bone_name)
+		
+		var bone_id : int = skeleton.find_bone(add_bone_name)
+
+		var bone_handle: = preload( "BoneHandle.tscn" )
+		
+		var bone_name:String = add_bone_name
+		var bone_handle_node:BoneHandle = bone_handle.instance( )
+
+		bone_handle_node.bone_editor = self
+		bone_handle_node.name = bone_name
+		bone_handle_node.skeleton = self.skeleton
+		bone_handle_node.bone_id = bone_id
+		bone_handle_node.bone_name = bone_name
+
+		var parent_bone_id:int = self.skeleton.get_bone_parent( bone_id )
+		if parent_bone_id == -1:
+			self.add_child( bone_handle_node )
+
+		if Engine.editor_hint == true:
+			var tree:SceneTree = self.get_tree( )
+			if tree != null:
+				if tree.edited_scene_root != null:
+					bone_handle_node.set_owner( tree.edited_scene_root )
+
+		self.bone_handle_nodes.append( bone_handle_node )
+			
+		add_bone_name = ""
+		
+	
+func get_add_bone():
+	return false
