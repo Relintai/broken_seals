@@ -10,6 +10,8 @@ export(bool) var edit_bone_hierarchy : bool = false
 export(String) var add_bone_name : String = ""
 export(bool) var add_bone : bool = false setget set_add_bone, get_add_bone
 
+export(bool) var set_pose_as_rest : bool = false setget set_set_pose_as_rest, get_add_bone
+
 var skeleton:Skeleton = null
 var animation_player:AnimationPlayer = null
 var first_call:bool = true
@@ -233,3 +235,13 @@ func get_add_bone():
 
 func is_done_editor():
 	return true
+	
+func set_set_pose_as_rest(val):
+	if val:
+		for n in bone_handle_nodes:
+			n.set_as_rest_pose()
+			
+		for n in bone_handle_nodes:
+			n._ready()
+			
+		#load_poses()
