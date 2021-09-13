@@ -121,8 +121,30 @@ margin_right = 78.0
 margin_bottom = 20.0
 text = "F"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 72.0
+margin_right = 1010.0
+margin_bottom = 140.0
+
+[node name="Extrude" type="Button" parent="VBoxContainer/VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Extrude"
+
+[node name="AddBox" type="Button" parent="VBoxContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 44.0
+text = "Add  Box"
+
+[node name="UnwrapButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 1010.0
+margin_bottom = 68.0
+text = "UV Unwrap"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+margin_top = 144.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -136,3 +158,7 @@ margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 3 )
+
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/Extrude" to="." method="_on_Extrude_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/AddBox" to="." method="_on_AddBox_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]

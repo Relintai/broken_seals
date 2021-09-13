@@ -40,3 +40,13 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 	elif event.scancode == KEY_Z:
 		if plugin:
 			plugin.set_axis_z(event.pressed)
+
+
+func _on_Extrude_pressed():
+	pass # Replace with function body.
+
+func _on_AddBox_pressed():
+	pass # Replace with function body.
+
+func _on_UnwrapButton_pressed():
+	plugin.uv_unwrap()
