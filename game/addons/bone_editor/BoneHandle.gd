@@ -37,9 +37,19 @@ func set_pose( basis:Basis, origin:Vector3 ):
 	# printt( self.bone_name, basis, origin )
 
 func set_as_rest_pose():
-	original_rest = self.pose
-	self.skeleton.set_bone_rest(self.bone_id, original_rest)
+	self.skeleton.set_bone_rest(self.bone_id, transform)
 	self.skeleton.set_bone_pose( self.bone_id, Transform( ))
+	transform = Transform()
+	
+	self.original_rest = self.skeleton.get_bone_rest( self.bone_id )
+	
+	var parent_bone_id:int = self.skeleton.get_bone_parent( self.bone_id )
+	if parent_bone_id != -1:
+		self.original_parent_rest = self.skeleton.get_bone_global_pose( parent_bone_id )
+	
+	self.transform.basis = Basis( )
+	self.transform.origin = self.original_parent_rest.basis.xform( self.original_rest.origin )
+	self.original_global_rest_origin = self.transform.origin
 
 
 func _process( delta:float ):

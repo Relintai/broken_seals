@@ -236,10 +236,21 @@ func get_add_bone():
 func is_done_editor():
 	return true
 	
+func evaluate_rest_pose(n : Spatial):
+	if !n:
+		return
+		
+	n.set_as_rest_pose()
+		
+	for ch in n.get_children():
+		evaluate_rest_pose(ch as Spatial)
+	
 func set_set_pose_as_rest(val):
 	if val:
-		for n in bone_handle_nodes:
-			n.set_as_rest_pose()
+		for ch in get_children():
+			evaluate_rest_pose(ch as Spatial)
+		#for n in bone_handle_nodes:
+		#	n.set_as_rest_pose()
 			
 		for n in bone_handle_nodes:
 			n._ready()
