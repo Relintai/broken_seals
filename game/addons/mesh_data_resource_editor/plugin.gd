@@ -10,7 +10,7 @@ var mdi_ed_gui : Control
 var active_gizmos : Array
 
 func _enter_tree():
-	print("_enter_tree")
+	#print("_enter_tree")
 	
 	gizmo_plugin = MdiGizmoPlugin.new()
 	mdi_ed_gui = MDIEdGui.instance()
@@ -27,7 +27,7 @@ func _enter_tree():
 	set_input_event_forwarding_always_enabled()
 
 func _exit_tree():
-	print("_exit_tree")
+	#print("_exit_tree")
 	
 	remove_spatial_gizmo_plugin(gizmo_plugin)
 	#remove_control_from_container(EditorPlugin.CONTAINER_SPATIAL_EDITOR_SIDE_RIGHT, mdi_ed_gui)
@@ -45,15 +45,21 @@ func _exit_tree():
 #	mdi_ed_gui.queue_free()
 
 func handles(object):
-	print("disable_plugin")
+	#print("disable_plugin")
 	
 	if object is MeshDataInstance:
 		return true
 		
 	return false
+
+func edit(object):
+	var mdi : MeshDataInstance = object as MeshDataInstance
 	
+	if mdi:
+		mdi_ed_gui.set_mesh_data_resource(mdi.mesh_data)
+
 func make_visible(visible):
-	print("make_visible")
+	#print("make_visible")
 	
 	if visible:
 		mdi_ed_gui.show()
@@ -61,9 +67,10 @@ func make_visible(visible):
 		#mdi_ed_gui.hide()
 		#figure out how to hide it when something else gets selected, don't hide on unselect
 		pass
-	
+
 func get_plugin_name():
 	return "mesh_data_resource_editor"
+	
 
 #func forward_spatial_gui_input(camera, event):
 #	return forward_spatial_gui_input(0, camera, event)

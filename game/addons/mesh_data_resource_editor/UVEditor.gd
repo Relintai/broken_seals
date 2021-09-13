@@ -3,7 +3,7 @@ extends Control
 
 var mesh_data_resource : MeshDataResource = null setget  set_mesh_data_resource
 
-func set_mesh_data_resource(a):
+func set_mesh_data_resource(a : MeshDataResource):
 	if mesh_data_resource:
 		mesh_data_resource.disconnect("changed", self, "on_mdr_changed")
 	
@@ -11,7 +11,7 @@ func set_mesh_data_resource(a):
 	
 	if mesh_data_resource:
 		mesh_data_resource.connect("changed", self, "on_mdr_changed")
-	
+
 	update()
 
 func on_mdr_changed():
@@ -31,3 +31,4 @@ func _draw():
 			draw_line(uvs[indices[i + 2]] * get_size(), uvs[indices[i]] * get_size(), Color(1, 1, 1, 1), 1, false)
 			
 			
+	
