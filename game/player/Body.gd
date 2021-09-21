@@ -116,8 +116,8 @@ var _nameplate : Node = null
 #var los : bool = false
 
 func _ready() -> void:
-	camera = get_node_or_null("CameraPivot/Camera") as Camera
-	camera_pivot = get_node_or_null("CameraPivot") as Spatial
+	camera = get_node_or_null("CameraPivot/Camera") 
+	camera_pivot = get_node_or_null("CameraPivot") 
 	
 	model_rotation_node = get_node(model_path)
 	character_skeleton = get_node(character_skeleton_path)
@@ -683,7 +683,7 @@ func cmouseover(event):
 	
 	if result:
 		if result.collider:# and result.collider.owner is Entity:
-			var mo : Entity = result.collider.owner as Entity
+			var mo : Entity = result.collider.owner
 			
 			if mo == null:
 				return

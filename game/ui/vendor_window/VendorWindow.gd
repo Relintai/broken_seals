@@ -47,7 +47,7 @@ var _vendor_item_data : VendorItemData
 var _timer : float = 0
 
 func _ready() -> void:
-	opener_button = get_node_or_null(opener_button_path) as BaseButton
+	opener_button = get_node_or_null(opener_button_path)
 	
 	_item_entries.clear()
 	
