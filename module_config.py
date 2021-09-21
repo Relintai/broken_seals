@@ -1,7 +1,7 @@
 
 godot_branch = '3.x'
 
-engine_repository = [ ['https://github.com/godotengine/godot.git', 'git@github.com:godotengine/godot.git'], 'engine', '' ]
+engine_repository = [ ['https://github.com/Relintai/godot.git', 'git@github.com:Relintai/godot.git'], 'engine', '' ]
 
 module_repositories = [
     [ ['https://github.com/Relintai/world_generator.git', 'git@github.com:Relintai/world_generator.git'], 'world_generator', '' ],

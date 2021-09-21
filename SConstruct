@@ -174,6 +174,55 @@ def copytree(src, dst):
 
             shutil.copy2(sp, dp)
 
+def validate_repository_origin(data, clone_path, branch = 'master'):
+    full_path = os.path.abspath(clone_path)
+
+    if not os.path.isdir(full_path):
+        return
+
+    cwd = os.getcwd()
+    os.chdir(full_path)
+
+    res = subprocess.run('git remote -v', shell=True, capture_output=True)
+
+    resstr = res.stdout.decode('ascii')
+    resarr = resstr.split("\n")
+    res_orig = []
+
+    for l in resarr:
+        if "origin" in l:
+            res_orig.append(l)
+
+    if len(res_orig) == 0:
+        print("The repository " + clone_path + " does not seem to have an origin remote. Adding it.")
+
+        subprocess.call('git remote add origin ' + data[0][repository_index], shell=True)
+
+        os.chdir(cwd)
+
+        return
+
+    for l in data[0]:
+        for ll in res_orig:
+            if l in ll:
+                os.chdir(cwd)
+
+                return
+
+    rind = 0
+
+    if 'git@' in res_orig[0]:
+        rind = 1
+
+    subprocess.call('git remote remove origin', shell=True)
+    subprocess.call('git remote add origin ' + data[0][rind], shell=True)
+    subprocess.call('git pull origin', shell=True)
+    subprocess.call('git checkout origin/' + branch, shell=True)
+
+    print('Updated git remote origin in ' + clone_path)
+
+    os.chdir(cwd)
+
 def remove_repository(data, target_folder):
     folder = os.path.abspath(target_folder + data[1])
 
@@ -181,6 +230,7 @@ def remove_repository(data, target_folder):
         shutil.rmtree(folder)
 
 def update_engine():
+    validate_repository_origin(module_config.engine_repository, './engine/', module_config.godot_branch)
     update_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def update_modules():
@@ -208,6 +258,7 @@ def update_all():
 
 
 def setup_engine():
+    validate_repository_origin(module_config.engine_repository, './engine/', module_config.godot_branch)
     setup_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def setup_modules():
