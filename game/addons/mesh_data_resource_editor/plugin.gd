@@ -115,17 +115,17 @@ func set_axis_z(on : bool) -> void:
 func uv_unwrap() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.mesh_data:
 		current_mesh_data_instance.mesh_data.uv_unwrap()
-
-func forward_spatial_gui_input(camera, event):
-	for g in active_gizmos:
-		if g.forward_spatial_gui_input(0, camera, event):
-			return true
-	
-	return false
-
-#func forward_spatial_gui_input(index, camera, event):
+#
+#func forward_spatial_gui_input(camera, event):
 #	for g in active_gizmos:
-#		if g.forward_spatial_gui_input(index, camera, event):
+#		if g.forward_spatial_gui_input(0, camera, event):
 #			return true
 #
 #	return false
+
+func forward_spatial_gui_input(index, camera, event):
+	for g in active_gizmos:
+		if g.forward_spatial_gui_input(index, camera, event):
+			return true
+
+	return false
