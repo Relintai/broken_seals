@@ -9,8 +9,6 @@
 !gdpose/**
 !mesh_data_resource_editor
 !mesh_data_resource_editor/**
-!bone_editor
-!bone_editor/**
 !multirun
 !multirun/**
 !addon_versions
