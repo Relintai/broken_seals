@@ -349,24 +349,24 @@ class SMesh:
 		if !v1d:
 			processed_vertices[t.i1] = true
 			
-#			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
+			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
 
 		if !v2d:
 			processed_vertices[t.i2] = true
 			
-			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i1], processed_calc_uvs[t.i3])
+			processed_calc_uvs[t.i2] = transform_uv(t.vns3, t.vns1, t.vns2, processed_calc_uvs[t.i3], processed_calc_uvs[t.i1])
 
 		if !v3d:
 			processed_vertices[t.i3] = true
 
-#			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
+			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
 
 		join_triangles(t.neighbour_v1_v2)
 		join_triangles(t.neighbour_v2_v3)
 		join_triangles(t.neighbour_v1_v3)
 
 	func transform_uv(v1 : Vector2, v2 : Vector2, v3 : Vector2, vt1 : Vector2, vt2 : Vector2) -> Vector2:
-		if count == 3:
+		if count == 2:
 			return Vector2()
 			
 		count += 1
@@ -376,15 +376,51 @@ class SMesh:
 		
 		var ret : Vector2 = (vt1 - vt2).normalized() * l
 		
-		ret = ret.rotated(a)
+		var retr : Vector2 = ret.rotated(a)
 		
-
-		return ret
+		if overlaps(v1, v2, v3, retr, v3, v2):
+			retr = ret.rotated(-a)
+		
+		return retr
+		
+	func overlaps(v1 : Vector2, v2 : Vector2, v3 : Vector2, vs1 : Vector2, vs2 : Vector2, vs3 : Vector2) -> bool:
+		var tri1 : PoolVector2Array = PoolVector2Array()
+		var tri2 : PoolVector2Array = PoolVector2Array()
+		
+		tri1.resize(3)
+		tri2.resize(3)
+		
+		tri1[0] = v1
+		tri1[1] = v2
+		tri1[2] = v3
+		
+		tri2[0] = vs1
+		tri2[1] = vs2
+		tri2[2] = vs3
+		
+		return tri_tri_overlap_test(tri1, tri2)
+		
+	#from https://rosettacode.org/wiki/Determine_if_two_triangles_overlap
+	#there is probably a simpler way in this case, as one edge is shared
+	func tri_tri_overlap_test(tri1 : PoolVector2Array, tri2 : PoolVector2Array) -> bool:
+		for i in range(3):
+			var j : int = (i + 1) % 3
+			
+			if bound_doesnt_collide_check(tri1[i], tri1[j], tri2[0]) && bound_doesnt_collide_check(tri1[i], tri1[j], tri2[1]) && bound_doesnt_collide_check(tri1[i], tri1[j], tri2[2]):
+				return false
+		
+		for i in range(3):
+			var j : int = (i + 1) % 3
+			
+			if bound_doesnt_collide_check(tri2[i], tri2[j], tri1[0]) && bound_doesnt_collide_check(tri2[i], tri2[j], tri1[1]) && bound_doesnt_collide_check(tri2[i], tri2[j], tri1[2]):
+				return false
+		
+		return true
 		
 	func det2d(p1 : Vector2, p2 : Vector2, p3 : Vector2) -> float:
 		return p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)
 		
-	func bound_doesnt_collid_check(p1 : Vector2, p2 : Vector2, p3 : Vector2, eps : float):
+	func bound_doesnt_collide_check(p1 : Vector2, p2 : Vector2, p3 : Vector2, eps : float = 0.00001):
 		return det2d(p1, p2, p3) <= eps
 		
 	func normalize_uvs():
