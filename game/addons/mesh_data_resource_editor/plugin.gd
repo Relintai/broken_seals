@@ -158,6 +158,10 @@ class STriangle:
 	var n2 : Vector3
 	var n3 : Vector3
 	
+	var neighbour_v1_v2 : int = -1
+	var neighbour_v2_v3 : int = -1
+	var neighbour_v1_v3 : int = -1
+	
 	var face_normal : Vector3
 	var basis : Basis
 	
@@ -200,8 +204,6 @@ class STriangle:
 		vn1 = v1 - v2
 		vn2 = Vector3() #v2 - v2
 		
-		print_nverts()
-		
 		face_normal = vn1.cross(vn3).normalized()
 		
 		# face normal has to end up the y coordinate in the world coordinate system a.k.a 0 1 0 
@@ -219,7 +221,13 @@ class STriangle:
 		uv1 = Vector2(vn1.x, vn1.z)
 		uv2 = Vector2(vn2.x, vn2.z)
 		uv3 = Vector2(vn3.x, vn3.z)
-
+	
+	func has_edge(pi1 : int, pi2 : int):
+		if i1 == pi1 || i2 == pi1 || i3 == pi1:
+			if i1 == pi2 || i2 == pi2 || i3 == pi2:
+				return true
+				
+		return false
 		
 	func print():
 		print("[ Tri: " + str(i1) + ", " + str(i2) + ", " + str(i3) + ",  " + str(index) + " ]")
@@ -235,6 +243,10 @@ class STriangle:
 		
 	func print_normals():
 		print("[ Tri normals: " + str(n1) + ", " + str(n2) + ", " + str(n3) + " ]")
+		
+	func print_neighbours():
+		print("[ Tri neighbours: " + str(neighbour_v1_v2) + ", " + str(neighbour_v2_v3) + ", " + str(neighbour_v1_v3) + " ]")
+
 	
 class SMesh:
 	var indices : PoolIntArray
@@ -259,10 +271,29 @@ class SMesh:
 		
 	func unwrap():
 		project_vertices()
+		find_neighbours()
 		
 	func project_vertices():
 		for t in triangles:
 			t.project_vertices()
+		
+	func find_neighbours():
+		for i in range(triangles.size()):
+			var t = triangles[i]
+			
+			t.neighbour_v1_v2 = find_neighbour(i, t.i1, t.i2)
+			t.neighbour_v2_v3 = find_neighbour(i, t.i2, t.i3)
+			t.neighbour_v1_v3 = find_neighbour(i, t.i1, t.i3)
+		
+	func find_neighbour(current_index : int, i1 : int, i2 : int):
+		for i in range(triangles.size()):
+			if current_index == i:
+				continue
+				
+			if triangles[i].has_edge(i1, i2):
+				return i
+				
+		return -1
 		
 	func print():
 		print("[ SMesh:")
