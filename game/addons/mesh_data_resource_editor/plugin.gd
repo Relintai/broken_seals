@@ -326,7 +326,9 @@ class SMesh:
 		processed_calc_uvs[t.i3] = t.uv3
 
 		join_triangles(0)
-		
+	
+	var count  : int = 0
+	
 	func join_triangles(tindex):
 		if tindex == -1:
 			return
@@ -347,44 +349,43 @@ class SMesh:
 		if !v1d:
 			processed_vertices[t.i1] = true
 			
-#			var i1 : int = t.i2
-#			var i2 : int = t.i3
-#			var ifvert : int = t.i1
-			
-			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
+#			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
 
 		if !v2d:
 			processed_vertices[t.i2] = true
 			
-#			var i1 : int = t.i1
-#			var i2 : int = t.i3
-#			var ifvert : int = t.i2
-			
 			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i1], processed_calc_uvs[t.i3])
 
-			
-			
 		if !v3d:
 			processed_vertices[t.i3] = true
-			
-#			var i1 : int = t.i2
-#			var i2 : int = t.i3
-#			var ifvert : int = t.i1
-			
-			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
+
+#			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
 
 		join_triangles(t.neighbour_v1_v2)
 		join_triangles(t.neighbour_v2_v3)
 		join_triangles(t.neighbour_v1_v3)
 
 	func transform_uv(v1 : Vector2, v2 : Vector2, v3 : Vector2, vt1 : Vector2, vt2 : Vector2) -> Vector2:
+		if count == 3:
+			return Vector2()
+			
+		count += 1
+
 		var a : float = (v2 - v1).angle_to(v3 - v1)
+		var l : float = (v2 - v1).length()
 		
-		var ret : Vector2 = (vt2 - vt1).normalized() * (v3 - v1).length()
+		var ret : Vector2 = (vt1 - vt2).normalized() * l
 		
 		ret = ret.rotated(a)
 		
+
 		return ret
+		
+	func det2d(p1 : Vector2, p2 : Vector2, p3 : Vector2) -> float:
+		return p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)
+		
+	func bound_doesnt_collid_check(p1 : Vector2, p2 : Vector2, p3 : Vector2, eps : float):
+		return det2d(p1, p2, p3) <= eps
 		
 	func normalize_uvs():
 		var uv_xmin : float = processed_calc_uvs[0].x
