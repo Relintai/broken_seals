@@ -150,6 +150,10 @@ class STriangle:
 	var vn2 : Vector3
 	var vn3 : Vector3
 	
+	var vns1 : Vector2
+	var vns2 : Vector2
+	var vns3 : Vector2
+	
 	var uv1 : Vector2
 	var uv2 : Vector2
 	var uv3 : Vector2
@@ -221,6 +225,10 @@ class STriangle:
 		uv1 = Vector2(vn1.x, vn1.z)
 		uv2 = Vector2(vn2.x, vn2.z)
 		uv3 = Vector2(vn3.x, vn3.z)
+		
+		vns1 = uv1
+		vns2 = uv2
+		vns3 = uv3
 	
 	func has_edge(pi1 : int, pi2 : int):
 		if i1 == pi1 || i2 == pi1 || i3 == pi1:
@@ -254,6 +262,10 @@ class SMesh:
 	var uvs : PoolVector2Array
 	var triangles : Array
 	
+	var processed_vertices : Dictionary = Dictionary()
+	var processed_triangles : Dictionary = Dictionary()
+	var processed_calc_uvs : PoolVector2Array = PoolVector2Array()
+	
 	func is_triangle_neighbour(tri : STriangle) -> bool:
 		for t in triangles:
 			if t.is_neighbour(tri.i1, tri.i2, tri.i3):
@@ -272,6 +284,9 @@ class SMesh:
 	func unwrap():
 		project_vertices()
 		find_neighbours()
+		layout_uvs()
+		
+		#print(processed_calc_uvs)
 		
 	func project_vertices():
 		for t in triangles:
@@ -284,6 +299,88 @@ class SMesh:
 			t.neighbour_v1_v2 = find_neighbour(i, t.i1, t.i2)
 			t.neighbour_v2_v3 = find_neighbour(i, t.i2, t.i3)
 			t.neighbour_v1_v3 = find_neighbour(i, t.i1, t.i3)
+			
+	func layout_uvs():
+		processed_vertices = Dictionary()
+		processed_triangles = Dictionary()
+		processed_calc_uvs = PoolVector2Array()
+		
+		processed_calc_uvs.resize(vertices.size())
+		
+		var t = triangles[0]
+		
+		#don't
+		#processed_triangles[t.index] = true
+		
+		processed_vertices[t.i1] = true
+		processed_vertices[t.i2] = true
+		processed_vertices[t.i3] = true
+		
+		processed_calc_uvs[t.i1] = t.uv1
+		processed_calc_uvs[t.i2] = t.uv2
+		processed_calc_uvs[t.i3] = t.uv3
+
+		join_triangles(0)
+		
+	func join_triangles(tindex):
+		if tindex == -1:
+			return
+		
+		if processed_triangles.has(tindex):
+			return
+			
+		processed_triangles[tindex] = true
+			
+		var t = triangles[tindex]
+		
+		#note that only one of these can be false
+		#except for the first triangle (where all sould be true see layout_uvs()
+		var v1d : bool = processed_vertices.has(t.i1)
+		var v2d : bool = processed_vertices.has(t.i2)
+		var v3d : bool = processed_vertices.has(t.i3)
+		
+		if !v1d:
+			processed_vertices[t.i1] = true
+			
+#			var i1 : int = t.i2
+#			var i2 : int = t.i3
+#			var ifvert : int = t.i1
+			
+			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
+
+		if !v2d:
+			processed_vertices[t.i2] = true
+			
+#			var i1 : int = t.i1
+#			var i2 : int = t.i3
+#			var ifvert : int = t.i2
+			
+			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i1], processed_calc_uvs[t.i3])
+
+			
+			
+		if !v3d:
+			processed_vertices[t.i3] = true
+			
+#			var i1 : int = t.i2
+#			var i2 : int = t.i3
+#			var ifvert : int = t.i1
+			
+			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
+
+		join_triangles(t.neighbour_v1_v2)
+		join_triangles(t.neighbour_v2_v3)
+		join_triangles(t.neighbour_v1_v3)
+
+	func transform_uv(v1 : Vector2, v2 : Vector2, v3 : Vector2, vt1 : Vector2, vt2 : Vector2) -> Vector2:
+		var a : float = (v2 - v1).angle_to(v3 - v1)
+		
+		var ret : Vector2 = (vt2 - vt1).normalized() * (v3 - v1).length()
+		
+		ret = ret.rotated(a)
+		
+		return ret
+		
 		
 	func find_neighbour(current_index : int, i1 : int, i2 : int):
 		for i in range(triangles.size()):
