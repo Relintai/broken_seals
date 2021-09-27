@@ -128,8 +128,8 @@ func uv_unwrap() -> void:
 	var partitioned_meshes : Array = partition_mesh(mesh)
 	
 	for m in partitioned_meshes:
-		m.print()
-		#m.unwrap()
+		#m.print()
+		m.unwrap()
 		
 	
 	
@@ -139,13 +139,44 @@ class STriangle:
 	var i1 : int = 0
 	var i2 : int = 0
 	var i3 : int = 0
+	
 	var index : int = 0
+	
+	var v1 : Vector3
+	var v2 : Vector3
+	var v3 : Vector3
+	
+	var vn1 : Vector3
+	var vn2 : Vector3
+	var vn3 : Vector3
+	
+	var uv1 : Vector2
+	var uv2 : Vector2
+	var uv3 : Vector2
+	
+	var n1 : Vector3
+	var n2 : Vector3
+	var n3 : Vector3
+	
+	var face_normal : Vector3
+	var basis : Basis
 	
 	func set_indices(pi1 : int, pi2 : int, pi3 : int, pindex : int):
 		i1 = pi1
 		i2 = pi2
 		i3 = pi3
 		index = pindex
+		
+	func set_vertices(pv1 : Vector3, pv2 : Vector3, pv3 : Vector3):
+		v1 = pv1
+		v2 = pv2
+		v3 = pv3
+		
+	#for debugging
+	func set_normals(pn1 : Vector3, pn2 : Vector3, pn3 : Vector3):
+		n1 = pn1
+		n2 = pn2
+		n3 = pn3
 		
 	func is_neighbour(pi1 : int, pi2 : int, pi3 : int) -> bool:
 		var c : int = 0
@@ -164,8 +195,46 @@ class STriangle:
 		else:
 			return false
 		
+	func project_vertices() -> void:
+		vn3 = v3 - v2
+		vn1 = v1 - v2
+		vn2 = Vector3() #v2 - v2
+		
+		print_nverts()
+		
+		face_normal = vn1.cross(vn3).normalized()
+		
+		# face normal has to end up the y coordinate in the world coordinate system a.k.a 0 1 0 
+		# then triangle is in x, z plane
+		
+		basis = Basis(vn1.normalized(), face_normal, vn3.normalized())
+		basis = basis.orthonormalized()
+		
+		vn1 = basis.xform_inv(vn1)
+		vn2 = basis.xform_inv(vn2)
+		vn3 = basis.xform_inv(vn3)
+		
+		#these are not real uvs yet, just projections of the vertices to a 2d plane (v2 is at the origin)
+		#where the plane is parallel to our triangle
+		uv1 = Vector2(vn1.x, vn1.z)
+		uv2 = Vector2(vn2.x, vn2.z)
+		uv3 = Vector2(vn3.x, vn3.z)
+
+		
 	func print():
-		print("[ Tri: " + str(i1) + ", " + str(i2) + ", " + str(i3) + ",  " + str(index) + ", ]")
+		print("[ Tri: " + str(i1) + ", " + str(i2) + ", " + str(i3) + ",  " + str(index) + " ]")
+		
+	func print_verts():
+		print("[ Tri vets: " + str(v1) + ", " + str(v2) + ", " + str(v3) + " ]")
+		
+	func print_nverts():
+		print("[ Tri nvets: " + str(vn1) + ", " + str(vn2) + ", " + str(vn3) + " ]")
+		
+	func print_uvs():
+		print("[ Tri uvs: " + str(uv1) + ", " + str(uv2) + ", " + str(uv3) + " ]")
+		
+	func print_normals():
+		print("[ Tri normals: " + str(n1) + ", " + str(n2) + ", " + str(n3) + " ]")
 	
 class SMesh:
 	var indices : PoolIntArray
@@ -189,7 +258,11 @@ class SMesh:
 		return false
 		
 	func unwrap():
-		pass
+		project_vertices()
+		
+	func project_vertices():
+		for t in triangles:
+			t.project_vertices()
 		
 	func print():
 		print("[ SMesh:")
@@ -207,6 +280,8 @@ func partition_mesh(mesh : Array) -> Array:
 		return meshes
 	
 	var vertices : PoolVector3Array = mesh[ArrayMesh.ARRAY_VERTEX]
+	#for debugging
+	var normals : PoolVector3Array = mesh[ArrayMesh.ARRAY_NORMAL]
 	var indices : PoolIntArray = mesh[ArrayMesh.ARRAY_INDEX]
 	
 	if vertices.size() == 0:
@@ -222,6 +297,8 @@ func partition_mesh(mesh : Array) -> Array:
 		
 		var tri : STriangle = STriangle.new()
 		tri.set_indices(indices[iit], indices[iit + 1], indices[iit + 2], it)
+		tri.set_vertices(vertices[indices[iit]], vertices[indices[iit + 1]], vertices[indices[iit + 2]])
+		tri.set_normals(normals[indices[iit]], normals[indices[iit + 1]], normals[indices[iit + 2]])
 		
 		var found : bool = false
 		for m in meshes:
