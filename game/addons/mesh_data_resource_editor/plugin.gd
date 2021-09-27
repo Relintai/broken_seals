@@ -131,8 +131,12 @@ func uv_unwrap() -> void:
 		#m.print()
 		m.unwrap()
 		
+		mesh[ArrayMesh.ARRAY_TEX_UV] = m.processed_calc_uvs
+		
+	mdr.set_array(mesh)
 	
-	
+	if mdr:
+		mdi_ed_gui.set_mesh_data_resource(mdr)
 	
 	
 class STriangle:
@@ -285,8 +289,9 @@ class SMesh:
 		project_vertices()
 		find_neighbours()
 		layout_uvs()
+		normalize_uvs()
 		
-		#print(processed_calc_uvs)
+#		print(processed_calc_uvs)
 		
 	func project_vertices():
 		for t in triangles:
@@ -380,6 +385,56 @@ class SMesh:
 		ret = ret.rotated(a)
 		
 		return ret
+		
+	func normalize_uvs():
+		var uv_xmin : float = processed_calc_uvs[0].x
+		var uv_xmax : float = processed_calc_uvs[0].x
+		var uv_ymin : float = processed_calc_uvs[0].y
+		var uv_ymax : float = processed_calc_uvs[0].y
+		
+		for i in range(1, processed_calc_uvs.size()):
+			var uv : Vector2 = processed_calc_uvs[i]
+			
+			if uv.x < uv_xmin:
+				uv_xmin = uv.x
+				
+			if uv.x > uv_xmax:
+				uv_xmax = uv.x
+				
+			if uv.y < uv_ymin:
+				uv_ymin = uv.y
+				
+			if uv.y > uv_ymax:
+				uv_ymax = uv.y
+		
+		if uv_ymin < 0 || uv_xmin < 0:
+			var incvec : Vector2 = Vector2()
+			
+			if uv_xmin < 0:
+				incvec.x = -uv_xmin
+				uv_xmin = 0
+				uv_xmax += incvec.x
+			
+			if uv_ymin < 0:
+				incvec.y = -uv_ymin
+				uv_ymin = 0
+				uv_ymax += incvec.y
+			
+			for i in range(processed_calc_uvs.size()):
+				processed_calc_uvs[i] += incvec
+
+		var rx : float = uv_xmax - uv_xmin
+		var ry : float = uv_ymax - uv_ymin
+
+		for i in range(processed_calc_uvs.size()):
+			var v : Vector2 = processed_calc_uvs[i]
+			
+			v.x -= uv_xmin
+			v.y -= uv_ymin
+			v.x /= rx
+			v.y /= ry
+			
+			processed_calc_uvs[i] = v
 		
 		
 	func find_neighbour(current_index : int, i1 : int, i2 : int):
