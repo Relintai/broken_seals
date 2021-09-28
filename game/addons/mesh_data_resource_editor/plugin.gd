@@ -354,25 +354,25 @@ class SMesh:
 		if !v1d:
 			processed_vertices[t.i1] = true
 			
-			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
+			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i3], processed_calc_uvs[t.i2])
 			#print(processed_calc_uvs[t.i1])
 
 		if !v2d:
 			processed_vertices[t.i2] = true
 			
-			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i1], processed_calc_uvs[t.i3])
+			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i3], processed_calc_uvs[t.i1])
 
 		if !v3d:
 			processed_vertices[t.i3] = true
 
-#			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
+			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i2], processed_calc_uvs[t.i1])
 
 		join_triangles(t.neighbour_v1_v2)
 		join_triangles(t.neighbour_v2_v3)
 		join_triangles(t.neighbour_v1_v3)
 
 	func transform_uv(v1 : Vector2, v2 : Vector2, v3 : Vector2, vt1 : Vector2, vt2 : Vector2) -> Vector2:
-		if count >= 2:
+		if count >= 5:
 			return Vector2()
 			
 		count += 1
