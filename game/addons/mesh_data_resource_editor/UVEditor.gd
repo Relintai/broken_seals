@@ -26,9 +26,25 @@ func _draw():
 	
 	if indices.size() % 3 == 0:
 		for i in range(0, len(indices), 3):
-			draw_line(uvs[indices[i]] * get_size(), uvs[indices[i + 1]] * get_size(), Color(1, 1, 1, 1), 1, false)
-			draw_line(uvs[indices[i + 1]] * get_size(), uvs[indices[i + 2]] * get_size(), Color(1, 1, 1, 1), 1, false)
-			draw_line(uvs[indices[i + 2]] * get_size(), uvs[indices[i]] * get_size(), Color(1, 1, 1, 1), 1, false)
+			var c : Color = Color(1, 1, 1, 1)
 			
-			
-	
+			if uvs[indices[i]].is_equal_approx(Vector2()) || uvs[indices[i + 1]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+				
+			draw_line(uvs[indices[i]] * get_size(), uvs[indices[i + 1]] * get_size(), c, 1, false)
+
+			if uvs[indices[i + 1]].is_equal_approx(Vector2()) || uvs[indices[i + 2]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+				
+			draw_line(uvs[indices[i + 1]] * get_size(), uvs[indices[i + 2]] * get_size(), c, 1, false)
+				
+			if uvs[indices[i + 2]].is_equal_approx(Vector2()) || uvs[indices[i]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+
+			draw_line(uvs[indices[i + 2]] * get_size(), uvs[indices[i]] * get_size(), c, 1, false)

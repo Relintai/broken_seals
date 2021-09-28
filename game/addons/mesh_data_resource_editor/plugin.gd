@@ -312,6 +312,9 @@ class SMesh:
 		
 		processed_calc_uvs.resize(vertices.size())
 		
+		for i in range(processed_calc_uvs.size()):
+			processed_calc_uvs.set(i, Vector2())
+		
 		var t = triangles[0]
 		
 		#don't
@@ -324,6 +327,8 @@ class SMesh:
 		processed_calc_uvs[t.i1] = t.uv1
 		processed_calc_uvs[t.i2] = t.uv2
 		processed_calc_uvs[t.i3] = t.uv3
+		
+		#print(str(t.uv1) + str(t.uv2) + str(t.uv3))
 
 		join_triangles(0)
 	
@@ -350,37 +355,35 @@ class SMesh:
 			processed_vertices[t.i1] = true
 			
 			processed_calc_uvs[t.i1] =  transform_uv(t.vns2, t.vns3, t.vns1, processed_calc_uvs[t.i2], processed_calc_uvs[t.i3])
+			#print(processed_calc_uvs[t.i1])
 
 		if !v2d:
 			processed_vertices[t.i2] = true
 			
-			processed_calc_uvs[t.i2] = transform_uv(t.vns3, t.vns1, t.vns2, processed_calc_uvs[t.i3], processed_calc_uvs[t.i1])
+			processed_calc_uvs[t.i2] = transform_uv(t.vns1, t.vns3, t.vns2, processed_calc_uvs[t.i1], processed_calc_uvs[t.i3])
 
 		if !v3d:
 			processed_vertices[t.i3] = true
 
-			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
+#			processed_calc_uvs[t.i3] = transform_uv(t.vns1, t.vns2, t.vns3, processed_calc_uvs[t.i1], processed_calc_uvs[t.i2])
 
 		join_triangles(t.neighbour_v1_v2)
 		join_triangles(t.neighbour_v2_v3)
 		join_triangles(t.neighbour_v1_v3)
 
 	func transform_uv(v1 : Vector2, v2 : Vector2, v3 : Vector2, vt1 : Vector2, vt2 : Vector2) -> Vector2:
-		if count == 2:
+		if count >= 2:
 			return Vector2()
 			
 		count += 1
 
 		var a : float = (v2 - v1).angle_to(v3 - v1)
-		var l : float = (v2 - v1).length()
+		var l : float = (v3 - v1).length()
 		
-		var ret : Vector2 = (vt1 - vt2).normalized() * l
+		var ret : Vector2 = (vt2 - vt1).normalized() * l
 		
-		var retr : Vector2 = ret.rotated(a)
-		
-		if overlaps(v1, v2, v3, retr, v3, v2):
-			retr = ret.rotated(-a)
-		
+		var retr : Vector2 = ret.rotated(-a)
+
 		return retr
 		
 	func overlaps(v1 : Vector2, v2 : Vector2, v3 : Vector2, vs1 : Vector2, vs2 : Vector2, vs3 : Vector2) -> bool:
@@ -429,6 +432,8 @@ class SMesh:
 		var uv_ymin : float = processed_calc_uvs[0].y
 		var uv_ymax : float = processed_calc_uvs[0].y
 		
+		var incvec : Vector2 = Vector2()
+		
 		for i in range(1, processed_calc_uvs.size()):
 			var uv : Vector2 = processed_calc_uvs[i]
 			
@@ -445,7 +450,7 @@ class SMesh:
 				uv_ymax = uv.y
 		
 		if uv_ymin < 0 || uv_xmin < 0:
-			var incvec : Vector2 = Vector2()
+			
 			
 			if uv_xmin < 0:
 				incvec.x = -uv_xmin
@@ -472,7 +477,18 @@ class SMesh:
 			v.y /= ry
 			
 			processed_calc_uvs[i] = v
+			
+		#debug
+		var z : Vector2 = Vector2(incvec.x, incvec.y)
 		
+		z.x -= uv_xmin
+		z.y -= uv_ymin
+		z.x /= rx
+		z.y /= ry
+		
+		for i in range(processed_calc_uvs.size()):
+			if processed_calc_uvs[i].is_equal_approx(z):
+				processed_calc_uvs[i] = Vector2()
 		
 	func find_neighbour(current_index : int, i1 : int, i2 : int):
 		for i in range(triangles.size()):
