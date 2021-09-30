@@ -1,0 +1,220 @@
+{
+	"connections": [
+		{
+			"from": "warp_dilation",
+			"from_port": 0,
+			"to": "buffer_5",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_5",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 1,
+			"to": "buffer_6",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_6",
+			"from_port": 0,
+			"to": "warp_dilation",
+			"to_port": 1
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "buffer_7",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_7",
+			"from_port": 0,
+			"to": "warp_dilation",
+			"to_port": 0
+		}
+	],
+	"label": "Warp Dilation",
+	"longdesc": "",
+	"name": "warp_dilation",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "buffer_5",
+			"node_position": {
+				"x": -387.923584,
+				"y": -38
+			},
+			"parameters": {
+				"lod": 0,
+				"size": 9
+			},
+			"type": "buffer"
+		},
+		{
+			"name": "buffer_6",
+			"node_position": {
+				"x": -636.189514,
+				"y": -90.757477
+			},
+			"parameters": {
+				"lod": 0,
+				"size": 9
+			},
+			"type": "buffer"
+		},
+		{
+			"name": "buffer_7",
+			"node_position": {
+				"x": -635.189514,
+				"y": -199.757477
+			},
+			"parameters": {
+				"lod": 0,
+				"size": 9
+			},
+			"type": "buffer"
+		},
+		{
+			"name": "warp_dilation",
+			"node_position": {
+				"x": -404.125,
+				"y": -172.25
+			},
+			"parameters": {
+				"a": 0,
+				"d": 0.5,
+				"mode": 0,
+				"s": 9
+			},
+			"type": "warp_dilation_nobuf"
+		},
+		{
+			"name": "gen_inputs",
+			"node_position": {
+				"x": -1127.189453,
+				"y": -144.691238
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"name": "port1",
+					"type": "f"
+				},
+				{
+					"group_size": 0,
+					"name": "port0",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_outputs",
+			"node_position": {
+				"x": -70.923584,
+				"y": -122.691238
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"name": "port0",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_parameters",
+			"node_position": {
+				"x": -463.856934,
+				"y": -398.757477
+			},
+			"parameters": {
+				"a": 0,
+				"d": 0.5,
+				"mode": 0,
+				"s": 9
+			},
+			"type": "remote",
+			"widgets": [
+				{
+					"label": "Mode",
+					"linked_widgets": [
+						{
+							"node": "warp_dilation",
+							"widget": "mode"
+						}
+					],
+					"name": "mode",
+					"type": "linked_control"
+				},
+				{
+					"label": "Resolution",
+					"linked_widgets": [
+						{
+							"node": "warp_dilation",
+							"widget": "s"
+						},
+						{
+							"node": "buffer_7",
+							"widget": "size"
+						},
+						{
+							"node": "buffer_6",
+							"widget": "size"
+						},
+						{
+							"node": "buffer_5",
+							"widget": "size"
+						}
+					],
+					"name": "s",
+					"type": "linked_control"
+				},
+				{
+					"label": "Distance",
+					"linked_widgets": [
+						{
+							"node": "warp_dilation",
+							"widget": "d"
+						}
+					],
+					"name": "d",
+					"type": "linked_control"
+				},
+				{
+					"label": "Attenuation",
+					"linked_widgets": [
+						{
+							"node": "warp_dilation",
+							"widget": "a"
+						}
+					],
+					"name": "a",
+					"type": "linked_control"
+				}
+			]
+		}
+	],
+	"parameters": {
+		"a": 0,
+		"d": 0.5,
+		"mode": 0,
+		"s": 9
+	},
+	"shortdesc": "",
+	"type": "graph"
+}

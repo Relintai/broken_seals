@@ -1,0 +1,334 @@
+{
+	"connections": [
+		{
+			"from": "colorize_3",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 6
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "colorize_3",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "occlusion",
+			"to_port": 0
+		},
+		{
+			"from": "occlusion",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 5
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 2,
+			"to": "decompose",
+			"to_port": 0
+		},
+		{
+			"from": "decompose",
+			"from_port": 1,
+			"to": "gen_outputs",
+			"to_port": 2
+		},
+		{
+			"from": "decompose",
+			"from_port": 2,
+			"to": "gen_outputs",
+			"to_port": 1
+		},
+		{
+			"from": "blend_2",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 4
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 1,
+			"to": "gen_outputs",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 3,
+			"to": "gen_outputs",
+			"to_port": 3
+		},
+		{
+			"from": "brightness_contrast",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 4,
+			"to": "brightness_contrast",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "normal_map_2",
+			"to_port": 0
+		},
+		{
+			"from": "normal_map_2",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 1
+		}
+	],
+	"label": "Output",
+	"longdesc": "Converts a workflow mapped material (from an Apply Map or a Mix node) for a Material node",
+	"name": "mwf_output",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "colorize_3",
+			"node_position": {
+				"x": -939.637451,
+				"y": 871.842407
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 1,
+							"g": 1,
+							"pos": 0,
+							"r": 1
+						},
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0,
+							"pos": 1,
+							"r": 0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"type": "colorize"
+		},
+		{
+			"name": "occlusion",
+			"node_position": {
+				"x": -994.845825,
+				"y": 786.968262
+			},
+			"parameters": {
+				"param0": 10,
+				"param2": 1
+			},
+			"type": "occlusion"
+		},
+		{
+			"name": "decompose",
+			"node_position": {
+				"x": -924.371338,
+				"y": 570.25
+			},
+			"parameters": {
+
+			},
+			"type": "decompose"
+		},
+		{
+			"name": "blend_2",
+			"node_position": {
+				"x": -931.305542,
+				"y": 677.328491
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "gen_inputs",
+			"node_position": {
+				"x": -1626.805542,
+				"y": 608.758606
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 5,
+					"name": "Height",
+					"type": "f"
+				},
+				{
+					"group_size": 0,
+					"name": "Albedo",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"name": "ORM",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"name": "Emission",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"name": "Normal",
+					"type": "rgb"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_outputs",
+			"node_position": {
+				"x": -635.305542,
+				"y": 597.758606
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 7,
+					"longdesc": "",
+					"name": "Albedo",
+					"shortdesc": "Albedo",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Metallic",
+					"shortdesc": "Metallic",
+					"type": "f"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Roughness",
+					"shortdesc": "Roughness",
+					"type": "f"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Emission",
+					"shortdesc": "Emission",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Normal",
+					"shortdesc": "Normal",
+					"type": "rgb"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Occlusion",
+					"shortdesc": "Occlusion",
+					"type": "f"
+				},
+				{
+					"group_size": 0,
+					"longdesc": "",
+					"name": "Depth",
+					"shortdesc": "Depth",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_parameters",
+			"node_position": {
+				"x": -1104.881836,
+				"y": 425.25
+			},
+			"parameters": {
+				"param0": 1,
+				"param2": 1
+			},
+			"type": "remote",
+			"widgets": [
+				{
+					"label": "Occlusion",
+					"linked_widgets": [
+						{
+							"node": "occlusion",
+							"widget": "param2"
+						}
+					],
+					"longdesc": "The strength of the calculated occlusion effect",
+					"name": "param2",
+					"shortdesc": "Occlusion",
+					"type": "linked_control"
+				},
+				{
+					"label": "Mat Normal",
+					"linked_widgets": [
+						{
+							"node": "blend_2",
+							"widget": "amount"
+						}
+					],
+					"longdesc": "The strength of  normals from the base materials (compared to the normal generated from height information))",
+					"name": "param0",
+					"shortdesc": "MatNormal",
+					"type": "linked_control"
+				}
+			]
+		},
+		{
+			"name": "brightness_contrast",
+			"node_position": {
+				"x": -1177.223877,
+				"y": 677.062317
+			},
+			"parameters": {
+				"brightness": 0,
+				"contrast": 1
+			},
+			"type": "brightness_contrast"
+		},
+		{
+			"name": "normal_map_2",
+			"node_position": {
+				"x": -1152.5,
+				"y": 544.75
+			},
+			"parameters": {
+				"param0": 10,
+				"param1": 1.02,
+				"param2": 0,
+				"param4": 1
+			},
+			"type": "normal_map"
+		}
+	],
+	"parameters": {
+		"param0": 1,
+		"param2": 1
+	},
+	"shortdesc": "Output",
+	"type": "graph"
+}

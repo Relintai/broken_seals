@@ -1,0 +1,121 @@
+{
+	"name": "custom_uv",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"inputs": 0,
+		"rotate": 0,
+		"scale": 0,
+		"sx": 1,
+		"sy": 1
+	},
+	"shader_model": {
+		"code": "vec3 $(name_uv)_map = $map($uv);\nfloat $(name_uv)_rnd =  float($seed)+$(name_uv)_map.z;\n",
+		"global": "vec2 get_from_tileset(float count, float seed, vec2 uv) {\n\treturn clamp((uv+floor(rand2(vec2(seed))*count))/count, vec2(0.0), vec2(1.0));\n}\n\nvec2 custom_uv_transform(vec2 uv, vec2 cst_scale, float rnd_rotate, float rnd_scale, vec2 seed) {\n\tseed = rand2(seed);\n\tuv -= vec2(0.5);\n\tfloat angle = (seed.x * 2.0 - 1.0) * rnd_rotate;\n\tfloat ca = cos(angle);\n\tfloat sa = sin(angle);\n\tuv = vec2(ca*uv.x+sa*uv.y, -sa*uv.x+ca*uv.y);\n\tuv *= (seed.y-0.5)*2.0*rnd_scale+1.0;\n\tuv /= cst_scale;\n\tuv += vec2(0.5);\n\treturn uv;\n}\n",
+		"inputs": [
+			{
+				"default": "vec4(1.0)",
+				"label": "Input",
+				"longdesc": "The image or atlas of images to be remapped.",
+				"name": "in",
+				"shortdesc": "Input",
+				"type": "rgba"
+			},
+			{
+				"default": "vec3(1.0)",
+				"label": "UV",
+				"longdesc": "The custom UV map to be used for remapping.",
+				"name": "map",
+				"shortdesc": "Map",
+				"type": "rgb"
+			}
+		],
+		"instance": "",
+		"longdesc": "Remaps an Input image using a custom UV map.",
+		"name": "Custom UV",
+		"outputs": [
+			{
+				"longdesc": "Shows the remapped image",
+				"rgba": "$in(get_from_tileset($inputs, $(name_uv)_rnd, custom_uv_transform($(name_uv)_map.xy, vec2($sx, $sy), $rotate*0.01745329251, $scale, vec2($(name_uv)_map.z, float($seed)))))",
+				"shortdesc": "Output",
+				"type": "rgba"
+			}
+		],
+		"parameters": [
+			{
+				"default": 0,
+				"label": "Inputs",
+				"longdesc": "The input type of the node:\n- 1: single image\n- 4: atlas of 4 images\n- 16: atlas of 16 images\nAtlases can be created using the Tile2x2 node.",
+				"name": "inputs",
+				"shortdesc": "Inputs",
+				"type": "enum",
+				"values": [
+					{
+						"name": "1",
+						"value": "1.0"
+					},
+					{
+						"name": "4",
+						"value": "2.0"
+					},
+					{
+						"name": "16",
+						"value": "4.0"
+					}
+				]
+			},
+			{
+				"control": "None",
+				"default": 1,
+				"label": "Scale X",
+				"longdesc": "The scale of the input image along the X axis.",
+				"max": 5,
+				"min": 0,
+				"name": "sx",
+				"shortdesc": "Scale.x",
+				"step": 0.01,
+				"type": "float"
+			},
+			{
+				"control": "None",
+				"default": 1,
+				"label": "Scale Y",
+				"longdesc": "The scale of the input image along the Y axis.",
+				"max": 5,
+				"min": 0,
+				"name": "sy",
+				"shortdesc": "Scale.y",
+				"step": 0.01,
+				"type": "float"
+			},
+			{
+				"control": "None",
+				"default": 0,
+				"label": "Rnd Rotate",
+				"longdesc": "The random rotation applied to each remapped instance.",
+				"max": 180,
+				"min": 0,
+				"name": "rotate",
+				"shortdesc": "RndRotate",
+				"step": 0.1,
+				"type": "float"
+			},
+			{
+				"control": "None",
+				"default": 0.5,
+				"label": "Rnd Scale",
+				"longdesc": "The random scale applied to each remapped instance.",
+				"max": 1,
+				"min": 0,
+				"name": "scale",
+				"shortdesc": "RndScale",
+				"step": 0.01,
+				"type": "float"
+			}
+		],
+		"shortdesc": "Custom UV remapper"
+	},
+	"type": "shader"
+}

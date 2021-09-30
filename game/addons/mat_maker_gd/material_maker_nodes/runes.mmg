@@ -1,0 +1,60 @@
+{
+	"name": "runes",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"columns": 4,
+		"rows": 4
+	},
+	"shader_model": {
+		"code": "",
+		"global": "float ThickLine(vec2 uv, vec2 posA, vec2 posB, float radiusInv)\n{\n\treturn clamp(1.1-20.0*sdLine(uv, posA, posB).x, 0.0, 1.0);\n}\n\n// makes a rune in the 0..1 uv space. Seed is which rune to draw.\n// passes back gray in x and derivates for lighting in yz\nfloat Rune(vec2 uv, float s) {\n\tfloat finalLine = 0.0;\n\tvec2 seed = floor(uv)-rand2(vec2(s));\n\tuv = fract(uv);\n\tfor (int i = 0; i < 4; i++)\t// number of strokes\n\t{\n\t\tvec2 posA = rand2(floor(seed+0.5));\n\t\tvec2 posB = rand2(floor(seed+1.5));\n\t\tseed += 2.0;\n\t\t// expand the range and mod it to get a nicely distributed random number - hopefully. :)\n\t\tposA = fract(posA * 128.0);\n\t\tposB = fract(posB * 128.0);\n\t\t// each rune touches the edge of its box on all 4 sides\n\t\tif (i == 0) posA.y = 0.0;\n\t\tif (i == 1) posA.x = 0.999;\n\t\tif (i == 2) posA.x = 0.0;\n\t\tif (i == 3) posA.y = 0.999;\n\t\t// snap the random line endpoints to a grid 2x3\n\t\tvec2 snaps = vec2(2.0, 3.0);\n\t\tposA = (floor(posA * snaps) + 0.5) / snaps;\t// + 0.5 to center it in a grid cell\n\t\tposB = (floor(posB * snaps) + 0.5) / snaps;\n\t\t//if (distance(posA, posB) < 0.0001) continue;\t// eliminate dots.\n\t\t// Dots (degenerate lines) are not cross-GPU safe without adding 0.001 - divide by 0 error.\n\t\tfinalLine = max(finalLine, ThickLine(uv, posA, posB + 0.001, 20.0));\n\t}\n\treturn finalLine;\n}\n\n\n",
+		"includes": [
+			"sdline"
+		],
+		"inputs": [
+
+		],
+		"instance": "",
+		"longdesc": "Generates a grid filled with random runes",
+		"name": "Runes",
+		"outputs": [
+			{
+				"f": "Rune(vec2($columns, $rows)*$uv, float($seed))",
+				"longdesc": "A greyscale image showing random runes.",
+				"shortdesc": "Output",
+				"type": "f"
+			}
+		],
+		"parameters": [
+			{
+				"control": "None",
+				"default": 0,
+				"label": "Size X",
+				"longdesc": "The number of columns of the grid",
+				"max": 32,
+				"min": 2,
+				"name": "columns",
+				"shortdesc": "Size.x",
+				"step": 1,
+				"type": "float"
+			},
+			{
+				"control": "None",
+				"default": 0,
+				"label": "Size Y",
+				"longdesc": "The number of rows of the grid",
+				"max": 32,
+				"min": 2,
+				"name": "rows",
+				"shortdesc": "Size.y",
+				"step": 1,
+				"type": "float"
+			}
+		],
+		"shortdesc": "Simple runes"
+	},
+	"type": "shader"
+}

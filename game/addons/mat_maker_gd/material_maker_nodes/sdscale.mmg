@@ -1,0 +1,51 @@
+{
+	"name": "sdscale",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"s": 1
+	},
+	"shader_model": {
+		"code": "",
+		"global": "",
+		"inputs": [
+			{
+				"default": "0.0",
+				"label": "",
+				"longdesc": "The input shape, defined as a signed distance function",
+				"name": "in",
+				"shortdesc": "Input",
+				"type": "sdf2d"
+			}
+		],
+		"instance": "",
+		"longdesc": "Scales its input shape described as a signed distance function",
+		"name": "Scale",
+		"outputs": [
+			{
+				"longdesc": "The generated scaled shape",
+				"sdf2d": "$in(($uv-vec2(0.5))/$s+vec2(0.5))*$s",
+				"shortdesc": "Output",
+				"type": "sdf2d"
+			}
+		],
+		"parameters": [
+			{
+				"control": "Scale1.x",
+				"default": 1,
+				"label": "",
+				"longdesc": "The scale of the transform",
+				"max": 5,
+				"min": 0,
+				"name": "s",
+				"shortdesc": "Scale",
+				"step": 0.01,
+				"type": "float"
+			}
+		],
+		"shortdesc": "sdScale"
+	},
+	"type": "shader"
+}

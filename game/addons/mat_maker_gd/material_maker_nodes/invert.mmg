@@ -1,0 +1,40 @@
+{
+	"name": "invert",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+
+	},
+	"shader_model": {
+		"code": "",
+		"global": "",
+		"inputs": [
+			{
+				"default": "vec4(1.0, 1.0, 1.0, 1.0)",
+				"label": "",
+				"longdesc": "The input image",
+				"name": "in",
+				"shortdesc": "Input",
+				"type": "rgba"
+			}
+		],
+		"instance": "",
+		"longdesc": "A filter that inverts the R, G, and B channels of its input while keeping the A channel unchanged",
+		"name": "Invert",
+		"outputs": [
+			{
+				"longdesc": "Shows the inverted image",
+				"rgba": "vec4(vec3(1.0)-$in($uv).rgb, $in($uv).a)",
+				"shortdesc": "Output",
+				"type": "rgba"
+			}
+		],
+		"parameters": [
+
+		],
+		"shortdesc": "Invert filter"
+	},
+	"type": "shader"
+}

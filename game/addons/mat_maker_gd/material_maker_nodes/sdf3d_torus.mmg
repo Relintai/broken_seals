@@ -1,0 +1,80 @@
+{
+	"name": "sdf3d_torus",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"R": 0.3,
+		"axis": 2,
+		"r": 0.15
+	},
+	"shader_model": {
+		"code": "vec2 $(name_uv)_q = vec2($axis);\n",
+		"global": "",
+		"inputs": [
+
+		],
+		"instance": "",
+		"longdesc": "Generates a torus as a signed distance function",
+		"name": "Torus",
+		"outputs": [
+			{
+				"longdesc": "Shows the torus",
+				"sdf3d": "length($(name_uv)_q)-$r",
+				"shortdesc": "Output",
+				"type": "sdf3d"
+			}
+		],
+		"parameters": [
+			{
+				"default": 0,
+				"label": "Axis",
+				"longdesc": "The axis of the torus",
+				"name": "axis",
+				"shortdesc": "Torus",
+				"type": "enum",
+				"values": [
+					{
+						"name": "X",
+						"value": "length($uv.yz)-$R,$uv.x"
+					},
+					{
+						"name": "Y",
+						"value": "length($uv.zx)-$R,$uv.y"
+					},
+					{
+						"name": "Z",
+						"value": "length($uv.xy)-$R,$uv.z"
+					}
+				]
+			},
+			{
+				"control": "Radius1.r",
+				"default": 0.5,
+				"label": "R",
+				"longdesc": "The major radius of the torus",
+				"max": 1,
+				"min": 0,
+				"name": "R",
+				"shortdesc": "Radius1",
+				"step": 0.01,
+				"type": "float"
+			},
+			{
+				"control": "Radius11.r",
+				"default": 0.1,
+				"label": "r",
+				"longdesc": "The minor radius of the torus",
+				"max": 0.5,
+				"min": 0,
+				"name": "r",
+				"shortdesc": "Radius2",
+				"step": 0.01,
+				"type": "float"
+			}
+		],
+		"shortdesc": "Torus"
+	},
+	"type": "shader"
+}

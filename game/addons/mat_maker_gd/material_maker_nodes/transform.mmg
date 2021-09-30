@@ -1,0 +1,151 @@
+{
+	"name": "transform",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"repeat": false,
+		"rotate": 0,
+		"scale_x": 1,
+		"scale_y": 1,
+		"translate_x": 0,
+		"translate_y": 0
+	},
+	"shader_model": {
+		"code": "",
+		"longdesc": "Translates, rotates and scales its input",
+		"global": "vec2 transform(vec2 uv, vec2 translate, float rotate, vec2 scale, bool repeat) {\n \tvec2 rv;\n\tuv -= translate;\n\tuv -= vec2(0.5);\n\trv.x = cos(rotate)*uv.x + sin(rotate)*uv.y;\n\trv.y = -sin(rotate)*uv.x + cos(rotate)*uv.y;\n\trv /= scale;\n\trv += vec2(0.5);\n    if (repeat) {\n\t\treturn fract(rv);\n\t} else {\n\t\treturn clamp(rv, vec2(0.0), vec2(1.0));\n\t}\t\n}",
+		"inputs": [
+			{
+				"default": "vec4($uv, 0.0, 1.0)",
+				"label": "",
+				"longdesc": "The input image to be transformed",
+				"name": "i",
+				"shortdesc": "Input",
+				"type": "rgba"
+			},
+			{
+				"default": "1.0",
+				"label": "",
+				"longdesc": "An optional map for translation along the X axis",
+				"name": "tx",
+				"shortdesc": "TranslateMap.x",
+				"type": "f"
+			},
+			{
+				"default": "1.0",
+				"label": "",
+				"longdesc": "An optional map for translation along the Y axis",
+				"name": "ty",
+				"shortdesc": "TranslateMap.y",
+				"type": "f"
+			},
+			{
+				"default": "1.0",
+				"label": "",
+				"longdesc": "An optional map for rotation",
+				"name": "r",
+				"shortdesc": "RotateMap",
+				"type": "f"
+			},
+			{
+				"default": "1.0",
+				"label": "",
+				"longdesc": "An optional map for scaling along the X axis",
+				"name": "sx",
+				"shortdesc": "ScaleMap.x",
+				"type": "f"
+			},
+			{
+				"default": "1.0",
+				"label": "",
+				"longdesc": "An optional map for scaling along the Y axis",
+				"name": "sy",
+				"shortdesc": "ScaleMap.y",
+				"type": "f"
+			}
+		],
+		"instance": "",
+		"name": "Transform",
+		"outputs": [
+			{
+				"longdesc": "Shows the transformed image",
+				"rgba": "$i(transform($uv, vec2($translate_x*(2.0*$tx($uv)-1.0), $translate_y*(2.0*$ty($uv)-1.0)), $rotate*0.01745329251*(2.0*$r($uv)-1.0), vec2($scale_x*(2.0*$sx($uv)-1.0), $scale_y*(2.0*$sy($uv)-1.0)), $repeat))",
+				"shortdesc": "Output",
+				"type": "rgba"
+			}
+		],
+		"parameters": [
+			{
+				"control": "P1.x",
+				"default": 0,
+				"label": "2:Translate X:",
+				"longdesc": "The translation along the X axis",
+				"max": 1,
+				"min": -1,
+				"name": "translate_x",
+				"shortdesc": "Translate.x",
+				"step": 0.005,
+				"type": "float"
+			},
+			{
+				"control": "P1.y",
+				"default": 0,
+				"label": "Translate Y:",
+				"longdesc": "The translation along the Y axis",
+				"max": 1,
+				"min": -1,
+				"name": "translate_y",
+				"shortdesc": "Translate.y",
+				"step": 0.005,
+				"type": "float"
+			},
+			{
+				"control": "Radius1.a",
+				"default": 0,
+				"label": "Rotate:",
+				"longdesc": "The rotation angle",
+				"max": 720,
+				"min": -720,
+				"name": "rotate",
+				"shortdesc": "Rotate",
+				"step": 0.005,
+				"type": "float"
+			},
+			{
+				"control": "Scale1.x",
+				"default": 1,
+				"label": "Scale X:",
+				"longdesc": "The scaling factor along the X axis",
+				"max": 50,
+				"min": 0,
+				"name": "scale_x",
+				"shortdesc": "Scale.x",
+				"step": 0.005,
+				"type": "float"
+			},
+			{
+				"control": "Scale1.y",
+				"default": 1,
+				"label": "Scale Y:",
+				"longdesc": "The scaling factor along the Y axis",
+				"max": 50,
+				"min": 0,
+				"name": "scale_y",
+				"shortdesc": "Scale.y",
+				"step": 0.005,
+				"type": "float"
+			},
+			{
+				"default": false,
+				"label": "Repeat:",
+				"longdesc": "Repeat the input if checked, clamps otherwise",
+				"name": "repeat",
+				"shortdesc": "Repeat",
+				"type": "boolean"
+			}
+		]
+	},
+	"type": "shader"
+}

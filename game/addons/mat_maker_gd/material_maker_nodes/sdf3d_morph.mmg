@@ -1,0 +1,59 @@
+{
+	"name": "sdf3d_morph",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"amount": 0.5
+	},
+	"shader_model": {
+		"code": "",
+		"global": "",
+		"inputs": [
+			{
+				"default": "10.0",
+				"label": "",
+				"longdesc": "The first shape, defined as a signed distance function",
+				"name": "in1",
+				"shortdesc": "Input1",
+				"type": "sdf3d"
+			},
+			{
+				"default": "10.0",
+				"label": "",
+				"longdesc": "The second shape, defined as a signed distance function",
+				"name": "in2",
+				"shortdesc": "Input2",
+				"type": "sdf3d"
+			}
+		],
+		"instance": "",
+		"longdesc": "Morphs between 2 input shapes",
+		"name": "Morph",
+		"outputs": [
+			{
+				"longdesc": "The generated hybrid shape",
+				"sdf3d": "mix($in1($uv), $in2($uv), $amount)",
+				"shortdesc": "Output",
+				"type": "sdf3d"
+			}
+		],
+		"parameters": [
+			{
+				"control": "None",
+				"default": 0.5,
+				"label": "",
+				"longdesc": "The amount of the second input in the result",
+				"max": 1,
+				"min": 0,
+				"name": "amount",
+				"shortdesc": "Amount",
+				"step": 0.01,
+				"type": "float"
+			}
+		],
+		"shortdesc": "Morph"
+	},
+	"type": "shader"
+}

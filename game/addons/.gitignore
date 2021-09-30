@@ -11,5 +11,7 @@
 !mesh_data_resource_editor/**
 !multirun
 !multirun/**
+!mat_maker_gd
+!mat_maker_gd/**
 !addon_versions
 

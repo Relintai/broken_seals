@@ -1,0 +1,242 @@
+{
+	"name": "swap_channels",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"out_a": 8,
+		"out_b": 6,
+		"out_g": 4,
+		"out_r": 2
+	},
+	"shader_model": {
+		"code": "",
+		"global": "",
+		"inputs": [
+			{
+				"default": "vec4(1.0)",
+				"label": "",
+				"longdesc": "The input RGBA image",
+				"name": "in",
+				"shortdesc": "Input",
+				"type": "rgba"
+			}
+		],
+		"instance": "",
+		"longdesc": "Swaps the channels of its RGBA input",
+		"name": "Swap channels",
+		"outputs": [
+			{
+				"longdesc": "The output RGBA image",
+				"rgba": "vec4($out_r,$out_g,$out_b,$out_a)",
+				"shortdesc": "Output",
+				"type": "rgba"
+			}
+		],
+		"parameters": [
+			{
+				"default": 2,
+				"label": "R",
+				"longdesc": "The input channel to be assigned to the Red channel",
+				"name": "out_r",
+				"shortdesc": "Red",
+				"type": "enum",
+				"values": [
+					{
+						"name": "0",
+						"value": "0.0"
+					},
+					{
+						"name": "1",
+						"value": "1.0"
+					},
+					{
+						"name": "R",
+						"value": "$in($uv).r"
+					},
+					{
+						"name": "-R",
+						"value": "1.0-$in($uv).r"
+					},
+					{
+						"name": "G",
+						"value": "$in($uv).g"
+					},
+					{
+						"name": "-G",
+						"value": "1.0-$in($uv).g"
+					},
+					{
+						"name": "B",
+						"value": "$in($uv).b"
+					},
+					{
+						"name": "-B",
+						"value": "1.0-$in($uv).b"
+					},
+					{
+						"name": "A",
+						"value": "$in($uv).a"
+					},
+					{
+						"name": "-A",
+						"value": "1.0-$in($uv).a"
+					}
+				]
+			},
+			{
+				"default": 4,
+				"label": "G",
+				"longdesc": "The input channel to be assigned to the Green channel",
+				"name": "out_g",
+				"shortdesc": "Green",
+				"type": "enum",
+				"values": [
+					{
+						"name": "0",
+						"value": "0.0"
+					},
+					{
+						"name": "1",
+						"value": "1.0"
+					},
+					{
+						"name": "R",
+						"value": "$in($uv).r"
+					},
+					{
+						"name": "-R",
+						"value": "1.0-$in($uv).r"
+					},
+					{
+						"name": "G",
+						"value": "$in($uv).g"
+					},
+					{
+						"name": "-G",
+						"value": "1.0-$in($uv).g"
+					},
+					{
+						"name": "B",
+						"value": "$in($uv).b"
+					},
+					{
+						"name": "-B",
+						"value": "1.0-$in($uv).b"
+					},
+					{
+						"name": "A",
+						"value": "$in($uv).a"
+					},
+					{
+						"name": "-A",
+						"value": "1.0-$in($uv).a"
+					}
+				]
+			},
+			{
+				"default": 6,
+				"label": "B",
+				"longdesc": "The input channel to be assigned to the Blue channel",
+				"name": "out_b",
+				"shortdesc": "Blue",
+				"type": "enum",
+				"values": [
+					{
+						"name": "0",
+						"value": "0.0"
+					},
+					{
+						"name": "1",
+						"value": "1.0"
+					},
+					{
+						"name": "R",
+						"value": "$in($uv).r"
+					},
+					{
+						"name": "-R",
+						"value": "1.0-$in($uv).r"
+					},
+					{
+						"name": "G",
+						"value": "$in($uv).g"
+					},
+					{
+						"name": "-G",
+						"value": "1.0-$in($uv).g"
+					},
+					{
+						"name": "B",
+						"value": "$in($uv).b"
+					},
+					{
+						"name": "-B",
+						"value": "1.0-$in($uv).b"
+					},
+					{
+						"name": "A",
+						"value": "$in($uv).a"
+					},
+					{
+						"name": "-A",
+						"value": "1.0-$in($uv).a"
+					}
+				]
+			},
+			{
+				"default": 8,
+				"label": "A",
+				"longdesc": "The input channel to be assigned to the Alpha channel",
+				"name": "out_a",
+				"shortdesc": "Alpha",
+				"type": "enum",
+				"values": [
+					{
+						"name": "0",
+						"value": "0.0"
+					},
+					{
+						"name": "1",
+						"value": "1.0"
+					},
+					{
+						"name": "R",
+						"value": "$in($uv).r"
+					},
+					{
+						"name": "-R",
+						"value": "1.0-$in($uv).r"
+					},
+					{
+						"name": "G",
+						"value": "$in($uv).g"
+					},
+					{
+						"name": "-G",
+						"value": "1.0-$in($uv).g"
+					},
+					{
+						"name": "B",
+						"value": "$in($uv).b"
+					},
+					{
+						"name": "-B",
+						"value": "1.0-$in($uv).b"
+					},
+					{
+						"name": "A",
+						"value": "$in($uv).a"
+					},
+					{
+						"name": "-A",
+						"value": "1.0-$in($uv).a"
+					}
+				]
+			}
+		],
+		"shortdesc": "Swap channels"
+	},
+	"type": "shader"
+}

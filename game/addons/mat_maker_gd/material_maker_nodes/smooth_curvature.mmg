@@ -1,0 +1,880 @@
+{
+	"connections": [
+		{
+			"from": "blend",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 1
+		},
+		{
+			"from": "blend_2",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 1
+		},
+		{
+			"from": "blend_3",
+			"from_port": 0,
+			"to": "blend_4",
+			"to_port": 1
+		},
+		{
+			"from": "blend_4",
+			"from_port": 0,
+			"to": "invert",
+			"to_port": 0
+		},
+		{
+			"from": "invert",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 0
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "normal_map",
+			"to_port": 0
+		},
+		{
+			"from": "598_3",
+			"from_port": 0,
+			"to": "fast_blur",
+			"to_port": 0
+		},
+		{
+			"from": "fast_blur",
+			"from_port": 0,
+			"to": "blend_4",
+			"to_port": 0
+		},
+		{
+			"from": "598_2",
+			"from_port": 0,
+			"to": "fast_blur_2",
+			"to_port": 0
+		},
+		{
+			"from": "fast_blur_2",
+			"from_port": 0,
+			"to": "blend_3",
+			"to_port": 0
+		},
+		{
+			"from": "598_4",
+			"from_port": 0,
+			"to": "fast_blur_3",
+			"to_port": 0
+		},
+		{
+			"from": "fast_blur_3",
+			"from_port": 0,
+			"to": "blend_2",
+			"to_port": 0
+		},
+		{
+			"from": "598_5",
+			"from_port": 0,
+			"to": "fast_blur_4",
+			"to_port": 0
+		},
+		{
+			"from": "fast_blur_4",
+			"from_port": 0,
+			"to": "blend",
+			"to_port": 0
+		},
+		{
+			"from": "598_6",
+			"from_port": 0,
+			"to": "fast_blur_5",
+			"to_port": 0
+		},
+		{
+			"from": "fast_blur_5",
+			"from_port": 0,
+			"to": "blend",
+			"to_port": 1
+		},
+		{
+			"from": "normal_map",
+			"from_port": 0,
+			"to": "buffer_2",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "598_3",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "598_2",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "598_4",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "598_5",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "598_6",
+			"to_port": 0
+		}
+	],
+	"label": "Smooth Curvature",
+	"longdesc": "Creates a smooth curvature map from a height map",
+	"name": "smooth_curvature",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "normal_map",
+			"node_position": {
+				"x": -684.409058,
+				"y": 680
+			},
+			"parameters": {
+				"param0": 11,
+				"param1": 1,
+				"param2": 0,
+				"param4": 1
+			},
+			"type": "normal_map"
+		},
+		{
+			"name": "blend",
+			"node_position": {
+				"x": 510.361206,
+				"y": 903.779297
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "blend_2",
+			"node_position": {
+				"x": 510.179382,
+				"y": 803.915527
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "blend_3",
+			"node_position": {
+				"x": 509.270233,
+				"y": 702.279175
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "blend_4",
+			"node_position": {
+				"x": 509.542999,
+				"y": 600.279175
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 4
+			},
+			"type": "blend"
+		},
+		{
+			"name": "invert",
+			"node_position": {
+				"x": 754.354553,
+				"y": 603.172791
+			},
+			"parameters": {
+
+			},
+			"type": "invert"
+		},
+		{
+			"name": "gen_inputs",
+			"node_position": {
+				"x": -1097.162842,
+				"y": 678.835876
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "The input height map",
+					"name": "port0",
+					"shortdesc": "Height map",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_outputs",
+			"node_position": {
+				"x": 908.046326,
+				"y": 596.806824
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "The generated curvature map",
+					"name": "port0",
+					"shortdesc": "Output",
+					"type": "rgba"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_parameters",
+			"node_position": {
+				"x": -121.992188,
+				"y": 350.266235
+			},
+			"parameters": {
+				"param0": 11,
+				"param2": 1
+			},
+			"type": "remote",
+			"widgets": [
+				{
+					"label": "Size",
+					"linked_widgets": [
+						{
+							"node": "normal_map",
+							"widget": "param0"
+						},
+						{
+							"node": "598_3",
+							"widget": "size"
+						},
+						{
+							"node": "fast_blur",
+							"widget": "param0"
+						},
+						{
+							"node": "598_2",
+							"widget": "size"
+						},
+						{
+							"node": "fast_blur_2",
+							"widget": "param0"
+						},
+						{
+							"node": "598_4",
+							"widget": "size"
+						},
+						{
+							"node": "fast_blur_3",
+							"widget": "param0"
+						},
+						{
+							"node": "fast_blur_4",
+							"widget": "param0"
+						},
+						{
+							"node": "598_5",
+							"widget": "size"
+						},
+						{
+							"node": "fast_blur_5",
+							"widget": "param0"
+						},
+						{
+							"node": "598_6",
+							"widget": "size"
+						},
+						{
+							"node": "buffer_2",
+							"widget": "size"
+						}
+					],
+					"longdesc": "The buffer size for the filter",
+					"name": "param0",
+					"shortdesc": "Size",
+					"type": "linked_control"
+				},
+				{
+					"label": "Intensity",
+					"linked_widgets": [
+						{
+							"node": "normal_map",
+							"widget": "param1"
+						}
+					],
+					"longdesc": "The contrast of the generated highlights",
+					"name": "param2",
+					"shortdesc": "Intensity",
+					"type": "linked_control"
+				}
+			]
+		},
+		{
+			"name": "598_3",
+			"node_position": {
+				"x": -94.135475,
+				"y": 510.526459
+			},
+			"parameters": {
+				"amount": 1,
+				"size": 11,
+				"width": 1
+			},
+			"shader_model": {
+				"code": "vec2 $(name_uv)_emboss = $(name)_fct($uv);",
+				"global": "",
+				"inputs": [
+					{
+						"default": "vec3(0.0)",
+						"function": true,
+						"label": "",
+						"name": "in",
+						"type": "rgb"
+					}
+				],
+				"instance": "vec2 $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tvec2 rv = vec2(0.0);\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy)).xy*cos(vec2(atan(dy, dx))-vec2(0.0, 0.5)*3.14159265359)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
+				"name": "Curvature",
+				"outputs": [
+					{
+						"f": "0.5*($(name_uv)_emboss.x+$(name_uv)_emboss.y)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 9,
+						"first": 6,
+						"label": "Size",
+						"last": 12,
+						"name": "size",
+						"type": "size"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Amount",
+						"max": 10,
+						"min": 0,
+						"name": "amount",
+						"step": 0.1,
+						"type": "float"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Width",
+						"max": 5,
+						"min": 1,
+						"name": "width",
+						"step": 1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"name": "598_2",
+			"node_position": {
+				"x": -100.207932,
+				"y": 638.757874
+			},
+			"parameters": {
+				"amount": 1,
+				"size": 11,
+				"width": 2
+			},
+			"shader_model": {
+				"code": "vec2 $(name_uv)_emboss = $(name)_fct($uv);",
+				"global": "",
+				"inputs": [
+					{
+						"default": "vec3(0.0)",
+						"function": true,
+						"label": "",
+						"name": "in",
+						"type": "rgb"
+					}
+				],
+				"instance": "vec2 $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tvec2 rv = vec2(0.0);\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy)).xy*cos(vec2(atan(dy, dx))-vec2(0.0, 0.5)*3.14159265359)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
+				"name": "Curvature",
+				"outputs": [
+					{
+						"f": "0.5*($(name_uv)_emboss.x+$(name_uv)_emboss.y)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 9,
+						"first": 6,
+						"label": "Size",
+						"last": 12,
+						"name": "size",
+						"type": "size"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Amount",
+						"max": 10,
+						"min": 0,
+						"name": "amount",
+						"step": 0.1,
+						"type": "float"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Width",
+						"max": 5,
+						"min": 1,
+						"name": "width",
+						"step": 1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"name": "598_4",
+			"node_position": {
+				"x": -97.532082,
+				"y": 755.803345
+			},
+			"parameters": {
+				"amount": 1,
+				"size": 11,
+				"width": 4
+			},
+			"shader_model": {
+				"code": "vec2 $(name_uv)_emboss = $(name)_fct($uv);",
+				"global": "",
+				"inputs": [
+					{
+						"default": "vec3(0.0)",
+						"function": true,
+						"label": "",
+						"name": "in",
+						"type": "rgb"
+					}
+				],
+				"instance": "vec2 $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tvec2 rv = vec2(0.0);\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy)).xy*cos(vec2(atan(dy, dx))-vec2(0.0, 0.5)*3.14159265359)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
+				"name": "Curvature",
+				"outputs": [
+					{
+						"f": "0.5*($(name_uv)_emboss.x+$(name_uv)_emboss.y)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 9,
+						"first": 6,
+						"label": "Size",
+						"last": 12,
+						"name": "size",
+						"type": "size"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Amount",
+						"max": 10,
+						"min": 0,
+						"name": "amount",
+						"step": 0.1,
+						"type": "float"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Width",
+						"max": 5,
+						"min": 1,
+						"name": "width",
+						"step": 1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"name": "598_5",
+			"node_position": {
+				"x": -95.713867,
+				"y": 877.621521
+			},
+			"parameters": {
+				"amount": 1,
+				"size": 11,
+				"width": 8
+			},
+			"shader_model": {
+				"code": "vec2 $(name_uv)_emboss = $(name)_fct($uv);",
+				"global": "",
+				"inputs": [
+					{
+						"default": "vec3(0.0)",
+						"function": true,
+						"label": "",
+						"name": "in",
+						"type": "rgb"
+					}
+				],
+				"instance": "vec2 $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tvec2 rv = vec2(0.0);\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy)).xy*cos(vec2(atan(dy, dx))-vec2(0.0, 0.5)*3.14159265359)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
+				"name": "Curvature",
+				"outputs": [
+					{
+						"f": "0.5*($(name_uv)_emboss.x+$(name_uv)_emboss.y)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 9,
+						"first": 6,
+						"label": "Size",
+						"last": 12,
+						"name": "size",
+						"type": "size"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Amount",
+						"max": 10,
+						"min": 0,
+						"name": "amount",
+						"step": 0.1,
+						"type": "float"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Width",
+						"max": 5,
+						"min": 1,
+						"name": "width",
+						"step": 1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"name": "598_6",
+			"node_position": {
+				"x": -92.077492,
+				"y": 992.848633
+			},
+			"parameters": {
+				"amount": 1,
+				"size": 11,
+				"width": 16
+			},
+			"shader_model": {
+				"code": "vec2 $(name_uv)_emboss = $(name)_fct($uv);",
+				"global": "",
+				"inputs": [
+					{
+						"default": "vec3(0.0)",
+						"function": true,
+						"label": "",
+						"name": "in",
+						"type": "rgb"
+					}
+				],
+				"instance": "vec2 $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tvec2 rv = vec2(0.0);\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy)).xy*cos(vec2(atan(dy, dx))-vec2(0.0, 0.5)*3.14159265359)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
+				"name": "Curvature",
+				"outputs": [
+					{
+						"f": "0.5*($(name_uv)_emboss.x+$(name_uv)_emboss.y)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 9,
+						"first": 6,
+						"label": "Size",
+						"last": 12,
+						"name": "size",
+						"type": "size"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Amount",
+						"max": 10,
+						"min": 0,
+						"name": "amount",
+						"step": 0.1,
+						"type": "float"
+					},
+					{
+						"control": "None",
+						"default": 1,
+						"label": "Width",
+						"max": 5,
+						"min": 1,
+						"name": "width",
+						"step": 1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"connections": [
+				{
+					"from": "buffer_2",
+					"from_port": 0,
+					"to": "fast_blur_shader",
+					"to_port": 0
+				},
+				{
+					"from": "gen_inputs",
+					"from_port": 0,
+					"to": "buffer_2",
+					"to_port": 0
+				},
+				{
+					"from": "fast_blur_shader",
+					"from_port": 0,
+					"to": "gen_outputs",
+					"to_port": 0
+				}
+			],
+			"label": "Fast Blur",
+			"longdesc": "",
+			"name": "fast_blur",
+			"node_position": {
+				"x": 167.483093,
+				"y": 509.757843
+			},
+			"nodes": [
+				{
+					"name": "fast_blur_shader",
+					"node_position": {
+						"x": -168,
+						"y": 120
+					},
+					"parameters": {
+						"quality": 1,
+						"sigma": 2
+					},
+					"type": "fast_blur_shader"
+				},
+				{
+					"name": "buffer_2",
+					"node_position": {
+						"x": -187,
+						"y": 61.5
+					},
+					"parameters": {
+						"size": 11
+					},
+					"type": "buffer",
+					"version": 1
+				},
+				{
+					"name": "gen_inputs",
+					"node_position": {
+						"x": -602,
+						"y": 91.75
+					},
+					"parameters": {
+
+					},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "port0",
+							"type": "f"
+						}
+					],
+					"type": "ios"
+				},
+				{
+					"name": "gen_outputs",
+					"node_position": {
+						"x": 88,
+						"y": 61.75
+					},
+					"parameters": {
+
+					},
+					"ports": [
+						{
+							"group_size": 0,
+							"name": "port0",
+							"type": "rgba"
+						}
+					],
+					"type": "ios"
+				},
+				{
+					"name": "gen_parameters",
+					"node_position": {
+						"x": -254.5,
+						"y": -122.5
+					},
+					"parameters": {
+						"param0": 11,
+						"param1": 2,
+						"param2": 1
+					},
+					"type": "remote",
+					"widgets": [
+						{
+							"label": "Resolution",
+							"linked_widgets": [
+								{
+									"node": "buffer_2",
+									"widget": "size"
+								}
+							],
+							"name": "param0",
+							"type": "linked_control"
+						},
+						{
+							"label": "Sigma",
+							"linked_widgets": [
+								{
+									"node": "fast_blur_shader",
+									"widget": "sigma"
+								}
+							],
+							"name": "param1",
+							"type": "linked_control"
+						},
+						{
+							"label": "Quality",
+							"linked_widgets": [
+								{
+									"node": "fast_blur_shader",
+									"widget": "quality"
+								}
+							],
+							"name": "param2",
+							"type": "linked_control"
+						}
+					]
+				}
+			],
+			"parameters": {
+				"param0": 11,
+				"param1": 2,
+				"param2": 1
+			},
+			"shortdesc": "",
+			"type": "graph"
+		},
+		{
+			"name": "fast_blur_2",
+			"node_position": {
+				"x": 167.156082,
+				"y": 638.560974
+			},
+			"parameters": {
+				"param0": 11,
+				"param1": 5,
+				"param2": 1
+			},
+			"type": "fast_blur"
+		},
+		{
+			"name": "fast_blur_3",
+			"node_position": {
+				"x": 171.701691,
+				"y": 756.742798
+			},
+			"parameters": {
+				"param0": 11,
+				"param1": 8,
+				"param2": 1
+			},
+			"type": "fast_blur"
+		},
+		{
+			"name": "fast_blur_4",
+			"node_position": {
+				"x": 167.377045,
+				"y": 877.651917
+			},
+			"parameters": {
+				"param0": 11,
+				"param1": 16,
+				"param2": 1
+			},
+			"type": "fast_blur"
+		},
+		{
+			"name": "fast_blur_5",
+			"node_position": {
+				"x": 170.104279,
+				"y": 992.197327
+			},
+			"parameters": {
+				"param0": 11,
+				"param1": 34,
+				"param2": 1
+			},
+			"type": "fast_blur"
+		},
+		{
+			"name": "buffer_2",
+			"node_position": {
+				"x": -426.44928,
+				"y": 678.75
+			},
+			"parameters": {
+				"filter": false,
+				"mipmap": false,
+				"size": 11
+			},
+			"type": "buffer",
+			"version": 2
+		}
+	],
+	"parameters": {
+		"param0": 11,
+		"param2": 1
+	},
+	"shortdesc": "Smooth Curvature",
+	"type": "graph"
+}

@@ -1,0 +1,172 @@
+{
+	"connections": [
+		{
+			"from": "iterate_buffer",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 0
+		},
+		{
+			"from": "iterate_buffer",
+			"from_port": 1,
+			"to": "fill_iterate",
+			"to_port": 0
+		},
+		{
+			"from": "fill_iterate",
+			"from_port": 0,
+			"to": "iterate_buffer",
+			"to_port": 1
+		},
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "fill_preprocess",
+			"to_port": 0
+		},
+		{
+			"from": "fill_preprocess",
+			"from_port": 0,
+			"to": "iterate_buffer",
+			"to_port": 0
+		}
+	],
+	"label": "Fill",
+	"longdesc": "Fills areas defined by white outlines of its input",
+	"name": "fill",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "iterate_buffer",
+			"node_position": {
+				"x": -129.307083,
+				"y": -370.480591
+			},
+			"parameters": {
+				"iterations": 10,
+				"size": 8
+			},
+			"seed_value": 29168,
+			"type": "iterate_buffer"
+		},
+		{
+			"name": "gen_inputs",
+			"node_position": {
+				"x": -542.307068,
+				"y": -370.662445
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "The input image whose white outlines must be filled",
+					"name": "port0",
+					"shortdesc": "Input",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_outputs",
+			"node_position": {
+				"x": 198.267258,
+				"y": -362.662445
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "Generates fill data, to be connected to a fill companion node",
+					"name": "port0",
+					"shortdesc": "Output",
+					"type": "rgba"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_parameters",
+			"node_position": {
+				"x": -171.110138,
+				"y": -541.509705
+			},
+			"parameters": {
+				"param0": 8,
+				"param1": 10
+			},
+			"type": "remote",
+			"widgets": [
+				{
+					"label": "",
+					"linked_widgets": [
+						{
+							"node": "iterate_buffer",
+							"widget": "size"
+						},
+						{
+							"node": "fill_preprocess",
+							"widget": "s"
+						},
+						{
+							"node": "fill_iterate",
+							"widget": "s"
+						}
+					],
+					"longdesc": "The resolution of the inptu image",
+					"name": "param0",
+					"shortdesc": "Size",
+					"type": "linked_control"
+				},
+				{
+					"label": "",
+					"linked_widgets": [
+						{
+							"node": "iterate_buffer",
+							"widget": "iterations"
+						}
+					],
+					"longdesc": "The number of iterations of the algorithm. The optimal value depends a lot on the input image.",
+					"name": "param1",
+					"shortdesc": "Iterations",
+					"type": "linked_control"
+				}
+			]
+		},
+		{
+			"name": "fill_iterate",
+			"node_position": {
+				"x": -92.913391,
+				"y": -290.886963
+			},
+			"parameters": {
+				"s": 8
+			},
+			"type": "fill_iterate"
+		},
+		{
+			"name": "fill_preprocess",
+			"node_position": {
+				"x": -110.443481,
+				"y": -427.202026
+			},
+			"parameters": {
+				"s": 8
+			},
+			"type": "fill_preprocess"
+		}
+	],
+	"parameters": {
+		"param0": 8,
+		"param1": 10
+	},
+	"shortdesc": "Fill",
+	"type": "graph"
+}

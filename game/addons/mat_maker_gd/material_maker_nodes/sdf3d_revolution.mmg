@@ -1,0 +1,51 @@
+{
+	"name": "sdf3d_revolution",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"d": 0.25
+	},
+	"shader_model": {
+		"code": "vec2 $(name_uv)_q = vec2(length($uv.xy)-$d+0.5, $uv.z+0.5);\n",
+		"global": "",
+		"inputs": [
+			{
+				"default": "10.0",
+				"label": "",
+				"longdesc": "The input shape",
+				"name": "in",
+				"shortdesc": "Input",
+				"type": "sdf2d"
+			}
+		],
+		"instance": "",
+		"longdesc": "Revolves its input 2D shape around the Z axis",
+		"name": "Revolution",
+		"outputs": [
+			{
+				"longdesc": "The generated 3D object",
+				"sdf3d": "$in($(name_uv)_q)",
+				"shortdesc": "Output",
+				"type": "sdf3d"
+			}
+		],
+		"parameters": [
+			{
+				"control": "None",
+				"default": 0.25,
+				"label": "",
+				"longdesc": "The offset applied to the input shape during the revolution operation",
+				"max": 1,
+				"min": 0,
+				"name": "d",
+				"shortdesc": "Offset",
+				"step": 0.01,
+				"type": "float"
+			}
+		],
+		"shortdesc": "Revolution"
+	},
+	"type": "shader"
+}

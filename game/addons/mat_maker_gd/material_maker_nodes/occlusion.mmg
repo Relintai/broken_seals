@@ -1,0 +1,300 @@
+{
+	"connections": [
+		{
+			"from": "gen_inputs",
+			"from_port": 0,
+			"to": "buffer",
+			"to_port": 0
+		},
+		{
+			"from": "blend",
+			"from_port": 0,
+			"to": "colorize",
+			"to_port": 0
+		},
+		{
+			"from": "buffer",
+			"from_port": 0,
+			"to": "blend",
+			"to_port": 0
+		},
+		{
+			"from": "colorize",
+			"from_port": 0,
+			"to": "_2",
+			"to_port": 0
+		},
+		{
+			"from": "_2",
+			"from_port": 0,
+			"to": "gen_outputs",
+			"to_port": 0
+		},
+		{
+			"from": "buffer",
+			"from_port": 0,
+			"to": "gaussian_blur_x",
+			"to_port": 0
+		},
+		{
+			"from": "gaussian_blur_x",
+			"from_port": 0,
+			"to": "buffer_2",
+			"to_port": 0
+		},
+		{
+			"from": "buffer_2",
+			"from_port": 0,
+			"to": "gaussian_blur_y",
+			"to_port": 0
+		},
+		{
+			"from": "gaussian_blur_y",
+			"from_port": 0,
+			"to": "blend",
+			"to_port": 1
+		}
+	],
+	"label": "Occlusion",
+	"longdesc": "Generates an ambient occlusion map from a height map",
+	"name": "occlusion",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"nodes": [
+		{
+			"name": "buffer_2",
+			"node_position": {
+				"x": -409.875,
+				"y": -112.625
+			},
+			"parameters": {
+				"lod": 0,
+				"size": 8
+			},
+			"seed_value": 61344,
+			"type": "buffer"
+		},
+		{
+			"name": "buffer",
+			"node_position": {
+				"x": -408.25,
+				"y": -265.75
+			},
+			"parameters": {
+				"lod": 0,
+				"size": 8
+			},
+			"seed_value": 53030,
+			"type": "buffer"
+		},
+		{
+			"name": "gen_parameters",
+			"node_position": {
+				"x": -463.666626,
+				"y": -384.666656
+			},
+			"parameters": {
+				"param0": 8,
+				"param2": 1.5
+			},
+			"type": "remote",
+			"widgets": [
+				{
+					"label": "Grid size:",
+					"linked_widgets": [
+						{
+							"node": "buffer",
+							"widget": "size"
+						},
+						{
+							"node": "buffer_2",
+							"widget": "size"
+						},
+						{
+							"node": "gaussian_blur_x",
+							"widget": "size"
+						},
+						{
+							"node": "gaussian_blur_y",
+							"widget": "size"
+						}
+					],
+					"longdesc": "The resolution of the input height map",
+					"name": "param0",
+					"shortdesc": "Size",
+					"type": "linked_control"
+				},
+				{
+					"label": "Strength",
+					"linked_widgets": [
+						{
+							"node": "_2",
+							"widget": "g"
+						}
+					],
+					"longdesc": "The strength of the occlusion map effect",
+					"name": "param2",
+					"shortdesc": "Strength",
+					"type": "linked_control"
+				}
+			]
+		},
+		{
+			"name": "gen_inputs",
+			"node_position": {
+				"x": -824.666626,
+				"y": -116.392853
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "The input heightmap",
+					"name": "port0",
+					"shortdesc": "Input",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "gen_outputs",
+			"node_position": {
+				"x": 33.547607,
+				"y": -132.392853
+			},
+			"parameters": {
+
+			},
+			"ports": [
+				{
+					"group_size": 0,
+					"longdesc": "The generated occlusion map",
+					"name": "port0",
+					"shortdesc": "Output",
+					"type": "f"
+				}
+			],
+			"type": "ios"
+		},
+		{
+			"name": "blend",
+			"node_position": {
+				"x": -422.79895,
+				"y": 63.16272
+			},
+			"parameters": {
+				"amount": 1,
+				"blend_type": 11
+			},
+			"type": "blend"
+		},
+		{
+			"name": "colorize",
+			"node_position": {
+				"x": -167.79895,
+				"y": -178.83728
+			},
+			"parameters": {
+				"gradient": {
+					"interpolation": 1,
+					"points": [
+						{
+							"a": 1,
+							"b": 1,
+							"g": 1,
+							"pos": 0,
+							"r": 1
+						},
+						{
+							"a": 1,
+							"b": 0,
+							"g": 0,
+							"pos": 1,
+							"r": 0
+						}
+					],
+					"type": "Gradient"
+				}
+			},
+			"seed_value": 33856,
+			"type": "colorize"
+		},
+		{
+			"name": "_2",
+			"node_position": {
+				"x": -145.403687,
+				"y": -112.29187
+			},
+			"parameters": {
+				"g": 1.5
+			},
+			"shader_model": {
+				"code": "",
+				"global": "",
+				"inputs": [
+					{
+						"default": "0.0",
+						"label": "",
+						"name": "in",
+						"type": "f"
+					}
+				],
+				"instance": "",
+				"name": "",
+				"outputs": [
+					{
+						"f": "pow($in($uv), $g)",
+						"type": "f"
+					}
+				],
+				"parameters": [
+					{
+						"default": 1,
+						"label": "",
+						"max": 2,
+						"min": 0,
+						"name": "g",
+						"step": 0.1,
+						"type": "float"
+					}
+				]
+			},
+			"type": "shader"
+		},
+		{
+			"name": "gaussian_blur_x",
+			"node_position": {
+				"x": -413.053711,
+				"y": -189.016876
+			},
+			"parameters": {
+				"sigma": 50,
+				"size": 8
+			},
+			"type": "gaussian_blur_x"
+		},
+		{
+			"name": "gaussian_blur_y",
+			"node_position": {
+				"x": -405.053711,
+				"y": -21.016876
+			},
+			"parameters": {
+				"sigma": 50,
+				"size": 8
+			},
+			"type": "gaussian_blur_y"
+		}
+	],
+	"parameters": {
+		"param0": 8,
+		"param2": 1.5
+	},
+	"shortdesc": "Occlusion",
+	"type": "graph"
+}

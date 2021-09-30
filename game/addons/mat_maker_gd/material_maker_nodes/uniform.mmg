@@ -1,0 +1,50 @@
+{
+	"name": "uniform",
+	"node_position": {
+		"x": 0,
+		"y": 0
+	},
+	"parameters": {
+		"color": {
+			"a": 1,
+			"b": 1,
+			"g": 0.415686,
+			"r": 0,
+			"type": "Color"
+		}
+	},
+	"shader_model": {
+		"code": "",
+		"global": "",
+		"inputs": [
+
+		],
+		"instance": "",
+		"longdesc": "Draws a uniform image",
+		"name": "Uniform",
+		"outputs": [
+			{
+				"longdesc": "A uniform image of the selected color",
+				"rgba": "$(color)",
+				"shortdesc": "Output",
+				"type": "rgba"
+			}
+		],
+		"parameters": [
+			{
+				"default": {
+					"a": 1,
+					"b": 1,
+					"g": 1,
+					"r": 1
+				},
+				"label": "",
+				"longdesc": "Color of the uniform image",
+				"name": "color",
+				"shortdesc": "Color",
+				"type": "color"
+			}
+		]
+	},
+	"type": "shader"
+}
