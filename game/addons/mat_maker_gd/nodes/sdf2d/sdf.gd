@@ -1,6 +1,8 @@
 tool
 extends TextureRect
 
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+
 var image : Image
 var tex : ImageTexture
 
@@ -108,9 +110,9 @@ func sdf_circle(uv : Vector2) -> float:
 
 
 func sdf_box(uv : Vector2) -> float:
-	var o48575_0_d : Vector2 = absv2(uv - Vector2(p_o48575_cx+0.5, p_o48575_cy+0.5)) - Vector2(p_o48575_w, p_o48575_h)
+	var o48575_0_d : Vector2 = Commons.absv2(uv - Vector2(p_o48575_cx+0.5, p_o48575_cy+0.5)) - Vector2(p_o48575_w, p_o48575_h)
 	
-	return maxv2(o48575_0_d, Vector2(0, 0)).length() + min(max(o48575_0_d.x, o48575_0_d.y), 0.0)
+	return Commons.maxv2(o48575_0_d, Vector2(0, 0)).length() + min(max(o48575_0_d.x, o48575_0_d.y), 0.0)
 
 func sdf_line(uv : Vector2) -> float:
 	return sdLine(uv, Vector2(p_o49570_ax+0.5, p_o49570_ay+0.5), Vector2(p_o49570_bx+0.5, p_o49570_by+0.5)) - p_o49570_r;
@@ -130,17 +132,17 @@ func sdr_ndot(a : Vector2, b : Vector2) -> float:
 	return a.x * b.x - a.y * b.y;
 
 func sdRhombus(p : Vector2, b : Vector2) -> float:
-	var q : Vector2 = absv2(p);
+	var q : Vector2 = Commons.absv2(p);
 	var h : float = clamp((-2.0 * sdr_ndot(q,b) + sdr_ndot(b,b)) / b.dot(b), -1.0, 1.0);
 	var d : float = ( q - 0.5*b * Vector2(1.0-h, 1.0+h)).length()
 	return d * sign(q.x*b.y + q.y*b.x - b.x*b.y)
 
 func sdf_arc(uv : Vector2) -> float:
-	return sdArc(uv - Vector2(0.5, 0.5), modf(p_o51990_a1, 360.0) * 0.01745329251, modf(p_o51990_a2, 360.0)*0.01745329251, p_o51990_r1, p_o51990_r2);
+	return sdArc(uv - Vector2(0.5, 0.5), Commons.modf(p_o51990_a1, 360.0) * 0.01745329251, Commons.modf(p_o51990_a2, 360.0)*0.01745329251, p_o51990_r1, p_o51990_r2);
 
 func sdArc(p : Vector2, a1 : float, a2 : float, ra : float, rb : float) -> float:
-	var amid : float = 0.5*(a1+a2)+1.6+3.14 * step(a1, a2);
-	var alength : float = 0.5*(a1-a2)-1.6+3.14 * step(a1, a2);
+	var amid : float = 0.5*(a1+a2)+1.6+3.14 * Commons.step(a1, a2);
+	var alength : float = 0.5*(a1-a2)-1.6+3.14 * Commons.step(a1, a2);
 	var sca : Vector2 = Vector2(cos(amid), sin(amid));
 	var scb : Vector2 = Vector2(cos(alength), sin(alength));
 	
@@ -205,78 +207,6 @@ func sdf2d_rotate(uv : Vector2, a : float) -> Vector2:
 	rv.x = uv.x*c+uv.y*s;
 	rv.y = -uv.x*s+uv.y*c;
 	return rv+Vector2(0.5, 0.5);
-
-func maxv2(a : Vector2, b : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = max(a.x, b.x)
-	v.y = max(a.y, b.y)
-	
-	return v
-
-func absv2(v : Vector2) -> Vector2:
-	v.x = abs(v.x)
-	v.y = abs(v.y)
-	
-	return v
-
-func modf(x : float, y : float) -> float:
-	return x - y * floor(x / y)
-
-func fract(v : Vector2) -> Vector2:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	
-	return v
-	
-func fractf(f : float) -> float:
-	return f - floor(f)
-
-func rand(x : Vector2) -> float:
-	return fractf(cos(x.dot(Vector2(13.9898, 8.141))) * 43758.5453);
-	
-func step(edge : float, x : float) -> float:
-	if x < edge:
-		return 0.0
-	else:
-		return 1.0
-
-#common -----
-
-#float rand(vec2 x) {
-#    return fract(cos(dot(x, vec2(13.9898, 8.141))) * 43758.5453);
-#}
-#
-#vec2 rand2(vec2 x) {
-#    return fract(cos(vec2(dot(x, vec2(13.9898, 8.141)),
-#						  dot(x, vec2(3.4562, 17.398)))) * 43758.5453);
-#}
-#
-#vec3 rand3(vec2 x) {
-#    return fract(cos(vec3(dot(x, vec2(13.9898, 8.141)),
-#                          dot(x, vec2(3.4562, 17.398)),
-#                          dot(x, vec2(13.254, 5.867)))) * 43758.5453);
-#}
-#
-#vec3 rgb2hsv(vec3 c) {
-#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
-#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
-#
-#	float d = q.x - min(q.w, q.y);
-#	float e = 1.0e-10;
-#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-#}
-#
-#vec3 hsv2rgb(vec3 c) {
-#	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-#	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-#	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-#}
-
-
-#end common
-
 
 func reffg():
 	return false
