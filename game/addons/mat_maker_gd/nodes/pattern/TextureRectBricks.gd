@@ -1,6 +1,8 @@
 tool
 extends TextureRect
 
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+
 var image : Image
 var tex : ImageTexture
 
@@ -135,7 +137,7 @@ func brick_corner_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : floa
 	
 	r.x = clamp(((0.5 * size.x - mortar) - abs(uv.x - center.x)) / corner, 0, 1)
 	r.y = clamp(((0.5 * size.y - mortar) - abs(uv.y - center.y)) / corner, 0, 1)
-	r.z = rand(fract(center) + Vector2(pseed, pseed))
+	r.z = Commons.rand(Commons.fract(center) + Vector2(pseed, pseed))
 
 	return r
 	
@@ -178,12 +180,12 @@ func brick_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, pseed : float) -> Ve
 	var x : float = 0.5+ (uv.x - center.x) / max_size
 	var y : float = 0.5+ (uv.y - center.y) /max_size
 	
-	return Vector3(x, y, rand(fract(center) + Vector2(pseed, pseed)))
+	return Vector3(x, y, Commons.rand(Commons.fract(center) + Vector2(pseed, pseed)))
 	
 func bricks_rb(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	count *= repeat
 	
-	var x_offset : float = offset * step(0.5, fractf(uv.y * count.y * 0.5))
+	var x_offset : float = offset * Commons.step(0.5, Commons.fractf(uv.y * count.y * 0.5))
 	
 	var bmin : Vector2
 	bmin.x = floor(uv.x * count.x - x_offset)
@@ -198,8 +200,8 @@ func bricks_rb(uv : Vector2, count : Vector2, repeat : float, offset : float) ->
 func bricks_rb2(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	count *= repeat
 
-	var x_offset : float = offset * step(0.5, fractf(uv.y * count.y * 0.5))
-	count.x = count.x * (1.0+step(0.5, fractf(uv.y * count.y * 0.5)))
+	var x_offset : float = offset * Commons.step(0.5, Commons.fractf(uv.y * count.y * 0.5))
+	count.x = count.x * (1.0+Commons.step(0.5, Commons.fractf(uv.y * count.y * 0.5)))
 	var bmin : Vector2 = Vector2()
 	
 	bmin.x = floor(uv.x * count.x - x_offset)
@@ -217,7 +219,7 @@ func bricks_hb(uv : Vector2, count : Vector2, repeat : float, offset : float) ->
 	var c : float = pc * repeat
 	
 	var corner : Vector2 = Vector2(floor(uv.x * c), floor(uv.y * c))
-	var cdiff : float = modf(corner.x - corner.y, pc)
+	var cdiff : float = Commons.modf(corner.x - corner.y, pc)
 
 	if (cdiff < count.x):
 		var col : Color = Color()
@@ -247,7 +249,7 @@ func bricks_bw(uv : Vector2, count : Vector2, repeat : float, offset : float) ->
 	var corner2 : Vector2 = Vector2(count.x * floor(repeat* 2.0 * uv.x), count.y * floor(repeat * 2.0 * uv.y))
 	
 	var tmp : Vector2 = Vector2(floor(repeat * 2.0 * uv.x), floor(repeat * 2.0 * uv.y))
-	var cdiff : float = modf(tmp.dot(Vector2(1, 1)), 2.0)
+	var cdiff : float = Commons.modf(tmp.dot(Vector2(1, 1)), 2.0)
 	
 	var corner : Vector2
 	var size : Vector2
@@ -288,63 +290,6 @@ func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : float) ->
 		size = Vector2(count.x-1.0, count.y-1.0)
 
 	return Color(corner.x / c.x, corner.y / c.y, (corner.x + size.x) / c.x, (corner.y + size.y) / c.y)
-
-func modf(x : float, y : float) -> float:
-	return x - y * floor(x / y)
-
-func fract(v : Vector2) -> Vector2:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	
-	return v
-	
-func fractf(f : float) -> float:
-	return f - floor(f)
-
-func rand(x : Vector2) -> float:
-	return fractf(cos(x.dot(Vector2(13.9898, 8.141))) * 43758.5453);
-	
-func step(edge : float, x : float) -> float:
-	if x < edge:
-		return 0.0
-	else:
-		return 1.0
-
-#common -----
-
-#float rand(vec2 x) {
-#    return fract(cos(dot(x, vec2(13.9898, 8.141))) * 43758.5453);
-#}
-#
-#vec2 rand2(vec2 x) {
-#    return fract(cos(vec2(dot(x, vec2(13.9898, 8.141)),
-#						  dot(x, vec2(3.4562, 17.398)))) * 43758.5453);
-#}
-#
-#vec3 rand3(vec2 x) {
-#    return fract(cos(vec3(dot(x, vec2(13.9898, 8.141)),
-#                          dot(x, vec2(3.4562, 17.398)),
-#                          dot(x, vec2(13.254, 5.867)))) * 43758.5453);
-#}
-#
-#vec3 rgb2hsv(vec3 c) {
-#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
-#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
-#
-#	float d = q.x - min(q.w, q.y);
-#	float e = 1.0e-10;
-#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-#}
-#
-#vec3 hsv2rgb(vec3 c) {
-#	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-#	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-#	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-#}
-
-
-#end common
 
 #
 #vec4 $(name_uv)_rect = bricks_$pattern($uv, vec2($columns, $rows), $repeat, $row_offset);
