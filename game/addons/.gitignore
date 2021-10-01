@@ -13,5 +13,7 @@
 !multirun/**
 !mat_maker_gd
 !mat_maker_gd/**
+!color-palette
+!color-palette/**
 !addon_versions
 

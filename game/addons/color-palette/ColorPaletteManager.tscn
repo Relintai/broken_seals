@@ -1,0 +1,214 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/color-palette/utilities/EditorTheme.tres" type="Theme" id=1]
+[ext_resource path="res://addons/color-palette/ColorPaletteManager.gd" type="Script" id=2]
+[ext_resource path="res://addons/color-palette/icons/Add.svg" type="Texture" id=3]
+[ext_resource path="res://addons/color-palette/icons/Reload.svg" type="Texture" id=4]
+[ext_resource path="res://addons/color-palette/icons/Override.svg" type="Texture" id=5]
+[ext_resource path="res://addons/color-palette/icons/Filesystem.svg" type="Texture" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.180392, 0.207843, 0.278431, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.137255, 0.160784, 0.215686, 1 )
+
+[node name="ColorPaletteManager" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 340 )
+theme = ExtResource( 1 )
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 595.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorPaletteContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 695.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+
+[node name="OptionsContainer" type="HBoxContainer" parent="HBoxContainer/ColorPaletteContainer"]
+margin_right = 695.0
+margin_bottom = 24.0
+
+[node name="Title" type="Label" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_top = 1.0
+margin_right = 116.0
+margin_bottom = 23.0
+text = "Palette Directory"
+
+[node name="PaletteDirectory" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 120.0
+margin_right = 420.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 300, 0 )
+text = "res://addons/color-palette/_palettes/"
+placeholder_text = "Palette Directory"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OpenPaletteDirectory" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 424.0
+margin_right = 452.0
+margin_bottom = 24.0
+hint_tooltip = "Open directory in the File Manager"
+custom_colors/font_color_disabled = Color( 0.180392, 0.207843, 0.278431, 1 )
+icon = ExtResource( 6 )
+
+[node name="Spacer" type="Control" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 456.0
+margin_right = 477.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewPaletteName" type="LineEdit" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 481.0
+margin_right = 631.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 150, 0 )
+placeholder_text = "New Palette Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewPalette" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 635.0
+margin_right = 663.0
+margin_bottom = 24.0
+hint_tooltip = "Add new palette (creates new .gpl file on disk)"
+custom_colors/font_color_disabled = Color( 0.180392, 0.207843, 0.278431, 1 )
+icon = ExtResource( 3 )
+
+[node name="RefreshList" type="Button" parent="HBoxContainer/ColorPaletteContainer/OptionsContainer"]
+margin_left = 667.0
+margin_right = 695.0
+margin_bottom = 24.0
+hint_tooltip = "Reload/Refresh list"
+custom_colors/font_color_disabled = Color( 0.180392, 0.207843, 0.278431, 1 )
+icon = ExtResource( 4 )
+
+[node name="PaletteListScroll" type="ScrollContainer" parent="HBoxContainer/ColorPaletteContainer"]
+margin_top = 28.0
+margin_right = 695.0
+margin_bottom = 590.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="PaletteList" type="VBoxContainer" parent="HBoxContainer/ColorPaletteContainer/PaletteListScroll"]
+margin_right = 695.0
+margin_bottom = 562.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorEditorContainer" type="PanelContainer" parent="HBoxContainer"]
+margin_left = 699.0
+margin_right = 1014.0
+margin_bottom = 590.0
+rect_min_size = Vector2( 315, 0 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="Margin" type="MarginContainer" parent="HBoxContainer/ColorEditorContainer"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 314.0
+margin_bottom = 589.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Scroll" type="ScrollContainer" parent="HBoxContainer/ColorEditorContainer/Margin"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 308.0
+margin_bottom = 583.0
+
+[node name="ColorPickerContainer" type="VBoxContainer" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll"]
+margin_right = 290.0
+margin_bottom = 492.0
+
+[node name="SelectedColorLabel" type="Label" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+margin_right = 290.0
+margin_bottom = 22.0
+text = "Select a palette or color..."
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+margin_top = 26.0
+margin_right = 290.0
+margin_bottom = 50.0
+
+[node name="SelectedColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+margin_right = 99.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+margin_left = 103.0
+margin_top = 1.0
+margin_right = 119.0
+margin_bottom = 23.0
+rect_min_size = Vector2( 16, 0 )
+text = ">"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewColorRect" type="ColorRect" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+margin_left = 123.0
+margin_right = 222.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 50, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ApplyChanges" type="ToolButton" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+margin_left = 226.0
+margin_right = 256.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 30, 0 )
+hint_tooltip = "Replace/Override the existing color with the selected color."
+theme = ExtResource( 1 )
+icon = ExtResource( 5 )
+
+[node name="AddNewColor" type="ToolButton" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer/HBoxContainer"]
+margin_left = 260.0
+margin_right = 290.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 30, 0 )
+hint_tooltip = "Add the selected color to the palette"
+theme = ExtResource( 1 )
+icon = ExtResource( 3 )
+
+[node name="ColorPicker" type="ColorPicker" parent="HBoxContainer/ColorEditorContainer/Margin/Scroll/ColorPickerContainer"]
+margin_top = 54.0
+margin_right = 290.0
+margin_bottom = 492.0
+presets_enabled = false
+presets_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
