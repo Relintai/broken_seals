@@ -1,6 +1,8 @@
 tool
 extends TextureRect
 
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+
 var image : Image
 var tex : ImageTexture
 
@@ -115,8 +117,8 @@ func sdf3d_sphere(p : Vector3) -> Vector2:
 	return Vector2(o22692_0_1_sdf3d, 0.0);
 
 func sdf3d_box(p : Vector3, sx : float, sy : float, sz : float, r : float) -> Vector2:
-	var v : Vector3 = absv3((p)) - Vector3(sx, sy, sz);
-	var f : float = (maxv3(v,Vector3())).length() + min(max(v.x,max(v.y, v.z)),0.0) - r;
+	var v : Vector3 = Commons.absv3((p)) - Vector3(sx, sy, sz);
+	var f : float = (Commons.maxv3(v,Vector3())).length() + min(max(v.x,max(v.y, v.z)),0.0) - r;
 
 	return Vector2(f, 0.0);
 
@@ -124,20 +126,20 @@ var p_o69351_l = 0.250000000;
 var p_o69351_r = 0.250000000;
 
 func sdf3d_cylinder_y(p : Vector3) -> Vector2:
-	var o69351_0_d : Vector2 = absv2(Vector2(Vector2(p.x, p.z).length(),(p).y)) - Vector2(p_o69351_r,p_o69351_l);
-	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + maxv2(o69351_0_d, Vector2()).length();
+	var o69351_0_d : Vector2 = Commons.absv2(Vector2(Vector2(p.x, p.z).length(),(p).y)) - Vector2(p_o69351_r,p_o69351_l);
+	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + Commons.maxv2(o69351_0_d, Vector2()).length();
 
 	return Vector2(o69351_0_1_sdf3d, 0.0);
 
 func sdf3d_cylinder_x(p : Vector3) -> Vector2:
-	var o69351_0_d : Vector2 = absv2(Vector2(Vector2(p.y, p.z).length(),(p).x)) - Vector2(p_o69351_r,p_o69351_l);
-	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + maxv2(o69351_0_d, Vector2()).length();
+	var o69351_0_d : Vector2 = Commons.absv2(Vector2(Vector2(p.y, p.z).length(),(p).x)) - Vector2(p_o69351_r,p_o69351_l);
+	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + Commons.maxv2(o69351_0_d, Vector2()).length();
 
 	return Vector2(o69351_0_1_sdf3d, 0.0);
 
 func sdf3d_cylinder_z(p : Vector3) -> Vector2:
-	var o69351_0_d : Vector2 = absv2(Vector2(Vector2(p.x, p.y).length(),(p).z)) - Vector2(p_o69351_r,p_o69351_l);
-	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + maxv2(o69351_0_d, Vector2()).length();
+	var o69351_0_d : Vector2 = Commons.absv2(Vector2(Vector2(p.x, p.y).length(),(p).z)) - Vector2(p_o69351_r,p_o69351_l);
+	var o69351_0_1_sdf3d : float = min(max(o69351_0_d.x, o69351_0_d.y),0.0) + Commons.maxv2(o69351_0_d, Vector2()).length();
 
 	return Vector2(o69351_0_1_sdf3d, 0.0);
 
@@ -254,19 +256,19 @@ func sdf3d_normal(p : Vector3) -> Vector3:
 	return Vector3(-1.0, -1.0, -1.0) * n.normalized();
 	
 func sdf3dc_union(a : Vector2, b : Vector2) -> Vector2:
-	return Vector2(min(a.x, b.x), lerp(b.y, a.y, step(a.x, b.x)));
+	return Vector2(min(a.x, b.x), lerp(b.y, a.y, Commons.step(a.x, b.x)));
 
 func sdf3dc_sub(a : Vector2, b : Vector2) -> Vector2:
 	return Vector2(max(-a.x, b.x), a.y);
 
 
 func sdf3dc_inter(a : Vector2, b : Vector2) -> Vector2:
-	return Vector2(max(a.x, b.x), lerp(a.y, b.y, step(a.x, b.x)));
+	return Vector2(max(a.x, b.x), lerp(a.y, b.y, Commons.step(a.x, b.x)));
 
 
 func sdf3d_smooth_union(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 + 0.5 * (d2.x - d1.x) / k, 0.0, 1.0);
-	return Vector2(lerp(d2.x, d1.x, h)-k*h*(1.0 - h), lerp(d2.y, d1.y, step(d1.x, d2.x)));
+	return Vector2(lerp(d2.x, d1.x, h)-k*h*(1.0 - h), lerp(d2.y, d1.y, Commons.step(d1.x, d2.x)));
 
 func sdf3d_smooth_subtraction(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 - 0.5 * (d2.x + d1.x) / k, 0.0, 1.0);
@@ -274,7 +276,7 @@ func sdf3d_smooth_subtraction(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 
 func sdf3d_smooth_intersection(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 - 0.5 * (d2.x - d1.x) / k, 0.0, 1.0);
-	return Vector2(lerp(d2.x, d1.x, h)+k*h*(1.0-h), lerp(d1.y, d2.y, step(d1.x, d2.x)));
+	return Vector2(lerp(d2.x, d1.x, h)+k*h*(1.0-h), lerp(d1.y, d2.y, Commons.step(d1.x, d2.x)));
 
 var p_o885532_r = 0.250000000;
 
@@ -286,7 +288,7 @@ var p_o900574_y = 0.000000000;
 var p_o900574_z = 0.000000000;
 
 func sdf3d_elongation(p : Vector3) -> Vector3:
-	return ((p) - clampv3((p), - absv3(Vector3(p_o900574_x, p_o900574_y, p_o900574_z)), absv3(Vector3(p_o900574_x, p_o900574_y, p_o900574_z))))
+	return ((p) - Commons.clampv3((p), - Commons.absv3(Vector3(p_o900574_x, p_o900574_y, p_o900574_z)), Commons.absv3(Vector3(p_o900574_x, p_o900574_y, p_o900574_z))))
 
 var seed_o910161 = -49592;
 var p_o910161_rx = 3.000000000;
@@ -310,9 +312,9 @@ func repeat(p : Vector3, r : Vector3, pseed : float, randomness : float) -> Vect
 	var pxy : Vector2 = Vector2(p.x, p.y)
 	var rxy : Vector2 = Vector2(r.x, r.y)
 	
-	var r3 : Vector2 = floorv2(modv2((pxy + 0.5 * rxy) / rxy, Vector2(1.0 / rxy.x, 1.0 / rxy.y)) + Vector2(pseed, pseed))
+	var r3 : Vector2 = Commons.floorv2(Commons.modv2((pxy + 0.5 * rxy) / rxy, Vector2(1.0 / rxy.x, 1.0 / rxy.y)) + Vector2(pseed, pseed))
 	
-	var rr : Vector3 = rand3(r3)
+	var rr : Vector3 = Commons.rand3(r3)
 	
 	rr.x -= 0.5
 	rr.y -= 0.5
@@ -320,7 +322,7 @@ func repeat(p : Vector3, r : Vector3, pseed : float, randomness : float) -> Vect
 	
 	var a : Vector3 = (rr) * 6.28 * randomness;
 
-	p = modv3(p + 0.5 * r, r) - 0.5*r;
+	p = Commons.modv3(p + 0.5 * r, r) - 0.5*r;
 	var rv : Vector3;
 	var c : float;
 	var s : float;
@@ -364,148 +366,6 @@ func repeat(p : Vector3, r : Vector3, pseed : float, randomness : float) -> Vect
 #	rv.y = -p.x*s+p.y*c;
 #	rv.z = p.z;
 #	return rv;
-
-
-func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
-	v.x = clamp(v.x, mi.x, ma.x)
-	v.y = clamp(v.y, mi.y, ma.y)
-	v.y = clamp(v.z, mi.z, ma.z)
-	
-	return v
-
-
-func floorv2(a : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = floor(a.x)
-	v.y = floor(a.y)
-	
-	return v
-
-func maxv2(a : Vector2, b : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = max(a.x, b.x)
-	v.y = max(a.y, b.y)
-	
-	return v
-
-func maxv3(a : Vector3, b : Vector3) -> Vector3:
-	var v : Vector3 = Vector3()
-	
-	v.x = max(a.x, b.x)
-	v.y = max(a.y, b.y)
-	v.z = max(a.z, b.z)
-	
-	return v
-
-func absv2(v : Vector2) -> Vector2:
-	v.x = abs(v.x)
-	v.y = abs(v.y)
-	
-	return v
-	
-func absv3(v : Vector3) -> Vector3:
-	v.x = abs(v.x)
-	v.y = abs(v.y)
-	v.y = abs(v.y)
-	
-	return v
-
-func cosv3(v : Vector3) -> Vector3:
-	v.x = cos(v.x)
-	v.y = cos(v.y)
-	v.y = cos(v.y)
-	
-	return v
-
-func modv3(a : Vector3, b : Vector3) -> Vector3:
-	var v : Vector3 = Vector3()
-	
-	v.x = modf(a.x, b.x)
-	v.y = modf(a.y, b.y)
-	v.z = modf(a.z, b.z)
-	
-	return v
-	
-	
-func modv2(a : Vector2, b : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = modf(a.x, b.x)
-	v.y = modf(a.y, b.y)
-
-	return v
-
-func modf(x : float, y : float) -> float:
-	return x - y * floor(x / y)
-
-func fract(v : Vector2) -> Vector2:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	
-	return v
-	
-func fractv3(v : Vector3) -> Vector3:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	v.z = v.z - floor(v.z)
-	
-	return v
-	
-func fractf(f : float) -> float:
-	return f - floor(f)
-
-func rand(x : Vector2) -> float:
-	return fractf(cos(x.dot(Vector2(13.9898, 8.141))) * 43758.5453);
-
-func rand3(x : Vector2) -> Vector3:
-	return fractv3(cosv3(Vector3(x.dot(Vector2(13.9898, 8.141)),
-						  x.dot(Vector2(3.4562, 17.398)),
-						  x.dot(Vector2(13.254, 5.867)))) * 43758.5453);
-
-func step(edge : float, x : float) -> float:
-	if x < edge:
-		return 0.0
-	else:
-		return 1.0
-
-
-#common -----
-
-#float rand(vec2 x) {
-#    return fract(cos(dot(x, vec2(13.9898, 8.141))) * 43758.5453);
-#}
-#
-#vec2 rand2(vec2 x) {
-#    return fract(cos(vec2(dot(x, vec2(13.9898, 8.141)),
-#						  dot(x, vec2(3.4562, 17.398)))) * 43758.5453);
-#}
-#
-#vec3 rand3(vec2 x) {
-#    return fract(cos(vec3(dot(x, vec2(13.9898, 8.141)),
-#                          dot(x, vec2(3.4562, 17.398)),
-#                          dot(x, vec2(13.254, 5.867)))) * 43758.5453);
-#}
-#
-#vec3 rgb2hsv(vec3 c) {
-#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
-#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
-#
-#	float d = q.x - min(q.w, q.y);
-#	float e = 1.0e-10;
-#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-#}
-#
-#vec3 hsv2rgb(vec3 c) {
-#	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
-#	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
-#	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
-#}
-
-
-#end common
 
 
 func reffg():
