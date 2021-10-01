@@ -1,6 +1,8 @@
 tool
 extends TextureRect
 
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+
 var image : Image
 var tex : ImageTexture
 
@@ -65,7 +67,7 @@ func brightness_contrast(color : Color) -> Color:
 	
 	var cv : Vector3 = cvv + bv + Vector3(0.5, 0.5, 0.5) - (Vector3(p_o91644_contrast, p_o91644_contrast, p_o91644_contrast) * 0.5)
 	
-	var v : Vector3 = clampv3(cv, Vector3(), Vector3(1, 1, 1))
+	var v : Vector3 = Commons.clampv3(cv, Vector3(), Vector3(1, 1, 1))
 	
 	return Color(v.x, v.y, v.z, 1);
 
@@ -76,7 +78,7 @@ var  p_o102649_value = 1.000000000;
 func adjust_hsv(color : Color) -> Color:
 	var hsv : Vector3 = rgb_to_hsv(Vector3(color.r, color.g, color.b));
 	
-	var x : float = fract(hsv.x + p_o102649_hue)
+	var x : float = Commons.fract(hsv.x + p_o102649_hue)
 	var y : float = clamp(hsv.y * p_o102649_saturation, 0.0, 1.0)
 	var z : float = clamp(hsv.z * p_o102649_value, 0.0, 1.0)
 	
@@ -109,9 +111,9 @@ func rgb_to_hsv(c : Vector3) -> Vector3:
 func hsv_to_rgb(c : Vector3) -> Vector3:
 	var K : Color = Color(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
 	
-	var p : Vector3 = absv3(fractv3(Vector3(c.x, c.x, c.x) + Vector3(K.r, K.g, K.b)) * 6.0 - Vector3(K.a, K.a, K.a));
+	var p : Vector3 = Commons.absv3(Commons.fractv3(Vector3(c.x, c.x, c.x) + Vector3(K.r, K.g, K.b)) * 6.0 - Vector3(K.a, K.a, K.a));
 	
-	return c.z * lerp(Vector3(K.r, K.r, K.r), clampv3(p - Vector3(K.r, K.r, K.r), Vector3(), Vector3(1, 1, 1)), c.y);
+	return c.z * lerp(Vector3(K.r, K.r, K.r), Commons.clampv3(p - Vector3(K.r, K.r, K.r), Vector3(), Vector3(1, 1, 1)), c.y);
 
 func shape_circle(uv : Vector2, sides : float, size : float, edge : float) -> float:
 	uv.x = 2.0 * uv.x - 1.0
@@ -134,149 +136,10 @@ func transform(uv : Vector2, translate : Vector2, rotate : float, scale : Vector
 	rv += Vector2(0.5, 0.5);
 	
 	if (repeat):
-		return fractv2(rv);
+		return Commons.fractv2(rv);
 	else:
-		return clampv2(rv, Vector2(0, 0), Vector2(1, 1));
+		return Commons.clampv2(rv, Vector2(0, 0), Vector2(1, 1));
 		
-
-func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
-	v.x = clamp(v.x, mi.x, ma.x)
-	v.y = clamp(v.y, mi.y, ma.y)
-	v.y = clamp(v.z, mi.z, ma.z)
-	
-	return v
-
-func floorc(a : Color) -> Color:
-	var v : Color = Color()
-	
-	v.r = floor(a.r)
-	v.g = floor(a.g)
-	v.b = floor(a.b)
-	v.a = floor(a.a)
-	
-	return v
-
-
-func floorv2(a : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = floor(a.x)
-	v.y = floor(a.y)
-	
-	return v
-	
-func smoothstepv2(a : float, b : float, c : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = smoothstep(a, b, c.x)
-	v.y = smoothstep(a, b, c.y)
-	
-	return v
-
-func maxv2(a : Vector2, b : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = max(a.x, b.x)
-	v.y = max(a.y, b.y)
-	
-	return v
-
-func maxv3(a : Vector3, b : Vector3) -> Vector3:
-	var v : Vector3 = Vector3()
-	
-	v.x = max(a.x, b.x)
-	v.y = max(a.y, b.y)
-	v.z = max(a.z, b.z)
-	
-	return v
-
-func absv2(v : Vector2) -> Vector2:
-	v.x = abs(v.x)
-	v.y = abs(v.y)
-	
-	return v
-	
-func absv3(v : Vector3) -> Vector3:
-	v.x = abs(v.x)
-	v.y = abs(v.y)
-	v.y = abs(v.y)
-	
-	return v
-
-func cosv2(v : Vector2) -> Vector2:
-	v.x = cos(v.x)
-	v.y = cos(v.y)
-	
-	return v
-
-func cosv3(v : Vector3) -> Vector3:
-	v.x = cos(v.x)
-	v.y = cos(v.y)
-	v.y = cos(v.y)
-	
-	return v
-
-func modv3(a : Vector3, b : Vector3) -> Vector3:
-	var v : Vector3 = Vector3()
-	
-	v.x = modf(a.x, b.x)
-	v.y = modf(a.y, b.y)
-	v.z = modf(a.z, b.z)
-	
-	return v
-	
-	
-func modv2(a : Vector2, b : Vector2) -> Vector2:
-	var v : Vector2 = Vector2()
-	
-	v.x = modf(a.x, b.x)
-	v.y = modf(a.y, b.y)
-
-	return v
-
-func modf(x : float, y : float) -> float:
-	return x - y * floor(x / y)
-
-func fractv2(v : Vector2) -> Vector2:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	
-	return v
-	
-func fractv3(v : Vector3) -> Vector3:
-	v.x = v.x - floor(v.x)
-	v.y = v.y - floor(v.y)
-	v.z = v.z - floor(v.z)
-	
-	return v
-	
-func fract(f : float) -> float:
-	return f - floor(f)
-
-func clampv2(v : Vector2, pmin : Vector2, pmax : Vector2) -> Vector2:
-	v.x = clamp(v.x, pmin.x, pmax.x)
-	v.y = clamp(v.y, pmin.y, pmax.y)
-	
-	return v
-
-func rand(x : Vector2) -> float:
-	return fract(cos(x.dot(Vector2(13.9898, 8.141))) * 43758.5453);
-
-func rand2(x : Vector2) -> Vector2:
-	return fractv2(cosv2(Vector2(x.dot(Vector2(13.9898, 8.141)),
-						  x.dot(Vector2(3.4562, 17.398)))) * 43758.5453);
-
-func rand3(x : Vector2) -> Vector3:
-	return fractv3(cosv3(Vector3(x.dot(Vector2(13.9898, 8.141)),
-						  x.dot(Vector2(3.4562, 17.398)),
-						  x.dot(Vector2(13.254, 5.867)))) * 43758.5453);
-
-func step(edge : float, x : float) -> float:
-	if x < edge:
-		return 0.0
-	else:
-		return 1.0
-
 
 #common -----
 
