@@ -15,7 +15,6 @@ func _ready():
 	if !Engine.editor_hint:
 		gen()
 
-
 func gen() -> void:
 	if !image:
 		image = Image.new()
@@ -60,33 +59,9 @@ var p_o12297_persistence = 0.500000000;
 
 func sinewave(uv : Vector2) -> Color:
 
-	var f : float = perlin(((uv)), Vector2(p_o12297_scale_x, p_o12297_scale_y), int(p_o12297_iterations), p_o12297_persistence, seed_o12297);
+	var f : float = Commons.perlin(((uv)), Vector2(p_o12297_scale_x, p_o12297_scale_y), int(p_o12297_iterations), p_o12297_persistence, seed_o12297);
 	
 	return Color(f, f, f, 1)
-
-func perlin(uv : Vector2, size : Vector2, iterations : int, persistence : float, pseed : int) -> float:
-	var seed2 : Vector2 = Commons.rand2(Vector2(float(pseed), 1.0-float(pseed)));
-	var rv : float = 0.0;
-	var coef : float = 1.0;
-	var acc : float = 0.0;
-	
-	for i in range(iterations):
-		var step : Vector2 = Vector2(1, 1) / size;
-		var xy : Vector2 = Commons.floorv2(uv * size);
-		var f0 : float = Commons.rand(seed2 + Commons.modv2(xy, size));
-		var f1 : float = Commons.rand(seed2 + Commons.modv2(xy + Vector2(1.0, 0.0), size));
-		var f2 : float = Commons.rand(seed2 + Commons.modv2(xy + Vector2(0.0, 1.0), size));
-		var f3 : float = Commons.rand(seed2 + Commons.modv2(xy + Vector2(1.0, 1.0), size));
-
-		var mixval : Vector2 = Commons.smoothstepv2(0.0, 1.0, Commons.fractv2(uv * size));
-		
-		rv += coef * lerp(lerp(f0, f1, mixval.x), lerp(f2, f3, mixval.x), mixval.y);
-		acc += coef;
-		size *= 2.0;
-		coef *= persistence;
-
-	
-	return rv / acc;
 
 func reffg():
 	return false

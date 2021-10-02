@@ -56,17 +56,9 @@ var p_o46354_rows = 4.000000000;
 var p_o46354_width = 1.000000000;
 
 func weavecol(uv : Vector2) -> Color:
-	var f : float = weave(uv, Vector2(p_o46354_columns, p_o46354_rows), p_o46354_width*1.0);
+	var f : float = Commons.weave(uv, Vector2(p_o46354_columns, p_o46354_rows), p_o46354_width*1.0);
 
 	return Color(f, f, f, 1)
-
-
-func weave(uv : Vector2, count : Vector2, width : float) -> float:
-	uv *= count;
-	var c : float = (sin(3.1415926* (uv.x + floor(uv.y)))*0.5+0.5)*Commons.step(abs(Commons.fract(uv.y)-0.5), width*0.5);
-	c = max(c, (sin(3.1415926*(1.0+uv.y+floor(uv.x)))*0.5+0.5)*Commons.step(abs(Commons.fract(uv.x)-0.5), width*0.5));
-	return c;
-
 
 func reffg():
 	return false

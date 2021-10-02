@@ -60,34 +60,9 @@ var p_o28198_persistence = 0.500000000;
 
 func sinewave(uv : Vector2) -> Color:
 
-	var f : Vector3 = perlin_color(((uv)), Vector2(p_o28198_scale_x, p_o28198_scale_y), int(p_o28198_iterations), p_o28198_persistence, seed_o28198);
+	var f : Vector3 = Commons.perlin_color(((uv)), Vector2(p_o28198_scale_x, p_o28198_scale_y), int(p_o28198_iterations), p_o28198_persistence, seed_o28198);
 
 	return Color(f.x, f.y, f.z, 1)
-
-func perlin_color(uv : Vector2, size : Vector2, iterations : int, persistence : float, pseed : int) -> Vector3:
-	var seed2 : Vector2 = Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed)));
-	var rv : Vector3 = Vector3();
-	var coef : float = 1.0;
-	var acc : float = 0.0;
-	
-	for i in range(iterations):
-		var step : Vector2 = Vector2(1, 1) / size;
-		var xy : Vector2 = Commons.floorv2(uv * size);
-		
-		var f0 : Vector3 = Commons.rand3(seed2 + Commons.modv2(xy, size));
-		var f1 : Vector3 = Commons.rand3(seed2 + Commons.modv2(xy + Vector2(1.0, 0.0), size));
-		var f2 : Vector3 = Commons.rand3(seed2 + Commons.modv2(xy + Vector2(0.0, 1.0), size));
-		var f3 : Vector3 = Commons.rand3(seed2 + Commons.modv2(xy + Vector2(1.0, 1.0), size));
-
-		var mixval : Vector2 = Commons.smoothstepv2(0.0, 1.0, Commons.fractv2(uv * size));
-		
-		rv += coef * lerp(lerp(f0, f1, mixval.x), lerp(f2, f3, mixval.x), mixval.y);
-		
-		acc += coef;
-		size *= 2.0;
-		coef *= persistence;
-
-	return rv / acc;
 
 func reffg():
 	return false

@@ -57,23 +57,10 @@ var p_o9164_size = 4.000000000;
 
 func trunchet(uv : Vector2) -> Color:
 #	var f : float = truchet1(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
-	var f : float = truchet2(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
+	var f : float = Commons.truchet2(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
 	var col : Color  = Color(f, f, f, 1);
 	
 	return col
-
-func truchet1(uv : Vector2, pseed : Vector2) -> float:
-	var i : Vector2 = Commons.floorv2(uv);
-	var f : Vector2 = Commons.fractv2(uv) - Vector2(0.5, 0.5);
-	return 1.0 - abs(abs((2.0*Commons.step(Commons.rand(i+pseed), 0.5)-1.0)*f.x+f.y)-0.5);
-
-func truchet2(uv : Vector2, pseed : Vector2) -> float:
-	var i : Vector2 = Commons.floorv2(uv);
-	var f : Vector2 = Commons.fractv2(uv);
-	var random : float = Commons.step(Commons.rand(i+pseed), 0.5);
-	f.x *= 2.0 * random-1.0;
-	f.x += 1.0 - random;
-	return 1.0 - min(abs(f.length() - 0.5), abs((Vector2(1, 1) - f).length() - 0.5));
 
 func reffg():
 	return false
