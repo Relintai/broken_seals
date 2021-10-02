@@ -40,7 +40,7 @@ func gen() -> void:
 
 			var f : float = Commons.shape_circle(v, 3, 1.0 * 1.0, 1.0)
 			
-			f = gs_luminosity(Vector3(f, f, f));
+			f = Commons.grayscale_luminosity(Vector3(f, f, f));
 			
 			var c : Color = Color(f, f, f, 1)
 			
@@ -56,21 +56,6 @@ func gen() -> void:
 	
 	tex.create_from_image(image)
 	texture = tex
-
-func gs_min(c : Vector3) -> float:
-	return min(c.x, min(c.y, c.z));
-
-func gs_max(c : Vector3) -> float:
-	return max(c.x, max(c.y, c.z));
-
-func gs_lightness(c : Vector3) -> float:
-	return 0.5*(max(c.x, max(c.y, c.z)) + min(c.x, min(c.y, c.z)));
-
-func gs_average(c : Vector3) -> float:
-	return 0.333333333333*(c.x + c.y + c.z);
-
-func gs_luminosity(c : Vector3) -> float:
-	return 0.21 * c.x + 0.72 * c.y + 0.07 * c.z;
 
 func reffg():
 	return false

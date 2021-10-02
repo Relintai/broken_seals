@@ -57,9 +57,7 @@ var p_o7136_frequency = 2.000000000;
 var p_o7136_phase = 0.000000000;
 
 func sinewave(uv : Vector2) -> Color:
-	var f : float = 1.0- abs(2.0 * (uv.y-0.5) - p_o7136_amplitude * sin((p_o7136_frequency* uv.x + p_o7136_phase) * 6.28318530718));
-	
-	return Color(f, f, f, 1)
+	return Commons.sinewave(uv, p_o7136_amplitude, p_o7136_frequency, p_o7136_phase)
 
 func reffg():
 	return false

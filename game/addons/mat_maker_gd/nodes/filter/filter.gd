@@ -59,29 +59,14 @@ var p_o91644_brightness = 0.000000000;
 var p_o91644_contrast = 1.000000000;
 
 func brightness_contrast(color : Color) -> Color:
-	var bv : Vector3 = Vector3(p_o91644_brightness, p_o91644_brightness, p_o91644_brightness)
-	var cvv : Vector3 = Vector3(color.r * p_o91644_contrast, color.g * p_o91644_contrast, color.b * p_o91644_contrast)
-	
-	var cv : Vector3 = cvv + bv + Vector3(0.5, 0.5, 0.5) - (Vector3(p_o91644_contrast, p_o91644_contrast, p_o91644_contrast) * 0.5)
-	
-	var v : Vector3 = Commons.clampv3(cv, Vector3(), Vector3(1, 1, 1))
-	
-	return Color(v.x, v.y, v.z, 1);
+	return Commons.brightness_contrast(color, p_o91644_brightness, p_o91644_contrast);
 
 var p_o102649_hue = 0.000000000;
 var  p_o102649_saturation = 1.000000000;
 var  p_o102649_value = 1.000000000;
 
 func adjust_hsv(color : Color) -> Color:
-	var hsv : Vector3 = Commons.rgb_to_hsv(Vector3(color.r, color.g, color.b));
-	
-	var x : float = Commons.fract(hsv.x + p_o102649_hue)
-	var y : float = clamp(hsv.y * p_o102649_saturation, 0.0, 1.0)
-	var z : float = clamp(hsv.z * p_o102649_value, 0.0, 1.0)
-	
-	var h : Vector3 = Commons.hsv_to_rgb(Vector3(x, y, z))
-
-	return Color(h.x, h.y, h.z, color.a);
+	return Commons.adjust_hsv(color, p_o102649_hue, p_o102649_saturation, p_o102649_value)
 	
 func reffg():
 	return false

@@ -50,13 +50,10 @@ func gen() -> void:
 	tex.create_from_image(image)
 	texture = tex
 
+var seed_o26210 = 7313;
 
 func nc(uv : Vector2) -> Color:
-	var v : Vector3 = Commons.color_dots(((uv)), 1.0/512.000000000, seed_o26210);
-
-	return Color(v.x, v.y, v.z, 1)
-
-var seed_o26210 = 7313;
+	return Commons.noise_color(uv, seed_o26210)
 
 func reffg():
 	return false

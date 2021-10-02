@@ -1199,3 +1199,51 @@ static func shape_rays(uv : Vector2, sides : float, size : float, edge : float) 
 	var angle : float = modf(atan(uv.y / uv.x) + 3.14159265359, slice) / slice
 	
 	return clamp(min((size - angle) / edge, angle / edge), 0.0, 1.0);
+
+static func adjust_hsv(color : Color, hue : float, saturation : float, value : float) -> Color:
+	var hsv : Vector3 = rgb_to_hsv(Vector3(color.r, color.g, color.b));
+	
+	var x : float = fract(hsv.x + hue)
+	var y : float = clamp(hsv.y * saturation, 0.0, 1.0)
+	var z : float = clamp(hsv.z * value, 0.0, 1.0)
+	
+	var h : Vector3 = hsv_to_rgb(Vector3(x, y, z))
+
+	return Color(h.x, h.y, h.z, color.a);
+
+static func brightness_contrast(color : Color, brightness : float, contrast : float) -> Color:
+	var bv : Vector3 = Vector3(brightness, brightness, brightness)
+	var cvv : Vector3 = Vector3(color.r * contrast, color.g * contrast, color.b * contrast)
+	
+	var cv : Vector3 = cvv + bv + Vector3(0.5, 0.5, 0.5) - (Vector3(contrast, contrast, contrast) * 0.5)
+	
+	var v : Vector3 = clampv3(cv, Vector3(), Vector3(1, 1, 1))
+	
+	return Color(v.x, v.y, v.z, 1);
+
+
+static func grayscale_min(c : Vector3) -> float:
+	return min(c.x, min(c.y, c.z));
+
+static func grayscale_max(c : Vector3) -> float:
+	return max(c.x, max(c.y, c.z));
+
+static func grayscale_lightness(c : Vector3) -> float:
+	return 0.5*(max(c.x, max(c.y, c.z)) + min(c.x, min(c.y, c.z)));
+
+static func grayscale_average(c : Vector3) -> float:
+	return 0.333333333333*(c.x + c.y + c.z);
+
+static func grayscale_luminosity(c : Vector3) -> float:
+	return 0.21 * c.x + 0.72 * c.y + 0.07 * c.z;
+
+static func sinewave(uv : Vector2, amplitude : float, frequency : float, phase : float) -> Color:
+	var f : float = 1.0- abs(2.0 * (uv.y-0.5) - amplitude * sin((frequency* uv.x + phase) * 6.28318530718));
+	
+	return Color(f, f, f, 1)
+
+
+static func noise_color(uv : Vector2, pseed : int) -> Color:
+	var v : Vector3 = color_dots(((uv)), 1.0/512.000000000, pseed);
+
+	return Color(v.x, v.y, v.z, 1)
