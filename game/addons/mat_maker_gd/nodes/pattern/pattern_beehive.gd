@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -57,36 +57,13 @@ var p_o80035_sx = 4.000000000;
 var p_o80035_sy = 4.000000000;
 
 func beehive_1_col(uv : Vector2) -> Color:
-	var o80035_0_uv : Vector2 = ((uv)) * Vector2(p_o80035_sx, p_o80035_sy * 1.73205080757);
-	var center : Color = Commons.beehive_center(o80035_0_uv);
-	
-	var f : float = 1.0 - 2.0 * Commons.beehive_dist(Vector2(center.r, center.g));
-	
-	return Color(f, f, f, 1)
+	return Patterns.beehive_1c(uv, Vector2(p_o80035_sx, p_o80035_sy), seed_o80035)
 	
 func beehive_2_col(uv : Vector2) -> Color:
-	var o80035_0_uv : Vector2 = ((uv)) * Vector2(p_o80035_sx, p_o80035_sy * 1.73205080757);
-	var center : Color = Commons.beehive_center(o80035_0_uv);
-	
-	var f : float = 1.0 - 2.0 * Commons.beehive_dist(Vector2(center.r, center.g));
-	
-	var v : Vector3 = Commons.rand3(Commons.fractv2(Vector2(center.b, center.a) / Vector2(p_o80035_sx, p_o80035_sy)) + Vector2(float(seed_o80035),float(seed_o80035)));
-	
-	return Color(v.x, v.y, v.z, 1)
+	return Patterns.beehive_2c(uv, Vector2(p_o80035_sx, p_o80035_sy), seed_o80035)
 
 func beehive_3_col(uv : Vector2) -> Color:
-	var o80035_0_uv : Vector2 = ((uv)) * Vector2(p_o80035_sx, p_o80035_sy * 1.73205080757);
-	var center : Color = Commons.beehive_center(o80035_0_uv);
-	
-	#var f : float = 1.0 - 2.0 * beehive_dist(Vector2(center.r, center.g));
-	
-	var v1 : Vector2 = Vector2(0.5, 0.5) + Vector2(center.r, center.g)
-	var ff : float = Commons.rand(Commons.fractv2(Vector2(center.b, center.a) / Vector2(p_o80035_sx, p_o80035_sy)) + Vector2(float(seed_o80035), float(seed_o80035)))
-	
-	var c : Color = Color(v1.x, v1.y, ff, ff);
-	
-	return c
-
+	return Patterns.beehive_3c(uv, Vector2(p_o80035_sx, p_o80035_sy), seed_o80035)
 
 func reffg():
 	return false

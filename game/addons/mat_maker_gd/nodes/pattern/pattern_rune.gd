@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -54,9 +54,7 @@ var p_o49619_columns = 4.000000000;
 var p_o49619_rows = 4.000000000;
 
 func runecol(uv : Vector2) -> Color:
-	var f : float = Commons.Rune(Vector2(p_o49619_columns, p_o49619_rows)*((uv)));
-
-	return Color(f, f, f, 1)
+	return Patterns.runesc(uv, Vector2(p_o49619_columns, p_o49619_rows))
 
 func reffg():
 	return false

@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -59,9 +59,7 @@ var p_o74963_angle = -1.000000000;
 var p_o74963_randomness = 0.440000000;
 
 func scratchescol(uv : Vector2) -> Color:
-	var f : float = Commons.scratches(((uv)), int(p_o74963_layers), Vector2(p_o74963_length, p_o74963_width), p_o74963_waviness, p_o74963_angle, p_o74963_randomness, Vector2(float(seed_o74963), 0.0));
-
-	return Color(f, f, f, 1)
+	return Patterns.scratchesc(uv, int(p_o74963_layers), Vector2(p_o74963_length, p_o74963_width), p_o74963_waviness, p_o74963_angle, p_o74963_randomness, Vector2(float(seed_o74963), 0.0));
 
 func reffg():
 	return false

@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -37,7 +37,7 @@ func gen() -> void:
 		for y in range(image.get_height()):
 			var v : Vector2 = Vector2(x / w, y / h)
 
-			var f : float = Commons.pattern(v, 4, 4, Commons.CombinerType.MULTIPLY, Commons.CombinerAxisType.SINE, Commons.CombinerAxisType.SINE)
+			var f : float = Patterns.pattern(v, 4, 4, Patterns.CombinerType.MULTIPLY, Patterns.CombinerAxisType.SINE, Patterns.CombinerAxisType.SINE)
 
 			var col : Color = Color(f, f, f, 1)
 
