@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -56,9 +56,7 @@ var p_o46354_rows = 4.000000000;
 var p_o46354_width = 1.000000000;
 
 func weavecol(uv : Vector2) -> Color:
-	var f : float = Commons.weave(uv, Vector2(p_o46354_columns, p_o46354_rows), p_o46354_width*1.0);
-
-	return Color(f, f, f, 1)
+	return Patterns.weavec(uv, Vector2(p_o46354_columns, p_o46354_rows), p_o46354_width*1.0);
 
 func reffg():
 	return false

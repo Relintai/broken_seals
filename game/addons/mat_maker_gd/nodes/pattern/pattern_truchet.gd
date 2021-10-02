@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -56,11 +56,8 @@ var seed_o9164 = 6039;
 var p_o9164_size = 4.000000000;
 
 func trunchet(uv : Vector2) -> Color:
-#	var f : float = truchet1(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
-	var f : float = Commons.truchet2(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
-	var col : Color  = Color(f, f, f, 1);
-	
-	return col
+	return Patterns.truchet1c(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
+#	return Patterns.truchet2c(uv * p_o9164_size, Vector2(float(seed_o9164), float(seed_o9164)));
 
 func reffg():
 	return false

@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -83,11 +83,11 @@ func gen() -> void:
 #			var brect : Color = bricks_bw(v, Vector2(p_o39644_columns, p_o39644_rows), p_o39644_repeat, p_o39644_row_offset);
 			
 			#SpanishBond
-			var brect : Color = Commons.bricks_sb(v, Vector2(p_o39644_columns, p_o39644_rows), p_o39644_repeat, p_o39644_row_offset);
+			var brect : Color = Patterns.bricks_sb(v, Vector2(p_o39644_columns, p_o39644_rows), p_o39644_repeat, p_o39644_row_offset);
 			
 			
 			# 1, 2
-			var fcolor : Color = Commons.brick(v, Vector2(brect.r, brect.g),  Vector2(brect.b, brect.a), p_o39644_mortar*1.0, p_o39644_round*1.0, max(0.001, p_o39644_bevel*1.0));
+			var fcolor : Color = Patterns.brick(v, Vector2(brect.r, brect.g),  Vector2(brect.b, brect.a), p_o39644_mortar*1.0, p_o39644_round*1.0, max(0.001, p_o39644_bevel*1.0));
 			
 #			image.set_pixel(x, y, brect)
 #			image.set_pixel(x, y, fcolor)
