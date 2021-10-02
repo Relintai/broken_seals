@@ -208,38 +208,6 @@ static func color_dots(uv : Vector2, size : float, pseed : int) -> Vector3:
 	var point_pos : Vector2 = floorv2(uv) + Vector2(0.5, 0.5);
 	return rand3(seed2 + point_pos);
 
-
-static func voronoi(uv : Vector2, size : Vector2, stretch : Vector2, intensity : float, randomness : float, pseed : int) -> Color:
-	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0-float(pseed)));
-	uv *= size;
-	var best_distance0 : float = 1.0;
-	var best_distance1 : float = 1.0;
-	var point0 : Vector2;
-	var point1 : Vector2;
-	var p0 : Vector2 = floorv2(uv);
-	
-	for dx in range(-1, 2):# (int dx = -1; dx < 2; ++dx) {
-		for dy in range(-1, 2):# (int dy = -1; dy < 2; ++dy) {
-			var d : Vector2 = Vector2(float(dx), float(dy));
-			var p : Vector2 = p0+d;
-			
-			p += randomness * rand2(seed2 + modv2(p, size));
-			var distance : float = (stretch * (uv - p) / size).length();
-			
-			if (best_distance0 > distance):
-				best_distance1 = best_distance0;
-				best_distance0 = distance;
-				point1 = point0;
-				point0 = p;
-			elif (best_distance1 > distance):
-				best_distance1 = distance;
-				point1 = p;
-
-	var edge_distance : float = (uv - 0.5*(point0+point1)).dot((point0-point1).normalized());
-	
-	return Color(point0.x, point0.y, best_distance0 * (size).length() * intensity, edge_distance);
-
-
 static func perlin(uv : Vector2, size : Vector2, iterations : int, persistence : float, pseed : int) -> float:
 	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0-float(pseed)));
 	var rv : float = 0.0;
@@ -315,8 +283,6 @@ static func beehive_center(p : Vector2) -> Color:
 		return Color(h.b, h.a, hC.b + 9.73, hC.a + 9.73)
 	
 	#return dot(h.xy, h.xy) < dot(h.zw, h.zw) ? Color(h.xy, hC.xy) : Color(h.zw, hC.zw + 9.73);
-
-
 
 static func pattern(uv : Vector2, x_scale : float, y_scale : float, ct : int, catx : int, caty : int) -> float:
 	var x : float = 0

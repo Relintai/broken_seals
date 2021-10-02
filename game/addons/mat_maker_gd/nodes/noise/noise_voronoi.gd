@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var NoiseVoronoi = preload("res://addons/mat_maker_gd/nodes/common/noise_voronoi.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -52,27 +52,6 @@ func gen() -> void:
 	tex.create_from_image(image)
 	texture = tex
 
-
-func voron_1(uv : Vector2) -> Color:
-	var c : Color = Commons.voronoi(((uv)), Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689);
-	
-	return Color(c.b, c.b, c.b, 1)
-
-func voron_2(uv : Vector2) -> Color:
-	var c : Color = Commons.voronoi(((uv)), Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689);
-	
-	return Color(c.a, c.a, c.a, 1)
-
-func voron_3(uv : Vector2) -> Color:
-	var c : Color = Commons.voronoi(((uv)), Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689);
-	
-	var vv : Vector2 = Vector2(c.r, c.g)
-	
-	var v : Vector3 = Commons.rand3(Commons.fractv2(vv));
-	
-	return Color(v.x, v.y, v.z, 1)
-
-
 var seed_o8689 = 11667;
 var p_o8689_scale_x = 4.000000000;
 var p_o8689_scale_y = 4.000000000;
@@ -80,6 +59,15 @@ var p_o8689_stretch_x = 1.000000000;
 var p_o8689_stretch_y = 1.000000000;
 var p_o8689_intensity = 1.000000000;
 var p_o8689_randomness = 0.750000000;
+
+func voron_1(uv : Vector2) -> Color:
+	return NoiseVoronoi.voronoi_1(uv, Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689)
+
+func voron_2(uv : Vector2) -> Color:
+	return NoiseVoronoi.voronoi_2(uv, Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689)
+
+func voron_3(uv : Vector2) -> Color:
+	return NoiseVoronoi.voronoi_3(uv, Vector2(p_o8689_scale_x, p_o8689_scale_y), Vector2(p_o8689_stretch_y, p_o8689_stretch_x), p_o8689_intensity, p_o8689_randomness, seed_o8689)
 
 func reffg():
 	return false
