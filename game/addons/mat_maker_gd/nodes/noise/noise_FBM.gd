@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var NoiseFBM = preload("res://addons/mat_maker_gd/nodes/common/noise_fbm.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -64,148 +64,28 @@ var p_o33355_iterations = 5.000000000;
 var p_o33355_persistence = 0.500000000;
 
 func fbmval(uv : Vector2) -> Color:
-	var f : float = o33355_fbm(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.fbmval(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 
 func perlin(uv : Vector2) -> Color:
-	var f : float = o33355_perlin(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.perlin(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular(uv : Vector2) -> Color:
-	var f : float = o33355_cellular(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.cellular(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular2(uv : Vector2) -> Color:
-	var f : float = o33355_cellular2(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.cellular2(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular3(uv : Vector2) -> Color:
-	var f : float = o33355_cellular3(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.cellular3(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular4(uv : Vector2) -> Color:
-	var f : float = o33355_cellular4(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.cellular4(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular5(uv : Vector2) -> Color:
-	var f : float = o33355_cellular5(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
+	return NoiseFBM.cellular5(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular6(uv : Vector2) -> Color:
-	var f : float = o33355_cellular6(((uv)), Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355));
-
-	return Color(f, f, f, 1)
-
-func o33355_fbm(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_value(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_perlin(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_perlin(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_cellular(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_cellular2(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular2(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-
-func o33355_cellular3(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular3(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_cellular4(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular4(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_cellular5(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular5(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
-	
-func o33355_cellular6(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
-	var normalize_factor : float = 0.0;
-	var value : float = 0.0;
-	var scale : float = 1.0;
-	
-	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += Commons.fbm_cellular6(coord*size, size, pseed) * scale;
-		normalize_factor += scale;
-		size *= 2.0;
-		scale *= persistence;
-	
-	return value / normalize_factor;
+	return NoiseFBM.cellular6(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 
 func reffg():
 	return false
