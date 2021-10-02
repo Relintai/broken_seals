@@ -18,7 +18,6 @@ enum  CombinerType {
 	POW
 }
 
-
 static func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
 	v.x = clamp(v.x, mi.x, ma.x)
 	v.y = clamp(v.y, mi.y, ma.y)
@@ -201,62 +200,11 @@ static func transform(uv : Vector2, translate : Vector2, rotate : float, scale :
 	else:
 		return clampv2(rv, Vector2(0, 0), Vector2(1, 1));
 
-
 static func color_dots(uv : Vector2, size : float, pseed : int) -> Vector3:
 	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0 - float(pseed)));
 	uv /= size;
 	var point_pos : Vector2 = floorv2(uv) + Vector2(0.5, 0.5);
 	return rand3(seed2 + point_pos);
-
-static func perlin(uv : Vector2, size : Vector2, iterations : int, persistence : float, pseed : int) -> float:
-	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0-float(pseed)));
-	var rv : float = 0.0;
-	var coef : float = 1.0;
-	var acc : float = 0.0;
-	
-	for i in range(iterations):
-		var step : Vector2 = Vector2(1, 1) / size;
-		var xy : Vector2 = floorv2(uv * size);
-		var f0 : float = rand(seed2 + modv2(xy, size));
-		var f1 : float = rand(seed2 + modv2(xy + Vector2(1.0, 0.0), size));
-		var f2 : float = rand(seed2 + modv2(xy + Vector2(0.0, 1.0), size));
-		var f3 : float = rand(seed2 + modv2(xy + Vector2(1.0, 1.0), size));
-
-		var mixval : Vector2 = smoothstepv2(0.0, 1.0, fractv2(uv * size));
-		
-		rv += coef * lerp(lerp(f0, f1, mixval.x), lerp(f2, f3, mixval.x), mixval.y);
-		acc += coef;
-		size *= 2.0;
-		coef *= persistence;
-
-	
-	return rv / acc;
-
-static func perlin_color(uv : Vector2, size : Vector2, iterations : int, persistence : float, pseed : int) -> Vector3:
-	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0 - float(pseed)));
-	var rv : Vector3 = Vector3();
-	var coef : float = 1.0;
-	var acc : float = 0.0;
-	
-	for i in range(iterations):
-		var step : Vector2 = Vector2(1, 1) / size;
-		var xy : Vector2 = floorv2(uv * size);
-		
-		var f0 : Vector3 = rand3(seed2 + modv2(xy, size));
-		var f1 : Vector3 = rand3(seed2 + modv2(xy + Vector2(1.0, 0.0), size));
-		var f2 : Vector3 = rand3(seed2 + modv2(xy + Vector2(0.0, 1.0), size));
-		var f3 : Vector3 = rand3(seed2 + modv2(xy + Vector2(1.0, 1.0), size));
-
-		var mixval : Vector2 = smoothstepv2(0.0, 1.0, fractv2(uv * size));
-		
-		rv += coef * lerp(lerp(f0, f1, mixval.x), lerp(f2, f3, mixval.x), mixval.y);
-		
-		acc += coef;
-		size *= 2.0;
-		coef *= persistence;
-
-	return rv / acc;
-
 
 static func beehive_dist(p : Vector2) -> float:
 	var s : Vector2 = Vector2(1.0, 1.73205080757);

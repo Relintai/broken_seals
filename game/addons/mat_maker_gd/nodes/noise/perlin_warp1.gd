@@ -2,6 +2,7 @@ tool
 extends TextureRect
 
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var NoisePerlin = preload("res://addons/mat_maker_gd/nodes/common/noise_perlin.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -40,7 +41,7 @@ func gen() -> void:
 
 #			var f : float = pattern(v, 4, 4, CombinerType.MULTIPLY, CombinerAxisType.SINE, CombinerAxisType.SINE)
 
-			var col : Color = sinewave(v)
+			var col : Color = perlin_warp_1(v)
 #			var col : Color = beehive_2_col(v)
 #			var col : Color = beehive_3_col(v)
 
@@ -63,11 +64,8 @@ var p_o41836_scale_y = 4.000000000;
 var p_o41836_iterations = 3.000000000;
 var p_o41836_persistence = 0.500000000;
 
-func sinewave(uv : Vector2) -> Color:
-	var f : float = Commons.perlin((((uv))), Vector2(p_o41836_scale_x, p_o41836_scale_y), int(p_o41836_iterations), p_o41836_persistence, seed_o41836);
-	var ff : float = Commons.perlin((Commons.transform(((uv)), Vector2(p_o41835_translate_x*(2.0*f-1.0), p_o41835_translate_y*(2.0*f-1.0)), p_o41835_rotate*0.01745329251*(2.0*1.0-1.0), Vector2(p_o41835_scale_x*(2.0*1.0-1.0), p_o41835_scale_y*(2.0*1.0-1.0)), true)), Vector2(p_o41836_scale_x, p_o41836_scale_y), int(p_o41836_iterations), p_o41836_persistence, seed_o41836);
-
-	return Color(ff, ff, ff, 1)
+func perlin_warp_1(uv : Vector2) -> Color:
+	return NoisePerlin.perlin_warp_1(uv, Vector2(p_o41835_scale_x, p_o41835_scale_y), int(p_o41836_iterations), p_o41836_persistence, seed_o41836, Vector2(p_o41835_translate_x, p_o41835_translate_y), p_o41835_rotate, Vector2(p_o41836_scale_x, p_o41836_scale_y))
 
 func reffg():
 	return false
