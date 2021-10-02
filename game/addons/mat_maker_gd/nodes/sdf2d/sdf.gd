@@ -1,7 +1,8 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -76,18 +77,18 @@ func gen() -> void:
 #			var fc : float = sdf_rhombus(v)
 #			var fc : float = sdf_arc(v)
 			
-#			var fc : float = sdf_boolean_union(sdf_circle(v), sdf_box(v))
-#			var fc : float = sdf_boolean_substraction(sdf_circle(v), sdf_box(v))
-#			var fc : float = sdf_boolean_intersection(sdf_circle(v), sdf_box(v))
+			var fc : float = SDF2D.sdf_boolean_union(sdf_circle(v), sdf_box(v))
+#			var fc : float = SDF2D.sdf_boolean_substraction(sdf_circle(v), sdf_box(v))
+#			var fc : float = SDF2D.sdf_boolean_intersection(sdf_circle(v), sdf_box(v))
 			
-#			var fc : float = sdf_smooth_boolean_union(sdf_circle(v), sdf_box(v), 0.15)
-#			var fc : float = sdf_smooth_boolean_substraction(sdf_circle(v), sdf_box(v), 0.15)
-#			var fc : float = sdf_smooth_boolean_intersection(sdf_circle(v), sdf_box(v), 0.15)
+#			var fc : float = SDF2D.sdf_smooth_boolean_union(sdf_circle(v), sdf_box(v), 0.15)
+#			var fc : float = SDF2D.sdf_smooth_boolean_substraction(sdf_circle(v), sdf_box(v), 0.15)
+#			var fc : float = SDF2D.sdf_smooth_boolean_intersection(sdf_circle(v), sdf_box(v), 0.15)
 
-#			var fc : float = sdf_rounded_shape(sdf_box(v), 0.15)
-#			var fc : float = sdf_annular_shape(sdf_box(v), 0.15)
+#			var fc : float = SDF2D.sdf_rounded_shape(sdf_box(v), 0.15)
+#			var fc : float = SDF2D.sdf_annular_shape(sdf_box(v), 0.15)
 			
-			var fc : float = Commons.sdf_morph(sdf_circle(v), sdf_box(v), 0.5)
+#			var fc : float = SDF2D.sdf_morph(sdf_circle(v), sdf_box(v), 0.5)
 			
 			var col : Color = sdf_show(fc)
 
@@ -100,31 +101,22 @@ func gen() -> void:
 	texture = tex
 
 func sdf_show(val : float) -> Color:
-	var o47009_0_1_f : float = clamp(-val / max(p_o47009_bevel, 0.00001), 0.0, 1.0);
-	
-	return Color(o47009_0_1_f, o47009_0_1_f, o47009_0_1_f, 1)
-
+	return SDF2D.sdf_show(val, p_o47009_bevel)
 
 func sdf_circle(uv : Vector2) -> float:
-	return (uv - Vector2(p_o11635_cx + 0.5, p_o11635_cy + 0.5)).length() - p_o11635_r;
-
+	return SDF2D.sdf_circle(uv, Vector2(p_o11635_cx, p_o11635_cy), p_o11635_r)
 
 func sdf_box(uv : Vector2) -> float:
-	var o48575_0_d : Vector2 = Commons.absv2(uv - Vector2(p_o48575_cx+0.5, p_o48575_cy+0.5)) - Vector2(p_o48575_w, p_o48575_h)
-	
-	return Commons.maxv2(o48575_0_d, Vector2(0, 0)).length() + min(max(o48575_0_d.x, o48575_0_d.y), 0.0)
+	return SDF2D.sdf_box(uv, Vector2(p_o48575_cx, p_o48575_cx), Vector2(p_o48575_w, p_o48575_h))
 
 func sdf_line(uv : Vector2) -> float:
-	return Commons.sdLine(uv, Vector2(p_o49570_ax+0.5, p_o49570_ay+0.5), Vector2(p_o49570_bx+0.5, p_o49570_by+0.5)) - p_o49570_r;
-
+	return SDF2D.sdf_line(uv, Vector2(p_o49570_ax, p_o49570_ay), Vector2(p_o49570_bx, p_o49570_by), p_o49570_r)
 
 func sdf_rhombus(uv : Vector2) -> float:
-	return Commons.sdRhombus(uv - Vector2(p_o50848_cx + 0.5, p_o50848_cy+0.5), Vector2(p_o50848_w, p_o50848_h));
-
+	return SDF2D.sdf_rhombus(uv, Vector2(p_o50848_cx, p_o50848_cy), Vector2(p_o50848_w, p_o50848_h))
 
 func sdf_arc(uv : Vector2) -> float:
-	return Commons.sdArc(uv - Vector2(0.5, 0.5), Commons.modf(p_o51990_a1, 360.0) * 0.01745329251, Commons.modf(p_o51990_a2, 360.0)*0.01745329251, p_o51990_r1, p_o51990_r2);
-
+	return SDF2D.sdf_arc(uv, Vector2(p_o51990_a1, p_o51990_a2), Vector2(p_o51990_r1, p_o51990_r2))
 
 func reffg():
 	return false
