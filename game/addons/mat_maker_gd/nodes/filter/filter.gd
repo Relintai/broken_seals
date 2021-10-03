@@ -2,6 +2,8 @@ tool
 extends TextureRect
 
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Colors = preload("res://addons/mat_maker_gd/nodes/common/colors.gd")
+var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -38,7 +40,7 @@ func gen() -> void:
 		for y in range(image.get_height()):
 			var v : Vector2 = Vector2(x / w, y / h)
 
-			var f : float = Commons.shape_circle(v, 3, 1.0 * 1.0, 1.0)
+			var f : float = Shapes.shape_circle(v, 3, 1.0 * 1.0, 1.0)
 			var c : Color = Color(f, f, f, 1)
 			
 #			c = invert(c)
@@ -59,14 +61,14 @@ var p_o91644_brightness = 0.000000000;
 var p_o91644_contrast = 1.000000000;
 
 func brightness_contrast(color : Color) -> Color:
-	return Commons.brightness_contrast(color, p_o91644_brightness, p_o91644_contrast);
+	return Colors.brightness_contrast(color, p_o91644_brightness, p_o91644_contrast);
 
 var p_o102649_hue = 0.000000000;
 var  p_o102649_saturation = 1.000000000;
 var  p_o102649_value = 1.000000000;
 
 func adjust_hsv(color : Color) -> Color:
-	return Commons.adjust_hsv(color, p_o102649_hue, p_o102649_saturation, p_o102649_value)
+	return Colors.adjust_hsv(color, p_o102649_hue, p_o102649_saturation, p_o102649_value)
 	
 func reffg():
 	return false
