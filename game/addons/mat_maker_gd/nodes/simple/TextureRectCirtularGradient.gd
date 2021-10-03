@@ -1,6 +1,7 @@
 tool
 extends TextureRect
 
+var Gradients = preload("res://addons/mat_maker_gd/nodes/common/gradients.gd")
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 var image : Image
@@ -48,6 +49,27 @@ func gen() -> void:
 #	var bmin : Vector2 = Vector2(0.1, 0.1)
 #	var bmax : Vector2 = Vector2(1, 1)
 
+	var data : PoolRealArray = PoolRealArray()
+	data.resize(15)
+	var i : int = 0
+	data[i + 0] = p_o95415_gradient_0_pos
+	data[i + 1] = p_o95415_gradient_0_r
+	data[i + 2] = p_o95415_gradient_0_g
+	data[i + 3] = p_o95415_gradient_0_b
+	data[i + 4] = p_o95415_gradient_0_a
+	i += 5
+	data[i + 0] = p_o95415_gradient_1_pos
+	data[i + 1] = p_o95415_gradient_1_r
+	data[i + 2] = p_o95415_gradient_1_g
+	data[i + 3] = p_o95415_gradient_1_b
+	data[i + 4] = p_o95415_gradient_1_a
+	i += 5
+	data[i + 0] = p_o95415_gradient_2_pos
+	data[i + 1] = p_o95415_gradient_2_r
+	data[i + 2] = p_o95415_gradient_2_g
+	data[i + 3] = p_o95415_gradient_2_b
+	data[i + 4] = p_o95415_gradient_2_a
+
 	image.lock()
 	
 	var w : float = image.get_width()
@@ -57,15 +79,16 @@ func gen() -> void:
 	
 	for x in range(image.get_width()):
 		for y in range(image.get_height()):
-			var v : Vector2 = Vector2(x / w, y / h)
+			var uv : Vector2 = Vector2(x / w, y / h)
 			
 			#branchless fix for division by zero
-			v.y += 0.000001
+			uv.y += 0.000001
 			
-#			var col : Color = gradient_type_1(fractf(p_o95415_repeat * 0.15915494309 * atan((v.x - 0.5) / (v.y - 0.5))));
-#			var col : Color = gradient_type_2(fractf(p_o95415_repeat * 0.15915494309 * atan((v.x - 0.5) / (v.y - 0.5))));
-#			var col : Color = gradient_type_3(fractf(p_o95415_repeat * 0.15915494309 * atan((v.x - 0.5) / (v.y - 0.5))));
-			var col : Color = gradient_type_4(Commons.fractf(p_o95415_repeat * 0.15915494309 * atan((v.x - 0.5) / v.y - 0.5)));
+#			var col : Color = gradient_type_1(Commons.fractf(p_o95415_repeat * 0.15915494309 * atan((uv.x - 0.5) / (uv.y - 0.5))));
+#			var col : Color = gradient_type_2(Commons.fractf(p_o95415_repeat * 0.15915494309 * atan((uv.x - 0.5) / (uv.y - 0.5))));
+#			var col : Color = gradient_type_3(Commons.fractf(p_o95415_repeat * 0.15915494309 * atan((uv.x - 0.5) / (uv.y - 0.5))));
+#			var col : Color = gradient_type_4(Commons.fractf(p_o95415_repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)));
+			var col : Color = Gradients.circular_gradient_type_1(uv, p_o95415_repeat, data);
 
 			image.set_pixel(x, y, col)
 
@@ -73,6 +96,7 @@ func gen() -> void:
 	
 	tex.create_from_image(image)
 	texture = tex
+
 
 func gradient_type_1(x : float) -> Color:
 	if (x < 0.5*(p_o95415_gradient_0_pos+p_o95415_gradient_1_pos)):
@@ -112,6 +136,7 @@ func gradient_type_4(x : float) -> Color:
 		return lerp(lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), (x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)), lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), (x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)), 0.5+0.5*(x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos));
   
 	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
+ 
 
 func reffg():
 	return false
