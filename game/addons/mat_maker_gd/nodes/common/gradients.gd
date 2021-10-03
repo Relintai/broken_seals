@@ -4,6 +4,38 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #note: data : PoolRealArray -> pos, r, g, b, a, pos, r, g, b, a ....
 
+static func radial_gradient_type_1(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
+	return gradient_type_1(Commons.fractf(repeat * 1.41421356237* (Commons.fractv2(uv) - Vector2(0.5, 0.5)).length()), data)
+
+static func radial_gradient_type_2(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
+	return gradient_type_2(Commons.fractf(repeat * 1.41421356237* (Commons.fractv2(uv) - Vector2(0.5, 0.5)).length()), data)
+	
+static func radial_gradient_type_3(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
+	return gradient_type_3(Commons.fractf(repeat * 1.41421356237* (Commons.fractv2(uv) - Vector2(0.5, 0.5)).length()), data)
+	
+static func radial_gradient_type_4(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
+	return gradient_type_4(Commons.fractf(repeat * 1.41421356237* (Commons.fractv2(uv) - Vector2(0.5, 0.5)).length()), data)
+
+
+
+static func normal_gradient_type_1(uv : Vector2, repeat : float, rotate : float, data : PoolRealArray) -> Color:
+	var rr : float = 0.5+(cos(rotate*0.01745329251)*(uv.x-0.5)+sin(rotate*0.01745329251)*(uv.y-0.5))/(cos(abs(Commons.modf(rotate, 90.0)-45.0)*0.01745329251)*1.41421356237);
+	return gradient_type_1(Commons.fractf(rr * repeat), data)
+
+static func normal_gradient_type_2(uv : Vector2, repeat : float, rotate : float, data : PoolRealArray) -> Color:
+	var rr : float = 0.5+(cos(rotate*0.01745329251)*(uv.x-0.5)+sin(rotate*0.01745329251)*(uv.y-0.5))/(cos(abs(Commons.modf(rotate, 90.0)-45.0)*0.01745329251)*1.41421356237);
+	return gradient_type_2(Commons.fractf(rr * repeat), data)
+	
+static func normal_gradient_type_3(uv : Vector2, repeat : float, rotate : float, data : PoolRealArray) -> Color:
+	var rr : float = 0.5+(cos(rotate*0.01745329251)*(uv.x-0.5)+sin(rotate*0.01745329251)*(uv.y-0.5))/(cos(abs(Commons.modf(rotate, 90.0)-45.0)*0.01745329251)*1.41421356237);
+	return gradient_type_3(Commons.fractf(rr * repeat), data)
+	
+static func normal_gradient_type_4(uv : Vector2, repeat : float, rotate : float, data : PoolRealArray) -> Color:
+	var rr : float = 0.5+(cos(rotate*0.01745329251)*(uv.x-0.5)+sin(rotate*0.01745329251)*(uv.y-0.5))/(cos(abs(Commons.modf(rotate, 90.0)-45.0)*0.01745329251)*1.41421356237);
+	return gradient_type_4(Commons.fractf(rr * repeat), data)
+
+
+
 static func circular_gradient_type_1(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
 	return gradient_type_1(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
 
@@ -15,6 +47,8 @@ static func circular_gradient_type_3(uv : Vector2, repeat : float, data : PoolRe
 	
 static func circular_gradient_type_4(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
 	return gradient_type_4(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
+
+
 
 static func gradient_type_1(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
@@ -85,3 +119,64 @@ static func gradient_type_4(x : float, data : PoolRealArray) -> Color:
 #		return lerp(lerp(Color(gradient_0_r,gradient_0_g,gradient_0_b,gradient_0_a), Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), (x-gradient_0_pos)/(gradient_1_pos-gradient_0_pos)), lerp(Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), Color(gradient_2_r,gradient_2_g,gradient_2_b,gradient_2_a), (x-gradient_1_pos)/(gradient_2_pos-gradient_1_pos)), 0.5+0.5*(x-gradient_1_pos)/(gradient_2_pos-gradient_1_pos));
 #
 #	return Color(gradient_2_r,gradient_2_g,gradient_2_b,gradient_2_a);
+
+
+
+var p_o95415_repeat = 1.000000000;
+
+var p_o95415_gradient_0_pos = 0.000000000;
+var p_o95415_gradient_0_r = 0.000000000;
+var p_o95415_gradient_0_g = 0.000000000;
+var p_o95415_gradient_0_b = 0.000000000;
+var p_o95415_gradient_0_a = 1.000000000;
+var p_o95415_gradient_1_pos = 0.490909091;
+var p_o95415_gradient_1_r = 1.000000000;
+var p_o95415_gradient_1_g = 0.000000000;
+var p_o95415_gradient_1_b = 0.000000000;
+var p_o95415_gradient_1_a = 1.000000000;
+var p_o95415_gradient_2_pos = 1.000000000;
+var p_o95415_gradient_2_r = 1.000000000;
+var p_o95415_gradient_2_g = 1.000000000;
+var p_o95415_gradient_2_b = 1.000000000;
+var p_o95415_gradient_2_a = 1.000000000;
+
+
+func gradient_type_1_orig(x : float) -> Color:
+	if (x < 0.5*(p_o95415_gradient_0_pos+p_o95415_gradient_1_pos)):
+		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
+	elif (x < 0.5*(p_o95415_gradient_1_pos+p_o95415_gradient_2_pos)):
+		return Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a);
+
+	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
+
+func gradient_type_2_orig(x : float) -> Color:
+	if (x < p_o95415_gradient_0_pos):
+		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
+	elif (x < p_o95415_gradient_1_pos):
+		return lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), ((x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)));
+	elif (x < p_o95415_gradient_2_pos):
+		return lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), ((x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)));
+
+	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
+
+
+func gradient_type_3_orig(x : float) -> Color:
+	if (x < p_o95415_gradient_0_pos):
+		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
+	elif (x < p_o95415_gradient_1_pos):
+		return lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), 0.5-0.5*cos(3.14159265359*(x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)));
+	if (x < p_o95415_gradient_2_pos):
+		return lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), 0.5-0.5*cos(3.14159265359*(x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)));
+
+	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
+
+func gradient_type_4_orig(x : float) -> Color:
+	if (x < p_o95415_gradient_0_pos):
+		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
+	elif (x < p_o95415_gradient_1_pos):
+		return lerp(lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), (x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)), lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), (x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)), 1.0-0.5*(x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos));
+	elif (x < p_o95415_gradient_2_pos):
+		return lerp(lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), (x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)), lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), (x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)), 0.5+0.5*(x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos));
+  
+	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
+ 
