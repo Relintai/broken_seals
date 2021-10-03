@@ -1,3 +1,4 @@
+tool
 extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")

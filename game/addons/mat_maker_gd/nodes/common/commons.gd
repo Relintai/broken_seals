@@ -1,3 +1,4 @@
+tool
 extends Reference
 
 static func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
