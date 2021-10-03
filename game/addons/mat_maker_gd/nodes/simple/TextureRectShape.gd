@@ -1,7 +1,7 @@
 tool
 extends TextureRect
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
 
 var image : Image
 var tex : ImageTexture
@@ -39,6 +39,7 @@ func gen() -> void:
 #	var bmin : Vector2 = Vector2(0.1, 0.1)
 #	var bmax : Vector2 = Vector2(1, 1)
 
+
 	image.lock()
 	
 	var w : float = image.get_width()
@@ -50,11 +51,11 @@ func gen() -> void:
 		for y in range(image.get_height()):
 			var v : Vector2 = Vector2(x / w, y / h)
 
-#			var c : float = shape_circle(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
-#			var c : float = shape_polygon(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
-#			var c : float = shape_star(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
-#			var c : float = shape_curved_star(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
-			var c : float = Commons.shape_rays(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
+#			var c : float = Commons.shape_circle(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
+#			var c : float = Commons.shape_polygon(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
+#			var c : float = Commons.shape_star(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
+#			var c : float = Commons.shape_curved_star(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
+			var c : float = Shapes.shape_rays(v, p_o69054_sides, p_o69054_radius * 1.0, p_o69054_edge * 1.0)
 
 			image.set_pixel(x, y, Color(c, c, c, 1))
 
