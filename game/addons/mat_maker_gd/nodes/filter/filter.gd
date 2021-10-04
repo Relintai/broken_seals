@@ -55,7 +55,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+	#texture = tex
 
 var p_o91644_brightness = 0.000000000;
 var p_o91644_contrast = 1.000000000;

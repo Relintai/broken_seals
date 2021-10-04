@@ -50,7 +50,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 var seed_o80035 = 15184;
 var p_o80035_sx = 4.000000000;

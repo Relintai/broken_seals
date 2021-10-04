@@ -51,7 +51,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 var p_o41835_translate_x = 0.500000000;
 var p_o41835_translate_y = 0.500000000;

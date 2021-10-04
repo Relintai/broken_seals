@@ -53,7 +53,7 @@ func gen() -> void:
 	image.unlock()
 
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 func o11853_input_in(uv : Vector2) -> Vector3:
 	var f : float = Commons.shape_circle(uv, 3, 1.0 * 1.0, 1.0)

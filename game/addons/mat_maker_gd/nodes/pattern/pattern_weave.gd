@@ -48,7 +48,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 
 var p_o46354_columns = 4.000000000;

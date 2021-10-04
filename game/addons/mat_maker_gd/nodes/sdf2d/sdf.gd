@@ -98,7 +98,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 func sdf_show(val : float) -> Color:
 	return SDF2D.sdf_show(val, p_o47009_bevel)

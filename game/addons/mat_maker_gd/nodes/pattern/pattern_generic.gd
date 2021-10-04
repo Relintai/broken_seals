@@ -47,7 +47,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+#	texture = tex
 
 #var p_o7009_x_scale = 4.000000000;
 #var p_o7009_y_scale = 4.000000000;
