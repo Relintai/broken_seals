@@ -9,6 +9,7 @@ enum SlotTypes {
 	SLOT_TYPE_FLOAT = 2,
 	SLOT_TYPE_VECTOR2 = 3,
 	SLOT_TYPE_VECTOR3 = 4,
+	SLOT_TYPE_UNIVERSAL = 5,
 }
 
 export(Vector2) var graph_position : Vector2 = Vector2()
