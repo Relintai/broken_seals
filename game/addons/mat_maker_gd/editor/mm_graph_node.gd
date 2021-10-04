@@ -44,7 +44,7 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	
 	sb.connect("value_changed", self, "on_int_spinbox_value_changed", [ slot_idx ])
 
-func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
+func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> void:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	if slot_name != "":
@@ -57,7 +57,7 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	
 	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
 	sb.rounded = false
-	sb.step = 0
+	sb.step = step
 	sb.value = _node.call(getter)
 
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
