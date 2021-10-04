@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var Gradients = preload("res://addons/mat_maker_gd/nodes/common/gradients.gd")
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")

@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var NoiseVoronoi = preload("res://addons/mat_maker_gd/nodes/common/noise_voronoi.gd")
 

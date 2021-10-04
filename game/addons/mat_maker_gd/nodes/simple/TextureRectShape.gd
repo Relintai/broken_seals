@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
 

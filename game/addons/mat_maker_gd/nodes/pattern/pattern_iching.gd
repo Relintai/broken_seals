@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 

@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var NoisePerlin = preload("res://addons/mat_maker_gd/nodes/common/noise_perlin.gd")
 

@@ -1,5 +1,5 @@
 tool
-extends TextureRect
+extends MMNode
 
 var SDF3D = preload("res://addons/mat_maker_gd/nodes/common/sdf3d.gd")
 
