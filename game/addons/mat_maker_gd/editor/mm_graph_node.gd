@@ -25,6 +25,42 @@ func add_slot_label(input_type : int, output_type : int, getter : String, setter
 	l.text = slot_name
 	
 	add_slot(input_type, output_type, getter, setter, l)
+	
+func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	if slot_name != "":
+		var l : Label = Label.new()
+		l.text = slot_name
+		bc.add_child(l)
+	
+	var sb : SpinBox = SpinBox.new()
+	sb.rounded = true
+	bc.add_child(sb)
+	
+	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	
+	sb.value = _node.call(getter)
+	
+	sb.connect("value_changed", self, "on_int_spinbox_value_changed", [ slot_idx ])
+
+func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	if slot_name != "":
+		var l : Label = Label.new()
+		l.text = slot_name
+		bc.add_child(l)
+	
+	var sb : SpinBox = SpinBox.new()
+	bc.add_child(sb)
+	
+	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	sb.rounded = false
+	sb.step = 0
+	sb.value = _node.call(getter)
+
+	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
 
 func add_slot(input_type : int, output_type : int, getter : String, setter : String, control : Control) -> int:
 	add_child(control)
@@ -88,3 +124,9 @@ func on_node_changed():
 	#_node.recalculate_image(_material)
 	
 	propagate_node_change()
+	
+func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
+	_node.call(properties[slot_idx][4], int(val))
+
+func on_float_spinbox_value_changed(val : float, slot_idx) -> void:
+	_node.call(properties[slot_idx][4], val)

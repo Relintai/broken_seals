@@ -50,7 +50,7 @@ func gen() -> void:
 	image.unlock()
 	
 	tex.create_from_image(image)
-	texture = tex
+	#texture = tex
 
 var p_o7136_amplitude = 0.500000000;
 var p_o7136_frequency = 2.000000000;
