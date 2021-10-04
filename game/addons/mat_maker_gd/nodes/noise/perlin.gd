@@ -6,18 +6,12 @@ var NoisePerlin = preload("res://addons/mat_maker_gd/nodes/common/noise_perlin.g
 var image : Image
 var tex : ImageTexture
 
-export(Vector2) var bmin : Vector2 = Vector2(0.1, 0.1)
-export(Vector2) var bmax : Vector2 = Vector2(1, 1)
+export(Vector2) var scale : Vector2 = Vector2(4, 4)
+export(int) var iterations : int = 3
+export(float) var persistence : float = 0.5
 
-var seed_o12297 = -26656;
-var p_o12297_scale_x = 4.000000000;
-var p_o12297_scale_y = 4.000000000;
-var p_o12297_iterations = 3.000000000;
-var p_o12297_persistence = 0.500000000;
-
-func get_value_for(uv : Vector2, slot_idx : int) -> Color:
-	var a = NoisePerlin.perlinc(uv, Vector2(p_o12297_scale_x, p_o12297_scale_y), int(p_o12297_iterations), p_o12297_persistence, seed_o12297)
-	return a
+func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
+	return NoisePerlin.perlinc(uv, scale, iterations, persistence, pseed)
 
 func register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_texture(0, 0, "recalculate_image", "")

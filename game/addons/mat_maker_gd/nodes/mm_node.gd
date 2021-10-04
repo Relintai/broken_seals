@@ -21,7 +21,7 @@ func recalculate_image(material, slot_idx : int) -> ImageTexture:
 		for y in range(image.get_height()):
 			var v : Vector2 = Vector2(x / w, y / h)
 
-			var col : Color = get_value_for(v, slot_idx)
+			var col : Color = get_value_for(v, slot_idx, pseed)
 
 			image.set_pixel(x, y, col)
 
@@ -31,7 +31,7 @@ func recalculate_image(material, slot_idx : int) -> ImageTexture:
 
 	return tex
 
-func get_value_for(uv : Vector2, slot_idx : int) -> Color:
+func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
 	return Color()
 
 func register_methods(mm_graph_node) -> void:
