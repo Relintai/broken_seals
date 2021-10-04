@@ -29,10 +29,9 @@ func add_slot_label(input_type : int, output_type : int, getter : String, setter
 func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
-	if slot_name != "":
-		var l : Label = Label.new()
-		l.text = slot_name
-		bc.add_child(l)
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
 	sb.rounded = true
@@ -47,10 +46,9 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> void:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
-	if slot_name != "":
-		var l : Label = Label.new()
-		l.text = slot_name
-		bc.add_child(l)
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
 	bc.add_child(sb)
@@ -61,6 +59,33 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	sb.value = _node.call(getter)
 
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
+	
+func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> void:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sbx : SpinBox = SpinBox.new()
+	bc.add_child(sbx)
+	
+	var sby : SpinBox = SpinBox.new()
+	bc.add_child(sby)
+	
+	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	sbx.rounded = false
+	sby.rounded = false
+	sbx.step = step
+	sby.step = step
+	
+	var val : Vector2 = _node.call(getter)
+	
+	sbx.value = val.x
+	sby.value = val.y
+
+	sbx.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
+	sby.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 
 func add_slot(input_type : int, output_type : int, getter : String, setter : String, control : Control) -> int:
 	add_child(control)
@@ -130,3 +155,9 @@ func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
 
 func on_float_spinbox_value_changed(val : float, slot_idx) -> void:
 	_node.call(properties[slot_idx][4], val)
+
+func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
+	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
+	
+	_node.call(properties[slot_idx][4], vv)
+
