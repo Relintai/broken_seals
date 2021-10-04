@@ -149,6 +149,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/mat_maker_gd/nodes/mm_material.gd"
 }, {
+"base": "Resource",
+"class": "MMNode",
+"language": "GDScript",
+"path": "res://addons/mat_maker_gd/nodes/mm_node.gd"
+}, {
 "base": "Node",
 "class": "Main",
 "language": "GDScript",
@@ -253,6 +258,7 @@ _global_script_class_icons={
 "ItemTemplateGD": "",
 "LayeredTextureMaker": "",
 "MMMateial": "",
+"MMNode": "",
 "Main": "",
 "MainTPlanetGenerator": "",
 "ManaResource": "",
@@ -316,7 +322,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg" )
 
 [ess]
 

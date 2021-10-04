@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/mat_maker_gd/editor/CreateNamePopup.gd" type="Script" id=1]
+
+[node name="CreateNamePopup" type="ConfirmationDialog"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -245.5
+margin_top = -220.0
+margin_right = 245.5
+margin_bottom = 220.0
+window_title = "Create New Resource"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+line_edit_path = NodePath("VBoxContainer/LineEdit")
+tree_path = NodePath("VBoxContainer/Tree")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 483.0
+margin_bottom = 404.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_right = 475.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Type"
+
+[node name="Tree" type="Tree" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 475.0
+margin_bottom = 350.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+hide_root = true
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+visible = false
+margin_top = 354.0
+margin_right = 475.0
+margin_bottom = 368.0
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+visible = false
+margin_top = 372.0
+margin_right = 475.0
+margin_bottom = 396.0
+size_flags_horizontal = 3
+caret_blink = true
