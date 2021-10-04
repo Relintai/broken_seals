@@ -30,7 +30,7 @@ func recreate() -> void:
 		
 	for n in _material.nodes:
 		var gn : GraphNode = MMGraphNode.new()
-		gn.set_node(n)
+		gn.set_node(_material, n)
 		_graph_edit.add_child(gn)
 		
 	#connect them
@@ -56,8 +56,9 @@ func _on_AddPopup_ok_pressed(script_path : String):
 		print("_on_AddPopup_ok_pressed: Error !nnode! script: " + script_path)
 		return
 	
-	_material.nodes.append(nnode)
+	_material.add_node(nnode)
 	
 	var gn : GraphNode = MMGraphNode.new()
-	gn.set_node(nnode)
+	gn.set_node(_material, nnode)
 	_graph_edit.add_child(gn)
+	
