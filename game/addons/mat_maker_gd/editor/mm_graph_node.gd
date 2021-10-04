@@ -1,7 +1,7 @@
 tool
 extends GraphNode
 
-export(PoolColorArray) var slot_colors : PoolColorArray
+var slot_colors : PoolColorArray
 
 var _material : MMMateial  = null
 var _node : MMNode = null
@@ -10,7 +10,7 @@ var properties : Array = Array()
 func _init():
 	show_close = true
 	connect("offset_changed", self, "on_offset_changed")
-
+	
 func add_slot_texture(input_type : int, output_type : int, getter : String, setter : String) -> void:
 	var t : TextureRect = TextureRect.new()
 
@@ -50,12 +50,12 @@ func add_slot(input_type : int, output_type : int, getter : String, setter : Str
 	if output_type != -1:
 		set_slot_type_left(slot_idx, output_type)
 		
-	if slot_colors.size() > input_type:
+	if input_type != -1 && slot_colors.size() > input_type:
 		set_slot_color_left(slot_idx, slot_colors[input_type])
 		
-	if slot_colors.size() > output_type:
-		set_slot_color_left(slot_idx, slot_colors[output_type])
-		
+	if output_type != -1 && slot_colors.size() > output_type:
+		set_slot_color_right(slot_idx, slot_colors[output_type])
+
 	return slot_idx
 
 func set_node(material : MMMateial, node : MMNode) -> void:

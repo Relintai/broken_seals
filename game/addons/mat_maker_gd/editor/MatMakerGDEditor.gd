@@ -3,6 +3,8 @@ extends MarginContainer
 
 var MMGraphNode = preload("res://addons/mat_maker_gd/editor/mm_graph_node.gd")
 
+export(PoolColorArray) var slot_colors : PoolColorArray
+
 export(NodePath) var graph_edit_path : NodePath = "VBoxContainer/GraphEdit"
 export(NodePath) var add_popup_path : NodePath = "Popups/AddPopup"
 
@@ -30,6 +32,7 @@ func recreate() -> void:
 		
 	for n in _material.nodes:
 		var gn : GraphNode = MMGraphNode.new()
+		gn.slot_colors = slot_colors
 		gn.set_node(_material, n)
 		_graph_edit.add_child(gn)
 		
@@ -59,6 +62,7 @@ func _on_AddPopup_ok_pressed(script_path : String):
 	_material.add_node(nnode)
 	
 	var gn : GraphNode = MMGraphNode.new()
+	gn.slot_colors = slot_colors
 	gn.set_node(_material, nnode)
 	_graph_edit.add_child(gn)
 	

@@ -14,5 +14,5 @@ func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
 	return NoisePerlin.perlinc(uv, scale, iterations, persistence, pseed)
 
 func register_methods(mm_graph_node) -> void:
-	mm_graph_node.add_slot_texture(0, 0, "recalculate_image", "")
+	mm_graph_node.add_slot_texture(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
 
