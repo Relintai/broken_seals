@@ -15,7 +15,7 @@ var p_o12297_scale_y = 4.000000000;
 var p_o12297_iterations = 3.000000000;
 var p_o12297_persistence = 0.500000000;
 
-func get_value_for(uv : Vector2) -> Color:
+func get_value_for(uv : Vector2, slot_idx : int) -> Color:
 	var a = NoisePerlin.perlinc(uv, Vector2(p_o12297_scale_x, p_o12297_scale_y), int(p_o12297_iterations), p_o12297_persistence, seed_o12297)
 	return a
 
