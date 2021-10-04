@@ -11,6 +11,7 @@ var tool_button : ToolButton = null
 
 func _enter_tree():
 	add_custom_type("MMNode", "Resource", MMNode, null)
+	add_custom_type("MMMaterial", "Resource", MMMaterial, null)
 	
 	editor_scene = editor_packed_scene.instance()
 	
@@ -19,6 +20,7 @@ func _enter_tree():
 	
 func _exit_tree():
 	remove_custom_type("MMNode")
+	remove_custom_type("MMMaterial")
 	
 	remove_control_from_bottom_panel(editor_scene)
 	
