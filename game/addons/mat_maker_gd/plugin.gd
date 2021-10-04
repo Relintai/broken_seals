@@ -36,7 +36,9 @@ func handles(object):
 func edit(object):
 	#if editor_scene:
 	#	make_bottom_panel_item_visible(editor_scene)
-	pass
+	
+	if object is MMMateial:
+		editor_scene.set_mmmaterial(object as MMMateial)
 	
 func make_visible(visible):
 	if tool_button:
