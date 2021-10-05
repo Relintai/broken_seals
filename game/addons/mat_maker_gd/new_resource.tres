@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=6 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=3]
+[ext_resource path="res://addons/mat_maker_gd/nodes/simple/shape.gd" type="Script" id=4]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -18,7 +19,15 @@ bmin = Vector2( 0.1, 0.1 )
 bmax = Vector2( 1, 1 )
 refresh = false
 
+[sub_resource type="Resource" id=3]
+script = ExtResource( 4 )
+graph_position = Vector2( -280, -220 )
+shape_type = 0
+sides = 6
+radius = 0.845361
+edge = 0.051546
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ) ]
