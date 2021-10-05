@@ -13,6 +13,11 @@ static func perlin(uv : Vector2, size : Vector2, octaves : int, persistence : fl
 
 	return Color(f, f, f, 1)
 	
+static func perlinabs(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = perlinf(uv, size, octaves, persistence, pseed)
+
+	return Color(f, f, f, 1)
+	
 static func cellular(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
 	var f : float = cellularf(uv, size, octaves, persistence, pseed)
 
@@ -43,6 +48,28 @@ static func cellular6(uv : Vector2, size : Vector2, octaves : int, persistence :
 
 	return Color(f, f, f, 1)
 
+
+#float $(name)_fbm(vec2 coord, vec2 size, int folds, int octaves, float persistence, float seed) {
+#	float normalize_factor = 0.0;
+#	float value = 0.0;
+#	float scale = 1.0;
+#
+#	for (int i = 0; i < octaves; i++) {
+#		float noise = fbm_$noise(coord*size, size, seed);
+#
+#		for (int f = 0; f < folds; ++f) {
+#			noise = abs(2.0*noise-1.0);
+#		}
+#
+#		value += noise * scale;
+#		normalize_factor += scale;
+#		size *= 2.0;
+#		scale *= persistence;
+#	}
+#
+#	return value / normalize_factor;
+#}
+
 static func fbmf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
@@ -63,6 +90,19 @@ static func perlinf(coord : Vector2, size : Vector2, octaves : int, persistence 
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
 		value += fbm_perlin(coord*size, size, pseed) * scale;
+		normalize_factor += scale;
+		size *= 2.0;
+		scale *= persistence;
+	
+	return value / normalize_factor;
+	
+static func perlinabsf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+	var normalize_factor : float = 0.0;
+	var value : float = 0.0;
+	var scale : float = 1.0;
+	
+	for i in range(octaves):# (int i = 0; i < octaves; i++) {
+		value += fbm_perlinabs(coord*size, size, pseed) * scale;
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
@@ -148,6 +188,18 @@ static func cellular6f(coord : Vector2, size : Vector2, octaves : int, persisten
 	return value / normalize_factor;
 
 
+#float fbm_value(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float p00 = rand(mod(o, size));
+#	float p01 = rand(mod(o + vec2(0.0, 1.0), size));
+#	float p10 = rand(mod(o + vec2(1.0, 0.0), size));
+#	float p11 = rand(mod(o + vec2(1.0, 1.0), size));
+#	vec2 t = f * f * (3.0 - 2.0 * f);
+#
+#	return mix(mix(p00, p10, t.x), mix(p01, p11, t.x), t.y);
+#}
+
 static func fbm_value(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
 	var f : Vector2 = Commons.fractv2(coord);
@@ -158,6 +210,31 @@ static func fbm_value(coord : Vector2, size : Vector2, pseed : float) -> float:
 	
 	var t : Vector2 = f * f * (Vector2(3, 3) - 2.0 * f);
 	return lerp(lerp(p00, p10, t.x), lerp(p01, p11, t.x), t.y);
+
+
+#float fbm_perlin(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#
+#	float a00 = rand(mod(o, size)) * 6.28318530718;
+#	float a01 = rand(mod(o + vec2(0.0, 1.0), size)) * 6.28318530718;
+#	float a10 = rand(mod(o + vec2(1.0, 0.0), size)) * 6.28318530718;
+#	float a11 = rand(mod(o + vec2(1.0, 1.0), size)) * 6.28318530718;
+#
+#	vec2 v00 = vec2(cos(a00), sin(a00));
+#	vec2 v01 = vec2(cos(a01), sin(a01));
+#	vec2 v10 = vec2(cos(a10), sin(a10));
+#	vec2 v11 = vec2(cos(a11), sin(a11));
+#
+#	float p00 = dot(v00, f);
+#	float p01 = dot(v01, f - vec2(0.0, 1.0));
+#	float p10 = dot(v10, f - vec2(1.0, 0.0));
+#	float p11 = dot(v11, f - vec2(1.0, 1.0));
+#
+#	vec2 t = f * f * (3.0 - 2.0 * f);
+#
+#	return 0.5 + mix(mix(p00, p10, t.x), mix(p01, p11, t.x), t.y);
+#}
 
 static func fbm_perlin(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
@@ -179,6 +256,26 @@ static func fbm_perlin(coord : Vector2, size : Vector2, pseed : float) -> float:
 	
 	return 0.5 + lerp(lerp(p00, p10, t.x), lerp(p01, p11, t.x), t.y);
 
+#float fbm_perlinabs(vec2 coord, vec2 size, float seed) {
+#	return abs(2.0*fbm_perlin(coord, size, seed)-1.0);
+#}
+
+static func fbm_perlinabs(coord : Vector2, size : Vector2, pseed : float) -> float:
+	return abs(2.0*fbm_perlin(coord, size, pseed)-1.0)
+
+#float fbm_cellular(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float min_dist = 2.0;
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size)) + vec2(x, y);
+#			float dist = sqrt((f - node).x * (f - node).x + (f - node).y * (f - node).y);
+#			min_dist = min(min_dist, dist);
+#		}
+#	}
+#	return min_dist;
+#}
 
 static func fbm_cellular(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
@@ -196,6 +293,28 @@ static func fbm_cellular(coord : Vector2, size : Vector2, pseed : float) -> floa
 			min_dist = min(min_dist, dist);
 
 	return min_dist;
+
+#float fbm_cellular2(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float min_dist1 = 2.0;
+#	float min_dist2 = 2.0;
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size)) + vec2(x, y);
+#			float dist = sqrt((f - node).x * (f - node).x + (f - node).y * (f - node).y);
+#
+#			if (min_dist1 > dist) {
+#				min_dist2 = min_dist1;
+#				min_dist1 = dist;
+#			} else if (min_dist2 > dist) {
+#				min_dist2 = dist;
+#			}
+#		}
+#	}
+#
+#	return min_dist2-min_dist1;
+#}
 
 static func fbm_cellular2(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
@@ -222,6 +341,22 @@ static func fbm_cellular2(coord : Vector2, size : Vector2, pseed : float) -> flo
 	
 	return min_dist2-min_dist1;
 
+#float fbm_cellular3(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float min_dist = 2.0;
+#
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size))*0.5 + vec2(x, y);
+#			float dist = abs((f - node).x) + abs((f - node).y);
+#			min_dist = min(min_dist, dist);
+#		}
+#	}
+#
+#	return min_dist;
+#}
+
 static func fbm_cellular3(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
 	var f : Vector2 = Commons.fractv2(coord);
@@ -241,6 +376,29 @@ static func fbm_cellular3(coord : Vector2, size : Vector2, pseed : float) -> flo
 			min_dist = min(min_dist, dist);
 
 	return min_dist;
+
+#float fbm_cellular4(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float min_dist1 = 2.0;
+#	float min_dist2 = 2.0;
+#
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size))*0.5 + vec2(x, y);
+#			float dist = abs((f - node).x) + abs((f - node).y);
+#
+#				if (min_dist1 > dist) {
+#					min_dist2 = min_dist1;
+#					min_dist1 = dist;
+#				} else if (min_dist2 > dist) {
+#					min_dist2 = dist;
+#				}
+#		}
+#	}
+#
+#	return min_dist2-min_dist1;
+#}
 
 static func fbm_cellular4(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
@@ -267,6 +425,21 @@ static func fbm_cellular4(coord : Vector2, size : Vector2, pseed : float) -> flo
 
 	return min_dist2 - min_dist1;
 
+#float fbm_cellular5(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);float min_dist = 2.0;
+#
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size)) + vec2(x, y);
+#			float dist = max(abs((f - node).x), abs((f - node).y));
+#			min_dist = min(min_dist, dist);
+#		}
+#	}
+#
+#	return min_dist;
+#}
+
 static func fbm_cellular5(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
 	var f : Vector2 = Commons.fractv2(coord);
@@ -284,6 +457,28 @@ static func fbm_cellular5(coord : Vector2, size : Vector2, pseed : float) -> flo
 			min_dist = min(min_dist, dist);
 
 	return min_dist;
+
+#float fbm_cellular6(vec2 coord, vec2 size, float seed) {
+#	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
+#	vec2 f = fract(coord);
+#	float min_dist1 = 2.0;
+#	float min_dist2 = 2.0;
+#	for(float x = -1.0; x <= 1.0; x++) {
+#		for(float y = -1.0; y <= 1.0; y++) {
+#			vec2 node = rand2(mod(o + vec2(x, y), size)) + vec2(x, y);
+#			float dist = max(abs((f - node).x), abs((f - node).y));
+#
+#			if (min_dist1 > dist) {
+#				min_dist2 = min_dist1;
+#				min_dist1 = dist;
+#			} else if (min_dist2 > dist) {
+#				min_dist2 = dist;
+#			}
+#		}
+#	}
+#
+#	return min_dist2-min_dist1;
+#}
 
 static func fbm_cellular6(coord : Vector2, size : Vector2, pseed : float) -> float:
 	var o : Vector2 = Commons.floorv2(coord) + Commons.rand2(Vector2(float(pseed), 1.0 - float(pseed))) + size;
