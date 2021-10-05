@@ -15,9 +15,9 @@ func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
 
 func register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_texture(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
-	mm_graph_node.add_slot_int(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_iterations", "set_iterations", "iterations")
-	mm_graph_node.add_slot_float(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_persistence", "set_persistence", "persistence")
-	mm_graph_node.add_slot_vector2(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_scale", "set_scale", "scale")
+	mm_graph_node.add_slot_int(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_iterations", "set_iterations", "iterations")#, Vector2(1, 10))
+	mm_graph_node.add_slot_float(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_persistence", "set_persistence", "persistence", 0.05)#, Vector2(0, 1))
+	mm_graph_node.add_slot_vector2(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_scale", "set_scale", "scale", 1)#, Vector2(1, 32))
 
 func get_iterations() -> int:
 	return iterations

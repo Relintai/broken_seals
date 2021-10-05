@@ -28,7 +28,7 @@ func add_slot_label(input_type : int, output_type : int, getter : String, setter
 	
 	return add_slot(input_type, output_type, getter, setter, l)
 	
-func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> int:
+func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -37,6 +37,8 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	
 	var sb : SpinBox = SpinBox.new()
 	sb.rounded = true
+	sb.min_value = prange.x
+	sb.max_value = prange.y
 	bc.add_child(sb)
 	
 	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
@@ -47,7 +49,7 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	
 	return slot_idx
 
-func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> int:
+func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -60,13 +62,15 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
 	sb.rounded = false
 	sb.step = step
+	sb.min_value = prange.x
+	sb.max_value = prange.y
 	sb.value = _node.call(getter)
 
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
 	
 	return slot_idx
 	
-func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> int:
+func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -84,6 +88,10 @@ func add_slot_vector2(input_type : int, output_type : int, getter : String, sett
 	sby.rounded = false
 	sbx.step = step
 	sby.step = step
+	sbx.min_value = prange.x
+	sbx.max_value = prange.y
+	sby.min_value = prange.x
+	sby.max_value = prange.y
 	
 	var val : Vector2 = _node.call(getter)
 	
