@@ -27,7 +27,29 @@ func add_slot_label(input_type : int, output_type : int, getter : String, setter
 	l.text = slot_name
 	
 	return add_slot(input_type, output_type, getter, setter, l)
+
+func add_slot_enum(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, values : Array) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
 	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var mb : OptionButton = OptionButton.new()
+	
+	for v in values:
+		mb.add_item(v)
+	
+	bc.add_child(mb)
+	
+	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	
+	mb.selected = _node.call(getter)
+	
+	mb.connect("item_selected", self, "on_slot_enum_item_selected", [ slot_idx ])
+	
+	return slot_idx
+
 func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -272,3 +294,5 @@ func on_vector2_universal_spinbox_value_changed(val : float, slot_idx, spinbox_x
 	
 	properties[slot_idx][7].set_default_value(vv)
 	
+func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
+	_node.call(properties[slot_idx][4], val)
