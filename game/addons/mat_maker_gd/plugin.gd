@@ -3,6 +3,7 @@ extends EditorPlugin
 
 var MMNode = preload("res://addons/mat_maker_gd/nodes/mm_node.gd")
 var MMMaterial = preload("res://addons/mat_maker_gd/nodes/mm_material.gd")
+var MMNodeUniversalProperty = preload("res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd")
 
 var editor_packed_scene = preload("res://addons/mat_maker_gd/editor/MatMakerGDEditor.tscn")
 var editor_scene = null
@@ -12,6 +13,7 @@ var tool_button : ToolButton = null
 func _enter_tree():
 	add_custom_type("MMNode", "Resource", MMNode, null)
 	add_custom_type("MMMaterial", "Resource", MMMaterial, null)
+	add_custom_type("MMNodeUniversalProperty", "Resource", MMNodeUniversalProperty, null)
 	
 	editor_scene = editor_packed_scene.instance()
 	
@@ -21,6 +23,7 @@ func _enter_tree():
 func _exit_tree():
 	remove_custom_type("MMNode")
 	remove_custom_type("MMMaterial")
+	remove_custom_type("MMNodeUniversalProperty")
 	
 	remove_control_from_bottom_panel(editor_scene)
 	

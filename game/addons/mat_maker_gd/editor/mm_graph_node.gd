@@ -49,6 +49,29 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	
 	return slot_idx
 
+func add_slot_int_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sb : SpinBox = SpinBox.new()
+	sb.rounded = true
+	sb.min_value = prange.x
+	sb.max_value = prange.y
+	bc.add_child(sb)
+	
+	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	
+	sb.value = _node.call(input_property.get_default_value())
+	
+	sb.connect("value_changed", self, "on_int_universal_spinbox_value_changed", [ slot_idx ])
+	
+	properties[slot_idx].append(input_property)
+	
+	return slot_idx
+
 func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -69,7 +92,30 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
 	
 	return slot_idx
+
+func add_slot_float_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
 	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sb : SpinBox = SpinBox.new()
+	bc.add_child(sb)
+	
+	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	sb.rounded = false
+	sb.step = step
+	sb.min_value = prange.x
+	sb.max_value = prange.y
+	sb.value = _node.call(input_property.get_default_value())
+	
+	properties[slot_idx].append(input_property)
+
+	sb.connect("value_changed", self, "on_float_universal_spinbox_value_changed", [ slot_idx ])
+	
+	return slot_idx
+
 func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -101,6 +147,41 @@ func add_slot_vector2(input_type : int, output_type : int, getter : String, sett
 	sbx.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	sby.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	
+	return slot_idx
+
+func add_slot_vector2_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sbx : SpinBox = SpinBox.new()
+	bc.add_child(sbx)
+	
+	var sby : SpinBox = SpinBox.new()
+	bc.add_child(sby)
+	
+	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	sbx.rounded = false
+	sby.rounded = false
+	sbx.step = step
+	sby.step = step
+	sbx.min_value = prange.x
+	sbx.max_value = prange.y
+	sby.min_value = prange.x
+	sby.max_value = prange.y
+	
+	var val : Vector2 = _node.call(input_property.get_default_value())
+	
+	sbx.value = val.x
+	sby.value = val.y
+	
+	properties[slot_idx].append(input_property)
+
+	sbx.connect("value_changed", self, "on_vector2_universal_spinbox_value_changed", [ slot_idx, sbx, sby ])
+	sby.connect("value_changed", self, "on_vector2_universal_spinbox_value_changed", [ slot_idx, sbx, sby ])
+
 	return slot_idx
 
 func add_slot(input_type : int, output_type : int, getter : String, setter : String, control : Control) -> int:
@@ -180,3 +261,14 @@ func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_
 	
 	_node.call(properties[slot_idx][4], vv)
 
+func on_int_universal_spinbox_value_changed(val : float, slot_idx) -> void:
+	properties[slot_idx][7].set_default_value(int(val))
+
+func on_float_universal_spinbox_value_changed(val : float, slot_idx) -> void:
+	properties[slot_idx][7].set_default_value(val)
+
+func on_vector2_universal_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
+	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
+	
+	properties[slot_idx][7].set_default_value(vv)
+	
