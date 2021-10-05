@@ -22,7 +22,7 @@ export(Resource) var obj : Resource
 export(String) var getter : String
 export(Array) var params : Array
 
-func get_value():
+func get_value(uv : Vector2):
 	if !obj:
 		if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
 			return default_int
@@ -38,9 +38,9 @@ func get_value():
 		return null
 	
 	if params.size() == 0:
-		return obj.call(getter)
+		return obj.call(getter, uv)
 	else:
-		return obj.call(getter, params)
+		return obj.call(getter, uv, params)
 
 func get_default_value():
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
@@ -65,3 +65,5 @@ func set_default_value(val):
 		default_vector3 = val
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
 		default_color = val
+		
+	emit_changed()
