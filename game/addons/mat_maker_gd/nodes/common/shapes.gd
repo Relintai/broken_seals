@@ -4,7 +4,8 @@ extends Reference
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #float shape_circle(vec2 uv, float sides, float size, float edge) {  
-#	uv = 2.0*uv-1.0;edge = max(edge, 1.0e-8); 
+#	uv = 2.0*uv-1.0;
+#	edge = max(edge, 1.0e-8); 
 #	float distance = length(uv);  
 #	return clamp((1.0-distance/size)/edge, 0.0, 1.0);
 #}
