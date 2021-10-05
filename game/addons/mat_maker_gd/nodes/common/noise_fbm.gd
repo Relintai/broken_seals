@@ -3,48 +3,48 @@ extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
-static func fbmval(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = fbmf(uv, size, octaves, persistence, pseed)
+static func fbmval(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = fbmf(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 
-static func perlin(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = perlinf(uv, size, octaves, persistence, pseed)
-
-	return Color(f, f, f, 1)
-	
-static func perlinabs(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = perlinf(uv, size, octaves, persistence, pseed)
+static func perlin(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = perlinf(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellularf(uv, size, octaves, persistence, pseed)
+static func perlinabs(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = perlinf(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular2(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellular2f(uv, size, octaves, persistence, pseed)
+static func cellular(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellularf(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular3(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellular3f(uv, size, octaves, persistence, pseed)
+static func cellular2(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellular2f(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular4(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellular4f(uv, size, octaves, persistence, pseed)
+static func cellular3(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellular3f(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular5(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellular5f(uv, size, octaves, persistence, pseed)
+static func cellular4(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellular4f(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 	
-static func cellular6(uv : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> Color:
-	var f : float = cellular6f(uv, size, octaves, persistence, pseed)
+static func cellular5(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellular5f(uv, size, folds, octaves, persistence, pseed)
+
+	return Color(f, f, f, 1)
+	
+static func cellular6(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = cellular6f(uv, size, folds, octaves, persistence, pseed)
 
 	return Color(f, f, f, 1)
 
@@ -70,117 +70,162 @@ static func cellular6(uv : Vector2, size : Vector2, octaves : int, persistence :
 #	return value / normalize_factor;
 #}
 
-static func fbmf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func fbmf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_value(coord * size, size, pseed) * scale;
+		var noise : float = fbm_value(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func perlinf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func perlinf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_perlin(coord*size, size, pseed) * scale;
+		var noise : float = fbm_perlin(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func perlinabsf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func perlinabsf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_perlinabs(coord*size, size, pseed) * scale;
+		var noise : float = fbm_perlinabs(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func cellularf(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellularf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func cellular2f(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellular2f(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular2(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular2(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 
-static func cellular3f(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellular3f(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular3(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular3(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func cellular4f(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellular4f(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular4(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular4(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func cellular5f(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellular5f(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular5(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular5(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;
 	
 	return value / normalize_factor;
 	
-static func cellular6f(coord : Vector2, size : Vector2, octaves : int, persistence : float, pseed : float) -> float:
+static func cellular6f(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
 	var scale : float = 1.0;
 	
 	for i in range(octaves):# (int i = 0; i < octaves; i++) {
-		value += fbm_cellular6(coord*size, size, pseed) * scale;
+		var noise : float = fbm_cellular6(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
 		normalize_factor += scale;
 		size *= 2.0;
 		scale *= persistence;

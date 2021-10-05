@@ -64,28 +64,28 @@ var p_o33355_iterations = 5.000000000;
 var p_o33355_persistence = 0.500000000;
 
 func fbmval(uv : Vector2) -> Color:
-	return NoiseFBM.fbmval(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.fbmval(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 
 func perlin(uv : Vector2) -> Color:
-	return NoiseFBM.perlin(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.perlin(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular(uv : Vector2) -> Color:
-	return NoiseFBM.cellular(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular2(uv : Vector2) -> Color:
-	return NoiseFBM.cellular2(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular2(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular3(uv : Vector2) -> Color:
-	return NoiseFBM.cellular3(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular3(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular4(uv : Vector2) -> Color:
-	return NoiseFBM.cellular4(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular4(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular5(uv : Vector2) -> Color:
-	return NoiseFBM.cellular5(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular5(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 	
 func cellular6(uv : Vector2) -> Color:
-	return NoiseFBM.cellular6(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
+	return NoiseFBM.cellular6(uv, Vector2(p_o33355_scale_x, p_o33355_scale_y), 1, int(p_o33355_iterations), p_o33355_persistence, float(seed_o33355))
 
 func reffg():
 	return false
