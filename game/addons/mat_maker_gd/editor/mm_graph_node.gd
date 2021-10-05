@@ -11,22 +11,24 @@ func _init():
 	show_close = true
 	connect("offset_changed", self, "on_offset_changed")
 	
-func add_slot_texture(input_type : int, output_type : int, getter : String, setter : String) -> void:
+func add_slot_texture(input_type : int, output_type : int, getter : String, setter : String) -> int:
 	var t : TextureRect = TextureRect.new()
 
 	var slot_idx : int = add_slot(input_type, output_type, getter, setter, t)
 	
 	t.texture = _node.call(getter, _material, slot_idx)
 	properties[slot_idx].append(t.texture)
+	
+	return slot_idx
 
-func add_slot_label(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
+func add_slot_label(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> int:
 	var l : Label = Label.new()
 
 	l.text = slot_name
 	
-	add_slot(input_type, output_type, getter, setter, l)
+	return add_slot(input_type, output_type, getter, setter, l)
 	
-func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> void:
+func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -42,8 +44,10 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	sb.value = _node.call(getter)
 	
 	sb.connect("value_changed", self, "on_int_spinbox_value_changed", [ slot_idx ])
+	
+	return slot_idx
 
-func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> void:
+func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -60,7 +64,9 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
 	
-func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> void:
+	return slot_idx
+	
+func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -86,6 +92,8 @@ func add_slot_vector2(input_type : int, output_type : int, getter : String, sett
 
 	sbx.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	sby.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
+	
+	return slot_idx
 
 func add_slot(input_type : int, output_type : int, getter : String, setter : String, control : Control) -> int:
 	add_child(control)
@@ -118,6 +126,9 @@ func add_slot(input_type : int, output_type : int, getter : String, setter : Str
 		set_slot_color_right(slot_idx, slot_colors[output_type])
 
 	return slot_idx
+
+func get_property_control(slot_idx : int) -> Node:
+	return properties[slot_idx][5]
 
 func set_node(material : MMMateial, node : MMNode) -> void:
 	_node = node
