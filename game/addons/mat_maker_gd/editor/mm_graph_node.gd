@@ -20,6 +20,26 @@ func add_slot_texture(input_type : int, output_type : int, getter : String, sett
 	properties[slot_idx].append(t.texture)
 	
 	return slot_idx
+	
+func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
+	var t : TextureRect = TextureRect.new()
+
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", t)
+	
+	var img : Image = property.get_active_image()
+	
+	var tex : ImageTexture = ImageTexture.new()
+	
+	if img:
+		tex.create_from_image(img, 0)
+	
+	t.texture = tex
+	
+	properties[slot_idx].append(property)
+	
+	property.connect("changed", self, "on_universal_texture_changed", [ slot_idx ])
+	
+	return slot_idx
 
 func add_slot_label(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> int:
 	var l : Label = Label.new()
@@ -71,26 +91,26 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	
 	return slot_idx
 
-func add_slot_int_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_int_universal(property : MMNodeUniversalProperty) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
-	l.text = slot_name
+	l.text = property.slot_name
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
 	sb.rounded = true
-	sb.min_value = prange.x
-	sb.max_value = prange.y
+	sb.min_value = property.value_range.x
+	sb.max_value = property.value_range.y
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", bc)
 	
-	sb.value = input_property.get_default_value()
+	sb.value = property.get_default_value()
 	
 	sb.connect("value_changed", self, "on_int_universal_spinbox_value_changed", [ slot_idx ])
 	
-	properties[slot_idx].append(input_property)
+	properties[slot_idx].append(property)
 	
 	return slot_idx
 
@@ -115,24 +135,24 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	
 	return slot_idx
 
-func add_slot_float_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_float_universal(property : MMNodeUniversalProperty) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
-	l.text = slot_name
+	l.text = property.slot_name
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", bc)
 	sb.rounded = false
-	sb.step = step
-	sb.min_value = prange.x
-	sb.max_value = prange.y
-	sb.value = input_property.get_default_value()
+	sb.step = property.value_step
+	sb.min_value = property.value_range.x
+	sb.max_value = property.value_range.y
+	sb.value = property.get_default_value()
 	
-	properties[slot_idx].append(input_property)
+	properties[slot_idx].append(property)
 
 	sb.connect("value_changed", self, "on_float_universal_spinbox_value_changed", [ slot_idx ])
 	
@@ -171,11 +191,11 @@ func add_slot_vector2(input_type : int, output_type : int, getter : String, sett
 	
 	return slot_idx
 
-func add_slot_vector2_universal(input_property : MMNodeUniversalProperty, output_type : int, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_vector2_universal(property : MMNodeUniversalProperty) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
-	l.text = slot_name
+	l.text = property.slot_name
 	bc.add_child(l)
 	
 	var sbx : SpinBox = SpinBox.new()
@@ -184,22 +204,22 @@ func add_slot_vector2_universal(input_property : MMNodeUniversalProperty, output
 	var sby : SpinBox = SpinBox.new()
 	bc.add_child(sby)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", bc)
 	sbx.rounded = false
 	sby.rounded = false
-	sbx.step = step
-	sby.step = step
-	sbx.min_value = prange.x
-	sbx.max_value = prange.y
-	sby.min_value = prange.x
-	sby.max_value = prange.y
+	sbx.step = property.value_step
+	sby.step = property.value_step
+	sbx.min_value = property.value_range.x
+	sbx.max_value = property.value_range.y
+	sby.min_value = property.value_range.x
+	sby.max_value = property.value_range.y
 	
-	var val : Vector2 = input_property.get_default_value()
+	var val : Vector2 = property.get_default_value()
 	
 	sbx.value = val.x
 	sby.value = val.y
 	
-	properties[slot_idx].append(input_property)
+	properties[slot_idx].append(property)
 
 	sbx.connect("value_changed", self, "on_vector2_universal_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	sby.connect("value_changed", self, "on_vector2_universal_spinbox_value_changed", [ slot_idx, sbx, sby ])
@@ -296,3 +316,15 @@ func on_vector2_universal_spinbox_value_changed(val : float, slot_idx, spinbox_x
 	
 func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][4], val)
+
+
+func on_universal_texture_changed(slot_idx : int) -> void:
+	var img : Image = properties[slot_idx][6].get_active_image()
+	
+	var tex : ImageTexture = properties[slot_idx][5].texture
+	
+	if img:
+		properties[slot_idx][5].texture.create_from_image(img, 0)
+	else:
+		properties[slot_idx][5].texture = ImageTexture.new()
+

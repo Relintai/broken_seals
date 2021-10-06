@@ -4,6 +4,8 @@ extends Resource
 
 export(Vector2) var graph_position : Vector2 = Vector2()
 
+var properties_initialized : bool = false
+
 func recalculate_image(material, slot_idx : int) -> ImageTexture:
 	var image : Image = Image.new()
 	image.create(material.image_size.x, material.image_size.y, false, Image.FORMAT_RGBA8)
@@ -34,7 +36,20 @@ func recalculate_image(material, slot_idx : int) -> ImageTexture:
 func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
 	return Color()
 
+func init_properties() -> void:
+	if !properties_initialized:
+		properties_initialized = true
+		
+		_init_properties()
+
+func _init_properties() -> void:
+	pass
+
 func register_methods(mm_graph_node) -> void:
+	init_properties()
+	_register_methods(mm_graph_node)
+
+func _register_methods(mm_graph_node) -> void:
 	pass
 
 func get_graph_position() -> Vector2:

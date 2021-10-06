@@ -38,7 +38,7 @@ export(Resource) var input_property : Resource
 
 var input_slot_type : int = SlotTypes.SLOT_TYPE_NONE
 var output_slot_type : int = SlotTypes.SLOT_TYPE_NONE
-var slot_name : String = ""
+var slot_name : String
 var value_step : float = 0.1
 var value_range : Vector2 = Vector2(-1000, 1000)
 
@@ -101,3 +101,9 @@ func set_default_value(val):
 		default_image = val
 		
 	emit_changed()
+
+func get_active_image() -> Image:
+	if override_image:
+		return override_image
+		
+	return default_image
