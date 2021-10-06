@@ -28,29 +28,14 @@ export(Vector2) var default_vector2 : Vector2
 export(Vector3) var default_vector3 : Vector3
 export(Color) var default_color : Color
 
-export(Resource) var obj : Resource
-export(String) var getter : String
-export(Array) var params : Array
+#Should be a MMNodeUniversalProperty, but can't set it up like that
+export(Resource) var input_property : Resource
 
 func get_value(uv : Vector2):
-	if !obj:
-		if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
-			return default_int
-		elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
-			return default_float
-		elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2:
-			return default_vector2
-		elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR3:
-			return default_vector3
-		elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
-			return default_color
-		
-		return null
+	if !input_property:
+		return get_default_value()
 	
-	if params.size() == 0:
-		return obj.call(getter, uv)
-	else:
-		return obj.call(getter, uv, params)
+	return input_property.get_value(uv)
 
 func get_default_value():
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
@@ -63,6 +48,8 @@ func get_default_value():
 		return default_vector3
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
 		return default_color
+		
+	return null
 
 func set_default_value(val):
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
