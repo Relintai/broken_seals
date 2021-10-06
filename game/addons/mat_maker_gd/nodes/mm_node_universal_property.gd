@@ -18,26 +18,39 @@ enum MMNodeUniversalPropertyDefaultType {
 	DEFAULT_TYPE_VECTOR2 = 2,
 	DEFAULT_TYPE_VECTOR3 = 3,
 	DEFAULT_TYPE_COLOR = 4,
+	DEFAULT_TYPE_IMAGE = 5,
 }
 
-export(int, "Int,Float,Vector2,Vector3,Color") var default_type : int
+export(int, "Int,Float,Vector2,Vector3,Color,Image") var default_type : int
 
 export(int) var default_int : int
 export(float) var default_float : float
 export(Vector2) var default_vector2 : Vector2
 export(Vector3) var default_vector3 : Vector3
 export(Color) var default_color : Color
+export(Image) var default_image : Image
+
+#This is not exported on purpose!
+var override_image : Image
 
 #Should be a MMNodeUniversalProperty, but can't set it up like that
 export(Resource) var input_property : Resource
 
 func get_value(uv : Vector2):
 	if !input_property:
-		return get_default_value()
+		return get_default_value(uv)
 	
 	return input_property.get_value(uv)
+	
+func set_value(val):
+	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		override_image = val
+		emit_changed()
+		return
+		
+	set_default_value(val)
 
-func get_default_value():
+func get_default_value(uv : Vector2 = Vector2()):
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
 		return default_int
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
@@ -48,6 +61,22 @@ func get_default_value():
 		return default_vector3
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
 		return default_color
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		var image : Image = default_image
+		
+		if override_image:
+			image = override_image
+			
+		if !image:
+			return Color()
+
+		image.lock()
+		var x : int = uv.x * image.get_width()
+		var y : int = uv.y * image.get_height()
+		var c : Color = image.get_pixel(x, y)
+		image.unlock()
+
+		return c
 		
 	return null
 
@@ -62,5 +91,7 @@ func set_default_value(val):
 		default_vector3 = val
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
 		default_color = val
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		default_image = val
 		
 	emit_changed()
