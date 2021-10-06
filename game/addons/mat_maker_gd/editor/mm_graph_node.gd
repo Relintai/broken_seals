@@ -84,7 +84,7 @@ func add_slot_int_universal(input_property : MMNodeUniversalProperty, output_typ
 	sb.max_value = prange.y
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
 	
 	sb.value = input_property.get_default_value()
 	
@@ -125,7 +125,7 @@ func add_slot_float_universal(input_property : MMNodeUniversalProperty, output_t
 	var sb : SpinBox = SpinBox.new()
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
 	sb.rounded = false
 	sb.step = step
 	sb.min_value = prange.x
@@ -184,7 +184,7 @@ func add_slot_vector2_universal(input_property : MMNodeUniversalProperty, output
 	var sby : SpinBox = SpinBox.new()
 	bc.add_child(sby)
 	
-	var slot_idx : int = add_slot(MMNode.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, output_type, "", "", bc)
 	sbx.rounded = false
 	sby.rounded = false
 	sbx.step = step

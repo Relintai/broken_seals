@@ -54,11 +54,11 @@ func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
 	return Color(c, c, c, 1)
 
 func register_methods(mm_graph_node) -> void:
-	mm_graph_node.add_slot_texture(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
-	mm_graph_node.add_slot_enum(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_shape_typoe", "set_shape_typoe", "shape_type", [ "Circle", "Polygon", "Star", "Curved Star", "Rays" ])
-	mm_graph_node.add_slot_int(SlotTypes.SLOT_TYPE_NONE, SlotTypes.SLOT_TYPE_NONE, "get_sides", "set_sides", "sides")#, Vector2(1, 10))
-	mm_graph_node.add_slot_float_universal(radius, SlotTypes.SLOT_TYPE_NONE, "radius", 0.05)
-	mm_graph_node.add_slot_float_universal(edge, SlotTypes.SLOT_TYPE_NONE, "edge", 0.05)
+	mm_graph_node.add_slot_texture(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
+	mm_graph_node.add_slot_enum(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_shape_typoe", "set_shape_typoe", "shape_type", [ "Circle", "Polygon", "Star", "Curved Star", "Rays" ])
+	mm_graph_node.add_slot_int(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_sides", "set_sides", "sides")#, Vector2(1, 10))
+	mm_graph_node.add_slot_float_universal(radius, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "radius", 0.05)
+	mm_graph_node.add_slot_float_universal(edge, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "edge", 0.05)
 
 func get_shape_typoe() -> int:
 	return shape_type

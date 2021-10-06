@@ -2,16 +2,6 @@ tool
 class_name MMNode
 extends Resource
 
-enum SlotTypes {
-	SLOT_TYPE_NONE = -1,
-	SLOT_TYPE_IMAGE = 0,
-	SLOT_TYPE_INT = 1,
-	SLOT_TYPE_FLOAT = 2,
-	SLOT_TYPE_VECTOR2 = 3,
-	SLOT_TYPE_VECTOR3 = 4,
-	SLOT_TYPE_UNIVERSAL = 5,
-}
-
 export(Vector2) var graph_position : Vector2 = Vector2()
 
 func recalculate_image(material, slot_idx : int) -> ImageTexture:

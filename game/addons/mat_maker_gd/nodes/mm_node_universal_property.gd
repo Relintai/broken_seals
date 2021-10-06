@@ -2,6 +2,16 @@ tool
 class_name MMNodeUniversalProperty
 extends Resource
 
+enum SlotTypes {
+	SLOT_TYPE_NONE = -1,
+	SLOT_TYPE_IMAGE = 0,
+	SLOT_TYPE_INT = 1,
+	SLOT_TYPE_FLOAT = 2,
+	SLOT_TYPE_VECTOR2 = 3,
+	SLOT_TYPE_VECTOR3 = 4,
+	SLOT_TYPE_UNIVERSAL = 5,
+}
+
 enum MMNodeUniversalPropertyDefaultType {
 	DEFAULT_TYPE_INT = 0,
 	DEFAULT_TYPE_FLOAT = 1,
