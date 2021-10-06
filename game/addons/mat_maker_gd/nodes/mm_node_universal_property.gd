@@ -36,6 +36,12 @@ var override_image : Image
 #Should be a MMNodeUniversalProperty, but can't set it up like that
 export(Resource) var input_property : Resource
 
+var input_slot_type : int = SlotTypes.SLOT_TYPE_NONE
+var output_slot_type : int = SlotTypes.SLOT_TYPE_NONE
+var slot_name : String = ""
+var value_step : float = 0.1
+var value_range : Vector2 = Vector2(-1000, 1000)
+
 func get_value(uv : Vector2):
 	if !input_property:
 		return get_default_value(uv)
