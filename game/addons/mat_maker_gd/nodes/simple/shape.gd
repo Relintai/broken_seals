@@ -11,19 +11,22 @@ enum ShapeType {
 	SHAPE_TYPE_RAYS = 4,
 }
 
+export(Resource) var image : Resource
 export(int, "Circle,Polygon,Star,Curved Star,Rays") var shape_type : int = 0
 export(int) var sides : int = 6
 export(Resource) var radius : Resource
 export(Resource) var edge : Resource
 
 func _init_properties():
-	var changed : bool = false
-	
+	if !image:
+		image = MMNodeUniversalProperty.new()
+		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+
 	if !radius:
 		radius = MMNodeUniversalProperty.new()
 		radius.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
 		radius.set_default_value(0.34375)
-		changed = true
 
 	radius.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
 	radius.slot_name = "radius"
@@ -33,14 +36,10 @@ func _init_properties():
 		edge = MMNodeUniversalProperty.new()
 		edge.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
 		edge.set_default_value(0.2)
-		changed = true
 	
 	edge.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
 	edge.slot_name = "edge"
 	edge.value_step = 0.05
-	
-	if changed:
-		emit_changed()
 
 func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_texture(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
