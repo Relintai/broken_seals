@@ -48,7 +48,7 @@ margin_bottom = 600.0
 mouse_filter = 2
 
 [node name="AddPopup" parent="Popups" instance=ExtResource( 2 )]
-type_folders = PoolStringArray( "res://addons/mat_maker_gd/nodes/filter", "res://addons/mat_maker_gd/nodes/noise", "res://addons/mat_maker_gd/nodes/pattern", "res://addons/mat_maker_gd/nodes/sdf2d", "res://addons/mat_maker_gd/nodes/sdf3d", "res://addons/mat_maker_gd/nodes/simple" )
+type_folders = PoolStringArray( "res://addons/mat_maker_gd/nodes/filter", "res://addons/mat_maker_gd/nodes/noise", "res://addons/mat_maker_gd/nodes/pattern", "res://addons/mat_maker_gd/nodes/sdf2d", "res://addons/mat_maker_gd/nodes/sdf3d", "res://addons/mat_maker_gd/nodes/simple", "res://addons/mat_maker_gd/nodes/other" )
 
 [connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/AddButton" to="." method="_on_AddButton_pressed"]
 [connection signal="ok_pressed" from="Popups/AddPopup" to="." method="_on_AddPopup_ok_pressed"]

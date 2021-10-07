@@ -24,7 +24,7 @@ refresh = false
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.2
+default_float = 0.3
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
@@ -33,14 +33,14 @@ default_color = Color( 0, 0, 0, 1 )
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.35
+default_float = 0.4
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -260, -200 )
+graph_position = Vector2( -240, -340 )
 shape_type = 2
 sides = 6
 radius = SubResource( 4 )
