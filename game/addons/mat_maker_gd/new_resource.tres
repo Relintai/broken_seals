@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=12 format=2]
+[gd_resource type="Resource" load_steps=11 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
@@ -29,15 +29,6 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=6]
-script = ExtResource( 5 )
-default_type = 5
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
 default_type = 1
@@ -50,7 +41,6 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
 graph_position = Vector2( -260, -340 )
-image = SubResource( 6 )
 shape_type = 1
 sides = 4
 radius = SubResource( 4 )
