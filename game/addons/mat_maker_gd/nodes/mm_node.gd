@@ -118,3 +118,4 @@ func set_dirty(val : bool) -> void:
 
 func on_input_property_changed() -> void:
 	set_dirty(true)
+	emit_changed()

@@ -18,6 +18,30 @@ func _enter_tree():
 func ensure_objs() -> void:
 	if !_graph_edit:
 		_graph_edit = get_node(graph_edit_path)
+		
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
+		
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
+
+		_graph_edit.connect("connection_request", self, "on_graph_edit_connection_request")
+		_graph_edit.connect("disconnection_request", self, "on_graph_edit_disconnection_request")
+		
 
 func recreate() -> void:
 	ensure_objs()
@@ -44,6 +68,20 @@ func set_mmmaterial(object : MMMateial):
 	_material = object
 	
 	recreate()
+	
+func on_graph_edit_connection_request(from: String, from_slot: int, to: String, to_slot: int):
+	var from_node : GraphNode = _graph_edit.get_node(from)
+	var to_node : GraphNode = _graph_edit.get_node(to)
+
+	if from_node.connect_slot(from_slot, to_node, to_slot):
+		_graph_edit.connect_node(from, from_slot, to, to_slot)
+
+func on_graph_edit_disconnection_request(from: String, from_slot: int, to: String, to_slot: int):
+	var from_node : GraphNode = _graph_edit.get_node(from)
+	var to_node : GraphNode = _graph_edit.get_node(to)
+
+	if from_node.disconnect_slot(from_slot, to_node, to_slot):
+		_graph_edit.disconnect_node(from, from_slot, to, to_slot)
 
 func _on_AddButton_pressed():
 	get_node(add_popup_path).popup_centered()

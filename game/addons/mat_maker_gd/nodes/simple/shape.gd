@@ -11,7 +11,7 @@ enum ShapeType {
 	SHAPE_TYPE_RAYS = 4,
 }
 
-var image : Resource
+export(Resource) var image : Resource
 export(int, "Circle,Polygon,Star,Curved Star,Rays") var shape_type : int = 0
 export(int) var sides : int = 6
 export(Resource) var radius : Resource
@@ -21,7 +21,8 @@ func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
 		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
-		image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+		
+	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
 
 	if !radius:
 		radius = MMNodeUniversalProperty.new()

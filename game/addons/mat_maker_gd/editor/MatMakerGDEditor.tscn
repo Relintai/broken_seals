@@ -40,6 +40,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+right_disconnects = true
 scroll_offset = Vector2( 0, -20 )
 
 [node name="Popups" type="Control" parent="."]

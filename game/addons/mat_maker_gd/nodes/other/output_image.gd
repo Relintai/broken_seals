@@ -1,9 +1,9 @@
 tool
 extends MMNode
 
-var image : Resource
+export(Resource) var image : Resource
 
-var postfix : String = ""
+export(String) var postfix : String = ""
 
 func _init_properties():
 	image = MMNodeUniversalProperty.new()
@@ -18,6 +18,9 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_line_edit(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_postfix", "set_postfix", "postfix")
 
 func _render(material) -> void:
+	if !image:
+		return
+	
 	var img : Image = image.get_active_image()
 	
 	if !img:

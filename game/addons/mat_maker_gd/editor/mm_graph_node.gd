@@ -277,6 +277,54 @@ func add_slot(input_type : int, output_type : int, getter : String, setter : Str
 
 	return slot_idx
 
+func connect_slot(slot_idx : int, to_node : Node, to_slot_idx : int) -> bool:
+	var from_property_index : int = -1
+	var to_property_index : int = -1
+	
+	for i in range(properties.size()):
+		if properties[i][2] != -1:
+			from_property_index += 1
+			
+			if from_property_index == slot_idx:
+				from_property_index = i
+				break
+
+	for i in range(to_node.properties.size()):
+		if to_node.properties[i][1] != -1:
+			to_property_index += 1
+			
+			if to_property_index == to_slot_idx:
+				to_property_index = i
+				break
+	
+	to_node.properties[to_property_index][6].set_input_property(properties[from_property_index][6])
+
+	return true
+
+func disconnect_slot(slot_idx : int, to_node : Node, to_slot_idx : int) -> bool:
+	var from_property_index : int = -1
+	var to_property_index : int = -1
+	
+	for i in range(properties.size()):
+		if properties[i][2] != -1:
+			from_property_index += 1
+			
+			if from_property_index == slot_idx:
+				from_property_index = i
+				break
+
+	for i in range(to_node.properties.size()):
+		if to_node.properties[i][1] != -1:
+			to_property_index += 1
+			
+			if to_property_index == to_slot_idx:
+				to_property_index = i
+				break
+	
+	to_node.properties[to_property_index][6].set_input_property(null)
+
+	return true
+
 func get_property_control(slot_idx : int) -> Node:
 	return properties[slot_idx][5]
 

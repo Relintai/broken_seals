@@ -1,10 +1,11 @@
-[gd_resource type="Resource" load_steps=11 format=2]
+[gd_resource type="Resource" load_steps=15 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=3]
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/shape.gd" type="Script" id=4]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=5]
+[ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=6]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -29,24 +30,50 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="Resource" id=7]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 1.05
+default_float = 0.55
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -340, -360 )
-shape_type = 1
-sides = 4
+graph_position = Vector2( -360, -340 )
+image = SubResource( 7 )
+shape_type = 2
+sides = 6
 radius = SubResource( 4 )
 edge = SubResource( 3 )
+
+[sub_resource type="Resource" id=8]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 7 )
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 6 )
+graph_position = Vector2( -20, -340 )
+image = SubResource( 8 )
+postfix = "-test"
 
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ) ]

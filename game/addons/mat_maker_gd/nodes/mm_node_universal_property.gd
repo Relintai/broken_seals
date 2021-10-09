@@ -47,7 +47,7 @@ var owner
 
 func _init():
 	if input_property:
-		input_property.connect("changed", self, "on_input_property_cahnged")
+		input_property.connect("changed", self, "on_input_property_changed")
 
 func get_value(uv : Vector2):
 	if !input_property:
@@ -110,6 +110,9 @@ func set_default_value(val):
 	emit_changed()
 
 func get_active_image() -> Image:
+	if input_property:
+		return input_property.get_active_image()
+		
 	if override_image:
 		return override_image
 		
@@ -120,11 +123,14 @@ func set_input_property(val : MMNodeUniversalProperty) -> void:
 		return
 		
 	if input_property:
-		input_property.disconnect("changed", self, "on_input_property_cahnged")
+		input_property.disconnect("changed", self, "on_input_property_changed")
 	
 	input_property = val
 	
-	input_property.connect("changed", self, "on_input_property_cahnged")
+	if input_property:
+		input_property.connect("changed", self, "on_input_property_changed")
+		
+	emit_changed()
 	
-func on_input_property_cahnged() -> void:
+func on_input_property_changed() -> void:
 	emit_changed()
