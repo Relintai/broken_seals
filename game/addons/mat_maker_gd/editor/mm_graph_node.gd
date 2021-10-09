@@ -48,6 +48,25 @@ func add_slot_label(input_type : int, output_type : int, getter : String, setter
 	
 	return add_slot(input_type, output_type, getter, setter, l)
 
+func add_slot_line_edit(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, placeholder : String = "") -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var le : LineEdit = LineEdit.new()
+	le.placeholder_text = placeholder
+	bc.add_child(le)
+
+	var slot_idx : int =  add_slot(input_type, output_type, getter, setter, bc)
+	
+	le.text = _node.call(getter)
+	
+	le.connect("text_entered", self, "on_slot_line_edit_text_entered", [ slot_idx ])
+	
+	return slot_idx
+
 func add_slot_enum(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, values : Array) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -328,3 +347,5 @@ func on_universal_texture_changed(slot_idx : int) -> void:
 	else:
 		properties[slot_idx][5].texture = ImageTexture.new()
 
+func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
+	_node.call(properties[slot_idx][4], text)
