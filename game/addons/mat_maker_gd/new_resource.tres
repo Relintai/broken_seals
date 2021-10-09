@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=15 format=2]
+[gd_resource type="Resource" load_steps=19 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
@@ -25,7 +25,7 @@ refresh = false
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.5
+default_float = 0.75
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
@@ -43,21 +43,21 @@ default_color = Color( 0, 0, 0, 1 )
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.55
+default_float = 0.65
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -360, -340 )
+graph_position = Vector2( -340, -340 )
 image = SubResource( 7 )
-shape_type = 2
-sides = 6
+shape_type = 4
+sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=8]
+[sub_resource type="Resource" id=13]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -65,15 +65,50 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 7 )
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( -20, -340 )
-image = SubResource( 8 )
+image = SubResource( 13 )
 postfix = "-test"
+
+[sub_resource type="Resource" id=9]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.2
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=10]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=11]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.34375
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=12]
+script = ExtResource( 4 )
+graph_position = Vector2( -720, -60 )
+image = SubResource( 10 )
+shape_type = 3
+sides = 6
+radius = SubResource( 11 )
+edge = SubResource( 9 )
 
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ) ]

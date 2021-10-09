@@ -62,16 +62,25 @@ func _render(material) -> void:
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : float = 0
 	
+	var rad : float = radius.get_value(uv)
+	var edg : float = edge.get_value(uv)
+	
+	if rad == 0:
+		rad = 0.0000001
+		
+	if edg == 0:
+		edg = 0.0000001
+
 	if shape_type == ShapeType.SHAPE_TYPE_CIRCLE:
-		c = Shapes.shape_circle(uv, sides, radius.get_value(uv) * 1.0, edge.get_value(uv) * 1.0)
+		c = Shapes.shape_circle(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_POLYGON:
-		c = Shapes.shape_polygon(uv, sides, radius.get_value(uv) * 1.0, edge.get_value(uv) * 1.0)
+		c = Shapes.shape_polygon(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_STAR:
-		c = Shapes.shape_star(uv, sides, radius.get_value(uv) * 1.0, edge.get_value(uv) * 1.0)
+		c = Shapes.shape_star(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_CURVED_STAR:
-		c = Shapes.shape_curved_star(uv, sides, radius.get_value(uv) * 1.0, edge.get_value(uv) * 1.0)
+		c = Shapes.shape_curved_star(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_RAYS:
-		c = Shapes.shape_rays(uv, sides, radius.get_value(uv) * 1.0, edge.get_value(uv) * 1.0)
+		c = Shapes.shape_rays(uv, sides, rad, edg)
 		
 	return Color(c, c, c, 1)
 
