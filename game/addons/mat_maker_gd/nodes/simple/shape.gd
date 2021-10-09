@@ -11,7 +11,7 @@ enum ShapeType {
 	SHAPE_TYPE_RAYS = 4,
 }
 
-export(Resource) var image : Resource
+var image : Resource
 export(int, "Circle,Polygon,Star,Curved Star,Rays") var shape_type : int = 0
 export(int) var sides : int = 6
 export(Resource) var radius : Resource

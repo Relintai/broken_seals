@@ -15,7 +15,7 @@ persistence = 0.5
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 3 )
-graph_position = Vector2( 0, 0 )
+graph_position = Vector2( 140, 0 )
 bmin = Vector2( 0.1, 0.1 )
 bmax = Vector2( 1, 1 )
 refresh = false
@@ -24,7 +24,7 @@ refresh = false
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.8
+default_float = 0.5
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
@@ -42,16 +42,16 @@ default_color = Color( 0, 0, 0, 1 )
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
-default_float = 0.45
+default_float = 1.05
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -240, -340 )
+graph_position = Vector2( -260, -340 )
 image = SubResource( 6 )
-shape_type = 3
+shape_type = 1
 sides = 4
 radius = SubResource( 4 )
 edge = SubResource( 3 )
