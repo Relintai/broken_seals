@@ -40,15 +40,19 @@ func _init_properties():
 	edge.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
 	edge.slot_name = "edge"
 	edge.value_step = 0.05
+	
+	#this will end up generating the image
+	#maybe whis should be automaticly done whenn added into material
+	#emit_changed()
 
 func _register_methods(mm_graph_node) -> void:
-	mm_graph_node.add_slot_texture(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, "recalculate_image", "")
+	mm_graph_node.add_slot_texture(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, "render_image", "")
 	mm_graph_node.add_slot_enum(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_shape_typoe", "set_shape_typoe", "shape_type", [ "Circle", "Polygon", "Star", "Curved Star", "Rays" ])
 	mm_graph_node.add_slot_int(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_sides", "set_sides", "sides")#, Vector2(1, 10))
 	mm_graph_node.add_slot_float_universal(radius)
 	mm_graph_node.add_slot_float_universal(edge)
 
-func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
+func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : float = 0
 	
 	if shape_type == ShapeType.SHAPE_TYPE_CIRCLE:

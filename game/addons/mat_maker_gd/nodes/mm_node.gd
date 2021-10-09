@@ -4,9 +4,30 @@ extends Resource
 
 export(Vector2) var graph_position : Vector2 = Vector2()
 
+var input_properties : Array
+
 var properties_initialized : bool = false
 
-func recalculate_image(material, slot_idx : int) -> ImageTexture:
+var dirty : bool = true
+
+#MMMateial
+func render(material) -> bool:
+	if !dirty:
+		return false
+	
+	for p in input_properties:
+		if p.input_property && p.input_property.owner.dirty:
+			return false
+			
+	_render(material)
+	
+	return true
+
+#MMMateial
+func _render(material) -> void:
+	pass
+
+func render_image(material) -> ImageTexture:
 	var image : Image = Image.new()
 	image.create(material.image_size.x, material.image_size.y, false, Image.FORMAT_RGBA8)
 		
@@ -23,7 +44,7 @@ func recalculate_image(material, slot_idx : int) -> ImageTexture:
 		for y in range(image.get_height()):
 			var v : Vector2 = Vector2(x / w, y / h)
 
-			var col : Color = get_value_for(v, slot_idx, pseed)
+			var col : Color = get_value_for(v, pseed)
 
 			image.set_pixel(x, y, col)
 
@@ -33,7 +54,7 @@ func recalculate_image(material, slot_idx : int) -> ImageTexture:
 
 	return tex
 
-func get_value_for(uv : Vector2, slot_idx : int, pseed : int) -> Color:
+func get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 func init_properties() -> void:
@@ -59,3 +80,29 @@ func set_graph_position(pos : Vector2) -> void:
 	graph_position = pos
 	
 	emit_changed()
+
+func register_input_property(prop : MMNodeUniversalProperty) -> void:
+	prop.owner = self
+	
+	prop.connect("changed", self, "on_input_property_changed")
+	
+	input_properties.append(prop) 
+
+func unregister_input_property(prop : MMNodeUniversalProperty) -> void:
+	if prop.owner == self:
+		prop.owner = null
+	
+	prop.disconnect("changed", self, "on_input_property_changed")
+	
+	input_properties.erase(prop)
+
+func set_dirty(val : bool) -> void:
+	var changed : bool = val != dirty
+	
+	dirty = val
+	
+	if changed:
+		emit_changed()
+
+func on_input_property_changed() -> void:
+	set_dirty(true)

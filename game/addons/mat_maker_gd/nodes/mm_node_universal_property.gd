@@ -42,6 +42,13 @@ var slot_name : String
 var value_step : float = 0.1
 var value_range : Vector2 = Vector2(-1000, 1000)
 
+#MMNode
+var owner
+
+func _init():
+	if input_property:
+		input_property.connect("changed", self, "on_input_property_cahnged")
+
 func get_value(uv : Vector2):
 	if !input_property:
 		return get_default_value(uv)
@@ -107,3 +114,17 @@ func get_active_image() -> Image:
 		return override_image
 		
 	return default_image
+
+func set_input_property(val : MMNodeUniversalProperty) -> void:
+	if input_property == val:
+		return
+		
+	if input_property:
+		input_property.disconnect("changed", self, "on_input_property_cahnged")
+	
+	input_property = val
+	
+	input_property.connect("changed", self, "on_input_property_cahnged")
+	
+func on_input_property_cahnged() -> void:
+	emit_changed()
