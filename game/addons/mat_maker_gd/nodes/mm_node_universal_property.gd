@@ -53,8 +53,99 @@ func get_value(uv : Vector2):
 	if !input_property:
 		return get_default_value(uv)
 	
-	return input_property.get_value(uv)
+	if default_type == input_property.default_type:
+		return input_property.get_value(uv)
 	
+	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
+		return to_int(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
+		return to_float(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2:
+		return to_vector2(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR3:
+		return to_vector3(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
+		return to_color(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		return to_color(input_property.get_value(uv))
+		
+	return input_property.get_value(uv)
+
+func to_int(val) -> int:
+	if val is float:
+		return int(val)
+	
+	if val is Vector2:
+		return int(val.x)
+		
+	if val is Vector3:
+		return int(val.x)
+	
+	if val is Color:
+		return int(val.r)
+	
+	return 0
+
+func to_float(val) -> float:
+	if val is int:
+		return float(val)
+	
+	if val is Vector2:
+		return float(val.x)
+		
+	if val is Vector3:
+		return float(val.x)
+	
+	if val is Color:
+		return float(val.r)
+	
+	return 0.0
+	
+func to_vector2(val) -> Vector2:
+	if val is int:
+		return Vector2(val, val)
+		
+	if val is float:
+		return Vector2(val, val)
+		
+	if val is Vector3:
+		return Vector2(val.x, val.y)
+	
+	if val is Color:
+		return Vector2(val.r, val.g)
+	
+	return Vector2()
+	
+func to_vector3(val) -> Vector3:
+	if val is int:
+		return Vector3(val, val, val)
+		
+	if val is float:
+		return Vector3(val, val, val)
+		
+	if val is Vector2:
+		return Vector3(val.x, val.y, 0)
+	
+	if val is Color:
+		return Vector3(val.r, val.g, val.b)
+	
+	return Vector3()
+	
+func to_color(val) -> Color:
+	if val is int:
+		return Color(val, val, val, 1)
+		
+	if val is float:
+		return Color(val, val, val, 1)
+		
+	if val is Vector2:
+		return Color(val.x, val.y, 0, 1)
+	
+	if val is Vector3:
+		return Color(val.x, val.y, val.z, 1)
+	
+	return Color()
+
 func set_value(val):
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
 		override_image = val
