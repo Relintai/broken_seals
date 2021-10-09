@@ -49,8 +49,8 @@ func _init_properties():
 
 func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_texture_universal(image)
-	mm_graph_node.add_slot_enum(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_shape_typoe", "set_shape_typoe", "shape_type", [ "Circle", "Polygon", "Star", "Curved Star", "Rays" ])
-	mm_graph_node.add_slot_int(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "get_sides", "set_sides", "sides")#, Vector2(1, 10))
+	mm_graph_node.add_slot_enum("get_shape_typoe", "set_shape_typoe", "shape_type", [ "Circle", "Polygon", "Star", "Curved Star", "Rays" ])
+	mm_graph_node.add_slot_int("get_sides", "set_sides", "sides")#, Vector2(1, 10))
 	mm_graph_node.add_slot_float_universal(radius)
 	mm_graph_node.add_slot_float_universal(edge)
 

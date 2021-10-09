@@ -11,10 +11,10 @@ func _init():
 	show_close = true
 	connect("offset_changed", self, "on_offset_changed")
 	
-func add_slot_texture(input_type : int, output_type : int, getter : String, setter : String) -> int:
+func add_slot_texture(getter : String, setter : String) -> int:
 	var t : TextureRect = TextureRect.new()
 
-	var slot_idx : int = add_slot(input_type, output_type, getter, setter, t)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, t)
 	
 	t.texture = _node.call(getter, _material, slot_idx)
 	properties[slot_idx].append(t.texture)
@@ -41,14 +41,14 @@ func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	
 	return slot_idx
 
-func add_slot_label(input_type : int, output_type : int, getter : String, setter : String, slot_name : String) -> int:
+func add_slot_label(getter : String, setter : String, slot_name : String) -> int:
 	var l : Label = Label.new()
 
 	l.text = slot_name
 	
-	return add_slot(input_type, output_type, getter, setter, l)
+	return add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, l)
 
-func add_slot_line_edit(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, placeholder : String = "") -> int:
+func add_slot_line_edit(getter : String, setter : String, slot_name : String, placeholder : String = "") -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 
 	var l : Label = Label.new()
@@ -59,7 +59,7 @@ func add_slot_line_edit(input_type : int, output_type : int, getter : String, se
 	le.placeholder_text = placeholder
 	bc.add_child(le)
 
-	var slot_idx : int =  add_slot(input_type, output_type, getter, setter, bc)
+	var slot_idx : int =  add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	le.text = _node.call(getter)
 	
@@ -67,7 +67,7 @@ func add_slot_line_edit(input_type : int, output_type : int, getter : String, se
 	
 	return slot_idx
 
-func add_slot_enum(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, values : Array) -> int:
+func add_slot_enum(getter : String, setter : String, slot_name : String, values : Array) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -81,7 +81,7 @@ func add_slot_enum(input_type : int, output_type : int, getter : String, setter 
 	
 	bc.add_child(mb)
 	
-	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	mb.selected = _node.call(getter)
 	
@@ -89,7 +89,7 @@ func add_slot_enum(input_type : int, output_type : int, getter : String, setter 
 	
 	return slot_idx
 
-func add_slot_int(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_int(getter : String, setter : String, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -102,7 +102,7 @@ func add_slot_int(input_type : int, output_type : int, getter : String, setter :
 	sb.max_value = prange.y
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	sb.value = _node.call(getter)
 	
@@ -133,7 +133,7 @@ func add_slot_int_universal(property : MMNodeUniversalProperty) -> int:
 	
 	return slot_idx
 
-func add_slot_float(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_float(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -143,7 +143,7 @@ func add_slot_float(input_type : int, output_type : int, getter : String, setter
 	var sb : SpinBox = SpinBox.new()
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
 	sb.rounded = false
 	sb.step = step
 	sb.min_value = prange.x
@@ -177,7 +177,7 @@ func add_slot_float_universal(property : MMNodeUniversalProperty) -> int:
 	
 	return slot_idx
 
-func add_slot_vector2(input_type : int, output_type : int, getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+func add_slot_vector2(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
 	var l : Label = Label.new()
@@ -190,7 +190,7 @@ func add_slot_vector2(input_type : int, output_type : int, getter : String, sett
 	var sby : SpinBox = SpinBox.new()
 	bc.add_child(sby)
 	
-	var slot_idx : int = add_slot(input_type, output_type, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
 	sbx.rounded = false
 	sby.rounded = false
 	sbx.step = step
