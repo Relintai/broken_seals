@@ -39,6 +39,15 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="Resource" id=10]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=4]
 script = ExtResource( 5 )
 default_type = 1
@@ -47,10 +56,11 @@ default_float = 0.65
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 10 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -340, -340 )
+graph_position = Vector2( -360, -340 )
 image = SubResource( 7 )
 shape_type = 4
 sides = 11
@@ -68,7 +78,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
-graph_position = Vector2( -20, -340 )
+graph_position = Vector2( -20, -320 )
 image = SubResource( 13 )
 postfix = "-test"
 
@@ -77,15 +87,6 @@ script = ExtResource( 5 )
 default_type = 1
 default_int = 0
 default_float = 0.2
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="Resource" id=10]
-script = ExtResource( 5 )
-default_type = 5
-default_int = 0
-default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
@@ -101,7 +102,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=12]
 script = ExtResource( 4 )
-graph_position = Vector2( -720, -60 )
+graph_position = Vector2( -760, -60 )
 image = SubResource( 10 )
 shape_type = 3
 sides = 6

@@ -61,8 +61,30 @@ func recreate() -> void:
 		_graph_edit.add_child(gn)
 		
 	#connect them
+	for n in _material.nodes:
+		if n:
+			for ip in n.input_properties:
+				if ip.input_property:
+					var input_node : Node = find_graph_node_for(n)
+					var output_node : Node = find_graph_node_for(ip.input_property.owner)
+					
+					var to_slot : int = input_node.get_input_property_graph_node_slot_index(ip)
+					var from_slot : int = output_node.get_output_property_graph_node_slot_index(ip.input_property)
+					
+					_graph_edit.connect_node(output_node.name, from_slot, input_node.name, to_slot)
 	
 	_material.render()
+
+func find_graph_node_for(nnode) -> Node:
+	for c in _graph_edit.get_children():
+		if c is GraphNode:
+			if c.has_method("get_material_node"):
+				var n = c.get_material_node()
+				
+				if n == nnode:
+					return c
+
+	return null
 
 func set_mmmaterial(object : MMMateial):
 	_material = object

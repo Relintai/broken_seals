@@ -325,6 +325,30 @@ func disconnect_slot(slot_idx : int, to_node : Node, to_slot_idx : int) -> bool:
 
 	return true
 
+func get_input_property_graph_node_slot_index(property) -> int:
+	var property_index : int = -1
+	
+	for i in range(properties.size()):
+		if properties[i][1] != -1:
+			property_index += 1
+			
+			if properties[i][6] == property:
+				break
+				
+	return property_index
+
+func get_output_property_graph_node_slot_index(property) -> int:
+	var property_index : int = -1
+	
+	for i in range(properties.size()):
+		if properties[i][2] != -1:
+			property_index += 1
+			
+			if properties[i][6] == property:
+				break
+				
+	return property_index
+
 func get_property_control(slot_idx : int) -> Node:
 	return properties[slot_idx][5]
 
@@ -397,3 +421,6 @@ func on_universal_texture_changed(slot_idx : int) -> void:
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][4], text)
+
+func get_material_node() -> MMNode:
+	return _node
