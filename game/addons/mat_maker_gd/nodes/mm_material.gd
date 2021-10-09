@@ -5,9 +5,14 @@ extends Resource
 export(Vector2) var image_size : Vector2 = Vector2(128, 128)
 export(Array) var nodes : Array
 
-func _init():
-	for n in nodes:
-		n.connect("changed", self, "on_node_changed")
+var initialized : bool = false
+
+func initialize():
+	if !initialized:
+		initialized = true
+		
+		for n in nodes:
+			n.connect("changed", self, "on_node_changed")
 
 func add_node(node : MMNode) -> void:
 	nodes.append(node)
@@ -24,6 +29,9 @@ func remove_node(node : MMNode) -> void:
 	emit_changed()
 
 func render() -> void:
+	if !initialized:
+		initialize()
+		
 	var did_render : bool = true
 		
 	while did_render:

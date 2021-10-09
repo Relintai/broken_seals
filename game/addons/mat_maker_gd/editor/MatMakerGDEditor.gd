@@ -37,6 +37,8 @@ func recreate() -> void:
 		_graph_edit.add_child(gn)
 		
 	#connect them
+	
+	_material.render()
 
 func set_mmmaterial(object : MMMateial):
 	_material = object

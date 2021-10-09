@@ -5,6 +5,7 @@ extends Resource
 export(Vector2) var graph_position : Vector2 = Vector2()
 
 var input_properties : Array
+var output_properties : Array
 
 var properties_initialized : bool = false
 
@@ -21,17 +22,17 @@ func render(material) -> bool:
 			
 	_render(material)
 	
+	dirty = false
+	
 	return true
 
 #MMMateial
 func _render(material) -> void:
 	pass
 
-func render_image(material) -> ImageTexture:
+func render_image(material) -> Image:
 	var image : Image = Image.new()
 	image.create(material.image_size.x, material.image_size.y, false, Image.FORMAT_RGBA8)
-		
-	var tex : ImageTexture = ImageTexture.new()
 
 	image.lock()
 	
@@ -49,10 +50,8 @@ func render_image(material) -> ImageTexture:
 			image.set_pixel(x, y, col)
 
 	image.unlock()
-	
-	tex.create_from_image(image)
 
-	return tex
+	return image
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
@@ -84,7 +83,8 @@ func set_graph_position(pos : Vector2) -> void:
 func register_input_property(prop : MMNodeUniversalProperty) -> void:
 	prop.owner = self
 	
-	prop.connect("changed", self, "on_input_property_changed")
+	if !prop.is_connected("changed", self, "on_input_property_changed"):
+		prop.connect("changed", self, "on_input_property_changed")
 	
 	input_properties.append(prop) 
 
@@ -92,9 +92,21 @@ func unregister_input_property(prop : MMNodeUniversalProperty) -> void:
 	if prop.owner == self:
 		prop.owner = null
 	
-	prop.disconnect("changed", self, "on_input_property_changed")
+	if prop.is_connected("changed", self, "on_input_property_changed"):
+		prop.disconnect("changed", self, "on_input_property_changed")
 	
 	input_properties.erase(prop)
+
+func register_output_property(prop : MMNodeUniversalProperty) -> void:
+	prop.owner = self
+	
+	output_properties.append(prop) 
+
+func unregister_output_property(prop : MMNodeUniversalProperty) -> void:
+	if prop.owner == self:
+		prop.owner = null
+	
+	output_properties.erase(prop)
 
 func set_dirty(val : bool) -> void:
 	var changed : bool = val != dirty
