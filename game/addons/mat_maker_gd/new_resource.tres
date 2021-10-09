@@ -40,7 +40,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 4 )
-graph_position = Vector2( -260, -340 )
+graph_position = Vector2( -340, -360 )
 shape_type = 1
 sides = 4
 radius = SubResource( 4 )
