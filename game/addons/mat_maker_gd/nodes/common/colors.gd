@@ -66,6 +66,8 @@ static func hsv_to_rgb(c : Vector3) -> Vector3:
 #saturation, min: 0, max: 2, step: 0, default: 1
 #value, min: 0, max: 2, step: 0, default: 1
 
+#output: vec4(hsv_to_rgb($(name_uv)_hsv), $(name_uv)_rbga.a)
+
 static func adjust_hsv(color : Color, hue : float, saturation : float, value : float) -> Color:
 	var hsv : Vector3 = rgb_to_hsv(Vector3(color.r, color.g, color.b));
 	
@@ -80,7 +82,9 @@ static func adjust_hsv(color : Color, hue : float, saturation : float, value : f
 #brightness, min: -1, max: 1, step: 0.01, default: 0
 #contrast, min: -1, max: 1, step: 0.01, default: 1
 
-#vec4(clamp($in($uv).rgb*$contrast+vec3($brightness)+0.5-$contrast*0.5, vec3(0.0), vec3(1.0)), $in($uv).a)
+#input: default: vec4(0.5 ,0.5, 0.5, 1.0) -> img
+
+#output: vec4(clamp($in($uv).rgb*$contrast+vec3($brightness)+0.5-$contrast*0.5, vec3(0.0), vec3(1.0)), $in($uv).a)
 
 static func brightness_contrast(color : Color, brightness : float, contrast : float) -> Color:
 	var bv : Vector3 = Vector3(brightness, brightness, brightness)
@@ -91,6 +95,12 @@ static func brightness_contrast(color : Color, brightness : float, contrast : fl
 	var v : Vector3 = Commons.clampv3(cv, Vector3(), Vector3(1, 1, 1))
 	
 	return Color(v.x, v.y, v.z, 1);
+
+#greyscale
+
+#input: default: vec3(0.0). (Image)
+#output: gs_$mode($in($uv))
+#mode: enum: Lightness, Average, Luminosity, Min, Max. default: 4
 
 #float gs_min(vec3 c) {
 #	return min(c.r, min(c.g, c.b));
