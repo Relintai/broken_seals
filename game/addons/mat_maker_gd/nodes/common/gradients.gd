@@ -5,6 +5,24 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #note: data : PoolRealArray -> pos, r, g, b, a, pos, r, g, b, a ....
 
+#gradient.mmg
+
+#float $(name_uv)_r = 0.5+(cos($rotate*0.01745329251)*($uv.x-0.5)+sin($rotate*0.01745329251)*($uv.y-0.5))/(cos(abs(mod($rotate, 90.0)-45.0)*0.01745329251)*1.41421356237);"
+
+#output: $gradient(fract($(name_uv)_r*$repeat))
+
+#repeat: default: 1, min: 1, max : 32, step: 1
+#rotate: default: 0, min: -180, max: 180, step: 0.1
+
+#default: "interpolation": 1,
+# "points": [{"a": 1,"b": 0,"g": 0,"pos": 0,"r": 0},{"a": 1,"b": 1,"g": 1,"pos": 1,"r": 1} ],
+
+#radial_gradient.mmg
+
+#circular_gradient.mmg
+
+#gradient.gd
+
 static func radial_gradient_type_1(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
 	return gradient_type_1(Commons.fractf(repeat * 1.41421356237* (Commons.fractv2(uv) - Vector2(0.5, 0.5)).length()), data)
 
