@@ -50,6 +50,26 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #radius, float, min: 0, max: 1, default:0.2, step:0.01
 #profile, curve, default: (ls, rs, x, z) 0, 0, 0, 1,  0, 0, 1, 1
 
+#----------------------
+#sdf3d_cone.mmg
+
+#Outputs:
+
+#+X: $axis = length($uv.yz),-$uv.x
+#-X: $axis = length($uv.yz),$uv.x
+#+Y: $axis = length($uv.xz),$uv.y
+#-Y: $axis = length($uv.xz),-$uv.y
+#+Z: $axis = length($uv.xy),-$uv.z
+#-Z: $axis = length($uv.xy),$uv.z
+
+#Output (sdf3d)
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
+
+#Inputs:
+#axis, enum, default:5, values: +X, -X, +Y, -Y, +Z, -Z
+#angle, float, min: 0, max: 90, default:30, step:1
+
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
@@ -130,30 +150,49 @@ static func sdf3d_capsule_z(p : Vector3, r : float, l : float) -> Vector2:
 
 var p_o118934_a = 30.000000000;
 
+#+X: $axis = length($uv.yz),-$uv.x
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
+
 static func sdf3d_cone_px(p : Vector3, a : float) -> Vector2:
 	var  f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.y, p.z).length(), - (p).x));
 
 	return Vector2(f, 0.0);
+
+#-X: $axis = length($uv.yz),$uv.x
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
 
 static func sdf3d_cone_nx(p : Vector3, a : float) -> Vector2:
 	var  f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.y, p.z).length(),(p).x));
 
 	return Vector2(f, 0.0);
 
+#+Y: $axis = length($uv.xz),$uv.y
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
+
 static func sdf3d_cone_py(p : Vector3, a : float) -> Vector2:
 	var  f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.x, p.z).length(),(p).y));
 
 	return Vector2(f, 0.0);
+
+#-Y: $axis = length($uv.xz),-$uv.y
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
 
 static func sdf3d_cone_ny(p : Vector3, a : float) -> Vector2:
 	var  f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.x, p.z).length(),-(p).y));
 
 	return Vector2(f, 0.0);
 
+#+Z: $axis = length($uv.xy),-$uv.z
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
+
 static func sdf3d_cone_pz(p : Vector3, a : float) -> Vector2:
 	var  f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.x, p.y).length(),-(p).z));
 
 	return Vector2(f, 0.0);
+
+
+#-Z: $axis = length($uv.xy),$uv.z
+#dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
 
 static func sdf3d_cone_nz(p : Vector3, a : float) -> Vector2:
 	var f : float = Vector2(cos(a*0.01745329251),sin(a*0.01745329251)).dot(Vector2(Vector2(p.x, p.y).length(),(p).z));
