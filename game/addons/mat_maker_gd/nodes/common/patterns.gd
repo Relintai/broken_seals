@@ -72,6 +72,45 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #round, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
 #corner, float, min: 0, max: 0.5, default: 0.1, step:0.01
 
+#----------------------
+#bricks_uneven.mmg
+
+#Outputs:
+
+#Common
+#vec4 $(name_uv)_rect = bricks_uneven($uv, int($iterations), $min_size, $randomness, float($seed));
+#vec4 $(name_uv) = brick2($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $round*$round_map($uv), max(0.00001, $bevel*$bevel_map($uv)));
+
+#Bricks pattern (float) - A greyscale image that shows the bricks pattern
+#$(name_uv).x
+
+#Random color (rgb) - A random color for each brick
+#rand3(fract($(name_uv)_rect.xy)+rand2(vec2(float($seed))))
+
+#Position.x (float) - The position of each brick along the X axis",
+#$(name_uv).y
+
+#Position.y (float) - The position of each brick along the Y axis
+#$(name_uv).z
+
+#Brick UV (rgb) - An UV map output for each brick, to be connected to the Map input of a CustomUV node
+#brick_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
+
+#Corner UV (rgb) - An UV map output for each brick corner, to be connected to the Map input of a CustomUV node
+#brick_corner_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $corner, float($seed))
+
+#Direction (float) - The direction of each brick (white: horizontal, black: vertical)
+#0.5*(sign($(name_uv)_rect.z-$(name_uv)_rect.x-$(name_uv)_rect.w+$(name_uv)_rect.y)+1.0)
+
+#Inputs:
+#iterations, int, min: 1, max: 16, default:8, step:1
+#min_size, float, min: 0, max: 0.5, default: 0.3, step:0.01
+#randomness, float, min: 0, max: 1, default: 0.5, step:0.01
+#mortar, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#bevel, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#round, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#corner, float, min: 0, max: 0.5, default: 0.1, step:0.01
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -669,3 +708,56 @@ static func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 		size = Vector2(count.x-1.0, count.y-1.0)
 
 	return Color(corner.x / c.x, corner.y / c.y, (corner.x + size.x) / c.x, (corner.y + size.y) / c.y)
+
+#vec4 brick2(vec2 uv, vec2 bmin, vec2 bmax, float mortar, float round, float bevel) {
+#	float color;
+#	vec2 size = bmax - bmin;
+#	vec2 center = 0.5*(bmin+bmax);    
+#	vec2 d = abs(uv-center)-0.5*(size)+vec2(round+mortar);    
+#
+#	color = length(max(d,vec2(0))) + min(max(d.x,d.y),0.0)-round;
+#	color = clamp(-color/bevel, 0.0, 1.0);
+#
+#	vec2 tiled_brick_pos = mod(bmin, vec2(1.0, 1.0));
+#
+#	return vec4(color, center, tiled_brick_pos.x+7.0*tiled_brick_pos.y);
+#}
+
+static func brick2(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float, pround : float, bevel : float) -> Color:
+	return Color()
+
+#vec4 bricks_uneven(vec2 uv, int iterations, float min_size, float randomness, float seed) {
+#	vec2 a = vec2(0.0);
+#	vec2 b = vec2(1.0);
+#	for (int i = 0; i < iterations; ++i) {
+#		vec2 size = b-a;
+#		if (max(size.x, size.y) < min_size) {
+#			break;
+#		}
+#
+#		float x = rand(rand2(vec2(rand(a+b), seed)))*randomness+(1.0-randomness)*0.5;
+#
+#		if (size.x > size.y) {
+#			x *= size.x;
+#
+#			if (uv.x > a.x+x) {
+#				a.x += x;
+#			} else {
+#				b.x = a.x + x;
+#			}
+#		} else {
+#			x *= size.y;
+#
+#			if (uv.y > a.y+x) {
+#				a.y += x;
+#			} else {
+#				b.y = a.y + x;
+#			}
+#		}
+#	}
+#
+#	return vec4(a, b);
+#}
+
+static func bricks_uneven(uv : Vector2, iterations : int, min_size : float, randomness : float, pseed : float) -> Color:
+	return Color()
