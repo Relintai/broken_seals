@@ -5,6 +5,7 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #----------------------
 #sdf3d_box.mmg
+#Generates a rounded box as a signed distance function
 
 #Outputs:
 
@@ -17,6 +18,18 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #size, vector3, min: 0, max: 1, default:0.5, step:0.01
 #size, float, min: 0, max: 1, default:0.5, step:0.01
+
+#----------------------
+#sdf3d_sphere.mmg
+#Generates a sphere as a signed distance function
+
+#Outputs:
+
+#Output (sdf3d) - Shows the sphere
+#length($uv)-$r
+
+#Inputs:
+#radius, vector3, min: 0, max: 1, default:0.5, step:0.01
 
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
@@ -36,6 +49,8 @@ static func raymarch3(uv : Vector2) -> Color:
 	var v : Vector2 = sdf3d_raymarch(uv);
 	
 	return Color(v.y, v.y, v.y, 1)
+
+#length($uv)-$r
 
 static func sdf3d_sphere(p : Vector3, r : float) -> Vector2:
 	var s : float = p.length() - r;
