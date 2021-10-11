@@ -3,6 +3,11 @@ extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
+#beehive.mmg
+#Outputs: 3 beehive_1c, beehive_2c, beehive_3c
+#Inputs:
+#size, vector2, default: 2, min: 1, max: 64, step: 1
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -208,6 +213,12 @@ static func IChing(uv : Vector2, pseed : float) -> float:
 	
 	return base * Commons.step(0.1*Commons.step(float(bit & value), 0.5), Commons.fract(uv.x+0.55));
 
+#Beehive output 1
+#Shows the greyscale pattern
+#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
+#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
+#1.0-2.0*beehive_dist($(name_uv)_center.xy) 
+
 static func beehive_1c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	var o80035_0_uv : Vector2 = uv * Vector2(size.x, size.y * 1.73205080757);
 	var center : Color = beehive_center(o80035_0_uv);
@@ -215,7 +226,13 @@ static func beehive_1c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	var f : float = 1.0 - 2.0 * beehive_dist(Vector2(center.r, center.g));
 	
 	return Color(f, f, f, 1)
-	
+
+#Beehive output 2
+#Shows a random color for each hexagonal tile
+#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
+#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
+#rand3(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed)))
+
 static func beehive_2c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	var o80035_0_uv : Vector2 = uv * Vector2(size.x, size.y * 1.73205080757);
 	var center : Color = beehive_center(o80035_0_uv);
@@ -225,6 +242,12 @@ static func beehive_2c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	var v : Vector3 = Commons.rand3(Commons.fractv2(Vector2(center.b, center.a) / Vector2(size.x, size.y)) + Vector2(float(pseed),float(pseed)));
 	
 	return Color(v.x, v.y, v.z, 1)
+
+#Beehive output 3
+#Shows an UV map to be connected to the UV map port of the Custom UV node
+#vec3(vec2(0.5)+$(name_uv)_center.xy, rand(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed)))) 
+#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
+#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
 
 static func beehive_3c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	var o80035_0_uv : Vector2 = uv * Vector2(size.x, size.y * 1.73205080757);
@@ -239,12 +262,25 @@ static func beehive_3c(uv : Vector2, size : Vector2, pseed : int) -> Color:
 	
 	return c
 
+#float beehive_dist(vec2 p){
+#	ec2 s = vec2(1.0, 1.73205080757);    
+#	p = abs(p);    
+#	return max(dot(p, s*.5), p.x);
+#}
+
 static func beehive_dist(p : Vector2) -> float:
 	var s : Vector2 = Vector2(1.0, 1.73205080757);
 	
 	p = Commons.absv2(p);
 	
 	return max(p.dot(s*.5), p.x);
+
+#vec4 beehive_center(vec2 p) {
+#	vec2 s = vec2(1.0, 1.73205080757);    
+#	vec4 hC = floor(vec4(p, p - vec2(.5, 1)) / vec4(s,s)) + .5;    
+#	vec4 h = vec4(p - hC.xy*s, p - (hC.zw + .5)*s);  
+#	return dot(h.xy, h.xy)<dot(h.zw, h.zw) ? vec4(h.xy, hC.xy) : vec4(h.zw, hC.zw + 9.73);
+#}
 
 static func beehive_center(p : Vector2) -> Color:
 	var s : Vector2 = Vector2(1.0, 1.73205080757);
@@ -466,7 +502,7 @@ static func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 #	vec2 size = bmax - bmin;
 #	float max_size = max(size.x, size.y);
 #	float min_size = min(size.x, size.y);
-#	mortar *= min_size;\n\tcorner *= min_size;
+#	mortar *= min_size;corner *= min_size;
 #
 #	return vec3(clamp((0.5*size-vec2(mortar)-abs(uv-center))/corner, vec2(0.0), vec2(1.0)), rand(fract(center)+vec2(seed)));
 #}
@@ -475,7 +511,7 @@ static func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 #	count *= repeat;
 #	float x_offset = offset*step(0.5, fract(uv.y*count.y*0.5));
 #	vec2 bmin = floor(vec2(uv.x*count.x-x_offset, uv.y*count.y));
-#	bmin.x += x_offset;\n\tbmin /= count;
+#	bmin.x += x_offset;bmin /= count;
 #
 #	return vec4(bmin, bmin+vec2(1.0)/count);
 #}
