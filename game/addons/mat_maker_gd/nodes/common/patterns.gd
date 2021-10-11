@@ -5,7 +5,20 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #----------------------
 #beehive.mmg
-#Outputs: 3 beehive_1c, beehive_2c, beehive_3c
+#Outputs: (beehive_1c, beehive_2c, beehive_3c  TODO make common code parameters)
+#Common
+#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
+#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
+
+#Output (float) - Shows the greyscale pattern
+#1.0-2.0*beehive_dist($(name_uv)_center.xy)
+
+#Random color (rgb) - Shows a random color for each hexagonal tile
+#rand3(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed)))
+
+#UV map (rgb) - Shows an UV map to be connected to the UV map port of the Custom UV node
+#vec3(vec2(0.5)+$(name_uv)_center.xy, rand(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed))))
+
 #Inputs:
 #size, vector2, default: 2, min: 1, max: 64, step: 1
 
@@ -18,6 +31,47 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Pattern_y_type, enum, default: 5, values (CombinerAxisType): Sine, Triangle, Square, Sawtooth, Constant, Bounce
 #Pattern_Repeat, vector2, min: 0, max: 32, default:4, step: 1
 
+#----------------------
+#bricks.mmg
+
+#Outputs:
+
+#Common
+#vec4 $(name_uv)_rect = bricks_$pattern($uv, vec2($columns, $rows), $repeat, $row_offset);
+#vec4 $(name_uv) = brick($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $round*$round_map($uv), max(0.001, $bevel*$bevel_map($uv)));
+
+#Bricks pattern (float) - A greyscale image that shows the bricks pattern
+#$(name_uv).x
+
+#Random color (rgb) - A random color for each brick
+#brick_random_color($(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
+
+#Position.x (float) - The position of each brick along the X axis",
+#$(name_uv).y
+
+#Position.y (float) - The position of each brick along the Y axis
+#$(name_uv).z
+
+#Brick UV (rgb) - An UV map output for each brick, to be connected to the Map input of a CustomUV node
+#brick_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
+
+#Corner UV (rgb) - An UV map output for each brick corner, to be connected to the Map input of a CustomUV node
+#brick_corner_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $corner, float($seed))
+
+#Direction (float) - The direction of each brick (white: horizontal, black: vertical)
+#0.5*(sign($(name_uv)_rect.z-$(name_uv)_rect.x-$(name_uv)_rect.w+$(name_uv)_rect.y)+1.0)
+
+#Inputs:
+#type / Pattern, enum, default: 0, values: Running Bond,Running Bond (2),HerringBone,Basket Weave,Spanish Bond
+#repeat, int, min: 1, max: 8, default: 1, step:1
+#rows, int, min: 1, max: 64, default: 6, step:1
+#columns, int, min: 1, max: 64, default: 6, step:1
+#offset, float, min: 0, max: 1, default: 0.5, step:0.01
+#mortar, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#bevel, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#round, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
+#corner, float, min: 0, max: 0.5, default: 0.1, step:0.01
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -27,7 +81,7 @@ enum CombinerAxisType {
 	BOUNCE
 }
 
-enum  CombinerType {
+enum CombinerType {
 	MULTIPLY,
 	ADD,
 	MAX,
@@ -36,7 +90,7 @@ enum  CombinerType {
 	POW
 }
 
-#float $(name)_fct(vec2 uv) {\n\t
+#float $(name)_fct(vec2 uv) {
 #	return mix_$(mix)(wave_$(x_wave)($(x_scale)*uv.x), wave_$(y_wave)($(y_scale)*uv.y));
 #}
 
@@ -314,6 +368,18 @@ static func beehive_center(p : Vector2) -> Color:
 	
 	#return dot(h.xy, h.xy) < dot(h.zw, h.zw) ? Color(h.xy, hC.xy) : Color(h.zw, hC.zw + 9.73);
 
+#vec3 brick_corner_uv(vec2 uv, vec2 bmin, vec2 bmax, float mortar, float corner, float seed) {
+#	vec2 center = 0.5*(bmin + bmax);
+#	vec2 size = bmax - bmin;
+#
+#	float max_size = max(size.x, size.y);
+#	float min_size = min(size.x, size.y);
+#
+#	mortar *= min_size;
+#	corner *= min_size;
+#
+#	return vec3(clamp((0.5*size-vec2(mortar)-abs(uv-center))/corner, vec2(0.0), vec2(1.0)), rand(fract(center)+vec2(seed)+ceil(vec2(uv-center))));
+#}
 
 static func brick_corner_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float, corner : float, pseed : float) -> Vector3:
 	var center : Vector2 = 0.5 * (bmin + bmax)
@@ -333,6 +399,23 @@ static func brick_corner_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar
 	
 #	return vec3(clamp((0.5*size-vec2(mortar)-abs(uv-center))/corner, vec2(0.0), vec2(1.0)), rand(fract(center)+vec2(seed)));
 
+#vec4 brick(vec2 uv, vec2 bmin, vec2 bmax, float mortar, float round, float bevel) {
+#	float color;
+#	vec2 size = bmax - bmin;
+#	float min_size = min(size.x, size.y);
+#
+#	mortar *= min_size;
+#	bevel *= min_size;
+#	round *= min_size;
+#	vec2 center = 0.5*(bmin+bmax);    
+#	vec2 d = abs(uv-center)-0.5*(size)+vec2(round+mortar);    
+#
+#	color = length(max(d,vec2(0))) + min(max(d.x,d.y),0.0)-round;
+#	color = clamp(-color/bevel, 0.0, 1.0);
+#	vec2 tiled_brick_pos = mod(bmin, vec2(1.0, 1.0));
+#
+#	return vec4(color, center, tiled_brick_pos.x+7.0*tiled_brick_pos.y);
+#}
 
 static func brick(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float, pround : float, bevel : float) -> Color:
 	var color : float
@@ -362,6 +445,25 @@ static func brick(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float, 
 	
 	return Color(color, center.x, center.y, tiled_brick_pos_x + 7.0 * tiled_brick_pos_y)
 
+#vec3 brick_random_color(vec2 bmin, vec2 bmax, float seed) {
+#	vec2 center = 0.5*(bmin + bmax);
+#	return rand3(fract(center + vec2(seed)));
+#}
+
+static func brick_random_color(uv : Vector2, bmin : Vector2, bmax : Vector2, pseed : float) -> Vector3:
+	var center : Vector2 = 0.5 * (bmin + bmax)
+	
+	return Commons.rand3(Commons.fractv2(center + Vector2(pseed, pseed)));
+
+#vec3 brick_uv(vec2 uv, vec2 bmin, vec2 bmax, float seed) {
+#	vec2 center = 0.5*(bmin + bmax);
+#	vec2 size = bmax - bmin;
+#
+#	float max_size = max(size.x, size.y);
+#
+#	return vec3(0.5+(uv-center)/max_size, rand(fract(center)+vec2(seed)));
+#}
+
 static func brick_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, pseed : float) -> Vector3:
 	var center : Vector2 = 0.5 * (bmin + bmax)
 	var size : Vector2 = bmax - bmin
@@ -371,7 +473,18 @@ static func brick_uv(uv : Vector2, bmin : Vector2, bmax : Vector2, pseed : float
 	var y : float = 0.5+ (uv.y - center.y) /max_size
 	
 	return Vector3(x, y, Commons.rand(Commons.fractv2(center) + Vector2(pseed, pseed)))
-	
+
+#vec4 bricks_rb(vec2 uv, vec2 count, float repeat, float offset) {
+#	count *= repeat;float x_offset = offset*step(0.5, fract(uv.y*count.y*0.5));
+#
+#	vec2 bmin = floor(vec2(uv.x*count.x-x_offset, uv.y*count.y));
+#
+#	bmin.x += x_offset;
+#	bmin /= count;
+#
+#	return vec4(bmin, bmin+vec2(1.0)/count);
+#}
+
 static func bricks_rb(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	count *= repeat
 	
@@ -386,7 +499,21 @@ static func bricks_rb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 	var bmc : Vector2 = bmin + Vector2(1.0, 1.0) /  count
 
 	return Color(bmin.x, bmin.y, bmc.x, bmc.y)
-	
+
+#vec4 bricks_rb2(vec2 uv, vec2 count, float repeat, float offset) {
+#	count *= repeat;
+#
+#	float x_offset = offset*step(0.5, fract(uv.y*count.y*0.5));
+#	count.x = count.x*(1.0+step(0.5, fract(uv.y*count.y*0.5)));
+#
+#	vec2 bmin = floor(vec2(uv.x*count.x-x_offset, uv.y*count.y));
+#
+#	bmin.x += x_offset;
+#	bmin /= count;
+#
+#	return vec4(bmin, bmin+vec2(1.0)/count);
+#}
+
 static func bricks_rb2(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	count *= repeat
 
@@ -403,7 +530,20 @@ static func bricks_rb2(uv : Vector2, count : Vector2, repeat : float, offset : f
 	var b : Vector2 = bmin + Vector2(1, 1) / count
 	
 	return Color(bmin.x, bmin.y, b.x, b.y)
-	
+
+#vec4 bricks_hb(vec2 uv, vec2 count, float repeat, float offset) {
+#	float pc = count.x+count.y;
+#	float c = pc*repeat;
+#	vec2 corner = floor(uv*c);
+#	float cdiff = mod(corner.x-corner.y, pc);
+#
+#	if (cdiff < count.x) {
+#		return vec4((corner-vec2(cdiff, 0.0))/c, (corner-vec2(cdiff, 0.0)+vec2(count.x, 1.0))/c);
+#	} else {
+#		return vec4((corner-vec2(0.0, pc-cdiff-1.0))/c, (corner-vec2(0.0, pc-cdiff-1.0)+vec2(1.0, count.y))/c);
+#	}
+#}
+
 static func bricks_hb(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	var pc : float = count.x + count.y
 	var c : float = pc * repeat
@@ -431,7 +571,27 @@ static func bricks_hb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 		col.a = (corner.y - (pc - cdiff - 1.0) + count.y) / c
 		
 		return col
-		
+
+#vec4 bricks_bw(vec2 uv, vec2 count, float repeat, float offset) {
+#	vec2 c = 2.0*count*repeat;
+#	float mc = max(c.x, c.y);
+#	vec2 corner1 = floor(uv*c);
+#	vec2 corner2 = count*floor(repeat*2.0*uv);
+#	float cdiff = mod(dot(floor(repeat*2.0*uv), vec2(1.0)), 2.0);
+#	vec2 corner;
+#	vec2 size;
+#
+#	if (cdiff == 0.0) {
+#		orner = vec2(corner1.x, corner2.y);
+#		size = vec2(1.0, count.y);
+#	} else {
+#		corner = vec2(corner2.x, corner1.y);
+#		size = vec2(count.x, 1.0);
+#	}
+#
+#	return vec4(corner/c, (corner+size)/c);
+#}
+
 static func bricks_bw(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	var c : Vector2 = 2.0 * count * repeat
 	var mc : float = max(c.x, c.y)
@@ -452,6 +612,35 @@ static func bricks_bw(uv : Vector2, count : Vector2, repeat : float, offset : fl
 		size = Vector2(count.x, 1.0)
 
 	return Color(corner.x / c.x, corner.y / c.y, (corner.x + size.x) / c.x, (corner.y + size.y) / c.y)
+
+#vec4 bricks_sb(vec2 uv, vec2 count, float repeat, float offset) {
+#	vec2 c = (count+vec2(1.0))*repeat;
+#	float mc = max(c.x, c.y);
+#	vec2 corner1 = floor(uv*c);
+#	vec2 corner2 = (count+vec2(1.0))*floor(repeat*uv);
+#	vec2 rcorner = corner1 - corner2;
+#	vec2 corner;
+#	vec2 size;
+#
+#	if (rcorner.x == 0.0 && rcorner.y < count.y) {
+#		corner = corner2;
+#		size = vec2(1.0, count.y);
+#	} else if (rcorner.y == 0.0) {
+#		corner = corner2+vec2(1.0, 0.0);
+#		size = vec2(count.x, 1.0);
+#	} else if (rcorner.x == count.x) {
+#		corner = corner2+vec2(count.x, 1.0);
+#		size = vec2(1.0, count.y);
+#	} else if (rcorner.y == count.y) {
+#		corner = corner2+vec2(0.0, count.y);
+#		size = vec2(count.x, 1.0);
+#	} else {
+#		corner = corner2+vec2(1.0);
+#		size = vec2(count.x-1.0, count.y-1.0);
+#	}
+#
+#	return vec4(corner/c, (corner+size)/c);
+#}
 
 static func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : float) -> Color:
 	var c : Vector2 = (count + Vector2(1, 1)) * repeat
@@ -480,127 +669,3 @@ static func bricks_sb(uv : Vector2, count : Vector2, repeat : float, offset : fl
 		size = Vector2(count.x-1.0, count.y-1.0)
 
 	return Color(corner.x / c.x, corner.y / c.y, (corner.x + size.x) / c.x, (corner.y + size.y) / c.y)
-
-#
-#vec4 $(name_uv)_rect = bricks_$pattern($uv, vec2($columns, $rows), $repeat, $row_offset);
-#vec4 $(name_uv) = brick($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $round*$round_map($uv), max(0.001, $bevel*$bevel_map($uv)));
-#
-#vec4 brick(vec2 uv, vec2 bmin, vec2 bmax, float mortar, float round, float bevel) {
-#	float color;
-#	vec2 size = bmax - bmin;
-#	float min_size = min(size.x, size.y);
-#	mortar *= min_size;
-#	bevel *= min_size;
-#	round *= min_size;
-#	vec2 center = 0.5*(bmin+bmax);
-#
-#	vec2 d = abs(uv-center)-0.5*(size)+vec2(round+mortar);
-#	color = length(max(d,vec2(0))) + min(max(d.x,d.y),0.0)-round;
-#	color = clamp(-color/bevel, 0.0, 1.0);
-#	vec2 tiled_brick_pos = mod(bmin, vec2(1.0, 1.0));
-#
-#	return vec4(color, center, tiled_brick_pos.x+7.0*tiled_brick_pos.y);
-#}
-#
-#vec3 brick_uv(vec2 uv, vec2 bmin, vec2 bmax, float seed) {
-#	vec2 center = 0.5*(bmin + bmax);
-#	vec2 size = bmax - bmin;
-#	float max_size = max(size.x, size.y);
-#
-#	return vec3(0.5+(uv-center)/max_size, rand(fract(center)+vec2(seed)));
-#}
-#
-#vec3 brick_corner_uv(vec2 uv, vec2 bmin, vec2 bmax, float mortar, float corner, float seed) {
-#	vec2 center = 0.5*(bmin + bmax);
-#	vec2 size = bmax - bmin;
-#	float max_size = max(size.x, size.y);
-#	float min_size = min(size.x, size.y);
-#	mortar *= min_size;corner *= min_size;
-#
-#	return vec3(clamp((0.5*size-vec2(mortar)-abs(uv-center))/corner, vec2(0.0), vec2(1.0)), rand(fract(center)+vec2(seed)));
-#}
-#
-#vec4 bricks_rb(vec2 uv, vec2 count, float repeat, float offset) {
-#	count *= repeat;
-#	float x_offset = offset*step(0.5, fract(uv.y*count.y*0.5));
-#	vec2 bmin = floor(vec2(uv.x*count.x-x_offset, uv.y*count.y));
-#	bmin.x += x_offset;bmin /= count;
-#
-#	return vec4(bmin, bmin+vec2(1.0)/count);
-#}
-#
-#vec4 bricks_rb2(vec2 uv, vec2 count, float repeat, float offset) {
-#	count *= repeat;
-#
-#	float x_offset = offset*step(0.5, fract(uv.y*count.y*0.5));
-#	count.x = count.x*(1.0+step(0.5, fract(uv.y*count.y*0.5)));
-#	vec2 bmin = floor(vec2(uv.x*count.x-x_offset, uv.y*count.y));
-#
-#	bmin.x += x_offset;
-#	bmin /= count;
-#	return vec4(bmin, bmin+vec2(1.0)/count);
-#}
-#
-#vec4 bricks_hb(vec2 uv, vec2 count, float repeat, float offset) {
-#	float pc = count.x+count.y;
-#	float c = pc*repeat;
-#	vec2 corner = floor(uv*c);
-#	float cdiff = mod(corner.x-corner.y, pc);
-#
-#	if (cdiff < count.x) {
-#		return vec4((corner-vec2(cdiff, 0.0))/c, (corner-vec2(cdiff, 0.0)+vec2(count.x, 1.0))/c);
-#	} else {
-#		return vec4((corner-vec2(0.0, pc-cdiff-1.0))/c, (corner-vec2(0.0, pc-cdiff-1.0)+vec2(1.0, count.y))/c);
-#	}
-#}
-#
-#vec4 bricks_bw(vec2 uv, vec2 count, float repeat, float offset) {
-#	vec2 c = 2.0*count*repeat;
-#	float mc = max(c.x, c.y);
-#	vec2 corner1 = floor(uv*c);
-#	vec2 corner2 = count*floor(repeat*2.0*uv);
-#	float cdiff = mod(dot(floor(repeat*2.0*uv), vec2(1.0)), 2.0);
-#	vec2 corner;
-#	vec2 size;
-#
-#	if (cdiff == 0.0) {
-#		corner = vec2(corner1.x, corner2.y);
-#		size = vec2(1.0, count.y);
-#	} else {
-#		corner = vec2(corner2.x, corner1.y);
-#		size = vec2(count.x, 1.0);
-#	}
-#
-#	return vec4(corner/c, (corner+size)/c);
-#}
-#
-#vec4 bricks_sb(vec2 uv, vec2 count, float repeat, float offset) {
-#	vec2 c = (count+vec2(1.0))*repeat;
-#	float mc = max(c.x, c.y);
-#	vec2 corner1 = floor(uv*c);
-#	vec2 corner2 = (count+vec2(1.0))*floor(repeat*uv);
-#	vec2 rcorner = corner1 - corner2;
-#
-#	vec2 corner;
-#	vec2 size;
-#
-#	if (rcorner.x == 0.0 && rcorner.y < count.y) {
-#		corner = corner2;
-#		size = vec2(1.0, count.y);
-#	} else if (rcorner.y == 0.0) {
-#		corner = corner2+vec2(1.0, 0.0);
-#		size = vec2(count.x, 1.0);
-#	} else if (rcorner.x == count.x) {
-#		corner = corner2+vec2(count.x, 1.0);
-#		size = vec2(1.0, count.y);
-#	} else if (rcorner.y == count.y) {
-#		corner = corner2+vec2(0.0, count.y);
-#		size = vec2(count.x, 1.0);
-#	} else {
-#		corner = corner2+vec2(1.0);
-#		size = vec2(count.x-1.0, count.y-1.0);
-#	}
-#
-#	return vec4(corner/c, (corner+size)/c);
-#}
-
