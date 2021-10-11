@@ -3,6 +3,21 @@ extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
+#----------------------
+#sdf3d_box.mmg
+
+#Outputs:
+
+#Common
+#vec3 $(name_uv)_q = abs($uv) - vec3($sx, $sy, $sz);
+
+#Output (sdf3d) - Shows the rounded box
+#length(max($(name_uv)_q,0.0))+min(max($(name_uv)_q.x,max($(name_uv)_q.y,$(name_uv)_q.z)),0.0)-$r
+
+#Inputs:
+#size, vector3, min: 0, max: 1, default:0.5, step:0.01
+#size, float, min: 0, max: 1, default:0.5, step:0.01
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
@@ -26,6 +41,9 @@ static func sdf3d_sphere(p : Vector3, r : float) -> Vector2:
 	var s : float = p.length() - r;
 
 	return Vector2(s, 0.0);
+
+#vec3 $(name_uv)_q = abs($uv) - vec3($sx, $sy, $sz);
+#length(max($(name_uv)_q,0.0))+min(max($(name_uv)_q.x,max($(name_uv)_q.y,$(name_uv)_q.z)),0.0)-$r
 
 static func sdf3d_box(p : Vector3, sx : float, sy : float, sz : float, r : float) -> Vector2:
 	var v : Vector3 = Commons.absv3((p)) - Vector3(sx, sy, sz);
