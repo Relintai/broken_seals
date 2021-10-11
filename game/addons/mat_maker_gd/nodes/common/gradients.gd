@@ -19,7 +19,15 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #radial_gradient.mmg
 
+#output: $gradient(fract($repeat*1.41421356237*length(fract($uv)-vec2(0.5, 0.5))))
+
+#repeat: default: 1, min: 1, max : 32, step: 1
+
 #circular_gradient.mmg
+
+#output: gradient(fract($repeat*0.15915494309*atan($uv.y-0.5, $uv.x-0.5)))
+
+#repeat: default: 1, min: 1, max : 32, step: 1
 
 #gradient.gd
 
