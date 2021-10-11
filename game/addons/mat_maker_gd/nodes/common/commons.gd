@@ -1,6 +1,8 @@
 tool
 extends Reference
 
+#pattern.mmg
+
 static func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
 	v.x = clamp(v.x, mi.x, ma.x)
 	v.y = clamp(v.y, mi.y, ma.y)
@@ -152,45 +154,96 @@ static func transform(uv : Vector2, translate : Vector2, rotate : float, scale :
 	else:
 		return clampv2(rv, Vector2(0, 0), Vector2(1, 1));
 
+static func fractf(x : float) -> float:
+	return x - floor(x)
+
+#float mix_mul(float x, float y) {
+#	return x*y;
+#}
+
 static func mix_mul(x : float, y : float) -> float:
 	return x*y;
+
+#float mix_add(float x, float y) {
+#	return min(x+y, 1.0);
+#}
 
 static func mix_add(x : float, y : float) -> float:
 	return min(x+y, 1.0);
 
+#float mix_max(float x, float y) {
+#	return max(x, y);
+#}
+
 static func mix_max(x : float, y : float) -> float:
 	return max(x, y);
+
+#float mix_min(float x, float y) {
+#	return min(x, y);
+#}
 
 static func mix_min(x : float, y : float) -> float:
 	return min(x, y);
 
+#float mix_xor(float x, float y) {
+#	return min(x+y, 2.0-x-y);
+#}
+
 static func mix_xor(x : float, y : float) -> float:
 	return min(x+y, 2.0-x-y);
+
+#float mix_pow(float x, float y) {
+#	return pow(x, y);
+#}
 
 static func mix_pow(x : float, y : float) -> float:
 	return pow(x, y);
 
-static func fractf(x : float) -> float:
-	return x - floor(x)
+
+#float wave_constant(float x) {
+#	return 1.0;
+#}
 
 static func wave_constant(x : float) -> float:
 	return 1.0;
 
+#float wave_sine(float x) {
+#	return 0.5-0.5*cos(3.14159265359*2.0*x);
+#}
+
 static func wave_sine(x : float) -> float:
 	return 0.5-0.5*cos(3.14159265359*2.0*x);
+
+#float wave_triangle(float x) {
+#	x = fract(x);
+#	return min(2.0*x, 2.0-2.0*x);
+#}
 
 static func wave_triangle(x : float) -> float:
 	x = fractf(x);
 	return min(2.0*x, 2.0-2.0*x);
 
+#float wave_sawtooth(float x) {
+#	return fract(x);
+#}
+
 static func wave_sawtooth(x : float) -> float:
 	return fractf(x);
+
+#float wave_square(float x) {
+#	return (fract(x) < 0.5) ? 0.0 : 1.0;
+#}
 
 static func wave_square(x : float) -> float:
 	if (fractf(x) < 0.5):
 		return 0.0
 	else:
 		return 1.0
+
+#float wave_bounce(float x) {
+#	x = 2.0*(fract(x)-0.5);
+#	return sqrt(1.0-x*x);
+#}
 
 static func wave_bounce(x : float) -> float:
 	x = 2.0*(fractf(x)-0.5);

@@ -3,10 +3,20 @@ extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
+#----------------------
 #beehive.mmg
 #Outputs: 3 beehive_1c, beehive_2c, beehive_3c
 #Inputs:
 #size, vector2, default: 2, min: 1, max: 64, step: 1
+
+#----------------------
+#pattern.mmg
+#Outputs: $(name)_fct($(uv))
+
+#Combiner, enum, default: 0, values (CombinerType): Multiply, Add, Max, Min, Xor, Pow
+#Pattern_x_type, enum, default: 5, values (CombinerAxisType): Sine, Triangle, Square, Sawtooth, Constant, Bounce
+#Pattern_y_type, enum, default: 5, values (CombinerAxisType): Sine, Triangle, Square, Sawtooth, Constant, Bounce
+#Pattern_Repeat, vector2, min: 0, max: 32, default:4, step: 1
 
 enum CombinerAxisType {
 	SINE,
@@ -26,11 +36,14 @@ enum  CombinerType {
 	POW
 }
 
+#float $(name)_fct(vec2 uv) {\n\t
+#	return mix_$(mix)(wave_$(x_wave)($(x_scale)*uv.x), wave_$(y_wave)($(y_scale)*uv.y));
+#}
+
 static func pattern(uv : Vector2, x_scale : float, y_scale : float, ct : int, catx : int, caty : int) -> float:
 	var x : float = 0
 	var y : float = 0
 	
-	#in c++ these ifs should be function pointers or macros in the caller
 	if catx == CombinerAxisType.SINE:
 		x = Commons.wave_sine(x_scale * uv.x)
 	elif catx == CombinerAxisType.TRIANGLE:
