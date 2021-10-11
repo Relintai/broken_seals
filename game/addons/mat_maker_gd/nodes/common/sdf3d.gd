@@ -31,6 +31,25 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #radius, vector3, min: 0, max: 1, default:0.5, step:0.01
 
+#----------------------
+#sdf3d_capsule.mmg
+#Generates a capsule as a signed distance function
+
+#Outputs:
+
+#Common
+#vec3 $(name_uv)_p = $uv;
+#$(name_uv)_p.$axis -= clamp($(name_uv)_p.$axis, -$l, $l);
+
+#Output (sdf3d) - Shows the capsule
+#length($(name_uv)_p)-$r*$profile(clamp(0.5+0.5*($uv).$axis/$l, 0.0, 1.0))
+
+#Inputs:
+#axis, enum, default: 1, values: x, y, z
+#length, float, min: 0, max: 1, default:0.25, step:0.01
+#radius, float, min: 0, max: 1, default:0.2, step:0.01
+#profile, curve, default: (ls, rs, x, z) 0, 0, 0, 1,  0, 0, 1, 1
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
@@ -83,6 +102,10 @@ static func sdf3d_cylinder_z(p : Vector3, r : float, l : float) -> Vector2:
 	var f : float = min(max(v.x, v.y),0.0) + Commons.maxv2(v, Vector2()).length();
 
 	return Vector2(f, 0.0);
+
+#vec3 $(name_uv)_p = $uv;
+#$(name_uv)_p.$axis -= clamp($(name_uv)_p.$axis, -$l, $l);
+#return length($(name_uv)_p)-$r*$profile(clamp(0.5+0.5*($uv).$axis/$l, 0.0, 1.0))
 
 static func sdf3d_capsule_y(p : Vector3, r : float, l : float) -> Vector2:
 	var v : Vector3 = p;
