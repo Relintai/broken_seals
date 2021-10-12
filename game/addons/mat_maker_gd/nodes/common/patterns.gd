@@ -187,6 +187,33 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #stitch, float, min: 0, max: 10, default: 1, step:1
 #width_map, float, default: 1, (does not need input val (label)) (universal input)
 
+#----------------------
+#truchet.mmg
+
+#Outputs:
+
+#line: $shape = 1
+#circle: $shape = 2
+
+#Output (float) - Shows a greyscale image of the truchet pattern.
+#truchet$shape($uv*$size, vec2(float($seed)))
+
+#Inputs:
+#shape, enum, default: 0, values: line, circle
+#size, float, default: 4, min: 2, max: 64, step: 1
+
+#----------------------
+#truchet_generic.mmg
+
+#Outputs:
+
+#Output (color)
+#$in(truchet_generic_uv($uv*$size, vec2(float($seed))))
+
+#Inputs:
+#in, color, default: color(1.0)
+#size, float, default: 4, min: 2, max: 64, step: 1
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -253,26 +280,48 @@ static func pattern(uv : Vector2, x_scale : float, y_scale : float, ct : int, ca
 		return Commons.mix_pow(x, y);
 		
 	return 0.0
+	
 
 static func truchet1c(uv : Vector2, pseed : Vector2) -> Color:
 	var f : float = truchet1(uv, pseed)
 	return Color(f, f, f, 1);
 
+#float truchet1(vec2 uv, vec2 seed) {
+#	vec2 i = floor(uv);
+#	vec2 f = fract(uv)-vec2(0.5);
+#
+#	return 1.0-abs(abs((2.0*step(rand(i+seed), 0.5)-1.0)*f.x+f.y)-0.5);
+#}
+
 static func truchet1(uv : Vector2, pseed : Vector2) -> float:
 	var i : Vector2 = Commons.floorv2(uv);
 	var f : Vector2 = Commons.fractv2(uv) - Vector2(0.5, 0.5);
+	
 	return 1.0 - abs(abs((2.0*Commons.step(Commons.rand(i+pseed), 0.5)-1.0)*f.x+f.y)-0.5);
 
 static func truchet2c(uv : Vector2, pseed : Vector2) -> Color:
 	var f : float = truchet2(uv, pseed)
 	return Color(f, f, f, 1);
 
+#float truchet2(vec2 uv, vec2 seed) {
+#	vec2 i = floor(uv);
+#	vec2 f = fract(uv);
+#	float random = step(rand(i+seed), 0.5);
+#
+#	f.x *= 2.0*random-1.0;
+#	f.x += 1.0-random;
+#
+#	return 1.0-min(abs(length(f)-0.5), abs(length(1.0-f)-0.5));
+#}
+
 static func truchet2(uv : Vector2, pseed : Vector2) -> float:
 	var i : Vector2 = Commons.floorv2(uv);
 	var f : Vector2 = Commons.fractv2(uv);
 	var random : float = Commons.step(Commons.rand(i+pseed), 0.5);
+	
 	f.x *= 2.0 * random-1.0;
 	f.x += 1.0 - random;
+	
 	return 1.0 - min(abs(f.length() - 0.5), abs((Vector2(1, 1) - f).length() - 0.5));
 
 static func weavec(uv : Vector2, count : Vector2, width : float) -> Color:
@@ -948,3 +997,15 @@ static func brick2(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float,
 
 static func bricks_uneven(uv : Vector2, iterations : int, min_size : float, randomness : float, pseed : float) -> Color:
 	return Color()
+
+
+#vec2 truchet_generic_uv(vec2 uv, vec2 seed) {
+#	vec2 i = floor(uv);
+#	vec2 f = fract(uv);
+#	vec2 invert = step(rand2(seed+i), vec2(0.5));
+#
+#	return f*(vec2(1.0)-invert)+(vec2(1.0)-f)*invert;
+#}
+
+static func truchet_generic_uv(uv : Vector2, pseed : float) -> Vector2:
+	return Vector2()

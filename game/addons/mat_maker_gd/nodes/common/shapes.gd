@@ -3,6 +3,42 @@ extends Reference
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
+#----------------------
+#sphere.mmg
+
+#Outputs:
+
+#Output - (float) - A heightmap of the specified sphere
+#sphere($uv, vec2($cx, $cy), $r)
+
+#Inputs:
+#center, vector2, default: 0.5, min: 0, max: 1, step: 0.01
+#radius, float, min: 0, max: 1, default: 0.5, step:0.01
+
+#----------------------
+#shape.mmg
+
+#Outputs:
+
+#Output - (float) - Shows a white shape on a black background
+#shape_$(shape)($(uv), $(sides), $(radius)*$radius_map($uv), $(edge)*$edge_map($uv))
+
+#Inputs:
+#shape, enum, default: 0, values: circle, ploygon, star, curved_star, rays
+#sides, int, min: 2, max: 32, default: 3, step:1
+#radius, float, min: 0, max: 1, default: 1, step:0.01 (universal input)
+#edge, float, min: 0, max: 1, default: 0.2, step:0.01 (universal input)
+
+
+#float sphere(vec2 uv, vec2 c, float r) {
+#	uv -= c;
+#	uv /= r;
+#	return 2.0*r*sqrt(max(0.0, 1.0-dot(uv, uv)));
+#}
+
+static func sphere(uv : Vector2, c : Vector2, r : float) -> float:
+	return 0.0
+
 #float shape_circle(vec2 uv, float sides, float size, float edge) {  
 #	uv = 2.0*uv-1.0;
 #	edge = max(edge, 1.0e-8); 
