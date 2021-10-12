@@ -123,6 +123,22 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #size, vector2, default: 4, min: 2, max: 32, step: 1
 
+#scratches.mmg
+#Draws white scratches on a black background
+
+#Output (float) - Shows white scratches on a black background
+#scratches($uv, int($layers), vec2($length, $width), $waviness, $angle, $randomness, vec2(float($seed), 0.0))
+
+#Inputs:
+
+#scratch_size (l, w), vector2, min: 0.1, max: 1, default: (0.25, 0.5), step:0.01
+#layers, float, min: 1, max: 10, default: 4, step:1
+#waviness, float, min: 0, max: 1, default: 0.5, step:0.01
+#angle, float, min: -180, max: 180, default: 0, step:1
+#randomness, float, min: 0, max: 1, default: 0.5, step:0.01
+
+
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -230,6 +246,32 @@ static func sinewavec(uv : Vector2, amplitude : float, frequency : float, phase 
 static func sinewavef(uv : Vector2, amplitude : float, frequency : float, phase : float) -> float:
 	return 1.0- abs(2.0 * (uv.y-0.5) - amplitude * sin((frequency* uv.x + phase) * 6.28318530718));
 	
+#float scratch(vec2 uv, vec2 size, float waviness, float angle, float randomness, vec2 seed) {
+#	float subdivide = floor(1.0/size.x);
+#	float cut = size.x*subdivide;
+#
+#	uv *= subdivide;
+#
+#	vec2 r1 = rand2(floor(uv)+seed);
+#	vec2 r2 = rand2(r1);
+#
+#	uv = fract(uv);
+#	vec2 border = 10.0*min(fract(uv), 1.0-fract(uv));
+#	uv = 2.0*uv-vec2(1.0);
+#
+#	float a = 6.28318530718*(angle+(r1.x-0.5)*randomness);
+#	float c = cos(a);
+#	float s = sin(a);
+#
+#	uv = vec2(c*uv.x+s*uv.y, s*uv.x-c*uv.y);
+#	uv.y += 2.0*r1.y-1.0;
+#	uv.y += 0.5*waviness*cos(2.0*uv.x+6.28318530718*r2.y);
+#	uv.x /= cut;
+#	uv.y /= subdivide*size.y;
+#
+#	return min(border.x, border.y)*(1.0-uv.x*uv.x)*max(0.0, 1.0-1000.0*uv.y*uv.y);
+#}
+	
 static func scratch(uv : Vector2, size : Vector2, waviness : float, angle : float, randomness : float, pseed : Vector2) -> float:
 	var subdivide : float = floor(1.0/size.x);
 	var cut : float = size.x*subdivide;
@@ -250,6 +292,17 @@ static func scratch(uv : Vector2, size : Vector2, waviness : float, angle : floa
 	uv.y /= subdivide*size.y;
 	
 	return (1.0-uv.x*uv.x)*max(0.0, 1.0-1000.0*uv.y*uv.y);
+
+#float scratches(vec2 uv, int layers, vec2 size, float waviness, float angle, float randomness, vec2 seed) {
+#	float v = 0.0;
+#
+#	for (int i = 0; i < layers; ++i) {
+#		seed = rand2(seed);
+#		v = max(v, scratch(fract(uv+seed), size, waviness, angle/360.0, randomness, seed));
+#	}
+#
+#	return v;
+#}
 
 static func scratches(uv : Vector2, layers : int, size : Vector2, waviness : float, angle : float, randomness : float, pseed : Vector2) -> float:
 	var v : float = 0.0;
