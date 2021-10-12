@@ -123,8 +123,11 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #size, vector2, default: 4, min: 2, max: 32, step: 1
 
+#----------------------
 #scratches.mmg
 #Draws white scratches on a black background
+
+#Outputs:
 
 #Output (float) - Shows white scratches on a black background
 #scratches($uv, int($layers), vec2($length, $width), $waviness, $angle, $randomness, vec2(float($seed), 0.0))
@@ -136,6 +139,18 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #waviness, float, min: 0, max: 1, default: 0.5, step:0.01
 #angle, float, min: -180, max: 180, default: 0, step:1
 #randomness, float, min: 0, max: 1, default: 0.5, step:0.01
+
+#----------------------
+#iching.mmg
+#This node generates a grid of random I Ching hexagrams.
+
+#Outputs:
+
+#Output (float) - A greyscale image showing random I Ching hexagrams.
+#IChing(vec2($columns, $rows)*$uv, float($seed))
+
+#Inputs:
+#size, vector2, default: 2, min: 2, max: 32, step: 1
 
 
 
@@ -424,6 +439,14 @@ static func IChingc(uv : Vector2, row_col : Vector2, pseed : int) -> Color:
 	var f : float =  IChing(row_col * uv, float(pseed));
 
 	return Color(f, f, f, 1)
+
+#float IChing(vec2 uv, float seed) {
+#	int value = int(32.0*rand(floor(uv)+vec2(seed)));
+#	float base = step(0.5, fract(fract(uv.y)*6.5))*step(0.04, fract(uv.y+0.02))*step(0.2, fract(uv.x+0.1));
+#	int bit = int(fract(uv.y)*6.5);
+#
+#	return base*step(0.1*step(float(bit & value), 0.5), fract(uv.x+0.55));
+#}
 
 static func IChing(uv : Vector2, pseed : float) -> float:
 	var value : int = int(32.0 * Commons.rand(Commons.floorv2(uv) + Vector2(pseed, pseed)));
