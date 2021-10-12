@@ -165,7 +165,7 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #width, float, min: 0, max: 1, default: 0.8, step:0.05 (universal input)
 
 #----------------------
-#weave.mmg
+#weave2.mmg
 
 #code
 #vec3 $(name_uv) = weave2($uv, vec2($columns, $rows), $stitch, $width_x*$width_map($uv), $width_y*$width_map($uv));

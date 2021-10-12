@@ -267,6 +267,13 @@ static func ThickLine(uv : Vector2, posA : Vector2, posB : Vector2, radiusInv : 
 	
 	return finalGray;
 
+#vec3 color_dots(vec2 uv, float size, float seed) {
+#	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
+#	uv /= size;
+#	vec2 point_pos = floor(uv)+vec2(0.5);
+#	return rand3(seed2+point_pos);
+#}
+
 static func color_dots(uv : Vector2, size : float, pseed : int) -> Vector3:
 	var seed2 : Vector2 = rand2(Vector2(float(pseed), 1.0 - float(pseed)));
 	uv /= size;

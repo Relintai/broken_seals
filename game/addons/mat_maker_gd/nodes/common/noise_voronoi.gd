@@ -8,6 +8,24 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #voronoi_1, 2, 3, 4 -> different outputs
 #TODO make a set which takes color as input so all 4 variants can be calculated easily
 
+#Outputs:
+
+#vec4 $(name_uv)_xyzw = voronoi($uv, vec2($scale_x, $scale_y), vec2($stretch_y, $stretch_x), $intensity, $randomness, $seed);
+
+#Nodes - float - A greyscale pattern based on the distance to cell centers
+#$(name_uv)_xyzw.z
+
+#Borders - float - A greyscale pattern based on the distance to borders
+#$(name_uv)_xyzw.w
+
+#Random color - rgb - A color pattern that assigns a random color to each cell
+#rand3(fract(floor($(name_uv)_xyzw.xy)/vec2($scale_x, $scale_y)))
+
+#Fill - rgba - An output that should be plugged into a Fill companion node
+#vec4(fract(($(name_uv)_xyzw.xy-1.0)/vec2($scale_x, $scale_y)), vec2(2.0)/vec2($scale_x, $scale_y))
+
+#Inputs:
+
 #scale, min: 1, max: 32, step: 1, default: 4
 #stretch, min: 0.01, max: 1, step: 0.01, default: 1
 #intensity, min: 0, max: 1, step: 0.01, default: 0.75
