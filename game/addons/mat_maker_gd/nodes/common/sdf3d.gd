@@ -117,6 +117,24 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #length, float, min: 0, max: 1, default:0.5, step:0.01
 #radius, float, min: 0, max: 1, default:0.2, step:0.01
 
+#----------------------
+#sdf3d_plane.mmg
+#Generates a plane that can be used to cut other shapes
+
+#Outputs:
+
+#X: $axis = x
+#Y: $axis = y
+#Z: $axis = z
+
+#Output (sdf3dc) - Shows the plane
+#$uv.$axis
+
+#Inputs:
+#axis, enum, default: 1, values: X, Y, Z
+
+
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
