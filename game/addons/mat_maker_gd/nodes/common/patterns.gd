@@ -111,6 +111,18 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #round, float, min: 0, max: 0.5, default: 0.1, step:0.01 (universal input)
 #corner, float, min: 0, max: 0.5, default: 0.1, step:0.01
 
+#----------------------
+#runes.mmg (includes sdline.mmg)
+#Generates a grid filled with random runes
+
+#Outputs:
+
+#Output (float) - A greyscale image showing random runes.
+#Rune(vec2($columns, $rows)*$uv, float($seed))
+
+#Inputs:
+#size, vector2, default: 4, min: 2, max: 32, step: 1
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -260,6 +272,54 @@ static func runesc(uv : Vector2, col_row : Vector2) -> Color:
 
 static func runesf(uv : Vector2, col_row : Vector2) -> float:
 	return rune(col_row * uv);
+
+#sdline.mmg
+#vec2 sdLine(vec2 p, vec2 a, vec2 b) {
+#	vec2 pa = p-a, ba = b-a;
+#	float h = clamp(dot(pa,ba)/dot(ba,ba), 0.0, 1.0);
+#
+#	return vec2(length(pa-ba*h), h);
+#}
+
+#float ThickLine(vec2 uv, vec2 posA, vec2 posB, float radiusInv){
+#	return clamp(1.1-20.0*sdLine(uv, posA, posB).x, 0.0, 1.0);
+#}
+
+#// makes a rune in the 0..1 uv space. Seed is which rune to draw.
+#// passes back gray in x and derivates for lighting in yz
+#float Rune(vec2 uv, float s) {
+#	float finalLine = 0.0;
+#	vec2 seed = floor(uv)-rand2(vec2(s));
+#	uv = fract(uv);
+#
+#	for (int i = 0; i < 4; i++)	// number of strokes
+#	{
+#		vec2 posA = rand2(floor(seed+0.5));
+#		vec2 posB = rand2(floor(seed+1.5));
+#		seed += 2.0;
+#		// expand the range and mod it to get a nicely distributed random number - hopefully. :)
+#		posA = fract(posA * 128.0);
+#		posB = fract(posB * 128.0);
+#		// each rune touches the edge of its box on all 4 sides
+#
+#		if (i == 0) posA.y = 0.0;
+#		if (i == 1) posA.x = 0.999;
+#		if (i == 2) posA.x = 0.0;
+#		if (i == 3) posA.y = 0.999;
+#
+#		// snap the random line endpoints to a grid 2x3
+#		vec2 snaps = vec2(2.0, 3.0);
+#		posA = (floor(posA * snaps) + 0.5) / snaps; // + 0.5 to center it in a grid cell
+#		posB = (floor(posB * snaps) + 0.5) / snaps;
+#
+#		//if (distance(posA, posB) < 0.0001) continue;
+#		// eliminate dots.
+#		// Dots (degenerate lines) are not cross-GPU safe without adding 0.001 - divide by 0 error.
+#		finalLine = max(finalLine, ThickLine(uv, posA, posB + 0.001, 20.0));
+#	}
+#
+#	return finalLine;
+#}
 
 # makes a rune in the 0..1 uv space. Seed is which rune to draw.
 # passes back gray in x and derivates for lighting in yz

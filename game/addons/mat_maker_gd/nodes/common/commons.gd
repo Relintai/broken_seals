@@ -254,6 +254,8 @@ static func sinewave(uv : Vector2, amplitude : float, frequency : float, phase :
 	
 	return Color(f, f, f, 1)
 
+#from runes.mmg (old)
+
 static func ThickLine(uv : Vector2, posA : Vector2, posB : Vector2, radiusInv : float) -> float:
 	var dir : Vector2 = posA - posB;
 	var dirLen : float = dir.length()
