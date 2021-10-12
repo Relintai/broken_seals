@@ -92,6 +92,20 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Y, int, min: 1, max: 32, default:4, step:1
 #R, float, min: 0, max: 1, default:0.5, step:0.01
 
+#----------------------
+#sdf3d_rotate.mmg
+
+#Outputs:
+
+#Output (sdf3dc) - The rotated object
+#$in(rotate3d($uv, -vec3($ax, $ay, $az)*0.01745329251))
+
+#Inputs:
+#in, vec2, default:vec2(100, 0.0), (sdf3d input)
+#rotation, vector3, min: -180, max: 180, default:0, step:1
+
+
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
@@ -379,7 +393,33 @@ static func repeat(p : Vector3, r : Vector3, pseed : float, randomness : float) 
 	rv.z = p.z;
 	
 	return rv;
-	
+
+#vec3 rotate3d(vec3 p, vec3 a) {
+#	vec3 rv;
+#	float c;
+#	float s;
+#	c = cos(a.x);
+#	s = sin(a.x);
+#	rv.x = p.x;
+#	rv.y = p.y*c+p.z*s;
+#	rv.z = -p.y*s+p.z*c;
+#	c = cos(a.y);
+#	s = sin(a.y);
+#	p.x = rv.x*c+rv.z*s;
+#	p.y = rv.y;
+#	p.z = -rv.x*s+rv.z*c;
+#	c = cos(a.z);
+#	s = sin(a.z);
+#	rv.x = p.x*c+p.y*s;
+#	rv.y = -p.x*s+p.y*c;
+#	rv.z = p.z;
+#	return rv;
+#}
+
+static func rotate3d(p : Vector3, a : Vector3) -> Vector3:
+	#todo
+	return Vector3()
+
 #todo this needs to be solved
 static func sdf3d_input(p : Vector3) -> Vector2:
 	return sdf3d_sphere(p, 0.5)
