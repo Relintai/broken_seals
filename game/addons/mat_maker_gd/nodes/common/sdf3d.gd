@@ -104,7 +104,18 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #in, vec2, default:vec2(100, 0.0), (sdf3d input)
 #rotation, vector3, min: -180, max: 180, default:0, step:1
 
+#----------------------
+#sdf3d_cylinder.mmg
 
+#Outputs:
+
+#Output (sdf3dc) - Shows the cylinder
+#min(max($(name_uv)_d.x,$(name_uv)_d.y),0.0) + length(max($(name_uv)_d,0.0))
+
+#Inputs:
+#axis, enum, default: 1, values: X, Y, Z
+#length, float, min: 0, max: 1, default:0.5, step:0.01
+#radius, float, min: 0, max: 1, default:0.2, step:0.01
 
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
@@ -141,17 +152,26 @@ static func sdf3d_box(p : Vector3, sx : float, sy : float, sz : float, r : float
 
 	return Vector2(f, 0.0);
 
+#Y: $axis = length($uv.xz),$uv.y
+#vec2 $(name_uv)_d = abs(vec2($axis)) - vec2($r,$l);
+
 static func sdf3d_cylinder_y(p : Vector3, r : float, l : float) -> Vector2:
 	var v : Vector2 = Commons.absv2(Vector2(Vector2(p.x, p.z).length(),(p).y)) - Vector2(r,l);
 	var f : float = min(max(v.x, v.y),0.0) + Commons.maxv2(v, Vector2()).length();
 
 	return Vector2(f, 0.0);
 
+#X: $axis = length($uv.yz),$uv.x
+#vec2 $(name_uv)_d = abs(vec2($axis)) - vec2($r,$l);
+
 static func sdf3d_cylinder_x(p : Vector3, r : float, l : float) -> Vector2:
 	var v : Vector2 = Commons.absv2(Vector2(Vector2(p.y, p.z).length(),(p).x)) - Vector2(r, l);
 	var f : float = min(max(v.x, v.y),0.0) + Commons.maxv2(v, Vector2()).length();
 
 	return Vector2(f, 0.0);
+
+#Z: $axis = length($uv.xy),$uv.z
+#vec2 $(name_uv)_d = abs(vec2($axis)) - vec2($r,$l);
 
 static func sdf3d_cylinder_z(p : Vector3, r : float, l : float) -> Vector2:
 	var v : Vector2 = Commons.absv2(Vector2(Vector2(p.x, p.y).length(),(p).z)) - Vector2(r, l);
