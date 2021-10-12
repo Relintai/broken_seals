@@ -214,6 +214,151 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #color_index, float, min: 0, max: 1, default:0, step:0.01
 #in, vec2, default:vec2(100, 0.0), (sdf3d input)
 
+#----------------------
+#sdf3d_translate.mmg
+
+#Outputs:
+
+#Output - sdf3dc
+#$in($uv-vec3($x, $y, $z))
+
+#Inputs:
+#translation, vector3, min: -1, max: 1, default:0, step:0.01
+#in, vec2, default:vec2(100, 0.0), (sdf3dc input)
+
+#----------------------
+#sdf3d_scale.mmg
+
+#Outputs:
+
+#vec2 $(name_uv)_in = $in(($uv)/$s);
+
+#Output - sdf3dc
+#vec2($(name_uv)_in.x*$s, $(name_uv)_in.y)
+
+#Inputs:
+#scale_factor, float, min: 0, max: 5, default:1, step:0.01
+#in, vec2, default:vec2(100, 0.0), (sdf3dc input)
+
+#----------------------
+#sdf3d_rounded.mmg
+
+#Outputs:
+
+#vec2 $(name_uv)_v = $in($uv);
+
+#Output - sdf3dc
+#vec2($(name_uv)_v.x-$r, $(name_uv)_v.y)
+
+#Inputs:
+#radius, float, min: 0, max: 1, default:0, step:0.01
+#in, vec2, default:vec2(100, 0.0), (sdf3dc input)
+
+#----------------------
+#sdf3d_revolution.mmg
+
+#Outputs:
+
+#vec2 $(name_uv)_q = vec2(length($uv.xy)-$d+0.5, $uv.z+0.5);
+
+#Output - sdf3dc
+#$in($(name_uv)_q)
+
+#Inputs:
+#d, float, min: 0, max: 1, default:0.25, step:0.01
+#input, float, default:10.0, (sdf2d input)
+
+#----------------------
+#sdf3d_smoothboolean.mmg
+#Performs a smooth boolean operation (union, intersection or difference) between two shapes
+
+#Outputs:
+
+#Union: $op = union
+#Subtraction: $op = subtraction
+#Intersection: $op = intersection
+
+#Output - sdf3dc
+#sdf3d_smooth_$op($in1($uv), $in2($uv), $k)
+
+#Inputs:
+#in1, vec2, default:vec2(100, 0.0), (sdf3d input)
+#in2, vec2, default:vec2(100, 0.0), (sdf3d input)
+#operation, enum, default: 1, values: Union, Subtraction, Intersection
+#smoothness, float, min: 0, max: 1, default:0, step:0.01
+
+#----------------------
+#sdf3d_elongation.mmg
+
+#Outputs:
+
+#Output - sdf3dc
+#$in($uv-clamp($uv, -abs(vec3($x, $y, $z)), abs(vec3($x, $y, $z))))
+
+#Inputs:
+#in, vec2, default:vec2(100, 0.0), (sdf3dc input)
+#elongation, vector3, min: 0, max: 1, default:0, step:0.01
+
+#----------------------
+#sdf3d_extrusion.mmg
+
+#Outputs:
+
+#vec2 $(name_uv)_w = vec2($in($uv.xz+vec2(0.5)),abs($uv.y)-$d);
+
+#Output - sdf3dc
+#min(max($(name_uv)_w.x,$(name_uv)_w.y),0.0)+length(max($(name_uv)_w,0.0))
+
+#Inputs:
+#in, sdf2d, default:100, (input)
+#length, float, min: 0, max: 1, default:0.25, step:0.01
+
+#----------------------
+#sdf3d_morph.mmg
+
+#Outputs:
+
+#Output - sdf3d
+#mix($in1($uv), $in2($uv), $amount)
+
+#Inputs:
+#in1, vec2, default:vec2(100, 0.0), (sdf3d input)
+#in2, vec2, default:vec2(100, 0.0), (sdf3d input)
+#amount, float, min: 0, max: 1, default:0.5, step:0.01
+
+#----------------------
+#raymarching.mmg (raymarching_preview.mmg)
+#Raymarches a 3D object (described as signed distance function with optional color index) 
+#to render a heightmap, a normal map and a color index map.
+
+#raymarch_$name = sdf3d_raymarch
+#vec2 $(name_uv)_d = raymarch_$name($uv);
+
+#Outputs:
+
+#HeightMap - float - The generated height map
+#1.0-$(name_uv)_d.x
+
+#NormalMap - rgb - The generated normal map
+#vec3(0.5)+0.5*normal_$name(vec3($uv-vec2(0.5), 1.0-$(name_uv)_d.x))
+
+#ColorMap - float - The generated color index map
+#$(name_uv)_d.y
+
+#Inputs:
+#input, vec2, default:vec2(100, 0.0), (sdf3dc input)
+
+#----------------------
+#raymarching_preview.mmg
+
+#Outputs:
+
+#Output (rgb)
+#render_$name($uv-vec2(0.5))
+
+#Inputs:
+#input, vec2, default:vec2(100, 0.0), (sdf3dc input)
+
 static func raymarch(uv : Vector2) -> Color:
 	var d : Vector2 = sdf3d_raymarch(uv);
 	
@@ -370,6 +515,28 @@ static func sdf3d_torus_z(p : Vector3, R : float, r : float) -> Vector2:
 
 	return Vector2(f, 0.0);
 
+
+#vec2 raymarch_$name(vec2 uv) {
+#	vec3 ro = vec3(uv-vec2(0.5), 1.0);
+#	vec3 rd = vec3(0.0, 0.0, -1.0);
+#	float dO = 0.0;float c = 0.0;    
+#
+#	for (int i=0; i < 100; i++) {    
+#		vec3 p = ro + rd*dO;        
+#		vec2 dS = $sdf(p);        
+#		dO += dS.x;        
+#
+#		if (dO >= 1.0) {
+#			break;
+#		} else if (dS.x < 0.0001) {
+#			c = dS.y;
+#			break;
+#		}    
+#	}        
+#
+#	return vec2(dO, c);
+#}
+
 static func sdf3d_raymarch(uv : Vector2) -> Vector2:
 	var ro : Vector3 = Vector3(uv.x - 0.5, uv.y - 0.5, 1.0);
 	var rd : Vector3 = Vector3(0.0, 0.0, -1.0);
@@ -389,6 +556,21 @@ static func sdf3d_raymarch(uv : Vector2) -> Vector2:
 			break;
 	
 	return Vector2(dO, c);
+
+#vec3 normal_$name(vec3 p) {
+#	if (p.z <= 0.0) {
+#		return vec3(0.0, 0.0, 1.0);
+#	}
+#
+#	float d = $sdf(p).x;
+#	float e = .001;        
+#	vec3 n = d - vec3(        
+#		$sdf(p-vec3(e, 0.0, 0.0)).x,        
+#		$sdf(p-vec3(0.0, e, 0.0)).x,        
+#		$sdf(p-vec3(0.0, 0.0, e)).x);        
+#
+#	return vec3(-1.0, -1.0, -1.0)*normalize(n);
+#}
 
 static func sdf3d_normal(p : Vector3) -> Vector3:
 	if (p.z <= 0.0):
@@ -425,13 +607,28 @@ static func sdf3dc_sub(a : Vector2, b : Vector2) -> Vector2:
 static func sdf3dc_inter(a : Vector2, b : Vector2) -> Vector2:
 	return Vector2(max(a.x, b.x), lerp(a.y, b.y, Commons.step(a.x, b.x)));
 
+#vec2 sdf3d_smooth_union(vec2 d1, vec2 d2, float k) {    
+#	float h = clamp(0.5+0.5*(d2.x-d1.x)/k, 0.0, 1.0);    
+#	return vec2(mix(d2.x, d1.x, h)-k*h*(1.0-h), mix(d2.y, d1.y, step(d1.x, d2.x)));
+#}
+
 static func sdf3d_smooth_union(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 + 0.5 * (d2.x - d1.x) / k, 0.0, 1.0);
 	return Vector2(lerp(d2.x, d1.x, h)-k*h*(1.0 - h), lerp(d2.y, d1.y, Commons.step(d1.x, d2.x)));
 
+#vec2 sdf3d_smooth_subtraction(vec2 d1, vec2 d2, float k ) {    
+#	float h = clamp(0.5-0.5*(d2.x+d1.x)/k, 0.0, 1.0);    
+#	return vec2(mix(d2.x, -d1.x, h )+k*h*(1.0-h), d2.y);
+#}
+
 static func sdf3d_smooth_subtraction(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 - 0.5 * (d2.x + d1.x) / k, 0.0, 1.0);
 	return Vector2(lerp(d2.x, -d1.x, h )+k*h*(1.0-h), d2.y);
+
+#vec2 sdf3d_smooth_intersection(vec2 d1, vec2 d2, float k ) {    
+#	float h = clamp(0.5-0.5*(d2.x-d1.x)/k, 0.0, 1.0);    
+#	return vec2(mix(d2.x, d1.x, h)+k*h*(1.0-h), mix(d1.y, d2.y, step(d1.x, d2.x)));
+#}
 
 static func sdf3d_smooth_intersection(d1 : Vector2, d2 : Vector2, k : float) -> Vector2:
 	var h : float = clamp(0.5 - 0.5 * (d2.x - d1.x) / k, 0.0, 1.0);
@@ -568,3 +765,20 @@ static func circle_repeat_transform(p : Vector3, count : float) -> Vector3:
 #todo this needs to be solved
 static func sdf3d_input(p : Vector3) -> Vector2:
 	return sdf3d_sphere(p, 0.5)
+
+#raymarching_preview.mmg
+#vec3 render_$name(vec2 uv) {
+#	vec3 p = vec3(uv, 2.0-raymarch_$name(vec3(uv, 2.0), vec3(0.0, 0.0, -1.0)));
+#	vec3 n = normal_$name(p);
+#	vec3 l = vec3(5.0, 5.0, 10.0);
+#	vec3 ld = normalize(l-p);
+#
+#	float o = step(p.z, 0.001);
+#	float shadow = 1.0-0.75*step(raymarch_$name(l, -ld), length(l-p)-0.01);
+#	float light = 0.3+0.7*dot(n, ld)*shadow;
+#
+#	return vec3(0.8+0.2*o, 0.8+0.2*o, 1.0)*light;
+#}
+
+#static func sdf3d_render(p : Vector2) -> Vector3:
+#	return Vector3()
