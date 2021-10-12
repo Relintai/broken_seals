@@ -133,6 +133,24 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #axis, enum, default: 1, values: X, Y, Z
 
+#----------------------
+#sdf3d_torus.mmg
+#Generates a torus as a signed distance function
+
+#Outputs:
+
+#X: $axis = length($uv.yz)-$R,$uv.x
+#Y: $axis = length($uv.zx)-$R,$uv.y
+#Z: $axis = length($uv.xy)-$R,$uv.z
+#vec2 $(name_uv)_q = vec2($axis);\n
+
+#Output (sdf3dc) - Shows the torus
+#length($(name_uv)_q)-$r
+
+#Inputs:
+#axis, enum, default: 1, values: X, Y, Z
+#R, float, min: 0, max: 1, default:0.5, step:0.01
+#r, float, min: 0, max: 1, default:0.1, step:0.01
 
 
 static func raymarch(uv : Vector2) -> Color:
