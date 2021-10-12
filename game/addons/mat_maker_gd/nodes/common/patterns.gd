@@ -152,7 +152,40 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #Inputs:
 #size, vector2, default: 2, min: 2, max: 32, step: 1
 
+#----------------------
+#weave.mmg
 
+#Outputs:
+
+#Output (float) - Shows the generated greyscale weave pattern.
+#weave($uv, vec2($columns, $rows), $width*$width_map($uv))
+
+#Inputs:
+#size, vector2, default: 4, min: 2, max: 32, step: 1
+#width, float, min: 0, max: 1, default: 0.8, step:0.05 (universal input)
+
+#----------------------
+#weave.mmg
+
+#code
+#vec3 $(name_uv) = weave2($uv, vec2($columns, $rows), $stitch, $width_x*$width_map($uv), $width_y*$width_map($uv));
+
+#Outputs:
+
+#Output (float) - Shows the generated greyscale weave pattern.
+#$(name_uv).x
+
+#Horizontal mask (float) - Horizontal mask
+#$(name_uv).y
+
+#Vertical mask (float) - Mask for vertical stripes
+#$(name_uv).z
+
+#Inputs:
+#size, vector2, default: 4, min: 2, max: 32, step: 1
+#width, vector2, default: 0.8, min: 0, max: 1, step: 0.05
+#stitch, float, min: 0, max: 10, default: 1, step:1
+#width_map, float, default: 1, (does not need input val (label)) (universal input)
 
 enum CombinerAxisType {
 	SINE,
@@ -247,11 +280,29 @@ static func weavec(uv : Vector2, count : Vector2, width : float) -> Color:
 
 	return Color(f, f, f, 1)
 
+#float weave(vec2 uv, vec2 count, float width) {    
+#	uv *= count;
+#	float c = (sin(3.1415926*(uv.x+floor(uv.y)))*0.5+0.5)*step(abs(fract(uv.y)-0.5), width*0.5);
+#	c = max(c, (sin(3.1415926*(1.0+uv.y+floor(uv.x)))*0.5+0.5)*step(abs(fract(uv.x)-0.5), width*0.5));
+#	return c;
+#}
+
 static func weave(uv : Vector2, count : Vector2, width : float) -> float:
 	uv *= count;
 	var c : float = (sin(3.1415926* (uv.x + floor(uv.y)))*0.5+0.5)*Commons.step(abs(Commons.fract(uv.y)-0.5), width*0.5);
 	c = max(c, (sin(3.1415926*(1.0+uv.y+floor(uv.x)))*0.5+0.5)*Commons.step(abs(Commons.fract(uv.x)-0.5), width*0.5));
 	return c;
+	
+#vec3 weave2(vec2 uv, vec2 count, float stitch, float width_x, float width_y) {    
+#	uv *= stitch;
+#	uv *= count;
+#	float c1 = (sin(3.1415926 / stitch * (uv.x + floor(uv.y) - (stitch - 1.0))) * 0.25 + 0.75 ) *step(abs(fract(uv.y)-0.5), width_x*0.5);
+#	float c2 = (sin(3.1415926 / stitch * (1.0+uv.y+floor(uv.x) ))* 0.25 + 0.75 )*step(abs(fract(uv.x)-0.5), width_y*0.5);
+#	return vec3(max(c1, c2), 1.0-step(c1, c2), 1.0-step(c2, c1));
+#}
+
+static func weave2(uv : Vector2, count : Vector2, stitch : float, width_x : float, width_y : float) -> Vector3:
+	return Vector3();
 
 static func sinewavec(uv : Vector2, amplitude : float, frequency : float, phase : float) -> Color:
 	var f : float = 1.0- abs(2.0 * (uv.y-0.5) - amplitude * sin((frequency* uv.x + phase) * 6.28318530718));
