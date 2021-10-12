@@ -214,6 +214,94 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #in, color, default: color(1.0)
 #size, float, default: 4, min: 2, max: 64, step: 1
 
+#----------------------
+#arc_pavement.mmg
+#Draws a white shape on a black background
+
+#		"code": "vec2 $(name_uv)_uv = fract($uv)*vec2($repeat, -1.0);\nvec2 $(name_uv)_seed;\nvec4 $(name_uv)_ap = arc_pavement($(name_uv)_uv, $rows, $bricks, $(name_uv)_seed);\n",
+#		"outputs": [
+#			{
+#				"f": "pavement($(name_uv)_ap.zw, $bevel, 2.0*$mortar)",
+#				"longdesc": "A greyscale image that shows the bricks pattern",
+#				"shortdesc": "Bricks pattern",
+#				"type": "f"
+#			},
+#			{
+#				"longdesc": "A random color for each brick",
+#				"rgb": "rand3($(name_uv)_seed)",
+#				"shortdesc": "Random color",
+#				"type": "rgb"
+#			},
+#			{
+#				"longdesc": "An UV map output for each brick, to be connected to the Map input of a CustomUV node",
+#				"rgb": "vec3($(name_uv)_ap.zw, 0.0)",
+#				"shortdesc": "Brick UV",
+#				"type": "rgb"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 2,
+#				"label": "Repeat:",
+#				"longdesc": "The number of repetitions of the whole pattern",
+#				"max": 4,
+#				"min": 1,
+#				"name": "repeat",
+#				"shortdesc": "Repeat",
+#				"step": 1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 8,
+#				"label": "Rows:",
+#				"longdesc": "The number of rows",
+#				"max": 16,
+#				"min": 4,
+#				"name": "rows",
+#				"shortdesc": "Rows",
+#				"step": 1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 8,
+#				"label": "Bricks:",
+#				"longdesc": "The number of bricks per row",
+#				"max": 16,
+#				"min": 4,
+#				"name": "bricks",
+#				"shortdesc": "Bricks",
+#				"step": 1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.1,
+#				"label": "Mortar:",
+#				"longdesc": "The width of the space between bricks",
+#				"max": 0.5,
+#				"min": 0,
+#				"name": "mortar",
+#				"shortdesc": "Mortar",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.1,
+#				"label": "Bevel:",
+#				"longdesc": "The width of the edge of each brick",
+#				"max": 0.5,
+#				"min": 0,
+#				"name": "bevel",
+#				"shortdesc": "Bevel",
+#				"step": 0.01,
+#				"type": "float"
+#			}
+#		]
+
 enum CombinerAxisType {
 	SINE,
 	TRIANGLE,
@@ -1009,3 +1097,47 @@ static func bricks_uneven(uv : Vector2, iterations : int, min_size : float, rand
 
 static func truchet_generic_uv(uv : Vector2, pseed : float) -> Vector2:
 	return Vector2()
+
+
+#float pavement(vec2 uv, float bevel, float mortar) {\n\t
+#	uv = abs(uv-vec2(0.5));\n\t
+#
+#	return clamp((0.5*(1.0-mortar)-max(uv.x, uv.y))/max(0.0001, bevel), 0.0, 1.0);
+#}
+
+#vec4 arc_pavement(vec2 uv, float acount, float lcount, out vec2 seed) {\n\t
+#	float PI = 3.141592654;\n\t
+#	float radius = (0.5/sqrt(2.0));\n    
+#	float uvx = uv.x;\n    
+#	uv.x = 0.5*fract(uv.x+0.5)+0.25;\n    
+#	float center = (uv.x-0.5)/radius;\n    
+#	center *= center;\n    
+#	center = floor(acount*(uv.y-radius*sqrt(1.0-center))+0.5)/acount;\n    
+#
+#	vec2 v = uv-vec2(0.5, center);\n    
+#	float cornerangle = 0.85/acount+0.25*PI;\n    
+#	float acountangle = (PI-2.0*cornerangle)/(lcount+floor(mod(center*acount, 2.0)));\n    
+#	float angle = mod(atan(v.y, v.x), 2.0*PI);\n\t
+#
+#	float base_angle;\n\t
+#	float local_uvy = 0.5+acount*(length(v)-radius)*(1.54-0.71*cos(1.44*(angle-PI*0.5)));\n\t
+#	vec2 local_uv;\n    
+#
+#	if (angle < cornerangle) {\n        
+#		base_angle = 0.25*PI;\n\t\t
+#		local_uv = vec2((angle-0.25*PI)/cornerangle*0.38*acount+0.5, 1.0-local_uvy);\n\t\t
+#		seed = vec2(fract(center), 0.0);\n    
+#	} else if (angle > PI-cornerangle) {\n        
+#		base_angle = 0.75*PI;\n\t\t
+#		local_uv = vec2(local_uvy, 0.5-(0.75*PI-angle)/cornerangle*0.38*acount);\n\t\t
+#		seed = vec2(fract(center), 0.0);\n    
+#	} else {\n        
+#		base_angle = cornerangle+(floor((angle-cornerangle)/acountangle)+0.5)*acountangle;\n\t\t
+#		local_uv = vec2((angle-base_angle)/acountangle+0.5, 1.0-local_uvy);\n\t\t
+#		seed = vec2(fract(center), base_angle);\n    
+#	}\n    
+#
+#	vec2 brick_center = vec2(0.5, center)+radius*vec2(cos(base_angle), sin(base_angle));\n    
+#
+#	return vec4(brick_center.x+uvx-uv.x, brick_center.y, local_uv);\n
+#}
