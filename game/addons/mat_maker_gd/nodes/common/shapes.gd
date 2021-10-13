@@ -29,6 +29,128 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #radius, float, min: 0, max: 1, default: 1, step:0.01 (universal input)
 #edge, float, min: 0, max: 1, default: 0.2, step:0.01 (universal input)
 
+#----------------------
+#box.mmg
+#A heightmap of the specified box
+
+#		"outputs": [
+#			{
+#				"f": "1.0-box($uv, vec3($cx, $cy, $cz), vec3($sx, $sy, $sz), 0.01745329251*vec3($rx, $ry, $rz))",
+#				"longdesc": "A heightmap of the specified box",
+#				"shortdesc": "Output",
+#				"type": "f"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Center X",
+#				"longdesc": "X coordinate of the center of the box",
+#				"max": 1,
+#				"min": 0,
+#				"name": "cx",
+#				"shortdesc": "Center.x",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Center Y",
+#				"longdesc": "Y coordinate of the center of the box",
+#				"max": 1,
+#				"min": 0,
+#				"name": "cy",
+#				"shortdesc": "Center.y",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Center Z",
+#				"longdesc": "Z coordinate of the center of the box",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "cz",
+#				"shortdesc": "Center.z",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Size X",
+#				"longdesc": "Size along X axis",
+#				"max": 1,
+#				"min": 0,
+#				"name": "sx",
+#				"shortdesc": "Size.x",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Size Y",
+#				"longdesc": "Size along Y axis",
+#				"max": 1,
+#				"min": 0,
+#				"name": "sy",
+#				"shortdesc": "Size.y",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Size Z",
+#				"longdesc": "Size along Z axis",
+#				"max": 1,
+#				"min": 0,
+#				"name": "sz",
+#				"shortdesc": "Size.z",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Rot X",
+#				"longdesc": "Rotation angle around X axis",
+#				"max": 180,
+#				"min": -180,
+#				"name": "rx",
+#				"shortdesc": "Rot.x",
+#				"step": 0.1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Rot Y",
+#				"longdesc": "Rotation angle around Y axis",
+#				"max": 180,
+#				"min": -180,
+#				"name": "ry",
+#				"shortdesc": "Rot.y",
+#				"step": 0.1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Rot Z",
+#				"longdesc": "Rotation angle around Y axis",
+#				"max": 180,
+#				"min": -180,
+#				"name": "rz",
+#				"shortdesc": "Rot.z",
+#				"step": 0.1,
+#				"type": "float"
+#			}
+#		]
 
 #float sphere(vec2 uv, vec2 c, float r) {
 #	uv -= c;
@@ -144,3 +266,27 @@ static func shape_rays(uv : Vector2, sides : float, size : float, edge : float) 
 	var angle : float = Commons.modf(atan(uv.y / uv.x) + 3.14159265359, slice) / slice
 	
 	return clamp(min((size - angle) / edge, angle / edge), 0.0, 1.0);
+
+#float box(vec2 uv, vec3 center, vec3 rad, vec3 rot) {\n\t
+#	vec3 ro = vec3(uv, 1.0)-center;\n\t
+#	vec3 rd = vec3(0.0000001, 0.0000001, -1.0);\n\t
+#	mat3 r = mat3(vec3(1, 0, 0), vec3(0, cos(rot.x), -sin(rot.x)), vec3(0, sin(rot.x), cos(rot.x)));\n\t
+#
+#	r *= mat3(vec3(cos(rot.y), 0, -sin(rot.y)), vec3(0, 1, 0), vec3(sin(rot.y), 0, cos(rot.y)));\n\t
+#	r *= mat3(vec3(cos(rot.z), -sin(rot.z), 0), vec3(sin(rot.z), cos(rot.z), 0), vec3(0, 0, 1));\n\t
+#	ro = r * ro;\n\t
+#	rd = r * rd;\n    
+#	vec3 m = 1.0/rd;\n    
+#	vec3 n = m*ro;\n    
+#	vec3 k = abs(m)*rad;\n    
+#	vec3 t1 = -n - k;\n    
+#	vec3 t2 = -n + k;\n\n    
+#
+#	float tN = max(max(t1.x, t1.y), t1.z);\n    
+#	float tF = min(min(t2.x, t2.y), t2.z);\n    
+#
+#	if(tN>tF || tF<0.0) return 1.0;\n    
+#
+#	return tN;\n
+#}
+

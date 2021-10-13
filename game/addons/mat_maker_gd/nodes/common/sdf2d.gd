@@ -972,6 +972,1326 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #			}
 #		],
 
+#----------------------
+#curve.mmg
+
+#		"code": "vec2 $(name_uv)_bezier = sdBezier($uv, vec2($ax+0.5, $ay+0.5), vec2($bx+0.5, $by+0.5), vec2($cx+0.5, $cy+0.5));\nvec2 $(name_uv)_uv = vec2($(name_uv)_bezier.x, $(name_uv)_bezier.y/$width+0.5);\nvec2 $(name_uv)_uvtest = step(vec2(0.5), abs($(name_uv)_uv-vec2(0.5)));\n$(name_uv)_uv = mix(vec2(fract($repeat*$(name_uv)_uv.x), $(name_uv)_uv.y), vec2(0.0), max($(name_uv)_uvtest.x, $(name_uv)_uvtest.y));\n",
+#		"inputs": [
+#			{
+#				"default": "vec4(vec3(step(abs($uv.y-0.5), 0.4999)), 1.0)",
+#				"label": "",
+#				"longdesc": "Input pattern to be drawn along the curve",
+#				"name": "in",
+#				"shortdesc": "Pattern",
+#				"type": "rgba"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"longdesc": "An image showing the specified curve",
+#				"rgba": "$in($(name_uv)_uv)",
+#				"shortdesc": "Output",
+#				"type": "rgba"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "P1.x",
+#				"default": -0.3,
+#				"label": "AX",
+#				"longdesc": "Position on X axis of the first control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "ax",
+#				"shortdesc": "A.x",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "P1.y",
+#				"default": -0.1,
+#				"label": "AY",
+#				"longdesc": "Position on Y axis of the first control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "ay",
+#				"shortdesc": "A.y",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "P3.x",
+#				"default": -0,
+#				"label": "BX",
+#				"longdesc": "Position on X axis of the second control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "bx",
+#				"shortdesc": "B.x",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "P3.y",
+#				"default": 0.2,
+#				"label": "BY",
+#				"longdesc": "Position on Y axis of the second control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "by",
+#				"shortdesc": "B.y",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "P2.x",
+#				"default": 0.3,
+#				"label": "CX",
+#				"longdesc": "Position on X axis of the third control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "cx",
+#				"shortdesc": "C.x",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "P2.y",
+#				"default": -0.1,
+#				"label": "CY",
+#				"longdesc": "Position on Y axis of the third control point",
+#				"max": 0.5,
+#				"min": -0.5,
+#				"name": "cy",
+#				"shortdesc": "C.y",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.1,
+#				"label": "Width",
+#				"longdesc": "Width of the curve pattern",
+#				"max": 0.5,
+#				"min": 0,
+#				"name": "width",
+#				"shortdesc": "Width",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 1,
+#				"label": "Repeat",
+#				"longdesc": "Number of repetitions of the input pattern",
+#				"max": 16,
+#				"min": 1,
+#				"name": "repeat",
+#				"shortdesc": "Repeat",
+#				"step": 1,
+#				"type": "float"
+#			}
+#		]
+
+#----------------------
+#sdannularshape.mmg
+#Creates an annular shape from a shape described as a signed distance function
+
+#		"inputs": [
+#			{
+#				"default": "0.0",
+#				"label": "",
+#				"longdesc": "The input shape, defined as a signed distance function",
+#				"name": "in",
+#				"shortdesc": "Input",
+#				"type": "sdf2d"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"longdesc": "The generated layered shape",
+#				"sdf2d": "sdRipples($in($uv), $r, int($ripples))",
+#				"shortdesc": "Output",
+#				"type": "sdf2d"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Width",
+#				"longdesc": "The width of each generated ripple",
+#				"max": 1,
+#				"min": 0,
+#				"name": "r",
+#				"shortdesc": "Width",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 1,
+#				"label": "Ripples",
+#				"longdesc": "The number of generated ripples",
+#				"max": 16,
+#				"min": 0,
+#				"name": "ripples",
+#				"shortdesc": "Ripples",
+#				"step": 1,
+#				"type": "float"
+#			}
+#		],
+
+#----------------------
+#sd_mask_to_sdf.mmg
+
+#{
+#	"connections": [
+#		{
+#			"from": "6520",
+#			"from_port": 0,
+#			"to": "gen_outputs",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "edge_detect",
+#			"from_port": 0,
+#			"to": "1823",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "gen_inputs",
+#			"from_port": 0,
+#			"to": "buffer_2",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "buffer_2",
+#			"from_port": 0,
+#			"to": "6520",
+#			"to_port": 1
+#		},
+#		{
+#			"from": "buffer_2",
+#			"from_port": 0,
+#			"to": "tones_step",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "tones_step",
+#			"from_port": 0,
+#			"to": "edge_detect",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "1823",
+#			"from_port": 0,
+#			"to": "iterate_buffer",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "2434_8",
+#			"from_port": 0,
+#			"to": "iterate_buffer",
+#			"to_port": 1
+#		},
+#		{
+#			"from": "iterate_buffer",
+#			"from_port": 0,
+#			"to": "6520",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "24282_2",
+#			"from_port": 0,
+#			"to": "2434_8",
+#			"to_port": 0
+#		},
+#		{
+#			"from": "iterate_buffer",
+#			"from_port": 1,
+#			"to": "24282_2",
+#			"to_port": 0
+#		}
+#	],
+#	"label": "Mask to SDF",
+#	"longdesc": "",
+#	"name": "sd_mask_to_sdf",
+#	"node_position": {
+#		"x": 0,
+#		"y": 0
+#	},
+#	"nodes": [
+#		{
+#			"name": "iterate_buffer",
+#			"node_position": {
+#				"x": 76.700005,
+#				"y": -249.817047
+#			},
+#			"parameters": {
+#				"filter": false,
+#				"iterations": 30,
+#				"mipmap": false,
+#				"size": 10
+#			},
+#			"seed_value": 29168,
+#			"type": "iterate_buffer"
+#		},
+#		{
+#			"name": "2434_8",
+#			"node_position": {
+#				"x": 91.099991,
+#				"y": -9.031479
+#			},
+#			"parameters": {
+#				"distance": 0,
+#				"size": 10
+#			},
+#			"shader_model": {
+#				"code": "",
+#				"global": "",
+#				"inputs": [
+#					{
+#						"default": "vec3(-1.0)",
+#						"function": true,
+#						"label": "",
+#						"name": "in",
+#						"type": "rgb"
+#					}
+#				],
+#				"instance": "vec3 $(name)_jump_flood(vec2 uv, float size) {\n\tivec2 int_uv = ivec2(uv * size);\n\tfloat best_distance = 9999.9;\n\tvec2 best_coord;\n\tfloat iter = $in(uv).b;\n\titer += 0.01;\n\tfloat step_width = size / 4.0 / (iter * 100.0);\n\t\n\tfor (int x = -1; x <= 1; x++) {\n\t\tfor (int y = -1; y <= 1; y++) {\n\t\t\tivec2 offsetUV = int_uv + ivec2(x, y) * int(step_width);\n\t\t\tvec2 float_uv = vec2(offsetUV) / size;\n\t\t\tvec2 offset_pos = $in(float_uv).rg;\n\t\t\t\n\t\t\tif (offset_pos.x != 0.0 && offset_pos.y != 0.0) {\n\t\t\t\tvec2 diff = offset_pos - uv;\n\t\t\t\t//float dist = dot(diff, diff);\n\t\t\t\t$distance\n\t\t\t\tif (dist < best_distance) {\n\t\t\t\t\tbest_distance = dist;\n\t\t\t\t\tbest_coord = offset_pos;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\t\n\treturn vec3(best_coord, iter);\n}",
+#				"name": "Jump Flood",
+#				"outputs": [
+#					{
+#						"rgb": "$(name)_jump_flood($uv, $size)",
+#						"type": "rgb"
+#					}
+#				],
+#				"parameters": [
+#					{
+#						"default": 10,
+#						"first": 0,
+#						"label": "",
+#						"last": 13,
+#						"name": "size",
+#						"type": "size"
+#					},
+#					{
+#						"default": 0,
+#						"label": "",
+#						"name": "distance",
+#						"type": "enum",
+#						"values": [
+#							{
+#								"name": "Euclidean",
+#								"value": "float dist = dot(diff, diff);"
+#							},
+#							{
+#								"name": "Manhattan",
+#								"value": "float dist = abs(diff.x) + abs(diff.y);"
+#							},
+#							{
+#								"name": "Chebyshev",
+#								"value": "float dist = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);"
+#							}
+#						]
+#					}
+#				]
+#			},
+#			"type": "shader"
+#		},
+#		{
+#			"name": "1823",
+#			"node_position": {
+#				"x": -269.899872,
+#				"y": -18.741766
+#			},
+#			"parameters": {
+#
+#			},
+#			"shader_model": {
+#				"code": "",
+#				"global": "",
+#				"inputs": [
+#					{
+#						"default": "1.0",
+#						"label": "",
+#						"name": "in",
+#						"type": "f"
+#					}
+#				],
+#				"instance": "",
+#				"name": "Mask to UV Mask",
+#				"outputs": [
+#					{
+#						"rgb": "$in($uv) < .5 ? vec3(0.0) : vec3($uv, 0.0)",
+#						"type": "rgb"
+#					}
+#				],
+#				"parameters": [
+#
+#				]
+#			},
+#			"type": "shader"
+#		},
+#		{
+#			"name": "edge_detect",
+#			"node_position": {
+#				"x": -286.951447,
+#				"y": -137.078964
+#			},
+#			"parameters": {
+#				"size": 10,
+#				"threshold": 0.4,
+#				"width": 1
+#			},
+#			"type": "edge_detect"
+#		},
+#		{
+#			"name": "6520",
+#			"node_position": {
+#				"x": 364.156525,
+#				"y": -261.873169
+#			},
+#			"parameters": {
+#				"distance": 0,
+#				"tiled": false
+#			},
+#			"shader_model": {
+#				"code": "",
+#				"global": "",
+#				"inputs": [
+#					{
+#						"default": "vec3(0.0)",
+#						"function": true,
+#						"label": "",
+#						"name": "in",
+#						"type": "rgb"
+#					},
+#					{
+#						"default": "0.0",
+#						"function": true,
+#						"label": "",
+#						"name": "mask",
+#						"type": "f"
+#					}
+#				],
+#				"instance": "float $(name)_distance(vec2 uv, bool tiled) {\n\tif (tiled) {\n\t\tuv = fract(uv);\n\t}\n\tvec2 custom_uv = $in(uv).xy;\n\tvec2 diff = custom_uv != vec2(0.0) ? custom_uv - uv : vec2(1.0);\n\t$distance\n\tif (!tiled) {\n\t\tuv = clamp(uv, 0.0, 1.0);\n\t}\n\treturn $mask(uv) < 0.5 ? distance : -distance;\n}",
+#				"name": "Calculate Distance",
+#				"outputs": [
+#					{
+#						"sdf2d": "$(name)_distance($uv, $tiled)",
+#						"type": "sdf2d"
+#					}
+#				],
+#				"parameters": [
+#					{
+#						"default": false,
+#						"label": "Tiled",
+#						"name": "tiled",
+#						"type": "boolean"
+#					},
+#					{
+#						"default": 0,
+#						"label": "",
+#						"name": "distance",
+#						"type": "enum",
+#						"values": [
+#							{
+#								"name": "Euclidean",
+#								"value": "float distance = length(diff);"
+#							},
+#							{
+#								"name": "Manhattan",
+#								"value": "float distance = abs(diff.x) + abs(diff.y);"
+#							},
+#							{
+#								"name": "Chebyshev",
+#								"value": "float distance = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);"
+#							}
+#						]
+#					}
+#				]
+#			},
+#			"type": "shader"
+#		},
+#		{
+#			"name": "gen_inputs",
+#			"node_position": {
+#				"x": -735.85144,
+#				"y": -352.006775
+#			},
+#			"parameters": {
+#
+#			},
+#			"ports": [
+#				{
+#					"group_size": 0,
+#					"longdesc": "The greyscale mask to be converted",
+#					"name": "mask",
+#					"shortdesc": "Mask",
+#					"type": "f"
+#				}
+#			],
+#			"type": "ios"
+#		},
+#		{
+#			"name": "gen_outputs",
+#			"node_position": {
+#				"x": 646.256348,
+#				"y": -263.285461
+#			},
+#			"parameters": {
+#
+#			},
+#			"ports": [
+#				{
+#					"group_size": 0,
+#					"longdesc": "The genrated distance field",
+#					"name": "sdf",
+#					"shortdesc": "Output",
+#					"type": "sdf2d"
+#				}
+#			],
+#			"type": "ios"
+#		},
+#		{
+#			"name": "gen_parameters",
+#			"node_position": {
+#				"x": -47.67952,
+#				"y": -541.979187
+#			},
+#			"parameters": {
+#				"param0": 10,
+#				"param1": 30,
+#				"param2": false,
+#				"param3": 0
+#			},
+#			"type": "remote",
+#			"widgets": [
+#				{
+#					"label": "Size",
+#					"linked_widgets": [
+#						{
+#							"node": "iterate_buffer",
+#							"widget": "size"
+#						},
+#						{
+#							"node": "2434_8",
+#							"widget": "size"
+#						},
+#						{
+#							"node": "buffer_2",
+#							"widget": "size"
+#						},
+#						{
+#							"node": "edge_detect",
+#							"widget": "size"
+#						}
+#					],
+#					"longdesc": "The resolution used for the operation",
+#					"name": "param0",
+#					"shortdesc": "Size",
+#					"type": "linked_control"
+#				},
+#				{
+#					"label": "Iterations",
+#					"linked_widgets": [
+#						{
+#							"node": "iterate_buffer",
+#							"widget": "iterations"
+#						}
+#					],
+#					"longdesc": "The number of iterations the jump flood algorithm performs to calculate the distances",
+#					"name": "param1",
+#					"shortdesc": "Iterations",
+#					"type": "linked_control"
+#				},
+#				{
+#					"label": "Tiled",
+#					"linked_widgets": [
+#						{
+#							"node": "24282_2",
+#							"widget": "tiled"
+#						},
+#						{
+#							"node": "6520",
+#							"widget": "tiled"
+#						}
+#					],
+#					"longdesc": "Controls whether the resulting ditance field will be tiled. Useful for patterns that extend over the texture bounds",
+#					"name": "param2",
+#					"shortdesc": "Tiled",
+#					"type": "linked_control"
+#				},
+#				{
+#					"label": "Distance",
+#					"linked_widgets": [
+#						{
+#							"node": "2434_8",
+#							"widget": "distance"
+#						},
+#						{
+#							"node": "6520",
+#							"widget": "distance"
+#						}
+#					],
+#					"name": "param3",
+#					"shortdesc": "Distance function",
+#					"type": "linked_control"
+#				}
+#			]
+#		},
+#		{
+#			"name": "buffer_2",
+#			"node_position": {
+#				"x": -297.702789,
+#				"y": -348.41391
+#			},
+#			"parameters": {
+#				"size": 10
+#			},
+#			"type": "buffer",
+#			"version": 1
+#		},
+#		{
+#			"name": "tones_step",
+#			"node_position": {
+#				"x": -294.947968,
+#				"y": -258.84549
+#			},
+#			"parameters": {
+#				"invert": false,
+#				"value": 0.5,
+#				"width": 0
+#			},
+#			"type": "tones_step"
+#		},
+#		{
+#			"name": "24282_2",
+#			"node_position": {
+#				"x": 114.391708,
+#				"y": -90.765732
+#			},
+#			"parameters": {
+#				"tiled": false
+#			},
+#			"shader_model": {
+#				"code": "vec3 $(name_uv)_in = $in(fract($uv));\nvec3 $(name_uv)_tiled = $(name_uv)_in.xy != vec2(0.0) ? $(name_uv)_in + vec3(floor($uv), 0.0) : $(name_uv)_in;",
+#				"global": "",
+#				"inputs": [
+#					{
+#						"default": "vec3(1.0)",
+#						"function": true,
+#						"label": "",
+#						"name": "in",
+#						"type": "rgb"
+#					}
+#				],
+#				"instance": "",
+#				"name": "Tiling",
+#				"outputs": [
+#					{
+#						"rgb": "$tiled ? $(name_uv)_tiled : $(name_uv)_in",
+#						"type": "rgb"
+#					}
+#				],
+#				"parameters": [
+#					{
+#						"default": false,
+#						"label": "Tiled",
+#						"name": "tiled",
+#						"type": "boolean"
+#					}
+#				]
+#			},
+#			"type": "shader"
+#		},
+#		{
+#			"connections": [
+#				{
+#					"from": "edge_detect",
+#					"from_port": 0,
+#					"to": "1823",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "tones_step",
+#					"from_port": 0,
+#					"to": "edge_detect",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "1823",
+#					"from_port": 0,
+#					"to": "iterate_buffer",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "2434_8",
+#					"from_port": 0,
+#					"to": "iterate_buffer",
+#					"to_port": 1
+#				},
+#				{
+#					"from": "iterate_buffer",
+#					"from_port": 0,
+#					"to": "6520",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "24282_2",
+#					"from_port": 0,
+#					"to": "2434_8",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "iterate_buffer",
+#					"from_port": 1,
+#					"to": "24282_2",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "iterate_buffer",
+#					"from_port": 0,
+#					"to": "2153",
+#					"to_port": 1
+#				},
+#				{
+#					"from": "buffer_2",
+#					"from_port": 0,
+#					"to": "tones_step",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "gen_inputs",
+#					"from_port": 1,
+#					"to": "2153",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "2153",
+#					"from_port": 0,
+#					"to": "11582",
+#					"to_port": 1
+#				},
+#				{
+#					"from": "gen_inputs",
+#					"from_port": 1,
+#					"to": "11582",
+#					"to_port": 2
+#				},
+#				{
+#					"from": "11582",
+#					"from_port": 0,
+#					"to": "gen_outputs",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "8064",
+#					"from_port": 0,
+#					"to": "2153",
+#					"to_port": 2
+#				},
+#				{
+#					"from": "gen_inputs",
+#					"from_port": 0,
+#					"to": "8064",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "8064",
+#					"from_port": 0,
+#					"to": "buffer_2",
+#					"to_port": 0
+#				},
+#				{
+#					"from": "buffer_2",
+#					"from_port": 0,
+#					"to": "6520",
+#					"to_port": 1
+#				},
+#				{
+#					"from": "6520",
+#					"from_port": 0,
+#					"to": "11582",
+#					"to_port": 0
+#				}
+#			],
+#			"label": "Dilate 2",
+#			"longdesc": "",
+#			"name": "graph_3",
+#			"node_position": {
+#				"x": 515.555786,
+#				"y": -545.049744
+#			},
+#			"nodes": [
+#				{
+#					"name": "iterate_buffer",
+#					"node_position": {
+#						"x": 64.900002,
+#						"y": -259.215881
+#					},
+#					"parameters": {
+#						"filter": false,
+#						"iterations": 30,
+#						"mipmap": false,
+#						"size": 9
+#					},
+#					"seed_value": 29168,
+#					"type": "iterate_buffer"
+#				},
+#				{
+#					"name": "2434_8",
+#					"node_position": {
+#						"x": 102.099998,
+#						"y": 15.367363
+#					},
+#					"parameters": {
+#						"distance": 0,
+#						"size": 9
+#					},
+#					"shader_model": {
+#						"code": "",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "vec3(-1.0)",
+#								"function": true,
+#								"label": "",
+#								"name": "in",
+#								"type": "rgb"
+#							}
+#						],
+#						"instance": "vec3 $(name)_jump_flood(vec2 uv, float size) {\n\tivec2 int_uv = ivec2(uv * size);\n\tfloat best_distance = 9999.9;\n\tvec2 best_coord;\n\tfloat iter = $in(uv).b;\n\titer += 0.01;\n\tfloat step_width = size / 4.0 / (iter * 100.0);\n\t\n\tfor (int x = -1; x <= 1; x++) {\n\t\tfor (int y = -1; y <= 1; y++) {\n\t\t\tivec2 offsetUV = int_uv + ivec2(x, y) * int(step_width);\n\t\t\tvec2 float_uv = vec2(offsetUV) / size;\n\t\t\tvec2 offset_pos = $in(float_uv).rg;\n\t\t\t\n\t\t\tif (offset_pos.x != 0.0 && offset_pos.y != 0.0) {\n\t\t\t\tvec2 diff = offset_pos - uv;\n\t\t\t\t//float dist = dot(diff, diff);\n\t\t\t\t//float dist = abs(diff.x) + abs(diff.y);\n\t\t\t\t//float dist = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);\n\t\t\t\t$distance\n\t\t\t\tif (dist < best_distance) {\n\t\t\t\t\tbest_distance = dist;\n\t\t\t\t\tbest_coord = offset_pos;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\t\n\treturn vec3(best_coord, iter);\n}",
+#						"name": "Jump Flood",
+#						"outputs": [
+#							{
+#								"rgb": "$(name)_jump_flood($uv, $size)",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#							{
+#								"default": 10,
+#								"first": 0,
+#								"label": "",
+#								"last": 13,
+#								"name": "size",
+#								"type": "size"
+#							},
+#							{
+#								"default": 2,
+#								"label": "",
+#								"name": "distance",
+#								"type": "enum",
+#								"values": [
+#									{
+#										"name": "Euclidean",
+#										"value": "float dist = dot(diff, diff);"
+#									},
+#									{
+#										"name": "Manhattan",
+#										"value": "float dist = abs(diff.x) + abs(diff.y);"
+#									},
+#									{
+#										"name": "Chebyshev",
+#										"value": "float dist = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);"
+#									}
+#								]
+#							}
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "1823",
+#					"node_position": {
+#						"x": -269.899872,
+#						"y": -17.741766
+#					},
+#					"parameters": {
+#
+#					},
+#					"shader_model": {
+#						"code": "",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "1.0",
+#								"label": "",
+#								"name": "in",
+#								"type": "f"
+#							}
+#						],
+#						"instance": "",
+#						"name": "Mask to UV Mask",
+#						"outputs": [
+#							{
+#								"rgb": "$in($uv) < .5 ? vec3(0.0) : vec3($uv, 0.0)",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "edge_detect",
+#					"node_position": {
+#						"x": -286.951447,
+#						"y": -137.078964
+#					},
+#					"parameters": {
+#						"size": 9,
+#						"threshold": 0.4,
+#						"width": 1
+#					},
+#					"type": "edge_detect"
+#				},
+#				{
+#					"name": "6520",
+#					"node_position": {
+#						"x": 347.356567,
+#						"y": -346.449127
+#					},
+#					"parameters": {
+#						"distance": 0,
+#						"length": 0.1
+#					},
+#					"shader_model": {
+#						"code": "",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "vec3(0.0)",
+#								"function": true,
+#								"label": "",
+#								"name": "in",
+#								"type": "rgb"
+#							},
+#							{
+#								"default": "0.0",
+#								"function": true,
+#								"label": "",
+#								"name": "mask",
+#								"type": "f"
+#							}
+#						],
+#						"instance": "float $(name)_distance(vec2 uv, float length) {\n\tvec2 custom_uv = $in(fract(uv)).xy;\n\tvec2 diff = custom_uv != vec2(0.0) ? custom_uv - fract(uv) : vec2(1.0);\n\t//float distance = length(diff);\n\t//float distance = abs(diff.x) + abs(diff.y);\n\t//float distance = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);\n\t$distance\n\tif (length >= 0.0) {\n\t\treturn $mask(uv) < 0.5 ? clamp(1.0 - (distance / length), 0.0, 1.0) : 1.0;\n\t} else {\n\t\treturn $mask(uv) > 0.5 ? clamp((distance / -length), 0.0, 1.0) : 0.0;\n\t}\n}",
+#						"name": "Calculate Distance",
+#						"outputs": [
+#							{
+#								"f": "$(name)_distance($uv, $length)",
+#								"type": "f"
+#							}
+#						],
+#						"parameters": [
+#							{
+#								"control": "None",
+#								"default": 0.1,
+#								"label": "Length",
+#								"max": 1,
+#								"min": -1,
+#								"name": "length",
+#								"step": 0.01,
+#								"type": "float"
+#							},
+#							{
+#								"default": 2,
+#								"label": "",
+#								"name": "distance",
+#								"type": "enum",
+#								"values": [
+#									{
+#										"name": "Euclidean",
+#										"value": "float distance = length(diff);"
+#									},
+#									{
+#										"name": "Manhattan",
+#										"value": "float distance = abs(diff.x) + abs(diff.y);"
+#									},
+#									{
+#										"name": "Chebyshev",
+#										"value": "float distance = abs(diff.x) > abs(diff.y) ? abs(diff.x) : abs(diff.y);"
+#									}
+#								]
+#							}
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "gen_inputs",
+#					"node_position": {
+#						"x": -793.451477,
+#						"y": -236.812195
+#					},
+#					"parameters": {
+#
+#					},
+#					"ports": [
+#						{
+#							"group_size": 0,
+#							"longdesc": "The greyscale mask to be converted",
+#							"name": "mask",
+#							"shortdesc": "Mask",
+#							"type": "f"
+#						},
+#						{
+#							"group_size": 0,
+#							"longdesc": "",
+#							"name": "source",
+#							"shortdesc": "Source",
+#							"type": "rgb"
+#						}
+#					],
+#					"type": "ios"
+#				},
+#				{
+#					"name": "gen_outputs",
+#					"node_position": {
+#						"x": 885.056335,
+#						"y": -247.896317
+#					},
+#					"parameters": {
+#
+#					},
+#					"ports": [
+#						{
+#							"group_size": 0,
+#							"longdesc": "Shows the dilated image",
+#							"name": "out",
+#							"shortdesc": "Output",
+#							"type": "rgb"
+#						}
+#					],
+#					"type": "ios"
+#				},
+#				{
+#					"name": "gen_parameters",
+#					"node_position": {
+#						"x": 61.520477,
+#						"y": -639.339172
+#					},
+#					"parameters": {
+#						"param0": 9,
+#						"param1": 0.1,
+#						"param2": 0,
+#						"param3": 0,
+#						"param4": 30
+#					},
+#					"type": "remote",
+#					"widgets": [
+#						{
+#							"label": "",
+#							"linked_widgets": [
+#								{
+#									"node": "iterate_buffer",
+#									"widget": "size"
+#								},
+#								{
+#									"node": "2434_8",
+#									"widget": "size"
+#								},
+#								{
+#									"node": "buffer_2",
+#									"widget": "size"
+#								},
+#								{
+#									"node": "edge_detect",
+#									"widget": "size"
+#								}
+#							],
+#							"longdesc": "The resolution of the input images",
+#							"name": "param0",
+#							"shortdesc": "Size",
+#							"type": "linked_control"
+#						},
+#						{
+#							"label": "",
+#							"linked_widgets": [
+#								{
+#									"node": "6520",
+#									"widget": "length"
+#								}
+#							],
+#							"longdesc": "The length of the dilate effect",
+#							"name": "param1",
+#							"shortdesc": "Length",
+#							"type": "linked_control"
+#						},
+#						{
+#							"label": "",
+#							"linked_widgets": [
+#								{
+#									"node": "11582",
+#									"widget": "fill"
+#								}
+#							],
+#							"longdesc": "0 to generate a gradient to black while dilating, 1 to fill with input color",
+#							"name": "param2",
+#							"shortdesc": "Fill",
+#							"type": "linked_control"
+#						},
+#						{
+#							"label": "",
+#							"linked_widgets": [
+#								{
+#									"node": "2434_8",
+#									"widget": "distance"
+#								},
+#								{
+#									"node": "6520",
+#									"widget": "distance"
+#								}
+#							],
+#							"name": "param3",
+#							"shortdesc": "Distance Function",
+#							"type": "linked_control"
+#						},
+#						{
+#							"label": "",
+#							"linked_widgets": [
+#								{
+#									"node": "iterate_buffer",
+#									"widget": "iterations"
+#								}
+#							],
+#							"longdesc": "The number of iterations the jump flood algorithm performs to calculate the distances",
+#							"name": "param4",
+#							"shortdesc": "Iterations",
+#							"type": "linked_control"
+#						}
+#					]
+#				},
+#				{
+#					"name": "buffer_2",
+#					"node_position": {
+#						"x": -294.502808,
+#						"y": -340.816589
+#					},
+#					"parameters": {
+#						"size": 9
+#					},
+#					"type": "buffer",
+#					"version": 1
+#				},
+#				{
+#					"name": "tones_step",
+#					"node_position": {
+#						"x": -285.347992,
+#						"y": -253.248215
+#					},
+#					"parameters": {
+#						"invert": false,
+#						"value": 0.5,
+#						"width": 0
+#					},
+#					"type": "tones_step"
+#				},
+#				{
+#					"name": "24282_2",
+#					"node_position": {
+#						"x": 109.591705,
+#						"y": -88.567284
+#					},
+#					"parameters": {
+#						"tiled": true
+#					},
+#					"shader_model": {
+#						"code": "vec3 $(name_uv)_in = $in(fract($uv));\nvec3 $(name_uv)_tiled = $(name_uv)_in.xy != vec2(0.0) ? $(name_uv)_in + vec3(floor($uv), 0.0) : $(name_uv)_in;",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "vec3(1.0)",
+#								"function": true,
+#								"label": "",
+#								"name": "in",
+#								"type": "rgb"
+#							}
+#						],
+#						"instance": "",
+#						"name": "Tiling",
+#						"outputs": [
+#							{
+#								"rgb": "$tiled ? $(name_uv)_tiled : $(name_uv)_in",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#							{
+#								"default": false,
+#								"label": "Tiled",
+#								"name": "tiled",
+#								"type": "boolean"
+#							}
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "2153",
+#					"node_position": {
+#						"x": 368.85202,
+#						"y": -157.100906
+#					},
+#					"parameters": {
+#
+#					},
+#					"shader_model": {
+#						"code": "",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "vec3(1.0)",
+#								"label": "Source",
+#								"name": "source",
+#								"type": "rgb"
+#							},
+#							{
+#								"default": "$uv",
+#								"label": "Custom UV",
+#								"name": "custom_uv",
+#								"type": "rgb"
+#							},
+#							{
+#								"default": "0.0",
+#								"label": "Mask",
+#								"name": "mask",
+#								"type": "f"
+#							}
+#						],
+#						"instance": "",
+#						"name": "Dilate UV",
+#						"outputs": [
+#							{
+#								"rgb": "$mask($uv) < 0.5 ? $source($custom_uv($uv).xy) : $source($uv)",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "11582",
+#					"node_position": {
+#						"x": 609.343445,
+#						"y": -239.746399
+#					},
+#					"parameters": {
+#						"fill": 0
+#					},
+#					"shader_model": {
+#						"code": "float $(name_uv)_dist = $distance($uv);\nvec3 $(name_uv)_color = mix($source(fract($uv)), $fill_raw(fract($uv)), float( $(name_uv)_dist != 0.0 ) );\nvec3 $(name_uv)_mix = mix($(name_uv)_color * $(name_uv)_dist, $(name_uv)_color, $fill);",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "0.0",
+#								"function": true,
+#								"label": "Distance",
+#								"name": "distance",
+#								"type": "f"
+#							},
+#							{
+#								"default": "vec3(1.0)",
+#								"function": true,
+#								"label": "Fill Raw",
+#								"name": "fill_raw",
+#								"type": "rgb"
+#							},
+#							{
+#								"default": "vec3(1.0)",
+#								"function": true,
+#								"label": "Source",
+#								"name": "source",
+#								"type": "rgb"
+#							}
+#						],
+#						"instance": "",
+#						"name": "Dilate Combine",
+#						"outputs": [
+#							{
+#								"rgb": "$(name_uv)_mix",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#							{
+#								"control": "None",
+#								"default": 0,
+#								"label": "Fill",
+#								"max": 1,
+#								"min": 0,
+#								"name": "fill",
+#								"step": 0.01,
+#								"type": "float"
+#							}
+#						]
+#					},
+#					"type": "shader"
+#				},
+#				{
+#					"name": "8064",
+#					"node_position": {
+#						"x": -282.533325,
+#						"y": -433.011169
+#					},
+#					"parameters": {
+#
+#					},
+#					"shader_model": {
+#						"code": "",
+#						"global": "",
+#						"inputs": [
+#							{
+#								"default": "vec3(0.0)",
+#								"label": "",
+#								"name": "in",
+#								"type": "rgb"
+#							}
+#						],
+#						"instance": "",
+#						"name": "Default Value",
+#						"outputs": [
+#							{
+#								"rgb": "$in($uv)",
+#								"type": "rgb"
+#							}
+#						],
+#						"parameters": [
+#
+#						]
+#					},
+#					"type": "shader"
+#				}
+#			],
+#			"parameters": {
+#				"param0": 9,
+#				"param1": 0.1,
+#				"param2": 0,
+#				"param3": 0,
+#				"param4": 30
+#			},
+#			"shortdesc": "",
+#			"type": "graph"
+#		}
+#	],
+#	"parameters": {
+#		"param0": 10,
+#		"param1": 30,
+#		"param2": false,
+#		"param3": 0
+#	},
+#	"shortdesc": "",
+#	"type": "graph"
+#}
+
 static func sdf_show(val : float, bevel : float) -> Color:
 	var f : float = clamp(-val / max(bevel, 0.00001), 0.0, 1.0);
 	
@@ -1137,6 +2457,59 @@ static func sdf2d_rotate(uv : Vector2, a : float) -> Vector2:
 	rv.y = -uv.x*s+uv.y*c;
 	return rv+Vector2(0.5, 0.5);
 
+#float cross2( in vec2 a, in vec2 b ) { 
+#	return a.x*b.y - a.y*b.x; 
+#}
+
+#// signed distance to a quadratic bezier\n
+#vec2 sdBezier( in vec2 pos, in vec2 A, in vec2 B, in vec2 C ) {    \n    
+#	vec2 a = B - A;\n    
+#	vec2 b = A - 2.0*B + C;\n    
+#	vec2 c = a * 2.0;\n    
+#	vec2 d = A - pos;\n\n    
+#	float kk = 1.0/dot(b,b);\n    
+#	float kx = kk * dot(a,b);\n    
+#	float ky = kk * (2.0*dot(a,a)+dot(d,b))/3.0;\n    
+#	float kz = kk * dot(d,a);      \n\n    
+#	float res = 0.0;\n    
+#	float sgn = 0.0;\n\n    
+#	float p = ky - kx*kx;\n    
+#	float p3 = p*p*p;\n    
+#	float q = kx*(2.0*kx*kx - 3.0*ky) + kz;\n    
+#	float h = q*q + 4.0*p3;\n\t
+#	float rvx;\n\n    
+#
+#	if( h>=0.0 ) { 
+#		// 1 root\n        
+#		h = sqrt(h);\n        
+#		vec2 x = (vec2(h,-h)-q)/2.0;\n       
+#		 vec2 uv = sign(x)*pow(abs(x), vec2(1.0/3.0));\n\t\trvx = uv.x+uv.y-kx;\n        
+#		float t = clamp(rvx, 0.0, 1.0);\n        
+#		vec2 q2 = d+(c+b*t)*t;\n        
+#		res = dot(q2, q2);\n    \t
+#		sgn = cross2(c+2.0*b*t, q2);\n    
+#	} else {   
+#		// 3 roots\n        
+#		float z = sqrt(-p);\n        
+#		float v = acos(q/(p*z*2.0))/3.0;\n        
+#		float m = cos(v);\n        
+#		float n = sin(v)*1.732050808;\n        
+#		vec3  t = clamp(vec3(m+m,-n-m,n-m)*z-kx, 0.0, 1.0);\n        
+#		vec2  qx=d+(c+b*t.x)*t.x; 
+#		float dx=dot(qx, qx), sx = cross2(c+2.0*b*t.x,qx);\n        
+#		vec2  qy=d+(c+b*t.y)*t.y; 
+#		float dy=dot(qy, qy), sy = cross2(c+2.0*b*t.y,qy);\n        
+#
+#		if( dx<dy ) { 
+#			res=dx; sgn=sx; rvx = t.x; 
+#		} else { 
+#			res=dy; sgn=sy; rvx = t.y; 
+#		}\n    
+#	}\n    \n    
+#
+#	return vec2(rvx, sqrt(res)*sign(sgn));\n
+#}
+
 # signed distance to a quadratic bezier
 static func sdBezier(pos : Vector2, A : Vector2, B : Vector2, C : Vector2) -> Vector2:   
 	var a : Vector2 = B - A;
@@ -1278,3 +2651,12 @@ static func sdSmoothIntersection(d1 : float, d2 : float, k : float) -> float:
 	return 0.0
 	
 	
+#float sdRipples(float d, float w, int r) {\n\t
+#	for (int i = 0; i < r; ++i) {\n\t\t
+#		d = abs(d)-w;\n\t
+#	}\n\t
+#
+#	return d;\n
+#}
+
+

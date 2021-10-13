@@ -19,6 +19,130 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
 #}
 
+#----------------------
+#colorize.mmg
+#Remaps a greyscale image to a custom gradient
+
+#		"inputs": [
+#			{
+#				"default": "$uv.x",
+#				"label": "",
+#				"longdesc": "The input greyscale image",
+#				"name": "input",
+#				"shortdesc": "Input",
+#				"type": "f"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"longdesc": "The remapped RGBA image",
+#				"rgba": "$gradient($input($uv))",
+#				"shortdesc": "Output",
+#				"type": "rgba"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"default": {
+#					"interpolation": 1,
+#					"points": [
+#						{
+#							"a": 1,
+#							"b": 0,
+#							"g": 0,
+#							"pos": 0,
+#							"r": 0
+#						},
+#						{
+#							"a": 1,
+#							"b": 1,
+#							"g": 1,
+#							"pos": 1,
+#							"r": 1
+#						}
+#					],
+#					"type": "Gradient"
+#				},
+#				"label": "",
+#				"longdesc": "The gradient to which the input is remapped",
+#				"name": "gradient",
+#				"shortdesc": "Gradient",
+#				"type": "gradient"
+#			}
+#		],
+
+#----------------------
+#default_color.mmg
+
+#		"inputs": [
+#			{
+#				"default": "$default",
+#				"label": "",
+#				"name": "in",
+#				"type": "rgba"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"rgba": "$in($uv)",
+#				"type": "rgba"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"default": {
+#					"a": 1,
+#					"b": 1,
+#					"g": 1,
+#					"r": 1
+#				},
+#				"label": "",
+#				"name": "default",
+#				"type": "color"
+#			}
+#		]
+
+#----------------------
+#decompose.mmg
+#Decomposes an RGBA input into 4 greyscale images
+
+#		"inputs": [
+#			{
+#				"default": "vec4(1.0)",
+#				"label": "",
+#				"longdesc": "The RGBA input image",
+#				"name": "i",
+#				"shortdesc": "Input",
+#				"type": "rgba"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"f": "$i($uv).r",
+#				"longdesc": "Shows the Red channel of the input",
+#				"shortdesc": "Red",
+#				"type": "f"
+#			},
+#			{
+#				"f": "$i($uv).g",
+#				"longdesc": "Shows the Green channel of the input",
+#				"shortdesc": "Green",
+#				"type": "f"
+#			},
+#			{
+#				"f": "$i($uv).b",
+#				"longdesc": "Shows the Blue channel of the input",
+#				"shortdesc": "Blue",
+#				"type": "f"
+#			},
+#			{
+#				"f": "$i($uv).a",
+#				"longdesc": "Shows the Alpha channel of the input",
+#				"shortdesc": "Alpha",
+#				"type": "f"
+#			}
+#		],
+
 static func rgb_to_hsv(c : Vector3) -> Vector3:
 	var K : Color = Color(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
 	
