@@ -1752,6 +1752,130 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	"type": "shader"
 #}
 
+#----------------------
+#repeat.mmg
+#Translates, rotates and scales its input
+
+#		"inputs": [
+#			{
+#				"default": "vec4($uv, 0.0, 1.0)",
+#				"label": "",
+#				"longdesc": "The input image to be transformed",
+#				"name": "i",
+#				"shortdesc": "Input",
+#				"type": "rgba"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"longdesc": "Shows the transformed image",
+#				"rgba": "$i(fract($uv))",
+#				"shortdesc": "Output",
+#				"type": "rgba"
+#			}
+#		],
+
+#----------------------
+#remap.mmg
+#The remapped image map
+
+#		"code": "float $(name_uv)_x = $in($uv)*($max-$min);",
+#		"inputs": [
+#			{
+#				"default": "0.0",
+#				"label": "",
+#				"longdesc": "The greyscale input map",
+#				"name": "in",
+#				"shortdesc": "Input",
+#				"type": "f"
+#			}
+#		],
+#		"outputs": [
+#			{
+#				"f": "$min+$(name_uv)_x-mod($(name_uv)_x, max($step, 0.00000001))",
+#				"longdesc": "The remapped image map",
+#				"shortdesc": "Output",
+#				"type": "f"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Min",
+#				"longdesc": "The value generated for black areas of the input",
+#				"max": 10,
+#				"min": -10,
+#				"name": "min",
+#				"shortdesc": "Min",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Max",
+#				"longdesc": "The value generated for white areas of the input",
+#				"max": 10,
+#				"min": -10,
+#				"name": "max",
+#				"shortdesc": "Max",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "Step",
+#				"longdesc": "The step between generated values",
+#				"max": 1,
+#				"min": 0,
+#				"name": "step",
+#				"shortdesc": "Step",
+#				"step": 0.01,
+#				"type": "float"
+#			}
+#		],
+
+#----------------------
+#height_to_angle.mmg
+#Generates an angle map to be used by Advances Tiler nodes from a heightmap
+
+#		"inputs": [
+#			{
+#				"default": "0.0",
+#				"function": true,
+#				"label": "",
+#				"longdesc": "The input heightmap",
+#				"name": "in",
+#				"shortdesc": "Input",
+#				"type": "f"
+#			}
+#		],
+#		"instance": "float $(name)_fct(vec2 uv, float epsilon) {\n\tvec3 e = vec3(epsilon, -epsilon, 0);\n\tvec2 rv = vec2(1.0, -1.0)*$in(uv+e.xy);\n\trv += vec2(-1.0, 1.0)*$in(uv-e.xy);\n\trv += vec2(1.0, 1.0)*$in(uv+e.xx);\n\trv += vec2(-1.0, -1.0)*$in(uv-e.xx);\n\trv += vec2(2.0, 0.0)*$in(uv+e.xz);\n\trv += vec2(-2.0, 0.0)*$in(uv-e.xz);\n\trv += vec2(0.0, 2.0)*$in(uv+e.zx);\n\trv += vec2(0.0, -2.0)*$in(uv-e.zx);\n\treturn atan(rv.y, rv.x)/3.141592;\n}",
+#		"outputs": [
+#			{
+#				"f": "$(name)_fct($uv, 0.0001)+$angle/180.0",
+#				"longdesc": "The generated angle map. Values are between -1 and 1 and the corresponding Advanced Tiler parameter (Rotate) must be set to 180.",
+#				"shortdesc": "Output",
+#				"type": "f"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 0,
+#				"label": "",
+#				"longdesc": "The offset angle applied to the generated map",
+#				"max": 180,
+#				"min": -180,
+#				"name": "angle",
+#				"shortdesc": "Angle",
+#				"step": 0.01,
+#				"type": "float"
+#			}
+#		],
+
 #vec2 transform(vec2 uv, vec2 translate, float rotate, vec2 scale, bool repeat) {\n \t
 #	vec2 rv;\n\t
 #	uv -= translate;\n\t

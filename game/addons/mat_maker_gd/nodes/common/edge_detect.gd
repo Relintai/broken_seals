@@ -171,3 +171,53 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #			}
 #		],
 
+#----------------------
+#mul_detect.mmg
+
+#		"code": "float $(name_uv)_d = ($in($uv)-$v)/$t;",
+#		"global": "",
+#		"inputs": [
+#			{
+#				"default": "1.0",
+#				"label": "",
+#				"name": "mul",
+#				"type": "f"
+#			},
+#			{
+#				"default": "0.0",
+#				"label": "",
+#				"name": "in",
+#				"type": "f"
+#			}
+#		],
+#		"instance": "",
+#		"name": "MulDetect",
+#		"outputs": [
+#			{
+#				"f": "$mul($uv)*clamp(1.0-$(name_uv)_d*$(name_uv)_d, 0.0, 1.0)",
+#				"type": "f"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 0.5,
+#				"label": "Value",
+#				"max": 1,
+#				"min": 0,
+#				"name": "v",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 0.1,
+#				"label": "Tolerance",
+#				"max": 1,
+#				"min": 0.01,
+#				"name": "t",
+#				"step": 0.001,
+#				"type": "float"
+#			}
+#		]
+		

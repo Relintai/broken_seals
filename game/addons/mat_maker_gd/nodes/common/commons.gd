@@ -3,6 +3,91 @@ extends Reference
 
 #pattern.mmg
 
+#----------------------
+#hlsl_defs.tmpl
+
+##define hlsl_atan(x,y) atan2(x, y)
+##define mod(x,y) ((x)-(y)*floor((x)/(y)))
+#inline float4 textureLod(sampler2D tex, float2 uv, float lod) {
+#	return tex2D(tex, uv);
+#}
+#inline float2 tofloat2(float x) {
+#	return float2(x, x);
+#}
+#inline float2 tofloat2(float x, float y) {
+#	return float2(x, y);
+#}
+#inline float3 tofloat3(float x) {
+#	return float3(x, x, x);
+#}
+#inline float3 tofloat3(float x, float y, float z) {
+#	return float3(x, y, z);
+#}
+#inline float3 tofloat3(float2 xy, float z) {
+#	return float3(xy.x, xy.y, z);
+#}
+#inline float3 tofloat3(float x, float2 yz) {
+#	return float3(x, yz.x, yz.y);
+#}
+#inline float4 tofloat4(float x, float y, float z, float w) {
+#	return float4(x, y, z, w);
+#}
+#inline float4 tofloat4(float x) {
+#	return float4(x, x, x, x);
+#}
+#inline float4 tofloat4(float x, float3 yzw) {
+#	return float4(x, yzw.x, yzw.y, yzw.z);
+#}
+#inline float4 tofloat4(float2 xy, float2 zw) {
+#	return float4(xy.x, xy.y, zw.x, zw.y);
+#}
+#inline float4 tofloat4(float3 xyz, float w) {
+#	return float4(xyz.x, xyz.y, xyz.z, w);
+#}
+#inline float2x2 tofloat2x2(float2 v1, float2 v2) {
+#	return float2x2(v1.x, v1.y, v2.x, v2.y);
+#}
+	
+#----------------------
+#glsl_defs.tmpl
+
+#float rand(vec2 x) {
+#    return fract(cos(mod(dot(x, vec2(13.9898, 8.141)), 3.14)) * 43758.5453);
+#}
+
+#vec2 rand2(vec2 x) {
+#    return fract(cos(mod(vec2(dot(x, vec2(13.9898, 8.141)),
+#						      dot(x, vec2(3.4562, 17.398))), vec2(3.14))) * 43758.5453);
+#}
+
+#vec3 rand3(vec2 x) {
+#    return fract(cos(mod(vec3(dot(x, vec2(13.9898, 8.141)),
+#							  dot(x, vec2(3.4562, 17.398)),
+#                              dot(x, vec2(13.254, 5.867))), vec3(3.14))) * 43758.5453);
+#}
+
+#float param_rnd(float minimum, float maximum, float seed) {
+#	return minimum+(maximum-minimum)*rand(vec2(seed));
+#}
+
+#vec3 rgb2hsv(vec3 c) {
+#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
+#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
+#
+#	float d = q.x - min(q.w, q.y);
+#	float e = 1.0e-10;
+#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+#}
+
+#vec3 hsv2rgb(vec3 c) {
+#	vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+#	vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+#	return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+#}
+
+#----------------------
+
 static func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
 	v.x = clamp(v.x, mi.x, ma.x)
 	v.y = clamp(v.y, mi.y, ma.y)

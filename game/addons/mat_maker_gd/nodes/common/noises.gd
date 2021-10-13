@@ -39,6 +39,85 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return color;
 #}
 
+#----------------------
+#noise_anisotropic.mmg
+#Generates x-axis interpolated value noise
+
+#		"outputs": [
+#			{
+#				"f": "anisotropic($(uv), vec2($(scale_x), $(scale_y)), $(seed), $(smoothness), $(interpolation))",
+#				"longdesc": "Shows a greyscale value noise",
+#				"shortdesc": "Output",
+#				"type": "f"
+#			}
+#		],
+#		"parameters": [
+#			{
+#				"control": "None",
+#				"default": 4,
+#				"label": "Scale X",
+#				"longdesc": "The scale along the X axis",
+#				"max": 32,
+#				"min": 1,
+#				"name": "scale_x",
+#				"shortdesc": "Scale.x",
+#				"step": 1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 256,
+#				"label": "Scale Y",
+#				"longdesc": "The scale along the Y axis",
+#				"max": 1024,
+#				"min": 1,
+#				"name": "scale_y",
+#				"shortdesc": "Scale.y",
+#				"step": 1,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 1,
+#				"label": "Smoothness",
+#				"longdesc": "Controls how much the noise is blurred along the x-axis",
+#				"max": 1,
+#				"min": 0,
+#				"name": "smoothness",
+#				"shortdesc": "Smoothness",
+#				"step": 0.01,
+#				"type": "float"
+#			},
+#			{
+#				"control": "None",
+#				"default": 1,
+#				"label": "Interpolation",
+#				"longdesc": "Controls the type of interpolation used for the smoothing. 0 is linear interpolation, 1 is smooth interpolation",
+#				"max": 1,
+#				"min": 0,
+#				"name": "interpolation",
+#				"shortdesc": "Interpolation",
+#				"step": 0.01,
+#				"type": "float"
+#			}
+#		],
+
 static func dots(uv : Vector2, size : float, density : float, pseed : float) -> float:
 	return 0.0
 
+
+#float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interpolation) {\n\
+#	tvec2 seed2 = rand2(vec2(seed, 1.0-seed));\n\t\n\t
+#	vec2 xy = floor(uv*size);\n\t
+#	vec2 offset = vec2(rand(seed2 + xy.y), 0.0);\n\t
+#	vec2 xy_offset = floor(uv * size + offset );\n    
+#
+#	float f0 = rand(seed2+mod(xy_offset, size));\n    
+#	float f1 = rand(seed2+mod(xy_offset+vec2(1.0, 0.0), size));\n\t
+#	float mixer = clamp( (fract(uv.x*size.x+offset.x) -.5) / smoothness + 0.5, 0.0, 1.0 );\n    
+#	float smooth_mix = smoothstep(0.0, 1.0, mixer);\n\t
+#	float linear = mix(f0, f1, mixer);\n\t
+#	float smoothed = mix(f0, f1, smooth_mix);\n\t\n
+#
+#	return mix(linear, smoothed, interpolation);\n
+#}
