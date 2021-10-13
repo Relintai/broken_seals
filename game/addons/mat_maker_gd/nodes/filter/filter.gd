@@ -2,7 +2,7 @@ tool
 extends MMNode
 
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Colors = preload("res://addons/mat_maker_gd/nodes/common/colors.gd")
+var Filter = preload("res://addons/mat_maker_gd/nodes/common/filter.gd")
 var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
 
 var image : Image
@@ -61,14 +61,14 @@ var p_o91644_brightness = 0.000000000;
 var p_o91644_contrast = 1.000000000;
 
 func brightness_contrast(color : Color) -> Color:
-	return Colors.brightness_contrast(color, p_o91644_brightness, p_o91644_contrast);
+	return Filter.brightness_contrast(color, p_o91644_brightness, p_o91644_contrast);
 
 var p_o102649_hue = 0.000000000;
 var  p_o102649_saturation = 1.000000000;
 var  p_o102649_value = 1.000000000;
 
 func adjust_hsv(color : Color) -> Color:
-	return Colors.adjust_hsv(color, p_o102649_hue, p_o102649_saturation, p_o102649_value)
+	return Filter.adjust_hsv(color, p_o102649_hue, p_o102649_saturation, p_o102649_value)
 	
 func reffg():
 	return false

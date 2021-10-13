@@ -2,7 +2,7 @@ tool
 extends MMNode
 
 var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Colors = preload("res://addons/mat_maker_gd/nodes/common/colors.gd")
+var Filter = preload("res://addons/mat_maker_gd/nodes/common/filter.gd")
 var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
 
 var image : Image
@@ -42,7 +42,7 @@ func gen() -> void:
 
 			var f : float = Shapes.shape_circle(v, 3, 1.0 * 1.0, 1.0)
 			
-			f = Colors.grayscale_luminosity(Vector3(f, f, f));
+			f = Filter.grayscale_luminosity(Vector3(f, f, f));
 			
 			var c : Color = Color(f, f, f, 1)
 			
