@@ -1,3 +1,4 @@
+tool
 extends LineEdit
 
 export var value : float = 0.5 setget set_value

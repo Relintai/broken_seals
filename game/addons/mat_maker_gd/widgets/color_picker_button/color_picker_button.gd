@@ -1,3 +1,4 @@
+tool
 extends ColorPickerButton
 
 func get_drag_data(_position):
