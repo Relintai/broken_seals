@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://material_maker/widgets/gradient_editor/gradient_editor.gd" type="Script" id=1]
-[ext_resource path="res://material_maker/icons/icons.tres" type="Texture" id=2]
+[ext_resource path="res://addons/mat_maker_gd/widgets/gradient_editor/gradient_editor.gd" type="Script" id=1]
+[ext_resource path="res://addons/mat_maker_gd/icons/icons.tres" type="Texture" id=2]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -31,22 +31,18 @@ shader = SubResource( 3 )
 [sub_resource type="Theme" id=5]
 
 [sub_resource type="AtlasTexture" id=6]
-flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 96, 0, 32, 16 )
 
 [sub_resource type="AtlasTexture" id=7]
-flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 64, 0, 32, 16 )
 
 [sub_resource type="AtlasTexture" id=8]
-flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 64, 16, 32, 16 )
 
 [sub_resource type="AtlasTexture" id=9]
-flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 96, 16, 32, 16 )
 
@@ -102,4 +98,5 @@ align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="item_selected" from="Interpolation" to="." method="_on_Interpolation_item_selected"]

@@ -1,0 +1,15 @@
+[gd_resource type="ProxyTexture" load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends ProxyTexture
+
+func _init():
+	if Directory.new().file_exists(\"res://addons/mat_maker_gd/icons/icons.svg\"):
+		var t : ImageTexture = ImageTexture.new()
+		t.load(\"res://addons/mat_maker_gd/icons/icons.svg\")
+		base = t
+"
+
+[resource]
+script = SubResource( 1 )
