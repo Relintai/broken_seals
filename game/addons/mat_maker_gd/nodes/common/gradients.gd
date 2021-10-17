@@ -64,16 +64,16 @@ static func normal_gradient_type_4(uv : Vector2, repeat : float, rotate : float,
 
 
 static func circular_gradient_type_1(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
-	return gradient_type_1(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
+	return gradient_type_1(Commons.fractf(repeat * 0.15915494309 * atan2((uv.y - 0.5), uv.x - 0.5)), data)
 
 static func circular_gradient_type_2(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
-	return gradient_type_2(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
+	return gradient_type_2(Commons.fractf(repeat * 0.15915494309 * atan2((uv.y - 0.5), uv.x - 0.5)), data)
 	
 static func circular_gradient_type_3(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
-	return gradient_type_3(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
+	return gradient_type_3(Commons.fractf(repeat * 0.15915494309 * atan2((uv.y - 0.5), uv.x - 0.5)), data)
 	
 static func circular_gradient_type_4(uv : Vector2, repeat : float, data : PoolRealArray) -> Color:
-	return gradient_type_4(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
+	return gradient_type_4(Commons.fractf(repeat * 0.15915494309 * atan2((uv.y - 0.5), uv.x - 0.5)), data)
 
 
 static func gradient_type_1(x : float, data : PoolRealArray) -> Color:
