@@ -76,7 +76,6 @@ static func circular_gradient_type_4(uv : Vector2, repeat : float, data : PoolRe
 	return gradient_type_4(Commons.fractf(repeat * 0.15915494309 * atan((uv.x - 0.5) / uv.y - 0.5)), data)
 
 
-
 static func gradient_type_1(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
 		return Color()
@@ -92,7 +91,7 @@ static func gradient_type_2(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
 		return Color()
 	
-	for i in range(0, data.size() - 5, 5):
+	for i in range(0, data.size(), 5):
 		if x < data[i]:
 			if i == 0:
 				return Color(data[i + 1], data[i + 2], data[i + 3], data[i + 4])
@@ -108,7 +107,7 @@ static func gradient_type_3(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
 		return Color()
 	
-	for i in range(0, data.size() - 5, 5):
+	for i in range(0, data.size(), 5):
 		if x < data[i]:
 			if i == 0:
 				return Color(data[i + 1], data[i + 2], data[i + 3], data[i + 4])
@@ -125,7 +124,7 @@ static func gradient_type_4(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
 		return Color()
 	
-	for i in range(0, data.size() - 5, 5):
+	for i in range(0, data.size(), 5):
 		if x < data[i]:
 			if i == 0:
 				return Color(data[i + 1], data[i + 2], data[i + 3], data[i + 4])

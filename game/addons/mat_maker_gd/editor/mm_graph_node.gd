@@ -1,6 +1,8 @@
 tool
 extends GraphNode
 
+var gradient_editor_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/gradient_editor/gradient_editor.tscn")
+
 var slot_colors : PoolColorArray
 
 var _material : MMMateial  = null
@@ -20,7 +22,19 @@ func add_slot_texture(getter : String, setter : String) -> int:
 	properties[slot_idx].append(t.texture)
 	
 	return slot_idx
+
+func add_slot_gradient() -> int:
+	var ge : Control = gradient_editor_scene.instance()
+
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
 	
+	ge.set_value(_node)
+	#ge.texture = _node.call(getter, _material, slot_idx)
+	#properties[slot_idx].append(ge.texture)
+	
+	return slot_idx
+
+
 func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	var t : TextureRect = TextureRect.new()
 

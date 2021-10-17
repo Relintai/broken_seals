@@ -71,53 +71,63 @@ export var embedded : bool = true
 
 signal updated(value)
 
-func _ready() -> void:
-	$Gradient.material = $Gradient.material.duplicate(true)
-	#set_value(MMGradient.new())
+func _init():
+	connect("resized", self, "on_resized")
 
-func get_gradient_from_data(data):
-	if typeof(data) == TYPE_ARRAY:
-		return data
-	elif typeof(data) == TYPE_DICTIONARY:
-		if data.has("parameters") and data.parameters.has("gradient"):
-			return data.parameters.gradient
-		if data.has("type") and data.type == "Gradient":
-			return data
-	return null
+#func get_gradient_from_data(data):
+#	if typeof(data) == TYPE_ARRAY:
+#		return data
+#	elif typeof(data) == TYPE_DICTIONARY:
+#		if data.has("parameters") and data.parameters.has("gradient"):
+#			return data.parameters.gradient
+#		if data.has("type") and data.type == "Gradient":
+#			return data
+#	return null
 
-func get_drag_data(_position : Vector2):
-	var data = 0#MMType.serialize_value(value)
-	var preview = ColorRect.new()
-	preview.rect_size = Vector2(64, 24)
-	preview.material = $Gradient.material
-	set_drag_preview(preview)
-	return data
-
-func can_drop_data(_position : Vector2, data) -> bool:
-	return get_gradient_from_data(data) != null
-
-func drop_data(_position : Vector2, data) -> void:
-	var gradient = get_gradient_from_data(data)
-	#if gradient != null:
-		#set_value(MMType.deserialize_value(gradient))
+#func get_drag_data(_position : Vector2):
+#	var data = 0#MMType.serialize_value(value)
+#	var preview = ColorRect.new()
+#	preview.rect_size = Vector2(64, 24)
+#	preview.material = $Gradient.material
+#	set_drag_preview(preview)
+#	return data
+#
+#func can_drop_data(_position : Vector2, data) -> bool:
+#	return get_gradient_from_data(data) != null
+#
+#func drop_data(_position : Vector2, data) -> void:
+#	var gradient = get_gradient_from_data(data)
+#	#if gradient != null:
+#		#set_value(MMType.deserialize_value(gradient))
 
 func set_value(v) -> void:
 	value = v
+
+	update_preview()
+	call_deferred("update_cursors")
+
+func update_cursors() -> void:
 	for c in get_children():
 		if c is GradientCursor:
 			remove_child(c)
 			c.free()
-	for p in value.points:
-		add_cursor(p.v*(rect_size.x-GradientCursor.WIDTH), p.c)
-	$Interpolation.selected = value.interpolation
-	update_shader()
+	
+	var vs : int = value.get_point_count()
+		
+	for i in range(vs):
+		add_cursor(value.get_point_value(i) * (rect_size.x-GradientCursor.WIDTH), value.get_point_color(i))
+		
+	$Interpolation.selected = value.interpolation_type
 
 func update_value() -> void:
 	value.clear()
-	for c in get_children():
-		if c is GradientCursor:
-			value.add_point(c.rect_position.x/(rect_size.x-GradientCursor.WIDTH), c.color)
-	update_shader()
+	
+	var sc : Array = get_sorted_cursors()
+	
+	for c in sc:
+		value.add_point(c.rect_position.x/(rect_size.x-GradientCursor.WIDTH), c.color)
+			
+	update_preview()
 
 func add_cursor(x, color) -> void:
 	var cursor = GradientCursor.new()
@@ -132,7 +142,7 @@ func _gui_input(ev) -> void:
 			add_cursor(p, get_gradient_color(p))
 			update_value()
 		elif embedded:
-			var popup = load("res://material_maker/widgets/gradient_editor/gradient_popup.tscn").instance()
+			var popup = load("res://addons/mat_maker_gd/widgets/gradient_editor/gradient_popup.tscn").instance()
 			add_child(popup)
 			var popup_size = popup.rect_size
 			popup.popup(Rect2(ev.global_position, Vector2(0, 0)))
@@ -166,20 +176,48 @@ func get_sorted_cursors() -> Array:
 	array.sort_custom(GradientCursor, "sort")
 	return array
 
-func get_gradient_color(x) -> Color:
-	return value.get_color(x / (rect_size.x - GradientCursor.WIDTH))
+func generate_preview_image() -> void:
+	var tex : ImageTexture = $Gradient.texture
+	
+	if !tex:
+		tex = ImageTexture.new()
+		$Gradient.texture = tex
+		
+	var img : Image = tex.get_data()
+	
+	var w : float = $Gradient.rect_size.x
+	var h : float = $Gradient.rect_size.y
+	
+	if !img:
+		img = Image.new()
 
-func update_shader() -> void:
-	var shader
-	shader = "shader_type canvas_item;\n"
-	var params = value.get_shader_params("")
-	for sp in params.keys():
-		shader += "uniform float "+sp+" = "+str(params[sp])+";\n"
-	shader += value.get_shader("")
-	shader += "void fragment() { COLOR = _gradient_fct(UV.x); }"
-	$Gradient.material.shader.set_code(shader)
-	emit_signal("updated", value)
+	if img.get_size().x != w || img.get_size().y != h:
+		img.create(w, h, false, Image.FORMAT_RGBA8)
+		
+	img.lock()
+	
+	for i in range(w):
+		var x : float = float(i) / float(w)
+		var col : Color = value.get_gradient_color(x)
+		
+		for j in range(h):
+			img.set_pixel(i, j, col)
+		
+	img.unlock()
+	
+	tex.create_from_image(img, 0)
+
+func get_gradient_color(x) -> Color:
+	return value.get_gradient_color(x / (rect_size.x - GradientCursor.WIDTH))
+
+func update_preview() -> void:
+	call_deferred("generate_preview_image")
 
 func _on_Interpolation_item_selected(ID) -> void:
-	value.interpolation = ID
-	update_shader()
+	value.interpolation_type = ID
+	update_preview()
+
+func on_resized() -> void:
+	if value:
+		update_preview()
+		call_deferred("update_cursors")
