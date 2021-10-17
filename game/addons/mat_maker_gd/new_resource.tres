@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=19 format=2]
+[gd_resource type="Resource" load_steps=22 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/shape.gd" type="Script" id=4]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=5]
 [ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=6]
+[ext_resource path="res://addons/mat_maker_gd/nodes/gradient/gradient.gd" type="Script" id=7]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -109,7 +110,25 @@ sides = 6
 radius = SubResource( 11 )
 edge = SubResource( 9 )
 
+[sub_resource type="Resource" id=14]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=15]
+script = ExtResource( 7 )
+graph_position = Vector2( -300, 120 )
+image = SubResource( 14 )
+repeat = 1.0
+rotate = 0.0
+interpolation_type = 1
+points = PoolRealArray( 0, 0.376471, 0.239216, 0.713726, 1, 0.330508, 0.484375, 0.198669, 0.198669, 1, 0.644068, 1, 1, 1, 1, 1, 0.263715, 0.585938, 0.100708, 1 )
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ) ]
