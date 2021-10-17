@@ -119,90 +119,107 @@ static func gradient_type_3(x : float, data : PoolRealArray) -> Color:
 	var ds = data.size() - 5
 	return Color(data[ds + 1], data[ds + 2], data[ds + 3], data[ds + 4])
 
-#todo, logic is not yet finished
+static func get_data_color(index : int, data : PoolRealArray) -> Color:
+	var i : int = index * 5
+	
+	return Color(data[i + 1], data[i + 2],data[i + 3], data[i + 4])
+	
+static func get_data_pos(index : int, data : PoolRealArray) -> float:
+	return data[index * 5]
+
 static func gradient_type_4(x : float, data : PoolRealArray) -> Color:
 	if data.size() % 5 != 0 || data.size() == 0:
 		return Color()
 	
-	for i in range(0, data.size(), 5):
-		if x < data[i]:
+	var ds : int = data.size() / 5
+	var s : int = ds - 1
+	
+	for i in range(0, s):
+		if x < get_data_pos(i, data):
 			if i == 0:
-				return Color(data[i + 1], data[i + 2], data[i + 3], data[i + 4])
+				return get_data_color(i, data)
+				
+#			var dx : String = "(x-%s)/(%s-%s)" % [ pv(name, i), pv(name, i+1), pv(name, i) ]
+			var dx : float = (x - get_data_pos(i, data))/(get_data_pos(i + 1, data) - get_data_pos(i, data))
+#			var b : String = "mix(%s, %s, %s)" % [ pc(name, i), pc(name, i+1), dx ]
+			var b : Color = lerp(get_data_color(i - 1, data), get_data_color(i - 1, data), dx)
+
+			if i == 1:
+#				var c : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i+1), pc(name, i+2), pv(name, i+1), pv(name, i+2), pv(name, i+1) ]
+				var c : Color = lerp(get_data_color(i + 1, data), get_data_color(i + 2, data), (x - get_data_pos(i + 1, data))/(get_data_pos(i + 2, data) - get_data_pos(i + 1, data)))
+#				shader += "    return mix("+c+", "+b+", 1.0-0.5*"+dx+");\n"
+				return lerp(c, b, 1.0 - 0.5 * dx)
 			
-			var cprev : Color = Color(data[i - 4], data[i - 3], data[i - 2], data[i - 1])
-			var ccurr : Color = Color(data[i + 1], data[i + 2], data[i + 3], data[i + 4])
-			return lerp(cprev, ccurr, 0.5 - 0.5 * cos(3.14159265359 * ((x - data[i - 5]) / (data[i] - data[i - 5]))))
+#			var a : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i-1), pc(name, i),  pv(name, i-1), pv(name, i), pv(name, i-1) ]
+			var a : Color = lerp(get_data_color(i - 1, data), get_data_color(i, data), (x - get_data_pos(i - 1, data)) / (get_data_pos(i, data) - get_data_pos(i - 1, data)))
+			
+#			if i < s-1:
+			if i < s - 1:
+#				var c : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i+1), pc(name, i+2), pv(name, i+1), pv(name, i+2), pv(name, i+1) ]
+				var c : Color = lerp(get_data_color(i + 1, data), get_data_color(i + 2, data), (x - get_data_pos(i + 1, data)) / (get_data_pos(i + 2, data) - get_data_pos(i + 1, data)))
+#				var ac : String = "mix("+a+", "+c+", 0.5-0.5*cos(3.14159265359*"+dx+"))"
+				var ac : Color = lerp(a, c, 0.5-0.5*cos(3.14159265359 * dx))
+#				shader += "    return 0.5*("+b+" + "+ac+");\n"
+				var dt : Color = b + ac
+
+				dt.r *= 0.5
+				dt.g *= 0.5
+				dt.b *= 0.5
+				dt.a = clamp(0, 1, dt.a)
+
+				return dt
+#			else
+			else:
+#				shader += "    return mix("+a+", "+b+", 0.5+0.5*"+dx+");\n"
+				return lerp(a, b, 0.5 + 0.5 * dx)
+
+	return get_data_color(ds - 1, data)
+
+#todo make it selectable
+static func gradient_type_5(x : float, data : PoolRealArray) -> Color:
+	if data.size() % 5 != 0 || data.size() == 0:
+		return Color()
 	
-	var ds = data.size() - 5
-	return Color(data[ds + 1], data[ds + 2], data[ds + 3], data[ds + 4])
+	var ds : int = data.size() / 5
+	var s : int = ds - 1
 	
-	
-#	if (x < gradient_0_pos):
-#		return Color(gradient_0_r,gradient_0_g,gradient_0_b,gradient_0_a);
-#	elif (x < gradient_1_pos):
-#		return lerp(lerp(Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), Color(gradient_2_r,gradient_2_g,gradient_2_b,gradient_2_a), (x-gradient_1_pos)/(gradient_2_pos-gradient_1_pos)), lerp(Color(gradient_0_r,gradient_0_g,gradient_0_b,gradient_0_a), Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), (x-gradient_0_pos)/(gradient_1_pos-gradient_0_pos)), 1.0-0.5*(x-gradient_0_pos)/(gradient_1_pos-gradient_0_pos));
-#	elif (x < gradient_2_pos):
-#		return lerp(lerp(Color(gradient_0_r,gradient_0_g,gradient_0_b,gradient_0_a), Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), (x-gradient_0_pos)/(gradient_1_pos-gradient_0_pos)), lerp(Color(gradient_1_r,gradient_1_g,gradient_1_b,gradient_1_a), Color(gradient_2_r,gradient_2_g,gradient_2_b,gradient_2_a), (x-gradient_1_pos)/(gradient_2_pos-gradient_1_pos)), 0.5+0.5*(x-gradient_1_pos)/(gradient_2_pos-gradient_1_pos));
-#
-#	return Color(gradient_2_r,gradient_2_g,gradient_2_b,gradient_2_a);
+	for i in range(0, s):
+		if x < get_data_pos(i, data):
+			if i == 0:
+				return get_data_color(i, data)
+				
+#			var dx : String = "(x-%s)/(%s-%s)" % [ pv(name, i), pv(name, i+1), pv(name, i) ]
+			var dx : float = (x - get_data_pos(i, data))/(get_data_pos(i + 1, data) - get_data_pos(i, data))
+#			var b : String = "mix(%s, %s, %s)" % [ pc(name, i), pc(name, i+1), dx ]
+			var b : Color = lerp(get_data_color(i - 1, data), get_data_color(i - 1, data), dx)
 
+			if i == 1:
+#				var c : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i+1), pc(name, i+2), pv(name, i+1), pv(name, i+2), pv(name, i+1) ]
+				var c : Color = lerp(get_data_color(i + 1, data), get_data_color(i + 2, data), (x - get_data_pos(i + 1, data))/(get_data_pos(i + 2, data) - get_data_pos(i + 1, data)))
+#				shader += "    return mix("+c+", "+b+", 1.0-0.5*"+dx+");\n"
+				return lerp(c, b, 1.0 - 0.5 * dx)
+			
+#			var a : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i-1), pc(name, i),  pv(name, i-1), pv(name, i), pv(name, i-1) ]
+			var a : Color = lerp(get_data_color(i - 1, data), get_data_color(i, data), (x - get_data_pos(i - 1, data)) / (get_data_pos(i, data) - get_data_pos(i - 1, data)))
+			
+#			if i < s-1:
+			if i < s - 1:
+#				var c : String = "mix(%s, %s, (x-%s)/(%s-%s))" % [ pc(name, i+1), pc(name, i+2), pv(name, i+1), pv(name, i+2), pv(name, i+1) ]
+				var c : Color = lerp(get_data_color(i+1, data), get_data_color(i+2, data), (x - get_data_pos(i + 1, data)) / (get_data_pos(i + 2, data) - get_data_pos(i + 1, data)))
+#				var ac : String = "mix("+a+", "+c+", 0.5-0.5*cos(3.14159265359*"+dx+"))"
+				var ac : Color = lerp(a, c, 0.5-0.5*cos(3.14159265359 * dx))
+#				shader += "    return 0.5*("+b+" + "+ac+");\n"
+				var dt : Color = b + ac
 
+				dt.r *= 0.5
+				dt.g *= 0.5
+				dt.b *= 0.5
+				dt.a = clamp(0, 1, dt.a)
 
-var p_o95415_repeat = 1.000000000;
+				return dt
+#			else
+			else:
+#				shader += "    return mix("+a+", "+b+", 0.5+0.5*"+dx+");\n"
+				return lerp(a, b, 0.5 + 0.5 * dx)
 
-var p_o95415_gradient_0_pos = 0.000000000;
-var p_o95415_gradient_0_r = 0.000000000;
-var p_o95415_gradient_0_g = 0.000000000;
-var p_o95415_gradient_0_b = 0.000000000;
-var p_o95415_gradient_0_a = 1.000000000;
-var p_o95415_gradient_1_pos = 0.490909091;
-var p_o95415_gradient_1_r = 1.000000000;
-var p_o95415_gradient_1_g = 0.000000000;
-var p_o95415_gradient_1_b = 0.000000000;
-var p_o95415_gradient_1_a = 1.000000000;
-var p_o95415_gradient_2_pos = 1.000000000;
-var p_o95415_gradient_2_r = 1.000000000;
-var p_o95415_gradient_2_g = 1.000000000;
-var p_o95415_gradient_2_b = 1.000000000;
-var p_o95415_gradient_2_a = 1.000000000;
-
-
-func gradient_type_1_orig(x : float) -> Color:
-	if (x < 0.5*(p_o95415_gradient_0_pos+p_o95415_gradient_1_pos)):
-		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
-	elif (x < 0.5*(p_o95415_gradient_1_pos+p_o95415_gradient_2_pos)):
-		return Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a);
-
-	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
-
-func gradient_type_2_orig(x : float) -> Color:
-	if (x < p_o95415_gradient_0_pos):
-		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
-	elif (x < p_o95415_gradient_1_pos):
-		return lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), ((x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)));
-	elif (x < p_o95415_gradient_2_pos):
-		return lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), ((x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)));
-
-	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
-
-
-func gradient_type_3_orig(x : float) -> Color:
-	if (x < p_o95415_gradient_0_pos):
-		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
-	elif (x < p_o95415_gradient_1_pos):
-		return lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), 0.5-0.5*cos(3.14159265359*(x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)));
-	if (x < p_o95415_gradient_2_pos):
-		return lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), 0.5-0.5*cos(3.14159265359*(x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)));
-
-	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
-
-func gradient_type_4_orig(x : float) -> Color:
-	if (x < p_o95415_gradient_0_pos):
-		return Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a);
-	elif (x < p_o95415_gradient_1_pos):
-		return lerp(lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), (x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)), lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), (x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)), 1.0-0.5*(x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos));
-	elif (x < p_o95415_gradient_2_pos):
-		return lerp(lerp(Color(p_o95415_gradient_0_r,p_o95415_gradient_0_g,p_o95415_gradient_0_b,p_o95415_gradient_0_a), Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), (x-p_o95415_gradient_0_pos)/(p_o95415_gradient_1_pos-p_o95415_gradient_0_pos)), lerp(Color(p_o95415_gradient_1_r,p_o95415_gradient_1_g,p_o95415_gradient_1_b,p_o95415_gradient_1_a), Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a), (x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos)), 0.5+0.5*(x-p_o95415_gradient_1_pos)/(p_o95415_gradient_2_pos-p_o95415_gradient_1_pos));
-  
-	return Color(p_o95415_gradient_2_r,p_o95415_gradient_2_g,p_o95415_gradient_2_b,p_o95415_gradient_2_a);
- 
+	return get_data_color(ds - 1, data)
