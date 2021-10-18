@@ -536,8 +536,8 @@ static func scratches(uv : Vector2, layers : int, size : Vector2, waviness : flo
 	var v : float = 0.0;
 	
 	for i in range(layers):# (int i = 0; i < layers; ++i) {
-		v = max(v, scratch(Commons.fractv2(uv + pseed), size, waviness, angle/360.0, randomness, pseed));
 		pseed = Commons.rand2(pseed);
+		v = max(v, scratch(Commons.fractv2(uv + pseed), size, waviness, angle/360.0, randomness, pseed));
 
 	return v;
 
