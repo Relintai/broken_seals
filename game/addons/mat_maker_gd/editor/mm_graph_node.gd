@@ -123,9 +123,10 @@ func add_slot_line_edit(getter : String, setter : String, slot_name : String, pl
 func add_slot_enum(getter : String, setter : String, slot_name : String, values : Array) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
-	var l : Label = Label.new()
-	l.text = slot_name
-	bc.add_child(l)
+	if slot_name:
+		var l : Label = Label.new()
+		l.text = slot_name
+		bc.add_child(l)
 	
 	var mb : OptionButton = OptionButton.new()
 	

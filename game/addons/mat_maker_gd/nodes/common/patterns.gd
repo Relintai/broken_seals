@@ -372,6 +372,9 @@ enum CombinerType {
 	POW
 }
 
+#"Sine,Triangle,Square,Sawtooth,Constant,Bounce"
+#"Multiply,Add,Max,Min,Xor,Pow"
+
 #float $(name)_fct(vec2 uv) {
 #	return mix_$(mix)(wave_$(x_wave)($(x_scale)*uv.x), wave_$(y_wave)($(y_scale)*uv.y));
 #}
