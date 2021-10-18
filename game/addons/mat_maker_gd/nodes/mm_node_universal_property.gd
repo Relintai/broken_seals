@@ -31,6 +31,7 @@ export(Vector3) var default_vector3 : Vector3
 export(Color) var default_color : Color
 export(Image) var default_image : Image
 
+var force_override : bool = false
 #This is not exported on purpose!
 var override_image : Image
 
@@ -202,7 +203,7 @@ func set_default_value(val):
 	emit_changed()
 
 func get_active_image() -> Image:
-	if input_property:
+	if !force_override && input_property:
 		return input_property.get_active_image()
 		
 	if override_image:

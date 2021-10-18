@@ -23,53 +23,14 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #colorize.mmg
 #Remaps a greyscale image to a custom gradient
 
-#		"inputs": [
-#			{
-#				"default": "$uv.x",
-#				"label": "",
-#				"longdesc": "The input greyscale image",
-#				"name": "input",
-#				"shortdesc": "Input",
-#				"type": "f"
-#			}
-#		],
-#		"outputs": [
-#			{
-#				"longdesc": "The remapped RGBA image",
-#				"rgba": "$gradient($input($uv))",
-#				"shortdesc": "Output",
-#				"type": "rgba"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"default": {
-#					"interpolation": 1,
-#					"points": [
-#						{
-#							"a": 1,
-#							"b": 0,
-#							"g": 0,
-#							"pos": 0,
-#							"r": 0
-#						},
-#						{
-#							"a": 1,
-#							"b": 1,
-#							"g": 1,
-#							"pos": 1,
-#							"r": 1
-#						}
-#					],
-#					"type": "Gradient"
-#				},
-#				"label": "",
-#				"longdesc": "The gradient to which the input is remapped",
-#				"name": "gradient",
-#				"shortdesc": "Gradient",
-#				"type": "gradient"
-#			}
-#		],
+#Inputs:
+#input, float, $uv.x - The input greyscale image - (Image input)
+
+#Outputs:
+#output (rgba) $gradient($input($uv)) - Image output
+
+#Parameters:
+#gradient, Gradient 
 
 #----------------------
 #default_color.mmg

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=31 format=2]
+[gd_resource type="Resource" load_steps=34 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/gradient/radial_gradient.gd" type="Script" id=8]
 [ext_resource path="res://addons/mat_maker_gd/nodes/uniform/uniform.gd" type="Script" id=9]
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/image.gd" type="Script" id=10]
+[ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=11]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -61,7 +62,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=25]
+[sub_resource type="Resource" id=28]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -72,8 +73,8 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
-graph_position = Vector2( 100, -320 )
-image = SubResource( 25 )
+graph_position = Vector2( 300, -400 )
+image = SubResource( 28 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -176,7 +177,24 @@ graph_position = Vector2( -140, -220 )
 image = SubResource( 23 )
 image_path = "/home/relintai/Projects/broken_seals/game/icon.png"
 
+[sub_resource type="Resource" id=26]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 7 )
+
+[sub_resource type="Resource" id=27]
+script = ExtResource( 11 )
+graph_position = Vector2( 40, -300 )
+interpolation_type = 1
+points = PoolRealArray( 0, 0.171875, 1, 0, 1, 0.508474, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0.015625, 1, 1 )
+image = SubResource( 26 )
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ) ]
