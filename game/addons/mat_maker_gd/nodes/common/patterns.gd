@@ -870,8 +870,10 @@ static func brick(uv : Vector2, bmin : Vector2, bmax : Vector2, mortar : float, 
 #	return rand3(fract(center + vec2(seed)));
 #}
 
-static func brick_random_color(uv : Vector2, bmin : Vector2, bmax : Vector2, pseed : float) -> Vector3:
-	var center : Vector2 = 0.5 * (bmin + bmax)
+static func brick_random_color(bmin : Vector2, bmax : Vector2, pseed : float) -> Vector3:
+	var center : Vector2 = (bmin + bmax)
+	center.x *= 0.5
+	center.y *= 0.5
 	
 	return Commons.rand3(Commons.fractv2(center + Vector2(pseed, pseed)));
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=34 format=2]
+[gd_resource type="Resource" load_steps=46 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/uniform/uniform.gd" type="Script" id=9]
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/image.gd" type="Script" id=10]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=11]
+[ext_resource path="res://addons/mat_maker_gd/nodes/pattern/bricks.gd" type="Script" id=12]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -194,7 +195,116 @@ interpolation_type = 1
 points = PoolRealArray( 0, 0.171875, 1, 0, 1, 0.508474, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0.015625, 1, 1 )
 image = SubResource( 26 )
 
+[sub_resource type="Resource" id=29]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.1
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=30]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.1
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=31]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=32]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=33]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=34]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=35]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=36]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=37]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=38]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.1
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=39]
+script = ExtResource( 12 )
+graph_position = Vector2( 400, 180 )
+out_bricks_pattern = SubResource( 32 )
+out_random_color = SubResource( 37 )
+out_position_x = SubResource( 35 )
+out_position_y = SubResource( 36 )
+out_brick_uv = SubResource( 31 )
+out_corner_uv = SubResource( 33 )
+out_direction = SubResource( 34 )
+type = 0
+repeat = 1
+row_col = Vector2( 4, 4 )
+offset = 0.5
+mortar = SubResource( 30 )
+bevel = SubResource( 29 )
+roundness = SubResource( 38 )
+corner = 0.3
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ) ]
+nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ) ]
