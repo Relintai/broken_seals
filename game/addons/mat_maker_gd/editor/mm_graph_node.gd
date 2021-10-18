@@ -43,6 +43,24 @@ func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	
 	return slot_idx
 
+func add_slot_image_path_universal(property : MMNodeUniversalProperty, getter : String, setter : String) -> int:
+	var t : TextureButton = load("res://addons/mat_maker_gd/widgets/image_picker_button/image_picker_button.tscn").instance()
+
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", t)
+
+	properties[slot_idx].append(property)
+	properties[slot_idx].append(getter)
+	properties[slot_idx].append(setter)
+	
+	property.connect("changed", self, "on_universal_texture_changed_image_picker", [ slot_idx ])
+	
+	t.connect("on_file_selected", self, "on_universal_image_path_changed", [ slot_idx ])
+	
+	t.call_deferred("do_set_image_path", _node.call(getter))
+	
+	return slot_idx
+
+
 func add_slot_gradient() -> int:
 	var ge : Control = gradient_editor_scene.instance()
 
@@ -443,7 +461,6 @@ func on_vector2_universal_spinbox_value_changed(val : float, slot_idx, spinbox_x
 func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][4], val)
 
-
 func on_universal_texture_changed(slot_idx : int) -> void:
 	var img : Image = properties[slot_idx][6].get_active_image()
 	
@@ -454,11 +471,24 @@ func on_universal_texture_changed(slot_idx : int) -> void:
 	else:
 		properties[slot_idx][5].texture = ImageTexture.new()
 
+func on_universal_texture_changed_image_picker(slot_idx : int) -> void:
+	var img : Image = properties[slot_idx][6].get_active_image()
+	
+	var tex : ImageTexture = properties[slot_idx][5].texture_normal
+	
+	if img:
+		properties[slot_idx][5].texture_normal.create_from_image(img, 0)
+	else:
+		properties[slot_idx][5].texture_normal = ImageTexture.new()
+
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][4], text)
 
 func on_universal_color_changed(c : Color, slot_idx : int) -> void:
 	properties[slot_idx][6].set_default_value(c)
+
+func on_universal_image_path_changed(f : String, slot_idx : int) -> void:
+	_node.call(properties[slot_idx][8], f)
 
 func get_material_node() -> MMNode:
 	return _node
