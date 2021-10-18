@@ -1,8 +1,6 @@
-[gd_resource type="Resource" load_steps=46 format=2]
+[gd_resource type="Resource" load_steps=42 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/perlin.gd" type="Script" id=2]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=3]
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/shape.gd" type="Script" id=4]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=5]
 [ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=6]
@@ -12,20 +10,6 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/image.gd" type="Script" id=10]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=11]
 [ext_resource path="res://addons/mat_maker_gd/nodes/pattern/bricks.gd" type="Script" id=12]
-
-[sub_resource type="Resource" id=1]
-script = ExtResource( 2 )
-graph_position = Vector2( -520, -340 )
-scale = Vector2( 15, 4 )
-iterations = 3
-persistence = 0.5
-
-[sub_resource type="Resource" id=2]
-script = ExtResource( 3 )
-graph_position = Vector2( 440, 20 )
-bmin = Vector2( 0.1, 0.1 )
-bmax = Vector2( 1, 1 )
-refresh = false
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -63,7 +47,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=28]
+[sub_resource type="Resource" id=40]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -75,7 +59,7 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( 300, -400 )
-image = SubResource( 28 )
+image = SubResource( 40 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -307,4 +291,4 @@ corner = 0.3
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 1 ), SubResource( 2 ), SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ) ]
