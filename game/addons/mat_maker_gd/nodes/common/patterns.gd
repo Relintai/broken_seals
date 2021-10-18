@@ -585,13 +585,13 @@ static func scratchesc(uv : Vector2, layers : int, size : Vector2, waviness : fl
 	
 	return Color(f, f, f, 1)
 
-static func runesc(uv : Vector2, col_row : Vector2) -> Color:
-	var f : float = rune(col_row * uv);
+static func runesc(uv : Vector2, col_row : Vector2, pseed : float) -> Color:
+	var f : float = rune(col_row * uv, pseed);
 
 	return Color(f, f, f, 1)
 
-static func runesf(uv : Vector2, col_row : Vector2) -> float:
-	return rune(col_row * uv);
+static func runesf(uv : Vector2, col_row : Vector2, pseed : float) -> float:
+	return rune(col_row * uv, pseed);
 
 #sdline.mmg
 #vec2 sdLine(vec2 p, vec2 a, vec2 b) {
@@ -643,17 +643,17 @@ static func runesf(uv : Vector2, col_row : Vector2) -> float:
 
 # makes a rune in the 0..1 uv space. Seed is which rune to draw.
 # passes back gray in x and derivates for lighting in yz
-static func rune(uv : Vector2) -> float:
+static func rune(uv : Vector2, pseed : float) -> float:
 	var finalLine : float = 0.0;
-	var pseed : Vector2 = Commons.floorv2(uv) - Vector2(0.41, 0.41);
+	var sseed : Vector2 = Commons.floorv2(uv) - Vector2(pseed, pseed);
 	
 	uv = Commons.fractv2(uv);
 	
 	for i in range(4):# (int i = 0; i < 4; i++):  #	// number of strokes
-		var posA : Vector2 = Commons.rand2(Commons.floorv2(pseed + Vector2(0.5, 0.5)));
-		var posB : Vector2 = Commons.rand2(Commons.floorv2(pseed + Vector2(1.5, 1.5)));
-		pseed.x += 2.0;
-		pseed.y += 2.0;
+		var posA : Vector2 = Commons.rand2(Commons.floorv2(sseed + Vector2(0.5, 0.5)));
+		var posB : Vector2 = Commons.rand2(Commons.floorv2(sseed + Vector2(1.5, 1.5)));
+		sseed.x += 2.0;
+		sseed.y += 2.0;
 		
 		# expand the range and mod it to get a nicely distributed random number - hopefully. :)
 		
