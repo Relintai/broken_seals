@@ -496,7 +496,14 @@ static func weave(uv : Vector2, count : Vector2, width : float) -> float:
 #}
 
 static func weave2(uv : Vector2, count : Vector2, stitch : float, width_x : float, width_y : float) -> Vector3:
-	return Vector3();
+	uv.x *= stitch
+	uv.y *= stitch
+	uv *= count
+	
+	var c1 : float = (sin(3.1415926 / stitch * (uv.x + floor(uv.y) - (stitch - 1.0))) * 0.25 + 0.75 ) * Commons.step(abs(Commons.fract(uv.y) - 0.5), width_x * 0.5);
+	var c2 : float = (sin(3.1415926 / stitch * (1.0 + uv.y + floor(uv.x) ))* 0.25 + 0.75 ) * Commons.step(abs(Commons.fract(uv.x)-0.5), width_y * 0.5);
+	
+	return Vector3(max(c1, c2), 1.0 - Commons.step(c1, c2), 1.0 - Commons.step(c2, c1));
 
 static func sinewavec(uv : Vector2, amplitude : float, frequency : float, phase : float) -> Color:
 	var f : float = 1.0- abs(2.0 * (uv.y-0.5) - amplitude * sin((frequency* uv.x + phase) * 6.28318530718));
