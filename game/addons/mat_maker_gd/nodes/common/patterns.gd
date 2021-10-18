@@ -425,8 +425,10 @@ static func pattern(uv : Vector2, x_scale : float, y_scale : float, ct : int, ca
 	return 0.0
 	
 
-static func truchet1c(uv : Vector2, pseed : Vector2) -> Color:
-	var f : float = truchet1(uv, pseed)
+#"Line,Circle"
+
+static func truchet1c(uv : Vector2, size : float, pseed : float) -> Color:
+	var f : float = truchet1(uv * size, Vector2(pseed, pseed))
 	return Color(f, f, f, 1);
 
 #float truchet1(vec2 uv, vec2 seed) {
@@ -440,10 +442,10 @@ static func truchet1(uv : Vector2, pseed : Vector2) -> float:
 	var i : Vector2 = Commons.floorv2(uv);
 	var f : Vector2 = Commons.fractv2(uv) - Vector2(0.5, 0.5);
 	
-	return 1.0 - abs(abs((2.0*Commons.step(Commons.rand(i+pseed), 0.5)-1.0)*f.x+f.y)-0.5);
+	return 1.0 - abs(abs((2.0 * Commons.step(Commons.rand(i + pseed), 0.5) - 1.0) * f.x + f.y) - 0.5);
 
-static func truchet2c(uv : Vector2, pseed : Vector2) -> Color:
-	var f : float = truchet2(uv, pseed)
+static func truchet2c(uv : Vector2, size : float, pseed : float) -> Color:
+	var f : float = truchet2(uv * size, Vector2(pseed, pseed))
 	return Color(f, f, f, 1);
 
 #float truchet2(vec2 uv, vec2 seed) {
@@ -460,9 +462,9 @@ static func truchet2c(uv : Vector2, pseed : Vector2) -> Color:
 static func truchet2(uv : Vector2, pseed : Vector2) -> float:
 	var i : Vector2 = Commons.floorv2(uv);
 	var f : Vector2 = Commons.fractv2(uv);
-	var random : float = Commons.step(Commons.rand(i+pseed), 0.5);
+	var random : float = Commons.step(Commons.rand(i + pseed), 0.5);
 	
-	f.x *= 2.0 * random-1.0;
+	f.x *= 2.0 * random - 1.0;
 	f.x += 1.0 - random;
 	
 	return 1.0 - min(abs(f.length() - 0.5), abs((Vector2(1, 1) - f).length() - 0.5));

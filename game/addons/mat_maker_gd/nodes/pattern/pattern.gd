@@ -3,16 +3,6 @@ extends MMNode
 
 var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
 
-#----------------------
-#pattern.mmg
-#Outputs: $(name)_fct($(uv))
-
-#Combiner, enum, default: 0, values (CombinerType): Multiply, Add, Max, Min, Xor, Pow
-#Pattern_x_type, enum, default: 5, values (CombinerAxisType): Sine, Triangle, Square, Sawtooth, Constant, Bounce
-#Pattern_y_type, enum, default: 5, values (CombinerAxisType): Sine, Triangle, Square, Sawtooth, Constant, Bounce
-#Pattern_Repeat, vector2, min: 0, max: 32, default:4, step: 1
-
-
 export(Resource) var image : Resource
 export(int, "Multiply,Add,Max,Min,Xor,Pow") var combiner_type : int = 0
 export(int, "Sine,Triangle,Square,Sawtooth,Constant,Bounce") var combiner_axis_type_x : int = 0
