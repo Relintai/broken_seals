@@ -9,7 +9,8 @@ enum SlotTypes {
 	SLOT_TYPE_FLOAT = 2,
 	SLOT_TYPE_VECTOR2 = 3,
 	SLOT_TYPE_VECTOR3 = 4,
-	SLOT_TYPE_UNIVERSAL = 5,
+	SLOT_TYPE_COLOR = 5,
+	SLOT_TYPE_UNIVERSAL = 6,
 }
 
 enum MMNodeUniversalPropertyDefaultType {

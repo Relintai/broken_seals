@@ -23,18 +23,6 @@ func add_slot_texture(getter : String, setter : String) -> int:
 	
 	return slot_idx
 
-func add_slot_gradient() -> int:
-	var ge : Control = gradient_editor_scene.instance()
-
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
-	
-	ge.set_value(_node)
-	#ge.texture = _node.call(getter, _material, slot_idx)
-	#properties[slot_idx].append(ge.texture)
-	
-	return slot_idx
-
-
 func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	var t : TextureRect = TextureRect.new()
 
@@ -52,6 +40,39 @@ func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	properties[slot_idx].append(property)
 	
 	property.connect("changed", self, "on_universal_texture_changed", [ slot_idx ])
+	
+	return slot_idx
+
+func add_slot_gradient() -> int:
+	var ge : Control = gradient_editor_scene.instance()
+
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
+	
+	ge.set_value(_node)
+	#ge.texture = _node.call(getter, _material, slot_idx)
+	#properties[slot_idx].append(ge.texture)
+	
+	return slot_idx
+
+func add_slot_color(getter : String, setter : String) -> int:
+	var cp : ColorPickerButton = ColorPickerButton.new()
+
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, cp)
+	
+	cp.color = _node.call(getter)
+	
+	return slot_idx
+
+func add_slot_color_universal(property : MMNodeUniversalProperty) -> int:
+	var cp : ColorPickerButton = ColorPickerButton.new()
+
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", cp)
+	
+	cp.color = property.get_default_value()
+	
+	properties[slot_idx].append(property)
+	
+	cp.connect("color_changed", self, "on_universal_color_changed", [ slot_idx ])
 	
 	return slot_idx
 
@@ -435,6 +456,9 @@ func on_universal_texture_changed(slot_idx : int) -> void:
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][4], text)
+
+func on_universal_color_changed(c : Color, slot_idx : int) -> void:
+	properties[slot_idx][6].set_default_value(c)
 
 func get_material_node() -> MMNode:
 	return _node
