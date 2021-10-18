@@ -187,7 +187,7 @@ func _render(material) -> void:
 
 			#Random color (rgb) - A random color for each brick
 			#brick_random_color($(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
-			var brc : Vector3 = Patterns.brick_random_color(Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), pseed)
+			var brc : Vector3 = Patterns.brick_random_color(Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), 1 / float(pseed))
 			var random_color_col : Color = Color(brc.x, brc.y, brc.z, 1)
 
 			#Position.x (float) - The position of each brick along the X axis",
