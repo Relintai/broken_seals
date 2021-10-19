@@ -35,7 +35,7 @@ func get_center() -> Vector2:
 func set_center(val : Vector2) -> void:
 	center = val
 
-	set_dirty(true)
+	output.emit_changed()
 	
 #radius
 func get_radius() -> float:
@@ -44,4 +44,4 @@ func get_radius() -> float:
 func set_radius(val : float) -> void:
 	radius = val
 
-	set_dirty(true)
+	output.emit_changed()
