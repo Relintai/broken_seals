@@ -2,7 +2,7 @@
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/value.gd" type="Script" id=3]
+[ext_resource path="res://addons/mat_maker_gd/nodes/noise/fbm_noise.gd" type="Script" id=3]
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/shape.gd" type="Script" id=4]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=5]
 [ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=6]

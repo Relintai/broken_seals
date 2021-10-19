@@ -52,6 +52,11 @@ static func perlinabs(uv : Vector2, size : Vector2, folds : int, octaves : int, 
 
 	return Color(f, f, f, 1)
 	
+static func simplex(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
+	var f : float = fbm_simplexf(uv, size, folds, octaves, persistence, pseed)
+
+	return Color(f, f, f, 1)
+	
 static func cellular(uv : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> Color:
 	var f : float = cellularf(uv, size, folds, octaves, persistence, pseed)
 
@@ -136,7 +141,25 @@ static func perlinabsf(coord : Vector2, size : Vector2, folds : int, octaves : i
 		scale *= persistence;
 	
 	return value / normalize_factor;
+
+static func fbm_simplexf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
+	var normalize_factor : float = 0.0;
+	var value : float = 0.0;
+	var scale : float = 1.0;
 	
+	for i in range(octaves):# (int i = 0; i < octaves; i++) {
+		var noise : float = fbm_simplex(coord*size, size, pseed)
+		
+		for j in range(folds):# (int f = 0; f < folds; ++f) {
+			noise = abs(2.0*noise-1.0);
+		
+		value += noise * scale
+		normalize_factor += scale;
+		size *= 2.0;
+		scale *= persistence;
+	
+	return value / normalize_factor;
+
 static func cellularf(coord : Vector2, size : Vector2, folds : int, octaves : int, persistence : float, pseed : float) -> float:
 	var normalize_factor : float = 0.0;
 	var value : float = 0.0;
@@ -328,7 +351,12 @@ static func fbm_perlinabs(coord : Vector2, size : Vector2, pseed : float) -> flo
 #	u = fract(u) * 6.28318530718; // 2*pi
 #	return vec2(cos(u), sin(u));
 #}
-#
+
+static func rgrad2(p : Vector2, rot : float, pseed : float) -> Vector2:
+	var u : float = Commons.rand(p + Vector2(pseed, 1.0-pseed));
+	u = Commons.fract(u) * 6.28318530718; # 2*pi
+	return Vector2(cos(u), sin(u))
+
 #float fbm_simplex(vec2 coord, vec2 size, float seed) {
 #	coord *= 2.0; // needed for it to tile
 #	coord += rand2(vec2(seed, 1.0-seed)) + size;
@@ -371,8 +399,51 @@ static func fbm_perlinabs(coord : Vector2, size : Vector2, pseed : float) -> flo
 #}
 
 static func fbm_simplex(coord : Vector2, size : Vector2, pseed : float) -> float:
-	#TODO
-	return 0.0
+	coord *= 2.0; # needed for it to tile
+	coord += Commons.rand2(Vector2(pseed, 1.0-pseed)) + size;
+	size *= 2.0; # needed for it to tile
+	coord.y += 0.001;    
+
+	var uv : Vector2 = Vector2(coord.x + coord.y*0.5, coord.y);    
+	var i0 : Vector2 = Commons.floorv2(uv);
+	var f0 : Vector2 = Commons.fractv2(uv);    
+	var i1 : Vector2
+	
+	if (f0.x > f0.y):
+		i1 = Vector2(1.0, 0.0)
+	else: 
+		i1 = Vector2(0.0, 1.0);    
+		
+	var p0 : Vector2 = Vector2(i0.x - i0.y * 0.5, i0.y);    
+	var p1 : Vector2 = Vector2(p0.x + i1.x - i1.y * 0.5, p0.y + i1.y);    
+	var p2 : Vector2 = Vector2(p0.x + 0.5, p0.y + 1.0);    
+
+	i1 = i0 + i1;    
+
+	var i2 : Vector2 = i0 + Vector2(1.0, 1.0);    
+	var d0 : Vector2 = coord - p0;
+	var d1 : Vector2 = coord - p1;
+	var d2 : Vector2 = coord - p2;
+
+	var xw : Vector3 = Commons.modv3(Vector3(p0.x, p1.x, p2.x), Vector3(size.x, size.x, size.x));    
+	var yw : Vector3 = Commons.modv3(Vector3(p0.y, p1.y, p2.y), Vector3(size.y, size.y, size.y));    
+
+	var iuw : Vector3 = xw + 0.5 * yw;    
+	var ivw : Vector3 = yw;    
+
+	var g0 : Vector2 = rgrad2(Vector2(iuw.x, ivw.x), 0.0, pseed);    
+	var g1 : Vector2 = rgrad2(Vector2(iuw.y, ivw.y), 0.0, pseed);    
+	var g2 : Vector2 = rgrad2(Vector2(iuw.z, ivw.z), 0.0, pseed);    
+
+	var w : Vector3 = Vector3(g0.dot(d0), g1.dot(d1), g2.dot(d2));    
+	var t : Vector3 = Vector3(0.8, 0.8, 0.8) - Vector3(d0.dot(d0), d1.dot(d1), d2.dot(d2));    
+
+	t = Commons.maxv3(t, Vector3());
+	var t2 : Vector3 = t * t;    
+	var t4 : Vector3 = t2 * t2;    
+	var n : float = t4.dot(w);
+
+	return 0.5 + 5.5 * n;
 	
 #float fbm_cellular(vec2 coord, vec2 size, float seed) {
 #	vec2 o = floor(coord)+rand2(vec2(seed, 1.0-seed))+size;
