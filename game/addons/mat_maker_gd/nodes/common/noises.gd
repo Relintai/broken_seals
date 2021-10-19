@@ -34,64 +34,14 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #noise_anisotropic.mmg
 #Generates x-axis interpolated value noise
 
-#		"outputs": [
-#			{
-#				"f": "anisotropic($(uv), vec2($(scale_x), $(scale_y)), $(seed), $(smoothness), $(interpolation))",
-#				"longdesc": "Shows a greyscale value noise",
-#				"shortdesc": "Output",
-#				"type": "f"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 4,
-#				"label": "Scale X",
-#				"longdesc": "The scale along the X axis",
-#				"max": 32,
-#				"min": 1,
-#				"name": "scale_x",
-#				"shortdesc": "Scale.x",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 256,
-#				"label": "Scale Y",
-#				"longdesc": "The scale along the Y axis",
-#				"max": 1024,
-#				"min": 1,
-#				"name": "scale_y",
-#				"shortdesc": "Scale.y",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Smoothness",
-#				"longdesc": "Controls how much the noise is blurred along the x-axis",
-#				"max": 1,
-#				"min": 0,
-#				"name": "smoothness",
-#				"shortdesc": "Smoothness",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Interpolation",
-#				"longdesc": "Controls the type of interpolation used for the smoothing. 0 is linear interpolation, 1 is smooth interpolation",
-#				"max": 1,
-#				"min": 0,
-#				"name": "interpolation",
-#				"shortdesc": "Interpolation",
-#				"step": 0.01,
-#				"type": "float"
-#			}
-#		],
+#Output:
+#Output (float) - Shows a greyscale value noise
+#anisotropic($(uv), vec2($(scale_x), $(scale_y)), $(seed), $(smoothness), $(interpolation))
+
+#Input:
+#scale, Vector2, min: 1, 1, max: 32, 1024, step: 1, 1, default 4, 256
+#smoothness, float, min: 0, max: 1, step: 0,01, default: 1
+#Interpolation, float, min: 0, max: 1, step: 0,01, default: 1
 
 #float dots(vec2 uv, float size, float density, float seed) {
 #	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
@@ -108,21 +58,46 @@ static func dots(uv : Vector2, size : float, density : float, pseed : float) -> 
 	var color : float = Commons.step(Commons.rand2(seed2 + point_pos).x, density);   
 	return color
 
-#float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interpolation) {\n\
-#	tvec2 seed2 = rand2(vec2(seed, 1.0-seed));\n\t\n\t
-#	vec2 xy = floor(uv*size);\n\t
-#	vec2 offset = vec2(rand(seed2 + xy.y), 0.0);\n\t
-#	vec2 xy_offset = floor(uv * size + offset );\n    
+static func anisotropicc(uv : Vector2, size : Vector2, pseed : float, smoothness : float, interpolation : float) -> Color:
+	var v : float = anisotropic(uv, size, pseed, smoothness, interpolation)
+
+	return Color(v, v, v, 1)
+
+#float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interpolation) {
+#	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
+#	vec2 xy = floor(uv*size);
+#	vec2 offset = vec2(rand(seed2 + xy.y), 0.0);
+#	vec2 xy_offset = floor(uv * size + offset );    
 #
-#	float f0 = rand(seed2+mod(xy_offset, size));\n    
-#	float f1 = rand(seed2+mod(xy_offset+vec2(1.0, 0.0), size));\n\t
-#	float mixer = clamp( (fract(uv.x*size.x+offset.x) -.5) / smoothness + 0.5, 0.0, 1.0 );\n    
-#	float smooth_mix = smoothstep(0.0, 1.0, mixer);\n\t
-#	float linear = mix(f0, f1, mixer);\n\t
-#	float smoothed = mix(f0, f1, smooth_mix);\n\t\n
+#	float f0 = rand(seed2+mod(xy_offset, size));    
+#	float f1 = rand(seed2+mod(xy_offset+vec2(1.0, 0.0), size));
+#	float mixer = clamp( (fract(uv.x*size.x+offset.x) -.5) / smoothness + 0.5, 0.0, 1.0 );    
+#	float smooth_mix = smoothstep(0.0, 1.0, mixer);
+#	float linear = mix(f0, f1, mixer);
+#	float smoothed = mix(f0, f1, smooth_mix);
 #
-#	return mix(linear, smoothed, interpolation);\n
+#	return mix(linear, smoothed, interpolation);
 #}
+
+static func anisotropic(uv : Vector2, size : Vector2, pseed : float, smoothness : float, interpolation : float) -> float:
+	var seed2 : Vector2 = Commons.rand2(Vector2(pseed, 1.0 - pseed))
+	
+	var xy : Vector2 = Commons.floorv2(uv * size)
+	var s2xy : Vector2 = seed2
+	s2xy.x += xy.y
+	s2xy.y += xy.y
+	
+	var offset : Vector2 =  Vector2(Commons.rand(s2xy), 0.0)
+	var xy_offset : Vector2 = Commons.floorv2(uv * size + offset)
+
+	var f0 : float = Commons.rand(seed2 + Commons.modv2(xy_offset, size));    
+	var f1 : float = Commons.rand(seed2 + Commons.modv2(xy_offset + Vector2(1.0, 0.0), size))
+	var mixer : float = clamp((Commons.fract(uv.x * size.x + offset.x) - 0.5) / smoothness + 0.5, 0.0, 1.0)    
+	var smooth_mix : float = smoothstep(0.0, 1.0, mixer)
+	var linear : float = lerp(f0, f1, mixer)
+	var smoothed : float = lerp(f0, f1, smooth_mix)
+
+	return lerp(linear, smoothed, interpolation)
 
 #vec3 color_dots(vec2 uv, float size, float seed) {
 #	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
