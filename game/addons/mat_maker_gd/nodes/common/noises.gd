@@ -30,15 +30,6 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #grid_size, float, default: 4, min: 2, max: 12, step: 1
 #density, float, default: 0.5, min: 0, max: 1, step: 0.01
 
-
-#float dots(vec2 uv, float size, float density, float seed) {
-#	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
-#	uv /= size;
-#	vec2 point_pos = floor(uv)+vec2(0.5);
-#	float color = step(rand(seed2+point_pos), density);    
-#	return color;
-#}
-
 #----------------------
 #noise_anisotropic.mmg
 #Generates x-axis interpolated value noise
@@ -102,9 +93,20 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #			}
 #		],
 
-static func dots(uv : Vector2, size : float, density : float, pseed : float) -> float:
-	return 0.0
+#float dots(vec2 uv, float size, float density, float seed) {
+#	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
+#	uv /= size;
+#	vec2 point_pos = floor(uv)+vec2(0.5);
+#	float color = step(rand(seed2+point_pos), density);    
+#	return color;
+#}
 
+static func dots(uv : Vector2, size : float, density : float, pseed : float) -> float:
+	var seed2 : Vector2 = Commons.rand2(Vector2(pseed, 1.0 - pseed))
+	uv /= size
+	var point_pos : Vector2 = Commons.floorv2(uv) + Vector2(0.5, 0.5)
+	var color : float = Commons.step(Commons.rand2(seed2 + point_pos).x, density);   
+	return color
 
 #float anisotropic(vec2 uv, vec2 size, float seed, float smoothness, float interpolation) {\n\
 #	tvec2 seed2 = rand2(vec2(seed, 1.0-seed));\n\t\n\t
