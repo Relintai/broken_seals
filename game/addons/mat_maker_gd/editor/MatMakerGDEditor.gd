@@ -24,12 +24,14 @@ func ensure_objs() -> void:
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
 
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR)
 		
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
 		
@@ -38,10 +40,10 @@ func ensure_objs() -> void:
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
 		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR)
 
 		_graph_edit.connect("connection_request", self, "on_graph_edit_connection_request")
 		_graph_edit.connect("disconnection_request", self, "on_graph_edit_disconnection_request")
-		
 
 func recreate() -> void:
 	ensure_objs()

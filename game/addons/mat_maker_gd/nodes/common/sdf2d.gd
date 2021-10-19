@@ -811,50 +811,15 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #sdshow.mmg
 #Creates a greyscale image from a shape described as a 2D Signed Distance Function
 
-#		"inputs": [
-#			{
-#				"default": "0.0",
-#				"label": "",
-#				"longdesc": "The input shape",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "sdf2d"
-#			}
-#		],
-#		"outputs": [
-#			{
-#				"f": "clamp($base-$in($uv)/max($bevel, 0.00001), 0.0, 1.0)",
-#				"longdesc": "Shows the shape as a greyscale image",
-#				"shortdesc": "Output",
-#				"type": "f"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Bevel",
-#				"longdesc": "The width of the gradient at the edges of the shape",
-#				"max": 1,
-#				"min": 0,
-#				"name": "bevel",
-#				"shortdesc": "Bevel",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Base",
-#				"longdesc": "The base value of the output",
-#				"max": 1,
-#				"min": 0,
-#				"name": "base",
-#				"shortdesc": "Base",
-#				"step": 0.01,
-#				"type": "float"
-#			}
-#		],
+#Output
+
+#Output float (color) - Shows the shape as a greyscale image
+#clamp($base-$in($uv)/max($bevel, 0.00001), 0.0, 1.0)
+
+#Input:
+#Input (sdf - shape), default: 0 - sdf2d - universal input
+#bevel, float, min 0, max 1, step 0.01, default 0
+#base, float, min 0, max 1, step 0.01, default 0
 
 #----------------------
 #sdsmoothboolean.mmg

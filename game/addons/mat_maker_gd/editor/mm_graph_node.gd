@@ -164,6 +164,16 @@ func add_slot_int(getter : String, setter : String, slot_name : String, prange :
 	
 	return slot_idx
 
+func add_slot_label_universal(property : MMNodeUniversalProperty) -> int:
+	var l : Label = Label.new()
+	l.text = property.slot_name
+	
+	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", l)
+	
+	properties[slot_idx].append(property)
+	
+	return slot_idx
+
 func add_slot_int_universal(property : MMNodeUniversalProperty) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	

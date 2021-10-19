@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=48 format=2]
+[gd_resource type="Resource" load_steps=55 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/simple/image.gd" type="Script" id=10]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=11]
 [ext_resource path="res://addons/mat_maker_gd/nodes/pattern/bricks.gd" type="Script" id=12]
+[ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_show.gd" type="Script" id=13]
+[ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_shape_circle.gd" type="Script" id=14]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -49,7 +51,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=46]
+[sub_resource type="Resource" id=55]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -61,7 +63,7 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( 300, -400 )
-image = SubResource( 46 )
+image = SubResource( 55 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -325,7 +327,50 @@ folds = 0
 iterations = 3
 persistence = 0.5
 
+[sub_resource type="Resource" id=47]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=53]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=48]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 53 )
+
+[sub_resource type="Resource" id=49]
+script = ExtResource( 13 )
+graph_position = Vector2( 1280, -680 )
+image = SubResource( 47 )
+input = SubResource( 48 )
+bevel = 0.2
+base = 0.2
+
+[sub_resource type="Resource" id=54]
+script = ExtResource( 14 )
+graph_position = Vector2( 1020, -680 )
+output = SubResource( 53 )
+center = Vector2( 0, 0 )
+radius = 0.4
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ) ]

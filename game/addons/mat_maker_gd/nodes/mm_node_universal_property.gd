@@ -31,6 +31,7 @@ export(Vector3) var default_vector3 : Vector3
 export(Color) var default_color : Color
 export(Image) var default_image : Image
 
+var get_value_from_owner : bool = false
 var force_override : bool = false
 #This is not exported on purpose!
 var override_image : Image
@@ -52,6 +53,9 @@ func _init():
 		input_property.connect("changed", self, "on_input_property_changed")
 
 func get_value(uv : Vector2):
+	if get_value_from_owner:
+		return get_owner_value(uv)
+	
 	if !input_property:
 		return get_default_value(uv)
 	
@@ -73,7 +77,25 @@ func get_value(uv : Vector2):
 		
 	return input_property.get_value(uv)
 
+func get_owner_value(uv : Vector2):
+	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
+		return to_int(owner.get_property_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
+		return to_float(owner.get_property_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2:
+		return to_vector2(owner.get_property_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR3:
+		return to_vector3(owner.get_property_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
+		return to_color(owner.get_property_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		return to_color(owner.get_property_value(uv))
+	
+
 func to_int(val) -> int:
+	if val is int:
+		return val
+	
 	if val is float:
 		return int(val)
 	
@@ -89,6 +111,9 @@ func to_int(val) -> int:
 	return 0
 
 func to_float(val) -> float:
+	if val is float:
+		return val
+		
 	if val is int:
 		return float(val)
 	
@@ -104,6 +129,9 @@ func to_float(val) -> float:
 	return 0.0
 	
 func to_vector2(val) -> Vector2:
+	if val is Vector2:
+		return val
+		
 	if val is int:
 		return Vector2(val, val)
 		
@@ -119,6 +147,9 @@ func to_vector2(val) -> Vector2:
 	return Vector2()
 	
 func to_vector3(val) -> Vector3:
+	if val is Vector3:
+		return val
+		
 	if val is int:
 		return Vector3(val, val, val)
 		
@@ -134,6 +165,9 @@ func to_vector3(val) -> Vector3:
 	return Vector3()
 	
 func to_color(val) -> Color:
+	if val is Color:
+		return val
+		
 	if val is int:
 		return Color(val, val, val, 1)
 		
