@@ -6,7 +6,6 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #voronoi.mmg
 
 #voronoi_1, 2, 3, 4 -> different outputs
-#TODO make a set which takes color as input so all 4 variants can be calculated easily
 
 #Outputs:
 

@@ -49,7 +49,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=43]
+[sub_resource type="Resource" id=46]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -61,7 +61,7 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( 300, -400 )
-image = SubResource( 43 )
+image = SubResource( 46 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -301,7 +301,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=42]
 script = ExtResource( 2 )
-graph_position = Vector2( 380, -220 )
+graph_position = Vector2( 680, -220 )
 image = SubResource( 41 )
 grid_size = 64
 density = 0.3
@@ -317,9 +317,11 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=45]
 script = ExtResource( 3 )
-graph_position = Vector2( 580, -220 )
+graph_position = Vector2( 880, -220 )
 image = SubResource( 44 )
+type = 0
 scale = Vector2( 4.4, 4.2 )
+folds = 0
 iterations = 3
 persistence = 0.5
 
