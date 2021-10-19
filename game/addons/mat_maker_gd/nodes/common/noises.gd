@@ -123,3 +123,25 @@ static func dots(uv : Vector2, size : float, density : float, pseed : float) -> 
 #
 #	return mix(linear, smoothed, interpolation);\n
 #}
+
+#vec3 color_dots(vec2 uv, float size, float seed) {
+#	vec2 seed2 = rand2(vec2(seed, 1.0-seed));
+#	uv /= size;
+#	vec2 point_pos = floor(uv)+vec2(0.5);
+#	return rand3(seed2+point_pos);
+#}
+
+static func color_dots(uv : Vector2, size : float, pseed : float) -> Vector3:
+	var seed2 : Vector2 = Commons.rand2(Vector2(pseed, 1.0 - pseed))
+	
+	uv /= size
+	
+	var point_pos : Vector2 = Commons.floorv2(uv) + Vector2(0.5, 0.5)
+	
+	return Commons.rand3(seed2 + point_pos)
+
+static func noise_color(uv : Vector2, size : float, pseed : float) -> Color:
+	var v : Vector3 = color_dots(uv, 1.0 / size, pseed)
+
+	return Color(v.x, v.y, v.z, 1)
+
