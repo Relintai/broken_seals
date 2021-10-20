@@ -19,13 +19,14 @@ func _on_CurveDialog_popup_hide():
 
 func _on_OK_pressed():
 	emit_signal("polygon_changed", polygon)
+	polygon.polygon_changed()
 	
 	queue_free()
 
 func _on_Cancel_pressed():
 	polygon.set_points(previous_points)
 	emit_signal("polygon_changed", polygon)
-	
+
 	queue_free()
 
 func edit_polygon(poly):

@@ -32,6 +32,7 @@ func update_controls() -> void:
 func _on_ControlPoint_moved(index):
 	var control_point = get_child(index)
 	polygon.points[index] = reverse_transform_point(control_point.rect_position+control_point.OFFSET)
+	
 	update()
 	
 	emit_signal("value_changed", polygon)
