@@ -45,4 +45,5 @@ func _on_ControlPoint_gui_input(event):
 		rect_position = vector-OFFSET
 		if event.control:
 			get_parent().get_child(1-get_index()).rect_position = -vector-OFFSET
+			
 		get_parent().update_tangents()

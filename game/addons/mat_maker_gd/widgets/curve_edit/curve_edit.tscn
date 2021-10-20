@@ -18,4 +18,5 @@ __meta__ = {
 }
 
 [node name="CurveView" parent="." instance=ExtResource( 2 )]
+
 [connection signal="pressed" from="." to="." method="_on_CurveEdit_pressed"]

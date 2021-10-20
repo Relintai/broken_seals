@@ -3,6 +3,7 @@ extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
 
 const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
+var Curves = preload("res://addons/mat_maker_gd/nodes/common/curves.gd")
 
 export(Resource) var output : Resource
 export(Vector2) var A : Vector2 = Vector2(-0.3, -0.3)
@@ -33,7 +34,7 @@ func get_property_value(uv : Vector2) -> float:
 	
 	#$(name_uv)_sdl.x - $r * $profile($(name_uv)_sdl.y)
 	
-	return line.x
+	return line.x - width * Curves.curve(line.y, points)
 
 #a
 func get_a() -> Vector2:
@@ -65,9 +66,6 @@ func set_width(val : float) -> void:
 	emit_changed()
 	output.emit_changed()
 
-func polygon_changed() -> void:
-	_polygon_changed()
-
-func _polygon_changed() -> void:
+func _curve_changed() -> void:
 	emit_changed()
 	output.emit_changed()

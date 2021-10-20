@@ -54,7 +54,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=64]
+[sub_resource type="Resource" id=67]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -66,7 +66,7 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( 300, -400 )
-image = SubResource( 64 )
+image = SubResource( 67 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -339,7 +339,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=62]
+[sub_resource type="Resource" id=65]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
@@ -356,15 +356,15 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 62 )
+input_property = SubResource( 65 )
 
 [sub_resource type="Resource" id=49]
 script = ExtResource( 13 )
 graph_position = Vector2( 1480, -680 )
 image = SubResource( 47 )
 input = SubResource( 48 )
-bevel = 0.23
-base = 0.2
+bevel = 0.0
+base = 0.17
 
 [sub_resource type="Resource" id=53]
 script = ExtResource( 5 )
@@ -424,13 +424,7 @@ output = SubResource( 59 )
 center = Vector2( 0.04, 0 )
 size = Vector2( 0.3, 0.2 )
 
-[sub_resource type="Resource" id=63]
-script = ExtResource( 16 )
-graph_position = Vector2( 1060, -400 )
-points = PoolVector2Array( 0.2, 0.2, 0.7, 0.4, 0.858401, 0.631436, 0.672764, 0.875339, 0.396341, 0.873984, 0.25542, 0.856369, 0.143902, 0.556369 )
-output = SubResource( 62 )
-
-[sub_resource type="Resource" id=65]
+[sub_resource type="Resource" id=62]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
@@ -439,13 +433,20 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
+[sub_resource type="Resource" id=63]
+script = ExtResource( 16 )
+graph_position = Vector2( 960, -440 )
+points = PoolVector2Array( 0.2, 0.2, 0.7, 0.4, 0.858401, 0.631436, 0.672764, 0.875339, 0.396341, 0.873984, 0.25542, 0.856369, 0.143902, 0.556369 )
+output = SubResource( 62 )
+
 [sub_resource type="Resource" id=66]
 script = ExtResource( 17 )
-graph_position = Vector2( 1280, -280 )
+graph_position = Vector2( 1260, -580 )
+points = PoolRealArray( 0, 1, 0, 0, 0.154647, 0.9653, 0, 0.509482, 0.314904, 0.787066, 0, -0.181703, 0.461538, 0.768139, -2.54259, 1.21581, 0.665064, 0.839117, 4.01892, 0, 0.872596, 0.911672, 0, 0, 0.893429, 0.580442, 0, 0, 1, 1, 0, 0 )
 output = SubResource( 65 )
-A = Vector2( -0.3, -0.3 )
-B = Vector2( 0.3, 0.3 )
-width = 0.1
+A = Vector2( -0.3, -0.36 )
+B = Vector2( 0.25, 0.35 )
+width = 0.07
 
 [resource]
 script = ExtResource( 1 )

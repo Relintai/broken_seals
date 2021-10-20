@@ -3,31 +3,35 @@ extends WindowDialog
 
 var MMCurve = preload("res://addons/mat_maker_gd/nodes/bases/curve_base.gd")
 
-var previous_value
+var previous_points : Array
+var curve
 
 signal curve_changed(curve)
-signal return_curve(curve)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 func _on_CurveDialog_popup_hide():
-	emit_signal("return_curve", null)
+	queue_free()
 
 func _on_OK_pressed():
-	emit_signal("return_curve", $VBoxContainer/EditorContainer/CurveEditor.curve)
+	emit_signal("curve_changed", curve)
+	curve.curve_changed()
+	
+	queue_free()
 
 func _on_Cancel_pressed():
-	emit_signal("return_curve", previous_value)
+	curve.set_points(previous_points)
+	emit_signal("curve_changed", curve)
 
-func edit_curve(curve) -> Array:
-	previous_value = curve.duplicate()
+	queue_free()
+
+func edit_curve(c) -> void:
+	curve = c
+	previous_points = curve.get_points()
 	$VBoxContainer/EditorContainer/CurveEditor.set_curve(curve)
 	popup_centered()
-	var result = yield(self, "return_curve")
-	queue_free()
-	return result
 
 func _on_CurveEditor_value_changed(value):
 	emit_signal("curve_changed", value)

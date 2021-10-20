@@ -8,8 +8,12 @@ export var show_axes : bool = false
 var curve #: MMCurve
 
 func _ready() -> void:
-	curve = MMCurve.new()
+#	curve = MMCurve.new()
 	connect("resized", self, "_on_resize")
+	update()
+
+func set_curve(val) -> void:
+	curve = val
 	update()
 
 func transform_point(p : Vector2) -> Vector2:
@@ -19,6 +23,9 @@ func reverse_transform_point(p : Vector2) -> Vector2:
 	return Vector2(0.0, 1.0)+Vector2(1.0, -1.0)*p/rect_size
 
 func _draw():
+	if !curve:
+		return
+	
 #	var current_theme : Theme = get_node("/root/MainWindow").theme
 #
 #	var bg = current_theme.get_stylebox("panel", "Panel").bg_color
@@ -36,14 +43,17 @@ func _draw():
 			draw_line(Vector2(p.x, 0), Vector2(p.x, rect_size.y-1), axes_color)
 			draw_line(Vector2(0, p.y), Vector2(rect_size.x-1, p.y), axes_color)
 			
-	for i in range(curve.points.size()-1):
-		var p1 = curve.points[i].p
-		var p2 = curve.points[i+1].p
+	var points = curve.get_points()
+			
+	for i in range(points.size() - 1):
+		var p1 = points[i].p
+		var p2 = points[i+1].p
 		var d = (p2.x-p1.x)/3.0
-		var yac = p1.y+d*curve.points[i].rs
-		var ybc = p2.y-d*curve.points[i+1].ls
+		var yac = p1.y+d*points[i].rs
+		var ybc = p2.y-d*points[i+1].ls
 		var p = transform_point(p1)
 		var count : int = max(1, int((transform_point(p2).x-p.x/5.0)))
+		
 		for tt in range(count):
 			var t = (tt+1.0)/count
 			var omt = (1.0 - t)
