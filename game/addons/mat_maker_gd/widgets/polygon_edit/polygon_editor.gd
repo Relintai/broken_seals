@@ -1,3 +1,4 @@
+tool
 extends "res://addons/mat_maker_gd/widgets/polygon_edit/polygon_view.gd"
 
 signal value_changed(value)
@@ -13,6 +14,10 @@ func set_polygon(p) -> void:
 func update_controls() -> void:
 	for c in get_children():
 		c.queue_free()
+		
+	if !polygon:
+		return
+		
 	for i in polygon.points.size():
 		var p = polygon.points[i]
 		var control_point = preload("res://addons/mat_maker_gd/widgets/polygon_edit/control_point.tscn").instance()
@@ -21,12 +26,14 @@ func update_controls() -> void:
 		control_point.rect_position = transform_point(p)-control_point.OFFSET
 		control_point.connect("moved", self, "_on_ControlPoint_moved")
 		control_point.connect("removed", self, "_on_ControlPoint_removed")
+		
 	emit_signal("value_changed", polygon)
 
 func _on_ControlPoint_moved(index):
 	var control_point = get_child(index)
 	polygon.points[index] = reverse_transform_point(control_point.rect_position+control_point.OFFSET)
 	update()
+	
 	emit_signal("value_changed", polygon)
 
 func _on_ControlPoint_removed(index):
@@ -35,6 +42,9 @@ func _on_ControlPoint_removed(index):
 		update_controls()
 
 func _on_PolygonEditor_gui_input(event):
+	if !polygon:
+		return
+		
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.doubleclick:
 			var new_point_position = reverse_transform_point(get_local_mouse_position())

@@ -536,41 +536,12 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #sdpolygon.mmg
 #A polygon as a signed distance function
 
-#		"instance": "float sdPolygon_$(name)(vec2 p) {vec2 v[] = $polygon;int l = v.length();    float d = dot(p-v[0],p-v[0]);    float s = 1.0;int j = l-1;    for(int i=0; i<l; i++)    {        vec2 e = v[j] - v[i];        vec2 w =    p - v[i];        vec2 b = w - e*clamp( dot(w,e)/dot(e,e), 0.0, 1.0 );        d = min( d, dot(b,b) );        bvec3 c = bvec3(p.y>=v[i].y,p.y<v[j].y,e.x*w.y>e.y*w.x);        if( all(c) || all(not(c)) ) s*=-1.0;j=i;    }    return s*sqrt(d);}",
-#		"outputs": [
-#			{
-#				"longdesc": "The polygon as a signed distance function",
-#				"sdf2d": "sdPolygon_$(name)($uv)",
-#				"shortdesc": "Output",
-#				"type": "sdf2d"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"default": {
-#					"points": [
-#						{
-#							"x": 0.2,
-#							"y": 0.2
-#						},
-#						{
-#							"x": 0.4,
-#							"y": 0.7
-#						},
-#						{
-#							"x": 0.7,
-#							"y": 0.4
-#						}
-#					],
-#					"type": "Polygon"
-#				},
-#				"label": "",
-#				"longdesc": "The polygon to be drawn",
-#				"name": "polygon",
-#				"shortdesc": "Polygon",
-#				"type": "polygon"
-#			}
-#		],
+#Output:
+#Out, sdf2d (float) (property)
+#sdPolygon_$(name)($uv)
+
+#Input:
+#polygon points, default: 0.2, 0.2,  0.4, 0.7,  0.7, 0.4
 
 #----------------------
 #sdrepeat.mmg
@@ -2624,4 +2595,51 @@ static func sdSmoothIntersection(d1 : float, d2 : float, k : float) -> float:
 #	return d;\n
 #}
 
+#$polygon = { p1(vec2), p2(vec2), p3(vec2) ... }
+#float sdPolygon_$(name)(vec2 p) {
+#	vec2 v[] = $polygon;
+#	int l = v.length();
+#	float d = dot(p-v[0],p-v[0]);
+#	float s = 1.0;
+#	int j = l-1;
+#
+#	for(int i=0; i<l; i++) {        
+#		vec2 e = v[j] - v[i];
+#		vec2 w = p - v[i];
+#		vec2 b = w - e*clamp( dot(w,e)/dot(e,e), 0.0, 1.0 );
+#		d = min( d, dot(b,b) );
+#		bvec3 c = bvec3(p.y>=v[i].y,p.y<v[j].y,e.x*w.y>e.y*w.x);
+#
+#		if(all(c) || all(not(c))) {
+#			s *= -1.0;
+#		}
+#
+#		j = i;    
+#	}
+#
+#	return s*sqrt(d);
+#}
 
+static func sdPolygon(p : Vector2, v : PoolVector2Array) -> float:
+	var l : int = v.size()
+	var pmv0 : Vector2 = p - v[0]
+	var d : float = pmv0.dot(pmv0)
+	var s : float = 1.0
+	var j : int = l - 1
+
+	for i in range(l): #for(int i=0; i<l; i++)
+		var e : Vector2 = v[j] - v[i]
+		var w : Vector2 = p - v[i]
+		var b : Vector2 = w - e * clamp(w.dot(e) / e.dot(e), 0.0, 1.0)
+		d = min(d, b.dot(b))
+		
+		var b1 : bool = p.y >= v[i].y
+		var b2 : bool = p.y < v[j].y
+		var b3 : bool = e.x * w.y > e.y * w.x
+
+		if((b1 && b2 && b3) || (!b1 && !b2 && !b3)):
+			s *= -1.0
+
+		j = i
+
+	return s * sqrt(d)

@@ -3,7 +3,8 @@ extends Control
 
 var MMPolygon = preload("res://addons/mat_maker_gd/nodes/bases/polygon_base.gd")
 
-var polygon #: MMPolygon
+#: MMPolygon
+var polygon 
 
 var draw_size : Vector2 = Vector2(1, 1)
 var draw_offset : Vector2 = Vector2(0, 0)
@@ -14,7 +15,7 @@ func set_closed(c : bool = true):
 	update()
 
 func _ready() -> void:
-	polygon = MMPolygon.new()
+#	polygon = MMPolygon.new()
 	connect("resized", self, "_on_resize")
 	_on_resize()
 
@@ -24,12 +25,24 @@ func transform_point(p : Vector2) -> Vector2:
 func reverse_transform_point(p : Vector2) -> Vector2:
 	return (p-draw_offset)/draw_size
 
+func set_polygon(val):
+	polygon = val
+	
+	update()
+
 func _draw():
-	var current_theme : Theme = get_node("/root/MainWindow").theme
-	var bg = current_theme.get_stylebox("panel", "Panel").bg_color
-	var fg = current_theme.get_color("font_color", "Label")
-	var axes_color : Color = bg.linear_interpolate(fg, 0.25)
-	var curve_color : Color = bg.linear_interpolate(fg, 0.75)
+	if !polygon:
+		return
+	
+#	var current_theme : Theme = get_node("/root/MainWindow").theme
+#	var bg = current_theme.get_stylebox("panel", "Panel").bg_color
+#	var fg = current_theme.get_color("font_color", "Label")
+#	var axes_color : Color = bg.linear_interpolate(fg, 0.25)
+#	var curve_color : Color = bg.linear_interpolate(fg, 0.75)
+	
+	var axes_color : Color = Color(0.9, 0.9, 0.9, 1)
+	var curve_color : Color = Color(1, 1, 1, 1)
+	
 	draw_rect(Rect2(draw_offset, draw_size), axes_color, false)
 	var tp : Vector2 = transform_point(polygon.points[polygon.points.size()-1 if closed else 0])
 	for p in polygon.points:

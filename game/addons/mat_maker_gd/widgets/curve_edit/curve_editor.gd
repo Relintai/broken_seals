@@ -1,3 +1,4 @@
+tool
 extends "res://addons/mat_maker_gd/widgets/curve_edit/curve_view.gd"
 
 signal value_changed(value)

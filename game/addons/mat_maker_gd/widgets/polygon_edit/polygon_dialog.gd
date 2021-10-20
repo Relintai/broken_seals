@@ -1,10 +1,11 @@
+tool
 extends WindowDialog
 
 export var closed : bool = true setget set_closed
-var previous_value
+var previous_points : PoolVector2Array
+var polygon
 
 signal polygon_changed(polygon)
-signal return_polygon(polygon)
 
 func set_closed(c : bool = true):
 	closed = c
@@ -12,21 +13,33 @@ func set_closed(c : bool = true):
 	$VBoxContainer/EditorContainer/PolygonEditor.set_closed(closed)
 
 func _on_CurveDialog_popup_hide():
-	emit_signal("return_polygon", null)
+#	emit_signal("return_polygon", null)
+	queue_free()
+	pass
 
 func _on_OK_pressed():
-	emit_signal("return_polygon", $VBoxContainer/EditorContainer/PolygonEditor.polygon)
+	emit_signal("polygon_changed", polygon)
+	
+	queue_free()
 
 func _on_Cancel_pressed():
-	emit_signal("return_polygon", previous_value)
+	polygon.set_points(previous_points)
+	emit_signal("polygon_changed", polygon)
+	
+	queue_free()
 
-func edit_polygon(polygon) -> Array:
-	previous_value = polygon.duplicate()
+func edit_polygon(poly):
+	polygon = poly
+	previous_points = polygon.points
+	
 	$VBoxContainer/EditorContainer/PolygonEditor.set_polygon(polygon)
 	popup_centered()
-	var result = yield(self, "return_polygon")
-	queue_free()
-	return result
+	
+	#var result = yield(self, "return_polygon")
+	
+	#queue_free()
+	
+	#return result
 
 func _on_PolygonEditor_value_changed(value):
 	emit_signal("polygon_changed", value)

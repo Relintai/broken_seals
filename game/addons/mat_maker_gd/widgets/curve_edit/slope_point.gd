@@ -1,3 +1,4 @@
+tool
 extends Control
 
 export var distance : float
@@ -10,8 +11,11 @@ func _ready():
 	pass # Replace with function body.
 
 func _draw():
-	var current_theme : Theme = get_node("/root/MainWindow").theme
-	var color : Color = current_theme.get_color("font_color", "Label")
+#	var current_theme : Theme = get_node("/root/MainWindow").theme
+#	var color : Color = current_theme.get_color("font_color", "Label")
+	
+	var color : Color = Color(1, 1, 1, 1)
+	
 	draw_circle(Vector2(3.0, 3.0), 3.0, color)
 
 func _on_ControlPoint_gui_input(event):

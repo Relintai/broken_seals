@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var points : Array = [Vector2(0.2, 0.2), Vector2(0.7, 0.4), Vector2(0.4, 0.7)]
+var points : PoolVector2Array = [Vector2(0.2, 0.2), Vector2(0.7, 0.4), Vector2(0.4, 0.7)]
 
 func to_string() -> String:
 	var rv = PoolStringArray()
@@ -10,7 +10,9 @@ func to_string() -> String:
 	return rv.join(",")
 
 func clear() -> void:
-	points.clear()
+	points.resize(0)
+	
+	set_dirty(true)
 
 func add_point(x : float, y : float, closed : bool = true) -> void:
 	var p : Vector2 = Vector2(x, y)
@@ -21,13 +23,16 @@ func add_point(x : float, y : float, closed : bool = true) -> void:
 	var min_length : float = (p-Geometry.get_closest_point_to_segment_2d(p, points[0], points[points_count-1])).length()
 	var insert_point = 0
 	for i in points_count-1:
-		var length = (p-Geometry.get_closest_point_to_segment_2d(p, points[i], points[i+1])).length()
+		var length = (p - Geometry.get_closest_point_to_segment_2d(p, points[i], points[i+1])).length()
 		if length < min_length:
 			min_length = length
 			insert_point = i+1
 	if !closed and insert_point == 0 and (points[0]-p).length() > (points[points_count-1]-p).length():
 		insert_point = points_count
+		
 	points.insert(insert_point, p)
+	
+	set_dirty(true)
 
 func remove_point(index : int) -> bool:
 	var s = points.size()
@@ -35,6 +40,7 @@ func remove_point(index : int) -> bool:
 		return false
 	else:
 		points.remove(index)
+		set_dirty(true)
 	return true
 
 func get_point_count() -> int:
@@ -45,6 +51,11 @@ func get_point(i : int) -> Vector2:
 
 func set_point(i : int, v : Vector2) -> void:
 	points[i] = v
+	set_dirty(true)
+
+func set_points(v : PoolVector2Array) -> void:
+	points = v
+	set_dirty(true)
 
 func get_shader() -> String:
 	var elements : PoolStringArray = PoolStringArray()

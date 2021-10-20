@@ -1,3 +1,4 @@
+tool
 extends Control
 
 var MMCurve = preload("res://addons/mat_maker_gd/nodes/bases/curve_base.gd")
@@ -18,11 +19,14 @@ func _ready():
 	pass # Replace with function body.
 
 func _draw():
-	var current_theme : Theme = get_node("/root/MainWindow").theme
-	var color : Color = current_theme.get_color("font_color", "Label")
+#	var current_theme : Theme = get_node("/root/MainWindow").theme
+#	var color : Color = current_theme.get_color("font_color", "Label")
+	
+	var color : Color = Color(1, 1, 1, 1)
 	for c in get_children():
 		if c.visible:
 			draw_line(OFFSET, c.rect_position+OFFSET, color)
+			
 	draw_rect(Rect2(0, 0, 7, 7), color)
 
 #p : MMCurve.Point

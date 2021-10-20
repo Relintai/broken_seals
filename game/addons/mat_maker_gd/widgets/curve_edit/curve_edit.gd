@@ -1,3 +1,4 @@
+tool
 extends Control
 
 var MMCurve = preload("res://addons/mat_maker_gd/nodes/bases/curve_base.gd")

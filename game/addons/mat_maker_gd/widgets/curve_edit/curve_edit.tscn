@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://material_maker/widgets/curve_edit/curve_edit.gd" type="Script" id=1]
-[ext_resource path="res://material_maker/widgets/curve_edit/curve_view.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/mat_maker_gd/widgets/curve_edit/curve_edit.gd" type="Script" id=1]
+[ext_resource path="res://addons/mat_maker_gd/widgets/curve_edit/curve_view.tscn" type="PackedScene" id=2]
 
 [node name="CurveEdit" type="Button"]
 anchor_left = 1.0
