@@ -59,9 +59,11 @@ func set_points(v : PoolVector2Array) -> void:
 	
 	_polygon_changed()
 
+func polygon_changed() -> void:
+	_polygon_changed()
+
 func _polygon_changed() -> void:
 	emit_changed()
-
 
 func to_string() -> String:
 	var rv = PoolStringArray()

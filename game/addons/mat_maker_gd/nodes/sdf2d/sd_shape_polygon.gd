@@ -24,9 +24,6 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value(uv : Vector2) -> float:
 	return SDF2D.sdPolygon(uv, points)
 
-func polygon_changed() -> void:
-	_polygon_changed()
-
 func _polygon_changed() -> void:
 	emit_changed()
 	output.emit_changed()

@@ -318,99 +318,17 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #sdline.mmg
 #A line or a capsule shape described as a signed distance function
 
-#		"code": "vec2 $(name_uv)_sdl = sdLine($uv, vec2($ax+0.5, $ay+0.5), vec2($bx+0.5, $by+0.5));",
-#		"outputs": [
-#			{
-#				"longdesc": "The shape as signed distance function",
-#				"sdf2d": "$(name_uv)_sdl.x-$r*$profile($(name_uv)_sdl.y)",
-#				"shortdesc": "Output",
-#				"type": "sdf2d"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "P1.x",
-#				"default": 0,
-#				"label": "A X",
-#				"longdesc": "The position on the X axis of the first point of the line",
-#				"max": 1,
-#				"min": -1,
-#				"name": "ax",
-#				"shortdesc": "A.x",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "P1.y",
-#				"default": 0,
-#				"label": "A Y",
-#				"longdesc": "The position on the Y axis of the first point of the line",
-#				"max": 1,
-#				"min": -1,
-#				"name": "ay",
-#				"shortdesc": "A.y",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "P2.x",
-#				"default": 1,
-#				"label": "B X",
-#				"longdesc": "The position on the X axis of the second point of the line",
-#				"max": 1,
-#				"min": -1,
-#				"name": "bx",
-#				"shortdesc": "B.x",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "P2.y",
-#				"default": 1,
-#				"label": "B Y",
-#				"longdesc": "The position on the Y axis of the second point of the line",
-#				"max": 1,
-#				"min": -1,
-#				"name": "by",
-#				"shortdesc": "B.y",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "Radius1.r",
-#				"default": 0,
-#				"label": "Width",
-#				"longdesc": "The width of the capsule shape around the line",
-#				"max": 1,
-#				"min": 0,
-#				"name": "r",
-#				"shortdesc": "Width",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"default": {
-#					"points": [
-#						{
-#							"ls": 0,
-#							"rs": 0,
-#							"x": 0,
-#							"y": 1
-#						},
-#						{
-#							"ls": 0,
-#							"rs": 0,
-#							"x": 1,
-#							"y": 1
-#						}
-#					],
-#					"type": "Curve"
-#				},
-#				"label": "Profile",
-#				"name": "profile",
-#				"type": "curve"
-#			}
-#		],
+#vec2 $(name_uv)_sdl = sdLine($uv, vec2($ax+0.5, $ay+0.5), vec2($bx+0.5, $by+0.5));
+
+#Outputs
+#output, sdf2d (float), (output property)
+#$(name_uv)_sdl.x-$r*$profile($(name_uv)_sdl.y)
+
+#Inputs
+#A, Vector2, min: -1, max: 1, step: 0.01, default: (-0.3, -0.3)
+#B, Vector2, min: -1, max: 1, step: 0.01, default: (0.3, 0.3)
+#width, float, min: 0, max: 1, step: 0.01, default: 0.1
+#points (curve), default: 0, 0, 0, 1,  0, 0, 1, 1
 
 #----------------------
 #sdmorph.mmg
@@ -2247,14 +2165,16 @@ static func sdf_box(uv : Vector2, c : Vector2, wh : Vector2) -> float:
 	
 	return Commons.maxv2(d, Vector2(0, 0)).length() + min(max(d.x, d.y), 0.0)
 
-static func sdf_line(uv : Vector2, a : Vector2, b : Vector2, r : float) -> float:
+#vec2 $(name_uv)_sdl = sdLine($uv, vec2($ax+0.5, $ay+0.5), vec2($bx+0.5, $by+0.5));
+
+static func sdf_line(uv : Vector2, a : Vector2, b : Vector2, r : float) -> Vector2:
 	a.x += 0.5
 	a.y += 0.5
 	
 	b.x += 0.5
 	b.y += 0.5
 	
-	return sdLine(uv, a, b) - r
+	return sdLine(uv, a, b)
 
 
 static func sdf_rhombus(uv : Vector2, c : Vector2, wh : Vector2) -> float:
@@ -2361,13 +2281,13 @@ static func sdf_morph(a : float, b : float, amount : float) -> float:
 #	return vec2(length(pa-ba*h), h);
 #}
 
-static func sdLine(p : Vector2, a  : Vector2, b : Vector2) -> float:
+static func sdLine(p : Vector2, a  : Vector2, b : Vector2) -> Vector2:
 	var pa : Vector2 = p - a
 	var ba : Vector2 = b - a
 	
 	var h : float = clamp(pa.dot(ba) / ba.dot(ba), 0.0, 1.0);
 	
-	return (pa - (ba * h)).length()
+	return Vector2((pa - (ba * h)).length(), h)
 
 
 #Needs thought

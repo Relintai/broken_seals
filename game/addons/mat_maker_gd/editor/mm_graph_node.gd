@@ -3,6 +3,7 @@ extends GraphNode
 
 var gradient_editor_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/gradient_editor/gradient_editor.tscn")
 var polygon_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/polygon_edit/polygon_edit.tscn")
+var curve_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/curve_edit/curve_edit.tscn")
 
 var slot_colors : PoolColorArray
 
@@ -84,6 +85,16 @@ func add_slot_polygon() -> int:
 	
 	return slot_idx
 
+func add_slot_curve() -> int:
+	var ge : Control = curve_edit_scene.instance()
+
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
+	
+	ge.set_value(_node)
+	#ge.texture = _node.call(getter, _material, slot_idx)
+	#properties[slot_idx].append(ge.texture)
+	
+	return slot_idx
 
 func add_slot_color(getter : String, setter : String) -> int:
 	var cp : ColorPickerButton = ColorPickerButton.new()
