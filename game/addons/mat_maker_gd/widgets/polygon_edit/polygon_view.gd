@@ -45,6 +45,7 @@ func _draw():
 	
 	draw_rect(Rect2(draw_offset, draw_size), axes_color, false)
 	var tp : Vector2 = transform_point(polygon.points[polygon.points.size()-1 if closed else 0])
+	
 	for p in polygon.points:
 		var tnp = transform_point(p)
 		draw_line(tp, tnp, curve_color)

@@ -34,7 +34,8 @@ func get_center() -> Vector2:
 
 func set_center(val : Vector2) -> void:
 	center = val
-
+	
+	emit_changed()
 	output.emit_changed()
 	
 #size
@@ -43,5 +44,6 @@ func get_size() -> Vector2:
 
 func set_size(val : Vector2) -> void:
 	size = val
-
+	
+	emit_changed()
 	output.emit_changed()

@@ -36,7 +36,8 @@ func get_angle() -> Vector2:
 
 func set_angle(val : Vector2) -> void:
 	angle = val
-
+	
+	emit_changed()
 	output.emit_changed()
 	
 #radius
@@ -45,7 +46,8 @@ func get_radius() -> float:
 
 func set_radius(val : float) -> void:
 	radius = val
-
+	
+	emit_changed()
 	output.emit_changed()
 
 #width
@@ -54,5 +56,6 @@ func get_width() -> float:
 
 func set_width(val : float) -> void:
 	width = val
-
+	
+	emit_changed()
 	output.emit_changed()
