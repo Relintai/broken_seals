@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var points : PoolVector2Array = [Vector2(0.2, 0.2), Vector2(0.7, 0.4), Vector2(0.4, 0.7)]
+export(PoolVector2Array) var points : PoolVector2Array = [Vector2(0.2, 0.2), Vector2(0.7, 0.4), Vector2(0.4, 0.7)]
 
 func clear() -> void:
 	points.resize(0)
