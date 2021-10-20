@@ -14,7 +14,7 @@ func _init_properties():
 		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
 		
 	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	output.slot_name = "Output"
+	output.slot_name = ">>>   Output    >>>"
 	output.get_value_from_owner = true
 
 	register_output_property(output)
