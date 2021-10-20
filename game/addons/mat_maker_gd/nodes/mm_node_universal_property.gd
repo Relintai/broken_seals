@@ -52,8 +52,8 @@ func _init():
 	if input_property:
 		input_property.connect("changed", self, "on_input_property_changed")
 
-func get_value(uv : Vector2):
-	if get_value_from_owner:
+func get_value(uv : Vector2, skip_owner_val : bool = false):
+	if get_value_from_owner && !skip_owner_val:
 		return get_owner_value(uv)
 	
 	if !input_property:
