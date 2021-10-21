@@ -17,7 +17,7 @@ func _init_properties():
 	input1.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
 #	input1.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
 	input1.slot_name = ">>>   Input 1       "
-	if !input2.is_connected("changed", self, "on_input_changed"):
+	if !input1.is_connected("changed", self, "on_input_changed"):
 		input1.connect("changed", self, "on_input_changed")
 	
 	if !input2:
