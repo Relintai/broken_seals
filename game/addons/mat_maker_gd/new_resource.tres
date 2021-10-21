@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=81 format=2]
+[gd_resource type="Resource" load_steps=86 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_tf_rotate.gd" type="Script" id=19]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_tf_scale.gd" type="Script" id=20]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_bool.gd" type="Script" id=21]
+[ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_smooth_bool.gd" type="Script" id=22]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -343,7 +344,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=75]
+[sub_resource type="Resource" id=79]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
@@ -360,7 +361,7 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 75 )
+input_property = SubResource( 79 )
 
 [sub_resource type="Resource" id=49]
 script = ExtResource( 13 )
@@ -506,7 +507,7 @@ input_property = SubResource( 53 )
 script = ExtResource( 20 )
 graph_position = Vector2( 1340, -740 )
 output = SubResource( 72 )
-scale = 1.83
+scale = 1.8
 
 [sub_resource type="Resource" id=76]
 script = ExtResource( 5 )
@@ -516,7 +517,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 59 )
 
 [sub_resource type="Resource" id=77]
 script = ExtResource( 5 )
@@ -526,7 +526,15 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 72 )
+
+[sub_resource type="Resource" id=75]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=78]
 script = ExtResource( 21 )
@@ -536,7 +544,36 @@ input2 = SubResource( 77 )
 output = SubResource( 75 )
 operation = 2
 
+[sub_resource type="Resource" id=80]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 59 )
+
+[sub_resource type="Resource" id=81]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 72 )
+
+[sub_resource type="Resource" id=82]
+script = ExtResource( 22 )
+graph_position = Vector2( 1400, -1280 )
+input1 = SubResource( 80 )
+input2 = SubResource( 81 )
+output = SubResource( 79 )
+operation = 1
+smoothness = 0.04
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ) ]
