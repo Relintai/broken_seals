@@ -90,7 +90,15 @@ func get_owner_value(uv : Vector2):
 		return to_color(owner.get_property_value(uv))
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
 		return to_color(owner.get_property_value(uv))
+
+func get_value_sdf3d(uv3 : Vector3, skip_owner_val : bool = false) -> Vector2:
+	if get_value_from_owner && !skip_owner_val:
+		return owner.get_property_value_sdf3d(uv3)
 	
+	if !input_property:
+		return default_vector2
+	
+	return input_property.get_value_sdf3d(uv3)
 
 func to_int(val) -> int:
 	if val is int:

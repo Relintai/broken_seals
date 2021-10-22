@@ -519,7 +519,8 @@ static func sdf3d_torus_z(p : Vector3, R : float, r : float) -> Vector2:
 #vec2 raymarch_$name(vec2 uv) {
 #	vec3 ro = vec3(uv-vec2(0.5), 1.0);
 #	vec3 rd = vec3(0.0, 0.0, -1.0);
-#	float dO = 0.0;float c = 0.0;    
+#	float dO = 0.0;
+#	float c = 0.0;    
 #
 #	for (int i=0; i < 100; i++) {    
 #		vec3 p = ro + rd*dO;        
