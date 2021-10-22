@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=98 format=2]
+[gd_resource type="Resource" load_steps=103 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_annular_shape.gd" type="Script" id=24]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_repeat.gd" type="Script" id=25]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_circle_repeat.gd" type="Script" id=26]
+[ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_morph.gd" type="Script" id=27]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -348,7 +349,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=59]
+[sub_resource type="Resource" id=93]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
@@ -356,16 +357,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="Resource" id=91]
-script = ExtResource( 5 )
-default_type = 1
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 59 )
 
 [sub_resource type="Resource" id=48]
 script = ExtResource( 5 )
@@ -375,7 +366,7 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 91 )
+input_property = SubResource( 93 )
 
 [sub_resource type="Resource" id=49]
 script = ExtResource( 13 )
@@ -427,12 +418,21 @@ input = SubResource( 57 )
 bevel = 0.0
 base = 0.0
 
+[sub_resource type="Resource" id=59]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=60]
 script = ExtResource( 15 )
 graph_position = Vector2( 1060, -1320 )
 output = SubResource( 59 )
 center = Vector2( 0.03, 0 )
-size = Vector2( 0.2, 0.2 )
+size = Vector2( 0.2, 0.22 )
 
 [sub_resource type="Resource" id=62]
 script = ExtResource( 5 )
@@ -609,7 +609,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 62 )
 
 [sub_resource type="Resource" id=88]
 script = ExtResource( 24 )
@@ -635,13 +634,50 @@ x = 5
 y = 5
 random_rotation = 0.5
 
+[sub_resource type="Resource" id=91]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=92]
 script = ExtResource( 26 )
 graph_position = Vector2( 860, -880 )
 output = SubResource( 91 )
 count = 5
 
+[sub_resource type="Resource" id=94]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 59 )
+
+[sub_resource type="Resource" id=95]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 62 )
+
+[sub_resource type="Resource" id=96]
+script = ExtResource( 27 )
+graph_position = Vector2( 620, -840 )
+input1 = SubResource( 94 )
+input2 = SubResource( 95 )
+output = SubResource( 93 )
+amount = 0.5
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ) ]
