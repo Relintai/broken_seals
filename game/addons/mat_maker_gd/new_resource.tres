@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=95 format=2]
+[gd_resource type="Resource" load_steps=98 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_rounded_shape.gd" type="Script" id=23]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_annular_shape.gd" type="Script" id=24]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_repeat.gd" type="Script" id=25]
+[ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_circle_repeat.gd" type="Script" id=26]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -356,7 +357,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=89]
+[sub_resource type="Resource" id=91]
 script = ExtResource( 5 )
 default_type = 1
 default_int = 0
@@ -374,7 +375,7 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 89 )
+input_property = SubResource( 91 )
 
 [sub_resource type="Resource" id=49]
 script = ExtResource( 13 )
@@ -431,7 +432,7 @@ script = ExtResource( 15 )
 graph_position = Vector2( 1060, -1320 )
 output = SubResource( 59 )
 center = Vector2( 0.03, 0 )
-size = Vector2( 0.1, 0.1 )
+size = Vector2( 0.2, 0.2 )
 
 [sub_resource type="Resource" id=62]
 script = ExtResource( 5 )
@@ -617,6 +618,15 @@ output = SubResource( 87 )
 width = 0.02
 ripples = 3
 
+[sub_resource type="Resource" id=89]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=90]
 script = ExtResource( 25 )
 graph_position = Vector2( 840, -1140 )
@@ -625,7 +635,13 @@ x = 5
 y = 5
 random_rotation = 0.5
 
+[sub_resource type="Resource" id=92]
+script = ExtResource( 26 )
+graph_position = Vector2( 860, -880 )
+output = SubResource( 91 )
+count = 5
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ) ]
