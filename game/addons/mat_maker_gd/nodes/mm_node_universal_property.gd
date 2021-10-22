@@ -213,6 +213,10 @@ func get_default_value(uv : Vector2 = Vector2()):
 		image.lock()
 		var x : int = uv.x * image.get_width()
 		var y : int = uv.y * image.get_height()
+		
+		x = clamp(x, 0, image.get_width() - 1)
+		y = clamp(y, 0, image.get_width() - 1)
+		
 		var c : Color = image.get_pixel(x, y)
 		image.unlock()
 

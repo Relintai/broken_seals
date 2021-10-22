@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=103 format=2]
+[gd_resource type="Resource" load_steps=107 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_repeat.gd" type="Script" id=25]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_circle_repeat.gd" type="Script" id=26]
 [ext_resource path="res://addons/mat_maker_gd/nodes/sdf2d/sd_op_morph.gd" type="Script" id=27]
+[ext_resource path="res://addons/mat_maker_gd/nodes/simple/curve.gd" type="Script" id=28]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -64,7 +65,7 @@ sides = 11
 radius = SubResource( 4 )
 edge = SubResource( 3 )
 
-[sub_resource type="Resource" id=86]
+[sub_resource type="Resource" id=101]
 script = ExtResource( 5 )
 default_type = 5
 default_int = 0
@@ -76,7 +77,7 @@ default_color = Color( 0, 0, 0, 1 )
 [sub_resource type="Resource" id=6]
 script = ExtResource( 6 )
 graph_position = Vector2( 300, -400 )
-image = SubResource( 86 )
+image = SubResource( 101 )
 postfix = "-test"
 
 [sub_resource type="Resource" id=9]
@@ -677,7 +678,37 @@ input2 = SubResource( 95 )
 output = SubResource( 93 )
 amount = 0.5
 
+[sub_resource type="Resource" id=98]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=102]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 44 )
+
+[sub_resource type="Resource" id=100]
+script = ExtResource( 28 )
+graph_position = Vector2( 1140, -220 )
+image = SubResource( 98 )
+input = SubResource( 102 )
+a = Vector2( -0.35, -0.2 )
+b = Vector2( 0, 0.5 )
+c = Vector2( 0.35, -0.2 )
+width = 0.24
+repeat = 5
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ), SubResource( 100 ) ]

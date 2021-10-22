@@ -2206,7 +2206,8 @@ static func sdf2d_rotate(uv : Vector2, a : float) -> Vector2:
 #		// 1 root\n        
 #		h = sqrt(h);\n        
 #		vec2 x = (vec2(h,-h)-q)/2.0;\n       
-#		 vec2 uv = sign(x)*pow(abs(x), vec2(1.0/3.0));\n\t\trvx = uv.x+uv.y-kx;\n        
+#		vec2 uv = sign(x)*pow(abs(x), vec2(1.0/3.0));
+#		rvx = uv.x+uv.y-kx;\n        
 #		float t = clamp(rvx, 0.0, 1.0);\n        
 #		vec2 q2 = d+(c+b*t)*t;\n        
 #		res = dot(q2, q2);\n    \t
@@ -2236,7 +2237,7 @@ static func sdf2d_rotate(uv : Vector2, a : float) -> Vector2:
 # signed distance to a quadratic bezier
 static func sdBezier(pos : Vector2, A : Vector2, B : Vector2, C : Vector2) -> Vector2:   
 	var a : Vector2 = B - A;
-	var b : Vector2 = A - 2.0*B + C;
+	var b : Vector2 = A - 2.0 * B + C;
 	var c : Vector2 = a * 2.0;
 	var d : Vector2 = A - pos;
 
@@ -2249,59 +2250,51 @@ static func sdBezier(pos : Vector2, A : Vector2, B : Vector2, C : Vector2) -> Ve
 	var sgn : float = 0.0;
 
 	var p : float = ky - kx * kx;
-	var p3 : float = p*p*p;
-	var q : float = kx*(2.0*kx*kx - 3.0*ky) + kz;
-	var h : float = q*q + 4.0*p3;
-	var rvx : float;
-
-	if(h >= 0.0):# // 1 root
+	var p3 : float = p * p * p;
+	var q : float = kx * (2.0 * kx * kx - 3.0 * ky) + kz;
+	var h : float = q * q + 4.0 * p3;
+	var rvx : float = 0
+	
+	if(h >= 0.0):
+		# // 1 root
 		h = sqrt(h);
 		
-		var x : Vector2 = Vector2(h,-h);
-		x.x -= q
-		x.y -= q
-		x.x /= 2.0
-		x.y /= 2.0
+		var x : Vector2 = (Vector2(h,-h) - Vector2(q, q)) / 2.0
 
-		var uv : Vector2 = Vector2()
+		var uv : Vector2 = Commons.signv2(x) * Commons.powv2(Commons.absv2(x), Vector2(1.0/3.0, 1.0/3.0));
 		
-		uv.x = sign(x.x) * pow(abs(x.x), 1);
-		uv.x = sign(x.y) * pow(abs(x.y), 3);
-		
-		rvx = uv.x+uv.y-kx;
+		rvx = uv.x + uv.y - kx;
 		var t : float = clamp(rvx, 0.0, 1.0);
-		var q2 : Vector2 = d+(c+b*t)*t;
+		var q2 : Vector2 = d + (c + b * t) * t;
 		res = q2.dot(q2);
 		
-		var tmp2 : Vector2 = c
-		tmp2.x += 2
-		tmp2.y += 2
-		
-		tmp2 *= b*t
-		
-		sgn = tmp2.cross(q2)
+		sgn = (c + Vector2(2, 2) * b * t).cross(q2)
+
 	else: #  // 3 roots
 		var z : float = sqrt(-p);
-		var v : float = acos(q/(p*z*2.0))/3.0;
+		var v : float = acos(q / (p * z * 2.0)) / 3.0;
 		var m : float = cos(v);
-		var n : float = sin(v)*1.732050808;
+		var n : float = sin(v) * 1.732050808;
 		
-#		var t : Vector3 = clamp(Vector3(m+m,-n-m,n-m)*z-kx, 0.0, 1.0);
-#
-#
-#		var qx : Vector2 = d+(c+b*t.x)*t.x; 
-#		var dx : float = dot(qx, qx)
-#		sx = cross2(c+2.0*b*t.x,qx);
-#		var qy : Vector2 = d+(c+b*t.y)*t.y; 
-#		var dy : float = dot(qy, qy)
-#		sy = cross2(c+2.0*b*t.y,qy);
-#		if dx<dy:
-#			res=dx; sgn=sx; rvx = t.x; 
-#		else:
-#			res=dy; sgn=sy; rvx = t.y;
-#
-	return Vector2(rvx, sqrt(res)*sign(sgn));
+		var t : Vector3 = Commons.clampv3(Vector3(m+m, -n-m, n-m) * z - Vector3(kx, kx, kx), Vector3(), Vector3(1, 1, 1));
 
+		var qx : Vector2 = d + (c + b * t.x) * t.x; 
+		var dx : float = qx.dot(qx)
+		var sx  : float = (c + Vector2(2, 2) * b * t.x).cross(qx)
+		var qy : Vector2 = d + (c + b * t.y) * t.y
+		var dy : float = qy.dot(qy)
+		var sy : float = (c + Vector2(2, 2) * b * t.y).cross(qy)
+		
+		if dx<dy:
+			res=dx
+			sgn=sx
+			rvx = t.x
+		else:
+			res=dy
+			sgn=sy
+			rvx = t.y
+
+	return Vector2(rvx, sqrt(res) * sign(sgn))
 
 #vec2 circle_repeat_transform_2d(vec2 p, float count) {
 #	float r = 6.28/count;

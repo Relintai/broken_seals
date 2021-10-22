@@ -164,6 +164,12 @@ static func cosv3(v : Vector3) -> Vector3:
 	
 	return v
 
+static func powv2(x : Vector2, y : Vector2) -> Vector2:
+	x.x = pow(x.x, y.x)
+	x.y = pow(x.y, y.y)
+	
+	return x
+
 static func modv3(a : Vector3, b : Vector3) -> Vector3:
 	var v : Vector3 = Vector3()
 	
@@ -224,6 +230,18 @@ static func step(edge : float, x : float) -> float:
 		return 0.0
 	else:
 		return 1.0
+
+static func stepv2(edge : Vector2, x : Vector2) -> Vector2:
+	edge.x = step(edge.x, x.x)
+	edge.y = step(edge.y, x.y)
+	
+	return edge
+
+static func signv2(x : Vector2) -> Vector2:
+	x.x = sign(x.x)
+	x.y = sign(x.y)
+
+	return x
 
 static func transform(uv : Vector2, translate : Vector2, rotate : float, scale : Vector2, repeat : bool) -> Vector2:
 	var rv : Vector2 = Vector2();
