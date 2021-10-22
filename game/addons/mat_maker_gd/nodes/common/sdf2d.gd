@@ -926,50 +926,15 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #sdannularshape.mmg
 #Creates an annular shape from a shape described as a signed distance function
 
-#		"inputs": [
-#			{
-#				"default": "0.0",
-#				"label": "",
-#				"longdesc": "The input shape, defined as a signed distance function",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "sdf2d"
-#			}
-#		],
-#		"outputs": [
-#			{
-#				"longdesc": "The generated layered shape",
-#				"sdf2d": "sdRipples($in($uv), $r, int($ripples))",
-#				"shortdesc": "Output",
-#				"type": "sdf2d"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Width",
-#				"longdesc": "The width of each generated ripple",
-#				"max": 1,
-#				"min": 0,
-#				"name": "r",
-#				"shortdesc": "Width",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Ripples",
-#				"longdesc": "The number of generated ripples",
-#				"max": 16,
-#				"min": 0,
-#				"name": "ripples",
-#				"shortdesc": "Ripples",
-#				"step": 1,
-#				"type": "float"
-#			}
-#		],
+#Output
+
+#Output float (color) - Shows the shape as a greyscale image
+#sdRipples($in($uv), $r, int($ripples))
+
+#Input:
+#Input (sdf - shape), default: 0 - sdf2d - universal input
+#width, float, min 0, max 1, step 0.01, default 0
+#rippples, int, min 1, max 16, default 1
 
 #----------------------
 #sd_mask_to_sdf.mmg
@@ -2482,13 +2447,19 @@ static func sdSmoothIntersection(d1 : float, d2 : float, k : float) -> float:
 	return 0.0
 	
 	
-#float sdRipples(float d, float w, int r) {\n\t
-#	for (int i = 0; i < r; ++i) {\n\t\t
-#		d = abs(d)-w;\n\t
-#	}\n\t
+#float sdRipples(float d, float w, int r) {\n
+#	for (int i = 0; i < r; ++i) {
+#		d = abs(d)-w;
+#	}
 #
-#	return d;\n
+#	return d;
 #}
+
+static func sdRipples(d : float, w : float, r : int) -> float:
+	for i in range(r):
+		d = abs(d)-w;
+
+	return d
 
 #$polygon = { p1(vec2), p2(vec2), p3(vec2) ... }
 #float sdPolygon_$(name)(vec2 p) {
