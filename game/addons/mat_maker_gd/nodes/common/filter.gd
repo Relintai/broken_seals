@@ -563,241 +563,33 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #emboss.mmg
 #Creates highlights and shadows from an input heightmap
 
-#{
-#	"connections": [
-#		{
-#			"from": "gen_inputs",
-#			"from_port": 0,
-#			"to": "buffer",
-#			"to_port": 0
-#		},
-#		{
-#			"from": "buffer",
-#			"from_port": 0,
-#			"to": "598",
-#			"to_port": 0
-#		},
-#		{
-#			"from": "598",
-#			"from_port": 0,
-#			"to": "gen_outputs",
-#			"to_port": 0
-#		}
-#	],
-#	"nodes": [
-#		{
-#			"name": "buffer",
-#			"node_position": {
-#				"x": -65.493774,
-#				"y": -609.5
-#			},
-#			"parameters": {
-#				"lod": 0,
-#				"size": 9
-#			},
-#			"seed_value": 10109,
-#			"type": "buffer"
-#		},
-#		{
-#			"name": "598",
-#			"node_position": {
-#				"x": -77.579605,
-#				"y": -529.738281
-#			},
-#			"parameters": {
-#				"amount": 5,
-#				"angle": 0,
-#				"size": 9,
-#				"width": 1
-#			},
-#			"shader_model": {
-#				"code": "",
-#				"global": "",
-#				"includes": [
-#					""
-#				],
-#				"inputs": [
-#					{
-#						"default": "0.0",
-#						"function": true,
-#						"label": "",
-#						"name": "in",
-#						"type": "f"
-#					}
-#				],
-#				"instance": "float $(name)_fct(vec2 uv) {\n\tfloat pixels = max(1.0, $width);\n\tfloat e = 1.0/$size;\n\tfloat rv = 0.0;\n\tfor (float dx = -pixels; dx <= pixels; dx += 1.0) {\n\t\tfor (float dy = -pixels; dy <= pixels; dy += 1.0) {\n\t\t\tif (abs(dx) > 0.5 || abs(dy) > 0.5) {\n\t\t\t\trv += $in(uv+e*vec2(dx, dy))*cos(atan(dy, dx)-$angle*3.14159265359/180.0)/length(vec2(dx, dy));\n\t\t\t}\n\t\t}\n\t}\n\treturn $amount*rv/pixels+0.5;\n}",
-#				"name": "Emboss",
-#				"outputs": [
-#					{
-#						"f": "$(name)_fct($uv)",
-#						"type": "f"
-#					}
-#				],
-#				"parameters": [
-#					{
-#						"default": 9,
-#						"first": 6,
-#						"label": "Size",
-#						"last": 12,
-#						"name": "size",
-#						"type": "size"
-#					},
-#					{
-#						"control": "None",
-#						"default": 0,
-#						"label": "Angle",
-#						"max": 180,
-#						"min": -180,
-#						"name": "angle",
-#						"step": 0.1,
-#						"type": "float"
-#					},
-#					{
-#						"control": "None",
-#						"default": 1,
-#						"label": "Amount",
-#						"max": 10,
-#						"min": 0,
-#						"name": "amount",
-#						"step": 0.1,
-#						"type": "float"
-#					},
-#					{
-#						"control": "None",
-#						"default": 1,
-#						"label": "Width",
-#						"max": 5,
-#						"min": 1,
-#						"name": "width",
-#						"step": 1,
-#						"type": "float"
-#					}
-#				]
-#			},
-#			"type": "shader"
-#		},
-#		{
-#			"name": "gen_inputs",
-#			"node_position": {
-#				"x": -461.57959,
-#				"y": -574.119141
-#			},
-#			"parameters": {
+#float $(name)_fct(vec2 uv) {
+#	float pixels = max(1.0, $width);
+#	float e = 1.0/$size;
+#	float rv = 0.0;
 #
-#			},
-#			"ports": [
-#				{
-#					"group_size": 0,
-#					"longdesc": "The input height map",
-#					"name": "port0",
-#					"shortdesc": "Input",
-#					"type": "f"
-#				}
-#			],
-#			"type": "ios"
-#		},
-#		{
-#			"name": "gen_outputs",
-#			"node_position": {
-#				"x": 187.506226,
-#				"y": -557.119141
-#			},
-#			"parameters": {
-#
-#			},
-#			"ports": [
-#				{
-#					"group_size": 0,
-#					"longdesc": "The generated image",
-#					"name": "port0",
-#					"shortdesc": "Output",
-#					"type": "f"
-#				}
-#			],
-#			"type": "ios"
-#		},
-#		{
-#			"name": "gen_parameters",
-#			"node_position": {
-#				"x": -111.036682,
-#				"y": -777.5
-#			},
-#			"parameters": {
-#				"param0": 9,
-#				"param1": 0,
-#				"param2": 5,
-#				"param3": 1
-#			},
-#			"type": "remote",
-#			"widgets": [
-#				{
-#					"label": "Size",
-#					"linked_widgets": [
-#						{
-#							"node": "buffer",
-#							"widget": "size"
-#						},
-#						{
-#							"node": "598",
-#							"widget": "size"
-#						}
-#					],
-#					"longdesc": "The resolution of the input image",
-#					"name": "param0",
-#					"shortdesc": "Size",
-#					"type": "linked_control"
-#				},
-#				{
-#					"label": "Angle",
-#					"linked_widgets": [
-#						{
-#							"node": "598",
-#							"widget": "angle"
-#						}
-#					],
-#					"longdesc": "The angle of the simulated light",
-#					"name": "param1",
-#					"shortdesc": "Angle",
-#					"type": "linked_control"
-#				},
-#				{
-#					"label": "Amount",
-#					"linked_widgets": [
-#						{
-#							"node": "598",
-#							"widget": "amount"
-#						}
-#					],
-#					"longdesc": "The strength of the emboss effect",
-#					"name": "param2",
-#					"shortdesc": "Strength",
-#					"type": "linked_control"
-#				},
-#				{
-#					"label": "Width",
-#					"linked_widgets": [
-#						{
-#							"node": "598",
-#							"widget": "width"
-#						}
-#					],
-#					"longdesc": "The width (in pixels) of the area sampled for each pixel",
-#					"name": "param3",
-#					"shortdesc": "Width",
-#					"type": "linked_control"
-#				}
-#			]
+#	for (float dx = -pixels; dx <= pixels; dx += 1.0) {
+#		for (float dy = -pixels; dy <= pixels; dy += 1.0) {
+#			if (abs(dx) > 0.5 || abs(dy) > 0.5) {
+#				rv += $in(uv+e*vec2(dx, dy))*cos(atan(dy, dx)-$angle*3.14159265359/180.0)/length(vec2(dx, dy));
+#			}
 #		}
-#	],
-#	"parameters": {
-#		"param0": 9,
-#		"param1": 0,
-#		"param2": 5,
-#		"param3": 1
-#	},
-#	"shortdesc": "Emboss",
-#	"type": "graph"
+#	}
+#
+#	return $amount*rv/pixels+0.5;
 #}
+
+#Outputs:
+
+#Output - (float)
+#$(name)_fct($uv)
+
+#Inputs:
+#input, float, default 0
+#size, int (image size)
+#angle, float, min: -180, max: 180, default: 0, step: 0.1
+#amount, float, min: 0, max: 10, default: 1, step: 0.1
+#width, float, min: 1, max: 5, default: 1, step: 1
 
 #----------------------
 #invert.mmg
