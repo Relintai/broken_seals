@@ -498,113 +498,19 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #blend.mmg
 #Blends its input, using an optional mask
 
-#		"code": "vec4 $(name_uv)_s1 = $s1($uv);\nvec4 $(name_uv)_s2 = $s2($uv);\nfloat $(name_uv)_a = $amount*$a($uv);\n",
-#		"inputs": [
-#			{
-#				"default": "vec4($uv.x, 1.0, 1.0, 1.0)",
-#				"label": "Source1",
-#				"longdesc": "The foreground input",
-#				"name": "s1",
-#				"shortdesc": "Foreground",
-#				"type": "rgba"
-#			},
-#			{
-#				"default": "vec4(1.0, $uv.y, 1.0, 1.0)",
-#				"label": "Source2",
-#				"longdesc": "The background input",
-#				"name": "s2",
-#				"shortdesc": "Background",
-#				"type": "rgba"
-#			},
-#			{
-#				"default": "1.0",
-#				"label": "Opacity",
-#				"longdesc": "The optional opacity mask",
-#				"name": "a",
-#				"shortdesc": "Mask",
-#				"type": "f"
-#			}
-#		],
-#		"outputs": [
-#			{
-#				"longdesc": "Shows the result of the blend operation",
-#				"rgba": "vec4(blend_$blend_type($uv, $(name_uv)_s1.rgb, $(name_uv)_s2.rgb, $(name_uv)_a*$(name_uv)_s1.a), min(1.0, $(name_uv)_s2.a+$(name_uv)_a*$(name_uv)_s1.a))",
-#				"shortdesc": "Output",
-#				"type": "rgba"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"default": 0,
-#				"label": "",
-#				"longdesc": "The algorithm used to blend the inputs",
-#				"name": "blend_type",
-#				"shortdesc": "Blend mode",
-#				"type": "enum",
-#				"values": [
-#					{
-#						"name": "Normal",
-#						"value": "normal"
-#					},
-#					{
-#						"name": "Dissolve",
-#						"value": "dissolve"
-#					},
-#					{
-#						"name": "Multiply",
-#						"value": "multiply"
-#					},
-#					{
-#						"name": "Screen",
-#						"value": "screen"
-#					},
-#					{
-#						"name": "Overlay",
-#						"value": "overlay"
-#					},
-#					{
-#						"name": "Hard Light",
-#						"value": "hard_light"
-#					},
-#					{
-#						"name": "Soft Light",
-#						"value": "soft_light"
-#					},
-#					{
-#						"name": "Burn",
-#						"value": "burn"
-#					},
-#					{
-#						"name": "Dodge",
-#						"value": "dodge"
-#					},
-#					{
-#						"name": "Lighten",
-#						"value": "lighten"
-#					},
-#					{
-#						"name": "Darken",
-#						"value": "darken"
-#					},
-#					{
-#						"name": "Difference",
-#						"value": "difference"
-#					}
-#				]
-#			},
-#			{
-#				"control": "None",
-#				"default": 0.5,
-#				"label": "3:",
-#				"longdesc": "The opacity of the blend operation",
-#				"max": 1,
-#				"min": 0,
-#				"name": "amount",
-#				"shortdesc": "Opacity",
-#				"step": 0.01,
-#				"type": "float"
-#			}
-#		],
+#Outputs:
+
+#Output - (color)
+#vec4 $(name_uv)_s1 = $s1($uv);
+#vec4 $(name_uv)_s2 = $s2($uv);
+#float $(name_uv)_a = $amount*$a($uv);
+#vec4(blend_$blend_type($uv, $(name_uv)_s1.rgb, $(name_uv)_s2.rgb, $(name_uv)_a*$(name_uv)_s1.a), min(1.0, $(name_uv)_s2.a+$(name_uv)_a*$(name_uv)_s1.a))
+
+#Inputs:
+#in1, color, default vec4($uv.x, 1.0, 1.0, 1.0)
+#in2, color, default vec4($uv.x, 1.0, 1.0, 1.0)
+#blend_type, enum, default: 0, Normal,Dissolve,Multiply,Screen,Overlay,Hard Light,Soft Light,Burn,Dodge,Lighten,Darken,Difference
+#opactiy, float, min: 0, max: 1, default: 0.5, step: 0.01 (input float)
 
 #----------------------
 #combine.mmg
@@ -4639,7 +4545,10 @@ static func invert(color : Color) -> Color:
 #vec3 blend_normal(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*c1 + (1.0-opacity)*c2;\n
 #}
-	
+
+static func blend_normal(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * c1 + (1.0 - opacity) * c2
+
 #vec3 blend_dissolve(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	if (rand(uv) < opacity) {\n\t\t
 #		return c1;\n\t
@@ -4647,62 +4556,122 @@ static func invert(color : Color) -> Color:
 #		return c2;\n\t
 #	}\n
 #}
+
+static func blend_dissolve(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	if (Commons.rand2(uv) < Vector2(opacity, opacity)):
+		return c1
+	else:
+		return c2
 	
 #vec3 blend_multiply(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*c1*c2 + (1.0-opacity)*c2;\n
 #}
-	
+
+static func blend_multiply(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * c1 * c2 + (1.0 - opacity) * c2
+
 #vec3 blend_screen(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*(1.0-(1.0-c1)*(1.0-c2)) + (1.0-opacity)*c2;\n
 #}
 
+static func blend_screen(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * (Vector3(1, 1, 1) - (Vector3(1, 1, 1) - c1) * (Vector3(1, 1, 1) - c2)) + (1.0 - opacity) * c2
+
 #float blend_overlay_f(float c1, float c2) {\n\t
 #	return (c1 < 0.5) ? (2.0*c1*c2) : (1.0-2.0*(1.0-c1)*(1.0-c2));\n
 #}
-	
+
+static func blend_overlay_f(c1 : float, c2 : float) -> float:
+	if (c1 < 0.5):
+		return (2.0 * c1 * c2)
+	else:
+		return (1.0 - 2.0 * (1.0 - c1) * (1.0 - c2))
+
 #vec3 blend_overlay(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*vec3(blend_overlay_f(c1.x, c2.x), blend_overlay_f(c1.y, c2.y), blend_overlay_f(c1.z, c2.z)) + (1.0-opacity)*c2;\n
 #}
 	
+static func blend_overlay(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Vector3(blend_overlay_f(c1.x, c2.x), blend_overlay_f(c1.y, c2.y), blend_overlay_f(c1.z, c2.z)) + (1.0 - opacity) * c2
+
 #vec3 blend_hard_light(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*0.5*(c1*c2+blend_overlay(uv, c1, c2, 1.0)) + (1.0-opacity)*c2;\n
 #}
-		
+
+static func blend_hard_light(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * 0.5 * (c1 * c2 + blend_overlay(uv, c1, c2, 1.0)) + (1.0 - opacity) * c2
+
 #float blend_soft_light_f(float c1, float c2) {\n\t
 #	return (c2 < 0.5) ? (2.0*c1*c2+c1*c1*(1.0-2.0*c2)) : 2.0*c1*(1.0-c2)+sqrt(c1)*(2.0*c2-1.0);\n
 #}
-		
+
+static func blend_soft_light_f(c1 : float, c2 : float) -> float:
+	if (c2 < 0.5):
+		return (2.0 * c1 * c2 + c1 * c1 * (1.0 - 2.0 * c2))
+	else:
+		return 2.0 * c1 * (1.0 - c2) + sqrt(c1) * (2.0 * c2 - 1.0)
+
 #vec3 blend_soft_light(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*vec3(blend_soft_light_f(c1.x, c2.x), blend_soft_light_f(c1.y, c2.y), blend_soft_light_f(c1.z, c2.z)) + (1.0-opacity)*c2;\n
 #}
-		
+
+static func blend_soft_light(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Vector3(blend_soft_light_f(c1.x, c2.x), blend_soft_light_f(c1.y, c2.y), blend_soft_light_f(c1.z, c2.z)) + (1.0 - opacity) * c2
+
 #float blend_burn_f(float c1, float c2) {\n\t
 #	return (c1==0.0)?c1:max((1.0-((1.0-c2)/c1)),0.0);\n
 #}
-		
+
+static func blend_burn_f(c1 : float, c2 : float) -> float:
+	if (c1 == 0.0):
+		return c1
+	else:
+		return max((1.0 - ((1.0 - c2) / c1)), 0.0)
+
 #vec3 blend_burn(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*vec3(blend_burn_f(c1.x, c2.x), blend_burn_f(c1.y, c2.y), blend_burn_f(c1.z, c2.z)) + (1.0-opacity)*c2;
 #}
-		
+
+static func blend_burn(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Vector3(blend_burn_f(c1.x, c2.x), blend_burn_f(c1.y, c2.y), blend_burn_f(c1.z, c2.z)) + (1.0 - opacity) * c2
+
 #float blend_dodge_f(float c1, float c2) {\n\t
 #	return (c1==1.0)?c1:min(c2/(1.0-c1),1.0);\n
 #}
-	
+
+static func blend_dodge_f(c1 : float, c2 : float) -> float:
+	if (c1==1.0):
+		return c1
+	else:
+		return min(c2 / (1.0 - c1), 1.0)
+
 #vec3 blend_dodge(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*vec3(blend_dodge_f(c1.x, c2.x), blend_dodge_f(c1.y, c2.y), blend_dodge_f(c1.z, c2.z)) + (1.0-opacity)*c2;\n
 #}
 
+static func blend_dodge(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Vector3(blend_dodge_f(c1.x, c2.x), blend_dodge_f(c1.y, c2.y), blend_dodge_f(c1.z, c2.z)) + (1.0 - opacity) * c2
+
 #vec3 blend_lighten(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*max(c1, c2) + (1.0-opacity)*c2;\n
 #}
-	
+
+static func blend_lighten(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Commons.maxv3(c1, c2) + (1.0 - opacity) * c2
+
 #vec3 blend_darken(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*min(c1, c2) + (1.0-opacity)*c2;\n
 #}
-	
+
+static func blend_darken(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Commons.minv3(c1, c2) + (1.0 - opacity) * c2
+
 #vec3 blend_difference(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*clamp(c2-c1, vec3(0.0), vec3(1.0)) + (1.0-opacity)*c2;\n
 #}
+
+static func blend_difference(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity : float) -> Vector3:
+	return opacity * Commons.clampv3(c2 - c1, Vector3(), Vector3(1, 1, 1)) + (1.0 - opacity) * c2
 
 #vec4 adjust_levels(vec4 input, vec4 in_min, vec4 in_mid, vec4 in_max, vec4 out_min, vec4 out_max) {\n\t
 #	input = clamp((input-in_min)/(in_max-in_min), 0.0, 1.0);\n\t
@@ -4712,8 +4681,6 @@ static func invert(color : Color) -> Color:
 #	input = 0.5*mix(input/(in_mid), 1.0+(input-in_mid)/(1.0-in_mid), dark);\n\t
 #	return out_min+input*(out_max-out_min);\n
 #}
-
-
 
 
 

@@ -213,6 +213,19 @@ static func clampv2(v : Vector2, pmin : Vector2, pmax : Vector2) -> Vector2:
 	
 	return v
 
+static func minv2(v1 : Vector2, v2 : Vector2) -> Vector2:
+	v1.x = min(v1.x, v2.x)
+	v1.y = min(v1.y, v2.y)
+	
+	return v1
+	
+static func minv3(v1 : Vector3, v2 : Vector3) -> Vector3:
+	v1.x = min(v1.x, v2.x)
+	v1.y = min(v1.y, v2.y)
+	v1.z = min(v1.z, v2.z)
+	
+	return v1
+
 static func rand(x : Vector2) -> float:
 	return fract(cos(x.dot(Vector2(13.9898, 8.141))) * 43758.5453);
 
