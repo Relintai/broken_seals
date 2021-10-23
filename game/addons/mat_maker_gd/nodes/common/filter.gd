@@ -1087,40 +1087,22 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #make_tileable.mmg
 #Creates a tileable version of its input image by moving different parts around to hide seams.
 
-#		"inputs": [
-#			{
-#				"default": "vec4(1.0)",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The image to be made tileable",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "rgba"
-#			}
-#		],
-#		"instance": "vec4 make_tileable_$(name)(vec2 uv, float w) {\n\tvec4 a = $in(uv);\n\tvec4 b = $in(fract(uv+vec2(0.5)));\n\tfloat coef_ab = sin(1.57079632679*clamp((length(uv-vec2(0.5))-0.5+w)/w, 0.0, 1.0));\n\tvec4 c = $in(fract(uv+vec2(0.25)));\n\tfloat coef_abc = sin(1.57079632679*clamp((min(min(length(uv-vec2(0.0, 0.5)), length(uv-vec2(0.5, 0.0))), min(length(uv-vec2(1.0, 0.5)), length(uv-vec2(0.5, 1.0))))-w)/w, 0.0, 1.0));\n\treturn mix(c, mix(a, b, coef_ab), coef_abc);\n}\n",
-#		"outputs": [
-#			{
-#				"longdesc": "A tileable version of the input image",
-#				"rgba": "make_tileable_$(name)($uv, 0.5*$w)",
-#				"shortdesc": "Output",
-#				"type": "rgba"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 0.1,
-#				"label": "",
-#				"longdesc": "Width of the transition areas between parts of the input image",
-#				"max": 0.25,
-#				"min": 0,
-#				"name": "w",
-#				"shortdesc": "Width",
-#				"step": 0.01,
-#				"type": "float"
-#			}
-#		]
+#vec4 make_tileable_$(name)(vec2 uv, float w) {
+#	vec4 a = $in(uv);
+#	vec4 b = $in(fract(uv+vec2(0.5)));
+#	float coef_ab = sin(1.57079632679*clamp((length(uv-vec2(0.5))-0.5+w)/w, 0.0, 1.0));
+#	vec4 c = $in(fract(uv+vec2(0.25)));
+#	float coef_abc = sin(1.57079632679*clamp((min(min(length(uv-vec2(0.0, 0.5)), length(uv-vec2(0.5, 0.0))), min(length(uv-vec2(1.0, 0.5)), length(uv-vec2(0.5, 1.0))))-w)/w, 0.0, 1.0));
+#	return mix(c, mix(a, b, coef_ab), coef_abc);
+#}
+
+#Inputs:
+#input, rgba, default: vec4(1.0)
+#width, float, min:0, max: 1: default: 0.1, step: 0.01
+
+#Outputs:
+#output (rgba) 
+#make_tileable_$(name)($uv, 0.5*$w)
 
 #----------------------
 #occlusion.mmg

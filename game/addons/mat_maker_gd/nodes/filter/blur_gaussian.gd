@@ -20,7 +20,7 @@ func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
 		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
-		input.set_default_value(1)
+		input.set_default_value(Color())
 
 	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input1    "
