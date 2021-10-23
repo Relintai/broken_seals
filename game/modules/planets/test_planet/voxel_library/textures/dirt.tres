@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=47 format=2]
+[gd_resource type="Resource" load_steps=52 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=2]
@@ -20,7 +20,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 3 )
-graph_position = Vector2( -520, -80 )
+graph_position = Vector2( -480, -80 )
 image = SubResource( 1 )
 grid_size = 512
 density = 0.0
@@ -33,14 +33,24 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=39]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 1 )
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 4 )
-graph_position = Vector2( -200, -60 )
+graph_position = Vector2( -260, -80 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0, 0, 0, 0, 0.677966, 0.188235, 0.141176, 0.101961, 1, 1, 0.282353, 0.235294, 0.0901961, 1 )
 image = SubResource( 3 )
+input = SubResource( 39 )
 
 [sub_resource type="Resource" id=5]
 script = ExtResource( 2 )
@@ -63,7 +73,7 @@ input_property = SubResource( 3 )
 
 [sub_resource type="Resource" id=7]
 script = ExtResource( 5 )
-graph_position = Vector2( 80, -80 )
+graph_position = Vector2( -40, -80 )
 image = SubResource( 5 )
 input = SubResource( 6 )
 angle = 47.9
@@ -78,14 +88,24 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=40]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 5 )
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 4 )
-graph_position = Vector2( 360, -20 )
+graph_position = Vector2( 180, -80 )
 interpolation_type = 1
 points = PoolRealArray( 0.584746, 0, 0, 0, 0, 0.79661, 0.286275, 0.192157, 0.054902, 1, 1, 0.396078, 0.439216, 0.443137, 1 )
 image = SubResource( 8 )
+input = SubResource( 40 )
 
 [sub_resource type="Resource" id=10]
 script = ExtResource( 2 )
@@ -98,7 +118,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=11]
 script = ExtResource( 6 )
-graph_position = Vector2( -900, 380 )
+graph_position = Vector2( -460, 340 )
 image = SubResource( 10 )
 type = 0
 scale = Vector2( 40, 40 )
@@ -114,14 +134,24 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=41]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 10 )
 
 [sub_resource type="Resource" id=13]
 script = ExtResource( 4 )
-graph_position = Vector2( -580, 420 )
+graph_position = Vector2( -260, 360 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0.447059, 0.345098, 0.215686, 1, 0.245763, 0.529412, 0.423529, 0.301961, 1, 0.38983, 0.219608, 0.2, 0.14902, 1, 0.584746, 0.298039, 0.25098, 0.164706, 1, 0.745763, 0.447059, 0.333333, 0.223529, 1, 1, 0.662745, 0.478431, 0.207843, 1 )
 image = SubResource( 12 )
+input = SubResource( 41 )
 
 [sub_resource type="Resource" id=14]
 script = ExtResource( 2 )
@@ -163,7 +193,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=18]
 script = ExtResource( 8 )
-graph_position = Vector2( 20, 440 )
+graph_position = Vector2( -20, 360 )
 image = SubResource( 14 )
 input1 = SubResource( 15 )
 input2 = SubResource( 16 )
@@ -189,25 +219,6 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
 input_property = SubResource( 14 )
 
-[sub_resource type="Resource" id=21]
-script = ExtResource( 2 )
-default_type = 5
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="Resource" id=22]
-script = ExtResource( 2 )
-default_type = 5
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 21 )
-
 [sub_resource type="Resource" id=23]
 script = ExtResource( 2 )
 default_type = 5
@@ -216,7 +227,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 22 )
 
 [sub_resource type="Resource" id=24]
 script = ExtResource( 2 )
@@ -232,14 +242,14 @@ input_property = SubResource( 23 )
 script = ExtResource( 2 )
 default_type = 1
 default_int = 0
-default_float = 0.64
+default_float = 0.6
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=26]
 script = ExtResource( 8 )
-graph_position = Vector2( 360, 560 )
+graph_position = Vector2( 240, 520 )
 image = SubResource( 19 )
 input1 = SubResource( 20 )
 input2 = SubResource( 24 )
@@ -257,7 +267,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=28]
 script = ExtResource( 6 )
-graph_position = Vector2( -680, 1400 )
+graph_position = Vector2( 0, 1280 )
 image = SubResource( 27 )
 type = 0
 scale = Vector2( 15, 25 )
@@ -304,29 +314,68 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=33]
 script = ExtResource( 8 )
-graph_position = Vector2( -300, 1500 )
+graph_position = Vector2( 240, 1340 )
 image = SubResource( 29 )
 input1 = SubResource( 30 )
 input2 = SubResource( 31 )
 blend_type = 0
 opacity = SubResource( 32 )
 
+[sub_resource type="Resource" id=21]
+script = ExtResource( 2 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="Resource" id=34]
 script = ExtResource( 6 )
-graph_position = Vector2( -640, 880 )
+graph_position = Vector2( -460, 900 )
 image = SubResource( 21 )
-type = 0
+type = 1
 scale = Vector2( 100, 100 )
 folds = 0
 iterations = 10
 persistence = 0.2
 
+[sub_resource type="Resource" id=22]
+script = ExtResource( 2 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=42]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 21 )
+
 [sub_resource type="Resource" id=35]
 script = ExtResource( 4 )
-graph_position = Vector2( -360, 920 )
+graph_position = Vector2( -240, 940 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0, 0, 0, 0, 0.822034, 0, 0, 0, 0, 1, 1, 1, 1, 1 )
 image = SubResource( 22 )
+input = SubResource( 42 )
+
+[sub_resource type="Resource" id=43]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 22 )
 
 [sub_resource type="Resource" id=36]
 script = ExtResource( 4 )
@@ -334,8 +383,9 @@ graph_position = Vector2( 0, 940 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0, 0, 0, 0, 0.59322, 0, 0, 0, 0, 0.635593, 0.0823529, 0.360784, 0.109804, 1, 0.745763, 0.458824, 0.682353, 0.0901961, 1, 0.872881, 0.227451, 0.462745, 0.25098, 1, 1, 0.494118, 0.839216, 0.6, 1 )
 image = SubResource( 23 )
+input = SubResource( 43 )
 
-[sub_resource type="Resource" id=37]
+[sub_resource type="Resource" id=44]
 script = ExtResource( 2 )
 default_type = 5
 default_int = 0
@@ -347,8 +397,8 @@ input_property = SubResource( 19 )
 
 [sub_resource type="Resource" id=38]
 script = ExtResource( 7 )
-graph_position = Vector2( 760, 560 )
-image = SubResource( 37 )
+graph_position = Vector2( 500, 400 )
+image = SubResource( 44 )
 postfix = ""
 
 [resource]

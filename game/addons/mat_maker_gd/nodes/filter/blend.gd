@@ -78,7 +78,7 @@ func _render(material) -> void:
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var b : Vector3 = Vector3()
-
+	
 	#vec4 $(name_uv)_s1 = $s1($uv);
 	var s1 : Color = input1.get_value(uv)
 	#vec4 $(name_uv)_s2 = $s2($uv);
