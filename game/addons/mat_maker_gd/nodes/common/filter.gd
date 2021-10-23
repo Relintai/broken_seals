@@ -561,6 +561,7 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #----------------------
 #emboss.mmg
+#Creates highlights and shadows from an input heightmap
 
 #{
 #	"connections": [
@@ -583,13 +584,6 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #			"to_port": 0
 #		}
 #	],
-#	"label": "Emboss",
-#	"longdesc": "Creates highlights and shadows from an input heightmap",
-#	"name": "emboss",
-#	"node_position": {
-#		"x": 0,
-#		"y": 0
-#	},
 #	"nodes": [
 #		{
 #			"name": "buffer",
@@ -4681,6 +4675,4 @@ static func blend_difference(uv : Vector2, c1 : Vector3, c2 : Vector3, opacity :
 #	input = 0.5*mix(input/(in_mid), 1.0+(input-in_mid)/(1.0-in_mid), dark);\n\t
 #	return out_min+input*(out_max-out_min);\n
 #}
-
-
 

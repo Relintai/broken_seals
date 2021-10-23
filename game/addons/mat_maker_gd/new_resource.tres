@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=128 format=2]
+[gd_resource type="Resource" load_steps=132 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/filter.gd" type="Script" id=31]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/grayscale.gd" type="Script" id=32]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/blend.gd" type="Script" id=33]
+[ext_resource path="res://addons/mat_maker_gd/nodes/filter/emboss.gd" type="Script" id=34]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 5 )
@@ -181,7 +182,7 @@ default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=24]
 script = ExtResource( 10 )
-graph_position = Vector2( -140, -220 )
+graph_position = Vector2( 640, 140 )
 image = SubResource( 23 )
 image_path = "/home/relintai/Projects/broken_seals/game/icon.png"
 
@@ -704,7 +705,7 @@ input_property = SubResource( 44 )
 
 [sub_resource type="Resource" id=100]
 script = ExtResource( 28 )
-graph_position = Vector2( 1140, -220 )
+graph_position = Vector2( 1120, -200 )
 image = SubResource( 98 )
 input = SubResource( 102 )
 a = Vector2( -0.35, -0.2 )
@@ -820,7 +821,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
-input_property = SubResource( 37 )
 
 [sub_resource type="Resource" id=118]
 script = ExtResource( 5 )
@@ -830,7 +830,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
-input_property = SubResource( 17 )
 
 [sub_resource type="Resource" id=119]
 script = ExtResource( 5 )
@@ -850,7 +849,35 @@ input2 = SubResource( 118 )
 blend_type = 0
 opacity = SubResource( 119 )
 
+[sub_resource type="Resource" id=121]
+script = ExtResource( 5 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=122]
+script = ExtResource( 5 )
+default_type = 1
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 98 )
+
+[sub_resource type="Resource" id=123]
+script = ExtResource( 34 )
+graph_position = Vector2( 1020, 380 )
+image = SubResource( 121 )
+input = SubResource( 122 )
+angle = 20.0
+amount = 5.0
+width = 6.0
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ), SubResource( 100 ), SubResource( 108 ), SubResource( 110 ), SubResource( 112 ), SubResource( 113 ), SubResource( 115 ), SubResource( 120 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 21 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ), SubResource( 100 ), SubResource( 108 ), SubResource( 110 ), SubResource( 112 ), SubResource( 113 ), SubResource( 115 ), SubResource( 120 ), SubResource( 123 ) ]
