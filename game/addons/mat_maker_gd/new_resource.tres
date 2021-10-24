@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=121 format=2]
+[gd_resource type="Resource" load_steps=119 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=2]
@@ -806,26 +806,7 @@ image = SubResource( 130 )
 input = SubResource( 131 )
 width = 0.1
 
-[sub_resource type="Resource" id=136]
-script = ExtResource( 5 )
-default_type = 5
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="Resource" id=137]
-script = ExtResource( 3 )
-graph_position = Vector2( 0, 0 )
-image = SubResource( 136 )
-type = 0
-scale = Vector2( 2, 2 )
-folds = 0
-iterations = 5
-persistence = 0.5
-
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 128, 128 )
-nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ), SubResource( 100 ), SubResource( 120 ), SubResource( 123 ), SubResource( 132 ), SubResource( 137 ) ]
+nodes = [ SubResource( 5 ), SubResource( 6 ), SubResource( 12 ), SubResource( 15 ), SubResource( 18 ), SubResource( 24 ), SubResource( 27 ), SubResource( 39 ), SubResource( 42 ), SubResource( 45 ), SubResource( 49 ), SubResource( 54 ), SubResource( 58 ), SubResource( 60 ), SubResource( 63 ), SubResource( 66 ), SubResource( 69 ), SubResource( 71 ), SubResource( 73 ), SubResource( 78 ), SubResource( 82 ), SubResource( 85 ), SubResource( 88 ), SubResource( 90 ), SubResource( 92 ), SubResource( 96 ), SubResource( 100 ), SubResource( 120 ), SubResource( 123 ), SubResource( 132 ) ]
