@@ -387,6 +387,21 @@ points = PoolRealArray( 0, 0, 0, 0, 0, 0.59322, 0, 0, 0, 0, 0.635593, 0.0823529,
 image = SubResource( 23 )
 input = SubResource( 43 )
 
+[sub_resource type="Resource" id=53]
+script = ExtResource( 2 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=38]
+script = ExtResource( 7 )
+graph_position = Vector2( 980, 540 )
+image = SubResource( 53 )
+postfix = "_albedo"
+
 [sub_resource type="Resource" id=45]
 script = ExtResource( 2 )
 default_type = 5
@@ -395,22 +410,6 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-
-[sub_resource type="Resource" id=48]
-script = ExtResource( 2 )
-default_type = 5
-default_int = 0
-default_float = 0.0
-default_vector2 = Vector2( 0, 0 )
-default_vector3 = Vector3( 0, 0, 0 )
-default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 45 )
-
-[sub_resource type="Resource" id=38]
-script = ExtResource( 7 )
-graph_position = Vector2( 980, 540 )
-image = SubResource( 48 )
-postfix = "_albedo"
 
 [sub_resource type="Resource" id=49]
 script = ExtResource( 2 )
