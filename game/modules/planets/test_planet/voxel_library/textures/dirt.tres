@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=56 format=2]
+[gd_resource type="Resource" load_steps=61 format=2]
 
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
 [ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=7]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/blend.gd" type="Script" id=8]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/make_tileable.gd" type="Script" id=9]
+[ext_resource path="res://addons/mat_maker_gd/nodes/filter/fill_channel.gd" type="Script" id=10]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
@@ -395,7 +396,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=44]
+[sub_resource type="Resource" id=48]
 script = ExtResource( 2 )
 default_type = 5
 default_int = 0
@@ -407,9 +408,18 @@ input_property = SubResource( 45 )
 
 [sub_resource type="Resource" id=38]
 script = ExtResource( 7 )
-graph_position = Vector2( 700, 520 )
-image = SubResource( 44 )
+graph_position = Vector2( 980, 540 )
+image = SubResource( 48 )
 postfix = "_albedo"
+
+[sub_resource type="Resource" id=49]
+script = ExtResource( 2 )
+default_type = 5
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="Resource" id=46]
 script = ExtResource( 2 )
@@ -419,16 +429,43 @@ default_float = 0.0
 default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
-input_property = SubResource( 19 )
+input_property = SubResource( 49 )
 
 [sub_resource type="Resource" id=47]
 script = ExtResource( 9 )
-graph_position = Vector2( 480, 520 )
+graph_position = Vector2( 760, 540 )
 image = SubResource( 45 )
 input = SubResource( 46 )
 width = 0.1
 
+[sub_resource type="Resource" id=50]
+script = ExtResource( 2 )
+default_type = 4
+default_int = 0
+default_float = 0.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+input_property = SubResource( 19 )
+
+[sub_resource type="Resource" id=51]
+script = ExtResource( 2 )
+default_type = 1
+default_int = 0
+default_float = 1.0
+default_vector2 = Vector2( 0, 0 )
+default_vector3 = Vector3( 0, 0, 0 )
+default_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="Resource" id=52]
+script = ExtResource( 10 )
+graph_position = Vector2( 520, 540 )
+image = SubResource( 49 )
+input = SubResource( 50 )
+value = SubResource( 51 )
+channel = 3
+
 [resource]
 script = ExtResource( 1 )
 image_size = Vector2( 256, 256 )
-nodes = [ SubResource( 2 ), SubResource( 4 ), SubResource( 7 ), SubResource( 9 ), SubResource( 11 ), SubResource( 13 ), SubResource( 18 ), SubResource( 26 ), SubResource( 28 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 38 ), SubResource( 47 ) ]
+nodes = [ SubResource( 2 ), SubResource( 4 ), SubResource( 7 ), SubResource( 9 ), SubResource( 11 ), SubResource( 13 ), SubResource( 18 ), SubResource( 26 ), SubResource( 28 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 38 ), SubResource( 47 ), SubResource( 52 ) ]
