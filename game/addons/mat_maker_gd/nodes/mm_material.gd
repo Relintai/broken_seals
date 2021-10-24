@@ -22,6 +22,16 @@ func add_node(node : MMNode) -> void:
 	emit_changed()
 	
 func remove_node(node : MMNode) -> void:
+	if !node:
+		return
+	
+	for op in node.output_properties:
+		for n in nodes:
+			if n:
+				for ip in n.input_properties:
+						if ip.input_property == op:
+							ip.set_input_property(null)
+	
 	nodes.erase(node)
 	
 	node.disconnect("changed", self, "on_node_changed")

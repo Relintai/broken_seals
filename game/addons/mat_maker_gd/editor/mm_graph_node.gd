@@ -14,6 +14,7 @@ var properties : Array = Array()
 func _init():
 	show_close = true
 	connect("offset_changed", self, "on_offset_changed")
+	connect("close_request", self, "on_close_request")
 	
 func add_slot_texture(getter : String, setter : String) -> int:
 	var t : TextureRect = TextureRect.new()
@@ -533,3 +534,13 @@ func on_universal_image_path_changed(f : String, slot_idx : int) -> void:
 
 func get_material_node() -> MMNode:
 	return _node
+
+func on_close_request() -> void:
+	var n : Node = get_parent()
+	
+	while n:
+		if n.has_method("on_graph_node_close_request"):
+			n.call_deferred("on_graph_node_close_request", self)
+			return
+			
+		n = n.get_parent()

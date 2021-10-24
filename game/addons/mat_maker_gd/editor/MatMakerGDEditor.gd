@@ -48,6 +48,8 @@ func ensure_objs() -> void:
 func recreate() -> void:
 	ensure_objs()
 	
+	_graph_edit.clear_connections()
+	
 	for c in _graph_edit.get_children():
 		if c is GraphNode:
 			_graph_edit.remove_child(c)
@@ -106,6 +108,11 @@ func on_graph_edit_disconnection_request(from: String, from_slot: int, to: Strin
 
 	if from_node.disconnect_slot(from_slot, to_node, to_slot):
 		_graph_edit.disconnect_node(from, from_slot, to, to_slot)
+
+func on_graph_node_close_request(node : GraphNode) -> void:
+	if _material:
+		_material.remove_node(node._node)
+		recreate()
 
 func _on_AddButton_pressed():
 	get_node(add_popup_path).popup_centered()
