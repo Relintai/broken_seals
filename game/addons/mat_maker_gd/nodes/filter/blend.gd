@@ -84,7 +84,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	#vec4 $(name_uv)_s2 = $s2($uv);
 	var s2 : Color = input2.get_value(uv)
 	#float $(name_uv)_a = $amount*$a($uv);
-	var a : float = opacity.get_default_value(uv) * opacity.get_value(uv)
+	var a : float = opacity.get_value(uv)
 	
 	#vec4(blend_$blend_type($uv, $(name_uv)_s1.rgb, $(name_uv)_s2.rgb, $(name_uv)_a*$(name_uv)_s1.a), min(1.0, $(name_uv)_s2.a+$(name_uv)_a*$(name_uv)_s1.a))
 	
