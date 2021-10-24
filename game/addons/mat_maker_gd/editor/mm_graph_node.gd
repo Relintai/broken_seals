@@ -17,6 +17,9 @@ func _init():
 	
 func add_slot_texture(getter : String, setter : String) -> int:
 	var t : TextureRect = TextureRect.new()
+	t.rect_min_size = Vector2(128, 128)
+	t.expand = true
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, t)
 	
@@ -27,6 +30,9 @@ func add_slot_texture(getter : String, setter : String) -> int:
 
 func add_slot_texture_universal(property : MMNodeUniversalProperty) -> int:
 	var t : TextureRect = TextureRect.new()
+	t.rect_min_size = Vector2(128, 128)
+	t.expand = true
+	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 	var slot_idx : int = add_slot(property.input_slot_type, property.output_slot_type, "", "", t)
 	
