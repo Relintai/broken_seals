@@ -13,7 +13,7 @@ export(Resource) var out_direction : Resource
 
 export(int, "Running Bond,Running Bond (2),HerringBone,Basket Weave,Spanish Bond") var type : int = 0
 export(int) var repeat : int = 1
-export(Vector2) var row_col : Vector2 = Vector2(4, 4)
+export(Vector2) var col_row : Vector2 = Vector2(4, 4)
 export(float) var offset : float = 0.5
 export(Resource) var mortar : Resource
 export(Resource) var bevel : Resource
@@ -118,7 +118,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_enum("get_type", "set_type", "Type", [ "Running Bond", "Running Bond (2)", "HerringBone", "Basket Weave", "Spanish Bond" ])
 	mm_graph_node.add_slot_int("get_repeat", "set_repeat", "Repeat")
 	
-	mm_graph_node.add_slot_vector2("get_row_col", "set_row_col", "Row, Col")#, Vector2(1, 32))#, Vector2(0, 32))
+	mm_graph_node.add_slot_vector2("get_col_row", "set_col_row", "Col, Row")#, Vector2(1, 32))#, Vector2(0, 32))
 	mm_graph_node.add_slot_float("get_offset", "set_offset", "Offset")
 
 	mm_graph_node.add_slot_float_universal(mortar)
@@ -167,15 +167,15 @@ func _render(material) -> void:
 			#"Running Bond,Running Bond (2),HerringBone,Basket Weave,Spanish Bond"
 			
 			if type == 0:
-				brick_rect = Patterns.bricks_rb(uv, row_col, repeat, offset)
+				brick_rect = Patterns.bricks_rb(uv, col_row, repeat, offset)
 			elif type == 1:
-				brick_rect = Patterns.bricks_rb2(uv, row_col, repeat, offset)
+				brick_rect = Patterns.bricks_rb2(uv, col_row, repeat, offset)
 			elif type == 2:
-				brick_rect = Patterns.bricks_hb(uv, row_col, repeat, offset)
+				brick_rect = Patterns.bricks_hb(uv, col_row, repeat, offset)
 			elif type == 3:
-				brick_rect = Patterns.bricks_bw(uv, row_col, repeat, offset)
+				brick_rect = Patterns.bricks_bw(uv, col_row, repeat, offset)
 			elif type == 4:
-				brick_rect = Patterns.bricks_sb(uv, row_col, repeat, offset)
+				brick_rect = Patterns.bricks_sb(uv, col_row, repeat, offset)
 			
 			
 			#vec4 $(name_uv) = brick($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $round*$round_map($uv), max(0.001, $bevel*$bevel_map($uv)));
@@ -258,12 +258,12 @@ func set_repeat(val : int) -> void:
 
 	set_dirty(true)
 
-#row_col
-func get_row_col() -> Vector2:
-	return row_col
+#col_row
+func get_col_row() -> Vector2:
+	return col_row
 
-func set_row_col(val : Vector2) -> void:
-	row_col = val
+func set_col_row(val : Vector2) -> void:
+	col_row = val
 
 	set_dirty(true)
 
