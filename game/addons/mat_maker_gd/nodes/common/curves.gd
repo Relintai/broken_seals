@@ -58,8 +58,8 @@ static func curve(x : float, points : PoolRealArray) -> float:
 		var dx : float = x - points[pi];
 		
 		#var d : float = p_"+name+"_"+str(i+1)+"_x - p_"+name+"_"+str(i)+"_x;
-		var d : float = points[pi + 1] - points[pi];
-		
+		var d : float = points[pip1] - points[pi];
+
 		var t : float = dx / d
 		var omt : float = (1.0 - t)
 		var omt2 : float = omt * omt
