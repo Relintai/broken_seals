@@ -305,6 +305,48 @@ func add_slot_vector2(getter : String, setter : String, slot_name : String, step
 	
 	return slot_idx
 
+func add_slot_vector3(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sbx : SpinBox = SpinBox.new()
+	bc.add_child(sbx)
+	
+	var sby : SpinBox = SpinBox.new()
+	bc.add_child(sby)
+	
+	var sbz : SpinBox = SpinBox.new()
+	bc.add_child(sbz)
+	
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	sbx.rounded = false
+	sby.rounded = false
+	sbz.rounded = false
+	sbx.step = step
+	sby.step = step
+	sbz.step = step
+	sbx.min_value = prange.x
+	sbx.max_value = prange.y
+	sby.min_value = prange.x
+	sby.max_value = prange.y
+	sbz.min_value = prange.x
+	sbz.max_value = prange.y
+	
+	var val : Vector3 = _node.call(getter)
+	
+	sbx.value = val.x
+	sby.value = val.y
+	sbz.value = val.z
+
+	sbx.connect("value_changed", self, "on_vector3_spinbox_value_changed", [ slot_idx, sbx, sby, sbz ])
+	sby.connect("value_changed", self, "on_vector3_spinbox_value_changed", [ slot_idx, sbx, sby, sbz ])
+	sbz.connect("value_changed", self, "on_vector3_spinbox_value_changed", [ slot_idx, sbx, sby, sbz ])
+	
+	return slot_idx
+
 func add_slot_vector2_universal(property : MMNodeUniversalProperty) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -486,6 +528,11 @@ func on_float_spinbox_value_changed(val : float, slot_idx) -> void:
 
 func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
 	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
+	
+	_node.call(properties[slot_idx][4], vv)
+
+func on_vector3_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y, spinbox_z) -> void:
+	var vv : Vector3 = Vector3(spinbox_x.value, spinbox_y.value, spinbox_z.value)
 	
 	_node.call(properties[slot_idx][4], vv)
 
