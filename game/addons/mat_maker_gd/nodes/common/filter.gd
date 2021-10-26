@@ -9,16 +9,6 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 
 #main node methods: adjust_hsv, brightness_contrast
 
-#vec3 rgb_to_hsv(vec3 c) {
-#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
-#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
-#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
-#
-#	float d = q.x - min(q.w, q.y);
-#	float e = 1.0e-10;
-#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
-#}
-
 #----------------------
 #colorize.mmg
 #Remaps a greyscale image to a custom gradient
@@ -4188,6 +4178,17 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #			}
 #		],
 
+#vec3 rgb_to_hsv(vec3 c) {
+#	vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
+#	vec4 p = c.g < c.b ? vec4(c.bg, K.wz) : vec4(c.gb, K.xy);
+#	vec4 q = c.r < p.x ? vec4(p.xyw, c.r) : vec4(c.r, p.yzx);
+#
+#	float d = q.x - min(q.w, q.y);
+#	float e = 1.0e-10;
+#	return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);
+#}
+
+
 static func rgb_to_hsv(c : Vector3) -> Vector3:
 	var K : Color = Color(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
 	
@@ -4240,11 +4241,11 @@ static func hsv_to_rgb(c : Vector3) -> Vector3:
 static func adjust_hsv(color : Color, hue : float, saturation : float, value : float) -> Color:
 	var hsv : Vector3 = rgb_to_hsv(Vector3(color.r, color.g, color.b));
 	
-	var x : float = Commons.fract(hsv.x + hue)
-	var y : float = clamp(hsv.y * saturation, 0.0, 1.0)
-	var z : float = clamp(hsv.z * value, 0.0, 1.0)
+	hsv.x += hue
+	hsv.y = clamp(hsv.y * saturation, 0.0, 1.0)
+	hsv.z = clamp(hsv.z * value, 0.0, 1.0)
 	
-	var h : Vector3 = hsv_to_rgb(Vector3(x, y, z))
+	var h : Vector3 = hsv_to_rgb(hsv)
 
 	return Color(h.x, h.y, h.z, color.a);
 

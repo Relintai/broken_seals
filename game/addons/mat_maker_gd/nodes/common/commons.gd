@@ -147,7 +147,7 @@ static func absv2(v : Vector2) -> Vector2:
 static func absv3(v : Vector3) -> Vector3:
 	v.x = abs(v.x)
 	v.y = abs(v.y)
-	v.z = abs(v.y)
+	v.z = abs(v.z)
 	
 	return v
 
