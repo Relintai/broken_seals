@@ -742,8 +742,26 @@ static func repeat(p : Vector3, r : Vector3, pseed : float, randomness : float) 
 #}
 
 static func rotate3d(p : Vector3, a : Vector3) -> Vector3:
-	#todo
-	return Vector3()
+	var rv : Vector3 = Vector3()
+	var c : float = 0
+	var s : float = 0
+	c = cos(a.x)
+	s = sin(a.x)
+	rv.x = p.x
+	rv.y = p.y * c + p.z * s
+	rv.z = -p.y * s + p.z * c
+	c = cos(a.y)
+	s = sin(a.y)
+	p.x = rv.x * c + rv.z * s
+	p.y = rv.y
+	p.z = -rv.x * s + rv.z * c
+	c = cos(a.z)
+	s = sin(a.z)
+	rv.x = p.x * c + p.y * s
+	rv.y = -p.x * s + p.y * c
+	rv.z = p.z
+	
+	return rv
 
 #vec3 circle_repeat_transform(vec3 p, float count) {
 #	float r = 6.28/count;float pa = atan(p.x, p.y);
