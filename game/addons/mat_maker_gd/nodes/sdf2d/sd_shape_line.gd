@@ -10,6 +10,9 @@ export(Vector2) var A : Vector2 = Vector2(-0.3, -0.3)
 export(Vector2) var B : Vector2 = Vector2(0.3, 0.3)
 export(float) var width : float = 0.1
 
+func _init():
+	init_points_11()
+
 func _init_properties():
 	if !output:
 		output = MMNodeUniversalProperty.new()

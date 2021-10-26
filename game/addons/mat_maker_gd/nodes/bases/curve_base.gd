@@ -10,7 +10,15 @@ class Point:
 		ls = nls
 		rs = nrs
 
-export(PoolRealArray) var points = [ 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 ]
+export(PoolRealArray) var points
+
+func init_points_01():
+	if points.size() == 0:
+		points = [ 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 ]
+
+func init_points_11():
+	if points.size() == 0:
+		points = [ 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0 ]
 
 func to_string() -> String:
 	var rv = PoolStringArray()
