@@ -91,7 +91,7 @@ extends Reference
 static func clampv3(v : Vector3, mi : Vector3, ma : Vector3) -> Vector3:
 	v.x = clamp(v.x, mi.x, ma.x)
 	v.y = clamp(v.y, mi.y, ma.y)
-	v.y = clamp(v.z, mi.z, ma.z)
+	v.z = clamp(v.z, mi.z, ma.z)
 	
 	return v
 
@@ -147,7 +147,7 @@ static func absv2(v : Vector2) -> Vector2:
 static func absv3(v : Vector3) -> Vector3:
 	v.x = abs(v.x)
 	v.y = abs(v.y)
-	v.y = abs(v.y)
+	v.z = abs(v.y)
 	
 	return v
 
@@ -160,7 +160,7 @@ static func cosv2(v : Vector2) -> Vector2:
 static func cosv3(v : Vector3) -> Vector3:
 	v.x = cos(v.x)
 	v.y = cos(v.y)
-	v.y = cos(v.y)
+	v.z = cos(v.z)
 	
 	return v
 
