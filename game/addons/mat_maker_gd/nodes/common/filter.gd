@@ -585,24 +585,13 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #invert.mmg
 #A filter that inverts the R, G, and B channels of its input while keeping the A channel unchanged
 
-#		"inputs": [
-#			{
-#				"default": "vec4(1.0, 1.0, 1.0, 1.0)",
-#				"label": "",
-#				"longdesc": "The input image",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "rgba"
-#			}
-#		],
-#		"outputs": [
-#			{
-#				"longdesc": "Shows the inverted image",
-#				"rgba": "vec4(vec3(1.0)-$in($uv).rgb, $in($uv).a)",
-#				"shortdesc": "Output",
-#				"type": "rgba"
-#			}
-#		],
+#Outputs:
+
+#Output - (rgba)
+#vec4(vec3(1.0)-$in($uv).rgb, $in($uv).a)
+
+#Inputs:
+#input, rgba, default vec4(1.0, 1.0, 1.0, 1.0)
 
 #----------------------
 #normal_map.mmg
@@ -4310,7 +4299,6 @@ static func grayscale_luminosity(c : Vector3) -> float:
 
 static func invert(color : Color) -> Color:
 	return Color(1.0 - color.r, 1.0 - color.g, 1.0 - color.b, color.a);
-
 
 #vec3 blend_normal(vec2 uv, vec3 c1, vec3 c2, float opacity) {\n\t
 #	return opacity*c1 + (1.0-opacity)*c2;\n
