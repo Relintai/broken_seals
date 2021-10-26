@@ -446,8 +446,6 @@ static func sdf3d_capsule_z(p : Vector3, r : float, l : float) -> Vector2:
 
 	return Vector2(f, 0.0);
 
-var p_o118934_a = 30.000000000;
-
 #+X: $axis = length($uv.yz),-$uv.x
 #dot(vec2(cos($a*0.01745329251),sin($a*0.01745329251)),vec2($axis))
 
