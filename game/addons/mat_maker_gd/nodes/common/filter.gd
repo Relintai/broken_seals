@@ -4256,14 +4256,15 @@ static func adjust_hsv(color : Color, hue : float, saturation : float, value : f
 #output: vec4(clamp($in($uv).rgb*$contrast+vec3($brightness)+0.5-$contrast*0.5, vec3(0.0), vec3(1.0)), $in($uv).a)
 
 static func brightness_contrast(color : Color, brightness : float, contrast : float) -> Color:
-	var bv : Vector3 = Vector3(brightness, brightness, brightness)
-	var cvv : Vector3 = Vector3(color.r * contrast, color.g * contrast, color.b * contrast)
+	#output: vec4(clamp( $in($uv).rgb*$contrast + vec3($brightness) + 0.5 - $contrast*0.5, vec3(0.0), vec3(1.0)), $in($uv).a)
 	
-	var cv : Vector3 = cvv + bv + Vector3(0.5, 0.5, 0.5) - (Vector3(contrast, contrast, contrast) * 0.5)
+	var cvv : Vector3 = Vector3(color.r, color.g, color.b) * contrast
+	
+	var cv : Vector3 = cvv + Vector3(brightness, brightness, brightness) + Vector3(0.5, 0.5, 0.5) - Vector3(contrast, contrast, contrast) * 0.5
 	
 	var v : Vector3 = Commons.clampv3(cv, Vector3(), Vector3(1, 1, 1))
 	
-	return Color(v.x, v.y, v.z, 1);
+	return Color(v.x, v.y, v.z, color.a);
 
 #greyscale
 
