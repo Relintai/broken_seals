@@ -113,6 +113,15 @@ static func floorv2(a : Vector2) -> Vector2:
 	
 	return v
 	
+static func floorv3(a : Vector3) -> Vector3:
+	var v : Vector3 = Vector3()
+	
+	v.x = floor(a.x)
+	v.y = floor(a.y)
+	v.z = floor(a.z)
+	
+	return v
+	
 static func smoothstepv2(a : float, b : float, c : Vector2) -> Vector2:
 	var v : Vector2 = Vector2()
 	

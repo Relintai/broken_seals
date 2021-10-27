@@ -82,6 +82,50 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #tiler.mmg
 #Tiles several occurences of an input image while adding randomness.
 
+#vec4 $(name_uv)_rch = tiler_$(name)($uv, vec2($tx, $ty), int($overlap), vec2(float($seed)));
+
+#instance
+#vec4 tiler_$(name)(vec2 uv, vec2 tile, int overlap, vec2 _seed) {\n\t
+#	float c = 0.0;\n\t
+#	vec3 rc = vec3(0.0);\n\t
+#	vec3 rc1;\n\t
+#	for (int dx = -overlap; dx <= overlap; ++dx) {\n\t\t
+#		for (int dy = -overlap; dy <= overlap; ++dy) {\n\t\t\t
+#			vec2 pos = fract((floor(uv*tile)+vec2(float(dx), float(dy))+vec2(0.5))/tile-vec2(0.5));\n\t\t\t
+#			vec2 seed = rand2(pos+_seed);\n\t\t\trc1 = rand3(seed);\n\t\t\t
+#			pos = fract(pos+vec2($fixed_offset/tile.x, 0.0)*floor(mod(pos.y*tile.y, 2.0))+$offset*seed/tile);\n\t\t\t
+#			float mask = $mask(fract(pos+vec2(0.5)));\n\t\t\t
+#
+#			if (mask > 0.01) {\n\t\t\t\t
+#				vec2 pv = fract(uv - pos)-vec2(0.5);\n\t\t\t\t
+#				seed = rand2(seed);\n\t\t\t\t
+#					float angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251;\n\t\t\t\t
+#				float ca = cos(angle);\n\t\t\t\t
+#				float sa = sin(angle);\n\t\t\t\t
+#				pv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\t\t
+#				pv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\t\t
+#				pv /= vec2($scale_x, $scale_y);\n\t\t\t\t
+#				pv += vec2(0.5);\n\t\t\t\t
+#				seed = rand2(seed);\n\t\t\t\t
+#				vec2 clamped_pv = clamp(pv, vec2(0.0), vec2(1.0));\n\t\t\t\t
+#				if (pv.x != clamped_pv.x || pv.y != clamped_pv.y) {\n\t\t\t\t\t
+#					continue;\n\t\t\t\t
+#				}\n\t\t\t\t
+#
+#				$select_inputs\n\t\t\t\t
+#
+#				float c1 = $in.variation(pv, $variations ? seed.x : 0.0)*mask*(1.0-$value*seed.x);\n\t\t\t\t
+#				c = max(c, c1);\n\t\t\t\t
+#				rc = mix(rc, rc1, step(c, c1));\n\t\t\t
+#			}\n\t\t
+#		}\n\t
+#	}\n\t
+#
+#	return vec4(rc, c);\n
+#}
+
+
+
 #		"code": "vec4 $(name_uv)_rch = tiler_$(name)($uv, vec2($tx, $ty), int($overlap), vec2(float($seed)));",
 #		"inputs": [
 #			{
