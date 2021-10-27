@@ -1892,13 +1892,30 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	}\t\n
 #}
 
+static func transform(uv : Vector2, translate : Vector2, rotate : float, scale : Vector2, repeat : bool) -> Vector2:
+	var rv : Vector2 = Vector2()
+	uv -= translate
+	uv -= Vector2(0.5, 0.5)
+	rv.x = cos(rotate)*uv.x + sin(rotate)*uv.y
+	rv.y = -sin(rotate)*uv.x + cos(rotate)*uv.y
+	rv /= scale
+	rv += Vector2(0.5, 0.5)
+
+	if (repeat):
+		return Commons.fractv2(rv)
+	else:
+		return Commons.clampv2(rv, Vector2(0, 0), Vector2(1, 1))
 
 #vec2 transform2_clamp(vec2 uv) {\n\t
 #	return clamp(uv, vec2(0.0), vec2(1.0));\n
 #}
-	
+
+static func transform2_clamp(uv : Vector2) -> Vector2:
+	return Commons.clampv2(uv, Vector2(0, 0), Vector2(1, 1))
+
 #vec2 transform2(vec2 uv, vec2 translate, float rotate, vec2 scale) {\n \t
-#	vec2 rv;\n\tuv -= translate;\n\t
+#	vec2 rv;\n\t
+#	uv -= translate;\n\t
 #	uv -= vec2(0.5);\n\t
 #	rv.x = cos(rotate)*uv.x + sin(rotate)*uv.y;\n\t
 #	rv.y = -sin(rotate)*uv.x + cos(rotate)*uv.y;\n\t
@@ -1906,6 +1923,16 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	rv += vec2(0.5);\n\t
 #	return rv;\t\n
 #}
+
+static func transform2(uv : Vector2, translate : Vector2, rotate : float, scale : Vector2) -> Vector2:
+	var rv : Vector2 = Vector2()
+	uv -= translate
+	uv -= Vector2(0.5, 0.5)
+	rv.x = cos(rotate)*uv.x + sin(rotate)*uv.y
+	rv.y = -sin(rotate)*uv.x + cos(rotate)*uv.y
+	rv /= scale
+	rv += Vector2(0.5, 0.5)
+	return rv
 
 #vec2 rotate(vec2 uv, vec2 center, float rotate) {\n \t
 #	vec2 rv;\n\t
@@ -1916,6 +1943,14 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return rv;\t\n
 #}
 
+static func rotate(uv : Vector2, center : Vector2, rotate : float) -> Vector2:
+	var rv : Vector2 = Vector2()
+	uv -= center
+	rv.x = cos(rotate)*uv.x + sin(rotate)*uv.y
+	rv.y = -sin(rotate)*uv.x + cos(rotate)*uv.y
+	rv += center
+	return rv
+
 #vec2 scale(vec2 uv, vec2 center, vec2 scale) {\n\t
 #	uv -= center;\n\t
 #	uv /= scale;\n\t
@@ -1923,9 +1958,25 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return uv;\n
 #}
 
+static func scale(uv : Vector2, center : Vector2, scale : Vector2) -> Vector2:
+	uv -= center
+	uv /= scale
+	uv += center
+	return uv
+
+#vec2 uvmirror_h(vec2 uv, float offset) {\n\t
+#	return vec2(max(0, abs(uv.x-0.5)-0.5*offset)+0.5, uv.y);
+#}
+
+static func uvmirror_h(uv : Vector2, offset : float) -> Vector2:
+	return Vector2(max(0, abs(uv.x - 0.5) - 0.5 * offset)+0.5, uv.y)
+
 #vec2 uvmirror_v(vec2 uv, float offset) {\n\t
 #	return vec2(uv.x, max(0, abs(uv.y-0.5)-0.5*offset)+0.5);\n
 #}
+
+static func uvmirror_v(uv : Vector2, offset : float) -> Vector2:
+	return Vector2(uv.x, max(0, abs(uv.y - 0.5) - 0.5 * offset) + 0.5)
 
 #vec2 kal_rotate(vec2 uv, float count, float offset) {\n\t
 #	float pi = 3.14159265359;\n\t
@@ -1939,13 +1990,27 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return vec2(0.5)+l*vec2(cos(a), sin(a));\n
 #}
 
+static func kal_rotate(uv : Vector2, count : float, offset : float) -> Vector2:
+	var pi : float = 3.14159265359
+	offset *= pi / 180.0
+	offset += pi * (1.0/ count + 0.5)
+	uv -= Vector2(0.5, 0.5)
+
+	var l : float = uv.length()
+	var a : float = Commons.modf(atan2(uv.y, uv.x) + offset, 2.0 * pi / count) - offset
+
+	return Vector2(0.5, 0.5) + l * Vector2(cos(a), sin(a))
 
 #vec2 get_from_tileset(float count, float seed, vec2 uv) {\n\t
 #	return clamp((uv+floor(rand2(vec2(seed))*count))/count, vec2(0.0), vec2(1.0));\n
 #}
 
+static func get_from_tileset(count : float, pseed : float, uv : Vector2) -> Vector2:
+	return Commons.clampv2((uv + Commons.floorv2(Commons.rand2(Vector2(pseed, pseed))*count))/count, Vector2(0, 0), Vector2(1, 1))
+
 #vec2 custom_uv_transform(vec2 uv, vec2 cst_scale, float rnd_rotate, float rnd_scale, vec2 seed) {\n\t
-#	seed = rand2(seed);\n\tuv -= vec2(0.5);\n\t
+#	seed = rand2(seed);\n\t
+#	uv -= vec2(0.5);\n\t
 #	float angle = (seed.x * 2.0 - 1.0) * rnd_rotate;\n\t
 #	float ca = cos(angle);\n\t
 #	float sa = sin(angle);\n\t
@@ -1957,5 +2022,15 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	return uv;\n
 #}
 
+static func custom_uv_transform(uv : Vector2, cst_scale : Vector2, rnd_rotate : float, rnd_scale : float, pseed : Vector2) -> Vector2:
+	pseed = Commons.rand2(pseed)
+	uv -= Vector2(0.5, 0.5)
+	var angle : float = (pseed.x * 2.0 - 1.0) * rnd_rotate
+	var ca : float = cos(angle)
+	var sa : float = sin(angle)
+	uv = Vector2(ca * uv.x + sa * uv.y, -sa * uv.x + ca * uv.y)
+	uv *= (pseed.y-0.5)*2.0*rnd_scale+1.0
+	uv /= cst_scale
+	uv += Vector2(0.5, 0.5)
 
-
+	return uv

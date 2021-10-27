@@ -91,6 +91,31 @@ func get_owner_value(uv : Vector2):
 	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
 		return to_color(owner.get_property_value(uv))
 
+func get_value_or_zero(uv : Vector2, skip_owner_val : bool = false):
+	if get_value_from_owner && !skip_owner_val:
+		return get_owner_value(uv)
+	
+	if !input_property:
+		return get_zero_value()
+	
+	if default_type == input_property.default_type:
+		return input_property.get_value(uv)
+	
+	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
+		return to_int(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
+		return to_float(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2:
+		return to_vector2(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR3:
+		return to_vector3(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
+		return to_color(input_property.get_value(uv))
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		return to_color(input_property.get_value(uv))
+		
+	return input_property.get_value(uv)
+
 func get_value_sdf3d(uv3 : Vector3, skip_owner_val : bool = false) -> Vector2:
 	if get_value_from_owner && !skip_owner_val:
 		return owner.get_property_value_sdf3d(uv3)
@@ -197,6 +222,22 @@ func set_value(val):
 		return
 		
 	set_default_value(val)
+
+func get_zero_value():
+	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
+		return 0
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT:
+		return 0.0
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2:
+		return Vector2()
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR3:
+		return Vector3()
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR:
+		return Color()
+	elif default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE:
+		return Color()
+		
+	return null
 
 func get_default_value(uv : Vector2 = Vector2()):
 	if default_type == MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_INT:
