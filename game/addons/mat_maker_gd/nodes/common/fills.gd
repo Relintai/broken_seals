@@ -511,11 +511,24 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	}
 #}
 
+static func flood_fill_preprocess(uv : Vector2, c : float, s : float) -> Color:
+	if (c > 0.5):
+		return Color(0, 0, 0, 0)
+	else:
+		uv = Commons.floorv2(uv * s) / s
+		var f : float = 1.0 / s
+		return Color(uv.x, uv.y, f, f)
+
 #vec3 fill_to_uv_stretch(vec2 coord, vec4 bb, float seed) {
 #	vec2 uv_islands = fract(coord-bb.xy)/bb.zw;
 #	float random_value = rand(vec2(seed)+bb.xy+bb.zw);
 #	return vec3(uv_islands, random_value);
 #}
+
+static func fill_to_uv_stretch(coord : Vector2, bb : Color, pseed : float) -> Vector3:
+	var uv_islands : Vector2 = Commons.fractv2(coord - Vector2(bb.r, bb.g)) / Vector2(bb.b, bb.a)
+	var random_value : float = Commons.rand(Vector2(pseed, pseed) + Vector2(bb.r, bb.g) + Vector2(bb.b, bb.a))
+	return Vector3(uv_islands.x, uv_islands.y, random_value)
 	
 #vec3 fill_to_uv_square(vec2 coord, vec4 bb, float seed) {
 #	vec2 uv_islands;
@@ -531,3 +544,16 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #	float random_value = rand(vec2(seed)+bb.xy+bb.zw);
 #	return vec3(uv_islands, random_value);
 #}
+
+static func fill_to_uv_square(coord : Vector2, bb : Color, pseed : float) -> Vector3:
+	var uv_islands : Vector2 = Vector2()
+
+	if (bb.b > bb.a):
+		var adjusted_coord : Vector2 = coord + Vector2(0.0, (bb.b - bb.a) / 2.0);
+		uv_islands = Commons.fractv2(adjusted_coord - Vector2(bb.r, bb.g)) / Vector2(bb.b, bb.b)
+	else:
+		var adjusted_coord : Vector2 = coord + Vector2((bb.a - bb.b) / 2.0, 0.0);
+		uv_islands = Commons.fractv2(adjusted_coord - Vector2(bb.r, bb.g)) / Vector2(bb.a, bb.a)
+
+	var random_value : float = Commons.rand(Vector2(pseed, pseed) + Vector2(bb.r, bb.g) + Vector2(bb.b, bb.a))
+	return Vector3(uv_islands.x, uv_islands.y, random_value)
