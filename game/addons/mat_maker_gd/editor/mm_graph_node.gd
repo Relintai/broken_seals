@@ -197,6 +197,18 @@ func add_slot_int(getter : String, setter : String, slot_name : String, prange :
 	
 	return slot_idx
 
+func add_slot_bool(getter : String, setter : String, slot_name : String) -> int:
+	var cb : CheckBox = CheckBox.new()
+	cb.text = slot_name
+	
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, cb)
+	
+	cb.pressed = _node.call(getter)
+	
+	cb.connect("toggled", _node, setter)
+	
+	return slot_idx
+
 func add_slot_label_universal(property : MMNodeUniversalProperty) -> int:
 	var l : Label = Label.new()
 	l.text = property.slot_name
