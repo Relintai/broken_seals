@@ -110,6 +110,8 @@ func add_slot_color(getter : String, setter : String) -> int:
 	
 	cp.color = _node.call(getter)
 	
+	cp.connect("color_changed", _node, setter)
+	
 	return slot_idx
 
 func add_slot_color_universal(property : MMNodeUniversalProperty) -> int:
