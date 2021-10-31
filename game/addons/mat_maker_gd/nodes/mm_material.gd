@@ -13,6 +13,7 @@ export(Array) var nodes : Array
 var initialized : bool = false
 var rendering : bool = false
 var queued_render : bool = false
+var render_cancelled : bool = false
 
 func initialize():
 	if !initialized:
@@ -78,7 +79,12 @@ func render_threaded() -> void:
 	ThreadPool.add_job(j)
 
 func _thread_func() -> void:
+	if render_cancelled:
+		rendering = false
+		return
+	
 	rendering = true
+	render_cancelled = false
 	
 	var did_render : bool = true
 		
@@ -88,6 +94,10 @@ func _thread_func() -> void:
 		for n in nodes:
 			if n && n.render(self):
 				did_render = true
+				
+			if render_cancelled:
+				rendering = false
+				return
 				
 	rendering = false
 	
