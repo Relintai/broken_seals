@@ -257,7 +257,7 @@ func get_default_value(uv : Vector2 = Vector2()):
 			image = override_image
 			
 		if !image:
-			return Color()
+			return default_color
 
 		image.lock()
 		var x : int = uv.x * image.get_width()
