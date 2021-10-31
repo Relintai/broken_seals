@@ -13,11 +13,13 @@ export(Array) var nodes : Array
 var initialized : bool = false
 var rendering : bool = false
 var queued_render : bool = false
-var render_cancelled : bool = false
+var job : ThreadPoolExecuteJob = ThreadPoolExecuteJob.new()
 
 func initialize():
 	if !initialized:
 		initialized = true
+		
+		job.setup(self, "_thread_func")
 		
 		for n in nodes:
 			n.connect("changed", self, "on_node_changed")
@@ -66,6 +68,8 @@ func render_non_threaded() -> void:
 				did_render = true
 
 func render_threaded() -> void:
+	job.cancelled = false
+	
 	if rendering:
 		queued_render = true
 		return
@@ -73,18 +77,16 @@ func render_threaded() -> void:
 	if !initialized:
 		initialize()
 	
-	var j : ThreadPoolExecuteJob = ThreadPoolExecuteJob.new()
-	j.setup(self, "_thread_func")
-	
-	ThreadPool.add_job(j)
+	if !ThreadPool.has_job(job):
+		ThreadPool.add_job(job)
 
 func _thread_func() -> void:
-	if render_cancelled:
+	if job.cancelled:
 		rendering = false
 		return
 	
 	rendering = true
-	render_cancelled = false
+	job.cancelled = false
 	
 	var did_render : bool = true
 		
@@ -95,7 +97,7 @@ func _thread_func() -> void:
 			if n && n.render(self):
 				did_render = true
 				
-			if render_cancelled:
+			if job.cancelled:
 				rendering = false
 				return
 				
@@ -104,6 +106,12 @@ func _thread_func() -> void:
 	if queued_render:
 		queued_render = false
 		_thread_func()
+
+func cancel_render_and_wait() -> void:
+	if rendering:
+		ThreadPool.cancel_task_wait(job)
+		
+		job.cancelled = false
 
 func on_node_changed() -> void:
 	call_deferred("render")

@@ -58,6 +58,8 @@ func recreate() -> void:
 	if !_material:
 		return
 		
+	_material.cancel_render_and_wait()
+		
 	for n in _material.nodes:
 		var gn : GraphNode = MMGraphNode.new()
 		gn.slot_colors = slot_colors
@@ -98,6 +100,8 @@ func set_mmmaterial(object : MMMateial):
 func on_graph_edit_connection_request(from: String, from_slot: int, to: String, to_slot: int):
 	var from_node : GraphNode = _graph_edit.get_node(from)
 	var to_node : GraphNode = _graph_edit.get_node(to)
+	
+	_material.cancel_render_and_wait()
 
 	if from_node.connect_slot(from_slot, to_node, to_slot):
 		_graph_edit.connect_node(from, from_slot, to, to_slot)
@@ -105,12 +109,15 @@ func on_graph_edit_connection_request(from: String, from_slot: int, to: String, 
 func on_graph_edit_disconnection_request(from: String, from_slot: int, to: String, to_slot: int):
 	var from_node : GraphNode = _graph_edit.get_node(from)
 	var to_node : GraphNode = _graph_edit.get_node(to)
+	
+	_material.cancel_render_and_wait()
 
 	if from_node.disconnect_slot(from_slot, to_node, to_slot):
 		_graph_edit.disconnect_node(from, from_slot, to, to_slot)
 
 func on_graph_node_close_request(node : GraphNode) -> void:
 	if _material:
+		_material.cancel_render_and_wait()
 		_material.remove_node(node._node)
 		recreate()
 
@@ -122,6 +129,8 @@ func _on_AddPopup_ok_pressed(script_path : String):
 		return
 	
 	ensure_objs()
+	
+	_material.cancel_render_and_wait()
 
 	var sc = load(script_path)
 	var nnode : MMNode = sc.new()
