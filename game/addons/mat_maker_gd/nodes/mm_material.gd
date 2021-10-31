@@ -112,6 +112,8 @@ func cancel_render_and_wait() -> void:
 		ThreadPool.cancel_task_wait(job)
 		
 		job.cancelled = false
+		
+		pass
 
 func on_node_changed() -> void:
 	call_deferred("render")
