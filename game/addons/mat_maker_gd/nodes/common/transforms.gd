@@ -940,481 +940,210 @@ const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
 #splatter.mmg
 #Spreads several occurences of an input image randomly.
 
-#		"code": "vec4 $(name_uv)_rch = splatter_$(name)($uv, int($count), vec2(float($seed)));",
-#		"inputs": [
-#			{
-#				"default": "0.0",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The input image or atlas of 4 or 16 input images",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "f"
-#			},
-#			{
-#				"default": "1.0",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The mask applied to the pattern",
-#				"name": "mask",
-#				"shortdesc": "Mask",
-#				"type": "f"
-#			}
-#		],
-#		"instance": "vec4 splatter_$(name)(vec2 uv, int count, vec2 seed) {\n\tfloat c = 0.0;\n\tvec3 rc = vec3(0.0);\n\tvec3 rc1;\n\tfor (int i = 0; i < count; ++i) {\n\t\tseed = rand2(seed);\n\t\trc1 = rand3(seed);\n\t\tfloat mask = $mask(fract(seed+vec2(0.5)));\n\t\tif (mask > 0.01) {\n\t\t\tvec2 pv = fract(uv - seed)-vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\tfloat angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251;\n\t\t\tfloat ca = cos(angle);\n\t\t\tfloat sa = sin(angle);\n\t\t\tpv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\tpv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\tpv /= vec2($scale_x, $scale_y);\n\t\t\tpv += vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\tvec2 clamped_pv = clamp(pv, vec2(0.0), vec2(1.0));\n\t\t\tif (pv.x != clamped_pv.x || pv.y != clamped_pv.y) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\t$select_inputs\n\t\t\tfloat c1 = $in.variation(pv, $variations ? seed.x : 0.0)*mask*(1.0-$value*seed.x);\n\t\t\tc = max(c, c1);\n\t\t\trc = mix(rc, rc1, step(c, c1));\n\t\t}\n\t}\n\treturn vec4(rc, c);\n}\n",
-#		"outputs": [
-#			{
-#				"f": "$(name_uv)_rch.a",
-#				"longdesc": "Shows the generated pattern",
-#				"shortdesc": "Output",
-#				"type": "f"
-#			},
-#			{
-#				"longdesc": "Shows a random color for each instance of the input image",
-#				"rgb": "$(name_uv)_rch.rgb",
-#				"shortdesc": "Instance map",
-#				"type": "rgb"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 10,
-#				"label": "Count",
-#				"longdesc": "The number of occurences of the input image",
-#				"max": 100,
-#				"min": 1,
-#				"name": "count",
-#				"shortdesc": "Count",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"default": 0,
-#				"label": "Inputs",
-#				"longdesc": "The input type of the node:\n- 1: single image\n- 4: atlas of 4 images\n- 16: atlas of 16 images\nAtlases can be created using the Tile2x2 node.",
-#				"name": "select_inputs",
-#				"shortdesc": "Input",
-#				"type": "enum",
-#				"values": [
-#					{
-#						"name": "1",
-#						"value": " "
-#					},
-#					{
-#						"name": "4",
-#						"value": "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
-#					},
-#					{
-#						"name": "16",
-#						"value": "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
-#					}
-#				]
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale X",
-#				"longdesc": "The scale of input images on the X axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_x",
-#				"shortdesc": "Scale.x",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale Y",
-#				"longdesc": "The scale of input images on the Y axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_y",
-#				"shortdesc": "Scale.y",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Rotate",
-#				"longdesc": "The random rotation applied to each image instance",
-#				"max": 180,
-#				"min": 0,
-#				"name": "rotate",
-#				"shortdesc": "RndRotate",
-#				"step": 0.1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Scale",
-#				"longdesc": "The random scale applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "scale",
-#				"shortdesc": "RndScale",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0.5,
-#				"label": "Rnd Value",
-#				"longdesc": "The random greyscale value applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "value",
-#				"shortdesc": "RndValue",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"default": false,
-#				"label": "Variations",
-#				"longdesc": "Check to splat variations of the input",
-#				"name": "variations",
-#				"shortdesc": "Variations",
-#				"type": "boolean"
-#			}
-#		]
+#vec4 $(name_uv)_rch = splatter_$(name)($uv, int($count), vec2(float($seed)));
+
+#vec4 splatter_$(name)(vec2 uv, int count, vec2 seed) {\n\t
+#	float c = 0.0;\n\t
+#	vec3 rc = vec3(0.0);\n\t
+#	vec3 rc1;\n\t
+#
+#	for (int i = 0; i < count; ++i) {\n\t\t
+#		seed = rand2(seed);\n\t\t
+#		rc1 = rand3(seed);\n\t\t
+#		float mask = $mask(fract(seed+vec2(0.5)));\n\t\t
+#
+#		if (mask > 0.01) {\n\t\t\t
+#			vec2 pv = fract(uv - seed)-vec2(0.5);\n\t\t\t
+#			seed = rand2(seed);\n\t\t\t
+#			float angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251;\n\t\t\t
+#			float ca = cos(angle);\n\t\t\t
+#			float sa = sin(angle);\n\t\t\t
+#			pv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\t
+#			pv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\t
+#			pv /= vec2($scale_x, $scale_y);\n\t\t\t
+#			pv += vec2(0.5);\n\t\t\t
+#			seed = rand2(seed);\n\t\t\t
+#			vec2 clamped_pv = clamp(pv, vec2(0.0), vec2(1.0));\n\t\t\t
+#
+#			if (pv.x != clamped_pv.x || pv.y != clamped_pv.y) {\n\t\t\t\t
+#				continue;\n\t\t\t
+#			}\n\t\t\t
+#
+#			$select_inputs\n\t\t\t
+#
+#			float c1 = $in.variation(pv, $variations ? seed.x : 0.0)*mask*(1.0-$value*seed.x);\n\t\t\t
+#			c = max(c, c1);\n\t\t\t
+#			rc = mix(rc, rc1, step(c, c1));\n\t\t
+#		}\n\t
+#	}\n\t
+#
+#	return vec4(rc, c);\n
+#}
+
+#Inputs:
+
+#in, float, default: 0, - The input image or atlas of 4 or 16 input images
+#Mask, float, default: 1, - The mask applied to the pattern
+
+#Outputs:
+#Output, float, Shows the generated pattern
+#$(name_uv)_rch.a
+
+#Instance map, rgb, Shows a random color for each instance of the input image
+#$(name_uv)_rch.rgb
+
+#select_inputs enum
+#1,  " "
+#4, "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
+#16, "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
+
+#Parameters:
+#count, int, default 25, min 1, max 100, - The number of occurences of the input image
+#select_inputs (Inputs), enum, default 0, values 1, 4, 16
+#tile, Vector2, default 4, min:1, max:64, step:1 - The number of columns of the tiles pattern
+#overlap, float, default 1, min 0, max 5, step 1 - The number of neighbour tiles an instance of the input image can overlap. Set this parameter to the lowest value that generates the expected result (where all instances are fully visible) to improve performance.
+#scale, Vector2, default 1, min:0, max:2, step:0.01 - "The scale of input images on the X axis
+#rotate (rnd_rotate), float, default 0, min 0, max 180, step 0.1
+#scale (rnd_scale), float, default 0, min 0, max 1, step 0.01 - The random scale applied to each image instance
+#value (rnd_value), float, default 0, min 0, max 1, step 0.01
 
 #----------------------
 #splatter_color.mmg
 #preads several occurences of an input image randomly.
 
-#		"inputs": [
-#			{
-#				"default": "vec4(0.0, 0.0, 0.0, 0.0)",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The input image or atlas of 4 or 16 input images",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "rgba"
-#			},
-#			{
-#				"default": "1.0",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The mask applied to the pattern",
-#				"name": "mask",
-#				"shortdesc": "Mask",
-#				"type": "f"
-#			}
-#		],
-#		"instance": "vec4 splatter_$(name)(vec2 uv, int count, vec2 seed) {\n\tvec4 c = vec4(0.0);\n\tfor (int i = 0; i < count; ++i) {\n\t\tseed = rand2(seed);\n\t\tfloat mask = $mask(fract(seed+vec2(0.5)));\n\t\tif (mask > 0.01) {\n\t\t\tvec2 pv = fract(uv - seed)-vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\tfloat angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251;\n\t\t\tfloat ca = cos(angle);\n\t\t\tfloat sa = sin(angle);\n\t\t\tpv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\tpv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\tpv /= vec2($scale_x, $scale_y);\n\t\t\tpv += vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\tif (pv != clamp(pv, vec2(0.0), vec2(1.0))) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\t$select_inputs\n\t\t\tvec4 n = $in.variation(pv, $variations ? seed.x : 0.0);\n\t\t\tfloat na = n.a*mask*(1.0-$opacity*seed.x);\n\t\t\tfloat a = (1.0-c.a)*(1.0*na);\n\t\t\tc = mix(c, n, na);\n\t\t}\n\t}\n\treturn c;\n}\n",
-#		"outputs": [
-#			{
-#				"longdesc": "Shows the generated pattern",
-#				"rgba": "splatter_$(name)($uv, int($count), vec2(float($seed)))",
-#				"shortdesc": "Output",
-#				"type": "rgba"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 10,
-#				"label": "Count",
-#				"longdesc": "The number of occurences of the input image",
-#				"max": 100,
-#				"min": 1,
-#				"name": "count",
-#				"shortdesc": "Count",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"default": 0,
-#				"label": "Inputs",
-#				"longdesc": "The input type of the node:\n- 1: single image\n- 4: atlas of 4 images\n- 16: atlas of 16 images\nAtlases can be created using the Tile2x2 node.",
-#				"name": "select_inputs",
-#				"shortdesc": "Input",
-#				"type": "enum",
-#				"values": [
-#					{
-#						"name": "1",
-#						"value": " "
-#					},
-#					{
-#						"name": "4",
-#						"value": "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
-#					},
-#					{
-#						"name": "16",
-#						"value": "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
-#					}
-#				]
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale X",
-#				"longdesc": "The scale of input images on the X axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_x",
-#				"shortdesc": "Scale.x",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale Y",
-#				"longdesc": "The scale of input images on the Y axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_y",
-#				"shortdesc": "Scale.y",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Rotate",
-#				"longdesc": "The random rotation applied to each image instance",
-#				"max": 180,
-#				"min": 0,
-#				"name": "rotate",
-#				"shortdesc": "RndRotate",
-#				"step": 0.1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Scale",
-#				"longdesc": "The random scale applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "scale",
-#				"shortdesc": "RndScale",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0.5,
-#				"label": "Rnd Opacity",
-#				"longdesc": "The random opacity applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "opacity",
-#				"shortdesc": "RndOpacity",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"default": false,
-#				"label": "Variations",
-#				"longdesc": "Check to splat variations of the input",
-#				"name": "variations",
-#				"shortdesc": "Variations",
-#				"type": "boolean"
-#			}
-#		]
+#vec4 splatter_$(name)(vec2 uv, int count, vec2 seed) {\n\t
+#	vec4 c = vec4(0.0);\n\t
+#
+#	for (int i = 0; i < count; ++i) {\n\t\t
+#		seed = rand2(seed);\n\t\t
+#		float mask = $mask(fract(seed+vec2(0.5)));\n\t\t
+#
+#		if (mask > 0.01) {\n\t\t\t
+#			vec2 pv = fract(uv - seed)-vec2(0.5);\n\t\t\t
+#			seed = rand2(seed);\n\t\t\t
+#			float angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251;\n\t\t\t
+#			float ca = cos(angle);\n\t\t\t
+#			float sa = sin(angle);\n\t\t\t
+#			pv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\t
+#			pv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\t
+#			pv /= vec2($scale_x, $scale_y);\n\t\t\tpv += vec2(0.5);\n\t\t\t
+#			seed = rand2(seed);\n\t\t\t
+#
+#			if (pv != clamp(pv, vec2(0.0), vec2(1.0))) {\n\t\t\t\t
+#				continue;\n\t\t\t
+#			}\n\t\t\t
+#
+#			$select_inputs\n\t\t\t
+#
+#			vec4 n = $in.variation(pv, $variations ? seed.x : 0.0);\n\t\t\t
+#
+#			float na = n.a*mask*(1.0-$opacity*seed.x);\n\t\t\t
+#			float a = (1.0-c.a)*(1.0*na);\n\t\t\t
+#			c = mix(c, n, na);\n\t\t
+#		}\n\t
+#	}\n\t
+#
+#	return c;\n
+#}
+
+#Inputs:
+
+#in, rgba, default: 0, - The input image or atlas of 4 or 16 input images
+#Mask, float, default: 1, - The mask applied to the pattern
+
+#Outputs:
+#Output, rgba, Shows the generated pattern
+#splatter_$(name)($uv, int($count), vec2(float($seed)))
+
+#select_inputs enum
+#1,  " "
+#4, "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
+#16, "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
+
+#Parameters:
+#count, int, default 25, min 1, max 100, - The number of occurences of the input image
+#select_inputs (Inputs), enum, default 0, values 1, 4, 16
+#tile, Vector2, default 4, min:1, max:64, step:1 - The number of columns of the tiles pattern
+#overlap, float, default 1, min 0, max 5, step 1 - The number of neighbour tiles an instance of the input image can overlap. Set this parameter to the lowest value that generates the expected result (where all instances are fully visible) to improve performance.
+#scale, Vector2, default 1, min:0, max:2, step:0.01 - "The scale of input images on the X axis
+#rotate (rnd_rotate), float, default 0, min 0, max 180, step 0.1
+#scale (rnd_scale), float, default 0, min 0, max 1, step 0.01 - The random scale applied to each image instance
+#value (rnd_value), float, default 0, min 0, max 1, step 0.01
+#variations bool
 
 #----------------------
 #circle_splatter.mmg
 #Spreads several occurences of an input image in a circle or spiral pattern.
 
-#		"code": "vec4 $(name_uv)_rch = splatter_$(name)($uv, int($count), int($rings), vec2(float($seed)));",
-#		"inputs": [
-#			{
-#				"default": "0.0",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The input image or atlas of 4 or 16 input images",
-#				"name": "in",
-#				"shortdesc": "Input",
-#				"type": "f"
-#			},
-#			{
-#				"default": "1.0",
-#				"function": true,
-#				"label": "",
-#				"longdesc": "The mask applied to the pattern",
-#				"name": "mask",
-#				"shortdesc": "Mask",
-#				"type": "f"
-#			}
-#		],
-#		"instance": "vec4 splatter_$(name)(vec2 uv, int count, int rings, vec2 seed) {\n\tfloat c = 0.0;\n\tvec3 rc = vec3(0.0);\n\tvec3 rc1;\n\tseed = rand2(seed);\n\tfor (int i = 0; i < count; ++i) {\n\t\tfloat a = -1.57079632679+6.28318530718*float(i)*$rings/float(count);\n\t\tfloat rings_distance = ceil(float(i+1)*float(rings)/float(count))/float(rings);\n\t\tfloat spiral_distance = float(i+1)/float(count);\n\t\tvec2 pos = $radius*mix(rings_distance, spiral_distance, $spiral)*vec2(cos(a), sin(a));\n\t\tfloat mask = $mask(fract(pos-vec2(0.5)));\n\t\tif (mask > 0.01) {\n\t\t\tvec2 pv = uv-0.5-pos;\n\t\t\trc1 = rand3(seed);\n\t\t\tseed = rand2(seed);\n\t\t\tfloat angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251 + (a+1.57079632679) * $i_rotate;\n\t\t\tfloat ca = cos(angle);\n\t\t\tfloat sa = sin(angle);\n\t\t\tpv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\tpv /= mix(1.0, float(i+1)/float(count+1), $i_scale);\n\t\t\tpv /= vec2($scale_x, $scale_y);\n\t\t\tpv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\tpv += vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\tif (pv != clamp(pv, vec2(0.0), vec2(1.0))) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\t$select_inputs\n\t\t\tfloat c1 = $in(pv)*mask*(1.0-$value*seed.x);\n\t\t\tc = max(c, c1);\n\t\t\trc = mix(rc, rc1, step(c, c1));\n\t\t}\n\t}\n\treturn vec4(rc, c);\n}\n",
-#		"outputs": [
-#			{
-#				"f": "$(name_uv)_rch.a",
-#				"longdesc": "Shows the generated pattern",
-#				"shortdesc": "Output",
-#				"type": "f"
-#			},
-#			{
-#				"longdesc": "Shows a random color for each instance of the input image",
-#				"rgb": "$(name_uv)_rch.rgb",
-#				"shortdesc": "Instance map",
-#				"type": "rgb"
-#			}
-#		],
-#		"parameters": [
-#			{
-#				"control": "None",
-#				"default": 10,
-#				"label": "Count",
-#				"longdesc": "The number of occurences of the input image",
-#				"max": 256,
-#				"min": 1,
-#				"name": "count",
-#				"shortdesc": "Count",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Rings",
-#				"longdesc": "The number of rings of the circle pattern",
-#				"max": 16,
-#				"min": 1,
-#				"name": "rings",
-#				"shortdesc": "Rings",
-#				"step": 1,
-#				"type": "float"
-#			},
-#			{
-#				"default": 0,
-#				"label": "Inputs",
-#				"longdesc": "The input type of the node:\n- 1: single image\n- 4: atlas of 4 images\n- 16: atlas of 16 images\nAtlases can be created using the Tile2x2 node.",
-#				"name": "select_inputs",
-#				"shortdesc": "Input",
-#				"type": "enum",
-#				"values": [
-#					{
-#						"name": "1",
-#						"value": " "
-#					},
-#					{
-#						"name": "4",
-#						"value": "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
-#					},
-#					{
-#						"name": "16",
-#						"value": "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
-#					}
-#				]
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale X",
-#				"longdesc": "The scale of input images on the X axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_x",
-#				"shortdesc": "Scale.x",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 1,
-#				"label": "Scale Y",
-#				"longdesc": "The scale of input images on the Y axis",
-#				"max": 2,
-#				"min": 0,
-#				"name": "scale_y",
-#				"shortdesc": "Scale.y",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0.25,
-#				"label": "Radius",
-#				"longdesc": "The radius of the outer circle pattern",
-#				"max": 0.5,
-#				"min": 0,
-#				"name": "radius",
-#				"shortdesc": "Radius",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Spiral",
-#				"longdesc": "The type of pattern:\n- 0: circles\n- 1: spiral",
-#				"max": 1,
-#				"min": 0,
-#				"name": "spiral",
-#				"shortdesc": "Spiral",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Inc Rotate",
-#				"longdesc": "The rotate increment along the pattern",
-#				"max": 1,
-#				"min": 0,
-#				"name": "i_rotate",
-#				"shortdesc": "IncRotate",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Inc Scale",
-#				"longdesc": "The scale increment of the pattern",
-#				"max": 1,
-#				"min": 0,
-#				"name": "i_scale",
-#				"shortdesc": "IncScale",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Rotate",
-#				"longdesc": "The random rotation applied to each image instance",
-#				"max": 180,
-#				"min": 0,
-#				"name": "rotate",
-#				"shortdesc": "RndRotate",
-#				"step": 0.1,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0,
-#				"label": "Rnd Scale",
-#				"longdesc": "The random scale applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "scale",
-#				"shortdesc": "RndScale",
-#				"step": 0.01,
-#				"type": "float"
-#			},
-#			{
-#				"control": "None",
-#				"default": 0.5,
-#				"label": "Rnd Value",
-#				"longdesc": "The random greyscale value applied to each image instance",
-#				"max": 1,
-#				"min": 0,
-#				"name": "value",
-#				"shortdesc": "RndValue",
-#				"step": 0.01,
-#				"type": "float"
-#			}
-#		]
+#vec4 $(name_uv)_rch = splatter_$(name)($uv, int($count), int($rings), vec2(float($seed)));
+
+#vec4 splatter_$(name)(vec2 uv, int count, int rings, vec2 seed) {\n\t
+#	float c = 0.0;\n\t
+#	vec3 rc = vec3(0.0);\n\t
+#	vec3 rc1;\n\t
+#	seed = rand2(seed);\n\t
+#
+#	for (int i = 0; i < count; ++i) {\n\t\t
+#		float a = -1.57079632679+6.28318530718*float(i)*$rings/float(count);\n\t\t
+#		float rings_distance = ceil(float(i+1)*float(rings)/float(count))/float(rings);\n\t\t
+#		float spiral_distance = float(i+1)/float(count);\n\t\t
+#		vec2 pos = $radius*mix(rings_distance, spiral_distance, $spiral)*vec2(cos(a), sin(a));\n\t\t
+#		float mask = $mask(fract(pos-vec2(0.5)));\n\t\t
+#
+#		if (mask > 0.01) {\n\t\t\t
+#			vec2 pv = uv-0.5-pos;\n\t\t\t
+#			rc1 = rand3(seed);\n\t\t\tseed = rand2(seed);\n\t\t\t
+#			float angle = (seed.x * 2.0 - 1.0) * $rotate * 0.01745329251 + (a+1.57079632679) * $i_rotate;\n\t\t\t
+#			float ca = cos(angle);\n\t\t\t
+#			float sa = sin(angle);\n\t\t\t
+#			pv = vec2(ca*pv.x+sa*pv.y, -sa*pv.x+ca*pv.y);\n\t\t\t
+#			pv /= mix(1.0, float(i+1)/float(count+1), $i_scale);\n\t\t\t
+#			pv /= vec2($scale_x, $scale_y);\n\t\t\t
+#			pv *= (seed.y-0.5)*2.0*$scale+1.0;\n\t\t\t
+#			pv += vec2(0.5);\n\t\t\tseed = rand2(seed);\n\t\t\t
+#
+#			if (pv != clamp(pv, vec2(0.0), vec2(1.0))) {\n\t\t\t\t
+#				continue;\n\t\t\t
+#			}\n\t\t\t
+#
+#			$select_inputs\n\t\t\t
+#
+#			float c1 = $in(pv)*mask*(1.0-$value*seed.x);\n\t\t\t
+#
+#			c = max(c, c1);\n\t\t\trc = mix(rc, rc1, step(c, c1));\n\t\t
+#		}\n\t
+#	}\n\t
+#
+#	return vec4(rc, c);\n
+#}
+
+
+#Inputs:
+
+#in, float, default: 0, - The input image or atlas of 4 or 16 input images
+#Mask, float, default: 1, - The mask applied to the pattern
+
+#Outputs:
+#Output, float, Shows the generated pattern
+#$(name_uv)_rch.rgb
+
+#select_inputs enum
+#1,  " "
+#4, "pv = clamp(0.5*(pv+floor(rand2(seed)*2.0)), vec2(0.0), vec2(1.0));"
+#16, "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
+
+#Parameters:
+#count, int, default 10, min 1, max 256, - The number of occurences of the input image
+#rings, int, default 1, min 1, max 16, - The number of occurences of the input image
+#select_inputs (Inputs), enum, default 0, values 1, 4, 16
+#scale, Vector2, default 1, min:0, max:2, step:0.01 - "The scale of input images on the X axis
+#radius, float, default 0.4, min 0, max 0.5, step 0.01
+#spiral, float, default 0, min 0, max 1, step 0.01
+#i_rotate (inc_rotate), float, default 0, min 0, max 180, step 0.1
+#i_scale (inc_scale), float, default 0, min 0, max 1, step 0.01
+#rotate (rnd_rotate), float, default 0, min 0, max 180, step 0.1
+#scale (rnd_scale), float, default 0, min 0, max 1, step 0.01 - The random scale applied to each image instance
+#value (rnd_value), float, default 0, min 0, max 1, step 0.01
 
 #----------------------
 #warp_dilation.mmg
