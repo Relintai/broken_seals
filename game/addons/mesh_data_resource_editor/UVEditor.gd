@@ -20,6 +20,9 @@ func on_mdr_changed():
 func _draw():
 	if !mesh_data_resource:
 		return
+		
+	if mesh_data_resource.array.size() != ArrayMesh.ARRAY_MAX:
+		return
 	
 	var uvs : PoolVector2Array = mesh_data_resource.array[ArrayMesh.ARRAY_TEX_UV]
 	var indices : PoolIntArray = mesh_data_resource.array[ArrayMesh.ARRAY_INDEX]

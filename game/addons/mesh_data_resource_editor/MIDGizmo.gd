@@ -101,6 +101,9 @@ func redraw():
 	if !mdr:
 		return
 	
+	if mdr.array.size() != ArrayMesh.ARRAY_MAX:
+		return
+	
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	
 	if vertices.size() == 0:
