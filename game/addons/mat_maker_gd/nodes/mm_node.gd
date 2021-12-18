@@ -37,7 +37,7 @@ func render_image(material) -> Image:
 	image.lock()
 	
 	var w : float = image.get_width()
-	var h : float = image.get_width()
+	var h : float = image.get_height()
 	
 	var pseed : float = randf() + randi()
 	
