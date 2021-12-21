@@ -1,0 +1,124 @@
+[gd_scene format=2]
+
+[node name="Control" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TabContainer" type="TabContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+tab_align = 0
+
+[node name="World" type="VBoxContainer" parent="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/World"]
+margin_right = 1002.0
+margin_bottom = 20.0
+
+[node name="AddButton" type="Button" parent="TabContainer/World/HBoxContainer"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="DeleteButton" type="Button" parent="TabContainer/World/HBoxContainer"]
+margin_left = 41.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "Delete"
+
+[node name="Continent" type="VBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Continent"]
+margin_right = 1002.0
+margin_bottom = 20.0
+
+[node name="AddButton" type="Button" parent="TabContainer/Continent/HBoxContainer"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="DeleteButton" type="Button" parent="TabContainer/Continent/HBoxContainer"]
+margin_left = 41.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "Delete"
+
+[node name="Zone" type="VBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Zone"]
+margin_right = 1002.0
+margin_bottom = 20.0
+
+[node name="AddButton" type="Button" parent="TabContainer/Zone/HBoxContainer"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="DeleteButton" type="Button" parent="TabContainer/Zone/HBoxContainer"]
+margin_left = 41.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "Delete"
+
+[node name="SubZone" type="VBoxContainer" parent="TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/SubZone"]
+margin_right = 1002.0
+margin_bottom = 20.0
+
+[node name="AddButton" type="Button" parent="TabContainer/SubZone/HBoxContainer"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="DeleteButton" type="Button" parent="TabContainer/SubZone/HBoxContainer"]
+margin_left = 41.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "Delete"
