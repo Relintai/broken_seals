@@ -15,5 +15,7 @@
 !mat_maker_gd/**
 !color-palette
 !color-palette/**
+!world_generator
+!world_generator/**
 !addon_versions
 
