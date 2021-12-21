@@ -39,7 +39,7 @@ func edit(object):
 	#	make_bottom_panel_item_visible(editor_scene)
 
 	if object is WorldGenWorld:
-		editor_scene.set_mmmaterial(object as WorldGenWorld)
+		editor_scene.set_wgworld(object as WorldGenWorld)
 
 func make_visible(visible):
 	if tool_button:
