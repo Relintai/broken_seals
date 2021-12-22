@@ -26,5 +26,5 @@ zones = [  ]
 [resource]
 resource_name = "asdasdss"
 script = ExtResource( 1 )
-rect = Rect2( 0, 0, 1, 1 )
+rect = Rect2( 0, 0, 1000, 1000 )
 continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]

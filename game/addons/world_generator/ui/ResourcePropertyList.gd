@@ -152,7 +152,7 @@ func add_slot_vector2(getter : String, setter : String, slot_name : String, step
 	sby.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	
 	return slot_idx
-
+	
 func add_slot_vector3(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -195,6 +195,64 @@ func add_slot_vector3(getter : String, setter : String, slot_name : String, step
 	
 	return slot_idx
 
+
+func add_slot_rect2(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-10000, 10000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var hc1 : HBoxContainer = HBoxContainer.new()
+	bc.add_child(hc1)
+	
+	var sbx : SpinBox = SpinBox.new()
+	hc1.add_child(sbx)
+	
+	var sby : SpinBox = SpinBox.new()
+	hc1.add_child(sby)
+	
+	var hc2 : HBoxContainer = HBoxContainer.new()
+	bc.add_child(hc2)
+	
+	var sbw : SpinBox = SpinBox.new()
+	hc2.add_child(sbw)
+	
+	var sbh : SpinBox = SpinBox.new()
+	hc2.add_child(sbh)
+	
+	var slot_idx : int = add_slot(getter, setter, bc)
+	sbx.rounded = false
+	sby.rounded = false
+	sbw.rounded = false
+	sbh.rounded = false
+	sbx.step = step
+	sby.step = step
+	sbw.step = step
+	sbh.step = step
+	sbx.min_value = prange.x
+	sbx.max_value = prange.y
+	sby.min_value = prange.x
+	sby.max_value = prange.y
+	sbw.min_value = prange.x
+	sbw.max_value = prange.y
+	sbh.min_value = prange.x
+	sbh.max_value = prange.y
+	
+	var val : Rect2 = _edited_resource.call(getter)
+	
+	sbx.value = val.position.x
+	sby.value = val.position.y
+	sbw.value = val.size.x
+	sbh.value = val.size.y
+
+	sbx.connect("value_changed", self, "on_rect2_spinbox_value_changed", [ slot_idx, [ sbx, sby, sbw, sbh ] ])
+	sby.connect("value_changed", self, "on_rect2_spinbox_value_changed", [ slot_idx, [ sbx, sby, sbw, sbh ] ])
+	sbw.connect("value_changed", self, "on_rect2_spinbox_value_changed", [ slot_idx, [ sbx, sby, sbw, sbh ] ])
+	sbh.connect("value_changed", self, "on_rect2_spinbox_value_changed", [ slot_idx, [ sbx, sby, sbw, sbh ] ])
+	
+	return slot_idx
+
 func add_slot(getter : String, setter : String, control : Control) -> int:
 	var content_node = $MainContainer/Content
 	
@@ -228,6 +286,11 @@ func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_
 
 func on_vector3_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y, spinbox_z) -> void:
 	var vv : Vector3 = Vector3(spinbox_x.value, spinbox_y.value, spinbox_z.value)
+	
+	_edited_resource.call(properties[slot_idx][2], vv)
+
+func on_rect2_spinbox_value_changed(val : float, slot_idx, spinboxes) -> void:
+	var vv : Rect2 = Rect2(spinboxes[0].value, spinboxes[1].value, spinboxes[2].value, spinboxes[3].value)
 	
 	_edited_resource.call(properties[slot_idx][2], vv)
 
