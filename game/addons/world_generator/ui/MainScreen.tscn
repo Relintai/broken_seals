@@ -56,9 +56,17 @@ margin_left = 829.0
 margin_right = 1002.0
 margin_bottom = 550.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/World/VBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/World/VBoxContainer"]
 margin_right = 173.0
-margin_bottom = 20.0
+margin_bottom = 14.0
+text = "Continents"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/World/VBoxContainer"]
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 38.0
 
 [node name="AddButton" type="Button" parent="TabContainer/World/VBoxContainer/HBoxContainer"]
 margin_right = 37.0
@@ -80,7 +88,7 @@ text = "Duplicate"
 [node name="DataList" parent="TabContainer/World/VBoxContainer" instance=ExtResource( 3 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 24.0
+margin_top = 42.0
 margin_right = 173.0
 margin_bottom = 550.0
 
@@ -164,3 +172,5 @@ margin_left = 41.0
 margin_right = 96.0
 margin_bottom = 20.0
 text = "Delete"
+
+[connection signal="pressed" from="TabContainer/World/VBoxContainer/HBoxContainer/AddButton" to="TabContainer/World/VBoxContainer/DataList" method="add_item"]

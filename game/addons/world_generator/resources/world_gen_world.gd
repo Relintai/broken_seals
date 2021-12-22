@@ -10,6 +10,10 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	continents = arr
 
+func add_content() -> void:
+	continents.append(Continent.new())
+	emit_changed()
+
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	

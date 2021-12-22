@@ -1,9 +1,30 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=7 format=2]
 
 [ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
+[ext_resource path="res://addons/world_generator/resources/continent.gd" type="Script" id=2]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+rect = Rect2( 0, 0, 1, 1 )
+zones = [  ]
+
+[sub_resource type="Resource" id=2]
+script = ExtResource( 2 )
+rect = Rect2( 0, 0, 1, 1 )
+zones = [  ]
+
+[sub_resource type="Resource" id=3]
+script = ExtResource( 2 )
+rect = Rect2( 0, 0, 1, 1 )
+zones = [  ]
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 2 )
+rect = Rect2( 0, 0, 1, 1 )
+zones = [  ]
 
 [resource]
 resource_name = "asdasdss"
 script = ExtResource( 1 )
 rect = Rect2( 0, 0, 1, 1 )
-continents = [  ]
+continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
