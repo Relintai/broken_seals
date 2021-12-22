@@ -19,7 +19,7 @@ func _enter_tree():
 
 	editor_scene = editor_packed_scene.instance()
 
-	tool_button = add_control_to_bottom_panel(editor_scene, "WorldEditor")
+	tool_button = add_control_to_bottom_panel(editor_scene, "World Editor")
 	tool_button.hide()
 
 func _exit_tree():
