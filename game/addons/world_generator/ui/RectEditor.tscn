@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/world_generator/ui/RectEditor.gd" type="Script" id=1]
+[ext_resource path="res://addons/world_generator/widgets/EditorZoomWidget.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/world_generator/ui/RectView.gd" type="Script" id=3]
+
+[node name="RectEditor" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+
+[node name="RectView" type="Control" parent="ScrollContainer"]
+margin_right = 1010.0
+margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 3 )
+
+[node name="Control" type="Control" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EditorZoomWidget" parent="Control" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 115.0
+margin_bottom = 22.0
+custom_constants/separation = -8
+__meta__ = {
+"_edit_use_anchors_": false
+}

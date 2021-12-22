@@ -4,7 +4,7 @@ extends PanelContainer
 var edited_world
 
 func refresh() -> void:
-	pass
+	$TabContainer/World/HSplitContainer/ResourcePropertyList.edit_resource(edited_world)
 
 func set_wgworld(wgw : WorldGenWorld) -> void:
 	edited_world = wgw

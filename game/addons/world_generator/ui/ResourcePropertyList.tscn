@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/world_generator/ui/ResourcePropertyList.gd" type="Script" id=1]
+
+[node name="ResourcePropertyList" type="ScrollContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 100, 0 )
+scroll_horizontal_enabled = false
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainContainer"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Properties"
+align = 1
+valign = 1
+
+[node name="Content" type="VBoxContainer" parent="MainContainer"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 18.0
+size_flags_horizontal = 3

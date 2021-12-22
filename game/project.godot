@@ -245,6 +245,11 @@ _global_script_classes=[ {
 "path": "res://scripts/game_modules/ui_window_module.gd"
 }, {
 "base": "Resource",
+"class": "WorldGenBaseResource",
+"language": "GDScript",
+"path": "res://addons/world_generator/resources/world_gen_base_resource.gd"
+}, {
+"base": "Resource",
 "class": "WorldGenWorld",
 "language": "GDScript",
 "path": "res://addons/world_generator/resources/world_gen_world.gd"
@@ -302,6 +307,7 @@ _global_script_class_icons={
 "SubZone": "",
 "UIGuiChildModule": "",
 "UIWindowModule": "",
+"WorldGenBaseResource": "",
 "WorldGenWorld": "",
 "Zone": ""
 }
