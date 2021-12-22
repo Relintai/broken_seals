@@ -1,5 +1,7 @@
 tool
-extends Resource
+extends "res://addons/world_generator/resources/world_gen_base_resource.gd"
 class_name SubZone
 
-export(Rect2) var rect : Rect2
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	

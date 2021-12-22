@@ -1,10 +1,11 @@
 tool
 extends EditorPlugin
 
-var WorldGenWorld = preload("res://addons/world_generator/resources/world_gen_world.gd")
-var Continent = preload("res://addons/world_generator/resources/continent.gd")
-var Zone = preload("res://addons/world_generator/resources/zone.gd")
-var SubZone = preload("res://addons/world_generator/resources/subzone.gd")
+var SWorldGenBaseResource = preload("res://addons/world_generator/resources/world_gen_base_resource.gd")
+var SWorldGenWorld = preload("res://addons/world_generator/resources/world_gen_world.gd")
+var SContinent = preload("res://addons/world_generator/resources/continent.gd")
+var SZone = preload("res://addons/world_generator/resources/zone.gd")
+var SSubZone = preload("res://addons/world_generator/resources/subzone.gd")
 
 var editor_packed_scene = preload("res://addons/world_generator/ui/MainScreen.tscn")
 var editor_scene = null
@@ -12,10 +13,13 @@ var editor_scene = null
 var tool_button : ToolButton = null
 
 func _enter_tree():
-	add_custom_type("WorldGenWorld", "Resource", WorldGenWorld, null)
-	add_custom_type("Continent", "Resource", Continent, null)
-	add_custom_type("Zone", "Resource", Zone, null)
-	add_custom_type("SubZone", "Resource", SubZone, null)
+	add_custom_type("WorldGenBaseResource", "Resource", SWorldGenBaseResource, null)
+	#Don't change the base to "WorldGenBaseResource" else it will complain about a non-existant class
+	#Also it works perfectly like this
+	add_custom_type("WorldGenWorld", "Resource", SWorldGenWorld, null)
+	add_custom_type("Continent", "Resource", SContinent, null)
+	add_custom_type("Zone", "Resource", SZone, null)
+	add_custom_type("SubZone", "Resource", SSubZone, null)
 
 	editor_scene = editor_packed_scene.instance()
 
@@ -23,6 +27,7 @@ func _enter_tree():
 	tool_button.hide()
 
 func _exit_tree():
+	remove_custom_type("WorldGenBaseResource")
 	remove_custom_type("WorldGenWorld")
 	remove_custom_type("Continent")
 	remove_custom_type("Zone")
