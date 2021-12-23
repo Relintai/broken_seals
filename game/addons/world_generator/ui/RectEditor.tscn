@@ -32,6 +32,7 @@ margin_top = 200.0
 margin_right = 200.0
 margin_bottom = 200.0
 script = ExtResource( 3 )
+zoom_widget_path = NodePath("../../../Control/EditorZoomWidget")
 
 [node name="Control" type="Control" parent="."]
 margin_left = 7.0

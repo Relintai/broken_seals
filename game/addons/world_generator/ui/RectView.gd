@@ -3,7 +3,20 @@ extends Control
 
 var rect_editor_node_scene : PackedScene = preload("res://addons/world_generator/ui/RectViewNode.tscn")
 
+export(NodePath) var zoom_widget_path : NodePath = ""
+
 var edited_resource : WorldGenBaseResource = null
+
+func _enter_tree():
+	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
+	
+	if !zoom_widget:
+		return
+	
+	zoom_widget.connect("zoom_changed", self, "on_zoom_changed")
+	
+func on_zoom_changed(zoom : float) -> void:
+	rect_scale =  Vector2(zoom, zoom)
 
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), Color(0.2, 0.2, 0.2, 1))
