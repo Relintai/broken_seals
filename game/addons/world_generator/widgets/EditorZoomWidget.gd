@@ -173,7 +173,6 @@ func _button_zoom_plus() -> void:
 
 func _notification(p_what : int) -> void:
 	if (p_what == NOTIFICATION_ENTER_TREE || p_what == NOTIFICATION_THEME_CHANGED):
-		print(get_icon("ZoomLess", "EditorIcons"))
 		zoom_minus.icon = get_icon("ZoomLess", "EditorIcons")
 		zoom_plus.icon = get_icon("ZoomMore", "EditorIcons")
 
