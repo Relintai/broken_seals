@@ -15,8 +15,8 @@ __meta__ = {
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 7.0
-margin_bottom = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
 margin_right = 400.0
