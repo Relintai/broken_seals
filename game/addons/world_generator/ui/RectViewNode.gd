@@ -68,7 +68,7 @@ func _gui_input(p_event : InputEvent) -> void:
 			# Update the cursor while moving along the borders.
 			var cursor = CURSOR_ARROW
 			if (!edited_resource.locked):
-				var preview_drag_type : int = _drag_hit_test(Vector2(mm.get_position().x, mm.get_position().y));
+				var preview_drag_type : int = _drag_hit_test(Vector2(mm.get_position().x, mm.get_position().y))
 				
 				var top_left : int = DragType.DRAG_RESIZE_TOP + DragType.DRAG_RESIZE_LEFT
 				var bottom_right : int = DragType.DRAG_RESIZE_BOTTOM + DragType.DRAG_RESIZE_RIGHT
@@ -144,8 +144,8 @@ func _drag_hit_test(pos : Vector2) -> int:
 			drag_type |= DragType.DRAG_RESIZE_LEFT
 		elif (pos.x >= (rect.size.x - scaleborder_size)):
 			drag_type |= DragType.DRAG_RESIZE_RIGHT
-
-	if (drag_type == DragType.DRAG_NONE && pos.y < 0):
-		drag_type = DragType.DRAG_MOVE
+			
+		if (drag_type == DragType.DRAG_NONE):
+			drag_type = DragType.DRAG_MOVE
 
 	return drag_type
