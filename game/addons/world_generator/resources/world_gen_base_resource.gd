@@ -3,6 +3,7 @@ extends Resource
 class_name WorldGenBaseResource
 
 export(Rect2) var rect : Rect2 = Rect2(0, 0, 1, 1)
+export(bool) var locked : bool = false
 
 func get_rect() -> Rect2:
 	return rect

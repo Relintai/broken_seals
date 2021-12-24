@@ -6,25 +6,30 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
 rect = Rect2( 0, 0, 100, 100 )
+locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
 rect = Rect2( 0, 0, 1, 1 )
+locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 2 )
 rect = Rect2( 0, 0, 1, 1 )
+locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 2 )
 rect = Rect2( 0, 0, 1, 1 )
+locked = false
 zones = [  ]
 
 [resource]
 resource_name = "asdasdss"
 script = ExtResource( 1 )
 rect = Rect2( 0, 0, 1000, 1000 )
+locked = false
 continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
