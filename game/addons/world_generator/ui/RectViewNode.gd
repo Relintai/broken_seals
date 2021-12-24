@@ -77,21 +77,21 @@ func _gui_input(p_event : InputEvent) -> void:
 				
 				match (preview_drag_type):
 					DragType.DRAG_RESIZE_TOP:
-						continue
+						cursor = CURSOR_VSIZE
 					DragType.DRAG_RESIZE_BOTTOM:
-						cursor = CURSOR_VSIZE;
+						cursor = CURSOR_VSIZE
 					DragType.DRAG_RESIZE_LEFT:
-						continue
+						cursor = CURSOR_HSIZE
 					DragType.DRAG_RESIZE_RIGHT:
-						cursor = CURSOR_HSIZE;
+						cursor = CURSOR_HSIZE
 					top_left:
-						continue
+						cursor = CURSOR_FDIAGSIZE
 					bottom_right:
-						cursor = CURSOR_FDIAGSIZE;
+						cursor = CURSOR_FDIAGSIZE
 					top_right:
-						continue
+						cursor = CURSOR_BDIAGSIZE
 					bottom_left:
-						cursor = CURSOR_BDIAGSIZE;
+						cursor = CURSOR_BDIAGSIZE
 			
 			if (get_cursor_shape() != cursor):
 				set_default_cursor_shape(cursor);
@@ -131,12 +131,11 @@ func _drag_hit_test(pos : Vector2) -> int:
 	var drag_type : int = DragType.DRAG_NONE
 
 	if (!edited_resource.locked):
-		var title_height : int = 20 #get_constant("title_height", "WindowDialog")
 		var scaleborder_size : int = 10 #get_constant("scaleborder_size", "WindowDialog")
 
 		var rect : Rect2 = get_rect()
 
-		if (pos.y < (-title_height + scaleborder_size)):
+		if (pos.y < (scaleborder_size)):
 			drag_type = DragType.DRAG_RESIZE_TOP
 		elif (pos.y >= (rect.size.y - scaleborder_size)):
 			drag_type = DragType.DRAG_RESIZE_BOTTOM
