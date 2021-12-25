@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/world_generator/ui/MainScreen.gd" type="Script" id=1]
-[ext_resource path="res://addons/world_generator/ui/RectEditor.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/world_generator/ui/DataList.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/world_generator/ui/WorldTab.gd" type="Script" id=4]
-[ext_resource path="res://addons/world_generator/ui/ResourcePropertyList.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/world_generator/ui/tabs/World.tscn" type="PackedScene" id=2]
 
 [node name="WorldGenerator" type="PanelContainer"]
 anchor_right = 1.0
@@ -23,74 +20,7 @@ margin_right = 1017.0
 margin_bottom = 593.0
 tab_align = 0
 
-[node name="World" type="HBoxContainer" parent="TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
-script = ExtResource( 4 )
-
-[node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/World"]
-margin_right = 825.0
-margin_bottom = 550.0
-size_flags_horizontal = 3
-
-[node name="RectEditor" parent="TabContainer/World/HSplitContainer" instance=ExtResource( 2 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 713.0
-margin_bottom = 550.0
-size_flags_horizontal = 3
-
-[node name="ResourcePropertyList" parent="TabContainer/World/HSplitContainer" instance=ExtResource( 5 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 725.0
-margin_right = 825.0
-margin_bottom = 550.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/World"]
-margin_left = 829.0
-margin_right = 1002.0
-margin_bottom = 550.0
-
-[node name="Label" type="Label" parent="TabContainer/World/VBoxContainer"]
-margin_right = 173.0
-margin_bottom = 14.0
-text = "Continents"
-align = 1
-valign = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/World/VBoxContainer"]
-margin_top = 18.0
-margin_right = 173.0
-margin_bottom = 38.0
-
-[node name="AddButton" type="Button" parent="TabContainer/World/VBoxContainer/HBoxContainer"]
-margin_right = 37.0
-margin_bottom = 20.0
-text = "Add"
-
-[node name="DeleteButton" type="Button" parent="TabContainer/World/VBoxContainer/HBoxContainer"]
-margin_left = 41.0
-margin_right = 96.0
-margin_bottom = 20.0
-text = "Delete"
-
-[node name="Duplicate" type="Button" parent="TabContainer/World/VBoxContainer/HBoxContainer"]
-margin_left = 100.0
-margin_right = 173.0
-margin_bottom = 20.0
-text = "Duplicate"
-
-[node name="DataList" parent="TabContainer/World/VBoxContainer" instance=ExtResource( 3 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 42.0
-margin_right = 173.0
-margin_bottom = 550.0
+[node name="World" parent="TabContainer" instance=ExtResource( 2 )]
 
 [node name="Continent" type="VBoxContainer" parent="TabContainer"]
 visible = false
@@ -172,5 +102,3 @@ margin_left = 41.0
 margin_right = 96.0
 margin_bottom = 20.0
 text = "Delete"
-
-[connection signal="pressed" from="TabContainer/World/VBoxContainer/HBoxContainer/AddButton" to="TabContainer/World/VBoxContainer/DataList" method="add_button_pressed"]
