@@ -15,6 +15,7 @@ func add_content(item_name : String = "") -> void:
 	subzone.resource_name = item_name
 	
 	var r : Rect2 = get_rect()
+	r.position = Vector2()
 	r.size.x /= 10.0
 	r.size.y /= 10.0
 	

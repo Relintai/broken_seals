@@ -35,7 +35,6 @@ margin_bottom = 600.0
 [node name="OptionButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
 margin_right = 277.0
 margin_bottom = 20.0
-selected = 0
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HSplitContainer/VBoxContainer"]
 margin_top = 24.0
