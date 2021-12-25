@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=25 format=2]
+[gd_resource type="Resource" load_steps=28 format=2]
 
 [ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/resources/continent.gd" type="Script" id=2]
@@ -31,12 +31,67 @@ rect = Rect2( 8, 13, 200.4, 61.8 )
 locked = false
 subzones = [  ]
 
+[sub_resource type="Resource" id=24]
+resource_name = "trtrtr"
+script = ExtResource( 3 )
+rect = Rect2( 0, 0, 24.1, 15.8 )
+locked = false
+subzones = [  ]
+
+[sub_resource type="GDScript" id=25]
+script/source = "tool
+extends \"res://addons/world_generator/resources/world_gen_base_resource.gd\"
+class_name Zone
+
+export(Array) var subzones : Array
+
+func get_content() -> Array:
+	return subzones
+
+func set_content(arr : Array) -> void:
+	subzones = arr
+
+func create_content(item_name : String = \"\") -> void:
+	var subzone : SubZone = SubZone.new()
+	subzone.resource_name = item_name
+	
+	var r : Rect2 = get_rect()
+	r.position = Vector2()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	subzone.set_rect(r)
+	
+	add_content(subzone)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	subzones.append(entry)
+	emit_changed()
+	
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(subzones.size()):
+		if subzones[i] == entry:
+			subzones.remove(i)
+			emit_changed()
+			return
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+"
+
+[sub_resource type="Resource" id=26]
+resource_name = "trtrtr (Duplicate)"
+script = SubResource( 25 )
+rect = Rect2( 0, 0, 24.1, 15.8 )
+locked = false
+subzones = [  ]
+
 [sub_resource type="Resource" id=1]
 resource_name = "wwww"
 script = ExtResource( 2 )
 rect = Rect2( 163, 35, 241, 158 )
 locked = false
-zones = [ SubResource( 8 ), SubResource( 13 ) ]
+zones = [ SubResource( 8 ), SubResource( 13 ), SubResource( 24 ), SubResource( 26 ) ]
 
 [sub_resource type="Resource" id=2]
 resource_name = "efefef"
