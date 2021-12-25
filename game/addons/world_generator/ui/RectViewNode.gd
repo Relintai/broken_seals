@@ -12,12 +12,29 @@ enum DragType {
 
 var edited_resource : WorldGenBaseResource = null
 
+var _edited_resource_rect_border_color : Color = Color(1, 1, 1, 1)
+var _edited_resource_rect_color : Color = Color(0.8, 0.8, 0.8, 0.9)
+var _editor_rect_border_size : int = 2
+var _edited_resource_font_color : Color = Color(0, 0, 0, 1)
+var _editor_additional_text : String = ""
+
 var drag_type : int
 var drag_offset : Vector2
 var drag_offset_far : Vector2
 
 func _draw():
-	draw_rect(Rect2(Vector2(), get_size()), Color(1, 1, 1, 1))
+	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
+	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
+	
+	var font : Font = get_font("font")
+	
+	var res_name : String = "NULL"
+	
+	if edited_resource:
+		res_name = edited_resource.resource_name
+	
+	draw_string(font, Vector2(_editor_rect_border_size, font.get_height()), res_name, _edited_resource_font_color)
+	draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 2), _editor_additional_text, _edited_resource_font_color, get_rect().size.x)
 
 func refresh() -> void:
 	if !edited_resource:
@@ -33,8 +50,15 @@ func refresh() -> void:
 func set_edited_resource(res : WorldGenBaseResource):
 	edited_resource = res
 	
+	if edited_resource:
+		_edited_resource_rect_border_color = edited_resource.get_editor_rect_border_color()
+		_edited_resource_rect_color = edited_resource.get_editor_rect_color()
+		_editor_rect_border_size = edited_resource.get_editor_rect_border_size()
+		_edited_resource_font_color = edited_resource.get_editor_font_color()
+		_editor_additional_text = edited_resource.get_editor_additional_text()
+
 	refresh()
-	
+
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _notification(p_what : int) -> void:
 	if (p_what == NOTIFICATION_MOUSE_EXIT):

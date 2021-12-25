@@ -27,14 +27,14 @@ subzones = [ SubResource( 14 ), SubResource( 15 ) ]
 [sub_resource type="Resource" id=13]
 resource_name = "qqq"
 script = ExtResource( 3 )
-rect = Rect2( 0, 0, 200.4, 61.8 )
+rect = Rect2( 14, 9, 200.4, 61.8 )
 locked = false
 subzones = [  ]
 
 [sub_resource type="Resource" id=1]
 resource_name = "wwww"
 script = ExtResource( 2 )
-rect = Rect2( 133, 63, 224, 158 )
+rect = Rect2( 161, 40, 241, 158 )
 locked = false
 zones = [ SubResource( 8 ), SubResource( 13 ) ]
 
@@ -104,7 +104,7 @@ subzones = [  ]
 [sub_resource type="Resource" id=7]
 resource_name = "343"
 script = ExtResource( 2 )
-rect = Rect2( 14, 134, 157, 152 )
+rect = Rect2( 26, 21, 154, 114 )
 locked = false
 zones = [ SubResource( 12 ) ]
 
