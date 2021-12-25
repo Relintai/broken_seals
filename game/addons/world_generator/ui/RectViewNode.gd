@@ -17,7 +17,7 @@ var drag_offset : Vector2
 var drag_offset_far : Vector2
 
 func _draw():
-	draw_rect(Rect2(get_position(), get_size()), Color(1, 1, 1, 1))
+	draw_rect(Rect2(Vector2(), get_size()), Color(1, 1, 1, 1))
 
 func refresh() -> void:
 	if !edited_resource:
@@ -99,7 +99,6 @@ func _gui_input(p_event : InputEvent) -> void:
 		else:
 			# Update while in a dragging operation.
 			var global_pos : Vector2 = get_global_mouse_position()
-			global_pos.y = max(global_pos.y, 0) # Ensure title bar stays visible.
 
 			var rect : Rect2 = get_rect()
 			var min_size : Vector2 = get_combined_minimum_size()
