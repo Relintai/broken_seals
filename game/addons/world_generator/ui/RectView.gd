@@ -5,6 +5,8 @@ var rect_editor_node_scene : PackedScene = preload("res://addons/world_generator
 
 export(NodePath) var zoom_widget_path : NodePath = ""
 
+var stored_rect_scale : Vector2 = Vector2(1, 1)
+
 var edited_resource : WorldGenBaseResource = null
 
 func _enter_tree():
@@ -14,9 +16,17 @@ func _enter_tree():
 		return
 	
 	zoom_widget.connect("zoom_changed", self, "on_zoom_changed")
+	connect("visibility_changed", self, "on_visibility_changed")
+
+func on_visibility_changed() -> void:
+	call_deferred("reapply_zoom")
+
+func reapply_zoom() -> void:
+	rect_scale = stored_rect_scale
 	
 func on_zoom_changed(zoom : float) -> void:
-	rect_scale =  Vector2(zoom, zoom)
+	stored_rect_scale = Vector2(zoom, zoom)
+	rect_scale = Vector2(zoom, zoom)
 
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), Color(0.2, 0.2, 0.2, 1))
