@@ -32,7 +32,7 @@ margin_left = 747.0
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="MenuButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
 margin_right = 277.0
 margin_bottom = 20.0
 selected = 0
