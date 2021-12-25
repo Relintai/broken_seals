@@ -24,6 +24,11 @@ tab_align = 0
 [node name="World" parent="TabContainer" instance=ExtResource( 2 )]
 
 [node name="Continent" parent="TabContainer" instance=ExtResource( 3 )]
+visible = false
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 
 [node name="Zone" type="VBoxContainer" parent="TabContainer"]
 visible = false
