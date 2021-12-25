@@ -11,7 +11,15 @@ func set_content(arr : Array) -> void:
 	continents = arr
 
 func add_content() -> void:
-	continents.append(Continent.new())
+	var continent : Continent = Continent.new()
+	
+	var r : Rect2 = get_rect()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	continent.set_rect(r)
+	
+	continents.append(continent)
 	emit_changed()
 
 func setup_property_inspector(inspector) -> void:
