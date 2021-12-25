@@ -198,27 +198,34 @@ func add_slot_vector3(getter : String, setter : String, slot_name : String, step
 
 func add_slot_rect2(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-10000, 10000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
+	bc.size_flags_horizontal = SIZE_EXPAND_FILL
 	
 	var l : Label = Label.new()
 	l.text = slot_name
 	bc.add_child(l)
 	
 	var hc1 : HBoxContainer = HBoxContainer.new()
+	hc1.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(hc1)
 	
 	var sbx : SpinBox = SpinBox.new()
+	sbx.size_flags_horizontal = SIZE_EXPAND_FILL
 	hc1.add_child(sbx)
 	
 	var sby : SpinBox = SpinBox.new()
+	sby.size_flags_horizontal = SIZE_EXPAND_FILL
 	hc1.add_child(sby)
 	
 	var hc2 : HBoxContainer = HBoxContainer.new()
+	hc2.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(hc2)
 	
 	var sbw : SpinBox = SpinBox.new()
+	sbw.size_flags_horizontal = SIZE_EXPAND_FILL
 	hc2.add_child(sbw)
 	
 	var sbh : SpinBox = SpinBox.new()
+	sbh.size_flags_horizontal = SIZE_EXPAND_FILL
 	hc2.add_child(sbh)
 	
 	var slot_idx : int = add_slot(getter, setter, bc)
