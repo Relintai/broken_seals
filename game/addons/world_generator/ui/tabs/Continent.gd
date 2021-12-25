@@ -9,12 +9,12 @@ func _ready():
 	option_button.connect("item_selected", self, "on_item_selected")
 
 func refresh_continent() -> void:
-#	$HSplitContainer/ResourcePropertyList.edit_resource(edited_world)
-#	$VBoxContainer/DataList.set_edited_resource(edited_world)
-#	$HSplitContainer/RectEditor.set_edited_resource(edited_world)
+	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.edit_resource(edited_continent)
+	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_edited_resource(edited_continent)
+	$HSplitContainer/RectEditor.set_edited_resource(edited_continent)
 
-	if !edited_continent:
-		return
+#	if !edited_continent:
+#		return
 
 func refresh() -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/OptionButton

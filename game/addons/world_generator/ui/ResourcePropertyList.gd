@@ -1,7 +1,7 @@
 tool
 extends ScrollContainer
 
-var _edited_resource : WorldGenWorld = null
+var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
 func add_slot_color(getter : String, setter : String) -> int:
