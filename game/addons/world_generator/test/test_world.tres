@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=20 format=2]
+[gd_resource type="Resource" load_steps=25 format=2]
 
 [ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/resources/continent.gd" type="Script" id=2]
@@ -14,27 +14,27 @@ locked = false
 [sub_resource type="Resource" id=15]
 resource_name = "we"
 script = ExtResource( 4 )
-rect = Rect2( 3, -1, 54.14, 32.78 )
+rect = Rect2( 7, 9, 54.14, 32.78 )
 locked = false
 
 [sub_resource type="Resource" id=8]
 resource_name = "asdasr"
 script = ExtResource( 3 )
-rect = Rect2( 25, 19, 191.4, 127.8 )
+rect = Rect2( 35, 21, 191.4, 127.8 )
 locked = false
 subzones = [ SubResource( 14 ), SubResource( 15 ) ]
 
 [sub_resource type="Resource" id=13]
 resource_name = "qqq"
 script = ExtResource( 3 )
-rect = Rect2( 14, 9, 200.4, 61.8 )
+rect = Rect2( 8, 13, 200.4, 61.8 )
 locked = false
 subzones = [  ]
 
 [sub_resource type="Resource" id=1]
 resource_name = "wwww"
 script = ExtResource( 2 )
-rect = Rect2( 161, 40, 241, 158 )
+rect = Rect2( 163, 35, 241, 158 )
 locked = false
 zones = [ SubResource( 8 ), SubResource( 13 ) ]
 
@@ -87,30 +87,167 @@ rect = Rect2( 473, 331, 100, 100 )
 locked = false
 zones = [ SubResource( 11 ) ]
 
-[sub_resource type="Resource" id=6]
-resource_name = "asdasdq"
+[sub_resource type="GDScript" id=16]
+script/source = "tool
+extends \"res://addons/world_generator/resources/world_gen_base_resource.gd\"
+class_name Continent
+
+export(Array) var zones : Array
+
+func get_content() -> Array:
+	return zones
+
+func set_content(arr : Array) -> void:
+	zones = arr
+
+func create_content(item_name : String = \"\") -> void:
+	var zone : Zone = Zone.new()
+	zone.resource_name = item_name
+	
+	var r : Rect2 = get_rect()
+	r.position = Vector2()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	zone.set_rect(r)
+	
+	add_content(zone)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	zones.append(entry)
+	emit_changed()
+
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(zones.size()):
+		if zones[i] == entry:
+			zones.remove(i)
+			emit_changed()
+			return
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+"
+
+[sub_resource type="Resource" id=17]
+resource_name = "qwet"
+script = SubResource( 16 )
+rect = Rect2( 473, 331, 100, 100 )
+locked = false
+zones = [ SubResource( 11 ) ]
+
+[sub_resource type="GDScript" id=18]
+script/source = "tool
+extends \"res://addons/world_generator/resources/world_gen_base_resource.gd\"
+class_name Continent
+
+export(Array) var zones : Array
+
+func get_content() -> Array:
+	return zones
+
+func set_content(arr : Array) -> void:
+	zones = arr
+
+func create_content(item_name : String = \"\") -> void:
+	var zone : Zone = Zone.new()
+	zone.resource_name = item_name
+	
+	var r : Rect2 = get_rect()
+	r.position = Vector2()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	zone.set_rect(r)
+	
+	add_content(zone)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	zones.append(entry)
+	emit_changed()
+
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(zones.size()):
+		if zones[i] == entry:
+			zones.remove(i)
+			emit_changed()
+			return
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+"
+
+[sub_resource type="Resource" id=19]
+resource_name = "qwesa"
+script = SubResource( 18 )
+rect = Rect2( 613, 346, 100, 100 )
+locked = false
+zones = [ SubResource( 11 ) ]
+
+[sub_resource type="Resource" id=20]
+resource_name = "ggg"
 script = ExtResource( 2 )
-rect = Rect2( 304, 280, 100, 100 )
+rect = Rect2( 26, 51, 100, 100 )
 locked = false
 zones = [  ]
 
-[sub_resource type="Resource" id=12]
-resource_name = "e"
-script = ExtResource( 3 )
-rect = Rect2( 24, 144, 0, 0 )
-locked = false
-subzones = [  ]
+[sub_resource type="GDScript" id=21]
+script/source = "tool
+extends \"res://addons/world_generator/resources/world_gen_base_resource.gd\"
+class_name Continent
 
-[sub_resource type="Resource" id=7]
-resource_name = "343"
-script = ExtResource( 2 )
-rect = Rect2( 26, 21, 154, 114 )
+export(Array) var zones : Array
+
+func get_content() -> Array:
+	return zones
+
+func set_content(arr : Array) -> void:
+	zones = arr
+
+func create_content(item_name : String = \"\") -> void:
+	var zone : Zone = Zone.new()
+	zone.resource_name = item_name
+	
+	var r : Rect2 = get_rect()
+	r.position = Vector2()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	zone.set_rect(r)
+	
+	add_content(zone)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	zones.append(entry)
+	emit_changed()
+
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(zones.size()):
+		if zones[i] == entry:
+			zones.remove(i)
+			emit_changed()
+			return
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+"
+
+[sub_resource type="Resource" id=22]
+resource_name = "ggg (Duplicate)"
+script = SubResource( 21 )
+rect = Rect2( 33, 181, 100, 100 )
 locked = false
-zones = [ SubResource( 12 ) ]
+zones = [  ]
+
+[sub_resource type="Resource" id=23]
+resource_name = "eeqqq"
+script = ExtResource( 2 )
+rect = Rect2( 256, 365, 100, 100 )
+locked = false
+zones = [  ]
 
 [resource]
-resource_name = "asdasdss"
+resource_name = "asdasdsse"
 script = ExtResource( 1 )
 rect = Rect2( 0, 0, 1000, 1000 )
 locked = false
-continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ]
+continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 17 ), SubResource( 19 ), SubResource( 20 ), SubResource( 22 ), SubResource( 23 ) ]

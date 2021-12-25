@@ -78,3 +78,5 @@ margin_right = 173.0
 margin_bottom = 564.0
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/AddButton" to="VBoxContainer/DataList" method="add_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/DeleteButton" to="VBoxContainer/DataList" method="delete_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Duplicate" to="VBoxContainer/DataList" method="duplicate_button_pressed"]

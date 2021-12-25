@@ -10,7 +10,7 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	subzones = arr
 
-func add_content(item_name : String = "") -> void:
+func create_content(item_name : String = "") -> void:
 	var subzone : SubZone = SubZone.new()
 	subzone.resource_name = item_name
 	
@@ -21,8 +21,18 @@ func add_content(item_name : String = "") -> void:
 	
 	subzone.set_rect(r)
 	
-	subzones.append(subzone)
+	add_content(subzone)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	subzones.append(entry)
 	emit_changed()
+	
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(subzones.size()):
+		if subzones[i] == entry:
+			subzones.remove(i)
+			emit_changed()
+			return
 
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)

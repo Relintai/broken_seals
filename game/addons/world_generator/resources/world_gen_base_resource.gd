@@ -18,9 +18,20 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	pass
 	
-func add_content(item_name : String = "") -> void:
+func add_content(entry : WorldGenBaseResource) -> void:
 	pass
 
+func create_content(item_name : String = "") -> void:
+	pass
+
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	pass
+
+func duplicate_content_entry(entry : WorldGenBaseResource) -> void:
+	var de : WorldGenBaseResource = entry.duplicate(true)
+	de.resource_name += " (Duplicate)"
+	add_content(de)
+	
 func get_editor_rect_border_color() -> Color:
 	return Color(1, 1, 1, 1)
 

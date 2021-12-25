@@ -10,7 +10,7 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	continents = arr
 
-func add_content(item_name : String = "") -> void:
+func create_content(item_name : String = "") -> void:
 	var continent : Continent = Continent.new()
 	continent.resource_name = item_name
 	
@@ -21,8 +21,18 @@ func add_content(item_name : String = "") -> void:
 	
 	continent.set_rect(r)
 	
-	continents.append(continent)
+	add_content(continent)
+
+func add_content(entry : WorldGenBaseResource) -> void:
+	continents.append(entry)
 	emit_changed()
+
+func remove_content_entry(entry : WorldGenBaseResource) -> void:
+	for i in range(continents.size()):
+		if continents[i] == entry:
+			continents.remove(i)
+			emit_changed()
+			return
 
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)

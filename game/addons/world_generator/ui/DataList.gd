@@ -12,7 +12,7 @@ func add_item(item_name : String = "") -> void:
 	if !edited_resource:
 		return
 		
-	edited_resource.add_content(item_name)
+	edited_resource.create_content(item_name)
 	
 func refresh() -> void:
 	clear()
@@ -58,9 +58,34 @@ func name_dialog_ok_pressed() -> void:
 		name_edited_resource.resource_name = $NameDialog/TextEdit.text
 		name_edited_resource = null
 
+func delete_button_pressed() -> void:
+	var item : TreeItem = get_selected()
+	
+	if !item:
+		return
+		
+	var item_resource = item.get_meta("res")
+	
+	if !item_resource:
+		return
+		
+	edited_resource.remove_content_entry(item_resource)
+
+func duplicate_button_pressed() -> void:
+	var item : TreeItem = get_selected()
+	
+	if !item:
+		return
+		
+	var item_resource = item.get_meta("res")
+	
+	if !item_resource:
+		return
+		
+	edited_resource.duplicate_content_entry(item_resource)
 
 func on_resource_changed() -> void:
-	refresh()
+	call_deferred("refresh")
 
 func on_item_activated() -> void:
 	var item : TreeItem = get_selected()

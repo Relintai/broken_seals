@@ -325,8 +325,6 @@ func refresh() -> void:
 	if _edited_resource:
 		_edited_resource.setup_property_inspector(self)
 		
-		if !_edited_resource.is_connected("changed", self, "on_edited_resource_changed"):
-			_edited_resource.connect("changed", self, "on_edited_resource_changed")
 
 func edit_resource(wgw) -> void:
 	if _edited_resource:
@@ -334,7 +332,11 @@ func edit_resource(wgw) -> void:
 	
 	_edited_resource = wgw
 	
+	#if !_edited_resource.is_connected("changed", self, "on_edited_resource_changed"):
+	if _edited_resource:
+		_edited_resource.connect("changed", self, "on_edited_resource_changed")
+	
 	refresh()
 
 func on_edited_resource_changed() -> void:
-	refresh()
+	call_deferred("refresh")

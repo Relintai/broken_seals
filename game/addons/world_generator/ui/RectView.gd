@@ -74,15 +74,15 @@ func clear_rects():
 		remove_child(c)
 
 func set_edited_resource(res : WorldGenBaseResource):
-#	if edited_resource:
-#		edited_resource.disconnect("changed", self, "on_edited_resource_changed")
+	if edited_resource:
+		edited_resource.disconnect("changed", self, "on_edited_resource_changed")
 	
 	edited_resource = res
 	
 	refresh()
 	
-#	if edited_resource:
-#		edited_resource.connect("changed", self, "on_edited_resource_changed")
+	if edited_resource:
+		edited_resource.connect("changed", self, "on_edited_resource_changed")
 
-#func on_edited_resource_changed() -> void:
-#	pass
+func on_edited_resource_changed() -> void:
+	call_deferred("refresh")
