@@ -124,6 +124,8 @@ func _gui_input(p_event : InputEvent) -> void:
 
 			set_size(rect.size)
 			set_position(rect.position)
+			
+			edited_resource.set_rect(rect)
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _drag_hit_test(pos : Vector2) -> int:

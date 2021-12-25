@@ -5,25 +5,25 @@
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 2 )
-rect = Rect2( 0, 0, 100, 100 )
+rect = Rect2( 133, 63, 224, 158 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=2]
 script = ExtResource( 2 )
-rect = Rect2( 0, 0, 1, 1 )
+rect = Rect2( 107, 271, 100, 49 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 2 )
-rect = Rect2( 0, 0, 1, 1 )
+rect = Rect2( 498, 185, 100, 100 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=4]
 script = ExtResource( 2 )
-rect = Rect2( 0, 0, 1, 1 )
+rect = Rect2( 522, 29, 63, 54 )
 locked = false
 zones = [  ]
 
