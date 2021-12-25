@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/world_generator/ui/MainScreen.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/ui/tabs/World.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/world_generator/ui/tabs/Continent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/world_generator/ui/tabs/Zone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/world_generator/ui/tabs/SubZone.tscn" type="PackedScene" id=5]
 
 [node name="WorldGenerator" type="PanelContainer"]
 anchor_right = 1.0
@@ -38,29 +39,9 @@ margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
 
-[node name="SubZone" type="VBoxContainer" parent="TabContainer"]
+[node name="SubZone" parent="TabContainer" instance=ExtResource( 5 )]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
 margin_left = 4.0
 margin_top = 32.0
 margin_right = -4.0
 margin_bottom = -4.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/SubZone"]
-margin_right = 1002.0
-margin_bottom = 20.0
-
-[node name="AddButton" type="Button" parent="TabContainer/SubZone/HBoxContainer"]
-margin_right = 37.0
-margin_bottom = 20.0
-text = "Add"
-
-[node name="DeleteButton" type="Button" parent="TabContainer/SubZone/HBoxContainer"]
-margin_left = 41.0
-margin_right = 96.0
-margin_bottom = 20.0
-text = "Delete"
