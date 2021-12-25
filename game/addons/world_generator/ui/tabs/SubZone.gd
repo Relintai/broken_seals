@@ -16,9 +16,11 @@ func _ready():
 	var szoption_button : OptionButton = $VBoxContainer/SubZoneOptionButton
 	szoption_button.connect("item_selected", self, "on_sub_zone_item_selected")
 
-func refresh_continent() -> void:
+func continent_changed() -> void:
 	var option_button : OptionButton = $VBoxContainer/ZoneOptionButton
 	option_button.clear()
+	edited_zone = null
+	edited_sub_zone = null
 
 	if !edited_continent:
 		return
@@ -32,10 +34,13 @@ func refresh_continent() -> void:
 			
 			if !edited_zone:
 				edited_zone = c
+	
+	zone_changed()
 
-func refresh_zone() -> void:
+func zone_changed() -> void:
 	var option_button : OptionButton = $VBoxContainer/SubZoneOptionButton
 	option_button.clear()
+	edited_sub_zone = null
 
 	if !edited_zone:
 		return
@@ -47,11 +52,13 @@ func refresh_zone() -> void:
 			option_button.add_item(c.resource_name)
 			option_button.set_item_metadata(option_button.get_item_count() - 1, c)
 			
-			if !edited_zone:
-				edited_zone = c
+			if !edited_sub_zone:
+				edited_sub_zone = c
+				
+	sub_zone_changed()
 
 
-func refresh_sub_zone() -> void:
+func sub_zone_changed() -> void:
 	$VBoxContainer/HBoxContainer2/ResourcePropertyList.edit_resource(edited_sub_zone)
 	
 func refresh() -> void:
@@ -71,7 +78,7 @@ func refresh() -> void:
 			if !edited_continent:
 				edited_continent = c
 			
-	refresh_continent()
+	continent_changed()
 	
 func set_wgworld(wgw : WorldGenWorld) -> void:
 	edited_world = wgw
@@ -84,17 +91,17 @@ func set_continent(continent : Continent) -> void:
 	edited_continent = continent
 	edited_zone = null
 	
-	refresh_continent()
+	continent_changed()
 
 func set_zone(zone : Zone) -> void:
 	edited_zone = zone
 	
-	refresh_zone()
+	zone_changed()
 	
 func set_sub_zone(sub_zone : SubZone) -> void:
 	edited_sub_zone = sub_zone
 	
-	refresh_sub_zone()
+	sub_zone_changed()
 
 func on_continent_item_selected(idx : int) -> void:
 	var option_button : OptionButton = $VBoxContainer/ContinentOptionButton
