@@ -10,8 +10,9 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	continents = arr
 
-func add_content() -> void:
+func add_content(item_name : String = "") -> void:
 	var continent : Continent = Continent.new()
+	continent.resource_name = item_name
 	
 	var r : Rect2 = get_rect()
 	r.size.x /= 10.0

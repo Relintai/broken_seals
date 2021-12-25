@@ -18,7 +18,7 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	pass
 	
-func add_content() -> void:
+func add_content(item_name : String = "") -> void:
 	pass
 
 func setup_property_inspector(inspector) -> void:

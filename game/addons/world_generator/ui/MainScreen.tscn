@@ -173,4 +173,4 @@ margin_right = 96.0
 margin_bottom = 20.0
 text = "Delete"
 
-[connection signal="pressed" from="TabContainer/World/VBoxContainer/HBoxContainer/AddButton" to="TabContainer/World/VBoxContainer/DataList" method="add_item"]
+[connection signal="pressed" from="TabContainer/World/VBoxContainer/HBoxContainer/AddButton" to="TabContainer/World/VBoxContainer/DataList" method="add_button_pressed"]

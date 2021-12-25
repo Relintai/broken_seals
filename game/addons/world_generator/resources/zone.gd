@@ -10,8 +10,11 @@ func get_content() -> Array:
 func set_content(arr : Array) -> void:
 	subzones = arr
 
-func add_content() -> void:
-	subzones.append(SubZone.new())
+func add_content(item_name : String = "") -> void:
+	var subzone : SubZone = SubZone.new()
+	subzone.resource_name = item_name
+	
+	subzones.append(subzone)
 	emit_changed()
 
 func setup_property_inspector(inspector) -> void:

@@ -1,29 +1,54 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/resources/continent.gd" type="Script" id=2]
 
 [sub_resource type="Resource" id=1]
+resource_name = "wwww"
 script = ExtResource( 2 )
 rect = Rect2( 133, 63, 224, 158 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=2]
+resource_name = "efefef"
 script = ExtResource( 2 )
 rect = Rect2( 107, 271, 100, 49 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=3]
+resource_name = "grgrg"
 script = ExtResource( 2 )
 rect = Rect2( 498, 185, 100, 100 )
 locked = false
 zones = [  ]
 
 [sub_resource type="Resource" id=4]
+resource_name = "qwdasd"
 script = ExtResource( 2 )
 rect = Rect2( 522, 29, 63, 54 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=5]
+resource_name = "qwe"
+script = ExtResource( 2 )
+rect = Rect2( 473, 331, 100, 100 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=6]
+resource_name = "asdasdq"
+script = ExtResource( 2 )
+rect = Rect2( 304, 280, 100, 100 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=7]
+resource_name = "343"
+script = ExtResource( 2 )
+rect = Rect2( 14, 134, 100, 100 )
 locked = false
 zones = [  ]
 
@@ -32,4 +57,4 @@ resource_name = "asdasdss"
 script = ExtResource( 1 )
 rect = Rect2( 0, 0, 1000, 1000 )
 locked = false
-continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
+continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ]

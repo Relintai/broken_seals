@@ -3,11 +3,16 @@ extends Tree
 
 var edited_resource : WorldGenBaseResource = null
 
-func add_item() -> void:
+var name_edited_resource : WorldGenBaseResource = null
+
+func _init():
+	connect("item_activated", self, "on_item_activated")
+
+func add_item(item_name : String = "") -> void:
 	if !edited_resource:
 		return
 		
-	edited_resource.add_content()
+	edited_resource.add_content(item_name)
 	
 func refresh() -> void:
 	clear()
@@ -29,6 +34,7 @@ func refresh() -> void:
 			var item : TreeItem = create_item(root)
 			
 			item.set_text(0, n)
+			item.set_meta("res", d)
 
 func set_edited_resource(res : WorldGenBaseResource)-> void:
 	if edited_resource:
@@ -41,5 +47,31 @@ func set_edited_resource(res : WorldGenBaseResource)-> void:
 	
 	refresh()
 
+func add_button_pressed() -> void:
+	$NameDialog/TextEdit.text = ""
+	$NameDialog.popup_centered()
+
+func name_dialog_ok_pressed() -> void:
+	if !name_edited_resource:
+		add_item($NameDialog/TextEdit.text)
+	else:
+		name_edited_resource.resource_name = $NameDialog/TextEdit.text
+		name_edited_resource = null
+
+
 func on_resource_changed() -> void:
 	refresh()
+
+func on_item_activated() -> void:
+	var item : TreeItem = get_selected()
+	
+	if !item:
+		return
+		
+	name_edited_resource = item.get_meta("res")
+	
+	if !name_edited_resource:
+		return
+		
+	$NameDialog/TextEdit.text = name_edited_resource.resource_name
+	$NameDialog.popup_centered()
