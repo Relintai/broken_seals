@@ -132,7 +132,7 @@ func _drag_hit_test(pos : Vector2) -> int:
 	var drag_type : int = DragType.DRAG_NONE
 
 	if (!edited_resource.locked):
-		var scaleborder_size : int = 10 #get_constant("scaleborder_size", "WindowDialog")
+		var scaleborder_size : int = 5 #get_constant("scaleborder_size", "WindowDialog")
 
 		var rect : Rect2 = get_rect()
 

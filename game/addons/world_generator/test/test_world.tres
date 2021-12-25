@@ -104,7 +104,7 @@ subzones = [  ]
 [sub_resource type="Resource" id=7]
 resource_name = "343"
 script = ExtResource( 2 )
-rect = Rect2( 14, 134, 100, 100 )
+rect = Rect2( 14, 134, 157, 152 )
 locked = false
 zones = [ SubResource( 12 ) ]
 
