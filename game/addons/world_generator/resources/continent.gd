@@ -14,6 +14,12 @@ func add_content(item_name : String = "") -> void:
 	var zone : Zone = Zone.new()
 	zone.resource_name = item_name
 	
+	var r : Rect2 = get_rect()
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	
+	zone.set_rect(r)
+	
 	zones.append(zone)
 	
 	emit_changed()
