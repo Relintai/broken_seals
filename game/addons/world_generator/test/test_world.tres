@@ -8,13 +8,13 @@
 [sub_resource type="Resource" id=14]
 resource_name = "qwe"
 script = ExtResource( 4 )
-rect = Rect2( 12, 17, 159.14, 87.78 )
+rect = Rect2( 21, 25, 150, 79 )
 locked = false
 
 [sub_resource type="Resource" id=15]
 resource_name = "we"
 script = ExtResource( 4 )
-rect = Rect2( 0, 0, 19.14, 12.78 )
+rect = Rect2( 3, -1, 54.14, 32.78 )
 locked = false
 
 [sub_resource type="Resource" id=8]

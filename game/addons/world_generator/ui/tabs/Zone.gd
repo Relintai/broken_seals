@@ -12,31 +12,11 @@ func _ready():
 	var zoption_button : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
 	zoption_button.connect("item_selected", self, "on_zone_item_selected")
 
-func refresh_continent() -> void:
-	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
-	option_button.clear()
-
-	if !edited_continent:
-		return
-	
-	var content : Array = edited_continent.get_content()
-	
-	for c in content:
-		if c:
-			option_button.add_item(c.resource_name)
-			option_button.set_item_metadata(option_button.get_item_count() - 1, c)
-			
-			if !edited_zone:
-				edited_zone = c
-
-func refresh_zone() -> void:
-	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.edit_resource(edited_zone)
-	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_edited_resource(edited_zone)
-	$HSplitContainer/RectEditor.set_edited_resource(edited_zone)
-	
 func refresh() -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
 	option_button.clear()
+	edited_continent = null
+	edited_zone = null
 
 	if !edited_world:
 		return
@@ -51,25 +31,50 @@ func refresh() -> void:
 			if !edited_continent:
 				edited_continent = c
 			
-	refresh_continent()
+	continent_changed()
+
+func continent_changed() -> void:
+	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
+	option_button.clear()
+	edited_zone = null
+
+	if !edited_continent:
+		return
 	
+	var content : Array = edited_continent.get_content()
+	
+	for c in content:
+		if c:
+			option_button.add_item(c.resource_name)
+			option_button.set_item_metadata(option_button.get_item_count() - 1, c)
+			
+			if !edited_zone:
+				edited_zone = c
+				
+	zone_changed()
+
+func zone_changed() -> void:
+	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.edit_resource(edited_zone)
+	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_edited_resource(edited_zone)
+	$HSplitContainer/RectEditor.set_edited_resource(edited_zone)
+	
+func set_continent(continent : Continent) -> void:
+	edited_continent = continent
+	edited_zone = null
+	
+	continent_changed()
+
+func set_zone(zone : Zone) -> void:
+	edited_zone = zone
+	
+	zone_changed()
+
 func set_wgworld(wgw : WorldGenWorld) -> void:
 	edited_world = wgw
 	edited_continent = null
 	edited_zone = null
 	
 	refresh()
-
-func set_continent(continent : Continent) -> void:
-	edited_continent = continent
-	edited_zone = null
-	
-	refresh_continent()
-
-func set_zone(zone : Zone) -> void:
-	edited_zone = zone
-	
-	refresh_zone()
 
 func on_continent_item_selected(idx : int) -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
