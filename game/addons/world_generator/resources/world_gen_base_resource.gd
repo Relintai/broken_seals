@@ -32,36 +32,36 @@ func duplicate_content_entry(entry : WorldGenBaseResource) -> void:
 	de.resource_name += " (Duplicate)"
 	add_content(de)
 
-func setup_terra_library(library : TerramanLibrary) -> void:
-	_setup_terra_library(library)
+func setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
+	_setup_terra_library(library, pseed)
 	
 	for c in get_content():
 		if c:
-			c.setup_terra_library()
+			c.setup_terra_library(library, pseed)
 
-func _setup_terra_library(library : TerramanLibrary) -> void:
+func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
 	pass
 
-func generate_terra_chunk(chunk: TerraChunk, spawn_mobs: bool) -> void:
+func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
 	pass
 	
-func generate_map() -> Image:
+func generate_map(pseed : int) -> Image:
 	var img : Image = Image.new()
 	
 	img.create(get_rect().size.x, get_rect().size.y, false, Image.FORMAT_RGBA8)
 	
-	add_to_map(img)
+	add_to_map(img, pseed)
 	
 	return img
 
-func add_to_map(var img : Image) -> void:
-	_add_to_map(img)
+func add_to_map(var img : Image, pseed : int) -> void:
+	_add_to_map(img, pseed)
 	
 	for c in get_content():
 		if c:
-			c.add_to_map(img)
+			c.add_to_map(img, pseed)
 
-func _add_to_map(var img : Image) -> void:
+func _add_to_map(var img : Image, pseed : int) -> void:
 	pass
 
 func get_editor_rect_border_color() -> Color:
