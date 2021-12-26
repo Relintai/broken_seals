@@ -32,9 +32,17 @@ func _draw():
 	
 	if edited_resource:
 		res_name = edited_resource.resource_name
+		
+	var res_cls : String = ""
+	
+	if edited_resource:
+		res_cls = edited_resource.get_editor_class()
 	
 	draw_string(font, Vector2(_editor_rect_border_size, font.get_height()), res_name, _edited_resource_font_color)
 	draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 2), _editor_additional_text, _edited_resource_font_color, get_rect().size.x)
+	
+	if res_cls != "":
+		draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 3), res_cls, _edited_resource_font_color, get_rect().size.x)
 
 func refresh() -> void:
 	if !edited_resource:
