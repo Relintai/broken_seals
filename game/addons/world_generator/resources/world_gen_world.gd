@@ -13,17 +13,17 @@ func set_content(arr : Array) -> void:
 func create_content(item_name : String = "") -> void:
 	var continent : Continent = Continent.new()
 	continent.resource_name = item_name
-	
+
+	add_content(continent)
+
+func add_content(entry : WorldGenBaseResource) -> void:
 	var r : Rect2 = get_rect()
 	r.position = Vector2()
 	r.size.x /= 10.0
 	r.size.y /= 10.0
 	
-	continent.set_rect(r)
+	entry.set_rect(r)
 	
-	add_content(continent)
-
-func add_content(entry : WorldGenBaseResource) -> void:
 	continents.append(entry)
 	emit_changed()
 
