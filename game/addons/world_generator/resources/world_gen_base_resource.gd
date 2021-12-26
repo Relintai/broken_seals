@@ -31,7 +31,39 @@ func duplicate_content_entry(entry : WorldGenBaseResource) -> void:
 	var de : WorldGenBaseResource = entry.duplicate(true)
 	de.resource_name += " (Duplicate)"
 	add_content(de)
+
+func setup_terra_library(library : TerramanLibrary) -> void:
+	_setup_terra_library(library)
 	
+	for c in get_content():
+		if c:
+			c.setup_terra_library()
+
+func _setup_terra_library(library : TerramanLibrary) -> void:
+	pass
+
+func generate_terra_chunk(chunk: TerraChunk, spawn_mobs: bool) -> void:
+	pass
+	
+func generate_map() -> Image:
+	var img : Image = Image.new()
+	
+	img.create(get_rect().size.x, get_rect().size.y, false, Image.FORMAT_RGBA8)
+	
+	add_to_map(img)
+	
+	return img
+
+func add_to_map(var img : Image) -> void:
+	_add_to_map(img)
+	
+	for c in get_content():
+		if c:
+			c.add_to_map(img)
+
+func _add_to_map(var img : Image) -> void:
+	pass
+
 func get_editor_rect_border_color() -> Color:
 	return Color(1, 1, 1, 1)
 
