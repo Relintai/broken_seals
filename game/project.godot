@@ -255,6 +255,11 @@ _global_script_classes=[ {
 "path": "res://addons/world_generator/resources/world_gen_world.gd"
 }, {
 "base": "Resource",
+"class": "WorldGeneratorSettings",
+"language": "GDScript",
+"path": "res://addons/world_generator/resources/world_generator_settings.gd"
+}, {
+"base": "Resource",
 "class": "Zone",
 "language": "GDScript",
 "path": "res://addons/world_generator/resources/zone.gd"
@@ -309,6 +314,7 @@ _global_script_class_icons={
 "UIWindowModule": "",
 "WorldGenBaseResource": "",
 "WorldGenWorld": "",
+"WorldGeneratorSettings": "",
 "Zone": ""
 }
 Node="input/actionbar_5_11"

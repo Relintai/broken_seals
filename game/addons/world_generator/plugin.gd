@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+var SWorldGeneratorSettings = preload("res://addons/world_generator/resources/world_generator_settings.gd")
+
 var SWorldGenBaseResource = preload("res://addons/world_generator/resources/world_gen_base_resource.gd")
 var SWorldGenWorld = preload("res://addons/world_generator/resources/world_gen_world.gd")
 var SContinent = preload("res://addons/world_generator/resources/continent.gd")
@@ -13,6 +15,8 @@ var editor_scene = null
 var tool_button : ToolButton = null
 
 func _enter_tree():
+	add_custom_type("WorldGeneratorSettings", "Resource", SWorldGeneratorSettings, null)
+	
 	add_custom_type("WorldGenBaseResource", "Resource", SWorldGenBaseResource, null)
 	#Don't change the base to "WorldGenBaseResource" else it will complain about a non-existant class
 	#Also it works perfectly like this
@@ -27,6 +31,8 @@ func _enter_tree():
 	tool_button.hide()
 
 func _exit_tree():
+	remove_custom_type("WorldGeneratorSettings")
+	
 	remove_custom_type("WorldGenBaseResource")
 	remove_custom_type("WorldGenWorld")
 	remove_custom_type("Continent")

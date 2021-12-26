@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/world_generator/resources/world_generator_settings.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+continent_class_folders = PoolStringArray( "res://world_generator/continents/" )
+zone_class_folders = PoolStringArray( "res://world_generator/zones/" )
+subzone_class_folders = PoolStringArray( "res://world_generator/subzones/" )
