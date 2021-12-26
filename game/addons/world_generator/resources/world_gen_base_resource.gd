@@ -27,6 +27,31 @@ func create_content(item_name : String = "") -> void:
 func remove_content_entry(entry : WorldGenBaseResource) -> void:
 	pass
 
+func get_content_with_name(name : String) -> WorldGenBaseResource:
+	if resource_name == name:
+		return self
+		
+	for c in get_content():
+		if c:
+			var cc = c.get_content_with_name(name)
+			if cc:
+				return cc
+		
+	return null
+
+func get_all_contents_with_name(name : String) -> Array:
+	var arr : Array = Array()
+	
+	if resource_name == name:
+		arr.append(self)
+		
+	for c in get_content():
+		if c:
+			var cc : Array = c.get_all_contents_with_name(name)
+			arr.append_array(cc)
+		
+	return arr
+
 func duplicate_content_entry(entry : WorldGenBaseResource) -> void:
 	var de : WorldGenBaseResource = entry.duplicate(true)
 	de.resource_name += " (Duplicate)"
@@ -43,6 +68,25 @@ func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
 	pass
 
 func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
+	generate_terra_chunk_internal(chunk, pseed, spawn_mobs, get_rect())
+	
+func generate_terra_chunk_internal(chunk: TerraChunk, pseed : int, spawn_mobs: bool, world_parent_rect : Rect2) -> void:
+	var wcr : Rect2 = get_rect()
+	wcr.position += world_parent_rect.position
+	
+	var p : Vector2 = Vector2(chunk.get_position_x(), chunk.get_position_z())
+	
+	#TODO
+	#if !wcr.has_point(p):
+	#	return
+		
+	_generate_terra_chunk(chunk, spawn_mobs, spawn_mobs)
+	
+	for c in get_content():
+		if c:
+			c.generate_terra_chunk_internal(chunk, pseed, spawn_mobs, wcr)
+	
+func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
 	pass
 	
 func generate_map(pseed : int) -> Image:

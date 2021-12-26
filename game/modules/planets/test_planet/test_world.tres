@@ -1,0 +1,39 @@
+[gd_resource type="Resource" load_steps=11 format=2]
+
+[ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
+[ext_resource path="res://world_generator/continents/test_continent.gd" type="Script" id=2]
+[ext_resource path="res://world_generator/zones/test_zone.gd" type="Script" id=3]
+[ext_resource path="res://world_generator/subzones/spawner.gd" type="Script" id=4]
+[ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=5]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="PropData" id=6]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t2.tres" type="PropData" id=7]
+
+[sub_resource type="Resource" id=2]
+resource_name = "Spawner"
+script = ExtResource( 4 )
+rect = Rect2( 55, 78, 22, 25 )
+locked = false
+
+[sub_resource type="Resource" id=3]
+resource_name = "TestForest"
+script = ExtResource( 3 )
+rect = Rect2( 39, 35, 142, 171 )
+locked = false
+subzones = [ SubResource( 2 ) ]
+
+[sub_resource type="Resource" id=1]
+resource_name = "Continent"
+script = ExtResource( 2 )
+rect = Rect2( 30, 15, 434, 459 )
+locked = false
+zones = [ SubResource( 3 ) ]
+dungeon_teleporter = ExtResource( 5 )
+prop_tree = ExtResource( 6 )
+prop_tree2 = ExtResource( 7 )
+
+[resource]
+resource_name = "TestWorld"
+script = ExtResource( 1 )
+rect = Rect2( -250, -250, 500, 500 )
+locked = false
+continents = [ SubResource( 1 ) ]

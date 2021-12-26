@@ -234,6 +234,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/world_generator/resources/subzone.gd"
 }, {
+"base": "TerramanLevelGenerator",
+"class": "TerraWorldGenerator",
+"language": "GDScript",
+"path": "res://scripts/world_generators/TerraWorldGenerator.gd"
+}, {
 "base": "GameModule",
 "class": "UIGuiChildModule",
 "language": "GDScript",
@@ -310,6 +315,7 @@ _global_script_class_icons={
 "SpellEffectVisualBasic": "",
 "SpellGD": "",
 "SubZone": "",
+"TerraWorldGenerator": "",
 "UIGuiChildModule": "",
 "UIWindowModule": "",
 "WorldGenBaseResource": "",
