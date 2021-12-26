@@ -1,18 +1,58 @@
 tool
 extends Tree
 
-var edited_resource : WorldGenBaseResource = null
+export(int, "Continent,Zone,Sub Zone") var class_types : int = 0
 
+var edited_resource : WorldGenBaseResource = null
 var name_edited_resource : WorldGenBaseResource = null
 
 func _init():
 	connect("item_activated", self, "on_item_activated")
+	
+func _enter_tree():
+	var dir : Directory = Directory.new()
+	
+	if dir.file_exists("res://world_generator_settings.tres"):
+		var wgs : WorldGeneratorSettings = load("res://world_generator_settings.tres") as WorldGeneratorSettings
+		
+		if !wgs:
+			return
+			
+		wgs.evaluate_scripts(class_types, $NameDialog/VBoxContainer/Tree)
 
 func add_item(item_name : String = "") -> void:
 	if !edited_resource:
 		return
 		
-	edited_resource.create_content(item_name)
+	var ti : TreeItem = $NameDialog/VBoxContainer/Tree.get_selected()
+	
+	if !ti:
+		return
+		
+	var e : WorldGenBaseResource = null
+	
+	if ti.has_meta("class_name"):
+		var cn : String = ti.get_meta("class_name")
+		
+		if cn == "Continent":
+			e = Continent.new()
+		elif cn == "Zone":
+			e = Zone.new()
+		elif cn == "SubZone":
+			e = SubZone.new()
+			
+	elif ti.has_meta("file"):
+		var cls = load(ti.get_meta("file"))
+		
+		if cls:
+			e = cls.new()
+		
+	if !e:
+		return
+	
+	e.resource_name = item_name
+	
+	edited_resource.add_content(e)
 	
 func refresh() -> void:
 	clear()
@@ -48,15 +88,18 @@ func set_edited_resource(res : WorldGenBaseResource)-> void:
 	refresh()
 
 func add_button_pressed() -> void:
-	$NameDialog/TextEdit.text = ""
+	$NameDialog/VBoxContainer/LineEdit.text = ""
 	$NameDialog.popup_centered()
 
 func name_dialog_ok_pressed() -> void:
-	if !name_edited_resource:
-		add_item($NameDialog/TextEdit.text)
-	else:
-		name_edited_resource.resource_name = $NameDialog/TextEdit.text
+	add_item($NameDialog/VBoxContainer/LineEdit.text)
+
+func name_edit_dialog_ok_pressed() -> void:
+	if name_edited_resource:
+		name_edited_resource.resource_name = $NameEditDialog/VBoxContainer/LineEdit.text
+		name_edited_resource.emit_changed()
 		name_edited_resource = null
+		on_resource_changed()
 
 func delete_button_pressed() -> void:
 	var item : TreeItem = get_selected()
@@ -98,5 +141,5 @@ func on_item_activated() -> void:
 	if !name_edited_resource:
 		return
 		
-	$NameDialog/TextEdit.text = name_edited_resource.resource_name
-	$NameDialog.popup_centered()
+	$NameEditDialog/VBoxContainer/LineEdit.text = name_edited_resource.resource_name
+	$NameEditDialog.popup_centered()

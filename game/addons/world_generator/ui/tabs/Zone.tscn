@@ -98,6 +98,7 @@ anchor_bottom = 0.0
 margin_top = 42.0
 margin_right = 173.0
 margin_bottom = 552.0
+class_types = 2
 
 [connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/AddButton" to="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList" method="add_button_pressed"]
 [connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/DeleteButton" to="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList" method="delete_button_pressed"]

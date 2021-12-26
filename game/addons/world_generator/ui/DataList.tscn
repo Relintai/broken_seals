@@ -14,17 +14,71 @@ __meta__ = {
 }
 
 [node name="NameDialog" type="ConfirmationDialog" parent="."]
-margin_right = 200.0
-margin_bottom = 70.0
+margin_right = 329.0
+margin_bottom = 313.0
 window_title = "Name"
+resizable = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextEdit" type="TextEdit" parent="NameDialog"]
+[node name="VBoxContainer" type="VBoxContainer" parent="NameDialog"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 192.0
-margin_bottom = 34.0
+margin_right = 321.0
+margin_bottom = 277.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="NameDialog/VBoxContainer"]
+margin_right = 313.0
+margin_bottom = 14.0
+text = "Class"
+
+[node name="Tree" type="Tree" parent="NameDialog/VBoxContainer"]
+margin_top = 18.0
+margin_right = 313.0
+margin_bottom = 223.0
+rect_min_size = Vector2( 0, 200 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="NameDialog/VBoxContainer"]
+margin_top = 227.0
+margin_right = 313.0
+margin_bottom = 241.0
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="NameDialog/VBoxContainer"]
+margin_top = 245.0
+margin_right = 313.0
+margin_bottom = 269.0
+
+[node name="NameEditDialog" type="ConfirmationDialog" parent="."]
+margin_right = 223.0
+margin_bottom = 82.0
+window_title = "Name"
+resizable = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NameEditDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 215.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="NameEditDialog/VBoxContainer"]
+margin_right = 207.0
+margin_bottom = 14.0
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="NameEditDialog/VBoxContainer"]
+margin_top = 18.0
+margin_right = 207.0
+margin_bottom = 42.0
 
 [connection signal="confirmed" from="NameDialog" to="." method="name_dialog_ok_pressed"]
+[connection signal="confirmed" from="NameEditDialog" to="." method="name_edit_dialog_ok_pressed"]

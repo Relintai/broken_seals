@@ -1,9 +1,12 @@
-[gd_resource type="Resource" load_steps=28 format=2]
+[gd_resource type="Resource" load_steps=40 format=2]
 
 [ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/resources/continent.gd" type="Script" id=2]
 [ext_resource path="res://addons/world_generator/resources/zone.gd" type="Script" id=3]
 [ext_resource path="res://addons/world_generator/resources/subzone.gd" type="Script" id=4]
+[ext_resource path="res://world_generator/continents/test_continent.gd" type="Script" id=5]
+[ext_resource path="res://world_generator/zones/test_zone.gd" type="Script" id=6]
+[ext_resource path="res://world_generator/subzones/test_subzone.gd" type="Script" id=7]
 
 [sub_resource type="Resource" id=14]
 resource_name = "qwe"
@@ -17,12 +20,18 @@ script = ExtResource( 4 )
 rect = Rect2( 7, 9, 54, 34 )
 locked = false
 
+[sub_resource type="Resource" id=34]
+resource_name = "yy"
+script = ExtResource( 7 )
+rect = Rect2( 66, 11, 100, 91 )
+locked = false
+
 [sub_resource type="Resource" id=8]
 resource_name = "asdasr"
 script = ExtResource( 3 )
 rect = Rect2( 35, 21, 191.4, 127.8 )
 locked = false
-subzones = [ SubResource( 14 ), SubResource( 15 ) ]
+subzones = [ SubResource( 14 ), SubResource( 15 ), SubResource( 34 ) ]
 
 [sub_resource type="Resource" id=13]
 resource_name = "qqq"
@@ -86,12 +95,26 @@ rect = Rect2( 64, 6, 158.1, 39.8 )
 locked = false
 subzones = [  ]
 
+[sub_resource type="Resource" id=32]
+resource_name = "tttte"
+script = ExtResource( 3 )
+rect = Rect2( 103, 28, 100, 100 )
+locked = false
+subzones = [  ]
+
+[sub_resource type="Resource" id=35]
+resource_name = "yu"
+script = ExtResource( 6 )
+rect = Rect2( 88, 21, 100, 100 )
+locked = false
+subzones = [  ]
+
 [sub_resource type="Resource" id=1]
 resource_name = "wwww"
 script = ExtResource( 2 )
 rect = Rect2( 163, 35, 241, 158 )
 locked = false
-zones = [ SubResource( 8 ), SubResource( 13 ), SubResource( 24 ), SubResource( 26 ) ]
+zones = [ SubResource( 8 ), SubResource( 13 ), SubResource( 24 ), SubResource( 26 ), SubResource( 32 ), SubResource( 35 ) ]
 
 [sub_resource type="Resource" id=2]
 resource_name = "efefef"
@@ -184,7 +207,7 @@ func setup_property_inspector(inspector) -> void:
 "
 
 [sub_resource type="Resource" id=17]
-resource_name = "qwet"
+resource_name = "qwetwwqasd"
 script = SubResource( 16 )
 rect = Rect2( 473, 331, 100, 100 )
 locked = false
@@ -232,7 +255,7 @@ func setup_property_inspector(inspector) -> void:
 "
 
 [sub_resource type="Resource" id=19]
-resource_name = "qwesa"
+resource_name = "qwesat"
 script = SubResource( 18 )
 rect = Rect2( 613, 346, 100, 100 )
 locked = false
@@ -300,9 +323,50 @@ rect = Rect2( 256, 365, 100, 100 )
 locked = false
 zones = [  ]
 
+[sub_resource type="Resource" id=27]
+resource_name = "asd"
+script = ExtResource( 2 )
+rect = Rect2( 337, 79, 100, 100 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=28]
+resource_name = "asd"
+script = ExtResource( 2 )
+rect = Rect2( 244, 234, 100, 100 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=29]
+script = ExtResource( 2 )
+rect = Rect2( 377, 69, 284, 238 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=30]
+resource_name = "tttttt"
+script = ExtResource( 2 )
+rect = Rect2( 188, 225, 233, 259 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=31]
+resource_name = "ttttyuqtttt"
+script = ExtResource( 2 )
+rect = Rect2( 339, 76, 220, 170 )
+locked = false
+zones = [  ]
+
+[sub_resource type="Resource" id=33]
+resource_name = "qttt"
+script = ExtResource( 5 )
+rect = Rect2( 99, 78, 213, 105 )
+locked = false
+zones = [  ]
+
 [resource]
 resource_name = "asdasdsse"
 script = ExtResource( 1 )
 rect = Rect2( 0, 0, 1000, 1000 )
 locked = false
-continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 17 ), SubResource( 19 ), SubResource( 20 ), SubResource( 22 ), SubResource( 23 ) ]
+continents = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 17 ), SubResource( 19 ), SubResource( 20 ), SubResource( 22 ), SubResource( 23 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ), SubResource( 30 ), SubResource( 31 ), SubResource( 33 ) ]
