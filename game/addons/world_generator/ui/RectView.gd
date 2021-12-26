@@ -43,10 +43,10 @@ func refresh() -> void:
 	
 	var p : MarginContainer = get_parent() as MarginContainer
 
-	p.add_constant_override("margin_left", rect.size.x / 4.0)
-	p.add_constant_override("margin_right", rect.size.x / 4.0)
-	p.add_constant_override("margin_top", rect.size.y / 4.0)
-	p.add_constant_override("margin_bottom", rect.size.y / 4.0)
+	p.add_constant_override("margin_left", min(rect.size.x / 4.0, 50))
+	p.add_constant_override("margin_right", min(rect.size.x / 4.0, 50))
+	p.add_constant_override("margin_top", min(rect.size.y / 4.0, 50))
+	p.add_constant_override("margin_bottom", min(rect.size.y / 4.0, 50))
 	
 	refresh_rects()
 	

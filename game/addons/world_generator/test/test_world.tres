@@ -14,7 +14,7 @@ locked = false
 [sub_resource type="Resource" id=15]
 resource_name = "we"
 script = ExtResource( 4 )
-rect = Rect2( 7, 9, 54.14, 32.78 )
+rect = Rect2( 7, 9, 54, 34 )
 locked = false
 
 [sub_resource type="Resource" id=8]
@@ -27,14 +27,14 @@ subzones = [ SubResource( 14 ), SubResource( 15 ) ]
 [sub_resource type="Resource" id=13]
 resource_name = "qqq"
 script = ExtResource( 3 )
-rect = Rect2( 8, 13, 200.4, 61.8 )
+rect = Rect2( 17, 59, 200.4, 52 )
 locked = false
 subzones = [  ]
 
 [sub_resource type="Resource" id=24]
 resource_name = "trtrtr"
 script = ExtResource( 3 )
-rect = Rect2( 0, 0, 24.1, 15.8 )
+rect = Rect2( 0, 0, 57.1, 45.8 )
 locked = false
 subzones = [  ]
 
@@ -82,7 +82,7 @@ func setup_property_inspector(inspector) -> void:
 [sub_resource type="Resource" id=26]
 resource_name = "trtrtr (Duplicate)"
 script = SubResource( 25 )
-rect = Rect2( 0, 0, 24.1, 15.8 )
+rect = Rect2( 64, 6, 158.1, 39.8 )
 locked = false
 subzones = [  ]
 
