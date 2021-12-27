@@ -62,5 +62,6 @@ func get_editor_additional_text() -> String:
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	
+	inspector.add_h_separator()
 	inspector.add_slot_resource("get_trainer", "set_trainer", "Trainer", "EntityData")
 	inspector.add_slot_resource("get_vendor", "set_vendor", "Vendor", "EntityData")

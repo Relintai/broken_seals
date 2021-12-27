@@ -173,6 +173,7 @@ func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int, spawn_mobs : bool) -> 
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	
+	inspector.add_h_separator()
 	inspector.add_slot_resource("get_dungeon_teleporter", "set_dungeon_teleporter", "Dungeon Teleporter", "PackedScene")
 	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
 	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")

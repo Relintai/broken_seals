@@ -6,6 +6,16 @@ var EditorResourceWidget : PackedScene = preload("res://addons/world_generator/w
 var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
+func add_h_separator() -> int:
+	var hsep : HSeparator = HSeparator.new()
+	
+	var content_node = $MainContainer/Content
+	
+	content_node.add_child(hsep)
+	var slot_idx : int = content_node.get_child_count() - 1
+	
+	return slot_idx
+
 func add_slot_color(getter : String, setter : String) -> int:
 	var cp : ColorPickerButton = ColorPickerButton.new()
 
