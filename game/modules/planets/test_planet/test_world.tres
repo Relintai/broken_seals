@@ -21,14 +21,14 @@ vendor = ExtResource( 9 )
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
 script = ExtResource( 3 )
-rect = Rect2( 28, 35, 378, 407 )
+rect = Rect2( 28.5, 27, 378, 407 )
 locked = false
 subzones = [ SubResource( 2 ) ]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Continent"
 script = ExtResource( 2 )
-rect = Rect2( 28, 25, 434, 459 )
+rect = Rect2( 33.5, 19.5, 434, 459 )
 locked = false
 zones = [ SubResource( 3 ) ]
 dungeon_teleporter = ExtResource( 5 )

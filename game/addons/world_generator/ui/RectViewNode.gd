@@ -23,6 +23,8 @@ var drag_type : int
 var drag_offset : Vector2
 var drag_offset_far : Vector2
 
+var _rect_scale : float = 1
+
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
@@ -51,14 +53,21 @@ func refresh() -> void:
 	
 	#anchor is bottom left here
 	var rect : Rect2 = edited_resource.get_rect()
+	rect.position *= _rect_scale
+	rect.size *= _rect_scale
 	
 	#anchor needs to be on top left here
 	var rp : Vector2 = rect.position
-	rp.y = edited_resource_parent_size.y - rect.size.y - rect.position.y
+	rp.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
 	rect_position = rp
 	rect_size = rect.size
 	
 	update()
+
+func set_editor_rect_scale(rect_scale) -> void:
+	_rect_scale = rect_scale
+	
+	refresh()
 
 func set_edited_resource(res : WorldGenBaseResource):
 	edited_resource = res
@@ -163,7 +172,9 @@ func _gui_input(p_event : InputEvent) -> void:
 			set_position(rect.position)
 			
 			#rect needs to be converted back
-			rect.position.y = edited_resource_parent_size.y - rect.size.y - rect.position.y
+			rect.position.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
+			rect.position /= _rect_scale
+			rect.size /= _rect_scale
 			edited_resource.set_rect(rect)
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp

@@ -5,7 +5,7 @@ var rect_editor_node_scene : PackedScene = preload("res://addons/world_generator
 
 export(NodePath) var zoom_widget_path : NodePath = ""
 
-var stored_rect_scale : Vector2 = Vector2(1, 1)
+var _rect_scale : float = 1
 
 var edited_resource : WorldGenBaseResource = null
 var edited_resource_current_size : Vector2 = Vector2()
@@ -20,14 +20,24 @@ func _enter_tree():
 	connect("visibility_changed", self, "on_visibility_changed")
 
 func on_visibility_changed() -> void:
-	call_deferred("reapply_zoom")
+	call_deferred("apply_zoom")
 
-func reapply_zoom() -> void:
-	rect_scale = stored_rect_scale
+func apply_zoom() -> void:
+	if !edited_resource:
+		return
+	
+	var rect : Rect2 = edited_resource.rect
+	edited_resource_current_size = rect.size
+	rect.position = rect.position * _rect_scale
+	rect.size = rect.size * _rect_scale
+	set_custom_minimum_size(rect.size)
+	
+	for c in get_children():
+		c.set_editor_rect_scale(_rect_scale)
 	
 func on_zoom_changed(zoom : float) -> void:
-	stored_rect_scale = Vector2(zoom, zoom)
-	rect_scale = Vector2(zoom, zoom)
+	_rect_scale = zoom
+	apply_zoom()
 
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), Color(0.2, 0.2, 0.2, 1))
@@ -39,9 +49,9 @@ func refresh() -> void:
 		return
 	
 	var rect : Rect2 = edited_resource.rect
-	
 	edited_resource_current_size = rect.size
-	
+	rect.position = rect.position * _rect_scale
+	rect.size = rect.size * _rect_scale
 	set_custom_minimum_size(rect.size)
 	
 	var p : MarginContainer = get_parent() as MarginContainer
@@ -50,6 +60,8 @@ func refresh() -> void:
 	p.add_constant_override("margin_right", min(rect.size.x / 4.0, 50))
 	p.add_constant_override("margin_top", min(rect.size.y / 4.0, 50))
 	p.add_constant_override("margin_bottom", min(rect.size.y / 4.0, 50))
+	
+	apply_zoom()
 	
 	refresh_rects()
 	
@@ -69,6 +81,7 @@ func refresh_rects() -> void:
 			var s : Node = rect_editor_node_scene.instance()
 			
 			add_child(s)
+			s.set_editor_rect_scale(_rect_scale)
 			s.edited_resource_parent_size = edited_resource_current_size
 			s.set_edited_resource(c)
 
