@@ -1,5 +1,6 @@
 tool
-extends Building
+#extends Building
+extends Resource
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -59,6 +60,14 @@ var enemy_data : Array = []
 # in binary: WallXP = 00001, WallXN = 0010, WallZP = 0100, WallZN = 1000
 enum NeighbourCaseCodeFlags { WallXP = 1, WallXN = 2, WallZP = 4, WallZN = 8 }
 enum Tile { Wall, Floor, Door, Empty }
+
+var sizex : int = 0
+var sizey : int = 0
+var sizez : int = 0
+
+var posx : int = 0
+var posy : int = 0
+var posz : int = 0
 
 func _instance(p_seed, p_instance):
 	._instance(p_seed, p_instance)

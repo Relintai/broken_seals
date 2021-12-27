@@ -1,9 +1,0 @@
-[gd_resource type="Planet" load_steps=3 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/planets/dung_simple_planet.gd" type="Script" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/2_tdungb.tres" type="Biome" id=2]
-
-[resource]
-id = 1
-biomes = [ ExtResource( 2 ) ]
-script = ExtResource( 1 )

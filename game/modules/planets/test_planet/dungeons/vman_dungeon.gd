@@ -1,5 +1,6 @@
 tool
-extends Building
+#extends Building
+extends Resource
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -52,6 +53,14 @@ var next_level_teleporter_position_data_space : Vector3 = Vector3()
 var enemy_data : Array = []
 
 enum Tile { Wall, Floor, Door, Empty }
+
+var sizex : int = 0
+var sizey : int = 0
+var sizez : int = 0
+
+var posx : int = 0
+var posy : int = 0
+var posz : int = 0
 
 func _instance(p_seed, p_instance):
 	._instance(p_seed, p_instance)
