@@ -27,6 +27,19 @@ func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, sta
 		pos = Vector3(main_chunk_pos_x * chunk.get_size_x() * chunk.voxel_scale + 2, 50 * chunk.voxel_scale, main_chunk_pos_z * chunk.get_size_z() * chunk.voxel_scale + 2)
 		ESS.entity_spawner.spawn_mob(vendor.id, 1, pos)
 
+func get_trainer() -> EntityData:
+	return trainer
+	
+func set_trainer(ed : EntityData) -> void:
+	trainer = ed
+	emit_changed()
+	
+func get_vendor() -> EntityData:
+	return vendor
+	
+func set_vendor(ed : EntityData) -> void:
+	vendor = ed
+	emit_changed()
 
 func get_editor_rect_border_color() -> Color:
 	return Color(0.8, 0.8, 0.8, 1)
@@ -45,3 +58,9 @@ func get_editor_class() -> String:
 
 func get_editor_additional_text() -> String:
 	return "Spawner"
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	
+	inspector.add_slot_resource("get_trainer", "set_trainer", "Trainer", "EntityData")
+	inspector.add_slot_resource("get_vendor", "set_vendor", "Vendor", "EntityData")

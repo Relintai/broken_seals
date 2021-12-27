@@ -8,6 +8,27 @@ export(PropData) var prop_tree2 : PropData
 var voxel_scale : float = 1
 var current_seed : int = 0
 
+func get_dungeon_teleporter() -> PackedScene:
+	return dungeon_teleporter
+	
+func set_dungeon_teleporter(ed : PackedScene) -> void:
+	dungeon_teleporter = ed
+	emit_changed()
+
+func get_prop_tree() -> PropData:
+	return prop_tree
+	
+func set_prop_tree(ed : PropData) -> void:
+	prop_tree = ed
+	emit_changed()
+
+func get_prop_tree2() -> PropData:
+	return prop_tree2
+	
+func set_prop_tree2(ed : PropData) -> void:
+	prop_tree2 = ed
+	emit_changed()
+
 func get_editor_rect_border_color() -> Color:
 	return Color(0.8, 0.8, 0.8, 1)
 
@@ -149,3 +170,9 @@ func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int, spawn_mobs : bool) -> 
 	dt.spawn_mobs = spawn_mobs
 	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
 	
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	
+	inspector.add_slot_resource("get_dungeon_teleporter", "set_dungeon_teleporter", "Dungeon Teleporter", "PackedScene")
+	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
+	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")
