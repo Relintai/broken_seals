@@ -348,9 +348,21 @@ func clear() -> void:
 func refresh() -> void:
 	clear()
 	
+	var cls_str : String = "[none]"
+	var script_str : String = "[none]"
+	
 	if _edited_resource:
+		cls_str = _edited_resource.get_class()
+		
+		var scr = _edited_resource.get_script()
+		
+		if scr:
+			script_str = scr.resource_path
+		
 		_edited_resource.setup_property_inspector(self)
 		
+	$MainContainer/HBoxContainer/ClassLE.text = cls_str
+	$MainContainer/HBoxContainer2/ScriptLE.text = script_str
 
 func edit_resource(wgw) -> void:
 	if _edited_resource:

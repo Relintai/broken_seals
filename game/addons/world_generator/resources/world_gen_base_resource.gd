@@ -106,7 +106,7 @@ func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> v
 		_generate_terra_chunk_fallback(chunk, pseed, spawn_mobs)
 		return
 	
-	for i in range(stack.size() - 1, -1, -1):
+	for i in range(stack.size()):
 		stack[i]._generate_terra_chunk(chunk, pseed, spawn_mobs, stack, i)
 	
 func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:

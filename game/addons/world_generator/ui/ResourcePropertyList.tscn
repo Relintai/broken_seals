@@ -14,7 +14,7 @@ __meta__ = {
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 18.0
+margin_bottom = 74.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainContainer"]
@@ -24,8 +24,48 @@ text = "Properties"
 align = 1
 valign = 1
 
-[node name="Content" type="VBoxContainer" parent="MainContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
 margin_top = 18.0
 margin_right = 1024.0
-margin_bottom = 18.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainContainer/HBoxContainer"]
+margin_top = 5.0
+margin_right = 37.0
+margin_bottom = 19.0
+text = "Class "
+valign = 1
+
+[node name="ClassLE" type="LineEdit" parent="MainContainer/HBoxContainer"]
+margin_left = 41.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer"]
+margin_top = 46.0
+margin_right = 1024.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainContainer/HBoxContainer2"]
+margin_top = 5.0
+margin_right = 36.0
+margin_bottom = 19.0
+text = "Script"
+valign = 1
+
+[node name="ScriptLE" type="LineEdit" parent="MainContainer/HBoxContainer2"]
+margin_left = 40.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+editable = false
+
+[node name="Content" type="VBoxContainer" parent="MainContainer"]
+margin_top = 74.0
+margin_right = 1024.0
+margin_bottom = 74.0
 size_flags_horizontal = 3
