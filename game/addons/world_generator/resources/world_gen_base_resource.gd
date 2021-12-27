@@ -132,6 +132,7 @@ func _add_to_map(var img : Image, pseed : int) -> void:
 func get_hit_stack(var pos : Vector2) -> Array:
 	var r : Rect2 = get_rect()
 	var local_pos : Vector2 = pos - rect.position
+	r.position = Vector2()
 
 	var result : Array = Array()
 
