@@ -14,7 +14,7 @@ __meta__ = {
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 98.0
+margin_bottom = 90.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainContainer"]
@@ -79,8 +79,3 @@ margin_right = 1024.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
-
-[node name="HSeparator3" type="HSeparator" parent="MainContainer"]
-margin_top = 94.0
-margin_right = 1024.0
-margin_bottom = 98.0
