@@ -113,22 +113,17 @@ subzones = [  ]
 resource_name = "wwww"
 script = ExtResource( 2 )
 rect = Rect2( 163, 35, 241, 158 )
-locked = false
 zones = [ SubResource( 8 ), SubResource( 13 ), SubResource( 24 ), SubResource( 26 ), SubResource( 32 ), SubResource( 35 ) ]
 
 [sub_resource type="Resource" id=2]
 resource_name = "efefef"
 script = ExtResource( 2 )
 rect = Rect2( 107, 271, 100, 49 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=3]
 resource_name = "grgrg"
 script = ExtResource( 2 )
 rect = Rect2( 498, 185, 100, 100 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=9]
 resource_name = "asd"
@@ -148,7 +143,6 @@ subzones = [  ]
 resource_name = "qwdasd"
 script = ExtResource( 2 )
 rect = Rect2( 522, 29, 63, 54 )
-locked = false
 zones = [ SubResource( 9 ), SubResource( 10 ) ]
 
 [sub_resource type="Resource" id=11]
@@ -162,7 +156,6 @@ subzones = [  ]
 resource_name = "qwe"
 script = ExtResource( 2 )
 rect = Rect2( 473, 331, 100, 100 )
-locked = false
 zones = [ SubResource( 11 ) ]
 
 [sub_resource type="GDScript" id=16]
@@ -265,8 +258,6 @@ zones = [ SubResource( 11 ) ]
 resource_name = "ggg"
 script = ExtResource( 2 )
 rect = Rect2( 26, 51, 100, 100 )
-locked = false
-zones = [  ]
 
 [sub_resource type="GDScript" id=21]
 script/source = "tool
@@ -320,42 +311,30 @@ zones = [  ]
 resource_name = "eeqqq"
 script = ExtResource( 2 )
 rect = Rect2( 256, 365, 100, 100 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=27]
 resource_name = "asd"
 script = ExtResource( 2 )
 rect = Rect2( 337, 79, 100, 100 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=28]
 resource_name = "asd"
 script = ExtResource( 2 )
 rect = Rect2( 244, 234, 100, 100 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=29]
 script = ExtResource( 2 )
 rect = Rect2( 377, 69, 284, 238 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=30]
 resource_name = "tttttt"
 script = ExtResource( 2 )
 rect = Rect2( 188, 225, 233, 259 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=31]
 resource_name = "ttttyuqtttt"
 script = ExtResource( 2 )
 rect = Rect2( 339, 76, 220, 170 )
-locked = false
-zones = [  ]
 
 [sub_resource type="Resource" id=33]
 resource_name = "qttt"
