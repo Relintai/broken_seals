@@ -21,13 +21,10 @@ func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, sta
 	if trainer == null || vendor == null:
 		return
 		
-	#var r : Rect2 = get_rect()
-	#var cpx : int = r.position.x + (r.size.x / 2)
-	
 	if chunk.position_x == main_chunk_pos_x && chunk.position_z == main_chunk_pos_z:
-		var pos : Vector3 = Vector3(4 * chunk.voxel_scale, 8 * chunk.voxel_scale, 4 * chunk.voxel_scale)
+		var pos : Vector3 = Vector3(main_chunk_pos_x * chunk.get_size_x() * chunk.voxel_scale + 4, 50 * chunk.voxel_scale, main_chunk_pos_z * chunk.get_size_z() * chunk.voxel_scale + 4)
 		ESS.entity_spawner.spawn_mob(trainer.id, 1, pos)
-		pos = Vector3(2 * chunk.voxel_scale, 8 * chunk.voxel_scale, 2 * chunk.voxel_scale)
+		pos = Vector3(main_chunk_pos_x * chunk.get_size_x() * chunk.voxel_scale + 2, 50 * chunk.voxel_scale, main_chunk_pos_z * chunk.get_size_z() * chunk.voxel_scale + 2)
 		ESS.entity_spawner.spawn_mob(vendor.id, 1, pos)
 
 
