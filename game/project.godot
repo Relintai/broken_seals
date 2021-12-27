@@ -169,11 +169,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/MainScene.gd"
 }, {
-"base": "TerramanLevelGenerator",
-"class": "MainTPlanetGenerator",
-"language": "GDScript",
-"path": "res://scripts/world_generators/MainTPlanetGenerator.gd"
-}, {
 "base": "EntityResource",
 "class": "ManaResource",
 "language": "GDScript",
@@ -302,7 +297,6 @@ _global_script_class_icons={
 "MMNode": "",
 "MMNodeUniversalProperty": "",
 "Main": "",
-"MainTPlanetGenerator": "",
 "ManaResource": "",
 "Menu": "",
 "MobGD": "",
