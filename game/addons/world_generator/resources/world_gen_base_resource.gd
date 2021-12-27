@@ -68,26 +68,24 @@ func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
 	pass
 
 func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
-	generate_terra_chunk_internal(chunk, pseed, spawn_mobs, get_rect())
-	
-func generate_terra_chunk_internal(chunk: TerraChunk, pseed : int, spawn_mobs: bool, world_parent_rect : Rect2) -> void:
-	var wcr : Rect2 = get_rect()
-	wcr.position += world_parent_rect.position
-	
 	var p : Vector2 = Vector2(chunk.get_position_x(), chunk.get_position_z())
+
+	var stack : Array = get_hit_stack(p)
 	
-	#TODO
-	#if !wcr.has_point(p):
-	#	return
-		
-	_generate_terra_chunk(chunk, spawn_mobs, spawn_mobs)
+	if stack.size() == 0:
+		_generate_terra_chunk_fallback(chunk, pseed, spawn_mobs)
+		return
 	
-	for c in get_content():
-		if c:
-			c.generate_terra_chunk_internal(chunk, pseed, spawn_mobs, wcr)
+	for i in range(stack.size() - 1, -1, -1):
+		stack[i]._generate_terra_chunk(chunk, pseed, spawn_mobs, stack, i)
 	
-func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
+func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
 	pass
+	
+func _generate_terra_chunk_fallback(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
+	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 1)
+	chunk.set_voxel(1, 0, 0, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 	
 func generate_map(pseed : int) -> Image:
 	var img : Image = Image.new()
@@ -107,6 +105,21 @@ func add_to_map(var img : Image, pseed : int) -> void:
 
 func _add_to_map(var img : Image, pseed : int) -> void:
 	pass
+
+func get_hit_stack(var pos : Vector2) -> Array:
+	var r : Rect2 = get_rect()
+	var local_pos : Vector2 = pos - rect.position
+
+	var result : Array = Array()
+
+	if r.has_point(local_pos):
+		result.append(self)
+		
+	for c in get_content():
+		if c:
+			result.append_array(c.get_hit_stack(local_pos))
+	
+	return result
 
 func get_editor_rect_border_color() -> Color:
 	return Color(1, 1, 1, 1)

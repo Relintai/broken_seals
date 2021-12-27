@@ -29,7 +29,7 @@ func get_editor_additional_text() -> String:
 func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
 	pass
 
-func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
+func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
 
@@ -68,7 +68,7 @@ func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> 
 
 	if not Engine.editor_hint and spawn_mobs and rng.randi() % 4 == 0:
 		var level : int = 1
-		
+
 		if chunk.get_voxel_world().has_method("get_mob_level"):
 			level  = chunk.get_voxel_world().get_mob_level()
 
