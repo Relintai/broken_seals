@@ -16,8 +16,11 @@ func _enter_tree():
 	if !zoom_widget:
 		return
 	
-	zoom_widget.connect("zoom_changed", self, "on_zoom_changed")
-	connect("visibility_changed", self, "on_visibility_changed")
+	if !zoom_widget.is_connected("zoom_changed", self, "on_zoom_changed"):
+		zoom_widget.connect("zoom_changed", self, "on_zoom_changed")
+	
+	if !is_connected("visibility_changed", self, "on_visibility_changed"):
+		connect("visibility_changed", self, "on_visibility_changed")
 
 func on_visibility_changed() -> void:
 	call_deferred("apply_zoom")
