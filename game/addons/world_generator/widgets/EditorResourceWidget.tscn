@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/world_generator/widgets/EditorResourceWidget.gd" type="Script" id=1]
+
+[node name="EditorResourceWidget" type="HBoxContainer"]
+margin_right = 376.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResourceButton" type="Button" parent="."]
+margin_right = 342.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Clear" type="Button" parent="."]
+margin_left = 346.0
+margin_right = 376.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 30, 0 )
+text = "X"
+
+[connection signal="pressed" from="ResourceButton" to="." method="on_resource_button_pressed"]
+[connection signal="pressed" from="Clear" to="." method="on_clear_button_pressed"]

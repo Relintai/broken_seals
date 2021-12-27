@@ -1,6 +1,8 @@
 tool
 extends ScrollContainer
 
+var EditorResourceWidget : PackedScene = preload("res://addons/world_generator/widgets/EditorResourceWidget.tscn")
+
 var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
@@ -22,6 +24,27 @@ func add_slot_label(getter : String, setter : String, slot_name : String) -> int
 	
 	return add_slot(getter, setter, l)
 
+func add_slot_resource(getter : String, setter : String, slot_name : String, resource_type : String = "Resource") -> int:
+	var bc : HBoxContainer = HBoxContainer.new()
+	bc.set_h_size_flags(SIZE_EXPAND_FILL)
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var r : Control = EditorResourceWidget.instance()
+	r.set_resource_type(resource_type)
+	r.set_resource(_edited_resource.call(getter))
+	r.set_h_size_flags(SIZE_EXPAND_FILL)
+	
+	bc.add_child(r)
+	
+	var slot_idx : int =  add_slot(getter, setter, bc)
+	
+	r.connect("on_resource_changed", self, "on_widget_resource_changed", [ slot_idx ])
+	
+	return slot_idx
+
 func add_slot_line_edit(getter : String, setter : String, slot_name : String, placeholder : String = "") -> int:
 	var bc : HBoxContainer = HBoxContainer.new()
 	bc.set_h_size_flags(SIZE_EXPAND_FILL)
@@ -35,7 +58,7 @@ func add_slot_line_edit(getter : String, setter : String, slot_name : String, pl
 	le.set_h_size_flags(SIZE_EXPAND_FILL)
 	bc.add_child(le)
 	
-	var slot_idx : int =  add_slot(getter, setter, bc)
+	var slot_idx : int = add_slot(getter, setter, bc)
 	
 	le.text = _edited_resource.call(getter)
 	
@@ -306,6 +329,9 @@ func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
 	_edited_resource.call(properties[slot_idx][2], text)
+
+func on_widget_resource_changed(res : Resource, slot_idx : int) -> void:
+	_edited_resource.call(properties[slot_idx][2], res)
 
 func clear() -> void:
 	properties.clear()
