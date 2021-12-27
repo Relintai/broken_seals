@@ -1,4 +1,4 @@
-[gd_resource type="Building" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/dungeons/vman_dungeon.gd" type="Script" id=1]
 [ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=2]
