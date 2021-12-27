@@ -11,20 +11,20 @@
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
 script = ExtResource( 4 )
-rect = Rect2( 55, 78, 22, 25 )
+rect = Rect2( 162, 172, 22, 25 )
 locked = false
 
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
 script = ExtResource( 3 )
-rect = Rect2( 39, 35, 142, 171 )
+rect = Rect2( 28, 35, 378, 407 )
 locked = false
 subzones = [ SubResource( 2 ) ]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Continent"
 script = ExtResource( 2 )
-rect = Rect2( 30, 15, 434, 459 )
+rect = Rect2( 28, 25, 434, 459 )
 locked = false
 zones = [ SubResource( 3 ) ]
 dungeon_teleporter = ExtResource( 5 )

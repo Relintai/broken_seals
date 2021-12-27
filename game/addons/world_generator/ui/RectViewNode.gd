@@ -11,6 +11,7 @@ enum DragType {
 };
 
 var edited_resource : WorldGenBaseResource = null
+var edited_resource_parent_size : Vector2 = Vector2()
 
 var _edited_resource_rect_border_color : Color = Color(1, 1, 1, 1)
 var _edited_resource_rect_color : Color = Color(0.8, 0.8, 0.8, 0.9)
@@ -47,10 +48,14 @@ func _draw():
 func refresh() -> void:
 	if !edited_resource:
 		return
-		
+	
+	#anchor is bottom left here
 	var rect : Rect2 = edited_resource.get_rect()
 	
-	rect_position = rect.position
+	#anchor needs to be on top left here
+	var rp : Vector2 = rect.position
+	rp.y = edited_resource_parent_size.y - rect.size.y - rect.position.y
+	rect_position = rp
 	rect_size = rect.size
 	
 	update()
@@ -157,6 +162,8 @@ func _gui_input(p_event : InputEvent) -> void:
 			set_size(rect.size)
 			set_position(rect.position)
 			
+			#rect needs to be converted back
+			rect.position.y = edited_resource_parent_size.y - rect.size.y - rect.position.y
 			edited_resource.set_rect(rect)
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp

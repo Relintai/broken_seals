@@ -8,6 +8,7 @@ export(NodePath) var zoom_widget_path : NodePath = ""
 var stored_rect_scale : Vector2 = Vector2(1, 1)
 
 var edited_resource : WorldGenBaseResource = null
+var edited_resource_current_size : Vector2 = Vector2()
 
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
@@ -39,6 +40,8 @@ func refresh() -> void:
 	
 	var rect : Rect2 = edited_resource.rect
 	
+	edited_resource_current_size = rect.size
+	
 	set_custom_minimum_size(rect.size)
 	
 	var p : MarginContainer = get_parent() as MarginContainer
@@ -66,6 +69,7 @@ func refresh_rects() -> void:
 			var s : Node = rect_editor_node_scene.instance()
 			
 			add_child(s)
+			s.edited_resource_parent_size = edited_resource_current_size
 			s.set_edited_resource(c)
 
 func clear_rects():
