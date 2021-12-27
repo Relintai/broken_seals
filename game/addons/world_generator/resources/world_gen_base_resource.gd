@@ -25,6 +25,13 @@ func set_rect(r : Rect2) -> void:
 	rect = r
 	emit_changed()
 
+func get_locked() -> bool:
+	return locked
+
+func set_locked(r : bool) -> void:
+	locked = r
+	emit_changed()
+
 func get_parent_pos() -> Vector2:
 	return _parent_pos
 
@@ -166,3 +173,4 @@ func get_editor_additional_text() -> String:
 func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_line_edit("get_name", "set_name", "Name")
 	inspector.add_slot_rect2("get_rect", "set_rect", "Rect", 1)
+	inspector.add_slot_bool("get_locked", "set_locked", "Locked")
