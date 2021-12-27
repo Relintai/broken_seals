@@ -287,7 +287,7 @@ func spawn(start_x : int, start_z : int) -> void:
 	
 	for x in range(start_x - chunk_spawn_range, chunk_spawn_range + start_x):
 		for z in range(start_z - chunk_spawn_range, chunk_spawn_range + start_z):
-			
+
 			var l : float = (spv - Vector2(x, z)).length()
 			
 			if l > chunk_spawn_range:
@@ -346,16 +346,20 @@ func load_character(file_name : String) -> void:
 	_player.set_physics_process(false)
 	
 	mob_level = _player.clevel
-	
-	set_player(_player.get_body())
-	
+
 	#_player.sseed = 2
 
 	Server.sset_seed(_player.sseed)
 	if level_generator != null:
 		level_generator.setup(self, _player.sseed, true, library)
+	
+	var spawn_chunk_pos : Vector2 = level_generator.get_spawn_chunk_position()
+	var ppos : Vector3 = Vector3(spawn_chunk_pos.x * chunk_size_x * voxel_scale, 100, spawn_chunk_pos.y * chunk_size_z * voxel_scale)
+	
+	_player.set_transform_3d(Transform(Basis(), ppos))
+	set_player(_player.get_body())
 
-	spawn(0, 0)
+	spawn(spawn_chunk_pos.x, spawn_chunk_pos.y)
 	
 	set_process(true)
 	

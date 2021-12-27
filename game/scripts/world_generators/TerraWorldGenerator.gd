@@ -35,8 +35,18 @@ func setup(world : TerraWorld, level_seed : int, spawn_mobs : bool, library: Ter
 	_library = library
 	
 	if world_gen_world != null:
+		world_gen_world.setup()
 		world_gen_world.setup_terra_library(_library, _level_seed)
 		_library.refresh_rects()
+
+func get_spawn_chunk_position() -> Vector2:
+	if world_gen_world != null:
+		var spawner = world_gen_world.get_content_with_name("Spawner")
+		
+		if spawner:
+			return spawner.get_spawn_chunk_position()
+	
+	return Vector2()
 
 func _generate_chunk(chunk : TerraChunk) -> void:
 	if world_gen_world == null:
