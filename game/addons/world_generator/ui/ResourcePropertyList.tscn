@@ -14,7 +14,7 @@ __meta__ = {
 
 [node name="MainContainer" type="VBoxContainer" parent="."]
 margin_right = 1024.0
-margin_bottom = 74.0
+margin_bottom = 98.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainContainer"]
@@ -24,10 +24,26 @@ text = "Properties"
 align = 1
 valign = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
+[node name="HSeparator" type="HSeparator" parent="MainContainer"]
 margin_top = 18.0
 margin_right = 1024.0
-margin_bottom = 42.0
+margin_bottom = 22.0
+
+[node name="Content" type="VBoxContainer" parent="MainContainer"]
+margin_top = 26.0
+margin_right = 1024.0
+margin_bottom = 26.0
+size_flags_horizontal = 3
+
+[node name="HSeparator2" type="HSeparator" parent="MainContainer"]
+margin_top = 30.0
+margin_right = 1024.0
+margin_bottom = 34.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer"]
+margin_top = 38.0
+margin_right = 1024.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainContainer/HBoxContainer"]
@@ -45,9 +61,9 @@ size_flags_horizontal = 3
 editable = false
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer"]
-margin_top = 46.0
+margin_top = 66.0
 margin_right = 1024.0
-margin_bottom = 70.0
+margin_bottom = 90.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="MainContainer/HBoxContainer2"]
@@ -64,8 +80,7 @@ margin_bottom = 24.0
 size_flags_horizontal = 3
 editable = false
 
-[node name="Content" type="VBoxContainer" parent="MainContainer"]
-margin_top = 74.0
+[node name="HSeparator3" type="HSeparator" parent="MainContainer"]
+margin_top = 94.0
 margin_right = 1024.0
-margin_bottom = 74.0
-size_flags_horizontal = 3
+margin_bottom = 98.0
