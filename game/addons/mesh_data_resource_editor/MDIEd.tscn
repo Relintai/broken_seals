@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
 [ext_resource path="res://addons/mesh_data_resource_editor/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://addons/mesh_data_resource_editor/UVEditor.gd" type="Script" id=3]
+[ext_resource path="res://addons/color-palette/utilities/FlexGridContainer.gd" type="Script" id=4]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -121,10 +122,39 @@ margin_right = 78.0
 margin_bottom = 20.0
 text = "F"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="FlexGridContainer" type="Container" parent="VBoxContainer"]
 margin_top = 72.0
 margin_right = 1010.0
-margin_bottom = 140.0
+margin_bottom = 92.0
+script = ExtResource( 4 )
+
+[node name="Button" type="Button" parent="VBoxContainer/FlexGridContainer"]
+margin_right = 56.0
+margin_bottom = 20.0
+text = "asdasd"
+
+[node name="Button2" type="Button" parent="VBoxContainer/FlexGridContainer"]
+margin_left = 60.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "qfqf"
+
+[node name="Button3" type="Button" parent="VBoxContainer/FlexGridContainer"]
+margin_left = 100.0
+margin_right = 132.0
+margin_bottom = 20.0
+text = "qef"
+
+[node name="Button4" type="Button" parent="VBoxContainer/FlexGridContainer"]
+margin_left = 136.0
+margin_right = 184.0
+margin_bottom = 20.0
+text = "asasd"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 96.0
+margin_right = 1010.0
+margin_bottom = 164.0
 
 [node name="Extrude" type="Button" parent="VBoxContainer/VBoxContainer"]
 margin_right = 1010.0
@@ -144,7 +174,7 @@ margin_bottom = 68.0
 text = "UV Unwrap"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 144.0
+margin_top = 168.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
