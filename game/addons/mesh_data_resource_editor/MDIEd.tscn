@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
-[ext_resource path="res://addons/mesh_data_resource_editor/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
+[ext_resource path="res://addons/mesh_data_resource_editor/button_groups/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://addons/mesh_data_resource_editor/UVEditor.gd" type="Script" id=3]
+[ext_resource path="res://addons/mesh_data_resource_editor/widgets/flex_grid_container.gd" type="Script" id=4]
+[ext_resource path="res://addons/mesh_data_resource_editor/button_groups/edit_mode_button_group.tres" type="ButtonGroup" id=5]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -11,7 +13,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-uv_editor_path = NodePath("VBoxContainer/ScrollContainer/UVEditor")
+uv_editor_path = NodePath("VBoxContainer/VBoxContainer/UVEditorScrollContainer/UVEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -22,143 +24,251 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Actions" type="VBoxContainer" parent="VBoxContainer"]
 margin_right = 1010.0
+margin_bottom = 86.0
+
+[node name="ActionsLabel" type="Label" parent="VBoxContainer/Actions"]
+margin_right = 1010.0
+margin_bottom = 14.0
+text = "Actions"
+align = 1
+valign = 1
+
+[node name="Actions" type="HBoxContainer" parent="VBoxContainer/Actions"]
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 86.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
+margin_right = 12.0
+margin_bottom = 68.0
+
+[node name="Label" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
+margin_right = 12.0
+margin_bottom = 20.0
+hint_tooltip = "Edit Mode"
+mouse_filter = 0
+size_flags_vertical = 7
+text = "E"
+align = 1
+valign = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
+margin_top = 24.0
+margin_right = 12.0
+margin_bottom = 44.0
+hint_tooltip = "Active Axis"
+mouse_filter = 0
+size_flags_vertical = 7
+text = "A"
+align = 1
+valign = 1
+
+[node name="Label3" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
+margin_top = 48.0
+margin_right = 12.0
+margin_bottom = 68.0
+hint_tooltip = "Selection Mode"
+mouse_filter = 0
+size_flags_vertical = 7
+text = "M"
+align = 1
+valign = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
+margin_left = 16.0
+margin_right = 82.0
+margin_bottom = 68.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
+margin_right = 66.0
 margin_bottom = 20.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_top = 3.0
-margin_right = 8.0
-margin_bottom = 17.0
-text = "V"
-
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 12.0
-margin_right = 31.0
+[node name="Translate" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
+margin_right = 19.0
 margin_bottom = 20.0
+hint_tooltip = "Translate"
 toggle_mode = true
 pressed = true
 group = ExtResource( 2 )
 text = "T"
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 35.0
-margin_right = 55.0
+[node name="Rotate" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
+margin_left = 23.0
+margin_right = 43.0
 margin_bottom = 20.0
+hint_tooltip = "Rotate"
 toggle_mode = true
 group = ExtResource( 2 )
 text = "R"
 
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 59.0
-margin_right = 78.0
+[node name="Scale" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
+margin_left = 47.0
+margin_right = 66.0
 margin_bottom = 20.0
+hint_tooltip = "Scale"
 toggle_mode = true
 group = ExtResource( 2 )
 text = "S"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_top = 24.0
-margin_right = 1010.0
+margin_right = 66.0
 margin_bottom = 44.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
-margin_top = 3.0
-margin_right = 7.0
-margin_bottom = 17.0
-text = "L"
-
-[node name="Button4" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 11.0
-margin_right = 30.0
+[node name="AxisX" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
+margin_right = 19.0
 margin_bottom = 20.0
 toggle_mode = true
 pressed = true
 text = "x"
 
-[node name="Button5" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 34.0
-margin_right = 53.0
+[node name="AxisY" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
+margin_left = 23.0
+margin_right = 42.0
 margin_bottom = 20.0
 toggle_mode = true
 pressed = true
 text = "y"
 
-[node name="Button6" type="Button" parent="VBoxContainer/HBoxContainer2"]
-margin_left = 57.0
-margin_right = 76.0
+[node name="AxisZ" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
+margin_left = 46.0
+margin_right = 65.0
 margin_bottom = 20.0
 toggle_mode = true
 pressed = true
 text = "z"
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_top = 48.0
-margin_right = 1010.0
+margin_right = 66.0
 margin_bottom = 68.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
-margin_top = 3.0
-margin_right = 7.0
-margin_bottom = 17.0
+[node name="Vertex" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
+margin_right = 20.0
+margin_bottom = 20.0
+hint_tooltip = "Vertex"
+toggle_mode = true
+pressed = true
+group = ExtResource( 5 )
+text = "V"
+
+[node name="Edge" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
+margin_left = 24.0
+margin_right = 43.0
+margin_bottom = 20.0
+hint_tooltip = "Edge"
+toggle_mode = true
+group = ExtResource( 5 )
+text = "E"
+
+[node name="Face" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
+margin_left = 47.0
+margin_right = 66.0
+margin_bottom = 20.0
+hint_tooltip = "Face"
+toggle_mode = true
+group = ExtResource( 5 )
 text = "F"
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 11.0
-margin_right = 31.0
-margin_bottom = 20.0
-text = "C"
-
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 35.0
-margin_right = 55.0
-margin_bottom = 20.0
-text = "R"
-
-[node name="Button3" type="Button" parent="VBoxContainer/HBoxContainer3"]
-margin_left = 59.0
-margin_right = 78.0
-margin_bottom = 20.0
-text = "F"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 72.0
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 90.0
 margin_right = 1010.0
-margin_bottom = 140.0
+margin_bottom = 94.0
 
-[node name="Extrude" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 98.0
 margin_right = 1010.0
+margin_bottom = 136.0
+
+[node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
+margin_right = 1010.0
+margin_bottom = 14.0
+text = "Operations"
+align = 1
+valign = 1
+
+[node name="Operations" type="Container" parent="VBoxContainer/Operations"]
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 38.0
+script = ExtResource( 4 )
+
+[node name="Extrude" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_right = 60.0
 margin_bottom = 20.0
 text = "Extrude"
 
-[node name="AddBox" type="Button" parent="VBoxContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 1010.0
-margin_bottom = 44.0
-text = "Add  Box"
-
-[node name="UnwrapButton" type="Button" parent="VBoxContainer/VBoxContainer"]
-margin_top = 48.0
-margin_right = 1010.0
-margin_bottom = 68.0
+[node name="UnwrapButton" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 64.0
+margin_right = 146.0
+margin_bottom = 20.0
 text = "UV Unwrap"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 144.0
+[node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
+margin_top = 140.0
+margin_right = 1010.0
+margin_bottom = 144.0
+
+[node name="Add" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 148.0
+margin_right = 1010.0
+margin_bottom = 186.0
+
+[node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
+margin_right = 1010.0
+margin_bottom = 14.0
+text = "Add"
+align = 1
+valign = 1
+
+[node name="Add" type="Container" parent="VBoxContainer/Add"]
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 38.0
+script = ExtResource( 4 )
+
+[node name="AddBox" type="Button" parent="VBoxContainer/Add/Add"]
+margin_right = 36.0
+margin_bottom = 20.0
+text = "Box"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
+margin_top = 190.0
+margin_right = 1010.0
+margin_bottom = 194.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 198.0
 margin_right = 1010.0
 margin_bottom = 586.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 14.0
+text = "UV"
+align = 1
+valign = 1
+
+[node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 388.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="UVEditor" type="Control" parent="VBoxContainer/ScrollContainer"]
+[node name="UVEditor" type="Control" parent="VBoxContainer/VBoxContainer/UVEditorScrollContainer"]
 margin_right = 100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 3 )
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/Extrude" to="." method="_on_Extrude_pressed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/AddBox" to="." method="_on_AddBox_pressed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/Extrude" to="." method="_on_Extrude_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
