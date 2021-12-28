@@ -27,7 +27,7 @@ extends Container
 
 
 var columns: int = 1 setget set_columns
-
+var _min_x : int = 0
 
 func _notification(p_what):
 	match p_what:
@@ -41,6 +41,7 @@ func _notification(p_what):
 			var vsep = get_constant("vseparation", "GridContainer")
 			
 			var min_columns = 1
+			_min_x = 0
 			
 			if get_child_count() > 0:
 				min_columns = int(floor(rect_size.x / (get_child(0).get_combined_minimum_size().x + hsep)))
@@ -62,6 +63,10 @@ func _notification(p_what):
 				valid_controls_index += 1
 
 				var ms: Vector2 = c.get_combined_minimum_size()
+				
+				if _min_x < ms.x:
+					_min_x = ms.x
+				
 				if col_minw.has(col):
 					col_minw[col] = max(col_minw[col], ms.x)
 				else:
@@ -187,6 +192,7 @@ func _get_minimum_size():
 		max_row = max(row, max_row)
 
 	var ms: Vector2
+	ms.x = _min_x
 
 	for e in row_minh.keys():
 		ms.y += row_minh.get(e)
