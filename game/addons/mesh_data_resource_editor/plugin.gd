@@ -1,6 +1,8 @@
 tool
 extends EditorPlugin
 
+const MeshAddUtils = preload("res://addons/mesh_data_resource_editor/utilities/mesh_add_utils.gd")
+
 const MdiGizmoPlugin = preload("res://addons/mesh_data_resource_editor/MDIGizmoPlugin.gd")
 const MDIEdGui = preload("res://addons/mesh_data_resource_editor/MDIEd.tscn")
 
@@ -112,6 +114,12 @@ func set_axis_z(on : bool) -> void:
 	for g in active_gizmos:
 		g.set_axis_z(on)
 
+func get_mdr() -> MeshDataResource:
+	if current_mesh_data_instance:
+		return current_mesh_data_instance.mesh_data
+		
+	return null
+
 func uv_unwrap() -> void:
 	var mdr : MeshDataResource = null
 	
@@ -147,3 +155,9 @@ func forward_spatial_gui_input(index, camera, event):
 			return true
 
 	return false
+
+func add_box() -> void:
+	var mdr : MeshDataResource = get_mdr()
+	
+	if mdr:
+		MeshAddUtils.add_box(mdr)

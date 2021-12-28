@@ -1,7 +1,7 @@
 tool
 extends PanelContainer
 
-var plugin
+var plugin : EditorPlugin
 
 export var uv_editor_path : NodePath
 
@@ -46,7 +46,7 @@ func _on_Extrude_pressed():
 	pass # Replace with function body.
 
 func _on_AddBox_pressed():
-	pass # Replace with function body.
+	plugin.add_box()
 
 func _on_UnwrapButton_pressed():
 	plugin.uv_unwrap()

@@ -206,6 +206,18 @@ margin_right = 146.0
 margin_bottom = 20.0
 text = "UV Unwrap"
 
+[node name="GenNormals" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 150.0
+margin_right = 246.0
+margin_bottom = 20.0
+text = "Gen Normals"
+
+[node name="GenTangents" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 250.0
+margin_right = 349.0
+margin_bottom = 20.0
+text = "Gen Tangents"
+
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
 margin_top = 140.0
 margin_right = 1010.0
