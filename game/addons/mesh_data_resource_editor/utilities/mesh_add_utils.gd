@@ -1,6 +1,17 @@
 extends Object
 
 static func add_box(mdr : MeshDataResource) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+		arrays[ArrayMesh.ARRAY_VERTEX] = PoolVector3Array()
+		arrays[ArrayMesh.ARRAY_NORMAL] = PoolVector3Array()
+		arrays[ArrayMesh.ARRAY_TEX_UV] = PoolVector2Array()
+		arrays[ArrayMesh.ARRAY_INDEX] = PoolIntArray()
+
+	
 	var st : SurfaceTool = SurfaceTool.new()
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -9,39 +20,39 @@ static func add_box(mdr : MeshDataResource) -> void:
 
 	#z
 	for i in range(2):
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 1))
 		st.add_vertex(Vector3(-0.5, -0.5, sgn * 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 0))
 		st.add_vertex(Vector3(-0.5, 0.5, sgn * 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 0))
 		st.add_vertex(Vector3(0.5, 0.5, sgn * 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 1))
 		st.add_vertex(Vector3(0.5, -0.5, sgn * 0.5))
 		
 		sgn *= -1
 	
 	#x
 	for i in range(2):
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 1))
 		st.add_vertex(Vector3(sgn * 0.5, -0.5, 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 0))
 		st.add_vertex(Vector3(sgn * 0.5, 0.5, 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 0))
 		st.add_vertex(Vector3(sgn * 0.5, 0.5, -0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 1))
 		st.add_vertex(Vector3(sgn * 0.5, -0.5, -0.5))
 		
 		sgn *= -1
 
 	#y
 	for i in range(2):
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 1))
 		st.add_vertex(Vector3(-0.5, sgn * 0.5, 0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(0, 0))
 		st.add_vertex(Vector3(-0.5, sgn * 0.5, -0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 0))
 		st.add_vertex(Vector3(0.5, sgn * 0.5, -0.5))
-		st.add_uv(Vector2())
+		st.add_uv(Vector2(1, 1))
 		st.add_vertex(Vector3(0.5, sgn * 0.5, 0.5))
 		
 		
