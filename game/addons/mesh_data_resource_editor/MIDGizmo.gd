@@ -20,6 +20,9 @@ var plugin : EditorPlugin
 var vertices : PoolVector3Array
 var indices : PoolIntArray
 
+var handle_points : PoolVector3Array
+var handle_to_vertex_map : Array
+
 var selected_indices : PoolIntArray
 var selected_vertices : PoolVector3Array
 var selected_vertices_original : PoolVector3Array
@@ -44,19 +47,18 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 	if edit_mode == EditMode.NONE:
 		return
 	elif edit_mode == EditMode.TRANSLATE:
-		for i in selected_indices:
-			var v : Vector3 = vertices[i]
+		var ofs : Vector3 = Vector3()
 
-			if (axis_constraint & AxisConstraint.X) != 0:
-				v.x += relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
+		if (axis_constraint & AxisConstraint.X) != 0:
+			ofs.x = relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
 				
-			if (axis_constraint & AxisConstraint.Y) != 0:
-				v.y += relative.y * -0.001
+		if (axis_constraint & AxisConstraint.Y) != 0:
+			ofs.y = relative.y * -0.001
 				
-			if (axis_constraint & AxisConstraint.Z) != 0:
-				v.z += relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
+		if (axis_constraint & AxisConstraint.Z) != 0:
+			ofs.z = relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
 
-			vertices.set(i, v)
+		add_to_all_selected(ofs)
 
 		redraw()
 		apply()
@@ -76,12 +78,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		
 		var b : Basis = Basis().scaled(vs) 
 		
-		for i in selected_indices:
-			var v : Vector3 = vertices[i]
-			
-			v = b * v
-
-			vertices.set(i, v)
+		mul_all_selected_with_basis(b)
 
 		redraw()
 		apply()
@@ -235,6 +232,18 @@ func forward_spatial_gui_input(index, camera, event):
 #			print("ROTATE")
 					
 	return false
+
+func add_to_all_selected(ofs : Vector3) -> void:
+	for i in selected_indices:
+		var v : Vector3 = vertices[i]
+		v += ofs
+		vertices.set(i, v)
+
+func mul_all_selected_with_basis(b : Basis) -> void:
+	for i in selected_indices:
+		var v : Vector3 = vertices[i]
+		v = b * v
+		vertices.set(i, v)
 
 func set_translate(on : bool) -> void:
 	if on:
