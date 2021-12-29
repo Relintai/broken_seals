@@ -144,7 +144,6 @@ func forward_spatial_gui_input(index, camera, event):
 		var ray_from : Vector3 = camera.global_transform.origin
 		var gpoint : Vector2 = event.get_position()
 		var grab_threshold : float = 8
-#		var grab_threshold : float = 4 * EDSCALE;
 
 		if event.get_button_index() == BUTTON_LEFT:
 			if event.is_pressed():
