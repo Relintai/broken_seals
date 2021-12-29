@@ -30,9 +30,7 @@ var vertices : PoolVector3Array
 var handle_points : PoolVector3Array
 var handle_to_vertex_map : Array
 
-var selected_indices : PoolIntArray
-var selected_vertices : PoolVector3Array
-var selected_vertices_original : PoolVector3Array
+var selected_points : PoolIntArray
 
 var edit_mode = EditMode.EDIT_MODE_TRANSLATE
 var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
@@ -129,8 +127,8 @@ func redraw():
 	
 	var vs : PoolVector3Array = PoolVector3Array()
 	
-	for i in selected_indices:
-		vs.append(vertices[i])
+	for i in selected_points:
+		vs.append(handle_points[i])
 	
 	add_handles(vs, handles_material)
 
@@ -161,9 +159,8 @@ func forward_spatial_gui_input(index, camera, event):
 				var closest_idx : int = -1
 				var closest_dist : float = 1e10
 				
-				var vertices_size : int = vertices.size()
-				for i in range(vertices_size):
-					var vert_pos_3d : Vector3 = gt.xform(vertices[i])
+				for i in range(handle_points.size()):
+					var vert_pos_3d : Vector3 = gt.xform(handle_points[i])
 					var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
 					var dist_3d : float = ray_from.distance_to(vert_pos_3d)
 					var dist_2d : float = gpoint.distance_to(vert_pos_2d)
@@ -173,35 +170,17 @@ func forward_spatial_gui_input(index, camera, event):
 						closest_idx = i;
 
 				if (closest_idx >= 0):
-					for si in selected_indices:
+					for si in selected_points:
 						if si == closest_idx:
 							return false
 					
-					var cv : Vector3 = vertices[closest_idx]
-					selected_vertices.append(cv)
-					selected_indices.append(closest_idx)
-					
-					selected_vertices_original.append(cv)
-					
-					#also find and mark duplicate vertices, but not as handles
-					for k in range(vertices.size()):
-						if k == closest_idx:
-							continue
-							
-						var vn : Vector3 = vertices[k]
-						
-						if is_equal_approx(cv.x, vn.x) && is_equal_approx(cv.y, vn.y) && is_equal_approx(cv.z, vn.z):
-							selected_indices.append(k)
-							selected_vertices_original.append(vn)
+					selected_points.append(closest_idx)
 
 					apply()
 					redraw()
 				else:
-					selected_indices.resize(0)
-					selected_vertices.resize(0)
-					
-					selected_vertices_original.resize(0)
-					
+					selected_points.resize(0)
+
 					apply()
 					redraw()
 			else:
@@ -232,16 +211,32 @@ func forward_spatial_gui_input(index, camera, event):
 	return false
 
 func add_to_all_selected(ofs : Vector3) -> void:
-	for i in selected_indices:
+	for i in selected_points:
 		var v : Vector3 = vertices[i]
 		v += ofs
 		vertices.set(i, v)
+	
+	for i in selected_points:
+		var ps : PoolIntArray = handle_to_vertex_map[i]
+		
+		for j in ps:
+			var v : Vector3 = vertices[j]
+			v += ofs
+			vertices.set(j, v)
 
 func mul_all_selected_with_basis(b : Basis) -> void:
-	for i in selected_indices:
+	for i in selected_points:
 		var v : Vector3 = vertices[i]
 		v = b * v
 		vertices.set(i, v)
+	
+	for i in selected_points:
+		var ps : PoolIntArray = handle_to_vertex_map[i]
+		
+		for j in ps:
+			var v : Vector3 = vertices[j]
+			v = b * v
+			vertices.set(j, v)
 
 func set_translate(on : bool) -> void:
 	if on:
