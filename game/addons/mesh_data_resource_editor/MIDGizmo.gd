@@ -5,7 +5,10 @@ var MeshOutline = preload("res://addons/mesh_data_resource_editor/utilities/mesh
 var MeshDecompose = preload("res://addons/mesh_data_resource_editor/utilities/mesh_decompose.gd")
 
 enum EditMode {
-	NONE, TRANSLATE, SCALE, ROTATE
+	EDIT_MODE_NONE = 0, 
+	EDIT_MODE_TRANSLATE = 1, 
+	EDIT_MODE_SCALE = 2, 
+	EDIT_MODE_ROTATE = 3
 }
 
 enum AxisConstraint {
@@ -32,7 +35,7 @@ var selected_indices : PoolIntArray
 var selected_vertices : PoolVector3Array
 var selected_vertices_original : PoolVector3Array
 
-var edit_mode = EditMode.TRANSLATE
+var edit_mode = EditMode.EDIT_MODE_TRANSLATE
 var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
 var selection_mode = SelectionMode.SELECTION_MODE_VERTEX
 var previous_point : Vector2
@@ -56,9 +59,9 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		relative = Vector2()
 		is_dragging = true
 	
-	if edit_mode == EditMode.NONE:
+	if edit_mode == EditMode.EDIT_MODE_NONE:
 		return
-	elif edit_mode == EditMode.TRANSLATE:
+	elif edit_mode == EditMode.EDIT_MODE_TRANSLATE:
 		var ofs : Vector3 = Vector3()
 
 		if (axis_constraint & AxisConstraint.X) != 0:
@@ -74,7 +77,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 
 		redraw()
 		apply()
-	elif edit_mode == EditMode.SCALE:
+	elif edit_mode == EditMode.EDIT_MODE_SCALE:
 		var r : float = 1.0 + ((relative.x + relative.y) * 0.05)
 		
 		var vs : Vector3 = Vector3()
@@ -94,7 +97,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 
 		redraw()
 		apply()
-	elif edit_mode == EditMode.ROTATE:
+	elif edit_mode == EditMode.EDIT_MODE_ROTATE:
 		print("MDR Editor: ROTATE NYI")
 		
 		
@@ -205,9 +208,9 @@ func forward_spatial_gui_input(index, camera, event):
 				is_dragging = false
 					
 #	elif event is InputEventMouseMotion:
-#		if edit_mode == EditMode.NONE:
+#		if edit_mode == EditMode.EDIT_MODE_NONE:
 #			return false
-#		elif edit_mode == EditMode.TRANSLATE:
+#		elif edit_mode == EditMode.EDIT_MODE_TRANSLATE:
 #			for i in selected_indices:
 #				var v : Vector3 = vertices[i]
 #
@@ -221,9 +224,9 @@ func forward_spatial_gui_input(index, camera, event):
 #				vertices.set(i, v)
 #
 #			redraw()
-#		elif edit_mode == EditMode.SCALE:
+#		elif edit_mode == EditMode.EDIT_MODE_SCALE:
 #			print("SCALE")
-#		elif edit_mode == EditMode.ROTATE:
+#		elif edit_mode == EditMode.EDIT_MODE_ROTATE:
 #			print("ROTATE")
 					
 	return false
@@ -242,15 +245,15 @@ func mul_all_selected_with_basis(b : Basis) -> void:
 
 func set_translate(on : bool) -> void:
 	if on:
-		edit_mode = EditMode.TRANSLATE
+		edit_mode = EditMode.EDIT_MODE_TRANSLATE
 	
 func set_scale(on : bool) -> void:
 	if on:
-		edit_mode = EditMode.SCALE
+		edit_mode = EditMode.EDIT_MODE_SCALE
 	
 func set_rotate(on : bool) -> void:
 	if on:
-		edit_mode = EditMode.ROTATE
+		edit_mode = EditMode.EDIT_MODE_ROTATE
 	
 func set_axis_x(on : bool) -> void:
 	if on:
