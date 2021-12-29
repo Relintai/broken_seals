@@ -196,16 +196,16 @@ func forward_spatial_gui_input(index, camera, event):
 							selected_indices.append(k)
 							selected_vertices_original.append(vn)
 
-					redraw()
 					apply()
+					redraw()
 				else:
 					selected_indices.resize(0)
 					selected_vertices.resize(0)
 					
 					selected_vertices_original.resize(0)
 					
-					redraw()
 					apply()
+					redraw()
 			else:
 				is_dragging = false
 					
