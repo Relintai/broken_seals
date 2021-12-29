@@ -3,7 +3,8 @@
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/grass_mossy_albedo.png" type="Texture" id=1]
 
 [sub_resource type="MeshDataResource" id=1]
-aabb = AABB( -0.5, -0.5, -1.025, 1, 1, 1.525 )
+array = [ PoolVector3Array( -0.5, -0.5, 0.5, -0.997, 1.141, 0.997, 0.102, 0.971, 0.898, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.656, 2.305, -0.656, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5 ), PoolVector3Array( 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1 ), null, null, PoolVector2Array( 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1 ), null, null, null, PoolIntArray( 0, 1, 2, 2, 3, 0, 4, 5, 6, 4, 7, 5, 3, 2, 5, 5, 7, 3, 0, 6, 1, 0, 4, 6, 1, 6, 5, 5, 2, 1, 0, 7, 4, 0, 3, 7 ) ]
+aabb = AABB( -0.997, -0.5, -0.656, 1.653, 2.805, 1.653 )
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 1 )

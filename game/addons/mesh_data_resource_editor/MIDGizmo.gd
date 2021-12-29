@@ -25,25 +25,23 @@ enum SelectionMode {
 
 var gizmo_size = 3.0
 
-var vertices : PoolVector3Array
-
-var handle_points : PoolVector3Array
-var handle_to_vertex_map : Array
-
-var selected_points : PoolIntArray
-
-var edit_mode = EditMode.EDIT_MODE_TRANSLATE
-var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
-var selection_mode = SelectionMode.SELECTION_MODE_VERTEX
+var edit_mode : int = EditMode.EDIT_MODE_TRANSLATE
+var axis_constraint : int = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
+var selection_mode : int = SelectionMode.SELECTION_MODE_VERTEX
 var previous_point : Vector2
 var is_dragging : bool = false
 
 var _mdr : MeshDataResource = null
 
-var _mesh_outline
+var _vertices : PoolVector3Array
+var _handle_points : PoolVector3Array
+var _handle_to_vertex_map : Array
+var _selected_points : PoolIntArray
+
+var _mesh_outline_generator
 
 func _init():
-	_mesh_outline = MeshOutline.new()
+	_mesh_outline_generator = MeshOutline.new()
 	
 func setup() -> void:
 	get_spatial_node().connect("mesh_data_resource_changed", self, "on_mesh_data_resource_changed")
@@ -119,16 +117,16 @@ func redraw():
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	var material = get_plugin().get_material("main", self)
 	
-	_mesh_outline.setup(_mdr)
-	add_lines(_mesh_outline.lines, material, false)
+	_mesh_outline_generator.setup(_mdr)
+	add_lines(_mesh_outline_generator.lines, material, false)
 
 	#displace selected handle verts too on drag, so this code just works.
 	#draw handles though instead ov vertices
 	
 	var vs : PoolVector3Array = PoolVector3Array()
 	
-	for i in selected_points:
-		vs.append(handle_points[i])
+	for i in _selected_points:
+		vs.append(_handle_points[i])
 	
 	add_handles(vs, handles_material)
 
@@ -137,7 +135,7 @@ func apply() -> void:
 		return
 		
 	var arrs : Array = _mdr.array
-	arrs[ArrayMesh.ARRAY_VERTEX] = vertices
+	arrs[ArrayMesh.ARRAY_VERTEX] = _vertices
 	_mdr.array = arrs
 
 func forward_spatial_gui_input(index, camera, event):
@@ -159,8 +157,8 @@ func forward_spatial_gui_input(index, camera, event):
 				var closest_idx : int = -1
 				var closest_dist : float = 1e10
 				
-				for i in range(handle_points.size()):
-					var vert_pos_3d : Vector3 = gt.xform(handle_points[i])
+				for i in range(_handle_points.size()):
+					var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
 					var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
 					var dist_3d : float = ray_from.distance_to(vert_pos_3d)
 					var dist_2d : float = gpoint.distance_to(vert_pos_2d)
@@ -170,16 +168,16 @@ func forward_spatial_gui_input(index, camera, event):
 						closest_idx = i;
 
 				if (closest_idx >= 0):
-					for si in selected_points:
+					for si in _selected_points:
 						if si == closest_idx:
 							return false
 					
-					selected_points.append(closest_idx)
+					_selected_points.append(closest_idx)
 
 					apply()
 					redraw()
 				else:
-					selected_points.resize(0)
+					_selected_points.resize(0)
 
 					apply()
 					redraw()
@@ -211,32 +209,32 @@ func forward_spatial_gui_input(index, camera, event):
 	return false
 
 func add_to_all_selected(ofs : Vector3) -> void:
-	for i in selected_points:
-		var v : Vector3 = vertices[i]
+	for i in _selected_points:
+		var v : Vector3 = _vertices[i]
 		v += ofs
-		vertices.set(i, v)
+		_vertices.set(i, v)
 	
-	for i in selected_points:
-		var ps : PoolIntArray = handle_to_vertex_map[i]
+	for i in _selected_points:
+		var ps : PoolIntArray = _handle_to_vertex_map[i]
 		
 		for j in ps:
-			var v : Vector3 = vertices[j]
+			var v : Vector3 = _vertices[j]
 			v += ofs
-			vertices.set(j, v)
+			_vertices.set(j, v)
 
 func mul_all_selected_with_basis(b : Basis) -> void:
-	for i in selected_points:
-		var v : Vector3 = vertices[i]
+	for i in _selected_points:
+		var v : Vector3 = _vertices[i]
 		v = b * v
-		vertices.set(i, v)
+		_vertices.set(i, v)
 	
-	for i in selected_points:
-		var ps : PoolIntArray = handle_to_vertex_map[i]
+	for i in _selected_points:
+		var ps : PoolIntArray = _handle_to_vertex_map[i]
 		
 		for j in ps:
-			var v : Vector3 = vertices[j]
+			var v : Vector3 = _vertices[j]
 			v = b * v
-			vertices.set(j, v)
+			_vertices.set(j, v)
 
 func set_translate(on : bool) -> void:
 	if on:
@@ -280,28 +278,28 @@ func _notification(what):
 	#add method recalc handles -> check for type
 func recalculate_handle_points() -> void:
 	if !_mdr:
-		handle_points.resize(0)
-		handle_to_vertex_map.resize(0)
+		_handle_points.resize(0)
+		_handle_to_vertex_map.resize(0)
 
 	var merged_arrays : Array = MeshUtils.merge_mesh_array(_mdr.array)
-	handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
+	_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
 	
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
-		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		#todo
-		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		#todo
-		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
 
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	_mdr = mdr
 	
 	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
-		vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+		_vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
 	else:
-		vertices.resize(0)
+		_vertices.resize(0)
 	
 	recalculate_handle_points()
 	redraw()
