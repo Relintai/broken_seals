@@ -21,8 +21,6 @@ func create_gizmo(spatial):
 		
 		gizmo.set_spatial_node(spatial)
 		gizmo.setup()
-		
-		#gizmo.plugin = plugin
 		plugin.register_gizmo(gizmo)
 		
 		return gizmo

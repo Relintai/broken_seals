@@ -26,7 +26,6 @@ enum SelectionMode {
 var gizmo_size = 3.0
 
 var vertices : PoolVector3Array
-var indices : PoolIntArray
 
 var handle_points : PoolVector3Array
 var handle_to_vertex_map : Array
@@ -75,8 +74,9 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 
 		add_to_all_selected(ofs)
 
-		redraw()
+		recalculate_handle_points()
 		apply()
+		redraw()
 	elif edit_mode == EditMode.EDIT_MODE_SCALE:
 		var r : float = 1.0 + ((relative.x + relative.y) * 0.05)
 		
@@ -95,8 +95,9 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		
 		mul_all_selected_with_basis(b)
 
-		redraw()
+		recalculate_handle_points()
 		apply()
+		redraw()
 	elif edit_mode == EditMode.EDIT_MODE_ROTATE:
 		print("MDR Editor: ROTATE NYI")
 		
@@ -140,7 +141,6 @@ func apply() -> void:
 	var arrs : Array = _mdr.array
 	arrs[ArrayMesh.ARRAY_VERTEX] = vertices
 	_mdr.array = arrs
-
 
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
@@ -281,6 +281,25 @@ func _notification(what):
 		if get_plugin():
 			get_plugin().unregister_gizmo(self)
 
+#todo if selection type changed recalc handles aswell
+	#add method recalc handles -> check for type
+func recalculate_handle_points() -> void:
+	if !_mdr:
+		handle_points.resize(0)
+		handle_to_vertex_map.resize(0)
+
+	var merged_arrays : Array = MeshUtils.merge_mesh_array(_mdr.array)
+	handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		#todo
+		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		#todo
+		handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, handle_points)
+
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	_mdr = mdr
 	
@@ -289,9 +308,5 @@ func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	else:
 		vertices.resize(0)
 	
-	#recalc handle points
-	
-	#if selection type changed recalc handles aswell
-	#add method recalc handles -> check for type
-	
+	recalculate_handle_points()
 	redraw()
