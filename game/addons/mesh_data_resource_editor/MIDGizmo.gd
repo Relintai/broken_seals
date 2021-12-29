@@ -1,6 +1,8 @@
 tool
 extends EditorSpatialGizmo
 
+var MeshOutline = preload("res://addons/mesh_data_resource_editor/utilities/mesh_outline.gd")
+
 enum EditMode {
 	NONE, TRANSLATE, SCALE, ROTATE
 }
@@ -13,10 +15,11 @@ enum AxisConstraint {
 
 var gizmo_size = 3.0
 
-var plugin
+var plugin : EditorPlugin
 
 var vertices : PoolVector3Array
 var indices : PoolIntArray
+
 var selected_indices : PoolIntArray
 var selected_vertices : PoolVector3Array
 var selected_vertices_original : PoolVector3Array
@@ -25,6 +28,11 @@ var edit_mode = EditMode.TRANSLATE
 var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
 var previous_point : Vector2
 var is_dragging : bool = false
+
+var _mesh_outline
+
+func _init():
+	_mesh_outline = MeshOutline.new()
 
 func set_handle(index: int, camera: Camera, point: Vector2):
 	var relative : Vector2 = point - previous_point
@@ -103,29 +111,15 @@ func redraw():
 	
 	if mdr.array.size() != ArrayMesh.ARRAY_MAX:
 		return
-	
+		
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
+	var material = get_plugin().get_material("main", self)
 	
+	_mesh_outline.setup(mdr)
+	add_lines(_mesh_outline.lines, material, false)
+
 	if vertices.size() == 0:
 		vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
-
-	var material = get_plugin().get_material("main", self)
-	var indices : PoolIntArray = mdr.array[ArrayMesh.ARRAY_INDEX]
-	
-	var lines : PoolVector3Array = PoolVector3Array()
-	
-	if indices.size() % 3 == 0:
-		for i in range(0, len(indices), 3):
-			lines.append(vertices[indices[i]])
-			lines.append(vertices[indices[i + 1]])
-			
-			lines.append(vertices[indices[i + 1]])
-			lines.append(vertices[indices[i + 2]])
-			
-			lines.append(vertices[indices[i + 2]])
-			lines.append(vertices[indices[i]])
-			
-	add_lines(lines, material, false)
 	
 	var vs : PoolVector3Array = PoolVector3Array()
 	

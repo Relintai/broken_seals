@@ -1,3 +1,4 @@
+tool
 extends Object
 
 static func add_box(mdr : MeshDataResource) -> void:
