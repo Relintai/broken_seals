@@ -2,6 +2,7 @@ tool
 extends EditorSpatialGizmo
 
 var MeshOutline = preload("res://addons/mesh_data_resource_editor/utilities/mesh_outline.gd")
+var MeshDecompose = preload("res://addons/mesh_data_resource_editor/utilities/mesh_decompose.gd")
 
 enum EditMode {
 	NONE, TRANSLATE, SCALE, ROTATE
@@ -13,9 +14,13 @@ enum AxisConstraint {
 	Z = 1 << 2,
 }
 
-var gizmo_size = 3.0
+enum SelectionMode {
+	SELECTION_MODE_VERTEX = 0,
+	SELECTION_MODE_EDGE = 1,
+	SELECTION_MODE_FACE = 2,
+}
 
-var plugin : EditorPlugin
+var gizmo_size = 3.0
 
 var vertices : PoolVector3Array
 var indices : PoolIntArray
@@ -29,13 +34,20 @@ var selected_vertices_original : PoolVector3Array
 
 var edit_mode = EditMode.TRANSLATE
 var axis_constraint = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
+var selection_mode = SelectionMode.SELECTION_MODE_VERTEX
 var previous_point : Vector2
 var is_dragging : bool = false
+
+var _mdr : MeshDataResource = null
 
 var _mesh_outline
 
 func _init():
 	_mesh_outline = MeshOutline.new()
+	
+func setup() -> void:
+	get_spatial_node().connect("mesh_data_resource_changed", self, "on_mesh_data_resource_changed")
+	on_mesh_data_resource_changed(get_spatial_node().mesh_data)
 
 func set_handle(index: int, camera: Camera, point: Vector2):
 	var relative : Vector2 = point - previous_point
@@ -96,27 +108,24 @@ func commit_handle(index: int, restore, cancel: bool = false) -> void:
 func redraw():
 	clear()
 	
-	var node : MeshDataInstance = get_spatial_node()
-	
-	if !node:
-		return
-		
-	var mdr : MeshDataResource = node.mesh_data
-	
-	if !mdr:
+	if !_mdr:
 		return
 	
-	if mdr.array.size() != ArrayMesh.ARRAY_MAX:
+	if _mdr.array.size() != ArrayMesh.ARRAY_MAX:
 		return
 		
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	var material = get_plugin().get_material("main", self)
 	
-	_mesh_outline.setup(mdr)
+	_mesh_outline.setup(_mdr)
 	add_lines(_mesh_outline.lines, material, false)
 
+	#do this setup somewhere else
 	if vertices.size() == 0:
-		vertices = mdr.array[ArrayMesh.ARRAY_VERTEX]
+		vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+		
+	#displace selected handle verts too on drag, so this code just works.
+	#draw handles though instead ov vertices
 	
 	var vs : PoolVector3Array = PoolVector3Array()
 	
@@ -126,23 +135,13 @@ func redraw():
 	add_handles(vs, handles_material)
 
 func apply() -> void:
-	var node : MeshDataInstance = get_spatial_node()
-	
-	if !node:
+	if !_mdr:
 		return
 		
-	var mdr : MeshDataResource = node.mesh_data
-	
-	if !mdr:
-		return
-		
-	var arrs : Array = mdr.array
-
+	var arrs : Array = _mdr.array
 	arrs[ArrayMesh.ARRAY_VERTEX] = vertices
-	
-	mdr.array = arrs
-	
-	node.refresh()
+	_mdr.array = arrs
+
 
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
@@ -280,5 +279,14 @@ func set_axis_z(on : bool) -> void:
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
-		if plugin:
-			plugin.unregister_gizmo(self)
+		if get_plugin():
+			get_plugin().unregister_gizmo(self)
+
+func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
+
+	#if changed recalc handles
+	#if selection type changed recalc handles aswell
+	#add method recalc handles -> check for type
+
+	_mdr = mdr
+	redraw()
