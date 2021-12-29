@@ -120,10 +120,6 @@ func redraw():
 	_mesh_outline.setup(_mdr)
 	add_lines(_mesh_outline.lines, material, false)
 
-	#do this setup somewhere else
-	if vertices.size() == 0:
-		vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
-		
 	#displace selected handle verts too on drag, so this code just works.
 	#draw handles though instead ov vertices
 	
@@ -289,4 +285,10 @@ func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	#add method recalc handles -> check for type
 
 	_mdr = mdr
+	
+	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
+		vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+	else:
+		vertices.resize(0)
+
 	redraw()
