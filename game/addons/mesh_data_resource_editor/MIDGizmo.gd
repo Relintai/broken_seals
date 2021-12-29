@@ -281,7 +281,17 @@ func recalculate_handle_points() -> void:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
 
-	var merged_arrays : Array = MeshUtils.merge_mesh_array(_mdr.array)
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	var arr : Array = Array()
+	arr.resize(ArrayMesh.ARRAY_MAX)
+	arr[ArrayMesh.ARRAY_VERTEX] = mdr_arr[ArrayMesh.ARRAY_VERTEX]
+	arr[ArrayMesh.ARRAY_INDEX] = mdr_arr[ArrayMesh.ARRAY_INDEX]
+
+	var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
 	_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
 	
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
