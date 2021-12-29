@@ -164,8 +164,8 @@ func forward_spatial_gui_input(index, camera, event):
 					var dist_2d : float = gpoint.distance_to(vert_pos_2d)
 					
 					if (dist_2d < grab_threshold && dist_3d < closest_dist):
-						closest_dist = dist_3d;
-						closest_idx = i;
+						closest_dist = dist_3d
+						closest_idx = i
 
 				if (closest_idx >= 0):
 					for si in _selected_points:
@@ -210,9 +210,9 @@ func forward_spatial_gui_input(index, camera, event):
 
 func add_to_all_selected(ofs : Vector3) -> void:
 	for i in _selected_points:
-		var v : Vector3 = _vertices[i]
+		var v : Vector3 = _handle_points[i]
 		v += ofs
-		_vertices.set(i, v)
+		_handle_points.set(i, v)
 	
 	for i in _selected_points:
 		var ps : PoolIntArray = _handle_to_vertex_map[i]
@@ -224,9 +224,9 @@ func add_to_all_selected(ofs : Vector3) -> void:
 
 func mul_all_selected_with_basis(b : Basis) -> void:
 	for i in _selected_points:
-		var v : Vector3 = _vertices[i]
+		var v : Vector3 = _handle_points[i]
 		v = b * v
-		_vertices.set(i, v)
+		_handle_points.set(i, v)
 	
 	for i in _selected_points:
 		var ps : PoolIntArray = _handle_to_vertex_map[i]
