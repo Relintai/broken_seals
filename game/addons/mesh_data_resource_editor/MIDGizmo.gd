@@ -95,7 +95,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		redraw()
 		apply()
 	elif edit_mode == EditMode.ROTATE:
-		print("ROTATE")
+		print("MDR Editor: ROTATE NYI")
 		
 		
 	previous_point = point
@@ -103,7 +103,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 func commit_handle(index: int, restore, cancel: bool = false) -> void:
 	previous_point = Vector2()
 	
-	print("commit")
+	print("MDR Editor: commit_handle test")
 
 func redraw():
 	clear()
@@ -279,16 +279,16 @@ func _notification(what):
 			get_plugin().unregister_gizmo(self)
 
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
-
-	#if changed recalc handles
-	#if selection type changed recalc handles aswell
-	#add method recalc handles -> check for type
-
 	_mdr = mdr
 	
 	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
 		vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
 	else:
 		vertices.resize(0)
-
+	
+	#recalc handle points
+	
+	#if selection type changed recalc handles aswell
+	#add method recalc handles -> check for type
+	
 	redraw()
