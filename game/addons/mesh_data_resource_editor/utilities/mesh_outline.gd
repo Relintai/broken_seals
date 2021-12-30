@@ -6,17 +6,10 @@ var _mdr : MeshDataResource
 var lines : PoolVector3Array
 
 func setup(mdr : MeshDataResource) -> void:
-	if _mdr != null && _mdr == mdr:
-		return
-	
-	if _mdr:
-		_mdr.disconnect("changed", self, "refresh")
+	lines.resize(0)
 	
 	_mdr = mdr
-	
-	if _mdr:
-		_mdr.connect("changed", self, "refresh")
-	
+
 	refresh()
 
 func refresh():
