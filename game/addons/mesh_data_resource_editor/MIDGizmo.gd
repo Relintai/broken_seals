@@ -285,7 +285,9 @@ func recalculate_handle_points() -> void:
 
 	var mdr_arr : Array = _mdr.array
 	
-	if mdr_arr.size() != ArrayMesh.ARRAY_MAX:
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		_handle_points.resize(0)
+		_handle_to_vertex_map.resize(0)
 		return
 		
 	var arr : Array = Array()
