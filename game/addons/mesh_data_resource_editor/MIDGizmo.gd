@@ -301,7 +301,7 @@ func recalculate_handle_points() -> void:
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
 		_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
-		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(arr, _handle_points)
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(mdr_arr, _handle_points)
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		var result : Array = MeshDecompose.get_handle_edge_to_vertex_map(arr)
 		
