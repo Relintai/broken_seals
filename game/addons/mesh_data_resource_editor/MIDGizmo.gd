@@ -122,7 +122,7 @@ func redraw():
 	
 	_mesh_outline_generator.setup(_mdr)
 	add_lines(_mesh_outline_generator.lines, material, false)
-
+	
 	if _selected_points.size() > 0:
 		var vs : PoolVector3Array = PoolVector3Array()
 		
@@ -134,10 +134,14 @@ func redraw():
 func apply() -> void:
 	if !_mdr:
 		return
-		
+	
+	_mdr.disconnect("changed", self, "on_mdr_changed")
+	
 	var arrs : Array = _mdr.array
 	arrs[ArrayMesh.ARRAY_VERTEX] = _vertices
 	_mdr.array = arrs
+	
+	_mdr.connect("changed", self, "on_mdr_changed")
 
 func forward_spatial_gui_input(index, camera, event):
 	if event is InputEventMouseButton:
@@ -282,14 +286,14 @@ func recalculate_handle_points() -> void:
 	if !_mdr:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
-
+	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
 		return
-
+	
 	var arr : Array = Array()
 	arr.resize(ArrayMesh.ARRAY_MAX)
 	arr[ArrayMesh.ARRAY_VERTEX] = mdr_arr[ArrayMesh.ARRAY_VERTEX]
@@ -311,8 +315,23 @@ func recalculate_handle_points() -> void:
 		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(arr, _handle_points)
 
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
+	if _mdr:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
+	
 	_mdr = mdr
 	
+	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
+		_vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+	else:
+		_vertices.resize(0)
+	
+	if _mdr:
+		_mdr.connect("changed", self, "on_mdr_changed")
+	
+	recalculate_handle_points()
+	redraw()
+
+func on_mdr_changed() -> void:
 	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
 		_vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
 	else:
