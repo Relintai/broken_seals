@@ -289,23 +289,26 @@ func recalculate_handle_points() -> void:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
 		return
-		
+
 	var arr : Array = Array()
 	arr.resize(ArrayMesh.ARRAY_MAX)
 	arr[ArrayMesh.ARRAY_VERTEX] = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 	arr[ArrayMesh.ARRAY_INDEX] = mdr_arr[ArrayMesh.ARRAY_INDEX]
 
-	var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
-	_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
-	
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
-		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
+		var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
+		_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(arr, _handle_points)
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		#todo
-		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
+		var result : Array = MeshDecompose.get_handle_edge_to_vertex_map(arr)
+		
+		_handle_points = result[0]
+		_handle_to_vertex_map = result[1]
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		#todo
-		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(_mdr.array, _handle_points)
+		var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
+		_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
+		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(arr, _handle_points)
 
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	_mdr = mdr

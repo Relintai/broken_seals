@@ -33,9 +33,91 @@ static func get_handle_vertex_to_vertex_map(arrays : Array, handle_points : Pool
 
 	return handle_to_vertex_map
 
-static func get_handle_edge_to_vertex_map() -> Array:
-	return Array()
+#returns an array:
+#index 0 is the handle_points
+#index 1 is the handle_to_vertex_map
+static func get_handle_edge_to_vertex_map(arrays : Array) -> Array:
+	var handle_to_vertex_map : Array
+	var handle_points : PoolVector3Array
 	
+	if arrays.size() != ArrayMesh.ARRAY_MAX || arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return [ handle_points, handle_to_vertex_map ] 
+		
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	
+	if vertices.size() == 0:
+		return [ handle_points, handle_to_vertex_map ] 
+	
+	var arr : Array = Array()
+	arr.resize(ArrayMesh.ARRAY_MAX)
+	arr[ArrayMesh.ARRAY_VERTEX] = arrays[ArrayMesh.ARRAY_VERTEX]
+	arr[ArrayMesh.ARRAY_INDEX] = arrays[ArrayMesh.ARRAY_INDEX]
+	
+	var optimized_arrays : Array = MeshUtils.merge_mesh_array(arr)
+	var optimized_verts : PoolVector3Array = optimized_arrays[ArrayMesh.ARRAY_VERTEX]
+	var optimized_indices : PoolIntArray = optimized_arrays[ArrayMesh.ARRAY_INDEX]
+
+	var vert_to_optimized_vert_map : Array = get_handle_vertex_to_vertex_map(arrays, optimized_verts)
+
+	var edge_map : Dictionary = Dictionary()
+	
+	for i in range(0, optimized_indices.size(), 3):
+		for j in range(3):
+			var i0 : int = optimized_indices[i + j]
+			var i1 : int = optimized_indices[(i + j + 1) % 3]
+			
+			var ei0 : int = min(i0, i1)
+			var ei1 : int = max(i0, i1)
+			
+			if !edge_map.has(ei0):
+				edge_map[ei0] = PoolIntArray()
+				
+			var etm : PoolIntArray = edge_map[ei0]
+			
+			var found : bool = false
+			for e in etm:
+				if e == ei1:
+					found = true
+					break
+			
+			if !found:
+				etm.append(ei1)
+				edge_map[ei0] = etm
+	
+	for key in edge_map.keys():
+		var indices : PoolIntArray = edge_map[key]
+		
+		for indx in indices:
+			var ei0 : int = key
+			var ei1 : int = indx
+			
+			var v0 : Vector3 = optimized_verts[ei0]
+			var v1 : Vector3 = optimized_verts[ei1]
+			
+			var emid : Vector3 = lerp(v0, v1, 0.5)
+			handle_points.append(emid)
+			var hindx : int = handle_points.size() - 1
+			
+			var vm0 : PoolIntArray = vert_to_optimized_vert_map[ei0]
+			var vm1 : PoolIntArray = vert_to_optimized_vert_map[ei1]
+			
+			var vm : PoolIntArray = PoolIntArray()
+			vm.append_array(vm0)
+			
+			for vi in vm1:
+				var found : bool = false
+				for vit in vm:
+					if vi == vit:
+						found = true
+						break
+				
+				if !found:
+					vm.append_array(vm1)
+			
+			handle_to_vertex_map.append(vm)
+	
+	return [ handle_points, handle_to_vertex_map ] 
+
 static func get_handle_face_to_vertex_map() -> Array:
 	return Array()
 
