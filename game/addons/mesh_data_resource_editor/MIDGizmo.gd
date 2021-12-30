@@ -123,12 +123,13 @@ func redraw():
 	_mesh_outline_generator.setup(_mdr)
 	add_lines(_mesh_outline_generator.lines, material, false)
 
-	var vs : PoolVector3Array = PoolVector3Array()
-	
-	for i in _selected_points:
-		vs.append(_handle_points[i])
-	
-	add_handles(vs, handles_material)
+	if _selected_points.size() > 0:
+		var vs : PoolVector3Array = PoolVector3Array()
+		
+		for i in _selected_points:
+			vs.append(_handle_points[i])
+		
+		add_handles(vs, handles_material)
 
 func apply() -> void:
 	if !_mdr:
@@ -176,6 +177,9 @@ func forward_spatial_gui_input(index, camera, event):
 					apply()
 					redraw()
 				else:
+					if _selected_points.size() == 0:
+						return false
+					
 					_selected_points.resize(0)
 
 					redraw()
