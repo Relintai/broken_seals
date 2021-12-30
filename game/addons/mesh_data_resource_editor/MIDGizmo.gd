@@ -273,7 +273,7 @@ func set_axis_z(on : bool) -> void:
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
-		if get_plugin():
+		if self != null && get_plugin():
 			get_plugin().unregister_gizmo(self)
 
 #todo if selection type changed recalc handles aswell
