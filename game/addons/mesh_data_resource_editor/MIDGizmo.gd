@@ -114,15 +114,15 @@ func redraw():
 	if _mdr.array.size() != ArrayMesh.ARRAY_MAX:
 		return
 		
+	if !get_plugin():
+		return
+	
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	var material = get_plugin().get_material("main", self)
 	
 	_mesh_outline_generator.setup(_mdr)
 	add_lines(_mesh_outline_generator.lines, material, false)
 
-	#displace selected handle verts too on drag, so this code just works.
-	#draw handles though instead ov vertices
-	
 	var vs : PoolVector3Array = PoolVector3Array()
 	
 	for i in _selected_points:
@@ -178,7 +178,6 @@ func forward_spatial_gui_input(index, camera, event):
 				else:
 					_selected_points.resize(0)
 
-					apply()
 					redraw()
 			else:
 				is_dragging = false
