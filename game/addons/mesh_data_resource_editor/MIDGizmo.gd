@@ -280,12 +280,11 @@ func _notification(what):
 		if self != null && get_plugin():
 			get_plugin().unregister_gizmo(self)
 
-#todo if selection type changed recalc handles aswell
-	#add method recalc handles -> check for type
 func recalculate_handle_points() -> void:
 	if !_mdr:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
+		return
 	
 	var mdr_arr : Array = _mdr.array
 	
