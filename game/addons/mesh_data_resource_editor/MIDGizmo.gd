@@ -256,24 +256,24 @@ func set_rotate(on : bool) -> void:
 	
 func set_axis_x(on : bool) -> void:
 	if on:
+		axis_constraint |= AxisConstraint.X
+	else:
 		if (axis_constraint & AxisConstraint.X) != 0:
 			axis_constraint ^= AxisConstraint.X
-		else:
-			axis_constraint |= AxisConstraint.X
 	
 func set_axis_y(on : bool) -> void:
 	if on:
+		axis_constraint |= AxisConstraint.Y
+	else:
 		if (axis_constraint & AxisConstraint.Y) != 0:
 			axis_constraint ^= AxisConstraint.Y
-		else:
-			axis_constraint |= AxisConstraint.Y
 	
 func set_axis_z(on : bool) -> void:
 	if on:
+		axis_constraint |= AxisConstraint.Z
+	else:
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			axis_constraint ^= AxisConstraint.Z
-		else:
-			axis_constraint |= AxisConstraint.Z
 
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
