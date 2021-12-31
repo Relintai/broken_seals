@@ -124,6 +124,8 @@ func redraw():
 	
 	if selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		_mesh_outline_generator.generate_mark_edges()
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		_mesh_outline_generator.generate_mark_faces()
 	else:
 		_mesh_outline_generator.generate()
 	
