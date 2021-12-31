@@ -29,14 +29,41 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 		#rotate
 		set_edit_mode_rotate()
 	elif event.scancode == KEY_X:
-		if plugin:
-			plugin.set_axis_x(event.pressed)
+		set_axis_x(!get_axis_x())
 	elif event.scancode == KEY_Y:
-		if plugin:
-			plugin.set_axis_y(event.pressed)
+		set_axis_y(!get_axis_y())
 	elif event.scancode == KEY_Z:
-		if plugin:
-			plugin.set_axis_z(event.pressed)
+		set_axis_z(!get_axis_z())
+
+func get_axis_x() -> bool:
+	return $VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisX.pressed
+
+func get_axis_y() -> bool:
+	return $VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisY.pressed
+			
+func get_axis_z() -> bool:
+	return $VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisZ.pressed
+
+func set_axis_x(on : bool) -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisX.pressed = on
+
+func set_axis_y(on : bool) -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisY.pressed = on
+			
+func set_axis_z(on : bool) -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisZ.pressed = on
+
+func on_axis_x_toggled(on : bool) -> void:
+	if plugin:
+		plugin.set_axis_x(on)
+
+func on_axis_y_toggled(on : bool) -> void:
+	if plugin:
+		plugin.set_axis_y(on)
+			
+func on_axis_z_toggled(on : bool) -> void:
+	if plugin:
+		plugin.set_axis_z(on)
 
 func set_edit_mode_translate() -> void:
 	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate.pressed = true
