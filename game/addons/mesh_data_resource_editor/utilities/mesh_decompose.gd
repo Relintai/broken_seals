@@ -112,7 +112,7 @@ static func get_handle_edge_to_vertex_map(arrays : Array) -> Array:
 						break
 				
 				if !found:
-					vm.append_array(vm1)
+					vm.append(vi)
 			
 			handle_to_vertex_map.append(vm)
 	
