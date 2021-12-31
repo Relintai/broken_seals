@@ -21,22 +21,26 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 	if event.alt || event.shift || event.control || event.meta || event.command:
 		return
 	
-	#if event.key
 	if event.scancode == KEY_G:
-		#translate
 		set_edit_mode_translate()
-	elif event.scancode == KEY_S:
-		#scale? probably needs a differrent key
-		set_edit_mode_scale()
-	elif event.scancode == KEY_R:
-		#rotate
+	elif event.scancode == KEY_H:
 		set_edit_mode_rotate()
-	elif event.scancode == KEY_X:
+	elif event.scancode == KEY_J:
+		set_edit_mode_scale()
+		
+	elif event.scancode == KEY_V:
 		set_axis_x(!get_axis_x())
-	elif event.scancode == KEY_Y:
+	elif event.scancode == KEY_B:
 		set_axis_y(!get_axis_y())
-	elif event.scancode == KEY_Z:
+	elif event.scancode == KEY_N:
 		set_axis_z(!get_axis_z())
+	
+	elif event.scancode == KEY_K:
+		set_selection_mode_vertex()
+	elif event.scancode == KEY_L:
+		set_selection_mode_edge()
+	elif event.scancode == KEY_SEMICOLON:
+		set_selection_mode_face()
 
 #Edit modes
 func set_edit_mode_translate() -> void:
