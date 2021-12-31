@@ -41,11 +41,11 @@ margin_right = 1010.0
 margin_bottom = 86.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
-margin_right = 12.0
+margin_right = 9.0
 margin_bottom = 68.0
 
 [node name="Label" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
-margin_right = 12.0
+margin_right = 9.0
 margin_bottom = 20.0
 hint_tooltip = "Edit Mode"
 mouse_filter = 0
@@ -56,7 +56,7 @@ valign = 1
 
 [node name="Label2" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
 margin_top = 24.0
-margin_right = 12.0
+margin_right = 9.0
 margin_bottom = 44.0
 hint_tooltip = "Active Axis"
 mouse_filter = 0
@@ -67,18 +67,18 @@ valign = 1
 
 [node name="Label3" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
 margin_top = 48.0
-margin_right = 12.0
+margin_right = 9.0
 margin_bottom = 68.0
 hint_tooltip = "Selection Mode"
 mouse_filter = 0
 size_flags_vertical = 7
-text = "M"
+text = "S"
 align = 1
 valign = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
-margin_left = 16.0
-margin_right = 82.0
+margin_left = 13.0
+margin_right = 79.0
 margin_bottom = 68.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
@@ -287,6 +287,9 @@ script = ExtResource( 3 )
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisX" to="." method="on_axis_x_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisY" to="." method="on_axis_y_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisZ" to="." method="on_axis_z_toggled"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Vertex" to="." method="on_selection_mode_vertex_toggled"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge" to="." method="on_selection_mode_edge_toggled"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="." method="on_selection_mode_face_toggled"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/Extrude" to="." method="_on_Extrude_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]

@@ -114,6 +114,18 @@ func set_axis_z(on : bool) -> void:
 	for g in active_gizmos:
 		g.set_axis_z(on)
 
+func set_selection_mode_vertex() -> void:
+	for g in active_gizmos:
+		g.set_selection_mode_vertex()
+
+func set_selection_mode_edge() -> void:
+	for g in active_gizmos:
+		g.set_selection_mode_edge()
+			
+func set_selection_mode_face() -> void:
+	for g in active_gizmos:
+		g.set_selection_mode_face()
+
 func get_mdr() -> MeshDataResource:
 	if current_mesh_data_instance:
 		return current_mesh_data_instance.mesh_data

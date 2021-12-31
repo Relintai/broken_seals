@@ -35,6 +35,32 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 	elif event.scancode == KEY_Z:
 		set_axis_z(!get_axis_z())
 
+#Edit modes
+func set_edit_mode_translate() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate.pressed = true
+
+func set_edit_mode_rotate() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Rotate.pressed = true
+			
+func set_edit_mode_scale() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Scale.pressed = true
+
+func on_edit_mode_translate_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_translate(on)
+
+func on_edit_mode_rotate_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_rotate(on)
+			
+func on_edit_mode_scale_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_scale(on)
+
+#axis locks
 func get_axis_x() -> bool:
 	return $VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisX.pressed
 
@@ -65,29 +91,31 @@ func on_axis_z_toggled(on : bool) -> void:
 	if plugin:
 		plugin.set_axis_z(on)
 
-func set_edit_mode_translate() -> void:
-	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate.pressed = true
+#selection modes
+func on_selection_mode_vertex_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_selection_mode_vertex()
 
-func set_edit_mode_rotate() -> void:
-	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Rotate.pressed = true
+func on_selection_mode_edge_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_selection_mode_edge()
 			
-func set_edit_mode_scale() -> void:
-	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Scale.pressed = true
-
-func on_edit_mode_translate_toggled(on : bool) -> void:
+func on_selection_mode_face_toggled(on : bool) -> void:
 	if on:
 		if plugin:
-			plugin.set_translate(on)
+			plugin.set_selection_mode_face()
 
-func on_edit_mode_rotate_toggled(on : bool) -> void:
-	if on:
-		if plugin:
-			plugin.set_rotate(on)
+func set_selection_mode_vertex() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Vertex.pressed = true
+
+func set_selection_mode_edge() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge.pressed = true
 			
-func on_edit_mode_scale_toggled(on : bool) -> void:
-	if on:
-		if plugin:
-			plugin.set_scale(on)
+func set_selection_mode_face() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face.pressed = true
+
 
 func _on_Extrude_pressed():
 	pass # Replace with function body.

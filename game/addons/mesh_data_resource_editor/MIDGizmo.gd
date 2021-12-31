@@ -275,6 +275,33 @@ func set_axis_z(on : bool) -> void:
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			axis_constraint ^= AxisConstraint.Z
 
+func set_selection_mode_vertex() -> void:
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		return
+		
+	selection_mode = SelectionMode.SELECTION_MODE_VERTEX
+	_selected_points.resize(0)
+	recalculate_handle_points()
+	redraw()
+
+func set_selection_mode_edge() -> void:
+	if selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		return
+		
+	selection_mode = SelectionMode.SELECTION_MODE_EDGE
+	_selected_points.resize(0)
+	recalculate_handle_points()
+	redraw()
+			
+func set_selection_mode_face() -> void:
+	if selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		return
+		
+	selection_mode = SelectionMode.SELECTION_MODE_FACE
+	_selected_points.resize(0)
+	recalculate_handle_points()
+	redraw()
+
 func _notification(what):
 	if what == NOTIFICATION_PREDELETE:
 		if self != null && get_plugin():
