@@ -18,6 +18,9 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 	if event.echo:
 		return
 	
+	if event.alt || event.shift || event.control || event.meta || event.command:
+		return
+	
 	#if event.key
 	if event.scancode == KEY_G:
 		#translate
