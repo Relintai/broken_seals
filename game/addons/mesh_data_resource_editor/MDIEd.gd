@@ -21,16 +21,13 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 	#if event.key
 	if event.scancode == KEY_G:
 		#translate
-		if plugin:
-			plugin.set_translate(event.pressed)
+		set_edit_mode_translate()
 	elif event.scancode == KEY_S:
 		#scale? probably needs a differrent key
-		if plugin:
-			plugin.set_scale(event.pressed)
+		set_edit_mode_scale()
 	elif event.scancode == KEY_R:
 		#rotate
-		if plugin:
-			plugin.set_rotate(event.pressed)
+		set_edit_mode_rotate()
 	elif event.scancode == KEY_X:
 		if plugin:
 			plugin.set_axis_x(event.pressed)
@@ -41,6 +38,29 @@ func _unhandled_key_input(event : InputEventKey) -> void:
 		if plugin:
 			plugin.set_axis_z(event.pressed)
 
+func set_edit_mode_translate() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate.pressed = true
+
+func set_edit_mode_rotate() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Rotate.pressed = true
+			
+func set_edit_mode_scale() -> void:
+	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Scale.pressed = true
+
+func on_edit_mode_translate_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_translate(on)
+
+func on_edit_mode_rotate_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_rotate(on)
+			
+func on_edit_mode_scale_toggled(on : bool) -> void:
+	if on:
+		if plugin:
+			plugin.set_scale(on)
 
 func _on_Extrude_pressed():
 	pass # Replace with function body.
