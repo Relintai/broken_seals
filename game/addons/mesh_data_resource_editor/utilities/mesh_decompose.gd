@@ -64,7 +64,7 @@ static func get_handle_edge_to_vertex_map(arrays : Array) -> Array:
 	for i in range(0, optimized_indices.size(), 3):
 		for j in range(3):
 			var i0 : int = optimized_indices[i + j]
-			var i1 : int = optimized_indices[(i + j + 1) % 3]
+			var i1 : int = optimized_indices[i + ((j + 1) % 3)]
 			
 			var ei0 : int = min(i0, i1)
 			var ei1 : int = max(i0, i1)
