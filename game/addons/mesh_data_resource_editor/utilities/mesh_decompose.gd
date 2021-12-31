@@ -118,8 +118,75 @@ static func get_handle_edge_to_vertex_map(arrays : Array) -> Array:
 	
 	return [ handle_points, handle_to_vertex_map ] 
 
-static func get_handle_face_to_vertex_map() -> Array:
-	return Array()
+#returns an array:
+#index 0 is the handle_points
+#index 1 is the handle_to_vertex_map
+static func get_handle_face_to_vertex_map(arrays : Array) -> Array:
+	var handle_to_vertex_map : Array
+	var handle_points : PoolVector3Array
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX || arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return [ handle_points, handle_to_vertex_map ] 
+		
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	
+	if vertices.size() == 0:
+		return [ handle_points, handle_to_vertex_map ] 
+	
+	var arr : Array = Array()
+	arr.resize(ArrayMesh.ARRAY_MAX)
+	arr[ArrayMesh.ARRAY_VERTEX] = arrays[ArrayMesh.ARRAY_VERTEX]
+	arr[ArrayMesh.ARRAY_INDEX] = arrays[ArrayMesh.ARRAY_INDEX]
+	
+	var optimized_arrays : Array = MeshUtils.merge_mesh_array(arr)
+	var optimized_verts : PoolVector3Array = optimized_arrays[ArrayMesh.ARRAY_VERTEX]
+	var optimized_indices : PoolIntArray = optimized_arrays[ArrayMesh.ARRAY_INDEX]
+
+	var vert_to_optimized_vert_map : Array = get_handle_vertex_to_vertex_map(arrays, optimized_verts)
+
+	for i in range(0, optimized_indices.size(), 3):
+		var i0 : int = optimized_indices[i + 0]
+		var i1 : int = optimized_indices[i + 1]
+		var i2 : int = optimized_indices[i + 2]
+				
+		var v0 : Vector3 = optimized_verts[i0]
+		var v1 : Vector3 = optimized_verts[i1]
+		var v2 : Vector3 = optimized_verts[i2]
+
+		var pmid : Vector3 = v0 + v1 + v2
+		pmid /= 3
+		handle_points.append(pmid)
+		
+		var vm0 : PoolIntArray = vert_to_optimized_vert_map[i0]
+		var vm1 : PoolIntArray = vert_to_optimized_vert_map[i1]
+		var vm2 : PoolIntArray = vert_to_optimized_vert_map[i2]
+		
+		var vm : PoolIntArray = PoolIntArray()
+		vm.append_array(vm0)
+
+		for vi in vm1:
+			var found : bool = false
+			for vit in vm:
+				if vi == vit:
+					found = true
+					break
+				
+			if !found:
+				vm.append(vi)
+				
+		for vi in vm2:
+			var found : bool = false
+			for vit in vm:
+				if vi == vit:
+					found = true
+					break
+				
+			if !found:
+				vm.append(vi)
+		
+		handle_to_vertex_map.append(vm)
+		
+	return [ handle_points, handle_to_vertex_map ] 
 
 static func calculate_map_midpoints(mesh : Array, vertex_map : Array) -> PoolVector3Array:
 	return PoolVector3Array()

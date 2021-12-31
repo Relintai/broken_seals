@@ -343,10 +343,10 @@ func recalculate_handle_points() -> void:
 		_handle_points = result[0]
 		_handle_to_vertex_map = result[1]
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
-		#todo
-		var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
-		_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
-		_handle_to_vertex_map = MeshDecompose.get_handle_vertex_to_vertex_map(arr, _handle_points)
+		var result : Array = MeshDecompose.get_handle_face_to_vertex_map(arr)
+		
+		_handle_points = result[0]
+		_handle_to_vertex_map = result[1]
 
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	if _mdr:
