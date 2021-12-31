@@ -121,6 +121,12 @@ func redraw():
 	var material = get_plugin().get_material("main", self)
 	
 	_mesh_outline_generator.setup(_mdr)
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		_mesh_outline_generator.generate_mark_edges()
+	else:
+		_mesh_outline_generator.generate()
+	
 	add_lines(_mesh_outline_generator.lines, material, false)
 	
 	if _selected_points.size() > 0:
