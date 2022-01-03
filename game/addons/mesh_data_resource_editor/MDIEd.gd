@@ -132,3 +132,10 @@ func _on_AddBox_pressed():
 
 func _on_UnwrapButton_pressed():
 	plugin.uv_unwrap()
+
+func _on_add_triangle_pressed():
+	plugin.add_triangle()
+
+func _on_add_quad_pressed():
+	plugin.add_quad()
+

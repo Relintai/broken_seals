@@ -373,3 +373,12 @@ func on_mdr_changed() -> void:
 	
 	recalculate_handle_points()
 	redraw()
+
+func add_triangle() -> void:
+	if !_mdr:
+		return
+		
+	
+	
+func add_quad() -> void:
+	pass

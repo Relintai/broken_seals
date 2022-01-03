@@ -218,6 +218,30 @@ margin_right = 349.0
 margin_bottom = 20.0
 text = "Gen Tangents"
 
+[node name="RemDoubles" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 353.0
+margin_right = 451.0
+margin_bottom = 20.0
+text = "Rem Doubles"
+
+[node name="Merge" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 455.0
+margin_right = 507.0
+margin_bottom = 20.0
+text = "Merge"
+
+[node name="Split" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 511.0
+margin_right = 551.0
+margin_bottom = 20.0
+text = "Split"
+
+[node name="SplitOffset" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_left = 555.0
+margin_right = 638.0
+margin_bottom = 20.0
+text = "Split Offset"
+
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
 margin_top = 140.0
 margin_right = 1010.0
@@ -245,6 +269,18 @@ script = ExtResource( 4 )
 margin_right = 36.0
 margin_bottom = 20.0
 text = "Box"
+
+[node name="AddTriangle" type="Button" parent="VBoxContainer/Add/Add"]
+margin_left = 40.0
+margin_right = 102.0
+margin_bottom = 20.0
+text = "Triangle"
+
+[node name="AdQuad" type="Button" parent="VBoxContainer/Add/Add"]
+margin_left = 106.0
+margin_right = 152.0
+margin_bottom = 20.0
+text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
 margin_top = 190.0
@@ -293,3 +329,5 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/Extrude" to="." method="_on_Extrude_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/AddTriangle" to="." method="_on_add_triangle_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/AdQuad" to="." method="_on_add_quad_pressed"]

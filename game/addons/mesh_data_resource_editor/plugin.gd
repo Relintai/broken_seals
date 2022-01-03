@@ -173,3 +173,11 @@ func add_box() -> void:
 	
 	if mdr:
 		MeshAddUtils.add_box(mdr)
+
+func add_triangle() -> void:
+	for g in active_gizmos:
+		g.add_triangle()
+		
+func add_quad() -> void:
+	for g in active_gizmos:
+		g.add_quad()
