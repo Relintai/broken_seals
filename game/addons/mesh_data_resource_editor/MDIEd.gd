@@ -139,3 +139,14 @@ func _on_add_triangle_pressed():
 func _on_add_quad_pressed():
 	plugin.add_quad()
 
+func _on_merge_pressed():
+	plugin.merge()
+
+func _on_split_pressed():
+	plugin.split()
+
+func _on_connect_pressed():
+	plugin.connect_action()
+
+func _on_disconnect_pressed():
+	plugin.disconnect_action()

@@ -386,3 +386,15 @@ func add_quad() -> void:
 func add_box() -> void:
 	if _mdr:
 		MeshAddUtils.add_box(_mdr)
+
+func merge():
+	pass
+
+func split():
+	pass
+
+func connect_action():
+	pass
+
+func disconnect_action():
+	pass

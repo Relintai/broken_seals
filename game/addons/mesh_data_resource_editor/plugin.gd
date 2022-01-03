@@ -181,3 +181,19 @@ func add_triangle() -> void:
 func add_quad() -> void:
 	for g in active_gizmos:
 		g.add_quad()
+
+func merge():
+	for g in active_gizmos:
+		g.merge()
+
+func split():
+	for g in active_gizmos:
+		g.split()
+
+func connect_action():
+	for g in active_gizmos:
+		g.connect_action()
+
+func disconnect_action():
+	for g in active_gizmos:
+		g.disconnect_action()
