@@ -1,18 +1,10 @@
 tool
 extends Object
 
+static func add_triangle(mdr : MeshDataResource) -> void:
+	pass
+	
 static func add_box(mdr : MeshDataResource) -> void:
-	var arrays : Array = mdr.get_array()
-	
-	if arrays.size() != ArrayMesh.ARRAY_MAX:
-		arrays.resize(ArrayMesh.ARRAY_MAX)
-		
-		arrays[ArrayMesh.ARRAY_VERTEX] = PoolVector3Array()
-		arrays[ArrayMesh.ARRAY_NORMAL] = PoolVector3Array()
-		arrays[ArrayMesh.ARRAY_TEX_UV] = PoolVector2Array()
-		arrays[ArrayMesh.ARRAY_INDEX] = PoolIntArray()
-
-	
 	var st : SurfaceTool = SurfaceTool.new()
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -85,7 +77,7 @@ static func add_box(mdr : MeshDataResource) -> void:
 	merge_in_surface_tool(mdr, st)
 
 static func merge_in_surface_tool(mdr : MeshDataResource, st : SurfaceTool, generate_normals_if_needed : bool = true, generate_tangents_if_needed : bool = true) -> void:
-	var arrays : Array = mdr.get_array()
+	var arrays : Array = get_arrays_prepared(mdr)
 	
 	if arrays.size() != ArrayMesh.ARRAY_MAX:
 		arrays.resize(ArrayMesh.ARRAY_MAX)
@@ -273,3 +265,16 @@ static func merge_in_arrays(mdr : MeshDataResource, merge : Array) -> void:
 	arrays[ArrayMesh.ARRAY_INDEX] = indices
 	
 	mdr.set_array(arrays)
+
+static func get_arrays_prepared(mdr : MeshDataResource) -> Array:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+		arrays[ArrayMesh.ARRAY_VERTEX] = PoolVector3Array()
+		arrays[ArrayMesh.ARRAY_NORMAL] = PoolVector3Array()
+		arrays[ArrayMesh.ARRAY_TEX_UV] = PoolVector2Array()
+		arrays[ArrayMesh.ARRAY_INDEX] = PoolIntArray()
+		
+	return arrays
