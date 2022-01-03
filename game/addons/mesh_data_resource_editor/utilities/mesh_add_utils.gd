@@ -2,7 +2,50 @@ tool
 extends Object
 
 static func add_triangle(mdr : MeshDataResource) -> void:
-	pass
+	var st : SurfaceTool = SurfaceTool.new()
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	st.add_uv(Vector2(0, 1))
+	st.add_vertex(Vector3(-0.5, -0.5, 0))
+	st.add_uv(Vector2(0.5, 0))
+	st.add_vertex(Vector3(0, 0.5, 0))
+	st.add_uv(Vector2(1, 1))
+	st.add_vertex(Vector3(0.5, -0.5, 0))
+		
+	st.add_index(0)
+	st.add_index(1)
+	st.add_index(2)
+
+	st.generate_normals()
+	
+	merge_in_surface_tool(mdr, st)
+	
+
+static func add_quad(mdr : MeshDataResource) -> void:
+	var st : SurfaceTool = SurfaceTool.new()
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	st.add_uv(Vector2(0, 1))
+	st.add_vertex(Vector3(-0.5, -0.5, 0))
+	st.add_uv(Vector2(0, 0))
+	st.add_vertex(Vector3(-0.5, 0.5, 0))
+	st.add_uv(Vector2(1, 0))
+	st.add_vertex(Vector3(0.5, 0.5, 0))
+	st.add_uv(Vector2(1, 1))
+	st.add_vertex(Vector3(0.5, -0.5, 0))
+		
+	st.add_index(0)
+	st.add_index(1)
+	st.add_index(2)
+	st.add_index(2)
+	st.add_index(3)
+	st.add_index(0)
+
+	st.generate_normals()
+	
+	merge_in_surface_tool(mdr, st)
 	
 static func add_box(mdr : MeshDataResource) -> void:
 	var st : SurfaceTool = SurfaceTool.new()

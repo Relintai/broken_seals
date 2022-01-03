@@ -181,7 +181,7 @@ margin_bottom = 94.0
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 98.0
 margin_right = 1010.0
-margin_bottom = 304.0
+margin_bottom = 328.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
 margin_right = 1010.0
@@ -193,7 +193,7 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/Operations"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 206.0
+margin_bottom = 230.0
 
 [node name="Extrude" type="Button" parent="VBoxContainer/Operations/Operations"]
 margin_right = 1010.0
@@ -236,21 +236,27 @@ margin_right = 1010.0
 margin_bottom = 164.0
 text = "Split"
 
-[node name="SplitOffset" type="Button" parent="VBoxContainer/Operations/Operations"]
+[node name="Connect" type="Button" parent="VBoxContainer/Operations/Operations"]
 margin_top = 168.0
 margin_right = 1010.0
 margin_bottom = 188.0
-text = "Split Offset"
+text = "Connect"
+
+[node name="Disconnect" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_top = 192.0
+margin_right = 1010.0
+margin_bottom = 212.0
+text = "Disconnect"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
-margin_top = 308.0
+margin_top = 332.0
 margin_right = 1010.0
-margin_bottom = 312.0
+margin_bottom = 336.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 316.0
+margin_top = 340.0
 margin_right = 1010.0
-margin_bottom = 402.0
+margin_bottom = 426.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
 margin_right = 1010.0
@@ -282,12 +288,12 @@ margin_bottom = 68.0
 text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 406.0
+margin_top = 430.0
 margin_right = 1010.0
-margin_bottom = 410.0
+margin_bottom = 434.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 414.0
+margin_top = 438.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -303,7 +309,7 @@ valign = 1
 [node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 172.0
+margin_bottom = 148.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
