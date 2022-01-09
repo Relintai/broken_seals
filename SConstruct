@@ -520,44 +520,42 @@ if len(sys.argv) > 1:
             exit()
 
         exit()
-    elif arg[0] == 'p':
-        if arg == 'p':
-            print("Applies a patch. No Patches right now.Append s for the skeleton editor patch. For example: ps ")
-            exit()
-
-        cwd = os.getcwd()
-        full_path = cwd + '/engine/'
-
-        if not os.path.isdir(full_path):
-            print('engine directory does not exists.')
-            exit()
-
-        os.chdir(full_path)
-
-        #apply the patch to just the working directory, without creating a commit
-
-        if 's' in arg:
-            subprocess.call('git apply --index ../patches/custom_skeleton_3d_editor_plugin.patch', shell=True)
-
-            #unstage all files
-            subprocess.call('git reset', shell=True)
-
-            vman_full_path = cwd + '/engine/modules/voxelman/'
-
-            #also patch voxelman as the plugin changes forward_spatial_gui_input's definition
-            if os.path.isdir(vman_full_path):
-                os.chdir(vman_full_path)
-
-                subprocess.call('git apply --index ../../../patches/fix-voxel-editor-after-the-skeleton-editor-patch.patch', shell=True)
-
-                #unstage all files
-                subprocess.call('git reset', shell=True)
-            else:
-                print('Voxelman directory does not exists, skipping patch.')
-
-
-
-        exit()
+#    elif arg[0] == 'p':
+#        if arg == 'p':
+#            print("Applies a patch. No Patches right now.Append s for the skeleton editor patch. For example: ps ")
+#            exit()
+#
+#        cwd = os.getcwd()
+#        full_path = cwd + '/engine/'
+#
+#        if not os.path.isdir(full_path):
+#            print('engine directory does not exists.')
+#            exit()
+#
+#        os.chdir(full_path)
+#
+#        #apply the patch to just the working directory, without creating a commit
+#
+#        if 's' in arg:
+#            subprocess.call('git apply --index ../patches/custom_skeleton_3d_editor_plugin.patch', shell=True)
+#
+#            #unstage all files
+#            subprocess.call('git reset', shell=True)
+#
+#            vman_full_path = cwd + '/engine/modules/voxelman/'
+#
+#            #also patch voxelman as the plugin changes forward_spatial_gui_input's definition
+#            if os.path.isdir(vman_full_path):
+#                os.chdir(vman_full_path)
+#
+#                subprocess.call('git apply --index ../../../patches/fix-voxel-editor-after-the-skeleton-editor-patch.patch', shell=True)
+#
+#                #unstage all files
+#                subprocess.call('git reset', shell=True)
+#            else:
+#                print('Voxelman directory does not exists, skipping patch.')
+#
+#        exit()
 
 opts = Variables(args=ARGUMENTS)
 
