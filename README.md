@@ -6,6 +6,8 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
+The project uses a custom version of the ![Godot Engine](https://github.com/godotengine/godot) - 3.x branch.
+
 #### On Desktop
 
 ![Broken Seals desktop](pictures/screenshot_desktop.jpg)
@@ -14,42 +16,90 @@ I want the game to run on every platform, but the game design is PC first. From 
 
 ![Broken Seals on touchscreen](pictures/screenshot_touchscreen.jpg)
 
+## Project overview
+
+As stated in the opening section the project uses a custom version of the godot engine.
+
+The project's workflow has been set up so you can easily compile this version for yourself if you want to.
+See the [Compiling](#compiling) section if you want to know how to do this.
+
+### Engine
+
+Currently I use [my fork](https://github.com/Relintai/godot) of godot as a base for the engine (3.x).
+This contains a port of TokageItLab's SkeletonEditor pr (https://github.com/godotengine/godot/pull/45699).
+The original godot source will likely work too if you want that for some reason.
+
+Also the engine needs to have some engine modules built in. For example:
+
+Except for a few scripts, entities, spells and auras are handled by the 
+[entity_spell_system](https://github.com/Relintai/entity_spell_system)
+module c++ side.
+
+Threading is handled by [ThreadPool](https://github.com/Relintai/thread_pool).
+
+The terrain is handled by [Terraman](https://github.com/Relintai/terraman.git).
+
+Most of the models are imported as MeshDataResources, these are meshes that are meant to be merged.
+These come from the [MeshDataResource](https://github.com/Relintai/mesh_data_resource) module.
+Currently I'm working on the mesh_data_resource_editor addon that will enable these to be edited directly inside the editor.
+
+Actually [here's the full list](#the-required-engine-modules).
+
+### Game
+
+The [/game](https://github.com/Relintai/broken_seals/tree/master/game) folder contains the game's code and assets.
+This is the folder you are supposed to open in the editor.
+
+The game's folder structure should be mostly self explanatory.
+
+#### Game Modules
+
+Except for probably the game modules.
+I designed the game's code to be highly modular, so I created a [loader module](https://github.com/Relintai/broken_seals/tree/master/game/scripts/game_modules). It will look for files named ` game_module.tres ` and call methods on them on certain events.
+This system uses the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton.
+
+For example this is how the ui initializes itself. The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script, requests the instantiated ui from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton like ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `.
+
+And the data manager will instance it's player ui scene, and call all module's ` on_request_instance ` methods.
+
+These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are castable.
+For exmaple the [module](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/game_module.tres) for the naturalist, and it's [resource db](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/resource_db.tres), which will be merged into a central resource db for ESS. 
+
+Note that the module resources are sorted by their resource paths, so spells should always get the same id, on every platform every time.
+This is to optimize networkd spell casts.
+
+Most of the game assets ended up under the modules folder [here](https://github.com/Relintai/broken_seals/tree/master/game/modules) for this reason,
+however these might get moved, if I find a better arrangement.
+
+#### Terrain generation
+
+The terrain generation is now handled by the new [world_generator](https://github.com/Relintai/broken_seals/tree/master/game/addons/world_generator)
+addon. 
+
+The idea right now is that the terrain is only going to be pseudo-random, as generating proper connected worlds are kind of super difficult,
+especially if you also have to mesh them in 3d. I think this solution can be extended later to be able to do a full continent / world randomization
+/ generation. However for now the idea is that we have a World resource, this contains Continents, those zontain Zones, and those contain SubZones.
+The position and size is predetermined by the creator. And then when a chunk needs to be generated it gets put into this world, and setup.
+
+World does mostly nothing on it's own for now, except for holding continents.
+Right continents should handle things like oceans, and big mountains.
+Zones generate proper terrain, and add props. They need to blend into continents.
+SubZones can be used as spawners, prop spawners, or they can even do terrain mods.
+
+The editor contains an addon to help with editing the world.
+
 ## Editing the game
 
-In order for you to open the game in the editor you will need a custom built version, with a few engine modules built in.
+Grab an engine with the required modules and then open the project inside the `game` folder.
 
-You can check the releases tab to grab one, but since the project still changes a lot on the c++ side,
-if you get it there, also get the relevant game project.
+After the initial import it might need an editor restart, however everything should work after that.
 
-At the moment I don't have nightlies, I do plan on setting up something that could create them (github actions maybe?) eventually.
-
-If you want to use master, you will need to build the project yourself for now, but don't worry, Godot is surpisingly easy and 
-hassle free to compile! [See here.](#compiling)
-
-After you have the engine with the required modules, you can go ahead, and just open the project inside the `game` folder.
-
-Usually after the initial import it will need a restart, however everything should work after that.
-
-## The required engine modules
-
-These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically! See the [Compiling](#compiling) section.
-
-https://github.com/Relintai/world_generator.git \
-https://github.com/Relintai/entity_spell_system.git \
-https://github.com/Relintai/ui_extensions.git \
-https://github.com/Relintai/voxelman.git \
-https://github.com/Relintai/texture_packer.git \
-https://github.com/Relintai/godot_fastnoise.git \
-https://github.com/Relintai/mesh_data_resource.git \
-https://github.com/Relintai/procedural_animations.git \
-https://github.com/Relintai/props.git \
-https://github.com/Relintai/mesh_utils.git \
-https://github.com/Relintai/broken_seals_module.git \
-https://github.com/Relintai/thread_pool.git
+If you want to use master, you will likely need to build the editor for it if the c++ side had breaking changes since the last release.
 
 ## Compiling
 
-First make sure, that you have everything installed to be able to compile the engine. See: See the [official docs for compiling Godot](https://docs.godotengine.org/en/latest/development/compiling/index.html) for more info.
+First make sure, that you have everything installed to be able to compile the godot engine. See: See the [official docs for compiling Godot](https://docs.godotengine.org/en/latest/development/compiling/index.html) for more info. My setup/compile script uses the same tools, so
+you don't need to install anything else.
 
 Now let's clone this repository:
 
@@ -67,11 +117,28 @@ This will clone and setup the engine, and all of the required modules into a new
 
 (If you want to use the github's ssh links append `repository_type=ssh` like ``` scons repository_type=ssh ```)
 
-Once it is done you can compile the engine, either by going into the engine folder and following the 
-[official docs](https://docs.godotengine.org/en/latest/development/compiling/index.html), or by using [build words](#build-words) without changing directories.
+Once it is done you can compile the engine.
 
-Once the build finishes you can find the editor executable inside the `./engine/bin/` folder, but you can also run it using the provided `editor.sh`,
-or `editor.bat` (These will create a copy, so you can compile while the editor is running). 
+To build the editor on windows with 4 threads run the following command:
+
+``` scons bew -j4 ```
+
+To build the editor on linux with 4 threads run the following command:
+
+``` scons bel -j4 ```
+
+I call this feature of the setup script build words. [See](#Build words).
+
+Once the build finishes you can find the editor executable inside the `./engine/bin/` folder.
+
+For convenience there is a provided `editor.sh`, or `editor.bat` for running it from the project's folder.
+These will create a copy, so you can even compile while the editor is running.
+
+Alternatively if you don't want to use build words, you can also just go into the engine folder:
+
+``` cd engine ```
+
+And compile godot as per the [official docs](https://docs.godotengine.org/en/latest/development/compiling/index.html).
 
 ### Build words
 
@@ -177,21 +244,6 @@ Appends `debug_symbols=no` to the build command, which will strip the resulting 
 
 ``` scons bel_strip -j4 ```
 
-#### Patches
-
-The build script can apply optional patches. They work similarly to build words, except this time the word has to start with p, and then it has to be followed by the desired patch characters.
-
-Like `scons ps`
-
-They will not create new commits to the engine, so they can easily be removed.
-
-##### SkeletonEditor
-
-To apply the SkeletonEditor patch append s after the p, like `scons ps`.
-
-This is a patch made from the skeleton editor backport. See: https://github.com/TokageItLab/godot/commits/pose-edit-mode-fixedup and 
-https://github.com/godotengine/godot/pull/45699
-
 #### Scons cache, and sdk locations
 
 In order to use scons cache and to tell the build system where some of the required sdks are located you usually 
@@ -203,6 +255,50 @@ In order to solve this a build config file was added.
 
 If you want to use the config simply rename the provided `build.config.example` to `build.config`, and customize 
 the settings inside.
+
+### Manual Setup
+
+If you you don't want to use the setup script (or just want to know what it actually does), 
+this section will explain how to set everything up manually.
+
+First clone godot. Either my fork (recommended at the moment):
+
+``` git clone https://github.com/Relintai/godot.git ```
+
+or the official 3.x master:
+
+``` git clone https://github.com/godotengine/godot.git -b 3.x ```
+
+go into engine's modules fodler.
+
+``` cd godot/modules/ ```
+
+Now go ahead and get every single required engine module from [here](#the-required-engine-modules).
+
+``` cd ../../ ```
+
+Now if you look at the [HEADS file](https://github.com/Relintai/broken_seals/blob/master/HEADS).
+
+It contains the commit hashes for that particular revision for every module and the engine.
+
+You need to go through them and checkout the proper commits.
+
+Now you can go ahead and compile godot normally.
+
+#### The required engine modules
+
+These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically! See the [Compiling](#compiling) section.
+
+https://github.com/Relintai/entity_spell_system.git \
+https://github.com/Relintai/ui_extensions.git \
+https://github.com/Relintai/texture_packer.git \
+https://github.com/Relintai/godot_fastnoise.git \
+https://github.com/Relintai/mesh_data_resource.git \
+https://github.com/Relintai/props.git \
+https://github.com/Relintai/mesh_utils.git \
+https://github.com/Relintai/broken_seals_module.git \
+https://github.com/Relintai/thread_pool.git \
+https://github.com/Relintai/terraman.git
 
 ## Pulling upstream changes
 
