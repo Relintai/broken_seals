@@ -58,11 +58,11 @@ This system uses the [DataManager](https://github.com/Relintai/broken_seals/blob
 
 For example this is how the ui initializes itself:
 
-The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script requests the ui nodes from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton (likeL ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `). And then the data manager will instance it's ` player_ui ` scene, and call all module's ` on_request_instance ` methods, while alos passing the newly instanced scene to them.
+The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script requests the ui nodes from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton (like ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `). And then the data manager will instance it's ` player_ui ` scene, and call all module's ` on_request_instance ` methods, while also passing the newly instanced scene to them.
 
-These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are actually castable.\
+These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are actually castable.
 
-This is the [module](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/game_module.tres) for the naturalist, and it's [resource db](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/resource_db.tres), which will be merged into a central resource db for ESS. 
+This is the [module](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/game_module.tres) for the naturalist, and it's [ResourceDB](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/resource_db.tres), which will be merged into a central resource db for ESS. 
 
 Note that the module resources are sorted by their resource paths, so spells should always get the same id, on every platform every time.
 This is to optimize networkd spell casts.
@@ -75,15 +75,17 @@ however these might get moved, if I find a better arrangement.
 The terrain generation is now handled by the new [world_generator](https://github.com/Relintai/broken_seals/tree/master/game/addons/world_generator)
 addon. 
 
-The idea right now is that the terrain is only going to be pseudo-random, as generating proper connected worlds are kind of super difficult,
+Right now the terrain is only going to be pseudo-random, as generating proper connected worlds are kind of super difficult,
 especially if you also have to mesh them in 3d. I think this solution can be extended later to be able to do a full continent / world randomization
-/ generation. However for now the idea is that we have a World resource, this contains Continents, those zontain Zones, and those contain SubZones.
-The position and size is predetermined by the creator. And then when a chunk needs to be generated it gets put into this world, and setup.
+/ generation. 
 
-World does mostly nothing on it's own for now, except for holding continents.
-Right continents should handle things like oceans, and big mountains.
-Zones generate proper terrain, and add props. They need to blend into continents.
-SubZones can be used as spawners, prop spawners, or they can even do terrain mods.
+However for now the idea is that we have a World resource, this contains Continents, those zontain Zones, and those contain SubZones.\
+The position and size is predetermined by the designer. And then when a chunk needs to be generated it gets put into this world, and setup.
+
+- World does mostly nothing on it's own for now, except for holding continents.
+- Right continents should handle things like oceans, and big mountains.
+- Zones generate proper terrain, and add props. They need to blend into continents.
+- SubZones can be used as spawners, prop spawners, or they can even do terrain mods.
 
 The editor contains an addon to help with editing the world.
 
