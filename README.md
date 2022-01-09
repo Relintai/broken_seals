@@ -76,10 +76,11 @@ The terrain generation is now handled by the new [world_generator](https://githu
 addon. 
 
 Right now the terrain is only going to be pseudo-random, as generating proper connected worlds are kind of super difficult,
-especially if you also have to mesh them in 3d. /
+especially if you also have to mesh them in 3d. \
 I think this solution can be extended later to be able to do a full continent / world randomization / generation. 
 
-For now the idea is that we have a World resource, this contains Continents, those zontain Zones, and those contain SubZones.\
+For now the idea is that we have a World resource, this contains Continents, those zontain Zones, and those contain SubZones.
+
 The position and size is predetermined by the designer. And then when a chunk needs to be generated it gets put into this world, and then these generate it's data.
 
 - World does mostly nothing on it's own for now, except for holding continents.
@@ -131,7 +132,7 @@ To build the editor on linux with 4 threads run the following command:
 
 ``` scons bel -j4 ```
 
-I call this feature of the setup script build words. [See](#Build words).
+I call this feature of the setup script build words. [See](#build-words).
 
 Once the build finishes you can find the editor executable inside the `./engine/bin/` folder.
 
@@ -291,7 +292,7 @@ Now you can go ahead and compile godot normally.
 
 #### The required engine modules
 
-These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically! See the [Compiling](#compiling) section.
+These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically! See the [compiling](#compiling) section.
 
 https://github.com/Relintai/entity_spell_system.git \
 https://github.com/Relintai/ui_extensions.git \
