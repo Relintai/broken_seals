@@ -21,12 +21,13 @@ This project uses a custom version of ![godot (3.x branch)](https://github.com/g
 As stated in the opening section the project uses a custom version of the godot engine.
 
 The project's workflow has been set up so you can easily compile this version for yourself if you want to.
+
 See the [Compiling](#compiling) section if you want to know how to do this.
 
 ### Engine
 
 Currently [my fork](https://github.com/Relintai/godot) of godot is used as a base for the engine (3.x). \
-This contains a port of TokageItLab's SkeletonEditor pr (https://github.com/godotengine/godot/pull/45699).\
+This contains a port of [TokageItLab's SkeletonEditor pr](https://github.com/godotengine/godot/pull/45699).\
 The original godot source will likely work too if you want that for some reason.
 
 Also the engine needs to have some engine modules built in. For example:
