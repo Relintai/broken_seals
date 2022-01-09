@@ -6,7 +6,7 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
-The project uses a custom version of the ![Godot Engine](https://github.com/godotengine/godot) - 3.x branch.
+This project uses a custom version of ![godot](https://github.com/godotengine/godot) - (3.x branch) as it's engine.
 
 #### On Desktop
 
@@ -25,8 +25,8 @@ See the [Compiling](#compiling) section if you want to know how to do this.
 
 ### Engine
 
-Currently I use [my fork](https://github.com/Relintai/godot) of godot as a base for the engine (3.x).
-This contains a port of TokageItLab's SkeletonEditor pr (https://github.com/godotengine/godot/pull/45699).
+Currently [my fork](https://github.com/Relintai/godot) of godot is used as a base for the engine (3.x). \
+This contains a port of TokageItLab's SkeletonEditor pr (https://github.com/godotengine/godot/pull/45699).\
 The original godot source will likely work too if you want that for some reason.
 
 Also the engine needs to have some engine modules built in. For example:
