@@ -48,7 +48,7 @@ Actually [here's the full list](#the-required-engine-modules).
 The [/game](https://github.com/Relintai/broken_seals/tree/master/game) folder contains the game's code and assets.
 This is the folder you are supposed to open in the editor.
 
-The game's folder structure should be mostly self explanatory. Except for a few things:
+The game's folder structure should be (hopefully) mostly self explanatory.
 
 #### Game Modules
 
@@ -58,7 +58,7 @@ This system uses the [DataManager](https://github.com/Relintai/broken_seals/blob
 
 For example this is how the ui initializes itself:
 
-The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script, requests the instantiated ui from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton like ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `. And then the data manager will instance it's player ui scene, and call all module's ` on_request_instance ` methods.
+The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script requests the ui nodes from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton (likeL ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `). And then the data manager will instance it's ` player_ui ` scene, and call all module's ` on_request_instance ` methods, while alos passing the newly instanced scene to them.
 
 These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are actually castable.\
 
