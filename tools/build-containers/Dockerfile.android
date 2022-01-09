@@ -6,13 +6,13 @@ ENV ANDROID_NDK_VERSION=21.4.7075529
 ENV ANDROID_NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}
 
 RUN dnf -y install --setopt=install_weak_deps=False \
-      gcc gcc-c++ java-1.8.0-openjdk-devel ncurses-compat-libs && \
+      gcc gcc-c++ java-11-openjdk-devel ncurses-compat-libs && \
     mkdir -p sdk && cd sdk && \
     export CMDLINETOOLS=commandlinetools-linux-7302050_latest.zip && \
     curl -LO https://dl.google.com/android/repository/${CMDLINETOOLS} && \
     unzip ${CMDLINETOOLS} && \
     rm ${CMDLINETOOLS} && \
     yes | cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses && \
-    cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" "ndk;${ANDROID_NDK_VERSION}" 'cmdline-tools;latest' 'build-tools;30.0.3' 'platforms;android-29' 'cmake;3.18.1'
+    cmdline-tools/bin/sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" "ndk;${ANDROID_NDK_VERSION}" 'cmdline-tools;latest' 'build-tools;30.0.3' 'platforms;android-30' 'cmake;3.18.1'
 
 CMD /bin/bash
