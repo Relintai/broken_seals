@@ -30,17 +30,14 @@ Currently [my fork](https://github.com/Relintai/godot) of godot is used as a bas
 This contains a port of [TokageItLab's SkeletonEditor pr](https://github.com/godotengine/godot/pull/45699).\
 The original godot source will likely work too if you want that for some reason.
 
-Also the engine needs to have some engine modules built in. For example:
+The engine needs to have some engine modules built in. For example:
 
-Except for a few scripts, entities, spells and auras are handled by the 
+- Except for a few scripts, entities, spells and auras are handled by the 
 [entity_spell_system](https://github.com/Relintai/entity_spell_system)
-module c++ side.
-
-Threading is handled by [ThreadPool](https://github.com/Relintai/thread_pool).
-
-The terrain is handled by [Terraman](https://github.com/Relintai/terraman.git).
-
-Most of the models are imported as MeshDataResources, these are meshes that are meant to be merged.
+module, on the c++ side.
+- Threading is handled by [ThreadPool](https://github.com/Relintai/thread_pool).
+- The terrain is handled by [Terraman](https://github.com/Relintai/terraman.git).
+- Most of the models are imported as MeshDataResources, these are meshes that are meant to be merged.
 These come from the [MeshDataResource](https://github.com/Relintai/mesh_data_resource) module.
 Currently I'm working on the mesh_data_resource_editor addon that will enable these to be edited directly inside the editor.
 
