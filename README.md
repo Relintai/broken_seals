@@ -6,7 +6,7 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
-This project uses a custom version of ![godot](https://github.com/godotengine/godot) - (3.x branch) as it's engine.
+This project uses a custom version of ![godot (3.x branch)](https://github.com/godotengine/godot/tree/3.x) as it's engine.
 
 #### On Desktop
 
