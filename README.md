@@ -39,7 +39,7 @@ module, on the c++ side.
 - The terrain is handled by [Terraman](https://github.com/Relintai/terraman.git).
 - Most of the models are imported as MeshDataResources, these are meshes that are meant to be merged.
 These come from the [MeshDataResource](https://github.com/Relintai/mesh_data_resource) module.
-Currently I'm working on the mesh_data_resource_editor addon that will enable these to be edited directly inside the editor.
+(Currently I'm working on the mesh_data_resource_editor addon that will enable these to be edited directly inside the editor.)
 
 Actually [here's the full list](#the-required-engine-modules).
 
@@ -48,20 +48,21 @@ Actually [here's the full list](#the-required-engine-modules).
 The [/game](https://github.com/Relintai/broken_seals/tree/master/game) folder contains the game's code and assets.
 This is the folder you are supposed to open in the editor.
 
-The game's folder structure should be mostly self explanatory.
+The game's folder structure should be mostly self explanatory. Except for a few things:
 
 #### Game Modules
 
-Except for probably the game modules.
-I designed the game's code to be highly modular, so I created a [loader module](https://github.com/Relintai/broken_seals/tree/master/game/scripts/game_modules). It will look for files named ` game_module.tres ` and call methods on them on certain events.
+I designed the game's code to be highly modular, so I created a [loader module](https://github.com/Relintai/broken_seals/tree/master/game/scripts/game_modules). \
+It will look for files named ` game_module.tres ` and call methods on them on certain events.\
 This system uses the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton.
 
-For example this is how the ui initializes itself. The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script, requests the instantiated ui from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton like ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `.
+For example this is how the ui initializes itself:
 
-And the data manager will instance it's player ui scene, and call all module's ` on_request_instance ` methods.
+The player's [body](https://github.com/Relintai/broken_seals/blob/master/game/player/Body.gd) script, requests the instantiated ui from the [DataManager](https://github.com/Relintai/broken_seals/blob/master/game/scripts/game_modules/DataManager.gd) singleton like ` var ui = DataManager.request_instance(DataManager.PLAYER_UI_INSTANCE) `. And then the data manager will instance it's player ui scene, and call all module's ` on_request_instance ` methods.
 
-These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are castable.
-For exmaple the [module](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/game_module.tres) for the naturalist, and it's [resource db](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/resource_db.tres), which will be merged into a central resource db for ESS. 
+These module scripts are also responsible for collecting all spells and then setting them into the ESS singleton, so they are actually castable.\
+
+This is the [module](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/game_module.tres) for the naturalist, and it's [resource db](https://github.com/Relintai/broken_seals/blob/master/game/modules/entity_classes/naturalist/resource_db.tres), which will be merged into a central resource db for ESS. 
 
 Note that the module resources are sorted by their resource paths, so spells should always get the same id, on every platform every time.
 This is to optimize networkd spell casts.
