@@ -51,7 +51,7 @@ def onerror(func, path, exc_info):
     else:
         raise
 
-def copytree(src, dst):
+def copytree(src, dst, warn = 0):
     for item in os.listdir(src):
     
         sp = os.path.join(src, item)
@@ -66,7 +66,7 @@ def copytree(src, dst):
             if os.path.isdir(dp):
                 shutil.rmtree(dp, onerror=onerror)
 
-            copytree(sp, dp)
+            copytree(sp, dp, warn)
         else:
             if item.endswith(".a") or item.endswith(".class") or item.endswith(".dex") or item.endswith(".pyc") or item.endswith(".o") or item.endswith(".bc") or item.endswith(".so") or item == "export_presets.cfg" or item.endswith(".gen.h") or item.endswith(".os") or item.endswith(".dblite") or item == ".scons_node_count" or item == ".scons_env.json" or item == "compile_commands.json" or item == "config.log" or item.endswith(".gen.inc") or item.endswith(".gen.cpp") :
                 continue
@@ -75,6 +75,13 @@ def copytree(src, dst):
 
             if not os.path.isdir(dst):
                 os.makedirs(dst)
+
+            file_size_bytes = os.path.getsize(sp)
+
+            if warn > 0 and file_size_bytes >= warn:
+                # Ignore assets, this is meant to catch temp / generated files
+                if not (item.endswith(".po") or item.endswith(".tres") or item.endswith(".ttf") or item.endswith(".tza") or item.endswith(".blend") or item.endswith(".blend1") or item.endswith(".pot")):
+                    print("WARNING! File '", sp, "' (", file_size_bytes, "bytes) is over the warn threshold!")
 
             shutil.copy2(sp, dp)
 
@@ -86,14 +93,18 @@ def copy_repository(data, target_folder, clone_path):
 
 #print(sys.argv)
 
-if len(sys.argv) == 3:
+if len(sys.argv) == 3 or len(sys.argv) == 4:
     src_dir = sys.argv[1]
     dst_dir = sys.argv[2]
+    warn = 0
+
+    if len(sys.argv) == 4:
+        warn = int(sys.argv[3])
 
     src_dir = os.path.abspath(src_dir)
     dst_dir = os.path.abspath(dst_dir)
 
-    copytree(src_dir, dst_dir)
+    copytree(src_dir, dst_dir, warn)
 
 
 else:
