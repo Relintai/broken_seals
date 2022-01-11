@@ -16,6 +16,105 @@ This project uses a custom version of ![godot (3.x branch)](https://github.com/g
 
 ![Broken Seals on touchscreen](pictures/screenshot_touchscreen.jpg)
 
+## Status 
+
+On the technical side almost everything has been set up the way I think will work in long term. 
+Improvements will be needed obviously, but I don't expect big core reworks anymore (for the forseable future).
+Here's a list of the more prominent [Features](#features).
+
+Currently I'm working to finish / make the content creation tools usable without any issues. 
+These are the mesh_data_resource_editor, the mat_maker_gd, and the world_generator addon.
+
+mesh_data_resource_editor will need the most amount of work by far, as it needs some of it's core tools implemented.
+The rest only needs undo-redo to fix most of their remaining usability issues.
+
+Character mesh generation, and it's setup will probably get refinements soon, after the mesh data resource editor 
+editor plugin is done, as it definitely needs some work. This might require some api changes, other than this 
+I don't expect big changes anymore.
+
+I only have a minimum amount of content, only enought to figure out things like look, colors, style, and technical stuff etc.
+I'll start working on it properly after the content creation tools are done. (Hopefully soon.)
+Hopefully it won't take long to have something that's actually playable.
+
+Note that things like the spell system already has most of the required core features for even complex spells,
+which might be strange at first sight, especially if you know agile development, this is because this project
+was originally developed in unity (for about 3 years), and then eventually due to constant issues, bugs,
+and annoyances I ported it to godot (while fixing the design issues that I was forced to do because of c# / unity),
+and then later I went open source with it. Since I already had a prototype that let me mess with classes for a while, 
+I decided to just focus on the technical stuff, and make that as good as I can first.
+
+## Features
+
+### Content creation tools
+
+I'm working on these currently.
+
+- World Generator. It contains resources that can handle world generation, and an interface for easy editing. Needs undo redo.\
+- Mat Maker GD. [RodZill4's Material Maker](https://github.com/RodZill4/material-maker) ported to the cpu. Needs undo redo, and about 60 nodes.\
+- Mesh Data Resource Editor. Needs some core features (Like mesh face creation, deletion, and edge split merge). Also needs undo redo.
+
+I also have these added to the project.
+
+- Color palette addon. from https://github.com/EricEzaM/godot-color-palette \
+- Godoxel addon. An in godot image editor. from https://github.com/aaronfranke/GraphicsEditor
+
+### Multiplayer
+
+Multiplayer was broken for quite a while, so currently it has a lot more bugs than it used to.
+Most of these should be relativelty easy to fix.
+
+- Authoritative server implementation. (Except for movement for now.)
+- You can create, and join to servers.
+- Movement works. Although the animations are not implemented for client players.
+- Targeting works.
+- Spell casting works. Although auras have some issues for now.
+- Inventory management should work.
+- Stuff like vendors, trainers should all work. I think except for crafting (I think just some methods need to be marked as RPCs, and they need to call eachouter like it.).
+
+### Characters
+
+- Main and secondary stats all work, they are also customizable in the project settings. They also have built in maint stat -> secondary stat conversion support.
+- Character resources all work and scriptable. (Like health, mana, speed, energy etc) Also you can dynamically add it and remove it from a character.
+- Tab targeting support.
+- Spells, and auras are fully scriptable, and networked.
+- Actionbar, actionbar profiles support.
+- Spell learning support.
+- Talent support, with multiple talent trees.
+- Loot.
+- Equipment support including weapons, clothes, and aloso other attachments. Although starter gear support is not yet finished.
+- Support for changing clothes via texture merging.
+- Character models are using merged meshes and textures, with generated LOD. (This is also multi threaded, with fallback when no threads are available.) This system is using MeshDataResources.
+- Generic attach point support for the character skeletons. (Spell cast particle effects, spell effects, also the same system can be used for weapons.)
+- Interaction support.
+- Vendors, Trainers, Crafting.
+- Fully scriptable ai support.
+- Control over characters can be easily changed by the server, and the character bodies are scripted to act accordingly automatically. For example mind control effects can be implemented with this system.
+
+### Terrain
+
+- Multi threaded chunk generation. It will even work when no threads are available, also in this case the work gets distributed over multiple frames (although a step is a bit too long, so it still needs some tweaks).
+- Prop system. You can serialize scenes into a more efficient format than scene files. These can contain lights, meshes, rooms and portals, etc. The system is scriptable. Scene hierarchies also work.
+- PropInstance node, which can mesh and put props into the scene.
+- Terraman prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
+- Per chunk material support, even for props.
+- Vertex light support. You can add vertex lights (via code, or the prop system), and the meshes will be colored with it.
+- Vertex colors are also used to achieve the main style. (RAO).
+- Vertex color based ambient occlusion support.
+- LOD support, even for prop meshes.
+- LOD generation is scriptable.
+- Procedural world generation.
+
+### UI
+
+- Menu and game ui.
+- Actionbars with keybind support. Also the icons that you drag to the actionbar actually gets merged into the ui's texture to reduce drawcalls.
+- Character, talent, spellbook, crafting, inventory, loot, vendor, trainer windows are all implemented.
+- Easily scriptable options dialog.
+- The menu has full support for keyboard / controller navigation. (The game itself misses it at the moment though.)
+- Touchscreen controls. It will also make the buttons bigger if it detects a touchscreen.
+- Keybind window.
+- About window (still needs some work).
+
 ## Project overview
 
 As stated in the opening section the project uses a custom version of the godot engine.
