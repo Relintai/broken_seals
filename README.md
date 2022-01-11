@@ -50,7 +50,7 @@ Note: I'm currently focusing on these.
 
 - World Generator: It contains resources that can handle world generation, and an interface for easy editing. Needs undo redo.
 - Mat Maker GD: [RodZill4's Material Maker](https://github.com/RodZill4/material-maker) ported to the cpu. Needs undo redo, and about 60 nodes.
-- Mesh Data Resource Editor: Needs some core features (Like mesh face creation, deletion, and edge split merge). Also needs undo redo.
+- Mesh Data Resource Editor: Needs some core features (Like mesh face creation, deletion, edge split, merge etc). Also needs undo redo.
 
 I also have these added to the project.
 
@@ -62,13 +62,13 @@ I also have these added to the project.
 Multiplayer was broken for quite a while, so currently it has a lot more bugs than it used to.
 Most of these should be relativelty easy to fix.
 
-- Authoritative server implementation. (Except for movement for now.)
+- Authoritative server implementation. (Except for movement. Can be done though, I'll do it eventually, but it's usual for these kind of games to not have authoritative movement.)
 - You can create, and join to servers.
-- Movement works. Although the animations are not implemented for client players.
+- Movement works. Although the animations are not yet implemented for client players.
 - Targeting works.
 - Spell casting works. Although auras have some issues for now.
 - Inventory management should work.
-- Stuff like vendors, trainers should all work. I think except for crafting (I think just some methods need to be marked as RPCs, and they need to call eachouter like it.).
+- Stuff like vendors, trainers should all work. I think except for crafting (I think just some methods need to be marked as RPCs, and they might need to need to call eachother via rpcs).
 
 ### Characters
 
