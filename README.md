@@ -107,6 +107,7 @@ Missing:
 - Vertex color based ambient occlusion support.
 - LOD support, even for prop meshes.
 - LOD generation is scriptable.
+- Dungeon generation support via a separate prop based system. Dungeons are generated below ground, with teleporters to them. Also support for turning off the terrain engine while the player is inside a dungeon.
 - Procedural world generation. [See here](#terrain-generation).
 
 ### UI
