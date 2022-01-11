@@ -80,14 +80,20 @@ Most of these should be relativelty easy to fix.
 - Spell learning support.
 - Talent support, with multiple talent trees.
 - Loot.
-- Equipment support including weapons, clothes, and aloso other attachments. Although starter gear support is not yet finished.
+- Equipment support including weapons, clothes, and also other attachments. Although starter gear support is not yet finished.
 - Support for changing clothes via texture merging.
+- Support for changing parts of models via clothes. Also support for alternative bodyparts (like hair styles etc). This is not yet used, might need to change a bit.
 - Character models are using merged meshes and textures, with generated LOD. (This is also multi threaded, with fallback when no threads are available.) This system is using MeshDataResources.
 - Generic attach point support for the character skeletons. (Spell cast particle effects, spell effects, also the same system can be used for weapons.)
 - Interaction support.
 - Vendors, Trainers, Crafting.
 - Fully scriptable ai support.
 - Control over characters can be easily changed by the server, and the character bodies are scripted to act accordingly automatically. For example mind control effects can be implemented with this system.
+
+Missing:
+
+- Character customization support (like selecting hairtyles). It's mostly there, but some crucial features are still missing.
+- Temporary character model change support. Think of polymorph effects, toys etc. Needs the character customization support first.
 
 ### Terrain
 
