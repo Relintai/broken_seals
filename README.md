@@ -18,9 +18,9 @@ This project uses a custom version of ![godot (3.x branch)](https://github.com/g
 
 ## Status 
 
-On the technical side almost everything has been set up the way I think will work in long term. 
-Improvements will be needed obviously, but I don't expect big core reworks anymore (for the forseable future).
-Here's a list of the more prominent [Features](#features).
+On the technical side almost everything has been set up the way I think will work in long term. \
+Improvements will be needed obviously, but I don't expect big core reworks anymore (for the forseable future).\
+[Here's a list of some of the more prominent features](#features).
 
 Currently I'm working to finish / make the content creation tools usable without any issues. 
 These are the mesh_data_resource_editor, the mat_maker_gd, and the world_generator addon.
