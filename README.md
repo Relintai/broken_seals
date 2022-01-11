@@ -31,7 +31,7 @@ Character mesh generation, and it's setup will probably get refinements soon, af
 editor plugin is done, as it definitely needs some work. This might require some api changes, other than this 
 I don't expect big changes anymore.
 
-I only have a minimum amount of content, only enought to figure out things like look, colors, style, and technical stuff etc.
+I only have a minimum amount of content, only enugh to figure out things like look, colors, style, and technical stuff etc.
 I'll start working on it properly after the content creation tools are done. \
 Hopefully it won't take long to have something that's actually playable.
 
@@ -46,16 +46,16 @@ I decided to just focus on the technical stuff, and make that as good as I can f
 
 ### Content creation tools
 
-I'm working on these currently.
+Note: I'm currently focusing on these.
 
-- World Generator. It contains resources that can handle world generation, and an interface for easy editing. Needs undo redo.
-- Mat Maker GD. [RodZill4's Material Maker](https://github.com/RodZill4/material-maker) ported to the cpu. Needs undo redo, and about 60 nodes.
-- Mesh Data Resource Editor. Needs some core features (Like mesh face creation, deletion, and edge split merge). Also needs undo redo.
+- World Generator: It contains resources that can handle world generation, and an interface for easy editing. Needs undo redo.
+- Mat Maker GD: [RodZill4's Material Maker](https://github.com/RodZill4/material-maker) ported to the cpu. Needs undo redo, and about 60 nodes.
+- Mesh Data Resource Editor: Needs some core features (Like mesh face creation, deletion, and edge split merge). Also needs undo redo.
 
 I also have these added to the project.
 
-- Color palette addon. from https://github.com/EricEzaM/godot-color-palette 
-- Godoxel addon. An in godot image editor. from https://github.com/aaronfranke/GraphicsEditor
+- Color palette addon from https://github.com/EricEzaM/godot-color-palette 
+- Godoxel addon (An in godot image editor.) from https://github.com/aaronfranke/GraphicsEditor
 
 ### Multiplayer
 
