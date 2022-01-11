@@ -107,7 +107,7 @@ Missing:
 - Vertex color based ambient occlusion support.
 - LOD support, even for prop meshes.
 - LOD generation is scriptable.
-- Procedural world generation. [See](#terrain-generation).
+- Procedural world generation. [See here](#terrain-generation).
 
 ### UI
 
