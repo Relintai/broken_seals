@@ -82,7 +82,7 @@ Most of these should be relativelty easy to fix.
 - Loot.
 - Equipment support including weapons, clothes, and also other attachments. Although starter gear support is not yet finished.
 - Support for changing clothes via texture merging.
-- Support for changing parts of models via clothes. Also support for alternative bodyparts (like hair styles etc). This is not yet used, might need to change a bit.
+- Support for changing parts of models via clothes. Also support for alternative bodyparts.
 - Character models are using merged meshes and textures, with generated LOD. (This is also multi threaded, with fallback when no threads are available.) This system is using MeshDataResources.
 - Generic attach point support for the character skeletons. (Spell cast particle effects, spell effects, also the same system can be used for weapons.)
 - Interaction support.
@@ -97,17 +97,17 @@ Missing:
 
 ### Terrain
 
-- Multi threaded chunk generation. It will even work when no threads are available, also in this case the work gets distributed over multiple frames (although a step is a bit too long, so it still needs some tweaks).
+- Multi threaded chunk generation. It will even work when no threads are available, also in this case the work gets distributed over multiple frames (although one of the steps is a bit too long, so it still needs some tweaks).
 - Prop system. You can serialize scenes into a more efficient format than scene files. These can contain lights, meshes, rooms and portals, etc. The system is scriptable. Scene hierarchies also work.
 - PropInstance node, which can mesh and put props into the scene.
-- Terraman prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
 - Per chunk material support, even for props.
+- Terraman prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
 - Vertex light support. You can add vertex lights (via code, or the prop system), and the meshes will be colored with it.
 - Vertex colors are also used to achieve the main style. (RAO).
 - Vertex color based ambient occlusion support.
 - LOD support, even for prop meshes.
 - LOD generation is scriptable.
-- Procedural world generation.
+- Procedural world generation. [See](#terrain-generation).
 
 ### UI
 
@@ -118,7 +118,7 @@ Missing:
 - The menu has full support for keyboard / controller navigation. (The game itself misses it at the moment though.)
 - Touchscreen controls. It will also make the buttons bigger if it detects a touchscreen.
 - Keybind window.
-- About window (still needs some work).
+- About window.
 
 ## Project overview
 
