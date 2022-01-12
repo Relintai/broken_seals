@@ -108,7 +108,7 @@ func refresh() -> void:
 	var aura : Aura = _spec.get_talent(_row, culomn, ridx)
 		
 	_aura_name_label.text = aura.text_name
-	_aura_description_label.text = aura.text_description
+	_aura_description_label.text = aura.aura_text_description
 	_icon_rect.texture = aura.icon
 	_rank_label.text = str(known_rank_count) + "/" + str(rank_count)
 		

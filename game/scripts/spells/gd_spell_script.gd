@@ -181,7 +181,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 		ainfo.spell_scale = 1
 		ainfo.aura = aura
 
-		aura.sapply(ainfo)
+		aura.aura_sapply(ainfo)
 		
 	if info.target != null:
 		for aura in target_aura_applys:
@@ -202,7 +202,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 			ainfo.spell_scale = 1
 			ainfo.aura = aura
 
-			aura.sapply(ainfo)
+			aura.aura_sapply(ainfo)
 		
 		
 		

@@ -48,7 +48,7 @@ func on_notification_caura(what :int, aura_data : AuraData) -> void:
 	if what == SpellEnums.NOTIFICATION_AURA_ADDED:
 		var created_node : Node = aura_entry_scene.instance()
 		
-		if (not aura_data.aura.debuff):
+		if (not aura_data.aura.aura_debuff):
 			buff_container_node.add_child(created_node)
 			created_node.owner = buff_container_node
 		else:
@@ -57,7 +57,7 @@ func on_notification_caura(what :int, aura_data : AuraData) -> void:
 		
 		created_node.set_aura_data(aura_data)
 	elif what == SpellEnums.NOTIFICATION_AURA_REMOVED:
-		if (not aura_data.aura.debuff):
+		if (not aura_data.aura.aura_debuff):
 			for bn in buff_container_node.get_children():
 				if bn.get_aura_data() == aura_data:
 					buff_container_node.remove_child(bn)
