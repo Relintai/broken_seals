@@ -1,4 +1,4 @@
-extends "aura_script.gd"
+extends "res://scripts/spells/gd_spell_script.gd"
 
 export(bool) var does_stack : bool = true
 export(float) var mod_speed : float = 0

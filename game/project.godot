@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spell",
-"class": "AuraGD",
-"language": "GDScript",
-"path": "res://scripts/auras/aura_script.gd"
-}, {
 "base": "Reference",
 "class": "BrushPrefabs",
 "language": "GDScript",
@@ -265,7 +260,6 @@ _global_script_classes=[ {
 "path": "res://addons/world_generator/resources/zone.gd"
 } ]
 _global_script_class_icons={
-"AuraGD": "",
 "BrushPrefabs": "",
 "CharacterSkeketonAttachPoint": "",
 "ColorTile": "",
