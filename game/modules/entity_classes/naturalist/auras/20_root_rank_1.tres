@@ -6,8 +6,8 @@
 [resource]
 id = 8
 icon = ExtResource( 2 )
-time = 10.0
-debuff = true
+aura_time = 10.0
+aura_debuff = true
 aura_type = 1
-states_add = 4
+aura_states_add = 4
 script = ExtResource( 1 )
