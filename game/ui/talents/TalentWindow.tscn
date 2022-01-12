@@ -11,6 +11,9 @@ anchor_bottom = 1.0
 mouse_filter = 2
 theme = ExtResource( 1 )
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 spec_scene = ExtResource( 2 )
 spec_switcher_scene = ExtResource( 4 )
 spec_container_path = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer/TabContainer2")
