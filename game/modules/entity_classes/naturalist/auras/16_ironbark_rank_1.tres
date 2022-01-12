@@ -9,6 +9,6 @@ id = 6
 icon = ExtResource( 2 )
 aura_time = 6.0
 aura_type = 1
-aura_text_name = "Ironbark"
+text_name = "Ironbark"
 aura_text_description = "Reduces damage taken by 70%. This spell is not on the global cooldown."
 script = ExtResource( 1 )
