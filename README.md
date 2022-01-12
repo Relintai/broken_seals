@@ -101,12 +101,12 @@ Missing:
 - Prop system. You can serialize scenes into a more efficient format than scene files. These can contain lights, meshes, rooms and portals, etc. The system is scriptable. Scene hierarchies also work.
 - PropInstance node, which can mesh and put props into the scene.
 - Per chunk material support, even for props.
-- Terraman prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
-- Vertex light support. You can add vertex lights (via code, or the prop system), and the meshes will be colored with it.
-- Vertex colors are also used to achieve the main style. (RAO).
-- Vertex color based ambient occlusion support.
-- LOD support, even for prop meshes.
-- LOD generation is scriptable.
+- Terraman: prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
+- Terraman and PropInstance: Vertex light support. You can add vertex lights (via code, or the prop system), and the meshes will be colored with it.
+- Terraman:Vertex colors are also used to achieve the main style. (RAO).
+- Terraman:Vertex color based ambient occlusion support.
+- Terraman and PropInstance: LOD support, even for prop meshes.
+- Terraman and PropInstance: LOD generation is scriptable.
 - Dungeon generation support via a separate prop based system. Dungeons are generated below ground, with teleporters to them. Also support for turning off the terrain engine while the player is inside a dungeon.
 - Procedural world generation. [See here](#terrain-generation).
 
