@@ -9,8 +9,6 @@
 [resource]
 resource_name = "Naturalist"
 id = 2
-entity_type = 4
-entity_controller = 2
 text_name = "Naturalist"
 entity_species_data = ExtResource( 1 )
 entity_class_data = ExtResource( 2 )
