@@ -12,7 +12,7 @@ target_type = 480
 target_relation_type = 914787760
 rank = 1
 icon = ExtResource( 2 )
-caster_aura_applys = [ ExtResource( 1 ) ]
+spells_cast_on_caster = [ ExtResource( 1 ) ]
 text_name = "Ironbark"
 text_description = "Instant.
 Cooldown: {2}

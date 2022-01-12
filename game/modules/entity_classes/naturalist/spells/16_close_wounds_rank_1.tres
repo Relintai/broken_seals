@@ -11,7 +11,7 @@ spell_type = 8
 target_type = 2
 rank = 1
 icon = ExtResource( 3 )
-caster_aura_applys = [ ExtResource( 1 ) ]
+spells_cast_on_caster = [ ExtResource( 1 ) ]
 text_name = "Close Wounds"
 text_description = "Casttime: 2 sec.
 Cooldown: %%cooldown_cooldown sec

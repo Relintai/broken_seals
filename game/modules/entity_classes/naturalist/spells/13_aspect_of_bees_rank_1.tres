@@ -12,7 +12,7 @@ level = 4
 rank = 1
 icon = ExtResource( 3 )
 needs_target = true
-target_aura_applys = [ ExtResource( 1 ) ]
+spells_cast_on_target = [ ExtResource( 1 ) ]
 text_name = "Aspect of Bees"
 text_description = "Range: 26m.
 Instant.

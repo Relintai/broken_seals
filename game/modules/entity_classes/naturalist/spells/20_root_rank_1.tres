@@ -10,7 +10,7 @@ id = 10
 spell_type = 8
 rank = 1
 icon = ExtResource( 3 )
-target_aura_applys = [ ExtResource( 1 ) ]
+spells_cast_on_target = [ ExtResource( 1 ) ]
 text_name = "Root"
 text_description = "Range: 26m.
 Casttime: 1.5 sec.

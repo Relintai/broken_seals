@@ -17,7 +17,7 @@ spell_type = 8
 rank = 1
 icon = ExtResource( 5 )
 visual_spell_effects = ExtResource( 3 )
-target_aura_applys = [ ExtResource( 2 ) ]
+spells_cast_on_target = [ ExtResource( 2 ) ]
 text_name = "Aspect of Scorpions"
 text_description = "Range: 26m.
 Casttime: %%cast_cast_time .
