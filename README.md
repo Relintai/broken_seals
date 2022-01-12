@@ -20,7 +20,6 @@ This project uses a custom version of ![godot (3.x branch)](https://github.com/g
 
 On the technical side almost everything has been set up the way I think will work in long term. \
 Improvements will be needed obviously, but I don't expect core reworks anymore for the forseable future.\
-Except for a possible spell and aura merge. As at this stage this is easily doable, and it would save considerable amounts of development time, as you don't need to set up and manage 2 resources if a spell needs auras.
 [Here's a list of some of the more prominent features](#features).
 
 Currently I'm working to finish / make the content creation tools usable without any issues.
