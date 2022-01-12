@@ -1,6 +1,5 @@
-[gd_resource type="Spell" load_steps=4 format=2]
+[gd_resource type="Spell" load_steps=3 format=2]
 
-[ext_resource path="res://modules/entity_classes/naturalist/auras/16_ironbark_rank_1.tres" type="Spell" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/icons/ironbark.tres" type="Texture" id=2]
 [ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=3]
 
@@ -12,7 +11,6 @@ target_type = 480
 target_relation_type = 914787760
 rank = 1
 icon = ExtResource( 2 )
-spells_cast_on_caster = [ ExtResource( 1 ) ]
 text_name = "Ironbark"
 text_description = "Instant.
 Cooldown: {2}
@@ -20,4 +18,7 @@ Reduces damage taken by 70%. This spell is not on the global cooldown."
 cooldown_cooldown = 60.0
 aoe_targetType = -1910718371
 aoe_colliderType = -298046312
+aura_time = 6.0
+aura_type = 1
+aura_text_description = "Reduces damage taken by 70%. This spell is not on the global cooldown."
 script = ExtResource( 3 )
