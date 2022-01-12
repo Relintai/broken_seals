@@ -5,11 +5,11 @@
 
 [resource]
 resource_name = "Improved Strike"
-icon = ExtResource( 2 )
 rank = 1
+icon = ExtResource( 2 )
+text_name = "Improved Strike"
 aura_type = 6
 aura_hide = true
-text_name = "Improved Strike"
 aura_text_description = "Reduces the cast time of Aspect of Scorpions by %%reduction_value seconds."
 script = ExtResource( 1 )
 spell_name = "Strike"

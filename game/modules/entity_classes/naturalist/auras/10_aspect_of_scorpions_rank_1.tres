@@ -6,13 +6,13 @@
 
 [resource]
 resource_name = "Aspect of Scorpions"
-icon = ExtResource( 3 )
 rank = 1
+icon = ExtResource( 3 )
+text_name = "Aspect of Scorpions"
 aura_time = 30.0
 aura_tick = 3.0
 aura_debuff = true
 aura_group = ExtResource( 2 )
-text_name = "Aspect of Scorpions"
 aura_text_description = "Deals %%damage_min  to %%damage_max  damage every %%tick  sec, and increases damage taken by 10% for 30 sec."
 aura_damage_enabled = true
 aura_damage_type = 8

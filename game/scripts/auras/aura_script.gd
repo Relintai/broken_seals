@@ -21,7 +21,7 @@ class_name AuraGD
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-func _sapply(info : AuraApplyInfo) -> void:
+func _aura_sapply(info : AuraApplyInfo) -> void:
 #	var add : bool = false
 	var ad : AuraData = info.target.aura_gets_by(info.caster, info.aura.id)
 
@@ -48,7 +48,7 @@ func _sapply(info : AuraApplyInfo) -> void:
 		ad.remaining_time = aura_time
 
 
-func _sdeapply(data : AuraData) -> void:
+func _aura_sdeapply(data : AuraData) -> void:
 	for i in range(aura_stat_attribute_get_count()):
 		data.owner.stat_mod(aura_stat_attribute_get_stat(id), -aura_stat_attribute_get_base_mod(i), -aura_stat_attribute_get_bonus_mod(i), -aura_stat_attribute_get_percent_mod(i))
 

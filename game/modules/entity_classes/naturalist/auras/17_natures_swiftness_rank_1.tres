@@ -8,11 +8,11 @@
 resource_name = "Nature's Swiftness"
 id = 7
 icon = ExtResource( 3 )
+text_name = "Nature's Swiftness"
 aura_time = 10.0
 aura_type = 1
-text_name = "Nature's Swiftness"
-aura_text_description = "Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
 aura_visual_spell_effects = ExtResource( 2 )
+aura_text_description = "Increases your movement speed by 60% for 6 sec. This spell is not on the global cooldown."
 script = ExtResource( 1 )
 does_stack = true
 mod_speed = 40.0

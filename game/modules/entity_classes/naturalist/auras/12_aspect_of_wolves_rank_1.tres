@@ -7,14 +7,14 @@
 [resource]
 resource_name = "Aspect of Wolves"
 id = 2
+rank = 10
 icon = ExtResource( 3 )
+text_name = "Aspect of Wolves"
 aura_time = 22.0
 aura_tick = 2.0
 aura_debuff = true
-rank = 10
 aura_type = 1
 aura_group = ExtResource( 2 )
-text_name = "Aspect of Wolves"
 aura_text_description = "Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
 aura_damage_enabled = true
 aura_damage_type = 16

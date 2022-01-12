@@ -7,10 +7,10 @@
 resource_name = "Close Wounds"
 id = 5
 icon = ExtResource( 2 )
+text_name = "Close Wounds"
 aura_time = 21.0
 aura_tick = 3.0
 aura_type = 1
-text_name = "Close Wounds"
 aura_text_description = "Heals you for 720 to 780 every 3 sec for 21 sec."
 aura_heal_enabled = true
 aura_heal_min = 720

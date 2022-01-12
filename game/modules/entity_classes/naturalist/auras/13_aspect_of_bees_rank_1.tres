@@ -7,14 +7,14 @@
 [resource]
 resource_name = "Aspect of Bees"
 id = 3
+rank = 10
 icon = ExtResource( 3 )
+text_name = "Aspect of Bees"
 aura_time = 21.0
 aura_tick = 3.0
 aura_debuff = true
-rank = 10
 aura_type = 1
 aura_group = ExtResource( 2 )
-text_name = "Aspect of Bees"
 aura_text_description = "Deals 460 to 540 damage every 3 sec, healing you for 80% of the damage."
 aura_damage_enabled = true
 aura_damage_type = 16
