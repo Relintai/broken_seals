@@ -49,8 +49,8 @@ func _on_set_owner():
 	for i in range(class_data.get_num_spells()):
 		var spell : Spell = class_data.get_spell(i)
 		
-		if spell.get_num_target_aura_applys() > 0:
-			var aura : Aura = spell.get_target_aura_apply(0)
+		if spell.spells_cast_on_target_num_get() > 0:
+			var aura : Spell = spell.spell_cast_on_target_get(0)
 			
 			if not _data["target_aura_spells"].has(aura.aura_group):
 				_data["target_aura_spells"][aura.aura_group] = []

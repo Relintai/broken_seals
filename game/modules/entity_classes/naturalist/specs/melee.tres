@@ -1,10 +1,10 @@
 [gd_resource type="CharacterSpec" load_steps=6 format=2]
 
-[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r1.tres" type="Aura" id=1]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r5.tres" type="Aura" id=2]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r4.tres" type="Aura" id=3]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r3.tres" type="Aura" id=4]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r2.tres" type="Aura" id=5]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r1.tres" type="Spell" id=1]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r5.tres" type="Spell" id=2]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r4.tres" type="Spell" id=3]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r3.tres" type="Spell" id=4]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/melee/talent_strike_r2.tres" type="Spell" id=5]
 
 [resource]
 resource_name = "Melee"

@@ -1,4 +1,4 @@
-extends Aura
+extends Spell
 class_name AuraGD
 
 # Copyright (c) 2019-2021 Péter Magyar

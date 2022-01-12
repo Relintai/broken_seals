@@ -1,7 +1,7 @@
 [gd_resource type="Spell" load_steps=7 format=2]
 
 [ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResource" id=1]
-[ext_resource path="res://modules/entity_classes/naturalist/auras/10_aspect_of_scorpions_rank_1.tres" type="Aura" id=2]
+[ext_resource path="res://modules/entity_classes/naturalist/auras/10_aspect_of_scorpions_rank_1.tres" type="Spell" id=2]
 [ext_resource path="res://modules/entity_classes/naturalist/effect_data/aspect_of_scorpions.tres" type="SpellEffectVisual" id=3]
 [ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=4]
 [ext_resource path="res://modules/entity_classes/naturalist/icons/aspect_of_scorpions.tres" type="Texture" id=5]

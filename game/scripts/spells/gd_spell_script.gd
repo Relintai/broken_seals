@@ -173,7 +173,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 		
 		handle_spell_heal(shi)
 		
-	for aura in caster_aura_applys:
+	for aura in spells_cast_on_caster:
 		var ainfo : AuraApplyInfo = AuraApplyInfo.new()
 		
 		ainfo.caster = info.caster
@@ -184,7 +184,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 		aura.aura_sapply(ainfo)
 		
 	if info.target != null:
-		for aura in target_aura_applys:
+		for aura in spells_cast_on_target:
 			var ad : AuraData = null
 			
 			if aura.aura_group != null:

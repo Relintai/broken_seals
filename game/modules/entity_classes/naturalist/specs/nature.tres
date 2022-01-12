@@ -1,8 +1,8 @@
 [gd_resource type="CharacterSpec" load_steps=4 format=2]
 
-[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r3.tres" type="Aura" id=1]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/talent_regrow_r1.tres" type="Aura" id=2]
-[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r2.tres" type="Aura" id=3]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r3.tres" type="Spell" id=1]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/talent_regrow_r1.tres" type="Spell" id=2]
+[ext_resource path="res://modules/entity_classes/naturalist/specs/nature/talent_regrow_r2.tres" type="Spell" id=3]
 
 [resource]
 resource_name = "Nature"

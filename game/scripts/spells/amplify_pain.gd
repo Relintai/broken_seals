@@ -31,7 +31,7 @@ func _cast_finishs(info : SpellCastInfo) -> void:
 		var ad : AuraData = target.aura_gets(i)
 		
 		if ad.caster == info.caster:
-			var aura : Aura = ad.aura
+			var aura : Spell = ad.aura
 			
 			if aura.aura_type & SpellEnums.AURA_TYPE_MAGIC != 0:
 				ad.time_since_last_tick += ad.tick
