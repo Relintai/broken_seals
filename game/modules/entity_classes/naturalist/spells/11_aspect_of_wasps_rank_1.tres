@@ -7,7 +7,7 @@
 resource_name = "Aspect of Wasps"
 spell_type = 8
 level = 2
-rank = 1
+rank = 10
 icon = ExtResource( 3 )
 text_name = "Aspect of Wasps"
 text_description = "Range: 26m.
@@ -16,4 +16,8 @@ Deals 230 to 270 damage every 3 sec, this damage increases over the duration, fo
 range_range = 26.0
 aoe_targetType = 541
 aoe_colliderType = 541
+aura_time = 21.0
+aura_tick = 1.0
+aura_debuff = true
+aura_type = 1
 script = ExtResource( 2 )

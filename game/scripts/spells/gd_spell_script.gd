@@ -178,7 +178,7 @@ func handle_effect(info : SpellCastInfo) -> void:
 		var ad : AuraData = AuraData.new()
 
 		if aura_get_aura_group():
-			ad = info.target.aura_gets_with_group_by_bind(info.caster, aura_get_aura_group())
+			ad = info.target.aura_gets_with_group_by(info.caster, aura_get_aura_group())
 		else:
 			ad = info.target.aura_gets_by(info.caster, id)
 		
