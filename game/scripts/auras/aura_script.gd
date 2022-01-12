@@ -1,4 +1,4 @@
-extends Spell
+extends "res://scripts/spells/gd_spell_script.gd"
 class_name AuraGD
 
 # Copyright (c) 2019-2021 Péter Magyar

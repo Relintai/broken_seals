@@ -36,8 +36,9 @@ func _cast_starts(info : SpellCastInfo) -> void:
 	if cooldown_global_cooldown_enabled and info.caster.gcd_hass() or info.caster.category_cooldown_hass(spell_type) or info.caster.cooldown_hass(id):
 		return
 	
-	if !info.caster.spell_hass_id(id):
-		return
+	# Todo Add source info to SpellCastInfo (player, item, spell, etc)
+	#if !info.caster.spell_hass_id(id):
+	#	return
 		
 	var entity_relation_type = info.caster.gets_relation_to(info.target)
 	
@@ -172,39 +173,57 @@ func handle_effect(info : SpellCastInfo) -> void:
 		shi.receiver = info.target
 		
 		handle_spell_heal(shi)
-		
-	for aura in spells_cast_on_caster:
-		var ainfo : AuraApplyInfo = AuraApplyInfo.new()
-		
-		ainfo.caster = info.caster
-		ainfo.target = info.caster
-		ainfo.spell_scale = 1
-		ainfo.aura = aura
+	
+	if is_aura():
+		var ad : AuraData = AuraData.new()
 
-		aura.aura_sapply(ainfo)
+		if aura_get_aura_group():
+			ad = info.target.aura_gets_with_group_by_bind(info.caster, aura_get_aura_group())
+		else:
+			ad = info.target.aura_gets_by(info.caster, id)
 		
+		if ad:
+			info.target.aura_removes_exact(ad)
+
+		var aai : AuraApplyInfo = AuraApplyInfo.new()
+
+		aai.caster_set(info.caster)
+		aai.target_set(info.target)
+		aai.spell_scale_set(info.spell_scale)
+		aai.set_aura(self)
+
+		aura_sapply(aai)
+
+	for spell in spells_cast_on_caster:
+		if !spell:
+			continue
+
+		var sci : SpellCastInfo = SpellCastInfo.new()
+
+		sci.caster = info.caster
+		sci.target = info.caster
+		sci.has_cast_time = spell.cast_enabled
+		sci.cast_time = spell.cast_cast_time
+		sci.spell_scale = info.spell_scale
+		sci.set_spell(spell)
+		
+		spell.cast_starts(sci)
+
 	if info.target != null:
-		for aura in spells_cast_on_target:
-			var ad : AuraData = null
-			
-			if aura.aura_group != null:
-				ad = info.target.aura_gets_with_group_by(info.caster, aura.aura_group)
-			else:
-				ad = info.target.aura_gets_by(info.caster, aura.get_id())
-			
-			if ad != null:
-				info.target.aura_removes_exact(ad)
-			
-			var ainfo : AuraApplyInfo = AuraApplyInfo.new()
-		
-			ainfo.caster = info.caster
-			ainfo.target = info.target
-			ainfo.spell_scale = 1
-			ainfo.aura = aura
+		for spell in spells_cast_on_target:
+			if !spell:
+				continue
 
-			aura.aura_sapply(ainfo)
-		
-		
+			var sci : SpellCastInfo = SpellCastInfo.new()
+
+			sci.caster = info.caster
+			sci.target = info.target
+			sci.has_cast_time = spell.cast_enabled
+			sci.cast_time = spell.cast_cast_time
+			sci.spell_scale = info.spell_scale
+			sci.set_spell(spell)
+
+			spell.cast_starts(sci)
 		
 func handle_cooldown(info : SpellCastInfo) -> void:
 	if cooldown_cooldown > 0:

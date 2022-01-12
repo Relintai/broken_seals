@@ -7,6 +7,9 @@
 [resource]
 resource_name = "Nature's Swiftness"
 id = 7
+spell_type = 8
+target_type = 0
+target_relation_type = 7
 icon = ExtResource( 3 )
 text_name = "Nature's Swiftness"
 aura_time = 10.0
