@@ -31,33 +31,32 @@ func _sapply(info : AuraApplyInfo) -> void:
 
 		setup_aura_data(ad, info);
 
-		for i in range(stat_attribute_get_count()):
-			info.target.stat_mod(stat_attribute_get_stat(id), stat_attribute_get_base_mod(i), stat_attribute_get_bonus_mod(i), stat_attribute_get_percent_mod(i))
+		for i in range(aura_stat_attribute_get_count()):
+			info.target.stat_mod(aura_stat_attribute_get_stat(id), aura_stat_attribute_get_base_mod(i), aura_stat_attribute_get_bonus_mod(i), aura_stat_attribute_get_percent_mod(i))
 
-		if states_add != 0:
+		if aura_states_add != 0:
 			for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
 				var t : int = 1 << i
 
-				if states_add & t != 0:
+				if aura_states_add & t != 0:
 					info.target.adds_state_ref(i)
-
 
 		info.target.aura_adds(ad);
 		
 		apply_mods(ad)
 	else:
-		ad.remaining_time = time
+		ad.remaining_time = aura_time
 
 
 func _sdeapply(data : AuraData) -> void:
-	for i in range(stat_attribute_get_count()):
-		data.owner.stat_mod(stat_attribute_get_stat(id), -stat_attribute_get_base_mod(i), -stat_attribute_get_bonus_mod(i), -stat_attribute_get_percent_mod(i))
+	for i in range(aura_stat_attribute_get_count()):
+		data.owner.stat_mod(aura_stat_attribute_get_stat(id), -aura_stat_attribute_get_base_mod(i), -aura_stat_attribute_get_bonus_mod(i), -aura_stat_attribute_get_percent_mod(i))
 
-	if states_add != 0:
+	if aura_states_add != 0:
 		for i in range(EntityEnums.ENTITY_STATE_TYPE_INDEX_MAX):
 			var t : int = 1 << i
 
-			if states_add & t != 0:
+			if aura_states_add & t != 0:
 				data.owner.removes_state_ref(i)
 				
 	deapply_mods(data)
@@ -72,7 +71,7 @@ func _con_aura_added(data : AuraData) -> void:
 	if data.owner.get_character_skeleton() == null or data.owner.get_character_skeleton().root_attach_point == null:
 		return
 	
-	var bse : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
+	var bse : SpellEffectVisualBasic = aura_visual_spell_effects as SpellEffectVisualBasic
 		
 	if bse != null:
 		if bse.root_aura_effect != null:
@@ -88,7 +87,7 @@ func _con_aura_added(data : AuraData) -> void:
 				data.owner.get_character_skeleton().torso_attach_point.add_effect_timed(bse.torso_aura_effect, bse.torso_aura_effect_time)
 
 func _con_aura_removed(data : AuraData) -> void:
-	var bse : SpellEffectVisualBasic = visual_spell_effects as SpellEffectVisualBasic
+	var bse : SpellEffectVisualBasic = aura_visual_spell_effects as SpellEffectVisualBasic
 		
 	if bse != null:
 		if bse.root_aura_effect != null and bse.root_aura_effect_time < 0.00001:
