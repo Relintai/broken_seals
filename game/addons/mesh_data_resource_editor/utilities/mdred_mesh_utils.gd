@@ -1,71 +1,6 @@
 tool
 extends Object
 
-# There are probably better ways to do this
-static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> bool:
-	var reflected : Vector3 = reflect_vertex(v0, v1, v2)
-	
-	var nn : Vector3 = get_face_normal(v0, v1, v2)
-
-	return should_triangle_flip(v0, reflected, v2, nn)
-
-static func reflect_vertex(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> Vector3:
-	return (v1 - v0).reflect(v2 - v0) + v0
-
-static func get_face_normal_arr_ti(verts : PoolVector3Array, indices : PoolIntArray, triangle_index : int, flipped : bool = false) -> Vector3:
-	return get_face_normal_arr(verts, indices, triangle_index * 3, flipped)
-
-static func get_face_normal_arr(verts : PoolVector3Array, indices : PoolIntArray, index : int, flipped : bool = false) -> Vector3:
-	var v0 : Vector3 = verts[indices[index]]
-	var v1 : Vector3 = verts[indices[index + 1]]
-	var v2 : Vector3 = verts[indices[index + 2]]
-	
-	return get_face_normal(v0, v1, v2, flipped)
-
-static func get_face_normal(v0 : Vector3, v1 : Vector3, v2 : Vector3, flipped : bool = false) -> Vector3:
-	if !flipped:
-		return Plane(v0, v1, v2).normal
-	else:
-		return Plane(v2, v1, v0).normal
-
-static func should_triangle_flip(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_dir_normal : Vector3) -> bool:
-	var normal : Vector3  = get_face_normal(v0, v1, v2)
-	
-	var ndns : float = normal.dot(similar_dir_normal)
-	
-	return ndns < 0
-
-static func is_normal_similar(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_dir_normal : Vector3) -> bool:
-	var normal : Vector3  = get_face_normal(v0, v1, v2)
-	
-	var ndns : float = normal.dot(similar_dir_normal)
-	
-	return ndns >= 0
-
-static func flip_triangle_ti(mdr : MeshDataResource, triangle_index : int) -> void:
-	flip_triangle(mdr, triangle_index * 3)
-
-static func flip_triangle(mdr : MeshDataResource, index : int) -> void:
-	var arrays : Array = mdr.get_array()
-	
-	if arrays.size() != ArrayMesh.ARRAY_MAX:
-		arrays.resize(ArrayMesh.ARRAY_MAX)
-		
-	if arrays[ArrayMesh.ARRAY_INDEX] == null:
-		return
-	
-	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
-
-	var i0 : int = indices[index]
-	var i2 : int = indices[index + 2]
-	
-	indices[index] = i2
-	indices[index + 2] = i0
-
-	arrays[ArrayMesh.ARRAY_INDEX] = indices
-	
-	mdr.set_array(arrays)
-
 static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 : Vector3, flip : bool = false) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
 	
@@ -411,3 +346,69 @@ static func get_arrays_prepared(mdr : MeshDataResource) -> Array:
 		arrays[ArrayMesh.ARRAY_INDEX] = PoolIntArray()
 		
 	return arrays
+
+# There are probably better ways to do this
+static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> bool:
+	var reflected : Vector3 = reflect_vertex(v0, v1, v2)
+	
+	var nn : Vector3 = get_face_normal(v0, v1, v2)
+
+	return should_triangle_flip(v0, v1, reflected, nn)
+
+static func reflect_vertex(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> Vector3:
+	return (v2 - v0).reflect(v1 - v0) + v0
+
+static func get_face_normal_arr_ti(verts : PoolVector3Array, indices : PoolIntArray, triangle_index : int, flipped : bool = false) -> Vector3:
+	return get_face_normal_arr(verts, indices, triangle_index * 3, flipped)
+
+static func get_face_normal_arr(verts : PoolVector3Array, indices : PoolIntArray, index : int, flipped : bool = false) -> Vector3:
+	var v0 : Vector3 = verts[indices[index]]
+	var v1 : Vector3 = verts[indices[index + 1]]
+	var v2 : Vector3 = verts[indices[index + 2]]
+	
+	return get_face_normal(v0, v1, v2, flipped)
+
+static func get_face_normal(v0 : Vector3, v1 : Vector3, v2 : Vector3, flipped : bool = false) -> Vector3:
+	if !flipped:
+		return Plane(v0, v1, v2).normal
+	else:
+		return Plane(v2, v1, v0).normal
+
+static func should_triangle_flip(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_dir_normal : Vector3) -> bool:
+	var normal : Vector3  = get_face_normal(v0, v1, v2)
+	
+	var ndns : float = normal.dot(similar_dir_normal)
+	
+	return ndns < 0
+
+static func is_normal_similar(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_dir_normal : Vector3) -> bool:
+	var normal : Vector3  = get_face_normal(v0, v1, v2)
+	
+	var ndns : float = normal.dot(similar_dir_normal)
+	
+	return ndns >= 0
+
+static func flip_triangle_ti(mdr : MeshDataResource, triangle_index : int) -> void:
+	flip_triangle(mdr, triangle_index * 3)
+
+static func flip_triangle(mdr : MeshDataResource, index : int) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return
+	
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+
+	var i0 : int = indices[index]
+	var i2 : int = indices[index + 2]
+	
+	indices[index] = i2
+	indices[index + 2] = i0
+
+	arrays[ArrayMesh.ARRAY_INDEX] = indices
+	
+	mdr.set_array(arrays)
+

@@ -384,7 +384,13 @@ func add_quad() -> void:
 		MDRMeshUtils.add_quad(_mdr)
 
 func add_triangle_at() -> void:
-	pass
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		#todo
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		#should_flip_reflected_triangle
+	else:
+		add_triangle()
 		
 func add_quad_at() -> void:
 	pass
