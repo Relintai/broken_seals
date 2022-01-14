@@ -182,6 +182,14 @@ func add_quad() -> void:
 	for g in active_gizmos:
 		g.add_quad()
 
+func add_triangle_at() -> void:
+	for g in active_gizmos:
+		g.add_triangle_at()
+		
+func add_quad_at() -> void:
+	for g in active_gizmos:
+		g.add_quad_at()
+
 func merge():
 	for g in active_gizmos:
 		g.merge()

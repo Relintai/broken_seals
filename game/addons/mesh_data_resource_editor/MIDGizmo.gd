@@ -383,6 +383,12 @@ func add_quad() -> void:
 	if _mdr:
 		MDRMeshUtils.add_quad(_mdr)
 
+func add_triangle_at() -> void:
+	pass
+		
+func add_quad_at() -> void:
+	pass
+
 func add_box() -> void:
 	if _mdr:
 		MDRMeshUtils.add_box(_mdr)

@@ -373,17 +373,41 @@ margin_right = 1010.0
 margin_bottom = 20.0
 text = "Box"
 
-[node name="AddTriangle" type="Button" parent="VBoxContainer/Add/Add"]
+[node name="Tri" type="HBoxContainer" parent="VBoxContainer/Add/Add"]
 margin_top = 24.0
 margin_right = 1010.0
 margin_bottom = 44.0
-text = "Triangle"
+size_flags_horizontal = 3
 
-[node name="AdQuad" type="Button" parent="VBoxContainer/Add/Add"]
+[node name="AddTriangle" type="Button" parent="VBoxContainer/Add/Add/Tri"]
+margin_right = 980.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Tri"
+
+[node name="At" type="Button" parent="VBoxContainer/Add/Add/Tri"]
+margin_left = 984.0
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "At"
+
+[node name="Quad" type="HBoxContainer" parent="VBoxContainer/Add/Add"]
 margin_top = 48.0
 margin_right = 1010.0
 margin_bottom = 68.0
+size_flags_horizontal = 3
+
+[node name="AddQuad" type="Button" parent="VBoxContainer/Add/Add/Quad"]
+margin_right = 980.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
 text = "Quad"
+
+[node name="At" type="Button" parent="VBoxContainer/Add/Add/Quad"]
+margin_left = 984.0
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
 margin_top = 424.0
@@ -447,5 +471,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
-[connection signal="pressed" from="VBoxContainer/Add/Add/AddTriangle" to="." method="_on_add_triangle_pressed"]
-[connection signal="pressed" from="VBoxContainer/Add/Add/AdQuad" to="." method="_on_add_quad_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/Tri/AddTriangle" to="." method="_on_add_triangle_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/Tri/At" to="." method="_on_add_triangle_at_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/Quad/AddQuad" to="." method="_on_add_quad_pressed"]
+[connection signal="pressed" from="VBoxContainer/Add/Add/Quad/At" to="." method="_on_add_auad_at_pressed"]

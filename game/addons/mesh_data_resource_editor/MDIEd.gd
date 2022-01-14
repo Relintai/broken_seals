@@ -150,3 +150,9 @@ func _on_connect_pressed():
 
 func _on_disconnect_pressed():
 	plugin.disconnect_action()
+
+func _on_add_triangle_at_pressed():
+	plugin.add_triangle_at()
+
+func _on_add_auad_at_pressed():
+	plugin.add_quad_at()
