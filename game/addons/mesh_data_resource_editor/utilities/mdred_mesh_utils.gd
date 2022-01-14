@@ -363,7 +363,7 @@ static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vect
 	return should_triangle_flip(v0, v1, reflected, nn)
 
 static func reflect_vertex(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> Vector3:
-	return (v2 - v0).reflect(v1 - v0) + v0
+	return (v2 - v0).reflect((v1 - v0).normalized()) + v0
 
 static func get_face_normal_arr_ti(verts : PoolVector3Array, indices : PoolIntArray, triangle_index : int, flipped : bool = false) -> Vector3:
 	return get_face_normal_arr(verts, indices, triangle_index * 3, flipped)

@@ -35,6 +35,7 @@ var is_dragging : bool = false
 var _mdr : MeshDataResource = null
 
 var _vertices : PoolVector3Array
+var _indices : PoolIntArray
 var _handle_points : PoolVector3Array
 var _handle_to_vertex_map : Array
 var _selected_points : PoolIntArray
@@ -148,6 +149,7 @@ func apply() -> void:
 	
 	var arrs : Array = _mdr.array
 	arrs[ArrayMesh.ARRAY_VERTEX] = _vertices
+	arrs[ArrayMesh.ARRAY_INDEX] = _indices
 	_mdr.array = arrs
 	
 	_mdr.connect("changed", self, "on_mdr_changed")
@@ -357,8 +359,10 @@ func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	
 	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
 		_vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+		_indices = _mdr.array[ArrayMesh.ARRAY_INDEX]
 	else:
 		_vertices.resize(0)
+		_indices.resize(0)
 	
 	if _mdr:
 		_mdr.connect("changed", self, "on_mdr_changed")
@@ -369,8 +373,10 @@ func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 func on_mdr_changed() -> void:
 	if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null:
 		_vertices = _mdr.array[ArrayMesh.ARRAY_VERTEX]
+		_indices = _mdr.array[ArrayMesh.ARRAY_INDEX]
 	else:
 		_vertices.resize(0)
+		_indices.resize(0)
 	
 	recalculate_handle_points()
 	redraw()
@@ -386,38 +392,138 @@ func add_quad() -> void:
 func is_verts_equal(v0 : Vector3, v1 : Vector3) -> bool:
 	return is_equal_approx(v0.x, v1.x) && is_equal_approx(v0.y, v1.y) && is_equal_approx(v0.z, v1.z)
 
-func add_triangle_to_edge(edge : int) -> void:
-#	var ps : PoolIntArray = _handle_to_vertex_map[edge]
-#
-#	if ps.size() == 0:
-#		return
-#
-#	var v0 : Vector3 = _vertices[ps[0]]
-#	var v1 : Vector3 = Vector3()
-#	var found_index : int = -1
-#
-#	for j in range(1, ps.size()):
-#		v1 = _vertices[j]
-#
-#		if !is_verts_equal(v0, v1):
-#			found_index = j
-#			break
-#
-#	if found_index == -1:
-#		return
-#
-	
-	#should_flip_reflected_triangle
-	
-	pass
+func find_other_vertex_for_edge(edge : int, v0 : Vector3) -> Vector3:
+	var ps : PoolIntArray = _handle_to_vertex_map[edge]
 
+	var vert : Vector3 = Vector3()
+
+	for i in range(ps.size()):
+		vert = _vertices[ps[i]]
+
+		if !is_verts_equal(v0, vert):
+			return vert
+	
+	return v0
+
+func split_edge_indices(edge : int) -> Array:
+	var ps : PoolIntArray = _handle_to_vertex_map[edge]
+	
+	if ps.size() == 0:
+		return [  ]
+
+	var v0 : Vector3 = _vertices[ps[0]]
+	
+	var v0ei : PoolIntArray = PoolIntArray()
+	v0ei.append(ps[0])
+	var v1ei : PoolIntArray = PoolIntArray()
+
+	for i in range(1, ps.size()):
+		var vert : Vector3 = _vertices[ps[i]]
+
+		if is_verts_equal(v0, vert):
+			v0ei.append(ps[i])
+		else:
+			v1ei.append(ps[i])
+	
+	return [ v0ei, v1ei ]
+
+func pool_int_arr_contains(arr : PoolIntArray, val : int) -> bool:
+	for a in arr:
+		if a == val:
+			return true
+			
+	return false
+	
+
+func find_triangles_for_edge(edge : int) -> PoolIntArray:
+	var eisarr : Array = split_edge_indices(edge)
+	
+	if eisarr.size() == 0:
+		return PoolIntArray()
+	
+	# these should have the same size
+	var v0ei : PoolIntArray = eisarr[0]
+	var v1ei : PoolIntArray = eisarr[1]
+	
+	var res : PoolIntArray = PoolIntArray()
+	
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		if pool_int_arr_contains(v0ei, i0) || pool_int_arr_contains(v0ei, i1) || pool_int_arr_contains(v0ei, i2):
+			if pool_int_arr_contains(v1ei, i0) || pool_int_arr_contains(v1ei, i1) || pool_int_arr_contains(v1ei, i2):
+				res.append(i / 3)
+	
+	return res
+
+func find_first_triangle_for_edge(edge : int) -> int:
+	var eisarr : Array = split_edge_indices(edge)
+
+	if eisarr.size() == 0:
+		return -1
+	
+	# these should have the same size
+	var v0ei : PoolIntArray = eisarr[0]
+	var v1ei : PoolIntArray = eisarr[1]
+	
+	var res : PoolIntArray = PoolIntArray()
+	
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		if pool_int_arr_contains(v0ei, i0) || pool_int_arr_contains(v0ei, i1) || pool_int_arr_contains(v0ei, i2):
+			if pool_int_arr_contains(v1ei, i0) || pool_int_arr_contains(v1ei, i1) || pool_int_arr_contains(v1ei, i2):
+				return i / 3
+	
+	return -1
+
+func add_triangle_to_edge(edge : int) -> void:
+	var triangle_index : int = find_first_triangle_for_edge(edge)
+	
+	var inds : int = triangle_index * 3
+	
+	var ti0 : int = _indices[inds]
+	var ti1 : int = _indices[inds + 1]
+	var ti2 : int = _indices[inds + 2]
+	
+	var ps : PoolIntArray = _handle_to_vertex_map[edge]
+	
+	if ps.size() == 0:
+		return
+		
+	var ei0 : int = 0
+	var ei1 : int = 0
+	var erefind : int = 0
+	
+	if !pool_int_arr_contains(ps, ti0):
+		ei0 = ti1
+		ei1 = ti2
+		erefind = ti0
+	elif !pool_int_arr_contains(ps, ti1):
+		ei0 = ti0
+		ei1 = ti2
+		erefind = ti1
+	elif !pool_int_arr_contains(ps, ti2):
+		ei0 = ti0
+		ei1 = ti1
+		erefind = ti2
+	
+	MDRMeshUtils.append_triangle_to_tri_edge(_mdr, _vertices[ei0], _vertices[ei1], _vertices[erefind])
+	
 func add_triangle_at() -> void:
+	if !_mdr:
+		return
+	
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		for i in _selected_points:
-			add_triangle_to_edge(i)
+		for sp in _selected_points:
+			add_triangle_to_edge(sp)
 	else:
 		add_triangle()
 		
