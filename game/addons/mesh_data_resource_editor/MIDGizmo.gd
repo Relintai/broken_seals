@@ -3,7 +3,7 @@ extends EditorSpatialGizmo
 
 var MeshOutline = preload("res://addons/mesh_data_resource_editor/utilities/mesh_outline.gd")
 var MeshDecompose = preload("res://addons/mesh_data_resource_editor/utilities/mesh_decompose.gd")
-var MeshAddUtils = preload("res://addons/mesh_data_resource_editor/utilities/mesh_add_utils.gd")
+var MDRMeshUtils = preload("res://addons/mesh_data_resource_editor/utilities/mdred_mesh_utils.gd")
 
 enum EditMode {
 	EDIT_MODE_NONE = 0, 
@@ -377,15 +377,15 @@ func on_mdr_changed() -> void:
 
 func add_triangle() -> void:
 	if _mdr:
-		MeshAddUtils.add_triangle(_mdr)
+		MDRMeshUtils.add_triangle(_mdr)
 
 func add_quad() -> void:
 	if _mdr:
-		MeshAddUtils.add_quad(_mdr)
+		MDRMeshUtils.add_quad(_mdr)
 
 func add_box() -> void:
 	if _mdr:
-		MeshAddUtils.add_box(_mdr)
+		MDRMeshUtils.add_box(_mdr)
 
 func merge():
 	pass

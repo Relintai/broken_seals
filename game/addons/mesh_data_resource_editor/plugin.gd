@@ -1,7 +1,7 @@
 tool
 extends EditorPlugin
 
-const MeshAddUtils = preload("res://addons/mesh_data_resource_editor/utilities/mesh_add_utils.gd")
+const MDRMeshUtils = preload("res://addons/mesh_data_resource_editor/utilities/mdred_mesh_utils.gd")
 
 const MdiGizmoPlugin = preload("res://addons/mesh_data_resource_editor/MDIGizmoPlugin.gd")
 const MDIEdGui = preload("res://addons/mesh_data_resource_editor/MDIEd.tscn")
@@ -172,7 +172,7 @@ func add_box() -> void:
 	var mdr : MeshDataResource = get_mdr()
 	
 	if mdr:
-		MeshAddUtils.add_box(mdr)
+		MDRMeshUtils.add_box(mdr)
 
 func add_triangle() -> void:
 	for g in active_gizmos:
