@@ -1,6 +1,19 @@
 tool
 extends Object
 
+# There are probably better ways to do this
+# It will be used for the extrude operation to be able to set triangle winding correctly
+# Correctly means it should face the same way as the triangle it was extruded from
+static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> bool:
+	var reflected : Vector3 = reflect_vertex(v0, v1, v2)
+	
+	var nn : Vector3 = get_face_normal(v0, v1, v2)
+
+	return should_triangle_flip(v0, reflected, v2, nn)
+
+static func reflect_vertex(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> Vector3:
+	return (v1 - v0).reflect(v2 - v0) + v0
+
 static func get_face_normal_arr_ti(verts : PoolVector3Array, indices : PoolIntArray, triangle_index : int, flipped : bool = false) -> Vector3:
 	return get_face_normal_arr(verts, indices, triangle_index * 3, flipped)
 
