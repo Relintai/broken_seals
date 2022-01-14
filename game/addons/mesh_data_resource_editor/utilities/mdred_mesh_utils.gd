@@ -2,8 +2,6 @@ tool
 extends Object
 
 # There are probably better ways to do this
-# It will be used for the extrude operation to be able to set triangle winding correctly
-# Correctly means it should face the same way as the triangle it was extruded from
 static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> bool:
 	var reflected : Vector3 = reflect_vertex(v0, v1, v2)
 	
