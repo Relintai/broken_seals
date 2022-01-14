@@ -1,6 +1,13 @@
 tool
 extends Object
 
+# Appends a triangle to the mesh. It's created from miroring v2 to the ev0, and ev1 edge
+static func append_triangle_to_tri_edge(mdr : MeshDataResource, ev0 : Vector3, ev1 : Vector3, v2 : Vector3) -> void:
+	var vref : Vector3 = reflect_vertex(ev0, ev1, v2)
+	var should_flip : bool = should_flip_reflected_triangle(ev0, ev1, v2)
+	
+	add_triangle_at(mdr, ev0, ev1, vref, should_flip)
+
 static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 : Vector3, flip : bool = false) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
 	

@@ -383,12 +383,41 @@ func add_quad() -> void:
 	if _mdr:
 		MDRMeshUtils.add_quad(_mdr)
 
+func is_verts_equal(v0 : Vector3, v1 : Vector3) -> bool:
+	return is_equal_approx(v0.x, v1.x) && is_equal_approx(v0.y, v1.y) && is_equal_approx(v0.z, v1.z)
+
+func add_triangle_to_edge(edge : int) -> void:
+#	var ps : PoolIntArray = _handle_to_vertex_map[edge]
+#
+#	if ps.size() == 0:
+#		return
+#
+#	var v0 : Vector3 = _vertices[ps[0]]
+#	var v1 : Vector3 = Vector3()
+#	var found_index : int = -1
+#
+#	for j in range(1, ps.size()):
+#		v1 = _vertices[j]
+#
+#		if !is_verts_equal(v0, v1):
+#			found_index = j
+#			break
+#
+#	if found_index == -1:
+#		return
+#
+	
+	#should_flip_reflected_triangle
+	
+	pass
+
 func add_triangle_at() -> void:
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		#should_flip_reflected_triangle
+		for i in _selected_points:
+			add_triangle_to_edge(i)
 	else:
 		add_triangle()
 		
