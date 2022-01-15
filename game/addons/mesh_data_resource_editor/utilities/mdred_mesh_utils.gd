@@ -1,8 +1,31 @@
 tool
 extends Object
 
-static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_points : PoolVector3Array, last_known_camera_facing : Vector3) -> void:
+static func remove_triangle(mdr : MeshDataResource, triangle_index : int) -> void:
+	if triangle_index < 0:
+		return
 	
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return
+	
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+
+	# Just remove that triangle
+	var i : int = triangle_index * 3
+	indices.remove(i)
+	indices.remove(i)
+	indices.remove(i)
+
+	arrays[ArrayMesh.ARRAY_INDEX] = indices
+	
+	mdr.set_array(arrays)
+
+static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_points : PoolVector3Array, last_known_camera_facing : Vector3) -> void:
 	if selected_points.size() < 3:
 		return
 	

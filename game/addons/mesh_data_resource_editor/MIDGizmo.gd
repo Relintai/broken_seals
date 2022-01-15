@@ -645,12 +645,7 @@ func create_face():
 		
 	if _selected_points.size() <= 2:
 		return
-		
-	var mdr_arr : Array = _mdr.array
-	
-	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
-		return
-	
+
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		
 		var points : PoolVector3Array = PoolVector3Array()
@@ -664,3 +659,89 @@ func create_face():
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
+
+func split_face_indices(face : int) -> Array:
+	var ps : PoolIntArray = _handle_to_vertex_map[face]
+	
+	if ps.size() == 0:
+		return [  ]
+
+	var v0 : Vector3 = _vertices[ps[0]]
+	var v1 : Vector3 = Vector3()
+	var v1found : bool = false
+	
+	var v0ei : PoolIntArray = PoolIntArray()
+	v0ei.append(ps[0])
+	var v1ei : PoolIntArray = PoolIntArray()
+	var v2ei : PoolIntArray = PoolIntArray()
+
+	for i in range(1, ps.size()):
+		var vert : Vector3 = _vertices[ps[i]]
+
+		if is_verts_equal(v0, vert):
+			v0ei.append(ps[i])
+		else:
+			if v1found:
+				if is_verts_equal(v1, vert):
+					v1ei.append(ps[i])
+				else:
+					v2ei.append(ps[i])
+			else:
+				v1found = true
+				v1 = _vertices[ps[i]]
+				v1ei.append(ps[i])
+	
+	return [ v0ei, v1ei, v2ei ]
+
+func find_first_triangle_index_for_face(face : int) -> int:
+	var split_indices_arr : Array = split_face_indices(face)
+	
+	if split_indices_arr.size() == 0:
+		return -1
+		
+	var v0ei : PoolIntArray = split_indices_arr[0]
+	var v1ei : PoolIntArray = split_indices_arr[1]
+	var v2ei : PoolIntArray = split_indices_arr[2]
+	var tri_index : int = -1
+	
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		if pool_int_arr_contains(v0ei, i0) || pool_int_arr_contains(v0ei, i1) || pool_int_arr_contains(v0ei, i2):
+			if pool_int_arr_contains(v1ei, i0) || pool_int_arr_contains(v1ei, i1) || pool_int_arr_contains(v1ei, i2):
+				if pool_int_arr_contains(v2ei, i0) || pool_int_arr_contains(v2ei, i1) || pool_int_arr_contains(v2ei, i2):
+					return i / 3
+	
+	return -1
+
+func delete_selected() -> void:
+	if !_mdr:
+		return
+		
+	if _selected_points.size() == 0:
+		return
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		#todo
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		#todo
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		if _mdr:
+			_mdr.disconnect("changed", self, "on_mdr_changed")
+	
+		for sp in _selected_points:
+			var triangle_index : int = find_first_triangle_index_for_face(sp)
+			
+			MDRMeshUtils.remove_triangle(_mdr, triangle_index)
+
+		_selected_points.resize(0)
+		
+		if _mdr:
+			_mdr.connect("changed", self, "on_mdr_changed")
+			
+		on_mdr_changed()
+	

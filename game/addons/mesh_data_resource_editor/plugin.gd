@@ -209,3 +209,7 @@ func disconnect_action():
 func create_face():
 	for g in active_gizmos:
 		g.create_face()
+
+func delete_selected():
+	for g in active_gizmos:
+		g.delete_selected()

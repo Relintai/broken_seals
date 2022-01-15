@@ -159,3 +159,6 @@ func _on_add_auad_at_pressed():
 
 func _oncreate_face_pressed():
 	plugin.create_face()
+
+func _on_delete_pressed():
+	plugin.delete_selected()

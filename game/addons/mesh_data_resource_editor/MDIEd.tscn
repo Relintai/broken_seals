@@ -289,6 +289,11 @@ margin_top = 18.0
 margin_right = 1010.0
 margin_bottom = 110.0
 
+[node name="Delete" type="Button" parent="VBoxContainer/FaceOps/Operations"]
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Delete"
+
 [node name="Merge" type="Button" parent="VBoxContainer/FaceOps/Operations"]
 margin_right = 1010.0
 margin_bottom = 20.0
@@ -472,6 +477,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
+[connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Connect" to="." method="_on_connect_pressed"]
