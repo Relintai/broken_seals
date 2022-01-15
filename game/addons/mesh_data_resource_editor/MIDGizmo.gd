@@ -521,7 +521,49 @@ func add_triangle_to_edge(edge : int) -> void:
 		ei1 = t
 	
 	MDRMeshUtils.append_triangle_to_tri_edge(_mdr, _vertices[ei0], _vertices[ei1], _vertices[erefind])
+
+func add_quad_to_edge(edge : int) -> void:
+	var triangle_index : int = find_first_triangle_for_edge(edge)
 	
+	var inds : int = triangle_index * 3
+	
+	var ti0 : int = _indices[inds]
+	var ti1 : int = _indices[inds + 1]
+	var ti2 : int = _indices[inds + 2]
+	
+	var ps : PoolIntArray = _handle_to_vertex_map[edge]
+	
+	if ps.size() == 0:
+		return
+		
+	var ei0 : int = 0
+	var ei1 : int = 0
+	var erefind : int = 0
+	
+	if !pool_int_arr_contains(ps, ti0):
+		ei0 = ti1
+		ei1 = ti2
+		erefind = ti0
+	elif !pool_int_arr_contains(ps, ti1):
+		ei0 = ti0
+		ei1 = ti2
+		erefind = ti1
+	elif !pool_int_arr_contains(ps, ti2):
+		ei0 = ti0
+		ei1 = ti1
+		erefind = ti2
+		
+	var fo : Vector3 = MDRMeshUtils.get_face_normal(_vertices[ti0], _vertices[ti1], _vertices[ti2])
+	var fn : Vector3 = MDRMeshUtils.get_face_normal(_vertices[ei0], _vertices[ei1], _vertices[erefind])
+	
+	if fo.dot(fn) < 0:
+		var t : int = ei0
+		ei0 = ei1
+		ei1 = t
+	
+	MDRMeshUtils.append_quad_to_tri_edge(_mdr, _vertices[ei0], _vertices[ei1], _vertices[erefind])
+	
+
 func add_triangle_at() -> void:
 	if !_mdr:
 		return
@@ -536,7 +578,17 @@ func add_triangle_at() -> void:
 		add_triangle()
 		
 func add_quad_at() -> void:
-	pass
+	if !_mdr:
+		return
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		#todo
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		for sp in _selected_points:
+			add_quad_to_edge(sp)
+	else:
+		add_triangle()
 
 func add_box() -> void:
 	if _mdr:

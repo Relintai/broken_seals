@@ -51,7 +51,55 @@ static func add_triangle(mdr : MeshDataResource) -> void:
 	st.generate_normals()
 	
 	merge_in_surface_tool(mdr, st)
+
+# Appends a quad to the mesh. It's created to the opposite side of v2 to the ev0, and ev1 edge
+static func append_quad_to_tri_edge(mdr : MeshDataResource, ev0 : Vector3, ev1 : Vector3, v2 : Vector3) -> void:
+	var vref : Vector3 = reflect_vertex(ev0, ev1, v2)
+	var vproj : Vector3 = (vref - ev0).project(ev1 - ev0)
+	var eoffs : Vector3 = (vref - ev0) - vproj
 	
+	var qv0 : Vector3 = ev0
+	var qv1 : Vector3 = ev0 + eoffs
+	var qv2 : Vector3 = ev1 + eoffs
+	var qv3 : Vector3 = ev1
+
+	add_quad_at(mdr, qv0, qv1, qv2, qv3, false)
+
+static func add_quad_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 : Vector3, v3 : Vector3, flip : bool = false) -> void:
+	var st : SurfaceTool = SurfaceTool.new()
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	st.add_uv(Vector2(0, 1))
+	st.add_vertex(v0)
+	st.add_uv(Vector2(0, 0))
+	st.add_vertex(v1)
+	st.add_uv(Vector2(1, 0))
+	st.add_vertex(v2)
+	st.add_uv(Vector2(1, 1))
+	st.add_vertex(v3)
+	
+
+	if !flip:
+		st.add_index(0)
+		st.add_index(1)
+		st.add_index(2)
+		
+		st.add_index(0)
+		st.add_index(2)
+		st.add_index(3)
+	else:
+		st.add_index(2)
+		st.add_index(1)
+		st.add_index(0)
+		
+		st.add_index(3)
+		st.add_index(2)
+		st.add_index(0)
+
+	st.generate_normals()
+	
+	merge_in_surface_tool(mdr, st)
 
 static func add_quad(mdr : MeshDataResource) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
