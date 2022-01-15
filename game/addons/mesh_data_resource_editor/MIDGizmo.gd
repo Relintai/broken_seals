@@ -31,6 +31,7 @@ var axis_constraint : int = AxisConstraint.X | AxisConstraint.Y | AxisConstraint
 var selection_mode : int = SelectionMode.SELECTION_MODE_VERTEX
 var previous_point : Vector2
 var is_dragging : bool = false
+var _last_known_camera_facing : Vector3 = Vector3(0, 0, -1)
 
 var _mdr : MeshDataResource = null
 
@@ -155,6 +156,8 @@ func apply() -> void:
 	_mdr.connect("changed", self, "on_mdr_changed")
 
 func forward_spatial_gui_input(index, camera, event):
+	_last_known_camera_facing = camera.transform.basis.xform(Vector3(0, 0, -1))
+	
 	if event is InputEventMouseButton:
 		var gt : Transform = get_spatial_node().global_transform
 		var ray_from : Vector3 = camera.global_transform.origin
@@ -635,3 +638,29 @@ func connect_action():
 
 func disconnect_action():
 	pass
+
+func create_face():
+	if !_mdr:
+		return
+		
+	if _selected_points.size() <= 2:
+		return
+		
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		
+		var points : PoolVector3Array = PoolVector3Array()
+		
+		for sp in _selected_points:
+			points.push_back(_handle_points[sp])
+			
+		MDRMeshUtils.add_triangulated_mesh_from_points(_mdr, points, _last_known_camera_facing)
+	
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass

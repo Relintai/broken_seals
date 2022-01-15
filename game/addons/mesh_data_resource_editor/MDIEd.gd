@@ -156,3 +156,6 @@ func _on_add_triangle_at_pressed():
 
 func _on_add_auad_at_pressed():
 	plugin.add_quad_at()
+
+func _oncreate_face_pressed():
+	plugin.create_face()

@@ -1,6 +1,45 @@
 tool
 extends Object
 
+static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_points : PoolVector3Array, last_known_camera_facing : Vector3) -> void:
+	
+	if selected_points.size() < 3:
+		return
+	
+	var st : SurfaceTool = SurfaceTool.new()
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	var v0 : Vector3 = selected_points[0]
+	var v1 : Vector3 = selected_points[1]
+
+	for i in range(2, selected_points.size()):
+		var v2 : Vector3 = selected_points[i]
+		
+		st.add_uv(Vector2(0, 1))
+		st.add_vertex(v0)
+		st.add_uv(Vector2(0.5, 0))
+		st.add_vertex(v1)
+		st.add_uv(Vector2(1, 1))
+		st.add_vertex(v2)
+		
+		var flip : bool = is_normal_similar(v0, v1, v2, last_known_camera_facing)
+
+		var im3 : int = (i - 2) * 3
+
+		if !flip:
+			st.add_index(im3)
+			st.add_index(im3 + 1)
+			st.add_index(im3 + 2)
+		else:
+			st.add_index(im3 + 2)
+			st.add_index(im3 + 1)
+			st.add_index(im3)
+
+	st.generate_normals()
+	
+	merge_in_surface_tool(mdr, st)
+
 # Appends a triangle to the mesh. It's created from miroring v2 to the ev0, and ev1 edge
 static func append_triangle_to_tri_edge(mdr : MeshDataResource, ev0 : Vector3, ev1 : Vector3, v2 : Vector3) -> void:
 	var vref : Vector3 = reflect_vertex(ev0, ev1, v2)

@@ -181,7 +181,7 @@ margin_bottom = 94.0
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 98.0
 margin_right = 1010.0
-margin_bottom = 208.0
+margin_bottom = 232.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/VertexOps"]
 margin_right = 1010.0
@@ -193,29 +193,35 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/VertexOps"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 110.0
+margin_bottom = 134.0
 
-[node name="Merge" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+[node name="AddFace" type="Button" parent="VBoxContainer/VertexOps/Operations"]
 margin_right = 1010.0
 margin_bottom = 20.0
-text = "Merge"
+text = "Create Face"
 
-[node name="Split" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+[node name="Merge" type="Button" parent="VBoxContainer/VertexOps/Operations"]
 margin_top = 24.0
 margin_right = 1010.0
 margin_bottom = 44.0
-text = "Split"
+text = "Merge"
 
-[node name="Connect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+[node name="Split" type="Button" parent="VBoxContainer/VertexOps/Operations"]
 margin_top = 48.0
 margin_right = 1010.0
 margin_bottom = 68.0
-text = "Connect"
+text = "Split"
 
-[node name="Disconnect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+[node name="Connect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
 margin_top = 72.0
 margin_right = 1010.0
 margin_bottom = 92.0
+text = "Connect"
+
+[node name="Disconnect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+margin_top = 96.0
+margin_right = 1010.0
+margin_bottom = 116.0
 text = "Disconnect"
 
 [node name="EdgeOps" type="VBoxContainer" parent="VBoxContainer"]
@@ -307,9 +313,9 @@ margin_bottom = 92.0
 text = "Disconnect"
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 212.0
+margin_top = 236.0
 margin_right = 1010.0
-margin_bottom = 322.0
+margin_bottom = 346.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
 margin_right = 1010.0
@@ -347,14 +353,14 @@ margin_bottom = 92.0
 text = "Rem Doubles"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
-margin_top = 326.0
+margin_top = 350.0
 margin_right = 1010.0
-margin_bottom = 330.0
+margin_bottom = 354.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 334.0
+margin_top = 358.0
 margin_right = 1010.0
-margin_bottom = 420.0
+margin_bottom = 444.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
 margin_right = 1010.0
@@ -410,12 +416,12 @@ margin_bottom = 20.0
 text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 424.0
+margin_top = 448.0
 margin_right = 1010.0
-margin_bottom = 428.0
+margin_bottom = 452.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 432.0
+margin_top = 456.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -431,7 +437,7 @@ valign = 1
 [node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 154.0
+margin_bottom = 130.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -456,6 +462,7 @@ script = ExtResource( 3 )
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge" to="VBoxContainer/EdgeOps" method="set_visible"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="." method="on_selection_mode_face_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="VBoxContainer/FaceOps" method="set_visible"]
+[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/AddFace" to="." method="_oncreate_face_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Connect" to="." method="_on_connect_pressed"]

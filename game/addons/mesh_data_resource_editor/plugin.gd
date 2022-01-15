@@ -205,3 +205,7 @@ func connect_action():
 func disconnect_action():
 	for g in active_gizmos:
 		g.disconnect_action()
+		
+func create_face():
+	for g in active_gizmos:
+		g.create_face()
