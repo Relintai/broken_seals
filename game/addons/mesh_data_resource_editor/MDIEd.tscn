@@ -186,7 +186,7 @@ margin_bottom = 202.0
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/VertexOps"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Vertex"
+text = "= Vertex ="
 align = 1
 valign = 1
 
@@ -260,7 +260,7 @@ margin_bottom = 262.0
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/EdgeOps"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Edge"
+text = "= Edge ="
 align = 1
 valign = 1
 
@@ -310,7 +310,7 @@ margin_bottom = 460.0
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/FaceOps"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Face"
+text = "= Face ="
 align = 1
 valign = 1
 
@@ -332,63 +332,79 @@ margin_bottom = 210.0
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 214.0
 margin_right = 1010.0
-margin_bottom = 348.0
+margin_bottom = 384.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Operations"
+text = "= Operations ="
 align = 1
 valign = 1
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/Operations"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 134.0
+margin_bottom = 170.0
 
 [node name="UnwrapButton" type="Button" parent="VBoxContainer/Operations/Operations"]
 margin_right = 1010.0
 margin_bottom = 20.0
 text = "UV Unwrap"
 
-[node name="GenNormals" type="Button" parent="VBoxContainer/Operations/Operations"]
+[node name="Label2" type="Label" parent="VBoxContainer/Operations/Operations"]
 margin_top = 24.0
 margin_right = 1010.0
-margin_bottom = 44.0
-text = "Gen Normals"
+margin_bottom = 38.0
+text = "Generate"
+align = 1
+valign = 1
+
+[node name="GenNormals" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_top = 42.0
+margin_right = 1010.0
+margin_bottom = 62.0
+text = "Normals"
 
 [node name="GenTangents" type="Button" parent="VBoxContainer/Operations/Operations"]
-margin_top = 48.0
+margin_top = 66.0
 margin_right = 1010.0
-margin_bottom = 68.0
-text = "Gen Tangents"
+margin_bottom = 86.0
+text = "Tangents"
+
+[node name="Label" type="Label" parent="VBoxContainer/Operations/Operations"]
+margin_top = 90.0
+margin_right = 1010.0
+margin_bottom = 104.0
+text = "Optimizations"
+align = 1
+valign = 1
 
 [node name="RemDoubles" type="Button" parent="VBoxContainer/Operations/Operations"]
-margin_top = 72.0
+margin_top = 108.0
 margin_right = 1010.0
-margin_bottom = 92.0
+margin_bottom = 128.0
 text = "Rem Doubles"
 
 [node name="MergeOptimize" type="Button" parent="VBoxContainer/Operations/Operations"]
-margin_top = 96.0
+margin_top = 132.0
 margin_right = 1010.0
-margin_bottom = 116.0
-text = "MergeOptim"
+margin_bottom = 152.0
+text = "Full Merge"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
-margin_top = 352.0
+margin_top = 388.0
 margin_right = 1010.0
-margin_bottom = 356.0
+margin_bottom = 392.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 360.0
+margin_top = 396.0
 margin_right = 1010.0
-margin_bottom = 446.0
+margin_bottom = 482.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Add"
+text = "= Add ="
 align = 1
 valign = 1
 
@@ -409,15 +425,17 @@ margin_bottom = 44.0
 size_flags_horizontal = 3
 
 [node name="AddTriangle" type="Button" parent="VBoxContainer/Add/Add/Tri"]
-margin_right = 980.0
+margin_right = 503.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Tri"
 
 [node name="At" type="Button" parent="VBoxContainer/Add/Add/Tri"]
-margin_left = 984.0
+margin_left = 507.0
 margin_right = 1010.0
 margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 text = "At"
 
 [node name="Quad" type="HBoxContainer" parent="VBoxContainer/Add/Add"]
@@ -427,24 +445,25 @@ margin_bottom = 68.0
 size_flags_horizontal = 3
 
 [node name="AddQuad" type="Button" parent="VBoxContainer/Add/Add/Quad"]
-margin_right = 980.0
+margin_right = 503.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Quad"
 
 [node name="At" type="Button" parent="VBoxContainer/Add/Add/Quad"]
-margin_left = 984.0
+margin_left = 507.0
 margin_right = 1010.0
 margin_bottom = 20.0
+size_flags_horizontal = 3
 text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 450.0
+margin_top = 486.0
 margin_right = 1010.0
-margin_bottom = 454.0
+margin_bottom = 490.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 458.0
+margin_top = 494.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -453,14 +472,14 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="VBoxContainer/VBoxContainer"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "UV"
+text = "= UV ="
 align = 1
 valign = 1
 
 [node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 128.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
