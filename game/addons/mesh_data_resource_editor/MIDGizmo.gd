@@ -511,6 +511,14 @@ func add_triangle_to_edge(edge : int) -> void:
 		ei0 = ti0
 		ei1 = ti1
 		erefind = ti2
+		
+	var fo : Vector3 = MDRMeshUtils.get_face_normal(_vertices[ti0], _vertices[ti1], _vertices[ti2])
+	var fn : Vector3 = MDRMeshUtils.get_face_normal(_vertices[ei0], _vertices[ei1], _vertices[erefind])
+	
+	if fo.dot(fn) < 0:
+		var t : int = ei0
+		ei0 = ei1
+		ei1 = t
 	
 	MDRMeshUtils.append_triangle_to_tri_edge(_mdr, _vertices[ei0], _vertices[ei1], _vertices[erefind])
 	

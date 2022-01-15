@@ -4,9 +4,8 @@ extends Object
 # Appends a triangle to the mesh. It's created from miroring v2 to the ev0, and ev1 edge
 static func append_triangle_to_tri_edge(mdr : MeshDataResource, ev0 : Vector3, ev1 : Vector3, v2 : Vector3) -> void:
 	var vref : Vector3 = reflect_vertex(ev0, ev1, v2)
-	var should_flip : bool = should_flip_reflected_triangle(ev0, ev1, v2)
-	
-	add_triangle_at(mdr, ev0, ev1, vref, should_flip)
+
+	add_triangle_at(mdr, ev1, ev0, vref, false)
 
 static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 : Vector3, flip : bool = false) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
@@ -19,7 +18,7 @@ static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, 
 	st.add_vertex(v1)
 	st.add_uv(Vector2(1, 1))
 	st.add_vertex(v2)
-	
+
 	if !flip:
 		st.add_index(0)
 		st.add_index(1)
@@ -357,7 +356,6 @@ static func get_arrays_prepared(mdr : MeshDataResource) -> Array:
 # There are probably better ways to do this
 static func should_flip_reflected_triangle(v0 : Vector3, v1 : Vector3, v2 : Vector3) -> bool:
 	var reflected : Vector3 = reflect_vertex(v0, v1, v2)
-	
 	var nn : Vector3 = get_face_normal(v0, v1, v2)
 
 	return should_triangle_flip(v0, v1, reflected, nn)
@@ -382,7 +380,7 @@ static func get_face_normal(v0 : Vector3, v1 : Vector3, v2 : Vector3, flipped : 
 		return Plane(v2, v1, v0).normal
 
 static func should_triangle_flip(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_dir_normal : Vector3) -> bool:
-	var normal : Vector3  = get_face_normal(v0, v1, v2)
+	var normal : Vector3 = get_face_normal(v0, v1, v2)
 	
 	var ndns : float = normal.dot(similar_dir_normal)
 	
