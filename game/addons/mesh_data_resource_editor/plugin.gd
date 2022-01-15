@@ -229,3 +229,15 @@ func merge_optimize():
 func generate_tangents():
 	for g in active_gizmos:
 		g.generate_tangents()
+		
+func onnect_to_first_selected():
+	for g in active_gizmos:
+		g.onnect_to_first_selected()
+		
+func connect_to_avg():
+	for g in active_gizmos:
+		g.connect_to_avg()
+		
+func connect_to_last_selected():
+	for g in active_gizmos:
+		g.connect_to_last_selected()

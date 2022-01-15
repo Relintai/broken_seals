@@ -181,7 +181,7 @@ margin_bottom = 94.0
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 98.0
 margin_right = 1010.0
-margin_bottom = 232.0
+margin_bottom = 226.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/VertexOps"]
 margin_right = 1010.0
@@ -193,7 +193,7 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/VertexOps"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 134.0
+margin_bottom = 128.0
 
 [node name="AddFace" type="Button" parent="VBoxContainer/VertexOps/Operations"]
 margin_right = 1010.0
@@ -212,17 +212,50 @@ margin_right = 1010.0
 margin_bottom = 68.0
 text = "Split"
 
-[node name="Connect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
+[node name="Label" type="Label" parent="VBoxContainer/VertexOps/Operations"]
 margin_top = 72.0
 margin_right = 1010.0
-margin_bottom = 92.0
+margin_bottom = 86.0
 text = "Connect"
+align = 1
+valign = 1
 
-[node name="Disconnect" type="Button" parent="VBoxContainer/VertexOps/Operations"]
-margin_top = 96.0
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/VertexOps/Operations"]
+margin_top = 90.0
 margin_right = 1010.0
-margin_bottom = 116.0
-text = "Disconnect"
+margin_bottom = 110.0
+size_flags_horizontal = 3
+
+[node name="ConnectToFirst" type="Button" parent="VBoxContainer/VertexOps/Operations/HBoxContainer"]
+margin_right = 249.0
+margin_bottom = 20.0
+hint_tooltip = "Move all vertices to the first one that was selected."
+size_flags_horizontal = 3
+text = "x<"
+
+[node name="ConnectMed" type="Button" parent="VBoxContainer/VertexOps/Operations/HBoxContainer"]
+margin_left = 253.0
+margin_right = 503.0
+margin_bottom = 20.0
+hint_tooltip = "Move all selected vertices to their average."
+size_flags_horizontal = 3
+text = ">x<"
+
+[node name="ConnectToLast" type="Button" parent="VBoxContainer/VertexOps/Operations/HBoxContainer"]
+margin_left = 507.0
+margin_right = 756.0
+margin_bottom = 20.0
+hint_tooltip = "Move all selected vertices to the last that was  selected."
+size_flags_horizontal = 3
+text = ">x"
+
+[node name="Disconnect" type="Button" parent="VBoxContainer/VertexOps/Operations/HBoxContainer"]
+margin_left = 760.0
+margin_right = 1010.0
+margin_bottom = 20.0
+hint_tooltip = "Move all vertices from each selected points apart so that you can select them again one by one."
+size_flags_horizontal = 3
+text = "<x>"
 
 [node name="EdgeOps" type="VBoxContainer" parent="VBoxContainer"]
 visible = false
@@ -259,18 +292,6 @@ margin_right = 1010.0
 margin_bottom = 68.0
 text = "Split"
 
-[node name="Connect" type="Button" parent="VBoxContainer/EdgeOps/Operations"]
-margin_top = 72.0
-margin_right = 1010.0
-margin_bottom = 92.0
-text = "Connect"
-
-[node name="Disconnect" type="Button" parent="VBoxContainer/EdgeOps/Operations"]
-margin_top = 96.0
-margin_right = 1010.0
-margin_bottom = 116.0
-text = "Disconnect"
-
 [node name="FaceOps" type="VBoxContainer" parent="VBoxContainer"]
 visible = false
 margin_top = 350.0
@@ -305,22 +326,10 @@ margin_right = 1010.0
 margin_bottom = 44.0
 text = "Split"
 
-[node name="Connect" type="Button" parent="VBoxContainer/FaceOps/Operations"]
-margin_top = 48.0
-margin_right = 1010.0
-margin_bottom = 68.0
-text = "Connect"
-
-[node name="Disconnect" type="Button" parent="VBoxContainer/FaceOps/Operations"]
-margin_top = 72.0
-margin_right = 1010.0
-margin_bottom = 92.0
-text = "Disconnect"
-
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 236.0
+margin_top = 230.0
 margin_right = 1010.0
-margin_bottom = 346.0
+margin_bottom = 364.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
 margin_right = 1010.0
@@ -332,7 +341,7 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/Operations"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 110.0
+margin_bottom = 134.0
 
 [node name="UnwrapButton" type="Button" parent="VBoxContainer/Operations/Operations"]
 margin_right = 1010.0
@@ -364,14 +373,14 @@ margin_bottom = 116.0
 text = "MergeOptim"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
-margin_top = 350.0
+margin_top = 368.0
 margin_right = 1010.0
-margin_bottom = 354.0
+margin_bottom = 372.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 358.0
+margin_top = 376.0
 margin_right = 1010.0
-margin_bottom = 444.0
+margin_bottom = 462.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
 margin_right = 1010.0
@@ -427,12 +436,12 @@ margin_bottom = 20.0
 text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 448.0
+margin_top = 466.0
 margin_right = 1010.0
-margin_bottom = 452.0
+margin_bottom = 470.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 456.0
+margin_top = 474.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -448,7 +457,7 @@ valign = 1
 [node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 130.0
+margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -476,18 +485,16 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/AddFace" to="." method="_oncreate_face_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Split" to="." method="_on_split_pressed"]
-[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Connect" to="." method="_on_connect_pressed"]
-[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
+[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/ConnectToFirst" to="." method="_on_connect_to_first_selected_pressed"]
+[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/ConnectMed" to="." method="_on_connect_to_avg_pressed"]
+[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/ConnectToLast" to="." method="_on_connect_to_last_selected_pressed"]
+[connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Extrude" to="." method="_on_Extrude_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Split" to="." method="_on_split_pressed"]
-[connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Connect" to="." method="_on_connect_pressed"]
-[connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Merge" to="." method="_on_merge_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Split" to="." method="_on_split_pressed"]
-[connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Connect" to="." method="_on_connect_pressed"]
-[connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/GenNormals" to="." method="_on_GenNormals_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/GenTangents" to="." method="_on_GenTangents_pressed"]

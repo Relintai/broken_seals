@@ -603,39 +603,6 @@ func merge():
 func split():
 	pass
 
-func connect_action():
-	if !_mdr:
-		return
-		
-	if _selected_points.size() < 2:
-		return
-		
-	var mdr_arr : Array = _mdr.array
-	
-	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
-		return
-	
-	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
-
-	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
-		var mpos : Vector3 = _handle_points[_selected_points[0]]
-		
-		for i in range(1, _selected_points.size()):
-			var ps : PoolIntArray = _handle_to_vertex_map[_selected_points[i]]
-			
-			for indx in ps:
-				vertices[indx] = mpos
-				
-		_selected_points.resize(0)
-				
-		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
-		_mdr.array = mdr_arr
-		
-	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		pass
-	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
-		pass
-
 func disconnect_action():
 	pass
 
@@ -783,4 +750,106 @@ func merge_optimize():
 	
 	_mdr.array = merged_arrays
 
+func onnect_to_first_selected():
+	if !_mdr:
+		return
+		
+	if _selected_points.size() < 2:
+		return
+		
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		var mpos : Vector3 = _handle_points[_selected_points[0]]
+		
+		for i in range(1, _selected_points.size()):
+			var ps : PoolIntArray = _handle_to_vertex_map[_selected_points[i]]
+			
+			for indx in ps:
+				vertices[indx] = mpos
+				
+		_selected_points.resize(0)
+				
+		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
+		_mdr.array = mdr_arr
+		
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass
+
+func connect_to_avg():
+	if !_mdr:
+		return
+		
+	if _selected_points.size() < 2:
+		return
+		
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
+
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		var mpos : Vector3 = Vector3()
+		
+		for sp in _selected_points:
+			mpos += _handle_points[sp]
+			
+		mpos /= _selected_points.size()
+		
+		for i in range(_selected_points.size()):
+			var ps : PoolIntArray = _handle_to_vertex_map[_selected_points[i]]
+			
+			for indx in ps:
+				vertices[indx] = mpos
+				
+		_selected_points.resize(0)
+				
+		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
+		_mdr.array = mdr_arr
+		
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass
+		
+func connect_to_last_selected():
+	if !_mdr:
+		return
+		
+	if _selected_points.size() < 2:
+		return
+		
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
+
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		var mpos : Vector3 = _handle_points[_selected_points[_selected_points.size() - 1]]
+		
+		for i in range(0, _selected_points.size() - 1):
+			var ps : PoolIntArray = _handle_to_vertex_map[_selected_points[i]]
+			
+			for indx in ps:
+				vertices[indx] = mpos
+				
+		_selected_points.resize(0)
+				
+		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
+		_mdr.array = mdr_arr
+		
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass

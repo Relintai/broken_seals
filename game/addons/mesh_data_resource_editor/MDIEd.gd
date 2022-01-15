@@ -145,8 +145,14 @@ func _on_merge_pressed():
 func _on_split_pressed():
 	plugin.split()
 
-func _on_connect_pressed():
-	plugin.connect_action()
+func _on_connect_to_first_selected_pressed():
+	plugin.onnect_to_first_selected()
+	
+func _on_connect_to_avg_pressed():
+	plugin.connect_to_avg()
+	
+func _on_connect_to_last_selected_pressed():
+	plugin.connect_to_last_selected()
 
 func _on_disconnect_pressed():
 	plugin.disconnect_action()
