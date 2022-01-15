@@ -237,3 +237,11 @@ func connect_to_avg():
 func connect_to_last_selected():
 	for g in active_gizmos:
 		g.connect_to_last_selected()
+
+func mark_seam():
+	for g in active_gizmos:
+		g.mark_seam()
+		
+func unmark_seam():
+	for g in active_gizmos:
+		g.unmark_seam()

@@ -253,9 +253,9 @@ text = "<x>"
 
 [node name="EdgeOps" type="VBoxContainer" parent="VBoxContainer"]
 visible = false
-margin_top = 212.0
+margin_top = 206.0
 margin_right = 1010.0
-margin_bottom = 346.0
+margin_bottom = 262.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/EdgeOps"]
 margin_right = 1010.0
@@ -267,7 +267,7 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/EdgeOps"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 134.0
+margin_bottom = 56.0
 
 [node name="Extrude" type="Button" parent="VBoxContainer/EdgeOps/Operations"]
 visible = false
@@ -275,11 +275,31 @@ margin_right = 1010.0
 margin_bottom = 20.0
 text = "Extrude"
 
-[node name="Split" type="Button" parent="VBoxContainer/EdgeOps/Operations"]
-margin_top = 48.0
+[node name="SeamLabel" type="Label" parent="VBoxContainer/EdgeOps/Operations"]
 margin_right = 1010.0
-margin_bottom = 68.0
-text = "Split"
+margin_bottom = 14.0
+text = "Seam"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EdgeOps/Operations"]
+margin_top = 18.0
+margin_right = 1010.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+
+[node name="Mark" type="Button" parent="VBoxContainer/EdgeOps/Operations/HBoxContainer"]
+margin_right = 503.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Mark"
+
+[node name="Unmark" type="Button" parent="VBoxContainer/EdgeOps/Operations/HBoxContainer"]
+margin_left = 507.0
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Unmark"
 
 [node name="FaceOps" type="VBoxContainer" parent="VBoxContainer"]
 visible = false
@@ -290,7 +310,7 @@ margin_bottom = 460.0
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/FaceOps"]
 margin_right = 1010.0
 margin_bottom = 14.0
-text = "Operations"
+text = "Face"
 align = 1
 valign = 1
 
@@ -304,16 +324,15 @@ margin_right = 1010.0
 margin_bottom = 20.0
 text = "Delete"
 
-[node name="Split" type="Button" parent="VBoxContainer/FaceOps/Operations"]
-margin_top = 24.0
-margin_right = 1010.0
-margin_bottom = 44.0
-text = "Split"
-
-[node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="VBoxContainer"]
 margin_top = 206.0
 margin_right = 1010.0
-margin_bottom = 340.0
+margin_bottom = 210.0
+
+[node name="Operations" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 214.0
+margin_right = 1010.0
+margin_bottom = 348.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/Operations"]
 margin_right = 1010.0
@@ -357,14 +376,14 @@ margin_bottom = 116.0
 text = "MergeOptim"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
-margin_top = 344.0
-margin_right = 1010.0
-margin_bottom = 348.0
-
-[node name="Add" type="VBoxContainer" parent="VBoxContainer"]
 margin_top = 352.0
 margin_right = 1010.0
-margin_bottom = 438.0
+margin_bottom = 356.0
+
+[node name="Add" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 360.0
+margin_right = 1010.0
+margin_bottom = 446.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/Add"]
 margin_right = 1010.0
@@ -420,12 +439,12 @@ margin_bottom = 20.0
 text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer"]
-margin_top = 442.0
+margin_top = 450.0
 margin_right = 1010.0
-margin_bottom = 446.0
+margin_bottom = 454.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 450.0
+margin_top = 458.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -441,7 +460,7 @@ valign = 1
 [node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer"]
 margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 136.0
+margin_bottom = 128.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -473,9 +492,9 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/ConnectToLast" to="." method="_on_connect_to_last_selected_pressed"]
 [connection signal="pressed" from="VBoxContainer/VertexOps/Operations/HBoxContainer/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Extrude" to="." method="_on_Extrude_pressed"]
-[connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/Split" to="." method="_on_split_pressed"]
+[connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/HBoxContainer/Mark" to="." method="_on_mark_seam_pressed"]
+[connection signal="pressed" from="VBoxContainer/EdgeOps/Operations/HBoxContainer/Unmark" to="." method="_on_unmark_seam_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Delete" to="." method="_on_delete_pressed"]
-[connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/GenNormals" to="." method="_on_GenNormals_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/GenTangents" to="." method="_on_GenTangents_pressed"]

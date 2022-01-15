@@ -850,3 +850,9 @@ func connect_to_last_selected():
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
+
+func mark_seam():
+	pass
+		
+func unmark_seam():
+	pass

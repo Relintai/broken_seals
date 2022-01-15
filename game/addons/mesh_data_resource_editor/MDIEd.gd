@@ -177,3 +177,9 @@ func _on_MergeOptimize_pressed():
 
 func _on_GenTangents_pressed():
 	plugin.generate_tangents()
+
+func _on_mark_seam_pressed():
+	plugin.mark_seam()
+
+func _on_unmark_seam_pressed():
+	plugin.unmark_seam()
