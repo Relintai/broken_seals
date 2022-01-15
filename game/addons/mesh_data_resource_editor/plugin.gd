@@ -213,3 +213,19 @@ func create_face():
 func delete_selected():
 	for g in active_gizmos:
 		g.delete_selected()
+
+func generate_normals():
+	for g in active_gizmos:
+		g.generate_normals()
+		
+func remove_doubles():
+	for g in active_gizmos:
+		g.remove_doubles()
+		
+func merge_optimize():
+	for g in active_gizmos:
+		g.merge_optimize()
+		
+func generate_tangents():
+	for g in active_gizmos:
+		g.generate_tangents()

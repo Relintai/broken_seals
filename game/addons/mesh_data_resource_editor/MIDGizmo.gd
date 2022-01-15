@@ -745,3 +745,42 @@ func delete_selected() -> void:
 			
 		on_mdr_changed()
 	
+func generate_normals():
+	if !_mdr:
+		return
+		
+	MDRMeshUtils.generate_normals(_mdr)
+
+func generate_tangents():
+	if !_mdr:
+		return
+		
+	MDRMeshUtils.generate_tangents(_mdr)
+
+func remove_doubles():
+	if !_mdr:
+		return
+	
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	var merged_arrays : Array = MeshUtils.remove_doubles(mdr_arr)
+	
+	_mdr.array = merged_arrays
+		
+func merge_optimize():
+	if !_mdr:
+		return
+	
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	var merged_arrays : Array = MeshUtils.merge_mesh_array(mdr_arr)
+	
+	_mdr.array = merged_arrays
+
+

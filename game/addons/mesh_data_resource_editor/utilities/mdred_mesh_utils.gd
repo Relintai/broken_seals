@@ -527,3 +527,128 @@ static func flip_triangle(mdr : MeshDataResource, index : int) -> void:
 	
 	mdr.set_array(arrays)
 
+static func add_into_surface_tool(mdr : MeshDataResource, st : SurfaceTool) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+	
+	var vertices : PoolVector3Array
+	var normals : PoolVector3Array
+	var tangents : PoolRealArray
+	var colors : PoolColorArray
+	var uv : PoolVector2Array
+	var uv2 : PoolVector2Array
+	var bones : PoolRealArray
+	var weights : PoolRealArray
+	var indices : PoolIntArray
+
+	if arrays[ArrayMesh.ARRAY_VERTEX] != null:
+		vertices = arrays[ArrayMesh.ARRAY_VERTEX]
+		
+	if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+		normals = arrays[ArrayMesh.ARRAY_NORMAL]
+		
+	if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+		tangents = arrays[ArrayMesh.ARRAY_TANGENT]
+		
+	if arrays[ArrayMesh.ARRAY_COLOR] != null:
+		colors = arrays[ArrayMesh.ARRAY_COLOR]
+	
+	if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+		uv = arrays[ArrayMesh.ARRAY_TEX_UV]
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+		uv2 = arrays[ArrayMesh.ARRAY_TEX_UV2]
+		
+	if arrays[ArrayMesh.ARRAY_BONES] != null:
+		bones = arrays[ArrayMesh.ARRAY_BONES]
+		
+	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+		weights = arrays[ArrayMesh.ARRAY_WEIGHTS]
+	
+	if arrays[ArrayMesh.ARRAY_INDEX] != null:
+		indices = arrays[ArrayMesh.ARRAY_INDEX]
+	
+	for i in range(vertices.size()):
+		if normals.size() > 0:
+			st.add_normal(normals[i])
+			
+		if tangents.size() > 0:
+			var ti : int = i * 4
+			st.add_tangent(Plane(tangents[ti], tangents[ti + 1], tangents[ti + 2], tangents[ti + 3]))
+		
+		if colors.size() > 0:
+			st.add_color(colors[i])
+			
+		if uv.size() > 0:
+			st.add_uv(uv[i])
+			
+		if uv2.size() > 0:
+			st.add_uv2(uv2[i])
+		
+		if bones.size() > 0:
+			var bi : int = i * 4
+			
+			var pia : PoolIntArray = PoolIntArray()
+			
+			pia.append(bones[bi])
+			pia.append(bones[bi + 1])
+			pia.append(bones[bi + 1])
+			pia.append(bones[bi + 1])
+			
+			st.add_bones(pia)
+		
+		if weights.size() > 0:
+			var bi : int = i * 4
+			
+			var pia : PoolIntArray = PoolIntArray()
+			
+			pia.append(bones[bi])
+			pia.append(bones[bi + 1])
+			pia.append(bones[bi + 2])
+			pia.append(bones[bi + 3])
+			
+			st.add_weight(pia)
+		
+		st.add_vertex(vertices[i])
+
+	for ind in indices:
+		st.add_index(ind)
+
+
+static func generate_normals(mdr : MeshDataResource) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return
+	
+	var st : SurfaceTool = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	add_into_surface_tool(mdr, st)
+	
+	st.generate_normals()
+	
+	mdr.array = st.commit_to_arrays()
+
+static func generate_tangents(mdr : MeshDataResource) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return
+		
+	var st : SurfaceTool = SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	add_into_surface_tool(mdr, st)
+	
+	st.generate_tangents()
+	
+	mdr.array = st.commit_to_arrays()

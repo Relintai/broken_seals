@@ -162,3 +162,15 @@ func _oncreate_face_pressed():
 
 func _on_delete_pressed():
 	plugin.delete_selected()
+
+func _on_GenNormals_pressed():
+	plugin.generate_normals()
+
+func _on_RemDoubles_pressed():
+	plugin.remove_doubles()
+
+func _on_MergeOptimize_pressed():
+	plugin.merge_optimize()
+
+func _on_GenTangents_pressed():
+	plugin.generate_tangents()

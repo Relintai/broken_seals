@@ -357,6 +357,12 @@ margin_right = 1010.0
 margin_bottom = 92.0
 text = "Rem Doubles"
 
+[node name="MergeOptimize" type="Button" parent="VBoxContainer/Operations/Operations"]
+margin_top = 96.0
+margin_right = 1010.0
+margin_bottom = 116.0
+text = "MergeOptim"
+
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer"]
 margin_top = 350.0
 margin_right = 1010.0
@@ -483,6 +489,10 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="VBoxContainer/FaceOps/Operations/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/Operations/Operations/UnwrapButton" to="." method="_on_UnwrapButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/GenNormals" to="." method="_on_GenNormals_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/GenTangents" to="." method="_on_GenTangents_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/RemDoubles" to="." method="_on_RemDoubles_pressed"]
+[connection signal="pressed" from="VBoxContainer/Operations/Operations/MergeOptimize" to="." method="_on_MergeOptimize_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/Tri/AddTriangle" to="." method="_on_add_triangle_pressed"]
 [connection signal="pressed" from="VBoxContainer/Add/Add/Tri/At" to="." method="_on_add_triangle_at_pressed"]
