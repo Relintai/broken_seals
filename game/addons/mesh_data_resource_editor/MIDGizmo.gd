@@ -575,8 +575,14 @@ func add_triangle_at() -> void:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
+		
 		for sp in _selected_points:
 			add_triangle_to_edge(sp)
+			
+		_selected_points.resize(0)
+		_mdr.connect("changed", self, "on_mdr_changed")
+		on_mdr_changed()
 	else:
 		add_triangle()
 		
@@ -588,8 +594,14 @@ func add_quad_at() -> void:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
+		
 		for sp in _selected_points:
 			add_quad_to_edge(sp)
+		
+		_selected_points.resize(0)
+		_mdr.connect("changed", self, "on_mdr_changed")
+		on_mdr_changed()
 	else:
 		add_triangle()
 
@@ -611,6 +623,7 @@ func create_face():
 		return
 
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
 		
 		var points : PoolVector3Array = PoolVector3Array()
 		
@@ -618,7 +631,10 @@ func create_face():
 			points.push_back(_handle_points[sp])
 			
 		MDRMeshUtils.add_triangulated_mesh_from_points(_mdr, points, _last_known_camera_facing)
-	
+		
+		_selected_points.resize(0)
+		_mdr.connect("changed", self, "on_mdr_changed")
+		on_mdr_changed()
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
