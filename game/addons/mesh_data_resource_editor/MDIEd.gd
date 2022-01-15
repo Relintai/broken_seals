@@ -1,5 +1,5 @@
 tool
-extends PanelContainer
+extends Control
 
 var plugin : EditorPlugin
 
