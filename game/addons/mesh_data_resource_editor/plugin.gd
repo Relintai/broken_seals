@@ -190,10 +190,6 @@ func add_quad_at() -> void:
 	for g in active_gizmos:
 		g.add_quad_at()
 
-func merge():
-	for g in active_gizmos:
-		g.merge()
-
 func split():
 	for g in active_gizmos:
 		g.split()

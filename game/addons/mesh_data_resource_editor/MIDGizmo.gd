@@ -597,9 +597,6 @@ func add_box() -> void:
 	if _mdr:
 		MDRMeshUtils.add_box(_mdr)
 
-func merge():
-	pass
-
 func split():
 	pass
 
