@@ -9,7 +9,10 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-uv_editor_path = NodePath("VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer/UVEditorScrollContainer/UVEditor")
+__meta__ = {
+"_edit_use_anchors_": false
+}
+uv_editor_path = NodePath("VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer/UVEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -185,7 +188,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 136.0
-margin_bottom = 414.0
+margin_bottom = 514.0
 
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_right = 136.0
@@ -471,7 +474,7 @@ margin_bottom = 392.0
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 396.0
 margin_right = 136.0
-margin_bottom = 414.0
+margin_bottom = 514.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -482,19 +485,10 @@ text = "= UV ="
 align = 1
 valign = 1
 
-[node name="UVEditorScrollContainer" type="ScrollContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
+[node name="UVEditor" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
 margin_top = 18.0
 margin_right = 136.0
-margin_bottom = 18.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="UVEditor" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer/UVEditorScrollContainer"]
-margin_right = 100.0
-margin_bottom = 100.0
+margin_bottom = 118.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 3 )
 
