@@ -25,24 +25,16 @@ __meta__ = {
 
 [node name="Actions" type="VBoxContainer" parent="VBoxContainer"]
 margin_right = 1010.0
-margin_bottom = 86.0
-
-[node name="ActionsLabel" type="Label" parent="VBoxContainer/Actions"]
-margin_right = 1010.0
-margin_bottom = 14.0
-text = "Actions"
-align = 1
-valign = 1
+margin_bottom = 68.0
 
 [node name="Actions" type="HBoxContainer" parent="VBoxContainer/Actions"]
-margin_top = 18.0
 margin_right = 1010.0
-margin_bottom = 86.0
+margin_bottom = 68.0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
-margin_left = 465.0
-margin_right = 474.0
+margin_left = 457.0
+margin_right = 466.0
 margin_bottom = 68.0
 
 [node name="Label" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
@@ -78,108 +70,126 @@ align = 1
 valign = 1
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
-margin_left = 478.0
-margin_right = 544.0
+margin_left = 470.0
+margin_right = 553.0
 margin_bottom = 68.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
-margin_right = 66.0
+margin_right = 83.0
 margin_bottom = 20.0
 
 [node name="Translate" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
-margin_right = 19.0
+margin_right = 25.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Translate"
+size_flags_horizontal = 3
 toggle_mode = true
 pressed = true
 group = ExtResource( 2 )
 text = "T"
 
 [node name="Rotate" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
-margin_left = 23.0
-margin_right = 43.0
+margin_left = 29.0
+margin_right = 54.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Rotate"
+size_flags_horizontal = 3
 toggle_mode = true
 group = ExtResource( 2 )
 text = "R"
 
 [node name="Scale" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer"]
-margin_left = 47.0
-margin_right = 66.0
+margin_left = 58.0
+margin_right = 83.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Scale"
+size_flags_horizontal = 3
 toggle_mode = true
 group = ExtResource( 2 )
 text = "S"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_top = 24.0
-margin_right = 66.0
+margin_right = 83.0
 margin_bottom = 44.0
 
 [node name="AxisX" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
-margin_right = 19.0
+margin_right = 25.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 3
 toggle_mode = true
 pressed = true
 text = "x"
 
 [node name="AxisY" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
-margin_left = 23.0
-margin_right = 42.0
+margin_left = 29.0
+margin_right = 54.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 3
 toggle_mode = true
 pressed = true
 text = "y"
 
 [node name="AxisZ" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2"]
-margin_left = 46.0
-margin_right = 65.0
+margin_left = 58.0
+margin_right = 83.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+size_flags_horizontal = 3
 toggle_mode = true
 pressed = true
 text = "z"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_top = 48.0
-margin_right = 66.0
+margin_right = 83.0
 margin_bottom = 68.0
 
 [node name="Vertex" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
-margin_right = 20.0
+margin_right = 25.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Vertex"
+size_flags_horizontal = 3
 toggle_mode = true
 pressed = true
 group = ExtResource( 5 )
 text = "V"
 
 [node name="Edge" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
-margin_left = 24.0
-margin_right = 43.0
+margin_left = 29.0
+margin_right = 54.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Edge"
+size_flags_horizontal = 3
 toggle_mode = true
 group = ExtResource( 5 )
 text = "E"
 
 [node name="Face" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3"]
-margin_left = 47.0
-margin_right = 66.0
+margin_left = 58.0
+margin_right = 83.0
 margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
 hint_tooltip = "Face"
+size_flags_horizontal = 3
 toggle_mode = true
 group = ExtResource( 5 )
 text = "F"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
-margin_top = 90.0
+margin_top = 72.0
 margin_right = 1010.0
-margin_bottom = 94.0
+margin_bottom = 76.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 98.0
+margin_top = 80.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -187,15 +197,16 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 514.0
+size_flags_horizontal = 3
 
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 104.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 14.0
 text = "= Vertex ="
 align = 1
@@ -203,23 +214,23 @@ valign = 1
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps"]
 margin_top = 18.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 104.0
 
 [node name="AddFace" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 20.0
 text = "Create Face"
 
 [node name="Split" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
 margin_top = 24.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 44.0
 text = "Split"
 
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
 margin_top = 48.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 62.0
 text = "Connect"
 align = 1
@@ -227,36 +238,36 @@ valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
 margin_top = 66.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 86.0
 size_flags_horizontal = 3
 
 [node name="ConnectToFirst" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_right = 27.0
+margin_right = 246.0
 margin_bottom = 20.0
 hint_tooltip = "Move all vertices to the first one that was selected."
 size_flags_horizontal = 3
 text = "x<"
 
 [node name="ConnectMed" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 31.0
-margin_right = 66.0
+margin_left = 250.0
+margin_right = 497.0
 margin_bottom = 20.0
 hint_tooltip = "Move all selected vertices to their average."
 size_flags_horizontal = 3
 text = ">x<"
 
 [node name="ConnectToLast" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 70.0
-margin_right = 97.0
+margin_left = 501.0
+margin_right = 747.0
 margin_bottom = 20.0
 hint_tooltip = "Move all selected vertices to the last that was  selected."
 size_flags_horizontal = 3
 text = ">x"
 
 [node name="Disconnect" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 101.0
-margin_right = 136.0
+margin_left = 751.0
+margin_right = 998.0
 margin_bottom = 20.0
 hint_tooltip = "Move all vertices from each selected points apart so that you can select them again one by one."
 size_flags_horizontal = 3
@@ -335,16 +346,16 @@ text = "Delete"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 108.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 112.0
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 116.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 286.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 14.0
 text = "= Operations ="
 align = 1
@@ -352,17 +363,17 @@ valign = 1
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_top = 18.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 170.0
 
 [node name="UnwrapButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 20.0
 text = "UV Unwrap"
 
 [node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 24.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 38.0
 text = "Generate"
 align = 1
@@ -370,19 +381,19 @@ valign = 1
 
 [node name="GenNormals" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 42.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 62.0
 text = "Normals"
 
 [node name="GenTangents" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 66.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 86.0
 text = "Tangents"
 
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 90.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 104.0
 text = "Optimizations"
 align = 1
@@ -390,28 +401,28 @@ valign = 1
 
 [node name="RemDoubles" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 108.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 128.0
 text = "Rem Doubles"
 
 [node name="MergeOptimize" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 132.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 152.0
 text = "Full Merge"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 290.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 294.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 298.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 384.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 14.0
 text = "= Add ="
 align = 1
@@ -419,29 +430,29 @@ valign = 1
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
 margin_top = 18.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 86.0
 
 [node name="AddBox" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 20.0
 text = "Box"
 
 [node name="Tri" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add"]
 margin_top = 24.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 44.0
 size_flags_horizontal = 3
 
 [node name="AddTriangle" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/Tri"]
-margin_right = 66.0
+margin_right = 497.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Tri"
 
 [node name="At" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/Tri"]
-margin_left = 70.0
-margin_right = 136.0
+margin_left = 501.0
+margin_right = 998.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -449,37 +460,37 @@ text = "At"
 
 [node name="Quad" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add"]
 margin_top = 48.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 68.0
 size_flags_horizontal = 3
 
 [node name="AddQuad" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/Quad"]
-margin_right = 66.0
+margin_right = 497.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Quad"
 
 [node name="At" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/Quad"]
-margin_left = 70.0
-margin_right = 136.0
+margin_left = 501.0
+margin_right = 998.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "At"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 388.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 392.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 396.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 514.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 14.0
 text = "= UV ="
 align = 1
@@ -487,7 +498,7 @@ valign = 1
 
 [node name="UVEditor" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
 margin_top = 18.0
-margin_right = 136.0
+margin_right = 998.0
 margin_bottom = 118.0
 rect_min_size = Vector2( 100, 100 )
 script = ExtResource( 3 )
