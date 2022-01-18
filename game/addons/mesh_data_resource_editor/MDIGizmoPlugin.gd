@@ -7,7 +7,7 @@ var plugin
 
 func _init():
 	create_material("main", Color(0.7, 0.7, 0.7))
-	create_material("seam", Color(1, 0, 0))
+	create_material("seam", Color(1, 0, 0), false, true)
 	create_handle_material("handles")
 
 func get_name():
