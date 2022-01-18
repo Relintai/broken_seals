@@ -4,13 +4,15 @@ extends Reference
 var _mdr : MeshDataResource
 
 var lines : PoolVector3Array
+var seam_lines : PoolVector3Array
 
 func setup(mdr : MeshDataResource) -> void:
 	_mdr = mdr
 
 func generate():
 	lines.resize(0)
-
+	seam_lines.resize(0)
+	
 	if !_mdr:
 		return
 	
@@ -33,9 +35,16 @@ func generate():
 			for j in range(3):
 				lines.append(vertices[indices[i + j]])
 				lines.append(vertices[indices[i + ((j + 1) % 3)]])
+				
+	var seams : PoolIntArray = _mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		seam_lines.append(vertices[seams[i]])
+		seam_lines.append(vertices[seams[i + 1]])
 			
 func generate_mark_edges():
 	lines.resize(0)
+	seam_lines.resize(0)
 
 	if !_mdr:
 		return
@@ -75,9 +84,17 @@ func generate_mark_edges():
 				lines.append(pmid + Vector3(0, 0, -l))
 				lines.append(pmid + Vector3(0, l, 0))
 				lines.append(pmid + Vector3(0, -l, 0))
+				
+				
+	var seams : PoolIntArray = _mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		seam_lines.append(vertices[seams[i]])
+		seam_lines.append(vertices[seams[i + 1]])
 
 func generate_mark_faces():
 	lines.resize(0)
+	seam_lines.resize(0)
 
 	if !_mdr:
 		return
@@ -123,3 +140,10 @@ func generate_mark_faces():
 			lines.append(pmid + Vector3(0, 0, -l))
 			lines.append(pmid + Vector3(0, l, 0))
 			lines.append(pmid + Vector3(0, -l, 0))
+			
+			
+	var seams : PoolIntArray = _mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		seam_lines.append(vertices[seams[i]])
+		seam_lines.append(vertices[seams[i + 1]])

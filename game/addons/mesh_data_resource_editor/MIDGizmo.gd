@@ -122,6 +122,7 @@ func redraw():
 	
 	var handles_material : SpatialMaterial = get_plugin().get_material("handles", self)
 	var material = get_plugin().get_material("main", self)
+	var seam_material = get_plugin().get_material("seam", self)
 	
 	_mesh_outline_generator.setup(_mdr)
 	
@@ -133,6 +134,7 @@ func redraw():
 		_mesh_outline_generator.generate()
 	
 	add_lines(_mesh_outline_generator.lines, material, false)
+	add_lines(_mesh_outline_generator.seam_lines, seam_material, false)
 	
 	if _selected_points.size() > 0:
 		var vs : PoolVector3Array = PoolVector3Array()
