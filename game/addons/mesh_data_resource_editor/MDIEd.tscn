@@ -243,35 +243,27 @@ margin_bottom = 86.0
 size_flags_horizontal = 3
 
 [node name="ConnectToFirst" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_right = 246.0
+margin_right = 330.0
 margin_bottom = 20.0
 hint_tooltip = "Move all vertices to the first one that was selected."
 size_flags_horizontal = 3
 text = "x<"
 
 [node name="ConnectMed" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 250.0
-margin_right = 497.0
+margin_left = 334.0
+margin_right = 664.0
 margin_bottom = 20.0
 hint_tooltip = "Move all selected vertices to their average."
 size_flags_horizontal = 3
 text = ">x<"
 
 [node name="ConnectToLast" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 501.0
-margin_right = 747.0
+margin_left = 668.0
+margin_right = 998.0
 margin_bottom = 20.0
 hint_tooltip = "Move all selected vertices to the last that was  selected."
 size_flags_horizontal = 3
 text = ">x"
-
-[node name="Disconnect" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
-margin_left = 751.0
-margin_right = 998.0
-margin_bottom = 20.0
-hint_tooltip = "Move all vertices from each selected points apart so that you can select them again one by one."
-size_flags_horizontal = 3
-text = "<x>"
 
 [node name="EdgeOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 visible = false
@@ -544,7 +536,6 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToFirst" to="." method="_on_connect_to_first_selected_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectMed" to="." method="_on_connect_to_avg_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToLast" to="." method="_on_connect_to_last_selected_pressed"]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/Disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer2/TriAt" to="." method="_on_add_triangle_at_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer2/QuadAt" to="." method="_on_add_auad_at_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/Extrude" to="." method="_on_Extrude_pressed"]
