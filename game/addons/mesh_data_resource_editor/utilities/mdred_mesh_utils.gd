@@ -724,3 +724,86 @@ static func remove_seam(mdr : MeshDataResource, index0 : int, index1 : int) -> v
 			seams.remove(i)
 			mdr.seams = seams
 			return
+
+static func is_verts_equal(v0 : Vector3, v1 : Vector3) -> bool:
+	return is_equal_approx(v0.x, v1.x) && is_equal_approx(v0.y, v1.y) && is_equal_approx(v0.z, v1.z)
+
+
+static func points_to_seams(mdr : MeshDataResource, points : PoolVector3Array) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null:
+		return
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	var seams : PoolIntArray = PoolIntArray()
+	
+	for i in range(0, points.size(), 2):
+		var p0 : Vector3 = points[i]
+		var p1 : Vector3 = points[i + 1]
+		
+		for j in range(0, indices.size(), 3):
+			var v0 : Vector3 = vertices[indices[j]]
+			var v1 : Vector3 = vertices[indices[j + 1]]
+			var v2 : Vector3 = vertices[indices[j + 2]]
+			
+			var p0_index : int = -1
+			
+			if is_verts_equal(p0, v0):
+				p0_index = indices[j]
+			elif is_verts_equal(p0, v1):
+				p0_index = indices[j + 1]
+			elif is_verts_equal(p0, v2):
+				p0_index = indices[j + 2]
+			
+			if p0_index == -1:
+				continue
+			
+			var p1_index : int = -1
+			
+			if is_verts_equal(p1, v0):
+				p1_index = indices[j]
+			elif is_verts_equal(p1, v1):
+				p1_index = indices[j + 1]
+			elif is_verts_equal(p1, v2):
+				p1_index = indices[j + 2]
+			
+			if p1_index == -1:
+				continue
+				
+			if p0_index == p1_index:
+				continue
+				
+			if p0_index > p1_index:
+				var t : int = p0_index
+				p0_index = p1_index
+				p1_index = t
+				
+			seams.push_back(p0_index)
+			seams.push_back(p1_index)
+			break
+			
+	mdr.seams = seams
+
+static func seams_to_points(mdr : MeshDataResource) -> PoolVector3Array:
+	var points : PoolVector3Array = PoolVector3Array()
+	
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return points
+		
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null:
+		return points
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var seams : PoolIntArray = mdr.seams
+	
+	for s in seams:
+		points.push_back(vertices[s])
+	
+	return points

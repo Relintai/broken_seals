@@ -743,28 +743,44 @@ func remove_doubles():
 	if !_mdr:
 		return
 	
+	_mdr.disconnect("changed", self, "on_mdr_changed")
+	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
 	
-	var merged_arrays : Array = MeshUtils.remove_doubles(mdr_arr)
+	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
+	var merged_arrays : Array = MeshUtils.remove_doubles(mdr_arr)
 	_mdr.array = merged_arrays
+	
+	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	
+	_mdr.connect("changed", self, "on_mdr_changed")
+	on_mdr_changed()
 		
 func merge_optimize():
 	if !_mdr:
 		return
 	
+	_mdr.disconnect("changed", self, "on_mdr_changed")
+	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
 	
-	var merged_arrays : Array = MeshUtils.merge_mesh_array(mdr_arr)
+	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
+	var merged_arrays : Array = MeshUtils.merge_mesh_array(mdr_arr)
 	_mdr.array = merged_arrays
-
+	
+	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	
+	_mdr.connect("changed", self, "on_mdr_changed")
+	on_mdr_changed()
+	
 func onnect_to_first_selected():
 	if !_mdr:
 		return

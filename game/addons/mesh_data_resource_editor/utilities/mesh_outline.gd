@@ -45,6 +45,9 @@ func initialize() -> bool:
 	return true
 
 func get_vertex(index : int) -> Vector3:
+	if index > _vertices.size():
+		return Vector3()
+	
 	var v : Vector3 = _vertices[index]
 	
 	# This should reduce z fighting
