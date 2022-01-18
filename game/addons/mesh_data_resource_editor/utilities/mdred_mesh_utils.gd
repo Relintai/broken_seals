@@ -17,6 +17,15 @@ static func remove_triangle(mdr : MeshDataResource, triangle_index : int) -> voi
 
 	# Just remove that triangle
 	var i : int = triangle_index * 3
+	
+	var i0 : int = indices[i]
+	var i1 : int = indices[i + 1]
+	var i2 : int = indices[i + 2]
+	
+	remove_seam_not_ordered(mdr, i0, i1)
+	remove_seam_not_ordered(mdr, i1, i2)
+	remove_seam_not_ordered(mdr, i2, i0)
+	
 	indices.remove(i)
 	indices.remove(i)
 	indices.remove(i)
@@ -672,7 +681,19 @@ static func order_seam_indices(arr : PoolIntArray) -> PoolIntArray:
 		ret.push_back(index1)
 	
 	return ret 
-	
+
+static func add_seam_not_ordered(mdr : MeshDataResource, index0 : int, index1 : int) -> void:
+	if index0 > index1:
+		add_seam(mdr, index1, index0)
+	else:
+		add_seam(mdr, index0, index1)
+
+static func remove_seam_not_ordered(mdr : MeshDataResource, index0 : int, index1 : int) -> void:
+	if index0 > index1:
+		remove_seam(mdr, index1, index0)
+	else:
+		remove_seam(mdr, index0, index1)
+
 static func has_seam(mdr : MeshDataResource, index0 : int, index1 : int) -> bool:
 	var seams : PoolIntArray = mdr.seams
 	
