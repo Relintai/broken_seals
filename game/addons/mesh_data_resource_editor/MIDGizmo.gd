@@ -1015,4 +1015,12 @@ func unmark_seam():
 		pass
 
 func apply_seam():
-	pass
+	if !_mdr:
+		return
+	
+	_mdr.disconnect("changed", self, "on_mdr_changed")
+	
+	MDRMeshUtils.apply_seam(_mdr)
+	
+	_mdr.connect("changed", self, "on_mdr_changed")
+	on_mdr_changed()

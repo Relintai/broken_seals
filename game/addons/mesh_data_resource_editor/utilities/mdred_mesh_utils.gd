@@ -807,3 +807,186 @@ static func seams_to_points(mdr : MeshDataResource) -> PoolVector3Array:
 		points.push_back(vertices[s])
 	
 	return points
+
+static func is_matching_seam(i0 : int, i1: int, si0 : int, si1: int) -> bool:
+	if i0 > i1:
+		var t : int = i0
+		i0 = i1
+		i1 = t
+		
+	return (i0 == si0) && (i1 == si1)
+
+static func apply_seam(mdr : MeshDataResource) -> void:
+	var points : PoolVector3Array = PoolVector3Array()
+	
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null:
+		return
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+
+	var seams : PoolIntArray = mdr.seams
+	
+	# Duplication happens later, as it requires lots of logic
+	var duplicate_verts_indices : PoolIntArray = PoolIntArray()
+	var new_vert_size : int = vertices.size()
+	
+	for i in range(0, seams.size(), 2):
+		var si0 : int = seams[i]
+		var si1 : int = seams[i + 1]
+		
+		var first : bool = true
+		for j in range(0, indices.size(), 3):
+			var i0 : int = indices[j]
+			var i1 : int = indices[j + 1]
+			var i2 : int = indices[j + 2]
+			
+			var edge_int_tri_index : int = -1
+			
+			if is_matching_seam(i0, i1, si0, si1):
+				edge_int_tri_index = 0
+			elif is_matching_seam(i1, i2, si0, si1):
+				edge_int_tri_index = 1
+			elif is_matching_seam(i2, i0, si0, si1):
+				edge_int_tri_index = 2
+			
+			if edge_int_tri_index == -1:
+				continue
+				
+			if first:
+				# Only split away the subsequent tris
+				first = false
+				continue
+			
+			if edge_int_tri_index == 0:
+				duplicate_verts_indices.push_back(i0)
+				duplicate_verts_indices.push_back(i1)
+				
+				indices.push_back(new_vert_size)
+				indices.push_back(new_vert_size + 1)
+				indices.push_back(i2)
+			elif edge_int_tri_index == 1:
+				duplicate_verts_indices.push_back(i1)
+				duplicate_verts_indices.push_back(i2)
+				
+				indices.push_back(i0)
+				indices.push_back(new_vert_size)
+				indices.push_back(new_vert_size + 1)
+			elif edge_int_tri_index == 2:
+				duplicate_verts_indices.push_back(i0)
+				duplicate_verts_indices.push_back(i2)
+				
+				indices.push_back(new_vert_size)
+				indices.push_back(i1)
+				indices.push_back(new_vert_size + 1)
+				
+			new_vert_size += 2
+	
+	arrays[ArrayMesh.ARRAY_INDEX] = indices
+	mdr.array = arrays
+	
+	seam_apply_duplicate_vertices(mdr, duplicate_verts_indices)
+
+# This will not touch the indices!
+static func seam_apply_duplicate_vertices(mdr : MeshDataResource, duplicate_verts_indices : PoolIntArray) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	
+	var normals : PoolVector3Array
+	var tangents : PoolRealArray
+	var colors : PoolColorArray
+	var uv : PoolVector2Array
+	var uv2 : PoolVector2Array
+	var bones : PoolRealArray
+	var weights : PoolRealArray
+
+	if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+		normals = arrays[ArrayMesh.ARRAY_NORMAL]
+		
+	if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+		tangents = arrays[ArrayMesh.ARRAY_TANGENT]
+		
+	if arrays[ArrayMesh.ARRAY_COLOR] != null:
+		colors = arrays[ArrayMesh.ARRAY_COLOR]
+	
+	if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+		uv = arrays[ArrayMesh.ARRAY_TEX_UV]
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+		uv2 = arrays[ArrayMesh.ARRAY_TEX_UV2]
+		
+	if arrays[ArrayMesh.ARRAY_BONES] != null:
+		bones = arrays[ArrayMesh.ARRAY_BONES]
+		
+	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+		weights = arrays[ArrayMesh.ARRAY_WEIGHTS]
+	
+
+	for index in duplicate_verts_indices:
+		vertices.push_back(vertices[index])
+		
+		if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+			normals.push_back(normals[index])
+			
+		if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+			tangents.push_back(tangents[index])
+			tangents.push_back(tangents[index + 1])
+			tangents.push_back(tangents[index + 2])
+			tangents.push_back(tangents[index + 3])
+			
+		if arrays[ArrayMesh.ARRAY_COLOR] != null:
+			colors.push_back(colors[index])
+
+		if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+			uv.push_back(uv[index])
+
+		if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+			uv2.push_back(uv2[index])
+
+		if arrays[ArrayMesh.ARRAY_BONES] != null:
+			bones.push_back(bones[index])
+			bones.push_back(bones[index + 1])
+			bones.push_back(bones[index + 2])
+			bones.push_back(bones[index + 3])
+
+		if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+			weights.push_back(weights[index])
+			weights.push_back(weights[index + 1])
+			weights.push_back(weights[index + 2])
+			weights.push_back(weights[index + 3])
+
+	#write back
+	
+	arrays[ArrayMesh.ARRAY_VERTEX] = vertices
+		
+	if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+		arrays[ArrayMesh.ARRAY_NORMAL] = normals
+		
+	if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+		arrays[ArrayMesh.ARRAY_TANGENT] = tangents
+		
+	if arrays[ArrayMesh.ARRAY_COLOR] != null:
+		arrays[ArrayMesh.ARRAY_COLOR] = colors
+	
+	if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+		arrays[ArrayMesh.ARRAY_TEX_UV] = uv
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+		arrays[ArrayMesh.ARRAY_TEX_UV2] = uv2
+		
+	if arrays[ArrayMesh.ARRAY_BONES] != null:
+		arrays[ArrayMesh.ARRAY_BONES] = bones
+		
+	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+		arrays[ArrayMesh.ARRAY_WEIGHTS] = weights
+
+	mdr.set_array(arrays)
