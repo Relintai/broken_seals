@@ -867,8 +867,181 @@ func connect_to_last_selected():
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
 
+func get_first_index_pair_for_edge(edge : int) -> PoolIntArray:
+	var ret : PoolIntArray = PoolIntArray()
+	
+	var eisarr : Array = split_edge_indices(edge)
+
+	if eisarr.size() == 0:
+		return ret
+	
+	# these should have the same size
+	var v0ei : PoolIntArray = eisarr[0]
+	var v1ei : PoolIntArray = eisarr[1]
+	
+	var res : PoolIntArray = PoolIntArray()
+	
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		if pool_int_arr_contains(v0ei, i0) || pool_int_arr_contains(v0ei, i1) || pool_int_arr_contains(v0ei, i2):
+			if pool_int_arr_contains(v1ei, i0) || pool_int_arr_contains(v1ei, i1) || pool_int_arr_contains(v1ei, i2):
+				
+				if pool_int_arr_contains(v0ei, i0):
+					ret.push_back(i0)
+				elif pool_int_arr_contains(v0ei, i1):
+					ret.push_back(i1)
+				elif pool_int_arr_contains(v0ei, i2):
+					ret.push_back(i2)
+				
+				if pool_int_arr_contains(v1ei, i0):
+					ret.push_back(i0)
+				elif pool_int_arr_contains(v1ei, i1):
+					ret.push_back(i1)
+				elif pool_int_arr_contains(v1ei, i2):
+					ret.push_back(i2)
+				
+				return ret
+				
+	return ret
+
+func get_all_index_pairs_for_edge(edge : int) -> PoolIntArray:
+	var ret : PoolIntArray = PoolIntArray()
+	
+	var eisarr : Array = split_edge_indices(edge)
+
+	if eisarr.size() == 0:
+		return ret
+	
+	# these should have the same size
+	var v0ei : PoolIntArray = eisarr[0]
+	var v1ei : PoolIntArray = eisarr[1]
+	
+	var res : PoolIntArray = PoolIntArray()
+	
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		if pool_int_arr_contains(v0ei, i0) || pool_int_arr_contains(v0ei, i1) || pool_int_arr_contains(v0ei, i2):
+			if pool_int_arr_contains(v1ei, i0) || pool_int_arr_contains(v1ei, i1) || pool_int_arr_contains(v1ei, i2):
+				
+				if pool_int_arr_contains(v0ei, i0):
+					ret.push_back(i0)
+				elif pool_int_arr_contains(v0ei, i1):
+					ret.push_back(i1)
+				elif pool_int_arr_contains(v0ei, i2):
+					ret.push_back(i2)
+				
+				if pool_int_arr_contains(v1ei, i0):
+					ret.push_back(i0)
+				elif pool_int_arr_contains(v1ei, i1):
+					ret.push_back(i1)
+				elif pool_int_arr_contains(v1ei, i2):
+					ret.push_back(i2)
+				
+	return ret
+
+func order_seam_indices(arr : PoolIntArray) -> PoolIntArray:
+	var ret : PoolIntArray = PoolIntArray()
+	
+	if arr.size() == 0:
+		return ret
+	
+	for i in range(0, arr.size(), 2):
+		var index0 : int = arr[i]
+		var index1 : int = arr[i + 1]
+		
+		if index0 > index1:
+			var t : int = index1
+			index1 = index0
+			index0 = t
+		
+		ret.push_back(index0)
+		ret.push_back(index1)
+	
+	return ret 
+	
+func has_seam(index0 : int, index1 : int) -> bool:
+	var seams : PoolIntArray = _mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		if seams[i] == index0 && seams[i + 1] == index1:
+			return true
+	
+	return false
+
+func add_seam(index0 : int, index1 : int) -> void:
+	if has_seam(index0, index1):
+		return
+		
+	var seams : PoolIntArray = _mdr.seams
+	seams.push_back(index0)
+	seams.push_back(index1)
+	_mdr.seams = seams
+
+func remove_seam(index0 : int, index1 : int) -> void:
+	if !has_seam(index0, index1):
+		return
+		
+	var seams : PoolIntArray = _mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		if seams[i] == index0 && seams[i + 1] == index1:
+			seams.remove(i)
+			seams.remove(i)
+			_mdr.seams = seams
+			return
+
 func mark_seam():
-	pass
+	if !_mdr:
+		return
+		
+	if _selected_points.size() == 0:
+		return
+
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
+		
+		for se in _selected_points:
+			var eis : PoolIntArray = order_seam_indices(get_first_index_pair_for_edge(se))
+			
+			if eis.size() == 0:
+				continue
+				
+			add_seam(eis[0], eis[1])
+		
+		_mdr.connect("changed", self, "on_mdr_changed")
+		on_mdr_changed()
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass
 		
 func unmark_seam():
-	pass
+	if !_mdr:
+		return
+		
+	if _selected_points.size() == 0:
+		return
+		
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		_mdr.disconnect("changed", self, "on_mdr_changed")
+		
+		for se in _selected_points:
+			var eis : PoolIntArray = order_seam_indices(get_all_index_pairs_for_edge(se))
+			
+			if eis.size() == 0:
+				continue
+				
+			remove_seam(eis[0], eis[1])
+		
+		_mdr.connect("changed", self, "on_mdr_changed")
+		on_mdr_changed()
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		pass
