@@ -652,3 +652,54 @@ static func generate_tangents(mdr : MeshDataResource) -> void:
 	st.generate_tangents()
 	
 	mdr.array = st.commit_to_arrays()
+
+static func order_seam_indices(arr : PoolIntArray) -> PoolIntArray:
+	var ret : PoolIntArray = PoolIntArray()
+	
+	if arr.size() == 0:
+		return ret
+	
+	for i in range(0, arr.size(), 2):
+		var index0 : int = arr[i]
+		var index1 : int = arr[i + 1]
+		
+		if index0 > index1:
+			var t : int = index1
+			index1 = index0
+			index0 = t
+		
+		ret.push_back(index0)
+		ret.push_back(index1)
+	
+	return ret 
+	
+static func has_seam(mdr : MeshDataResource, index0 : int, index1 : int) -> bool:
+	var seams : PoolIntArray = mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		if seams[i] == index0 && seams[i + 1] == index1:
+			return true
+	
+	return false
+
+static func add_seam(mdr : MeshDataResource, index0 : int, index1 : int) -> void:
+	if has_seam(mdr, index0, index1):
+		return
+		
+	var seams : PoolIntArray = mdr.seams
+	seams.push_back(index0)
+	seams.push_back(index1)
+	mdr.seams = seams
+
+static func remove_seam(mdr : MeshDataResource, index0 : int, index1 : int) -> void:
+	if !has_seam(mdr, index0, index1):
+		return
+		
+	var seams : PoolIntArray = mdr.seams
+	
+	for i in range(0, seams.size(), 2):
+		if seams[i] == index0 && seams[i + 1] == index1:
+			seams.remove(i)
+			seams.remove(i)
+			mdr.seams = seams
+			return

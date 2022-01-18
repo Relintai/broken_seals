@@ -947,56 +947,6 @@ func get_all_index_pairs_for_edge(edge : int) -> PoolIntArray:
 				
 	return ret
 
-func order_seam_indices(arr : PoolIntArray) -> PoolIntArray:
-	var ret : PoolIntArray = PoolIntArray()
-	
-	if arr.size() == 0:
-		return ret
-	
-	for i in range(0, arr.size(), 2):
-		var index0 : int = arr[i]
-		var index1 : int = arr[i + 1]
-		
-		if index0 > index1:
-			var t : int = index1
-			index1 = index0
-			index0 = t
-		
-		ret.push_back(index0)
-		ret.push_back(index1)
-	
-	return ret 
-	
-func has_seam(index0 : int, index1 : int) -> bool:
-	var seams : PoolIntArray = _mdr.seams
-	
-	for i in range(0, seams.size(), 2):
-		if seams[i] == index0 && seams[i + 1] == index1:
-			return true
-	
-	return false
-
-func add_seam(index0 : int, index1 : int) -> void:
-	if has_seam(index0, index1):
-		return
-		
-	var seams : PoolIntArray = _mdr.seams
-	seams.push_back(index0)
-	seams.push_back(index1)
-	_mdr.seams = seams
-
-func remove_seam(index0 : int, index1 : int) -> void:
-	if !has_seam(index0, index1):
-		return
-		
-	var seams : PoolIntArray = _mdr.seams
-	
-	for i in range(0, seams.size(), 2):
-		if seams[i] == index0 && seams[i + 1] == index1:
-			seams.remove(i)
-			seams.remove(i)
-			_mdr.seams = seams
-			return
 
 func mark_seam():
 	if !_mdr:
@@ -1011,12 +961,12 @@ func mark_seam():
 		_mdr.disconnect("changed", self, "on_mdr_changed")
 		
 		for se in _selected_points:
-			var eis : PoolIntArray = order_seam_indices(get_first_index_pair_for_edge(se))
+			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_first_index_pair_for_edge(se))
 			
 			if eis.size() == 0:
 				continue
 				
-			add_seam(eis[0], eis[1])
+			MDRMeshUtils.add_seam(_mdr, eis[0], eis[1])
 		
 		_mdr.connect("changed", self, "on_mdr_changed")
 		on_mdr_changed()
@@ -1036,12 +986,12 @@ func unmark_seam():
 		_mdr.disconnect("changed", self, "on_mdr_changed")
 		
 		for se in _selected_points:
-			var eis : PoolIntArray = order_seam_indices(get_all_index_pairs_for_edge(se))
+			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_all_index_pairs_for_edge(se))
 			
 			if eis.size() == 0:
 				continue
 				
-			remove_seam(eis[0], eis[1])
+			MDRMeshUtils.remove_seam(_mdr, eis[0], eis[1])
 		
 		_mdr.connect("changed", self, "on_mdr_changed")
 		on_mdr_changed()
