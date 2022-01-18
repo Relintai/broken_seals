@@ -132,27 +132,6 @@ func get_mdr() -> MeshDataResource:
 		
 	return null
 
-func uv_unwrap() -> void:
-	var mdr : MeshDataResource = null
-	
-	if current_mesh_data_instance && current_mesh_data_instance.mesh_data:
-		#current_mesh_data_instance.mesh_data.uv_unwrap()
-		mdr = current_mesh_data_instance.mesh_data
-		
-	if !mdr:
-		return
-		
-	var mesh : Array = mdr.get_array()
-	
-	var uvs : PoolVector2Array = MeshUtils.uv_unwrap(mesh)
-	
-	mesh[ArrayMesh.ARRAY_TEX_UV] = uvs
-
-	mdr.set_array(mesh)
-	
-	if mdr:
-		mdi_ed_gui.set_mesh_data_resource(mdr)
-	
 	
 #func forward_spatial_gui_input(camera, event):
 #	for g in active_gizmos:
@@ -249,3 +228,8 @@ func unmark_seam():
 func apply_seam():
 	for g in active_gizmos:
 		g.apply_seam()
+
+func uv_unwrap() -> void:
+	for g in active_gizmos:
+		g.apply_seam()
+	
