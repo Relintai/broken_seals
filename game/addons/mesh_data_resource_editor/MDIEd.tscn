@@ -547,6 +547,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/RemDoubles" to="." method="_on_RemDoubles_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/MergeOptimize" to="." method="_on_MergeOptimize_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/Clean" to="." method="_on_MergeOptimize_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/ApplySeams" to="." method="_on_apply_seams_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UnwrapButton2" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/AddTriangle" to="." method="_on_add_triangle_pressed"]

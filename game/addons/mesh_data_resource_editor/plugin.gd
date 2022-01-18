@@ -245,3 +245,7 @@ func mark_seam():
 func unmark_seam():
 	for g in active_gizmos:
 		g.unmark_seam()
+
+func apply_seam():
+	for g in active_gizmos:
+		g.apply_seam()

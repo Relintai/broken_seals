@@ -183,3 +183,6 @@ func _on_mark_seam_pressed():
 
 func _on_unmark_seam_pressed():
 	plugin.unmark_seam()
+
+func _on_apply_seams_pressed():
+	plugin.apply_seam()

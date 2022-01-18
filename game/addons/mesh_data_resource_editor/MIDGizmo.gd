@@ -1013,3 +1013,6 @@ func unmark_seam():
 		on_mdr_changed()
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
+
+func apply_seam():
+	pass
