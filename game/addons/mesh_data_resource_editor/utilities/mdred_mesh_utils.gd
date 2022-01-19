@@ -1005,6 +1005,8 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 	
 	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
 	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	var new_indices : PoolIntArray = PoolIntArray()
+	new_indices.append_array(indices)
 
 	var seams : PoolIntArray = mdr.seams
 	
@@ -1062,7 +1064,6 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 			tri.processed = true
 
 			if tri.both_sides_need_cut():
-				duplicate_verts_indices.push_back(tri.orig_index)
 				triangle_arrays.push_back([ tri ])
 				continue
 			
@@ -1105,19 +1106,15 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 		# Skip processing the first strip, so we don't create unused verts
 		for tind in range(1, triangle_arrays.size()):
 			var tris : Array = triangle_arrays[tind]
-			
+
 			duplicate_verts_indices.push_back(tris[0].orig_index)
-			
-			#print(tris)
-			
+
 			for tri in tris:
-				indices[tri.index_index] = new_vert_size
+				new_indices[tri.index_index] = new_vert_size
 			
 			new_vert_size += 1
 
-		#print("----")
-
-	arrays[ArrayMesh.ARRAY_INDEX] = indices
+	arrays[ArrayMesh.ARRAY_INDEX] = new_indices
 
 	mdr.array = seam_apply_duplicate_vertices(arrays, duplicate_verts_indices)
 
