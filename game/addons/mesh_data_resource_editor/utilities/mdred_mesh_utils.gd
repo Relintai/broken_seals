@@ -888,17 +888,12 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 			new_vert_size += 2
 	
 	arrays[ArrayMesh.ARRAY_INDEX] = indices
-	mdr.array = arrays
+	#mdr.array = arrays
 	
-	seam_apply_duplicate_vertices(mdr, duplicate_verts_indices)
+	mdr.array = seam_apply_duplicate_vertices(arrays, duplicate_verts_indices)
 
 # This will not touch the indices!
-static func seam_apply_duplicate_vertices(mdr : MeshDataResource, duplicate_verts_indices : PoolIntArray) -> void:
-	var arrays : Array = mdr.get_array()
-	
-	if arrays.size() != ArrayMesh.ARRAY_MAX:
-		arrays.resize(ArrayMesh.ARRAY_MAX)
-	
+static func seam_apply_duplicate_vertices(arrays : Array, duplicate_verts_indices : PoolIntArray) -> Array:
 	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
 	
 	var normals : PoolVector3Array
@@ -989,4 +984,4 @@ static func seam_apply_duplicate_vertices(mdr : MeshDataResource, duplicate_vert
 	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
 		arrays[ArrayMesh.ARRAY_WEIGHTS] = weights
 
-	mdr.set_array(arrays)
+	return arrays
