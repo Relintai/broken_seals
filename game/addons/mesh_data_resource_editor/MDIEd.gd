@@ -186,3 +186,6 @@ func _on_unmark_seam_pressed():
 
 func _on_apply_seams_pressed():
 	plugin.apply_seam()
+
+func _on_uv_edit_pressed():
+	$Popups/UVEditorPopup.popup_centered()

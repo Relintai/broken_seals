@@ -12,7 +12,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-uv_editor_path = NodePath("VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer/UVEditor")
+uv_editor_path = NodePath("VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UVDisplay")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -198,7 +198,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 998.0
-margin_bottom = 580.0
+margin_bottom = 586.0
 size_flags_horizontal = 3
 
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
@@ -372,7 +372,7 @@ margin_bottom = 112.0
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 116.0
 margin_right = 998.0
-margin_bottom = 352.0
+margin_bottom = 480.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_right = 998.0
@@ -384,7 +384,7 @@ valign = 1
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_top = 18.0
 margin_right = 998.0
-margin_bottom = 236.0
+margin_bottom = 364.0
 
 [node name="Label2" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_right = 998.0
@@ -440,27 +440,40 @@ text = "UV"
 align = 1
 valign = 1
 
-[node name="ApplySeams" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
+[node name="UVDisplay" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
 margin_top = 174.0
 margin_right = 998.0
-margin_bottom = 194.0
+margin_bottom = 274.0
+rect_min_size = Vector2( 100, 100 )
+script = ExtResource( 3 )
+
+[node name="UVEditButton" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
+margin_top = 278.0
+margin_right = 998.0
+margin_bottom = 298.0
+text = "Edit"
+
+[node name="ApplySeams" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
+margin_top = 302.0
+margin_right = 998.0
+margin_bottom = 322.0
 text = "Apply seams"
 
 [node name="UnwrapButton2" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations"]
-margin_top = 198.0
+margin_top = 326.0
 margin_right = 998.0
-margin_bottom = 218.0
+margin_bottom = 346.0
 text = "Unwrap"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 356.0
+margin_top = 484.0
 margin_right = 998.0
-margin_bottom = 360.0
+margin_bottom = 488.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 364.0
+margin_top = 492.0
 margin_right = 998.0
-margin_bottom = 450.0
+margin_bottom = 578.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
 margin_right = 998.0
@@ -494,30 +507,27 @@ size_flags_horizontal = 3
 text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 454.0
+margin_top = 582.0
 margin_right = 998.0
-margin_bottom = 458.0
+margin_bottom = 586.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 462.0
-margin_right = 998.0
-margin_bottom = 580.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="Popups" type="Control" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+mouse_filter = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
-margin_right = 998.0
-margin_bottom = 14.0
-text = "= UV ="
-align = 1
-valign = 1
-
-[node name="UVEditor" type="Control" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VBoxContainer"]
-margin_top = 18.0
-margin_right = 998.0
-margin_bottom = 118.0
-rect_min_size = Vector2( 100, 100 )
-script = ExtResource( 3 )
+[node name="UVEditorPopup" type="ConfirmationDialog" parent="Popups"]
+margin_left = 245.408
+margin_top = 92.4999
+margin_right = 720.408
+margin_bottom = 464.5
+window_title = "UV Editor"
+resizable = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate" to="." method="on_edit_mode_translate_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Rotate" to="." method="on_edit_mode_rotate_toggled"]
@@ -547,6 +557,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/RemDoubles" to="." method="_on_RemDoubles_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/MergeOptimize" to="." method="_on_MergeOptimize_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/Clean" to="." method="_on_MergeOptimize_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UVEditButton" to="." method="_on_uv_edit_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/ApplySeams" to="." method="_on_apply_seams_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UnwrapButton2" to="." method="_on_UnwrapButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Add/Add/AddBox" to="." method="_on_AddBox_pressed"]
