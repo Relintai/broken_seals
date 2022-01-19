@@ -867,6 +867,123 @@ static func pool_int_arr_contains(arr : PoolIntArray, val : int) -> bool:
 	return false
 	
 
+class SeamTriangleHelper:
+	var i0 : int = 0
+	var i1 : int = 0
+	var i2 : int = 0
+	var orig_index : int = 0
+	
+	var side_index_1 : int = 0
+	var side_index_2 : int = 0
+	var side_index_1_cut : bool = false
+	var side_index_2_cut : bool = false
+	
+	var processed : bool = false
+	
+	func get_side_index(i : int) -> int:
+		if i == 1:
+			return side_index_1
+		else:
+			return side_index_2
+			
+	func get_side_index_cut() -> int:
+		if side_index_1_cut && side_index_2_cut:
+			return 3
+		elif side_index_1_cut:
+			return 1
+		elif side_index_2_cut:
+			return 2
+		else:
+			return 0
+			
+	func get_opposite_side_index_cut() -> int:
+		if side_index_1_cut && side_index_2_cut:
+			return 3
+		elif side_index_1_cut:
+			return 2
+		elif side_index_2_cut:
+			return 1
+		else:
+			return 0
+			
+	func is_side_index_cut(i : int) -> bool:
+		if i == 1:
+			return side_index_1_cut
+		else:
+			return side_index_2_cut
+	
+	func is_the_same(h : SeamTriangleHelper) -> bool:
+		return is_triangle(h.i0, h.i1, h.i2)
+	
+	func is_triangle(pi0 : int, pi1 : int, pi2 : int) -> bool:
+		if pi0 == i0 || pi0 == i1 || pi0 == i2:
+			if pi1 == i0 || pi1 == i1 || pi1 == i2:
+				if pi2 == i0 || pi2 == i1 || pi2 == i2:
+					return true
+		
+		return false
+	
+	func is_neighbour_to(index : int) -> bool:
+		return (side_index_1 == index) || (side_index_2 == index)
+		
+	func needs_to_be_cut_near(index : int) -> bool:
+		if (side_index_1 == index):
+			return side_index_1_cut
+			
+		if (side_index_2 == index):
+			return side_index_2_cut
+			
+		return false
+		
+	func has_cut() -> bool:
+		return side_index_1_cut || side_index_2_cut
+		
+	func both_sides_need_cut() -> bool:
+		return side_index_1_cut && side_index_2_cut
+	
+	func setup(pi0 : int, pi1 : int, pi2 : int, porig_ind : int, seams : PoolIntArray) -> void:
+		processed = false
+		i0 = pi0
+		i1 = pi1
+		i2 = pi2
+		orig_index = porig_ind
+		
+		if porig_ind == pi0:
+			side_index_1 = pi1
+			side_index_2 = pi2
+		elif porig_ind == pi1:
+			side_index_1 = pi0
+			side_index_2 = pi2
+		elif porig_ind == pi2:
+			side_index_1 = pi1
+			side_index_2 = pi0
+			
+		determine_cuts(seams)
+	
+	func determine_cuts(seams : PoolIntArray) -> void:
+		if orig_index < side_index_1:
+			side_index_1_cut = check_cut(orig_index, side_index_1, seams)
+		else:
+			side_index_1_cut = check_cut(side_index_1, orig_index, seams)
+			
+		if orig_index < side_index_2:
+			side_index_2_cut = check_cut(orig_index, side_index_2, seams)
+		else:
+			side_index_2_cut = check_cut(side_index_2, orig_index, seams)
+		
+	func check_cut(ind0 : int, ind1 : int, seams : PoolIntArray) -> bool:
+		for stind in range(0, seams.size(), 2):
+			var si0 : int = seams[stind]
+			var si1 : int = seams[stind + 1]
+			
+			if (si0 == ind0) && (si1 == ind1):
+				return true
+				
+		return false
+		
+	func _to_string():
+		return "[ TRI: " + str(i0) + ", " + str(i1) + ", " + str(i2) + " ]"
+
 static func apply_seam(mdr : MeshDataResource) -> void:
 	var points : PoolVector3Array = PoolVector3Array()
 	
@@ -900,43 +1017,94 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 		if test_seam_count < 2:
 			continue
 		
-		var already_split_indices : PoolIntArray = PoolIntArray()
-		var already_split_indices_map : Dictionary = Dictionary()
-		var first : bool = true
+		# Collect all triangles that use this vertex as SeamTriangleHelpers
+		var triangles : Array = Array()
 		for j in range(indices.size()):
 			var i0 : int = indices[j]
-				
+			
 			if i0 != i:
 				continue
-				
-			#if first:
-				# Only split away the subsequent verts
-			#	first = false
-			#	continue
-			
+
 			var tri_j_offset : int = j % 3
 			var tri_start_index : int = j - tri_j_offset
-			
+
 			var i1 : int = indices[tri_start_index + ((tri_j_offset + 1) % 3)]
-			
-			for stind in range(0, seams.size(), 2):
-				var si0 : int = seams[stind]
-				var si1 : int = seams[stind + 1]
-				if is_matching_seam(i0, i1, si0, si1):
-								
-					if pool_int_arr_contains(already_split_indices, i0):
-						indices[j] = already_split_indices_map[i0]
-						break
-					
-					duplicate_verts_indices.push_back(i0)
-					indices[j] = new_vert_size
-					
-					already_split_indices.push_back(i0)
-					already_split_indices_map[i0] = new_vert_size
-					
-					new_vert_size += 1
+			var i2 : int = indices[tri_start_index + ((tri_j_offset + 2) % 3)]
+
+			var s : SeamTriangleHelper = SeamTriangleHelper.new()
+			s.setup(i0, i1, i2, i0, seams)
+			triangles.push_back(s)
+		
+		#print(triangles)
+		
+		var first : bool = true
+		while true:
+			# First find a triangle that needs to be cut
+			var tri : SeamTriangleHelper = null
+			var tri_index : int = -1
+			for it in range(triangles.size()):
+				tri = triangles[it]
+				
+				if tri.has_cut() && !tri.processed:
+					tri_index = it
 					break
-	
+					
+			if tri_index == -1:
+				#done
+				break
+			
+			tri.processed = true
+
+			if tri.both_sides_need_cut():
+				if !first:
+					duplicate_verts_indices.push_back(tri.orig_index)
+					indices[tri.orig_index] = new_vert_size
+					new_vert_size += 1
+				else:
+					# Keep the first one as-is
+					first = false
+				
+				# Done if both sides need cut
+				continue
+			
+			
+			var new_index : int = tri.orig_index
+			
+			if !first:
+				duplicate_verts_indices.push_back(tri.orig_index)
+				indices[tri.orig_index] = new_vert_size
+				new_index = new_vert_size
+				new_vert_size += 1
+			else:
+				# Keep the first one as-is
+				first = false
+			
+			# Find all neighbours and set them to processed + update the index for them
+			#var side_index : int = tri.get_side_index_cut()
+			var neighbour_tri : SeamTriangleHelper = tri
+			var find_neighbour_for_edge_index : int = tri.get_opposite_side_index_cut()
+			var find_neighbour_for_edge : int = neighbour_tri.get_side_index(find_neighbour_for_edge_index)
+			
+			var tri_found : bool = true
+			while tri_found:
+				tri_found = false
+				
+				for ntri in triangles:
+					if ntri.processed:
+						continue
+						
+					if ntri.is_the_same(neighbour_tri):
+						continue
+						
+					if ntri.is_neighbour_to(find_neighbour_for_edge):
+						neighbour_tri = ntri
+						find_neighbour_for_edge = neighbour_tri.get_side_index(find_neighbour_for_edge_index)
+						
+						neighbour_tri.processed = true
+						indices[tri.orig_index] = new_index
+						tri_found = true
+						break
+
 	arrays[ArrayMesh.ARRAY_INDEX] = indices
 	#mdr.array = arrays
 	
