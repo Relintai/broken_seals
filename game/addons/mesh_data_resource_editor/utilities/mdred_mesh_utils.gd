@@ -625,8 +625,51 @@ static func add_into_surface_tool(mdr : MeshDataResource, st : SurfaceTool) -> v
 	for ind in indices:
 		st.add_index(ind)
 
-
 static func generate_normals(mdr : MeshDataResource) -> void:
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return
+	
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	var normals : PoolVector3Array = PoolVector3Array()
+	normals.resize(vertices.size())
+	var nc : PoolIntArray = PoolIntArray()
+	nc.resize(vertices.size())
+	
+	for i in range(vertices.size()):
+		nc[i] = 0
+	
+	for i in range(0, indices.size(), 3):
+		var i0 : int = indices[i]
+		
+		var v0 : Vector3 = vertices[i0]
+		var v1 : Vector3 = vertices[indices[i + 1]]
+		var v2 : Vector3 = vertices[indices[i + 2]]
+		
+		var n = Plane(v0, v1, v2).normal
+		
+		if nc[i0] == 0:
+			nc[i0] = 1
+			normals[i0] = n
+		else:
+			normals[i0] = lerp(normals[i0], n, 0.5).normalized()
+	
+	arrays[ArrayMesh.ARRAY_NORMAL] = normals
+	mdr.array = arrays
+	
+
+# Apparently surfacetool adds more verts during normal generation
+# Keeping this here for now
+static func generate_normals_surface_tool(mdr : MeshDataResource) -> void:
 	var arrays : Array = mdr.get_array()
 	
 	if arrays.size() != ArrayMesh.ARRAY_MAX:
