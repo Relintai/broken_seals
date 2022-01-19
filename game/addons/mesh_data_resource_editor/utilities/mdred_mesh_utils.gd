@@ -872,6 +872,7 @@ class SeamTriangleHelper:
 	var i1 : int = 0
 	var i2 : int = 0
 	var orig_index : int = 0
+	var index_index : int = 0
 	
 	var side_index_1 : int = 0
 	var side_index_2 : int = 0
@@ -879,6 +880,12 @@ class SeamTriangleHelper:
 	var side_index_2_cut : bool = false
 	
 	var processed : bool = false
+	
+	func get_other_side_index(index : int) -> int:
+		if side_index_1 == index:
+			return side_index_2
+		else:
+			return side_index_1
 	
 	func get_side_index(i : int) -> int:
 		if i == 1:
@@ -941,12 +948,13 @@ class SeamTriangleHelper:
 	func both_sides_need_cut() -> bool:
 		return side_index_1_cut && side_index_2_cut
 	
-	func setup(pi0 : int, pi1 : int, pi2 : int, porig_ind : int, seams : PoolIntArray) -> void:
+	func setup(pi0 : int, pi1 : int, pi2 : int, porig_ind : int, pindex_index : int, seams : PoolIntArray) -> void:
 		processed = false
 		i0 = pi0
 		i1 = pi1
 		i2 = pi2
 		orig_index = porig_ind
+		index_index = pindex_index
 		
 		if porig_ind == pi0:
 			side_index_1 = pi1
@@ -1032,12 +1040,10 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 			var i2 : int = indices[tri_start_index + ((tri_j_offset + 2) % 3)]
 
 			var s : SeamTriangleHelper = SeamTriangleHelper.new()
-			s.setup(i0, i1, i2, i0, seams)
+			s.setup(i0, i1, i2, i0, j, seams)
 			triangles.push_back(s)
 		
-		#print(triangles)
-		
-		var first : bool = true
+		var triangle_arrays : Array = Array()
 		while true:
 			# First find a triangle that needs to be cut
 			var tri : SeamTriangleHelper = null
@@ -1056,35 +1062,18 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 			tri.processed = true
 
 			if tri.both_sides_need_cut():
-				if !first:
-					duplicate_verts_indices.push_back(tri.orig_index)
-					indices[tri.orig_index] = new_vert_size
-					new_vert_size += 1
-				else:
-					# Keep the first one as-is
-					first = false
-				
-				# Done if both sides need cut
+				duplicate_verts_indices.push_back(tri.orig_index)
+				triangle_arrays.push_back([ tri ])
 				continue
 			
-			
-			var new_index : int = tri.orig_index
-			
-			if !first:
-				duplicate_verts_indices.push_back(tri.orig_index)
-				indices[tri.orig_index] = new_vert_size
-				new_index = new_vert_size
-				new_vert_size += 1
-			else:
-				# Keep the first one as-is
-				first = false
+			var collected_triangles : Array = Array()
+			collected_triangles.push_back(tri)
 			
 			# Find all neighbours and set them to processed + update the index for them
 			#var side_index : int = tri.get_side_index_cut()
 			var neighbour_tri : SeamTriangleHelper = tri
 			var find_neighbour_for_edge_index : int = tri.get_opposite_side_index_cut()
 			var find_neighbour_for_edge : int = neighbour_tri.get_side_index(find_neighbour_for_edge_index)
-			
 			var tri_found : bool = true
 			while tri_found:
 				tri_found = false
@@ -1098,16 +1087,38 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 						
 					if ntri.is_neighbour_to(find_neighbour_for_edge):
 						neighbour_tri = ntri
-						find_neighbour_for_edge = neighbour_tri.get_side_index(find_neighbour_for_edge_index)
-						
+						find_neighbour_for_edge = neighbour_tri.get_other_side_index(find_neighbour_for_edge)
+
 						neighbour_tri.processed = true
-						indices[tri.orig_index] = new_index
 						tri_found = true
+						collected_triangles.push_back(neighbour_tri)
+						
+						if neighbour_tri.has_cut():
+							# Done with this "strip"
+							tri_found = false
+
 						break
+						
+			triangle_arrays.push_back(collected_triangles)
+		
+		# triangle_arrays is guaranteed to have at least 2 entries
+		# Skip processing the first strip, so we don't create unused verts
+		for tind in range(1, triangle_arrays.size()):
+			var tris : Array = triangle_arrays[tind]
+			
+			duplicate_verts_indices.push_back(tris[0].orig_index)
+			
+			#print(tris)
+			
+			for tri in tris:
+				indices[tri.index_index] = new_vert_size
+			
+			new_vert_size += 1
+
+		#print("----")
 
 	arrays[ArrayMesh.ARRAY_INDEX] = indices
-	#mdr.array = arrays
-	
+
 	mdr.array = seam_apply_duplicate_vertices(arrays, duplicate_verts_indices)
 
 
