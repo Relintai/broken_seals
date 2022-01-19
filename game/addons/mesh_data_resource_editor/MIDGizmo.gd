@@ -1034,13 +1034,11 @@ func uv_unwrap() -> void:
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
 	
-	var mesh : Array = _mdr.get_array()
+	var uvs : PoolVector2Array = MeshUtils.uv_unwrap(mdr_arr)
 	
-	var uvs : PoolVector2Array = MeshUtils.uv_unwrap(mesh)
-	
-	if uvs.size() != mdr_arr[ArrayMesh.ARRAY_VERTEX]:
+	if uvs.size() != mdr_arr[ArrayMesh.ARRAY_VERTEX].size():
 		print("Error: Could not unwrap mesh!")
 		return
 	
-	mesh[ArrayMesh.ARRAY_TEX_UV] = uvs
-	_mdr.set_array(mesh)
+	mdr_arr[ArrayMesh.ARRAY_TEX_UV] = uvs
+	_mdr.set_array(mdr_arr)

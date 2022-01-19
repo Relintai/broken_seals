@@ -231,5 +231,5 @@ func apply_seam():
 
 func uv_unwrap() -> void:
 	for g in active_gizmos:
-		g.apply_seam()
+		g.uv_unwrap()
 	
