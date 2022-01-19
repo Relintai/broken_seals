@@ -859,7 +859,91 @@ static func is_matching_seam(i0 : int, i1: int, si0 : int, si1: int) -> bool:
 		
 	return (i0 == si0) && (i1 == si1)
 
+static func pool_int_arr_contains(arr : PoolIntArray, val : int) -> bool:
+	for a in arr:
+		if a == val:
+			return true
+			
+	return false
+	
+
 static func apply_seam(mdr : MeshDataResource) -> void:
+	var points : PoolVector3Array = PoolVector3Array()
+	
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null:
+		return
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+
+	var seams : PoolIntArray = mdr.seams
+	
+	# Duplication happens later, as it requires lots of logic
+	var duplicate_verts_indices : PoolIntArray = PoolIntArray()
+	var new_vert_size : int = vertices.size()
+	
+	for i in range(vertices.size()):
+		# first check if vertex is a part of at least 2 edge seams
+		var test_seam_count : int = 0
+		for s in seams:
+			if s == i:
+				test_seam_count += 1
+				
+				if test_seam_count >= 2:
+					break
+				
+		if test_seam_count < 2:
+			continue
+		
+		var already_split_indices : PoolIntArray = PoolIntArray()
+		var already_split_indices_map : Dictionary = Dictionary()
+		var first : bool = true
+		for j in range(indices.size()):
+			var i0 : int = indices[j]
+				
+			if i0 != i:
+				continue
+				
+			#if first:
+				# Only split away the subsequent verts
+			#	first = false
+			#	continue
+			
+			var tri_j_offset : int = j % 3
+			var tri_start_index : int = j - tri_j_offset
+			
+			var i1 : int = indices[tri_start_index + ((tri_j_offset + 1) % 3)]
+			
+			for stind in range(0, seams.size(), 2):
+				var si0 : int = seams[stind]
+				var si1 : int = seams[stind + 1]
+				if is_matching_seam(i0, i1, si0, si1):
+								
+					if pool_int_arr_contains(already_split_indices, i0):
+						indices[j] = already_split_indices_map[i0]
+						break
+					
+					duplicate_verts_indices.push_back(i0)
+					indices[j] = new_vert_size
+					
+					already_split_indices.push_back(i0)
+					already_split_indices_map[i0] = new_vert_size
+					
+					new_vert_size += 1
+					break
+	
+	arrays[ArrayMesh.ARRAY_INDEX] = indices
+	#mdr.array = arrays
+	
+	mdr.array = seam_apply_duplicate_vertices(arrays, duplicate_verts_indices)
+
+
+static func apply_seam_old(mdr : MeshDataResource) -> void:
 	var points : PoolVector3Array = PoolVector3Array()
 	
 	var arrays : Array = mdr.get_array()
