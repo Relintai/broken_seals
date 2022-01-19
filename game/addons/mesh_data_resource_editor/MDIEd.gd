@@ -3,16 +3,20 @@ extends Control
 
 var plugin : EditorPlugin
 
-export var uv_editor_path : NodePath
+export var uv_preview_path : NodePath
 
-var uv_editor : Node
+var uv_preview : Node
 
 func _enter_tree():
-	uv_editor = get_node(uv_editor_path)
+	uv_preview = get_node(uv_preview_path)
 	
 func set_mesh_data_resource(a : MeshDataResource) -> void:
-	if uv_editor:
-		uv_editor.set_mesh_data_resource(a)
+	if uv_preview:
+		uv_preview.set_mesh_data_resource(a)
+
+func set_mesh_data_instance(a : MeshDataInstance) -> void:
+	if uv_preview:
+		uv_preview.set_mesh_data_instance(a)
 
 func _unhandled_key_input(event : InputEventKey) -> void:
 	if event.echo:

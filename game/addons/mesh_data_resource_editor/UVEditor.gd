@@ -2,6 +2,7 @@ tool
 extends Control
 
 var mesh_data_resource : MeshDataResource = null setget  set_mesh_data_resource
+var background_texture : Texture = null
 
 func set_mesh_data_resource(a : MeshDataResource):
 	if mesh_data_resource:
@@ -13,17 +14,26 @@ func set_mesh_data_resource(a : MeshDataResource):
 		mesh_data_resource.connect("changed", self, "on_mdr_changed")
 
 	update()
+	
+func set_mesh_data_instance(a : MeshDataInstance):
+	if !a:
+		background_texture = null
+	
+	background_texture = a.texture
 
 func on_mdr_changed():
 	update()
 
 func _draw():
+	if background_texture:
+		draw_texture_rect_region(background_texture, Rect2(Vector2(), get_size()), Rect2(Vector2(), background_texture.get_size()))
+	
 	if !mesh_data_resource:
 		return
 		
 	if mesh_data_resource.array.size() != ArrayMesh.ARRAY_MAX:
 		return
-	
+		
 	var uvs : PoolVector2Array = mesh_data_resource.array[ArrayMesh.ARRAY_TEX_UV]
 	var indices : PoolIntArray = mesh_data_resource.array[ArrayMesh.ARRAY_INDEX]
 	

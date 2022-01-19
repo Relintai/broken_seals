@@ -63,6 +63,7 @@ func edit(object):
 	
 	if mdi:
 		mdi_ed_gui.set_mesh_data_resource(mdi.mesh_data)
+		mdi_ed_gui.set_mesh_data_instance(mdi)
 
 func make_visible(visible):
 	#print("make_visible")
