@@ -386,6 +386,15 @@ func on_mdr_changed() -> void:
 	recalculate_handle_points()
 	redraw()
 
+func disable_change_event() -> void:
+	_mdr.disconnect("changed", self, "on_mdr_changed")
+
+func enable_change_event(update : bool = true) -> void:
+	_mdr.connect("changed", self, "on_mdr_changed")
+		
+	if update:
+		on_mdr_changed()
+
 func add_triangle() -> void:
 	if _mdr:
 		MDRMeshUtils.add_triangle(_mdr)
@@ -712,8 +721,7 @@ func delete_selected() -> void:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
-		if _mdr:
-			_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
 	
 		for sp in _selected_points:
 			var triangle_index : int = find_first_triangle_index_for_face(sp)
@@ -722,33 +730,48 @@ func delete_selected() -> void:
 
 		_selected_points.resize(0)
 		
-		if _mdr:
-			_mdr.connect("changed", self, "on_mdr_changed")
-			
-		on_mdr_changed()
-	
+		enable_change_event()
+
 func generate_normals():
 	if !_mdr:
 		return
-		
+
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+	
+	disable_change_event()
+	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	MDRMeshUtils.generate_normals(_mdr)
+	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	enable_change_event()
 
 func generate_tangents():
 	if !_mdr:
 		return
 		
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return
+		
+	disable_change_event()
+	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	MDRMeshUtils.generate_tangents(_mdr)
+	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	enable_change_event()
 
 func remove_doubles():
 	if !_mdr:
 		return
 	
-	_mdr.disconnect("changed", self, "on_mdr_changed")
-	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+	
+	disable_change_event()
 	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
@@ -757,19 +780,18 @@ func remove_doubles():
 	
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
 	
-	_mdr.connect("changed", self, "on_mdr_changed")
-	on_mdr_changed()
+	enable_change_event()
 		
 func merge_optimize():
 	if !_mdr:
 		return
 	
-	_mdr.disconnect("changed", self, "on_mdr_changed")
-	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+	
+	disable_change_event()
 	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
@@ -778,8 +800,7 @@ func merge_optimize():
 	
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
 	
-	_mdr.connect("changed", self, "on_mdr_changed")
-	on_mdr_changed()
+	enable_change_event()
 	
 func onnect_to_first_selected():
 	if !_mdr:
@@ -974,7 +995,7 @@ func mark_seam():
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
 		
 		for se in _selected_points:
 			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_first_index_pair_for_edge(se))
@@ -984,8 +1005,7 @@ func mark_seam():
 				
 			MDRMeshUtils.add_seam(_mdr, eis[0], eis[1])
 		
-		_mdr.connect("changed", self, "on_mdr_changed")
-		on_mdr_changed()
+		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
 		
@@ -999,7 +1019,7 @@ func unmark_seam():
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
 		
 		for se in _selected_points:
 			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_all_index_pairs_for_edge(se))
@@ -1009,8 +1029,7 @@ func unmark_seam():
 				
 			MDRMeshUtils.remove_seam(_mdr, eis[0], eis[1])
 		
-		_mdr.connect("changed", self, "on_mdr_changed")
-		on_mdr_changed()
+		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
 
