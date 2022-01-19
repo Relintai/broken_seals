@@ -884,7 +884,12 @@ static func apply_seam(mdr : MeshDataResource) -> void:
 				indices.push_back(new_vert_size)
 				indices.push_back(i1)
 				indices.push_back(new_vert_size + 1)
-				
+			
+			indices.remove(j)
+			indices.remove(j)
+			indices.remove(j)
+			j -= 3
+			
 			new_vert_size += 2
 	
 	arrays[ArrayMesh.ARRAY_INDEX] = indices
