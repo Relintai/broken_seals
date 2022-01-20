@@ -1,9 +1,8 @@
 tool
 extends PanelContainer
 
-func _init():
-#	Control/EditorZoomWidget
-	pass
+func set_plugin(plugin : EditorPlugin) -> void:
+	$ScrollContainer/MarginContainer/RectView.set_plugin(plugin)
 
 func set_mesh_data_resource(a : MeshDataResource) -> void:
 	$ScrollContainer/MarginContainer/RectView.set_mesh_data_resource(a)
@@ -16,3 +15,4 @@ func ok_pressed() -> void:
 	
 func cancel_pressed() -> void:
 	$ScrollContainer/MarginContainer/RectView.cancel_pressed()
+	

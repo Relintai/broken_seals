@@ -17,6 +17,9 @@ var edited_resource_current_size : Vector2 = Vector2()
 
 var _stored_uvs : PoolVector2Array = PoolVector2Array()
 
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
 	
@@ -28,6 +31,11 @@ func _enter_tree():
 	
 	if !is_connected("visibility_changed", self, "on_visibility_changed"):
 		connect("visibility_changed", self, "on_visibility_changed")
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	
+	_undo_redo = _plugin.get_undo_redo()
 
 func on_visibility_changed() -> void:
 	if is_visible_in_tree():
@@ -110,6 +118,20 @@ func set_mesh_data_instance(a : MeshDataInstance) -> void:
 func on_edited_resource_changed() -> void:
 	call_deferred("refresh")
 
+func get_uvs(mdr : MeshDataResource) -> PoolVector2Array:
+	if !_mdr:
+		return PoolVector2Array()
+
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return PoolVector2Array()
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
+		return PoolVector2Array()
+		
+	return arrays[ArrayMesh.ARRAY_TEX_UV]
+
 func store_uvs() -> void:
 	_stored_uvs.resize(0)
 
@@ -127,10 +149,27 @@ func store_uvs() -> void:
 	# Make sure it gets copied
 	_stored_uvs.append_array(arrays[ArrayMesh.ARRAY_TEX_UV])
 
+func apply_uvs(mdr : MeshDataResource, stored_uvs : PoolVector2Array) -> void:
+	if !_mdr:
+		return
+
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
+		return
+		
+	arrays[ArrayMesh.ARRAY_TEX_UV] = stored_uvs
+	
+	_mdr.array = arrays
 
 func ok_pressed() -> void:
-	#todo undo redo
-	pass
+	_undo_redo.create_action("UV Editor Accept")
+	_undo_redo.add_do_method(self, "apply_uvs", _mdr, get_uvs(_mdr))
+	_undo_redo.add_undo_method(self, "apply_uvs", _mdr, _stored_uvs)
+	_undo_redo.commit_action()
 	
 func cancel_pressed() -> void:
 	if !_mdr:
@@ -144,8 +183,10 @@ func cancel_pressed() -> void:
 	# Make sure it gets copied
 	var uvs : PoolVector2Array = PoolVector2Array()
 	uvs.append_array(_stored_uvs)
-	arrays[ArrayMesh.ARRAY_TEX_UV] = uvs
-	
-	_mdr.array = arrays
+
+	_undo_redo.create_action("UV Editor Cancel")
+	_undo_redo.add_do_method(self, "apply_uvs", _mdr, uvs)
+	_undo_redo.add_undo_method(self, "apply_uvs", _mdr, get_uvs(_mdr))
+	_undo_redo.commit_action()
 	
 	_stored_uvs.resize(0)

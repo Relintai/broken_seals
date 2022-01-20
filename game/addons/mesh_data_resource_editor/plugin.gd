@@ -18,7 +18,7 @@ func _enter_tree():
 	
 	gizmo_plugin = MdiGizmoPlugin.new()
 	mdi_ed_gui = MDIEdGui.instance()
-	mdi_ed_gui.plugin = self
+	mdi_ed_gui.set_plugin(self)
 	active_gizmos = []
 	
 	gizmo_plugin.plugin = self

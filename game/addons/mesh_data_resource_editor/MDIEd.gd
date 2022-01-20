@@ -1,7 +1,7 @@
 tool
 extends Control
 
-var plugin : EditorPlugin
+var _plugin : EditorPlugin
 
 export var uv_preview_path : NodePath
 export var uv_editor_path : NodePath
@@ -12,6 +12,15 @@ var uv_editor : Node
 func _enter_tree():
 	uv_preview = get_node(uv_preview_path)
 	uv_editor = get_node(uv_editor_path)
+	
+	if _plugin && uv_editor:
+		uv_editor.set_plugin(_plugin)
+	
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	
+	if uv_editor:
+		uv_editor.set_plugin(plugin)
 	
 func set_mesh_data_resource(a : MeshDataResource) -> void:
 	if uv_preview:
@@ -67,18 +76,18 @@ func set_edit_mode_scale() -> void:
 
 func on_edit_mode_translate_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_translate(on)
+		if _plugin:
+			_plugin.set_translate(on)
 
 func on_edit_mode_rotate_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_rotate(on)
+		if _plugin:
+			_plugin.set_rotate(on)
 			
 func on_edit_mode_scale_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_scale(on)
+		if _plugin:
+			_plugin.set_scale(on)
 
 #axis locks
 func get_axis_x() -> bool:
@@ -100,32 +109,32 @@ func set_axis_z(on : bool) -> void:
 	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer2/AxisZ.pressed = on
 
 func on_axis_x_toggled(on : bool) -> void:
-	if plugin:
-		plugin.set_axis_x(on)
+	if _plugin:
+		_plugin.set_axis_x(on)
 
 func on_axis_y_toggled(on : bool) -> void:
-	if plugin:
-		plugin.set_axis_y(on)
+	if _plugin:
+		_plugin.set_axis_y(on)
 			
 func on_axis_z_toggled(on : bool) -> void:
-	if plugin:
-		plugin.set_axis_z(on)
+	if _plugin:
+		_plugin.set_axis_z(on)
 
 #selection modes
 func on_selection_mode_vertex_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_selection_mode_vertex()
+		if _plugin:
+			_plugin.set_selection_mode_vertex()
 
 func on_selection_mode_edge_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_selection_mode_edge()
+		if _plugin:
+			_plugin.set_selection_mode_edge()
 			
 func on_selection_mode_face_toggled(on : bool) -> void:
 	if on:
-		if plugin:
-			plugin.set_selection_mode_face()
+		if _plugin:
+			_plugin.set_selection_mode_face()
 
 func set_selection_mode_vertex() -> void:
 	$VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Vertex.pressed = true
@@ -141,64 +150,64 @@ func _on_Extrude_pressed():
 	pass # Replace with function body.
 
 func _on_AddBox_pressed():
-	plugin.add_box()
+	_plugin.add_box()
 
 func _on_UnwrapButton_pressed():
-	plugin.uv_unwrap()
+	_plugin.uv_unwrap()
 
 func _on_add_triangle_pressed():
-	plugin.add_triangle()
+	_plugin.add_triangle()
 
 func _on_add_quad_pressed():
-	plugin.add_quad()
+	_plugin.add_quad()
 
 func _on_split_pressed():
-	plugin.split()
+	_plugin.split()
 
 func _on_connect_to_first_selected_pressed():
-	plugin.onnect_to_first_selected()
+	_plugin.onnect_to_first_selected()
 	
 func _on_connect_to_avg_pressed():
-	plugin.connect_to_avg()
+	_plugin.connect_to_avg()
 	
 func _on_connect_to_last_selected_pressed():
-	plugin.connect_to_last_selected()
+	_plugin.connect_to_last_selected()
 
 func _on_disconnect_pressed():
-	plugin.disconnect_action()
+	_plugin.disconnect_action()
 
 func _on_add_triangle_at_pressed():
-	plugin.add_triangle_at()
+	_plugin.add_triangle_at()
 
 func _on_add_auad_at_pressed():
-	plugin.add_quad_at()
+	_plugin.add_quad_at()
 
 func _oncreate_face_pressed():
-	plugin.create_face()
+	_plugin.create_face()
 
 func _on_delete_pressed():
-	plugin.delete_selected()
+	_plugin.delete_selected()
 
 func _on_GenNormals_pressed():
-	plugin.generate_normals()
+	_plugin.generate_normals()
 
 func _on_RemDoubles_pressed():
-	plugin.remove_doubles()
+	_plugin.remove_doubles()
 
 func _on_MergeOptimize_pressed():
-	plugin.merge_optimize()
+	_plugin.merge_optimize()
 
 func _on_GenTangents_pressed():
-	plugin.generate_tangents()
+	_plugin.generate_tangents()
 
 func _on_mark_seam_pressed():
-	plugin.mark_seam()
+	_plugin.mark_seam()
 
 func _on_unmark_seam_pressed():
-	plugin.unmark_seam()
+	_plugin.unmark_seam()
 
 func _on_apply_seams_pressed():
-	plugin.apply_seam()
+	_plugin.apply_seam()
 
 func _on_uv_edit_pressed():
 	$Popups/UVEditorPopup.popup_centered()
