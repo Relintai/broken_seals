@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://addons/mesh_data_resource_editor/UVEditor.gd" type="Script" id=3]
+[ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/edit_mode_button_group.tres" type="ButtonGroup" id=5]
 
 [node name="MDIEd" type="PanelContainer"]
@@ -519,15 +520,23 @@ margin_bottom = 593.0
 mouse_filter = 2
 
 [node name="UVEditorPopup" type="ConfirmationDialog" parent="Popups"]
-margin_left = 245.408
-margin_top = 92.4999
-margin_right = 720.408
-margin_bottom = 464.5
+margin_left = 245.0
+margin_top = 92.0
+margin_right = 753.0
+margin_bottom = 476.0
 window_title = "UV Editor"
 resizable = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="RectEditor" parent="Popups/UVEditorPopup" instance=ExtResource( 4 )]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -36.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Translate" to="." method="on_edit_mode_translate_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer/Rotate" to="." method="on_edit_mode_rotate_toggled"]
