@@ -405,11 +405,15 @@ func enable_change_event(update : bool = true) -> void:
 
 func add_triangle() -> void:
 	if _mdr:
+		var orig_arr = copy_arrays(_mdr.array)
 		MDRMeshUtils.add_triangle(_mdr)
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Triangle")
 
 func add_quad() -> void:
 	if _mdr:
+		var orig_arr = copy_arrays(_mdr.array)
 		MDRMeshUtils.add_quad(_mdr)
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Quad")
 
 func is_verts_equal(v0 : Vector3, v1 : Vector3) -> bool:
 	return is_equal_approx(v0.x, v1.x) && is_equal_approx(v0.y, v1.y) && is_equal_approx(v0.z, v1.z)
@@ -584,7 +588,6 @@ func add_quad_to_edge(edge : int) -> void:
 		ei1 = t
 	
 	MDRMeshUtils.append_quad_to_tri_edge(_mdr, _vertices[ei0], _vertices[ei1], _vertices[erefind])
-	
 
 func add_triangle_at() -> void:
 	if !_mdr:
@@ -594,14 +597,15 @@ func add_triangle_at() -> void:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
+		var orig_arr = copy_arrays(_mdr.array)
 		
 		for sp in _selected_points:
 			add_triangle_to_edge(sp)
-			
+		
 		_selected_points.resize(0)
-		_mdr.connect("changed", self, "on_mdr_changed")
-		on_mdr_changed()
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Triangle At")
+		enable_change_event()
 	else:
 		add_triangle()
 		
@@ -613,21 +617,24 @@ func add_quad_at() -> void:
 		#todo
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
+		var orig_arr = copy_arrays(_mdr.array)
 		
 		for sp in _selected_points:
 			add_quad_to_edge(sp)
 		
 		_selected_points.resize(0)
-		_mdr.connect("changed", self, "on_mdr_changed")
-		on_mdr_changed()
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Quad At")
+		enable_change_event()
 	else:
 		add_triangle()
 
 func add_box() -> void:
 	if _mdr:
+		var orig_arr = copy_arrays(_mdr.array)
 		MDRMeshUtils.add_box(_mdr)
-
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Box")
+		
 func split():
 	pass
 

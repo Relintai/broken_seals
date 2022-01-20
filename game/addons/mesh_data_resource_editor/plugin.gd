@@ -149,10 +149,8 @@ func forward_spatial_gui_input(index, camera, event):
 	return false
 
 func add_box() -> void:
-	var mdr : MeshDataResource = get_mdr()
-	
-	if mdr:
-		MDRMeshUtils.add_box(mdr)
+	for g in active_gizmos:
+		g.add_box()
 
 func add_triangle() -> void:
 	for g in active_gizmos:
