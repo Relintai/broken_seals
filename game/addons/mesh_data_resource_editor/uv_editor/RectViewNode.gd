@@ -19,9 +19,9 @@ var _uv_max : Vector2 = Vector2()
 
 var edited_resource_parent_size : Vector2 = Vector2()
 
-var _edited_resource_rect_border_color : Color = Color(1, 1, 1, 1)
+var _edited_resource_rect_border_color : Color = Color(0.8, 0.8, 0.8, 0.5)
 var _edited_resource_rect_color : Color = Color(0.5, 0.5, 0.5, 0.2)
-var _edited_resource_uv_mesh_color : Color = Color(0.8, 0.8, 0.8, 1)
+var _edited_resource_uv_mesh_color : Color = Color(1, 1, 1, 1)
 var _editor_rect_border_size : int = 2
 var _edited_resource_font_color : Color = Color(0, 0, 0, 1)
 var _editor_additional_text : String = ""
@@ -37,7 +37,7 @@ func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
 	
 	if _mdr && _uvs.size() > 0:
-		var c : Color = Color(1, 1, 1, 1)
+		var c : Color = _edited_resource_uv_mesh_color
 		
 		for i in range(0, len(_indices), 3):
 			draw_line(_uvs[_indices[i]] * get_size(), _uvs[_indices[i + 1]] * get_size(), c, 1, false)
