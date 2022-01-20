@@ -123,7 +123,7 @@ func set_up_base_rect() -> void:
 	
 func normalize_uvs() -> void:
 	var xmm : float = _uv_max.x - _uv_min.x
-	var ymm : float = _uv_max.x - _uv_min.x
+	var ymm : float = _uv_max.y - _uv_min.y
 	
 	if xmm == 0:
 		xmm = 0.0000001
