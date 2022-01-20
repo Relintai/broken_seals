@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/mesh_data_resource_editor/widgets/EditorZoomWidget.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/RectView.gd" type="Script" id=3]
 
-[node name="RectEditor" type="PanelContainer"]
+[node name="UVEditor" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )

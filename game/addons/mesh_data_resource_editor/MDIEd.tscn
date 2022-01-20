@@ -14,6 +14,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 uv_preview_path = NodePath("VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UVDisplay")
+uv_editor_path = NodePath("Popups/UVEditorPopup/UVEditor")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = 7.0
@@ -520,17 +521,17 @@ margin_bottom = 593.0
 mouse_filter = 2
 
 [node name="UVEditorPopup" type="ConfirmationDialog" parent="Popups"]
-margin_left = 245.0
-margin_top = 92.0
-margin_right = 753.0
-margin_bottom = 476.0
+margin_left = 149.0
+margin_top = 35.0
+margin_right = 901.0
+margin_bottom = 803.0
 window_title = "UV Editor"
 resizable = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RectEditor" parent="Popups/UVEditorPopup" instance=ExtResource( 4 )]
+[node name="UVEditor" parent="Popups/UVEditorPopup" instance=ExtResource( 4 )]
 margin_left = 8.0
 margin_top = 8.0
 margin_right = -8.0
