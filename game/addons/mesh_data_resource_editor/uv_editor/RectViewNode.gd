@@ -138,6 +138,45 @@ func normalize_uvs() -> void:
 		
 		_uvs[i] = uv
 
+
+func apply_uv() -> void:
+	if !_mdr:
+		return
+	
+	var rect : Rect2 = get_rect()
+	
+	#rect needs to be converted back
+	rect.position /= _rect_scale
+	rect.size /= _rect_scale
+	rect.position /= edited_resource_parent_size
+	rect.size /= edited_resource_parent_size
+	
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
+		return
+		
+	var uvs : PoolVector2Array = arrays[ArrayMesh.ARRAY_TEX_UV]
+		
+	for index in _indices:
+		var uv : Vector2 = _uvs[index]
+		
+		uv = uv * rect.size + rect.position
+		
+		uvs[index] = uv
+	
+	_uv_min = rect.position
+	_uv_max = rect.position + rect.size
+	
+	_base_rect = get_rect()
+	
+	arrays[ArrayMesh.ARRAY_TEX_UV] = uvs
+	_mdr.array = arrays
+
+
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _notification(p_what : int) -> void:
 	if (p_what == NOTIFICATION_MOUSE_EXIT):
@@ -162,6 +201,9 @@ func _gui_input(p_event : InputEvent) -> void:
 			
 		elif (drag_type != DragType.DRAG_NONE && !mb.is_pressed()):
 			# End a dragging operation.
+			
+			apply_uv()
+			
 			drag_type = DragType.DRAG_NONE
 
 	if p_event is InputEventMouseMotion:
@@ -227,12 +269,6 @@ func _gui_input(p_event : InputEvent) -> void:
 
 			set_size(rect.size)
 			set_position(rect.position)
-			
-			#rect needs to be converted back
-			rect.position /= _rect_scale
-			rect.size /= _rect_scale
-			#edited_resource.set_rect(rect)
-			#TODO re write uvs -> but only om drag end
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _drag_hit_test(pos : Vector2) -> int:
