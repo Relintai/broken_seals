@@ -10,11 +10,16 @@ enum DragType {
 	DRAG_RESIZE_LEFT = 1 << 4
 };
 
-var edited_resource : WorldGenBaseResource = null
+var _mdr : MeshDataResource = null
+var _indices : PoolIntArray = PoolIntArray()
+var _uvs : PoolVector2Array = PoolVector2Array()
+var _base_rect : Rect2 = Rect2(0, 0, 100, 100)
+
 var edited_resource_parent_size : Vector2 = Vector2()
 
 var _edited_resource_rect_border_color : Color = Color(1, 1, 1, 1)
-var _edited_resource_rect_color : Color = Color(0.8, 0.8, 0.8, 0.9)
+var _edited_resource_rect_color : Color = Color(0.5, 0.5, 0.5, 0.2)
+var _edited_resource_uv_mesh_color : Color = Color(0.8, 0.8, 0.8, 1)
 var _editor_rect_border_size : int = 2
 var _edited_resource_font_color : Color = Color(0, 0, 0, 1)
 var _editor_additional_text : String = ""
@@ -29,30 +34,38 @@ func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
 	
-	var font : Font = get_font("font")
-	
-	var res_name : String = "NULL"
-	
-	if edited_resource:
-		res_name = edited_resource.resource_name
-		
-	var res_cls : String = ""
-	
-	if edited_resource:
-		res_cls = edited_resource.get_editor_class()
-	
-	draw_string(font, Vector2(_editor_rect_border_size, font.get_height()), res_name, _edited_resource_font_color)
-	draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 2), _editor_additional_text, _edited_resource_font_color, get_rect().size.x)
-	
-	if res_cls != "":
-		draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 3), res_cls, _edited_resource_font_color, get_rect().size.x)
+	if _mdr && _uvs.size() > 0:
+		for i in range(0, len(_indices), 3):
+			var c : Color = Color(1, 1, 1, 1)
+			
+			if _uvs[_indices[i]].is_equal_approx(Vector2()) || _uvs[_indices[i + 1]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+				
+			draw_line(_uvs[_indices[i]] * get_size(), _uvs[_indices[i + 1]] * get_size(), c, 1, false)
+
+			if _uvs[_indices[i + 1]].is_equal_approx(Vector2()) || _uvs[_indices[i + 2]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+				
+			draw_line(_uvs[_indices[i + 1]] * get_size(), _uvs[_indices[i + 2]] * get_size(), c, 1, false)
+				
+			if _uvs[_indices[i + 2]].is_equal_approx(Vector2()) || _uvs[_indices[i]].is_equal_approx(Vector2()):
+				c = Color(1, 0, 0, 1)
+			else:
+				c = Color(1, 1, 1, 1)
+
+			draw_line(_uvs[_indices[i + 2]] * get_size(), _uvs[_indices[i]] * get_size(), c, 1, false)
+
 
 func refresh() -> void:
-	if !edited_resource:
+	if !_mdr:
 		return
 	
 	#anchor is bottom left here
-	var rect : Rect2 = edited_resource.get_rect()
+	var rect : Rect2 = _base_rect
 	rect.position *= _rect_scale
 	rect.size *= _rect_scale
 	
@@ -69,23 +82,60 @@ func set_editor_rect_scale(rect_scale) -> void:
 	
 	refresh()
 
-func set_edited_resource(res : WorldGenBaseResource):
-	edited_resource = res
+func set_edited_resource(mdr : MeshDataResource, indices : PoolIntArray):
+	_mdr = mdr
+	_indices = indices
+	_uvs.resize(0)
 	
-	if edited_resource:
-		_edited_resource_rect_border_color = edited_resource.get_editor_rect_border_color()
-		_edited_resource_rect_color = edited_resource.get_editor_rect_color()
-		_editor_rect_border_size = edited_resource.get_editor_rect_border_size()
-		_edited_resource_font_color = edited_resource.get_editor_font_color()
-		_editor_additional_text = edited_resource.get_editor_additional_text()
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
+		return
+		
+	_uvs = arrays[ArrayMesh.ARRAY_TEX_UV]
+	
+	set_up_base_rect()
 
 	refresh()
+
+func set_up_base_rect() -> void:
+	_base_rect = Rect2()
+	
+	if !_mdr:
+		return
+		
+	if _uvs.size() == 0:
+		return
+	
+	var vmin : Vector2 = _uvs[_indices[0]]
+	var vmax : Vector2 = vmin
+	for i in range(1, _indices.size()):
+		var uv : Vector2 = _uvs[_indices[i]]
+		
+		if uv.x < vmin.x:
+			vmin.x = uv.x
+		
+		if uv.x > vmax.x:
+			vmax.x = uv.x
+		
+		if uv.y < vmin.y:
+			vmin.y = uv.y
+		
+		if uv.y > vmax.y:
+			vmax.y = uv.y
+			
+	_base_rect = Rect2(vmin.x, vmin.y, vmax.x - vmin.x, vmax.y - vmin.y)
+	_base_rect.position *= edited_resource_parent_size
+	_base_rect.size *= edited_resource_parent_size
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _notification(p_what : int) -> void:
 	if (p_what == NOTIFICATION_MOUSE_EXIT):
 			# Reset the mouse cursor when leaving the resizable window border.
-			if (edited_resource && !edited_resource.locked && !drag_type):
+			if (_mdr && !drag_type):
 				if (get_default_cursor_shape() != CURSOR_ARROW):
 					set_default_cursor_shape(CURSOR_ARROW)
 
@@ -113,31 +163,31 @@ func _gui_input(p_event : InputEvent) -> void:
 		if (drag_type == DragType.DRAG_NONE):
 			# Update the cursor while moving along the borders.
 			var cursor = CURSOR_ARROW
-			if (!edited_resource.locked):
-				var preview_drag_type : int = _drag_hit_test(Vector2(mm.get_position().x, mm.get_position().y))
+
+			var preview_drag_type : int = _drag_hit_test(Vector2(mm.get_position().x, mm.get_position().y))
 				
-				var top_left : int = DragType.DRAG_RESIZE_TOP + DragType.DRAG_RESIZE_LEFT
-				var bottom_right : int = DragType.DRAG_RESIZE_BOTTOM + DragType.DRAG_RESIZE_RIGHT
-				var top_right : int = DragType.DRAG_RESIZE_TOP + DragType.DRAG_RESIZE_RIGHT
-				var bottom_left : int = DragType.DRAG_RESIZE_BOTTOM + DragType.DRAG_RESIZE_LEFT
+			var top_left : int = DragType.DRAG_RESIZE_TOP + DragType.DRAG_RESIZE_LEFT
+			var bottom_right : int = DragType.DRAG_RESIZE_BOTTOM + DragType.DRAG_RESIZE_RIGHT
+			var top_right : int = DragType.DRAG_RESIZE_TOP + DragType.DRAG_RESIZE_RIGHT
+			var bottom_left : int = DragType.DRAG_RESIZE_BOTTOM + DragType.DRAG_RESIZE_LEFT
 				
-				match (preview_drag_type):
-					DragType.DRAG_RESIZE_TOP:
-						cursor = CURSOR_VSIZE
-					DragType.DRAG_RESIZE_BOTTOM:
-						cursor = CURSOR_VSIZE
-					DragType.DRAG_RESIZE_LEFT:
-						cursor = CURSOR_HSIZE
-					DragType.DRAG_RESIZE_RIGHT:
-						cursor = CURSOR_HSIZE
-					top_left:
-						cursor = CURSOR_FDIAGSIZE
-					bottom_right:
-						cursor = CURSOR_FDIAGSIZE
-					top_right:
-						cursor = CURSOR_BDIAGSIZE
-					bottom_left:
-						cursor = CURSOR_BDIAGSIZE
+			match (preview_drag_type):
+				DragType.DRAG_RESIZE_TOP:
+					cursor = CURSOR_VSIZE
+				DragType.DRAG_RESIZE_BOTTOM:
+					cursor = CURSOR_VSIZE
+				DragType.DRAG_RESIZE_LEFT:
+					cursor = CURSOR_HSIZE
+				DragType.DRAG_RESIZE_RIGHT:
+					cursor = CURSOR_HSIZE
+				top_left:
+					cursor = CURSOR_FDIAGSIZE
+				bottom_right:
+					cursor = CURSOR_FDIAGSIZE
+				top_right:
+					cursor = CURSOR_BDIAGSIZE
+				bottom_left:
+					cursor = CURSOR_BDIAGSIZE
 			
 			if (get_cursor_shape() != cursor):
 				set_default_cursor_shape(cursor);
@@ -175,28 +225,28 @@ func _gui_input(p_event : InputEvent) -> void:
 			rect.position.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
 			rect.position /= _rect_scale
 			rect.size /= _rect_scale
-			edited_resource.set_rect(rect)
+			#edited_resource.set_rect(rect)
+			#TODO re write uvs -> but only om drag end
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _drag_hit_test(pos : Vector2) -> int:
 	var drag_type : int = DragType.DRAG_NONE
 
-	if (!edited_resource.locked):
-		var scaleborder_size : int = 5 #get_constant("scaleborder_size", "WindowDialog")
+	var scaleborder_size : int = 5 #get_constant("scaleborder_size", "WindowDialog")
 
-		var rect : Rect2 = get_rect()
+	var rect : Rect2 = get_rect()
 
-		if (pos.y < (scaleborder_size)):
-			drag_type = DragType.DRAG_RESIZE_TOP
-		elif (pos.y >= (rect.size.y - scaleborder_size)):
-			drag_type = DragType.DRAG_RESIZE_BOTTOM
+	if (pos.y < (scaleborder_size)):
+		drag_type = DragType.DRAG_RESIZE_TOP
+	elif (pos.y >= (rect.size.y - scaleborder_size)):
+		drag_type = DragType.DRAG_RESIZE_BOTTOM
 		
-		if (pos.x < scaleborder_size):
-			drag_type |= DragType.DRAG_RESIZE_LEFT
-		elif (pos.x >= (rect.size.x - scaleborder_size)):
-			drag_type |= DragType.DRAG_RESIZE_RIGHT
+	if (pos.x < scaleborder_size):
+		drag_type |= DragType.DRAG_RESIZE_LEFT
+	elif (pos.x >= (rect.size.x - scaleborder_size)):
+		drag_type |= DragType.DRAG_RESIZE_RIGHT
 			
-		if (drag_type == DragType.DRAG_NONE):
-			drag_type = DragType.DRAG_MOVE
+	if (drag_type == DragType.DRAG_NONE):
+		drag_type = DragType.DRAG_MOVE
 
 	return drag_type

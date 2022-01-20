@@ -190,3 +190,25 @@ static func get_handle_face_to_vertex_map(arrays : Array) -> Array:
 
 static func calculate_map_midpoints(mesh : Array, vertex_map : Array) -> PoolVector3Array:
 	return PoolVector3Array()
+
+static func partition_mesh(mdr : MeshDataResource) -> Array:
+	var partitions : Array = Array()
+	
+	var arrays : Array = mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return partitions
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return partitions
+	
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	
+	# TODO! Just copy indices and return them for now so I can develop the gui
+	var iarr : PoolIntArray = PoolIntArray()
+	for i in indices:
+		iarr.push_back(i)
+		
+	partitions.append(iarr)
+	
+	return partitions

@@ -1,6 +1,8 @@
 tool
 extends Control
 
+var MeshDecompose = preload("res://addons/mesh_data_resource_editor/utilities/mesh_decompose.gd")
+
 var rect_editor_node_scene : PackedScene = preload("res://addons/mesh_data_resource_editor/uv_editor/RectViewNode.tscn")
 
 export(NodePath) var zoom_widget_path : NodePath = ""
@@ -77,17 +79,16 @@ func refresh_rects() -> void:
 	
 	if !_mdr:
 		return
+		
+	var partitions : Array = MeshDecompose.partition_mesh(_mdr)
 	
-#	var cont : Array = edited_resource.get_content()
-#
-#	for c in cont:
-#		if c:
-#			var s : Node = rect_editor_node_scene.instance()
-#
-#			add_child(s)
-#			s.set_editor_rect_scale(_rect_scale)
-#			s.edited_resource_parent_size = edited_resource_current_size
-#			s.set_edited_resource(c)
+	for p in partitions:
+		var s : Node = rect_editor_node_scene.instance()
+
+		add_child(s)
+		s.set_editor_rect_scale(_rect_scale)
+		s.edited_resource_parent_size = edited_resource_current_size
+		s.set_edited_resource(_mdr, p)
 
 func clear_rects():
 	for c in get_children():
