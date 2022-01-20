@@ -48,15 +48,11 @@ func refresh() -> void:
 	if !_mdr:
 		return
 	
-	#anchor is bottom left here
 	var rect : Rect2 = _base_rect
 	rect.position *= _rect_scale
 	rect.size *= _rect_scale
 	
-	#anchor needs to be on top left here
-	var rp : Vector2 = rect.position
-	rp.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
-	rect_position = rp
+	rect_position = rect.position
 	rect_size = rect.size
 	
 	update()
@@ -233,7 +229,6 @@ func _gui_input(p_event : InputEvent) -> void:
 			set_position(rect.position)
 			
 			#rect needs to be converted back
-			rect.position.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
 			rect.position /= _rect_scale
 			rect.size /= _rect_scale
 			#edited_resource.set_rect(rect)
