@@ -19,18 +19,19 @@ margin_right = 1017.0
 margin_bottom = 593.0
 
 [node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
-margin_right = 400.0
-margin_bottom = 400.0
-custom_constants/margin_right = 200
-custom_constants/margin_top = 200
-custom_constants/margin_left = 200
-custom_constants/margin_bottom = 200
+margin_right = 700.0
+margin_bottom = 700.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
 
 [node name="RectView" type="Control" parent="ScrollContainer/MarginContainer"]
-margin_left = 200.0
-margin_top = 200.0
-margin_right = 200.0
-margin_bottom = 200.0
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 650.0
+margin_bottom = 650.0
+rect_min_size = Vector2( 600, 600 )
 script = ExtResource( 3 )
 zoom_widget_path = NodePath("../../../Control/EditorZoomWidget")
 

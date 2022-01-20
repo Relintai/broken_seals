@@ -15,6 +15,8 @@ var _background_texture : Texture = null
 var base_rect : Rect2 = Rect2(0, 0, 600, 600)
 var edited_resource_current_size : Vector2 = Vector2()
 
+var _stored_uvs : PoolVector2Array = PoolVector2Array()
+
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
 	
@@ -29,6 +31,7 @@ func _enter_tree():
 
 func on_visibility_changed() -> void:
 	if is_visible_in_tree():
+		store_uvs()
 		call_deferred("refresh")
 
 func apply_zoom() -> void:
@@ -106,3 +109,43 @@ func set_mesh_data_instance(a : MeshDataInstance) -> void:
 
 func on_edited_resource_changed() -> void:
 	call_deferred("refresh")
+
+func store_uvs() -> void:
+	_stored_uvs.resize(0)
+
+	if !_mdr:
+		return
+
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
+		return
+		
+	# Make sure it gets copied
+	_stored_uvs.append_array(arrays[ArrayMesh.ARRAY_TEX_UV])
+
+
+func ok_pressed() -> void:
+	#todo undo redo
+	pass
+	
+func cancel_pressed() -> void:
+	if !_mdr:
+		return
+
+	var arrays : Array = _mdr.get_array()
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return
+		
+	# Make sure it gets copied
+	var uvs : PoolVector2Array = PoolVector2Array()
+	uvs.append_array(_stored_uvs)
+	arrays[ArrayMesh.ARRAY_TEX_UV] = uvs
+	
+	_mdr.array = arrays
+	
+	_stored_uvs.resize(0)

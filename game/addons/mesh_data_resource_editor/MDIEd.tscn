@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://addons/mesh_data_resource_editor/UVEditor.gd" type="Script" id=3]
 [ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/edit_mode_button_group.tres" type="ButtonGroup" id=5]
+[ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditorPopup.gd" type="Script" id=6]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -527,6 +528,7 @@ margin_right = 901.0
 margin_bottom = 803.0
 window_title = "UV Editor"
 resizable = true
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
