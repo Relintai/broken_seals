@@ -43,12 +43,20 @@ var _selected_points : PoolIntArray
 
 var _mesh_outline_generator
 
+var _editor_plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
 func _init():
 	_mesh_outline_generator = MeshOutline.new()
 	
 func setup() -> void:
 	get_spatial_node().connect("mesh_data_resource_changed", self, "on_mesh_data_resource_changed")
 	on_mesh_data_resource_changed(get_spatial_node().mesh_data)
+
+func set_editor_plugin(editor_plugin : EditorPlugin) -> void:
+	_editor_plugin = editor_plugin
+	
+	_undo_redo = _editor_plugin.get_undo_redo()
 
 func set_handle(index: int, camera: Camera, point: Vector2):
 	var relative : Vector2 = point - previous_point
@@ -997,6 +1005,8 @@ func mark_seam():
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		disable_change_event()
 		
+		var prev_seams : PoolIntArray = copy_pool_int_array(_mdr.seams)
+		
 		for se in _selected_points:
 			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_first_index_pair_for_edge(se))
 			
@@ -1005,10 +1015,15 @@ func mark_seam():
 				
 			MDRMeshUtils.add_seam(_mdr, eis[0], eis[1])
 		
+		_undo_redo.create_action("mark_seam")
+		_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(_mdr.seams))
+		_undo_redo.add_undo_method(self, "set_seam", _mdr, prev_seams)
+		_undo_redo.commit_action()
+		
 		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
-		
+
 func unmark_seam():
 	if !_mdr:
 		return
@@ -1021,6 +1036,8 @@ func unmark_seam():
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		disable_change_event()
 		
+		var prev_seams : PoolIntArray = copy_pool_int_array(_mdr.seams)
+		
 		for se in _selected_points:
 			var eis : PoolIntArray = MDRMeshUtils.order_seam_indices(get_all_index_pairs_for_edge(se))
 			
@@ -1029,20 +1046,29 @@ func unmark_seam():
 				
 			MDRMeshUtils.remove_seam(_mdr, eis[0], eis[1])
 		
+		_undo_redo.create_action("mark_seam")
+		_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(_mdr.seams))
+		_undo_redo.add_undo_method(self, "set_seam", _mdr, prev_seams)
+		_undo_redo.commit_action()
+		
 		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		pass
+
+func set_seam(mdr : MeshDataResource, arr : PoolIntArray) -> void:
+	mdr.seams = arr
 
 func apply_seam():
 	if !_mdr:
 		return
 	
-	_mdr.disconnect("changed", self, "on_mdr_changed")
+	disable_change_event()
 	
+	var orig_arr : Array = copy_arrays(_mdr.array)
 	MDRMeshUtils.apply_seam(_mdr)
+	add_mesh_change_undo_redo(orig_arr, _mdr.array, "apply_seam")
 	
-	_mdr.connect("changed", self, "on_mdr_changed")
-	on_mdr_changed()
+	enable_change_event()
 	
 func uv_unwrap() -> void:
 	if !_mdr:
@@ -1052,12 +1078,43 @@ func uv_unwrap() -> void:
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+		
+	disable_change_event()
 	
 	var uvs : PoolVector2Array = MeshUtils.uv_unwrap(mdr_arr)
 	
 	if uvs.size() != mdr_arr[ArrayMesh.ARRAY_VERTEX].size():
 		print("Error: Could not unwrap mesh!")
 		return
+		
+	var orig_arr : Array = copy_arrays(mdr_arr)
 	
 	mdr_arr[ArrayMesh.ARRAY_TEX_UV] = uvs
-	_mdr.set_array(mdr_arr)
+	
+	add_mesh_change_undo_redo(orig_arr, mdr_arr, "uv_unwrap")
+	enable_change_event()
+
+func add_mesh_change_undo_redo(orig_arr : Array, new_arr : Array, action_name : String) -> void:
+	_undo_redo.create_action(action_name)
+	var nac : Array = copy_arrays(new_arr)
+	_undo_redo.add_do_method(self, "apply_mesh_change", _mdr, nac)
+	_undo_redo.add_undo_method(self, "apply_mesh_change", _mdr, orig_arr)
+	_undo_redo.commit_action()
+
+func apply_mesh_change(mdr : MeshDataResource, arr : Array) -> void:
+	if !mdr:
+		return
+		
+	mdr.array = copy_arrays(arr)
+
+func copy_arrays(arr : Array) -> Array:
+	return arr.duplicate(true)
+
+func copy_pool_int_array(pia : PoolIntArray) -> PoolIntArray:
+	var ret : PoolIntArray = PoolIntArray()
+	ret.resize(pia.size())
+	
+	for i in range(pia.size()):
+		ret[i] = pia[i]
+	
+	return ret

@@ -20,6 +20,7 @@ func create_gizmo(spatial):
 	if spatial is MeshDataInstance:
 		var gizmo = MDIGizmo.new()
 		
+		gizmo.set_editor_plugin(plugin)
 		gizmo.set_spatial_node(spatial)
 		gizmo.setup()
 		plugin.register_gizmo(gizmo)
