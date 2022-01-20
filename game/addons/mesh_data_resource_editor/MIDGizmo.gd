@@ -162,14 +162,14 @@ func apply() -> void:
 	if !_mdr:
 		return
 	
-	_mdr.disconnect("changed", self, "on_mdr_changed")
+	disable_change_event()
 	
 	var arrs : Array = _mdr.array
 	arrs[ArrayMesh.ARRAY_VERTEX] = _vertices
 	arrs[ArrayMesh.ARRAY_INDEX] = _indices
 	_mdr.array = arrs
 	
-	_mdr.connect("changed", self, "on_mdr_changed")
+	enable_change_event()
 
 func forward_spatial_gui_input(index, camera, event):
 	_last_known_camera_facing = camera.transform.basis.xform(Vector3(0, 0, -1))
@@ -665,6 +665,8 @@ func create_face():
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		disable_change_event()
 		
+		var orig_arr = copy_arrays(_mdr.array)
+		
 		var points : PoolVector3Array = PoolVector3Array()
 		
 		for sp in _selected_points:
@@ -672,7 +674,7 @@ func create_face():
 			
 		MDRMeshUtils.add_triangulated_mesh_from_points(_mdr, points, _last_known_camera_facing)
 		
-		
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Create Face")
 		
 		_selected_points.resize(0)
 		enable_change_event()
@@ -752,14 +754,17 @@ func delete_selected() -> void:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
 		disable_change_event()
-	
+		
+		var orig_arr = copy_arrays(_mdr.array)
+		
 		for sp in _selected_points:
 			var triangle_index : int = find_first_triangle_index_for_face(sp)
 			
 			MDRMeshUtils.remove_triangle(_mdr, triangle_index)
 
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Delete")
+
 		_selected_points.resize(0)
-		
 		enable_change_event()
 
 func generate_normals():
@@ -772,9 +777,14 @@ func generate_normals():
 		return
 	
 	disable_change_event()
+	var orig_arr = copy_arrays(_mdr.array)
+	var orig_seams = copy_pool_int_array(_mdr.seams)
+	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	MDRMeshUtils.generate_normals(_mdr)
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	
+	add_mesh_seam_change_undo_redo(orig_arr, orig_seams, _mdr.array, _mdr.seams, "Generate Normals")
 	enable_change_event()
 
 func generate_tangents():
@@ -787,9 +797,14 @@ func generate_tangents():
 		return
 		
 	disable_change_event()
+	var orig_arr = copy_arrays(_mdr.array)
+	var orig_seams = copy_pool_int_array(_mdr.seams)
+	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	MDRMeshUtils.generate_tangents(_mdr)
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
+	
+	add_mesh_seam_change_undo_redo(orig_arr, orig_seams, _mdr.array, _mdr.seams, "Generate Tangents")
 	enable_change_event()
 
 func remove_doubles():
@@ -802,14 +817,16 @@ func remove_doubles():
 		return
 	
 	disable_change_event()
+	var orig_arr = copy_arrays(_mdr.array)
+	var orig_seams = copy_pool_int_array(_mdr.seams)
 	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
 	var merged_arrays : Array = MeshUtils.remove_doubles(mdr_arr)
 	_mdr.array = merged_arrays
-	
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
 	
+	add_mesh_seam_change_undo_redo(orig_arr, orig_seams, _mdr.array, _mdr.seams, "Remove Doubles")
 	enable_change_event()
 		
 func merge_optimize():
@@ -822,17 +839,19 @@ func merge_optimize():
 		return
 	
 	disable_change_event()
+	var orig_arr = copy_arrays(_mdr.array)
+	var orig_seams = copy_pool_int_array(_mdr.seams)
 	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
 	
 	var merged_arrays : Array = MeshUtils.merge_mesh_array(mdr_arr)
 	_mdr.array = merged_arrays
-	
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
 	
+	add_mesh_seam_change_undo_redo(orig_arr, orig_seams, _mdr.array, _mdr.seams, "Merge Optimize")
 	enable_change_event()
 	
-func onnect_to_first_selected():
+func connect_to_first_selected():
 	if !_mdr:
 		return
 		
@@ -843,6 +862,10 @@ func onnect_to_first_selected():
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+	
+	disable_change_event()
+	
+	var orig_arr = copy_arrays(_mdr.array)
 	
 	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 
@@ -860,6 +883,8 @@ func onnect_to_first_selected():
 		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
 		_mdr.array = mdr_arr
 		
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Connect to first selected")
+		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
@@ -876,6 +901,9 @@ func connect_to_avg():
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+	
+	disable_change_event()
+	var orig_arr = copy_arrays(_mdr.array)
 	
 	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 
@@ -898,6 +926,9 @@ func connect_to_avg():
 		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
 		_mdr.array = mdr_arr
 		
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Connect to average")
+		enable_change_event()
+		
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
@@ -909,11 +940,15 @@ func connect_to_last_selected():
 		
 	if _selected_points.size() < 2:
 		return
-		
+	
+	var orig_arr = copy_arrays(_mdr.array)
+	
 	var mdr_arr : Array = _mdr.array
 	
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		return
+	
+	disable_change_event()
 	
 	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 
@@ -931,6 +966,8 @@ func connect_to_last_selected():
 		mdr_arr[ArrayMesh.ARRAY_VERTEX] = vertices
 		_mdr.array = mdr_arr
 		
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Connect to last selected")
+		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
@@ -1121,6 +1158,18 @@ func add_mesh_change_undo_redo(orig_arr : Array, new_arr : Array, action_name : 
 	var nac : Array = copy_arrays(new_arr)
 	_undo_redo.add_do_method(self, "apply_mesh_change", _mdr, nac)
 	_undo_redo.add_undo_method(self, "apply_mesh_change", _mdr, orig_arr)
+	_undo_redo.commit_action()
+
+func add_mesh_seam_change_undo_redo(orig_arr : Array, orig_seams : PoolIntArray, new_arr : Array, new_seams : PoolIntArray, action_name : String) -> void:
+	_undo_redo.create_action(action_name)
+	var nac : Array = copy_arrays(new_arr)
+	
+	_undo_redo.add_do_method(self, "apply_mesh_change", _mdr, nac)
+	_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(new_seams))
+	
+	_undo_redo.add_undo_method(self, "apply_mesh_change", _mdr, orig_arr)
+	_undo_redo.add_undo_method(self, "set_seam", _mdr, orig_seams)
+	
 	_undo_redo.commit_action()
 
 func apply_mesh_change(mdr : MeshDataResource, arr : Array) -> void:
