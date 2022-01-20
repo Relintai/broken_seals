@@ -43,6 +43,9 @@ var _selected_points : PoolIntArray
 
 var _mesh_outline_generator
 
+var _handle_drag_op : bool = false
+var _drag_op_orig_verices : PoolVector3Array = PoolVector3Array()
+
 var _editor_plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
@@ -64,6 +67,9 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 	if !is_dragging:
 		relative = Vector2()
 		is_dragging = true
+		
+		_handle_drag_op = true
+		_drag_op_orig_verices = copy_mdr_verts_array()
 	
 	if edit_mode == EditMode.EDIT_MODE_NONE:
 		return
@@ -213,7 +219,15 @@ func forward_spatial_gui_input(index, camera, event):
 					redraw()
 			else:
 				is_dragging = false
+				
+				if _handle_drag_op && _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null && _mdr.array[ArrayMesh.ARRAY_VERTEX].size() == _drag_op_orig_verices.size():
+					_undo_redo.create_action("Drag")
+					_undo_redo.add_do_method(self, "apply_vertex_array", _mdr, _mdr.array[ArrayMesh.ARRAY_VERTEX])
+					_undo_redo.add_undo_method(self, "apply_vertex_array", _mdr, _drag_op_orig_verices)
+					_undo_redo.commit_action()
 					
+				_handle_drag_op = false
+				
 #	elif event is InputEventMouseMotion:
 #		if edit_mode == EditMode.EDIT_MODE_NONE:
 #			return false
@@ -649,7 +663,7 @@ func create_face():
 		return
 
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
-		_mdr.disconnect("changed", self, "on_mdr_changed")
+		disable_change_event()
 		
 		var points : PoolVector3Array = PoolVector3Array()
 		
@@ -658,9 +672,10 @@ func create_face():
 			
 		MDRMeshUtils.add_triangulated_mesh_from_points(_mdr, points, _last_known_camera_facing)
 		
+		
+		
 		_selected_points.resize(0)
-		_mdr.connect("changed", self, "on_mdr_changed")
-		on_mdr_changed()
+		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
@@ -1114,6 +1129,18 @@ func apply_mesh_change(mdr : MeshDataResource, arr : Array) -> void:
 		
 	mdr.array = copy_arrays(arr)
 
+func apply_vertex_array(mdr : MeshDataResource, verts : PoolVector3Array) -> void:
+	if !mdr:
+		return
+		
+	var mdr_arr : Array = mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX:
+		return
+	
+	mdr_arr[ArrayMesh.ARRAY_VERTEX] = verts
+	mdr.array = mdr_arr
+
 func copy_arrays(arr : Array) -> Array:
 	return arr.duplicate(true)
 
@@ -1123,5 +1150,21 @@ func copy_pool_int_array(pia : PoolIntArray) -> PoolIntArray:
 	
 	for i in range(pia.size()):
 		ret[i] = pia[i]
+	
+	return ret
+
+func copy_mdr_verts_array() -> PoolVector3Array:
+	var ret : PoolVector3Array = PoolVector3Array()
+	
+	if !_mdr:
+		return ret
+
+	var mdr_arr : Array = _mdr.array
+	
+	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
+		return ret
+	
+	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
+	ret.append_array(vertices)
 	
 	return ret
