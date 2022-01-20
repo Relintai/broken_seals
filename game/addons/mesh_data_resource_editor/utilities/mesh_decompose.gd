@@ -191,6 +191,13 @@ static func get_handle_face_to_vertex_map(arrays : Array) -> Array:
 static func calculate_map_midpoints(mesh : Array, vertex_map : Array) -> PoolVector3Array:
 	return PoolVector3Array()
 
+static func pool_int_arr_contains(arr : PoolIntArray, val : int) -> bool:
+	for a in arr:
+		if a == val:
+			return true
+			
+	return false
+
 static func partition_mesh(mdr : MeshDataResource) -> Array:
 	var partitions : Array = Array()
 	
@@ -204,11 +211,53 @@ static func partition_mesh(mdr : MeshDataResource) -> Array:
 	
 	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
 	
-	# TODO! Just copy indices and return them for now so I can develop the gui
-	var iarr : PoolIntArray = PoolIntArray()
-	for i in indices:
-		iarr.push_back(i)
+	var triangle_count : int = indices.size() / 3
+	var processed_triangles : PoolIntArray = PoolIntArray()
+	
+	while triangle_count != processed_triangles.size():
+		var partition : PoolIntArray = PoolIntArray()
 		
-	partitions.append(iarr)
+		var first : bool = true
+		var triangle_added : bool = true
+		while triangle_added:
+			triangle_added = false
+			for i in range(indices.size()):
+				var triangle_index : int = i / 3
+				
+				if pool_int_arr_contains(processed_triangles, triangle_index):
+					continue
+				
+				if first:
+					first = false
+					
+					# We have to be at the 0th index of a triangle
+					partition.append(indices[i])
+					partition.append(indices[i + 1])
+					partition.append(indices[i + 2])
+					
+					triangle_added = true
+					break
+				
+				var index : int = indices[i]
+				
+				if pool_int_arr_contains(partition, index):
+					processed_triangles.append(triangle_index)
+					
+					var tri_start_index : int = i - (i % 3)
+
+					var i0 : int = indices[tri_start_index]
+					var i1 : int = indices[tri_start_index + 1]
+					var i2 : int = indices[tri_start_index + 2]
+					
+					partition.append(i0)
+					partition.append(i1)
+					partition.append(i2)
+					
+					triangle_added = true
+					break
+
+			
+		partitions.append(partition)
+		
 	
 	return partitions
