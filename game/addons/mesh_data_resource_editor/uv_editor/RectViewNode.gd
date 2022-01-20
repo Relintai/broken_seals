@@ -14,6 +14,8 @@ var _mdr : MeshDataResource = null
 var _indices : PoolIntArray = PoolIntArray()
 var _uvs : PoolVector2Array = PoolVector2Array()
 var _base_rect : Rect2 = Rect2(0, 0, 100, 100)
+var _uv_min : Vector2 = Vector2()
+var _uv_max : Vector2 = Vector2()
 
 var edited_resource_parent_size : Vector2 = Vector2()
 
@@ -35,30 +37,12 @@ func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
 	
 	if _mdr && _uvs.size() > 0:
+		var c : Color = Color(1, 1, 1, 1)
+		
 		for i in range(0, len(_indices), 3):
-			var c : Color = Color(1, 1, 1, 1)
-			
-			if _uvs[_indices[i]].is_equal_approx(Vector2()) || _uvs[_indices[i + 1]].is_equal_approx(Vector2()):
-				c = Color(1, 0, 0, 1)
-			else:
-				c = Color(1, 1, 1, 1)
-				
 			draw_line(_uvs[_indices[i]] * get_size(), _uvs[_indices[i + 1]] * get_size(), c, 1, false)
-
-			if _uvs[_indices[i + 1]].is_equal_approx(Vector2()) || _uvs[_indices[i + 2]].is_equal_approx(Vector2()):
-				c = Color(1, 0, 0, 1)
-			else:
-				c = Color(1, 1, 1, 1)
-				
 			draw_line(_uvs[_indices[i + 1]] * get_size(), _uvs[_indices[i + 2]] * get_size(), c, 1, false)
-				
-			if _uvs[_indices[i + 2]].is_equal_approx(Vector2()) || _uvs[_indices[i]].is_equal_approx(Vector2()):
-				c = Color(1, 0, 0, 1)
-			else:
-				c = Color(1, 1, 1, 1)
-
 			draw_line(_uvs[_indices[i + 2]] * get_size(), _uvs[_indices[i]] * get_size(), c, 1, false)
-
 
 func refresh() -> void:
 	if !_mdr:
@@ -95,8 +79,9 @@ func set_edited_resource(mdr : MeshDataResource, indices : PoolIntArray):
 	if arrays[ArrayMesh.ARRAY_TEX_UV] == null:
 		return
 		
-	_uvs = arrays[ArrayMesh.ARRAY_TEX_UV]
-	
+	# Make sure it gets copied
+	_uvs.append_array(arrays[ArrayMesh.ARRAY_TEX_UV])
+
 	set_up_base_rect()
 
 	refresh()
@@ -130,6 +115,32 @@ func set_up_base_rect() -> void:
 	_base_rect = Rect2(vmin.x, vmin.y, vmax.x - vmin.x, vmax.y - vmin.y)
 	_base_rect.position *= edited_resource_parent_size
 	_base_rect.size *= edited_resource_parent_size
+	
+	_uv_min = vmin
+	_uv_max = vmax
+	
+	normalize_uvs()
+	
+func normalize_uvs() -> void:
+	var xmm : float = _uv_max.x - _uv_min.x
+	var ymm : float = _uv_max.x - _uv_min.x
+	
+	if xmm == 0:
+		xmm = 0.0000001
+		
+	if ymm == 0:
+		ymm = 0.0000001
+	
+	for i in range(_uvs.size()):
+		var uv : Vector2 = _uvs[i]
+		
+		uv.x -= _uv_min.x
+		uv.x /= xmm
+		
+		uv.y -= _uv_min.y
+		uv.y /= ymm
+		
+		_uvs[i] = uv
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _notification(p_what : int) -> void:
