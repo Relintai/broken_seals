@@ -11,11 +11,24 @@ var _material : MMMateial  = null
 var _node : MMNode = null
 var properties : Array = Array()
 
+var _editor_node 
+var _undo_redo : UndoRedo = null 
+var _ignore_change_event : bool = false
+
 func _init():
 	show_close = true
 	connect("offset_changed", self, "on_offset_changed")
 	connect("close_request", self, "on_close_request")
+
+func set_editor(editor_node) -> void:
+	_editor_node = editor_node
 	
+	_undo_redo = _editor_node.get_undo_redo()
+
+func ignore_changes(val : bool) -> void:
+	_ignore_change_event = val
+	_editor_node.ignore_changes(val)
+
 func add_slot_texture(getter : String, setter : String) -> int:
 	var t : TextureRect = TextureRect.new()
 	t.rect_min_size = Vector2(128, 128)
@@ -448,7 +461,12 @@ func connect_slot(slot_idx : int, to_node : Node, to_slot_idx : int) -> bool:
 				to_property_index = i
 				break
 	
-	to_node.properties[to_property_index][6].set_input_property(properties[from_property_index][6])
+	#to_node.properties[to_property_index][6].set_input_property(properties[from_property_index][6])
+	
+	_undo_redo.create_action("MMGD: connect_slot")
+	_undo_redo.add_do_method(to_node.properties[to_property_index][6], "set_input_property", properties[from_property_index][6])
+	_undo_redo.add_undo_method(to_node.properties[to_property_index][6], "set_input_property", to_node.properties[to_property_index][6].input_property)
+	_undo_redo.commit_action()
 
 	return true
 
@@ -472,7 +490,12 @@ func disconnect_slot(slot_idx : int, to_node : Node, to_slot_idx : int) -> bool:
 				to_property_index = i
 				break
 	
-	to_node.properties[to_property_index][6].set_input_property(null)
+	#to_node.properties[to_property_index][6].set_input_property(null)
+
+	_undo_redo.create_action("MMGD: disconnect_slot")
+	_undo_redo.add_do_method(to_node.properties[to_property_index][6], "unset_input_property")
+	_undo_redo.add_undo_method(to_node.properties[to_property_index][6], "set_input_property", to_node.properties[to_property_index][6].input_property)
+	_undo_redo.commit_action()
 
 	return true
 
@@ -532,37 +555,96 @@ func on_node_changed():
 	#get all properties again
 	#_node.recalculate_image(_material)
 	
+	if _ignore_change_event:
+		return
+	
 	propagate_node_change()
 	
 func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
-	_node.call(properties[slot_idx][4], int(val))
+	#_node.call(properties[slot_idx][4], int(val))
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], int(val))
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_float_spinbox_value_changed(val : float, slot_idx) -> void:
-	_node.call(properties[slot_idx][4], val)
+	#_node.call(properties[slot_idx][4], val)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], val)
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
 	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
 	
-	_node.call(properties[slot_idx][4], vv)
+	#_node.call(properties[slot_idx][4], vv)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], vv)
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_vector3_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y, spinbox_z) -> void:
 	var vv : Vector3 = Vector3(spinbox_x.value, spinbox_y.value, spinbox_z.value)
 	
-	_node.call(properties[slot_idx][4], vv)
+	#_node.call(properties[slot_idx][4], vv)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], vv)
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_int_universal_spinbox_value_changed(val : float, slot_idx) -> void:
-	properties[slot_idx][6].set_default_value(int(val))
+	#properties[slot_idx][6].set_default_value(int(val))
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(properties[slot_idx][6], "set_default_value", int(val))
+	_undo_redo.add_undo_method(properties[slot_idx][6], "set_default_value", properties[slot_idx][6].get_default_value())
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_float_universal_spinbox_value_changed(val : float, slot_idx) -> void:
-	properties[slot_idx][6].set_default_value(val)
+	#properties[slot_idx][6].set_default_value(val)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(properties[slot_idx][6], "set_default_value", val)
+	_undo_redo.add_undo_method(properties[slot_idx][6], "set_default_value", properties[slot_idx][6].get_default_value())
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_vector2_universal_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
 	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
 	
-	properties[slot_idx][6].set_default_value(vv)
+	#properties[slot_idx][6].set_default_value(vv)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(properties[slot_idx][6], "set_default_value", vv)
+	_undo_redo.add_undo_method(properties[slot_idx][6], "set_default_value", properties[slot_idx][6].get_default_value())
+	_undo_redo.commit_action()
+	ignore_changes(false)
 	
 func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
-	_node.call(properties[slot_idx][4], val)
+	#_node.call(properties[slot_idx][4], val)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], val)
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_universal_texture_changed(slot_idx : int) -> void:
 	var img : Image = properties[slot_idx][6].get_active_image()
@@ -585,13 +667,34 @@ func on_universal_texture_changed_image_picker(slot_idx : int) -> void:
 		properties[slot_idx][5].texture_normal = ImageTexture.new()
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
-	_node.call(properties[slot_idx][4], text)
+	#_node.call(properties[slot_idx][4], text)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(_node, properties[slot_idx][4], text)
+	_undo_redo.add_undo_method(_node, properties[slot_idx][4], _node.call(properties[slot_idx][3]))
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_universal_color_changed(c : Color, slot_idx : int) -> void:
-	properties[slot_idx][6].set_default_value(c)
+	#properties[slot_idx][6].set_default_value(c)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(properties[slot_idx][6], "set_default_value", c)
+	_undo_redo.add_undo_method(properties[slot_idx][6], "set_default_value", properties[slot_idx][6].get_default_value())
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func on_universal_image_path_changed(f : String, slot_idx : int) -> void:
 	_node.call(properties[slot_idx][8], f)
+	
+	ignore_changes(true)
+	_undo_redo.create_action("MMGD: value changed")
+	_undo_redo.add_do_method(properties[slot_idx][6], "set_default_value", f)
+	_undo_redo.add_undo_method(properties[slot_idx][6], "set_default_value", properties[slot_idx][6].get_default_value())
+	_undo_redo.commit_action()
+	ignore_changes(false)
 
 func get_material_node() -> MMNode:
 	return _node

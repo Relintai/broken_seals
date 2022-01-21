@@ -16,6 +16,7 @@ func _enter_tree():
 	add_custom_type("MMNodeUniversalProperty", "Resource", MMNodeUniversalProperty, null)
 	
 	editor_scene = editor_packed_scene.instance()
+	editor_scene.set_plugin(self)
 	
 	tool_button = add_control_to_bottom_panel(editor_scene, "MMGD")
 	tool_button.hide()

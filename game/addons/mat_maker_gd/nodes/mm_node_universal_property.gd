@@ -311,6 +311,11 @@ func set_input_property(val : MMNodeUniversalProperty) -> void:
 		input_property.connect("changed", self, "on_input_property_changed")
 		
 	emit_changed()
-	
+
+# Because in UndiRedo if you pass null as the only argument it will look
+# for a method with no arguments
+func unset_input_property() -> void:
+	set_input_property(null)
+
 func on_input_property_changed() -> void:
 	emit_changed()

@@ -11,9 +11,21 @@ export(NodePath) var add_popup_path : NodePath = "Popups/AddPopup"
 var _graph_edit : GraphEdit = null
 
 var _material : MMMateial
+var _ignore_material_change_event : bool = false
+var _event_recreate_queued : bool = false
+
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
 
 func _enter_tree():
 	ensure_objs()
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	_undo_redo = plugin.get_undo_redo()
+
+func get_undo_redo() -> UndoRedo:
+	return _undo_redo
 
 func ensure_objs() -> void:
 	if !_graph_edit:
@@ -63,6 +75,7 @@ func recreate() -> void:
 	for n in _material.nodes:
 		var gn : GraphNode = MMGraphNode.new()
 		gn.slot_colors = slot_colors
+		gn.set_editor(self)
 		gn.set_node(_material, n)
 		_graph_edit.add_child(gn)
 		
@@ -80,6 +93,8 @@ func recreate() -> void:
 					_graph_edit.connect_node(output_node.name, from_slot, input_node.name, to_slot)
 	
 	_material.render()
+	
+	_event_recreate_queued = false
 
 func find_graph_node_for(nnode) -> Node:
 	for c in _graph_edit.get_children():
@@ -93,33 +108,63 @@ func find_graph_node_for(nnode) -> Node:
 	return null
 
 func set_mmmaterial(object : MMMateial):
+	if _material:
+		_material.disconnect("changed", self, "on_material_changed")
+	
 	_material = object
 	
-	recreate()
+	if _material:
+		_material.connect("changed", self, "on_material_changed")
 	
+	recreate()
+
+func on_material_changed() -> void:
+	if _ignore_material_change_event:
+		return
+		
+	if _event_recreate_queued:
+		return
+	
+	call_deferred("recreate")
+
+func ignore_changes(val : bool) -> void:
+	_ignore_material_change_event = val
+
 func on_graph_edit_connection_request(from: String, from_slot: int, to: String, to_slot: int):
 	var from_node : GraphNode = _graph_edit.get_node(from)
 	var to_node : GraphNode = _graph_edit.get_node(to)
 	
+	ignore_changes(true)
+	
 	_material.cancel_render_and_wait()
-
+	
 	if from_node.connect_slot(from_slot, to_node, to_slot):
 		_graph_edit.connect_node(from, from_slot, to, to_slot)
+		
+	ignore_changes(false)
 
 func on_graph_edit_disconnection_request(from: String, from_slot: int, to: String, to_slot: int):
 	var from_node : GraphNode = _graph_edit.get_node(from)
 	var to_node : GraphNode = _graph_edit.get_node(to)
 	
+	ignore_changes(true)
+	
 	_material.cancel_render_and_wait()
 
 	if from_node.disconnect_slot(from_slot, to_node, to_slot):
 		_graph_edit.disconnect_node(from, from_slot, to, to_slot)
+		
+	ignore_changes(false)
 
 func on_graph_node_close_request(node : GraphNode) -> void:
 	if _material:
+		ignore_changes(true)
+		
 		_material.cancel_render_and_wait()
 		_material.remove_node(node._node)
 		recreate()
+		
+		ignore_changes(false)
 
 func _on_AddButton_pressed():
 	get_node(add_popup_path).popup_centered()
@@ -139,10 +184,15 @@ func _on_AddPopup_ok_pressed(script_path : String):
 		print("_on_AddPopup_ok_pressed: Error !nnode! script: " + script_path)
 		return
 	
+	ignore_changes(true)
+	
 	_material.add_node(nnode)
 	
 	var gn : GraphNode = MMGraphNode.new()
 	gn.slot_colors = slot_colors
+	gn.set_editor(self)
 	gn.set_node(_material, nnode)
 	_graph_edit.add_child(gn)
+	
+	ignore_changes(false)
 	
