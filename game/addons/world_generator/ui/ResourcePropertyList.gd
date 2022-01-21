@@ -137,7 +137,7 @@ func add_slot_bool(getter : String, setter : String, slot_name : String) -> int:
 	
 	cb.pressed = _edited_resource.call(getter)
 	
-	cb.connect("toggled", _edited_resource, setter)
+	cb.connect("toggled", self, "on_checkbox_value_changed", [ slot_idx ])
 	
 	return slot_idx
 
@@ -329,6 +329,18 @@ func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
 	
 	_undo_redo.create_action("WE: Set Value")
 	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], int(val))
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
+
+func on_checkbox_value_changed(val : bool, slot_idx) -> void:
+	_ignore_changed_evend = true
+	
+	#_edited_resource.call(properties[slot_idx][2], val)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], val)
 	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
 	_undo_redo.commit_action()
 	
