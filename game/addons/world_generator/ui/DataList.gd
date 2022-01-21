@@ -6,6 +6,8 @@ export(int, "Continent,Zone,Sub Zone") var class_types : int = 0
 var edited_resource : WorldGenBaseResource = null
 var name_edited_resource : WorldGenBaseResource = null
 
+var _ignore_changed_event : bool = false
+
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
@@ -59,7 +61,13 @@ func add_item(item_name : String = "") -> void:
 	
 	e.resource_name = item_name
 	
-	edited_resource.add_content(e)
+	#edited_resource.add_content(e)
+	#remove_content_entry
+	
+	_undo_redo.create_action("WE: Created Entry")
+	_undo_redo.add_do_method(edited_resource, "add_content", e)
+	_undo_redo.add_undo_method(edited_resource, "remove_content_entry", e)
+	_undo_redo.commit_action()
 	
 func refresh() -> void:
 	clear()
@@ -119,7 +127,12 @@ func delete_button_pressed() -> void:
 	if !item_resource:
 		return
 		
-	edited_resource.remove_content_entry(item_resource)
+	#edited_resource.remove_content_entry(item_resource)
+	
+	_undo_redo.create_action("WE: Created Entry")
+	_undo_redo.add_do_method(edited_resource, "remove_content_entry", item_resource)
+	_undo_redo.add_undo_method(edited_resource, "add_content", item_resource)
+	_undo_redo.commit_action()
 
 func duplicate_button_pressed() -> void:
 	var item : TreeItem = get_selected()
@@ -132,9 +145,19 @@ func duplicate_button_pressed() -> void:
 	if !item_resource:
 		return
 		
-	edited_resource.duplicate_content_entry(item_resource)
+	#edited_resource.duplicate_content_entry(item_resource)
+	
+	var de = edited_resource.duplicate_content_entry(item_resource, false)
+
+	_undo_redo.create_action("WE: Created Entry")
+	_undo_redo.add_do_method(edited_resource, "add_content", de)
+	_undo_redo.add_undo_method(edited_resource, "remove_content_entry", de)
+	_undo_redo.commit_action()
 
 func on_resource_changed() -> void:
+	if _ignore_changed_event:
+		return
+		
 	call_deferred("refresh")
 
 func on_item_activated() -> void:

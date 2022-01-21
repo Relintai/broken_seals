@@ -82,10 +82,14 @@ func get_all_contents_with_name(name : String) -> Array:
 		
 	return arr
 
-func duplicate_content_entry(entry : WorldGenBaseResource) -> void:
+func duplicate_content_entry(entry : WorldGenBaseResource, add : bool = true) -> WorldGenBaseResource:
 	var de : WorldGenBaseResource = entry.duplicate(true)
 	de.resource_name += " (Duplicate)"
-	add_content(de)
+	
+	if add:
+		add_content(de)
+		
+	return de
 
 func setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
 	_setup_terra_library(library, pseed)
