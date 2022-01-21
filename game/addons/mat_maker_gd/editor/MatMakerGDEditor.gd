@@ -11,8 +11,8 @@ export(NodePath) var add_popup_path : NodePath = "Popups/AddPopup"
 var _graph_edit : GraphEdit = null
 
 var _material : MMMateial
-var _ignore_material_change_event : bool = false
-var _event_recreate_queued : bool = false
+var _ignore_material_change_event : int = 0
+var _recreation_in_progress : bool = false
 
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -58,6 +58,13 @@ func ensure_objs() -> void:
 		_graph_edit.connect("disconnection_request", self, "on_graph_edit_disconnection_request")
 
 func recreate() -> void:
+	ignore_changes(true)
+	
+	if _recreation_in_progress:
+		return
+
+	_recreation_in_progress = true
+	
 	ensure_objs()
 	
 	_graph_edit.clear_connections()
@@ -94,7 +101,9 @@ func recreate() -> void:
 	
 	_material.render()
 	
-	_event_recreate_queued = false
+	_recreation_in_progress = false
+	
+	ignore_changes(false)
 
 func find_graph_node_for(nnode) -> Node:
 	for c in _graph_edit.get_children():
@@ -119,16 +128,19 @@ func set_mmmaterial(object : MMMateial):
 		_material.connect("changed", self, "on_material_changed")
 
 func on_material_changed() -> void:
-	if _ignore_material_change_event:
+	if _ignore_material_change_event > 0:
 		return
 	
-	if _event_recreate_queued:
+	if _recreation_in_progress:
 		return
-	
+		
 	call_deferred("recreate")
 
 func ignore_changes(val : bool) -> void:
-	_ignore_material_change_event = val
+	if val:
+		_ignore_material_change_event += 1
+	else:
+		_ignore_material_change_event -= 1
 
 func on_graph_edit_connection_request(from: String, from_slot: int, to: String, to_slot: int):
 	var from_node : GraphNode = _graph_edit.get_node(from)
