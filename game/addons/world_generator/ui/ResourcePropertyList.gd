@@ -7,6 +7,7 @@ var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
 var _ignore_changed_evend : bool = false
+var _refresh_queued : bool = false
 
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -460,6 +461,8 @@ func refresh() -> void:
 		
 	$MainContainer/HBoxContainer/ClassLE.text = cls_str
 	$MainContainer/HBoxContainer2/ScriptLE.text = script_str
+	
+	_refresh_queued = false
 
 func edit_resource(wgw) -> void:
 	if _edited_resource:
@@ -476,5 +479,9 @@ func edit_resource(wgw) -> void:
 func on_edited_resource_changed() -> void:
 	if _ignore_changed_evend:
 		return
+	
+	if _refresh_queued:
+		return
 		
+	_refresh_queued = true
 	call_deferred("refresh")
