@@ -6,6 +6,8 @@ var EditorResourceWidget : PackedScene = preload("res://addons/world_generator/w
 var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
+var _ignore_changed_evend : bool = false
+
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
@@ -321,34 +323,100 @@ func get_property_control(slot_idx : int) -> Node:
 	return properties[slot_idx][3]
 
 func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
-	_edited_resource.call(properties[slot_idx][2], int(val))
+	_ignore_changed_evend = true
+	
+	#_edited_resource.call(properties[slot_idx][2], int(val))
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], int(val))
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_float_spinbox_value_changed(val : float, slot_idx) -> void:
-	_edited_resource.call(properties[slot_idx][2], val)
+	_ignore_changed_evend = true
+	
+	#_edited_resource.call(properties[slot_idx][2], val)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], val)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_vector2_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
+	_ignore_changed_evend = true
 	var vv : Vector2 = Vector2(spinbox_x.value, spinbox_y.value)
 	
-	_edited_resource.call(properties[slot_idx][2], vv)
+	#_edited_resource.call(properties[slot_idx][2], vv)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], vv)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_vector3_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y, spinbox_z) -> void:
+	_ignore_changed_evend = true
 	var vv : Vector3 = Vector3(spinbox_x.value, spinbox_y.value, spinbox_z.value)
 	
-	_edited_resource.call(properties[slot_idx][2], vv)
+	#_edited_resource.call(properties[slot_idx][2], vv)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], vv)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_rect2_spinbox_value_changed(val : float, slot_idx, spinboxes) -> void:
+	_ignore_changed_evend = true
 	var vv : Rect2 = Rect2(spinboxes[0].value, spinboxes[1].value, spinboxes[2].value, spinboxes[3].value)
 	
-	_edited_resource.call(properties[slot_idx][2], vv)
+	#_edited_resource.call(properties[slot_idx][2], vv)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], vv)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
-	_edited_resource.call(properties[slot_idx][2], val)
+	_ignore_changed_evend = true
+	#_edited_resource.call(properties[slot_idx][2], val)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], val)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
-	_edited_resource.call(properties[slot_idx][2], text)
+	_ignore_changed_evend = true
+	#_edited_resource.call(properties[slot_idx][2], text)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], text)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func on_widget_resource_changed(res : Resource, slot_idx : int) -> void:
-	_edited_resource.call(properties[slot_idx][2], res)
+	_ignore_changed_evend = true
+	#_edited_resource.call(properties[slot_idx][2], res)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], res)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
 
 func clear() -> void:
 	properties.clear()
@@ -394,4 +462,7 @@ func edit_resource(wgw) -> void:
 	refresh()
 
 func on_edited_resource_changed() -> void:
+	if _ignore_changed_evend:
+		return
+		
 	call_deferred("refresh")
