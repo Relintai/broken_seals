@@ -542,7 +542,7 @@ func set_node(material : MMMateial, node : MMNode) -> void:
 	
 	offset = _node.get_graph_position()
 	
-	_node.connect("changed", self, "on_node_changed")
+	#_node.connect("changed", self, "on_node_changed")
 
 func propagate_node_change() -> void:
 	pass
@@ -551,18 +551,17 @@ func on_offset_changed():
 	if _node:
 		_node.set_graph_position(offset)
 
-func on_node_changed():
-	#get all properties again
-	#_node.recalculate_image(_material)
-	
-	if _ignore_change_event:
-		return
-	
-	propagate_node_change()
+#func on_node_changed():
+#	if _ignore_change_event:
+#		return
+#
+#	_ignore_change_event = true
+#	propagate_node_change()
+#	_ignore_change_event = false
 	
 func on_int_spinbox_value_changed(val : float, slot_idx) -> void:
 	#_node.call(properties[slot_idx][4], int(val))
-	
+
 	ignore_changes(true)
 	_undo_redo.create_action("MMGD: value changed")
 	_undo_redo.add_do_method(_node, properties[slot_idx][4], int(val))
@@ -647,6 +646,8 @@ func on_slot_enum_item_selected(val : int, slot_idx : int) -> void:
 	ignore_changes(false)
 
 func on_universal_texture_changed(slot_idx : int) -> void:
+	ignore_changes(true)
+	
 	var img : Image = properties[slot_idx][6].get_active_image()
 	
 	var tex : ImageTexture = properties[slot_idx][5].texture
@@ -655,8 +656,12 @@ func on_universal_texture_changed(slot_idx : int) -> void:
 		properties[slot_idx][5].texture.create_from_image(img, 0)
 	else:
 		properties[slot_idx][5].texture = ImageTexture.new()
+		
+	ignore_changes(false)
 
 func on_universal_texture_changed_image_picker(slot_idx : int) -> void:
+	ignore_changes(true)
+	
 	var img : Image = properties[slot_idx][6].get_active_image()
 	
 	var tex : ImageTexture = properties[slot_idx][5].texture_normal
@@ -665,6 +670,8 @@ func on_universal_texture_changed_image_picker(slot_idx : int) -> void:
 		properties[slot_idx][5].texture_normal.create_from_image(img, 0)
 	else:
 		properties[slot_idx][5].texture_normal = ImageTexture.new()
+		
+	ignore_changes(false)
 
 func on_slot_line_edit_text_entered(text : String, slot_idx : int) -> void:
 	#_node.call(properties[slot_idx][4], text)
