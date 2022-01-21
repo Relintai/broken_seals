@@ -22,6 +22,7 @@ func initialize():
 		job.setup(self, "_thread_func")
 		
 		for n in nodes:
+			n.init_properties()
 			n.connect("changed", self, "on_node_changed")
 
 func add_node(node : MMNode) -> void:
