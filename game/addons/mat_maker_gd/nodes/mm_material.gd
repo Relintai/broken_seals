@@ -52,6 +52,10 @@ func remove_node(node : MMNode) -> void:
 func render() -> void:
 	initialize()
 	
+	if rendering:
+		queued_render = true
+		return
+	
 	if USE_THREADS:
 		render_threaded()
 	else:
@@ -69,13 +73,6 @@ func render_non_threaded() -> void:
 
 func render_threaded() -> void:
 	job.cancelled = false
-	
-	if rendering:
-		queued_render = true
-		return
-		
-	if !initialized:
-		initialize()
 	
 	if !ThreadPool.has_job(job):
 		ThreadPool.add_job(job)
@@ -109,11 +106,12 @@ func _thread_func() -> void:
 
 func cancel_render_and_wait() -> void:
 	if rendering:
-		ThreadPool.cancel_task_wait(job)
+		ThreadPool.cancel_job_wait(job)
 		
 		job.cancelled = false
 		
 		pass
 
 func on_node_changed() -> void:
+	emit_changed()
 	call_deferred("render")
