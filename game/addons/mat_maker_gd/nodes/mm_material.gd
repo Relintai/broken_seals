@@ -49,15 +49,14 @@ func remove_node(node : MMNode) -> void:
 	emit_changed()
 
 func render() -> void:
+	initialize()
+	
 	if USE_THREADS:
 		render_threaded()
 	else:
 		render_non_threaded()
 	
 func render_non_threaded() -> void:
-	if !initialized:
-		initialize()
-		
 	var did_render : bool = true
 		
 	while did_render:
