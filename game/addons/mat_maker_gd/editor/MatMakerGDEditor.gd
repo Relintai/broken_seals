@@ -112,16 +112,16 @@ func set_mmmaterial(object : MMMateial):
 		_material.disconnect("changed", self, "on_material_changed")
 	
 	_material = object
-	
+
+	recreate()
+		
 	if _material:
 		_material.connect("changed", self, "on_material_changed")
-	
-	recreate()
 
 func on_material_changed() -> void:
 	if _ignore_material_change_event:
 		return
-		
+	
 	if _event_recreate_queued:
 		return
 	
