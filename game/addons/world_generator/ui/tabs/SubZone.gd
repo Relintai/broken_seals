@@ -16,6 +16,9 @@ func _ready():
 	var szoption_button : OptionButton = $VBoxContainer/SubZoneOptionButton
 	szoption_button.connect("item_selected", self, "on_sub_zone_item_selected")
 
+func set_plugin(plugin : EditorPlugin) -> void:
+	$VBoxContainer/HBoxContainer2/ResourcePropertyList.set_plugin(plugin)
+
 func continent_changed() -> void:
 	var option_button : OptionButton = $VBoxContainer/ZoneOptionButton
 	option_button.clear()

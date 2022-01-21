@@ -6,6 +6,13 @@ var EditorResourceWidget : PackedScene = preload("res://addons/world_generator/w
 var _edited_resource : WorldGenBaseResource = null
 var properties : Array = Array()
 
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	_undo_redo = _plugin.get_undo_redo()
+
 func add_h_separator() -> int:
 	var hsep : HSeparator = HSeparator.new()
 	

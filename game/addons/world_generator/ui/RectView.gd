@@ -10,6 +10,9 @@ var _rect_scale : float = 1
 var edited_resource : WorldGenBaseResource = null
 var edited_resource_current_size : Vector2 = Vector2()
 
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
 	
@@ -21,6 +24,10 @@ func _enter_tree():
 	
 	if !is_connected("visibility_changed", self, "on_visibility_changed"):
 		connect("visibility_changed", self, "on_visibility_changed")
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	_undo_redo = _plugin.get_undo_redo()
 
 func on_visibility_changed() -> void:
 	call_deferred("apply_zoom")

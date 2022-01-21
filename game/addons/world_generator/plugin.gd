@@ -26,6 +26,7 @@ func _enter_tree():
 	add_custom_type("SubZone", "Resource", SSubZone, null)
 
 	editor_scene = editor_packed_scene.instance()
+	editor_scene.set_plugin(self)
 
 	tool_button = add_control_to_bottom_panel(editor_scene, "World Editor")
 	tool_button.hide()

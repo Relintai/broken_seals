@@ -12,6 +12,11 @@ func _ready():
 	var zoption_button : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
 	zoption_button.connect("item_selected", self, "on_zone_item_selected")
 
+func set_plugin(plugin : EditorPlugin) -> void:
+	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.set_plugin(plugin)
+	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_plugin(plugin)
+	$HSplitContainer/RectEditor.set_plugin(plugin)
+
 func refresh() -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
 	option_button.clear()

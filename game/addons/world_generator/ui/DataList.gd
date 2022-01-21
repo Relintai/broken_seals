@@ -6,9 +6,16 @@ export(int, "Continent,Zone,Sub Zone") var class_types : int = 0
 var edited_resource : WorldGenBaseResource = null
 var name_edited_resource : WorldGenBaseResource = null
 
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
 func _init():
 	connect("item_activated", self, "on_item_activated")
-	
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	_undo_redo = _plugin.get_undo_redo()
+
 func _enter_tree():
 	var dir : Directory = Directory.new()
 	

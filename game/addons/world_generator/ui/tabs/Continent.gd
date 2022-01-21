@@ -8,6 +8,11 @@ func _ready():
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/OptionButton
 	option_button.connect("item_selected", self, "on_item_selected")
 
+func set_plugin(plugin : EditorPlugin) -> void:
+	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.set_plugin(plugin)
+	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_plugin(plugin)
+	$HSplitContainer/RectEditor.set_plugin(plugin)
+
 func refresh_continent() -> void:
 	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.edit_resource(edited_continent)
 	$HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList.set_edited_resource(edited_continent)
