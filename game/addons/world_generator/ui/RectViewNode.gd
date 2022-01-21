@@ -25,6 +25,15 @@ var drag_offset_far : Vector2
 
 var _rect_scale : float = 1
 
+var _edited_resource_event_ignore : bool = false
+
+var _plugin : EditorPlugin = null
+var _undo_redo : UndoRedo = null
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin
+	_undo_redo = _plugin.get_undo_redo()
+
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
@@ -78,7 +87,15 @@ func set_edited_resource(res : WorldGenBaseResource):
 		_editor_rect_border_size = edited_resource.get_editor_rect_border_size()
 		_edited_resource_font_color = edited_resource.get_editor_font_color()
 		_editor_additional_text = edited_resource.get_editor_additional_text()
+	
+	edited_resource.connect("changed", self, "on_edited_resource_changed")
+	
+	refresh()
 
+func on_edited_resource_changed() -> void:
+	if _edited_resource_event_ignore:
+		return
+		
 	refresh()
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
@@ -106,6 +123,20 @@ func _gui_input(p_event : InputEvent) -> void:
 		elif (drag_type != DragType.DRAG_NONE && !mb.is_pressed()):
 			# End a dragging operation.
 			drag_type = DragType.DRAG_NONE
+			
+			var rect : Rect2 = get_rect()
+			#rect needs to be converted back
+			rect.position.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
+			rect.position /= _rect_scale
+			rect.size /= _rect_scale
+			
+			#edited_resource.set_rect(rect)
+			_edited_resource_event_ignore = true
+			_undo_redo.create_action("WE: Drag End")
+			_undo_redo.add_do_method(edited_resource, "set_rect", rect)
+			_undo_redo.add_undo_method(edited_resource, "set_rect", edited_resource.get_rect())
+			_undo_redo.commit_action()
+			_edited_resource_event_ignore = false
 
 	if p_event is InputEventMouseMotion:
 		var mm : InputEventMouseMotion = p_event as InputEventMouseMotion
@@ -170,12 +201,6 @@ func _gui_input(p_event : InputEvent) -> void:
 
 			set_size(rect.size)
 			set_position(rect.position)
-			
-			#rect needs to be converted back
-			rect.position.y = edited_resource_parent_size.y * _rect_scale - rect.size.y - rect.position.y
-			rect.position /= _rect_scale
-			rect.size /= _rect_scale
-			edited_resource.set_rect(rect)
 
 #based on / ported from engine/scene/gui/dialogs.h and .cpp
 func _drag_hit_test(pos : Vector2) -> int:

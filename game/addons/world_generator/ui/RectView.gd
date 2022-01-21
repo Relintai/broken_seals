@@ -91,6 +91,7 @@ func refresh_rects() -> void:
 			var s : Node = rect_editor_node_scene.instance()
 			
 			add_child(s)
+			s.set_plugin(_plugin)
 			s.set_editor_rect_scale(_rect_scale)
 			s.edited_resource_parent_size = edited_resource_current_size
 			s.set_edited_resource(c)
