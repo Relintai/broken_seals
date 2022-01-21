@@ -1165,9 +1165,9 @@ func add_mesh_seam_change_undo_redo(orig_arr : Array, orig_seams : PoolIntArray,
 	var nac : Array = copy_arrays(new_arr)
 	
 	_undo_redo.add_do_method(self, "apply_mesh_change", _mdr, nac)
-	_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(new_seams))
-	
 	_undo_redo.add_undo_method(self, "apply_mesh_change", _mdr, orig_arr)
+	
+	_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(new_seams))
 	_undo_redo.add_undo_method(self, "set_seam", _mdr, orig_seams)
 	
 	_undo_redo.commit_action()
