@@ -173,7 +173,14 @@ func on_graph_node_close_request(node : GraphNode) -> void:
 		ignore_changes(true)
 		
 		_material.cancel_render_and_wait()
-		_material.remove_node(node._node)
+		
+		#_material.remove_node(node._node)
+		
+		_undo_redo.create_action("MMGD: Remove Node")
+		_undo_redo.add_do_method(_material, "remove_node", node._node)
+		_undo_redo.add_undo_method(_material, "add_node", node._node)
+		_undo_redo.commit_action()
+		
 		recreate()
 		
 		ignore_changes(false)
@@ -198,7 +205,12 @@ func _on_AddPopup_ok_pressed(script_path : String):
 	
 	ignore_changes(true)
 	
-	_material.add_node(nnode)
+	#_material.add_node(nnode)
+	
+	_undo_redo.create_action("MMGD: Add Node")
+	_undo_redo.add_do_method(_material, "add_node", nnode)
+	_undo_redo.add_undo_method(_material, "remove_node", nnode)
+	_undo_redo.commit_action()
 	
 	var gn : GraphNode = MMGraphNode.new()
 	gn.slot_colors = slot_colors
