@@ -17,7 +17,7 @@ var _ignore_change_event : bool = false
 
 func _init():
 	show_close = true
-	connect("offset_changed", self, "on_offset_changed")
+	connect("dragged", self, "on_dragged")
 	connect("close_request", self, "on_close_request")
 
 func set_editor(editor_node) -> void:
@@ -547,9 +547,17 @@ func set_node(material : MMMateial, node : MMNode) -> void:
 func propagate_node_change() -> void:
 	pass
 
-func on_offset_changed():
+func on_dragged(from : Vector2, to : Vector2):
 	if _node:
-		_node.set_graph_position(offset)
+		ignore_changes(true)
+		#_node.set_graph_position(offset)
+		
+		_undo_redo.create_action("MMGD: value changed")
+		_undo_redo.add_do_method(_node, "set_graph_position", to)
+		_undo_redo.add_undo_method(_node, "set_graph_position", from)
+		_undo_redo.commit_action()
+		
+		ignore_changes(false)
 
 #func on_node_changed():
 #	if _ignore_change_event:
