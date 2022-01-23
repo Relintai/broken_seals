@@ -223,3 +223,12 @@ func on_pivot_mdi_origin_toggled(on : bool):
 func on_pivot_world_origin_toggled(on : bool):
 	if on:
 		_plugin.set_pivot_world_origin()
+
+func on_visual_indicator_outline_toggled(on : bool):
+	_plugin.visual_indicator_outline_set(on)
+
+func on_visual_indicator_seam_toggled(on : bool):
+	_plugin.visual_indicator_seam_set(on)
+
+func on_visual_indicator_handle_toggled(on : bool):
+	_plugin.visual_indicator_handle_set(on)

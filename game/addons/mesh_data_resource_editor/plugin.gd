@@ -245,3 +245,14 @@ func set_pivot_world_origin():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.set_pivot_world_origin()
 		
+func visual_indicator_outline_set(on : bool):
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.visual_indicator_outline_set(on)
+
+func visual_indicator_seam_set(on : bool):
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.visual_indicator_seam_set(on)
+
+func visual_indicator_handle_set(on : bool):
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.visual_indicator_handle_set(on)

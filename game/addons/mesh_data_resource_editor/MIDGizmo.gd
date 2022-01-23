@@ -36,6 +36,11 @@ var edit_mode : int = EditMode.EDIT_MODE_TRANSLATE
 var pivot_type : int = PivotTypes.PIVOT_TYPE_AVERAGED
 var axis_constraint : int = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
 var selection_mode : int = SelectionMode.SELECTION_MODE_VERTEX
+var visual_indicator_outline : bool = true
+var visual_indicator_seam : bool= true
+var visual_indicator_handle : bool = true
+
+
 var previous_point : Vector2
 var is_dragging : bool = false
 var _last_known_camera_facing : Vector3 = Vector3(0, 0, -1)
@@ -1239,3 +1244,16 @@ func transfer_state_from(other) -> void:
 	pivot_type = other.pivot_type
 	axis_constraint = other.axis_constraint
 	selection_mode = other.selection_mode
+	
+	visual_indicator_outline = other.visual_indicator_outline
+	visual_indicator_seam = other.visual_indicator_seam
+	visual_indicator_handle = other.visual_indicator_handle
+
+func visual_indicator_outline_set(on : bool):
+	visual_indicator_outline = on
+
+func visual_indicator_seam_set(on : bool):
+	visual_indicator_seam = on
+
+func visual_indicator_handle_set(on : bool):
+	visual_indicator_handle = on
