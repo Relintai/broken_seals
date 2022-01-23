@@ -153,14 +153,17 @@ func redraw():
 	_mesh_outline_generator.setup(_mdr)
 	
 	if selection_mode == SelectionMode.SELECTION_MODE_EDGE:
-		_mesh_outline_generator.generate_mark_edges()
+		_mesh_outline_generator.generate_mark_edges(visual_indicator_outline, visual_indicator_handle)
 	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
-		_mesh_outline_generator.generate_mark_faces()
+		_mesh_outline_generator.generate_mark_faces(visual_indicator_outline, visual_indicator_handle)
 	else:
-		_mesh_outline_generator.generate()
+		_mesh_outline_generator.generate(visual_indicator_outline, visual_indicator_handle)
 	
-	add_lines(_mesh_outline_generator.lines, material, false)
-	add_lines(_mesh_outline_generator.seam_lines, seam_material, false)
+	if visual_indicator_outline || visual_indicator_handle:
+		add_lines(_mesh_outline_generator.lines, material, false)
+	
+	if visual_indicator_seam:
+		add_lines(_mesh_outline_generator.seam_lines, seam_material, false)
 	
 	if _selected_points.size() > 0:
 		var vs : PoolVector3Array = PoolVector3Array()
@@ -1251,9 +1254,12 @@ func transfer_state_from(other) -> void:
 
 func visual_indicator_outline_set(on : bool):
 	visual_indicator_outline = on
+	redraw()
 
 func visual_indicator_seam_set(on : bool):
 	visual_indicator_seam = on
+	redraw()
 
 func visual_indicator_handle_set(on : bool):
 	visual_indicator_handle = on
+	redraw()

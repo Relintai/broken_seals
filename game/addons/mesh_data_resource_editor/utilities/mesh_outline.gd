@@ -58,16 +58,30 @@ func get_vertex(index : int) -> Vector3:
 		
 	return v
 
-func generate():
+func generate(mark_outline : bool, mark_handles : bool):
 	reset()
 	
 	if !initialize():
 		return
-		
-	for i in range(0, _indices.size(), 3):
-		for j in range(3):
-			lines.append(get_vertex(_indices[i + j]))
-			lines.append(get_vertex(_indices[i + ((j + 1) % 3)]))
+	
+	if mark_outline:
+		for i in range(0, _indices.size(), 3):
+			for j in range(3):
+				lines.append(get_vertex(_indices[i + j]))
+				lines.append(get_vertex(_indices[i + ((j + 1) % 3)]))
+			
+	if mark_handles:
+		for i in range(_vertices.size()):
+			var v : Vector3 = get_vertex(i)
+
+			var l : float = v.length() / 20.0
+					
+			lines.append(v + Vector3(l, 0, 0))
+			lines.append(v + Vector3(-l, 0, 0))
+			lines.append(v + Vector3(0, 0, l))
+			lines.append(v + Vector3(0, 0, -l))
+			lines.append(v + Vector3(0, l, 0))
+			lines.append(v + Vector3(0, -l, 0))
 				
 	var seams : PoolIntArray = _mdr.seams
 	
@@ -75,7 +89,7 @@ func generate():
 		seam_lines.append(get_vertex(seams[i]))
 		seam_lines.append(get_vertex(seams[i + 1]))
 			
-func generate_mark_edges():
+func generate_mark_edges(mark_outline : bool, mark_handles : bool):
 	reset()
 	
 	if !initialize():
@@ -88,19 +102,21 @@ func generate_mark_edges():
 				
 			var v0 : Vector3 = get_vertex(i0)
 			var v1 : Vector3 = get_vertex(i1)
-				
-			lines.append(v0)
-			lines.append(v1)
-				
-			var pmid : Vector3 = lerp(v0, v1, 0.5)
-			var l : float = (v0 - v1).length() / 20.0
-				
-			lines.append(pmid + Vector3(l, 0, 0))
-			lines.append(pmid + Vector3(-l, 0, 0))
-			lines.append(pmid + Vector3(0, 0, l))
-			lines.append(pmid + Vector3(0, 0, -l))
-			lines.append(pmid + Vector3(0, l, 0))
-			lines.append(pmid + Vector3(0, -l, 0))
+			
+			if mark_outline:
+				lines.append(v0)
+				lines.append(v1)
+			
+			if mark_handles:
+				var pmid : Vector3 = lerp(v0, v1, 0.5)
+				var l : float = (v0 - v1).length() / 20.0
+					
+				lines.append(pmid + Vector3(l, 0, 0))
+				lines.append(pmid + Vector3(-l, 0, 0))
+				lines.append(pmid + Vector3(0, 0, l))
+				lines.append(pmid + Vector3(0, 0, -l))
+				lines.append(pmid + Vector3(0, l, 0))
+				lines.append(pmid + Vector3(0, -l, 0))
 				
 				
 	var seams : PoolIntArray = _mdr.seams
@@ -109,37 +125,38 @@ func generate_mark_edges():
 		seam_lines.append(get_vertex(seams[i]))
 		seam_lines.append(get_vertex(seams[i + 1]))
 		
-func generate_mark_faces():
+func generate_mark_faces(mark_outline : bool, mark_handles : bool):
 	reset()
 	
 	if !initialize():
 		return
 
-	for i in range(0, _indices.size(), 3):
-		for j in range(3):
-			lines.append(get_vertex(_indices[i + j]))
-			lines.append(get_vertex(_indices[i + ((j + 1) % 3)]))
+	if mark_outline:
+		for i in range(0, _indices.size(), 3):
+			for j in range(3):
+				lines.append(get_vertex(_indices[i + j]))
+				lines.append(get_vertex(_indices[i + ((j + 1) % 3)]))
 
-	for i in range(0, _indices.size(), 3):
-			var i0 : int = _indices[i + 0]
-			var i1 : int = _indices[i + 1]
-			var i2 : int = _indices[i + 2]
-				
-			var v0 : Vector3 = get_vertex(i0)
-			var v1 : Vector3 = get_vertex(i1)
-			var v2 : Vector3 = get_vertex(i2)
+	if mark_handles:
+		for i in range(0, _indices.size(), 3):
+				var i0 : int = _indices[i + 0]
+				var i1 : int = _indices[i + 1]
+				var i2 : int = _indices[i + 2]
+					
+				var v0 : Vector3 = get_vertex(i0)
+				var v1 : Vector3 = get_vertex(i1)
+				var v2 : Vector3 = get_vertex(i2)
 
-			var pmid : Vector3 = v0 + v1 + v2
-			pmid /= 3
-			var l : float = (v0 - v1).length() / 20.0
-				
-			lines.append(pmid + Vector3(l, 0, 0))
-			lines.append(pmid + Vector3(-l, 0, 0))
-			lines.append(pmid + Vector3(0, 0, l))
-			lines.append(pmid + Vector3(0, 0, -l))
-			lines.append(pmid + Vector3(0, l, 0))
-			lines.append(pmid + Vector3(0, -l, 0))
-			
+				var pmid : Vector3 = v0 + v1 + v2
+				pmid /= 3
+				var l : float = (v0 - v1).length() / 20.0
+					
+				lines.append(pmid + Vector3(l, 0, 0))
+				lines.append(pmid + Vector3(-l, 0, 0))
+				lines.append(pmid + Vector3(0, 0, l))
+				lines.append(pmid + Vector3(0, 0, -l))
+				lines.append(pmid + Vector3(0, l, 0))
+				lines.append(pmid + Vector3(0, -l, 0))
 			
 	var seams : PoolIntArray = _mdr.seams
 	
