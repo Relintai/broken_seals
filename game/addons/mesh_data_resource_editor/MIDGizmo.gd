@@ -287,18 +287,18 @@ func mul_all_selected_with_basis(b : Basis) -> void:
 			v = b * v
 			_vertices.set(j, v)
 
-func set_translate(on : bool) -> void:
-	if on:
-		edit_mode = EditMode.EDIT_MODE_TRANSLATE
+func set_translate() -> void:
+	edit_mode = EditMode.EDIT_MODE_TRANSLATE
 	
-func set_scale(on : bool) -> void:
-	if on:
-		edit_mode = EditMode.EDIT_MODE_SCALE
+func set_scale() -> void:
+	edit_mode = EditMode.EDIT_MODE_SCALE
 	
-func set_rotate(on : bool) -> void:
-	if on:
-		edit_mode = EditMode.EDIT_MODE_ROTATE
-	
+func set_rotate() -> void:
+	edit_mode = EditMode.EDIT_MODE_ROTATE
+
+func set_edit_mode(em : int) -> void:
+	edit_mode = em
+
 func set_axis_x(on : bool) -> void:
 	if on:
 		axis_constraint |= AxisConstraint.X
@@ -1233,3 +1233,9 @@ func set_pivot_mdi_origin():
 
 func set_pivot_world_origin():
 	pivot_type = PivotTypes.PIVOT_TYPE_WORLD_ORIGIN
+
+func transfer_state_from(other) -> void:
+	edit_mode = other.edit_mode
+	pivot_type = other.pivot_type
+	axis_constraint = other.axis_constraint
+	selection_mode = other.selection_mode

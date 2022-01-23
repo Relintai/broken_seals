@@ -14,8 +14,6 @@ var active_gizmos : Array
 var current_mesh_data_instance : MeshDataInstance = null
 
 func _enter_tree():
-	#print("_enter_tree")
-	
 	gizmo_plugin = MdiGizmoPlugin.new()
 	mdi_ed_gui = MDIEdGui.instance()
 	mdi_ed_gui.set_plugin(self)
@@ -58,12 +56,15 @@ func handles(object):
 
 func edit(object):
 	var mdi : MeshDataInstance = object as MeshDataInstance
-	
-	current_mesh_data_instance = mdi
-	
+
 	if mdi:
+		if current_mesh_data_instance && mdi.gizmo && current_mesh_data_instance.gizmo:
+			mdi.gizmo.transfer_state_from(current_mesh_data_instance.gizmo)
+			
 		mdi_ed_gui.set_mesh_data_resource(mdi.mesh_data)
 		mdi_ed_gui.set_mesh_data_instance(mdi)
+		
+	current_mesh_data_instance = mdi
 
 func make_visible(visible):
 	#print("make_visible")
@@ -91,17 +92,17 @@ func unregister_gizmo(gizmo):
 			active_gizmos.remove(i)
 			return
 
-func set_translate(on : bool) -> void:
+func set_translate() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.set_translate(on)
+		current_mesh_data_instance.gizmo.set_translate()
 	
-func set_scale(on : bool) -> void:
+func set_scale() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.set_scale(on)
+		current_mesh_data_instance.gizmo.set_scale()
 	
-func set_rotate(on : bool) -> void:
+func set_rotate() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.set_rotate(on)
+		current_mesh_data_instance.gizmo.set_rotate()
 	
 func set_axis_x(on : bool) -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
@@ -118,7 +119,6 @@ func set_axis_z(on : bool) -> void:
 func set_selection_mode_vertex() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.set_selection_mode_vertex()
-
 
 func set_selection_mode_edge() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:

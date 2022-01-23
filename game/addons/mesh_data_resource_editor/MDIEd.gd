@@ -77,17 +77,17 @@ func set_edit_mode_scale() -> void:
 func on_edit_mode_translate_toggled(on : bool) -> void:
 	if on:
 		if _plugin:
-			_plugin.set_translate(on)
+			_plugin.set_translate()
 
 func on_edit_mode_rotate_toggled(on : bool) -> void:
 	if on:
 		if _plugin:
-			_plugin.set_rotate(on)
+			_plugin.set_rotate()
 			
 func on_edit_mode_scale_toggled(on : bool) -> void:
 	if on:
 		if _plugin:
-			_plugin.set_scale(on)
+			_plugin.set_scale()
 
 #axis locks
 func get_axis_x() -> bool:
