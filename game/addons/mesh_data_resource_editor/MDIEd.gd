@@ -211,3 +211,15 @@ func _on_apply_seams_pressed():
 
 func _on_uv_edit_pressed():
 	$Popups/UVEditorPopup.popup_centered()
+
+func on_pivot_average_toggled(on : bool):
+	if on:
+		_plugin.set_spivot_averaged()
+
+func on_pivot_mdi_origin_toggled(on : bool):
+	if on:
+		_plugin.set_pivot_mdi_origin()
+
+func on_pivot_world_origin_toggled(on : bool):
+	if on:
+		_plugin.set_pivot_world_origin()

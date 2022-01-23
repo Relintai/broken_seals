@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditor.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/edit_mode_button_group.tres" type="ButtonGroup" id=5]
 [ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditorPopup.gd" type="Script" id=6]
+[ext_resource path="res://addons/mesh_data_resource_editor/button_groups/pivot_button_group.tres" type="ButtonGroup" id=7]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -28,17 +29,17 @@ __meta__ = {
 
 [node name="Actions" type="VBoxContainer" parent="VBoxContainer"]
 margin_right = 1010.0
-margin_bottom = 68.0
+margin_bottom = 92.0
 
 [node name="Actions" type="HBoxContainer" parent="VBoxContainer/Actions"]
 margin_right = 1010.0
-margin_bottom = 68.0
+margin_bottom = 92.0
 alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
 margin_left = 457.0
 margin_right = 466.0
-margin_bottom = 68.0
+margin_bottom = 92.0
 
 [node name="Label" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
 margin_right = 9.0
@@ -72,10 +73,21 @@ text = "S"
 align = 1
 valign = 1
 
+[node name="Label4" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
+margin_top = 72.0
+margin_right = 9.0
+margin_bottom = 92.0
+hint_tooltip = "Pivot"
+mouse_filter = 0
+size_flags_vertical = 7
+text = "P"
+align = 1
+valign = 1
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Actions/Actions"]
 margin_left = 470.0
 margin_right = 553.0
-margin_bottom = 68.0
+margin_bottom = 92.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_right = 83.0
@@ -186,13 +198,51 @@ toggle_mode = true
 group = ExtResource( 5 )
 text = "F"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
 margin_top = 72.0
+margin_right = 83.0
+margin_bottom = 92.0
+
+[node name="Average" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
+margin_right = 25.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Average"
+size_flags_horizontal = 3
+toggle_mode = true
+pressed = true
+group = ExtResource( 7 )
+text = "A"
+
+[node name="MDIOrigin" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
+margin_left = 29.0
+margin_right = 54.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Mesh Data Instance Origin"
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 7 )
+text = "M"
+
+[node name="WorldOrigin" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
+margin_left = 58.0
+margin_right = 83.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "World Origin"
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 7 )
+text = "w"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+margin_top = 96.0
 margin_right = 1010.0
-margin_bottom = 76.0
+margin_bottom = 100.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
-margin_top = 80.0
+margin_top = 104.0
 margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
@@ -553,6 +603,9 @@ size_flags_vertical = 3
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge" to="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps" method="set_visible"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="." method="on_selection_mode_face_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="VBoxContainer/ScrollContainer/VBoxContainer2/FaceOps" method="set_visible"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/Average" to="." method="on_pivot_average_toggled"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/MDIOrigin" to="." method="on_pivot_mdi_origin_toggled"]
+[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/WorldOrigin" to="." method="on_pivot_world_origin_toggled"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/AddFace" to="." method="_oncreate_face_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToFirst" to="." method="_on_connect_to_first_selected_pressed"]

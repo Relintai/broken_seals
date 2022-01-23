@@ -232,3 +232,14 @@ func uv_unwrap() -> void:
 	for g in active_gizmos:
 		g.uv_unwrap()
 	
+func set_spivot_averaged():
+	for g in active_gizmos:
+		g.set_spivot_averaged()
+
+func set_pivot_mdi_origin():
+	for g in active_gizmos:
+		g.set_pivot_mdi_origin()
+
+func set_pivot_world_origin():
+	for g in active_gizmos:
+		g.set_pivot_world_origin()

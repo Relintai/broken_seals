@@ -24,9 +24,16 @@ enum SelectionMode {
 	SELECTION_MODE_FACE = 2,
 }
 
+enum PivotTypes {
+	PIVOT_TYPE_AVERAGED = 0,
+	PIVOT_TYPE_MDI_ORIGIN = 1,
+	PIVOT_TYPE_WORLD_ORIGIN = 2,
+}
+
 var gizmo_size = 3.0
 
 var edit_mode : int = EditMode.EDIT_MODE_TRANSLATE
+var pivot_type : int = PivotTypes.PIVOT_TYPE_AVERAGED
 var axis_constraint : int = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
 var selection_mode : int = SelectionMode.SELECTION_MODE_VERTEX
 var previous_point : Vector2
@@ -1217,3 +1224,12 @@ func copy_mdr_verts_array() -> PoolVector3Array:
 	ret.append_array(vertices)
 	
 	return ret
+
+func set_spivot_averaged():
+	pivot_type = PivotTypes.PIVOT_TYPE_AVERAGED
+
+func set_pivot_mdi_origin():
+	pivot_type = PivotTypes.PIVOT_TYPE_MDI_ORIGIN
+
+func set_pivot_world_origin():
+	pivot_type = PivotTypes.PIVOT_TYPE_WORLD_ORIGIN
