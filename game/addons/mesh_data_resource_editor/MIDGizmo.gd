@@ -217,18 +217,36 @@ func forward_spatial_gui_input(index, camera, event):
 						closest_idx = i
 
 				if (closest_idx >= 0):
-					for si in _selected_points:
-						if si == closest_idx:
+					for si in range(_selected_points.size()):
+						
+						if _selected_points[si] == closest_idx:
+							if event.control:
+								_selected_points.remove(si)
+								return true
+								
 							return false
 					
-					_selected_points.append(closest_idx)
+					if event.control:
+						return false
+					
+					if event.shift:
+						_selected_points.append(closest_idx)
+					else:
+						# Select new point only
+						_selected_points.resize(0)
+						_selected_points.append(closest_idx)
 
 					apply()
 					redraw()
 				else:
+					# Don't unselect all if either control or shift is held down
+					if event.shift || event.control:
+						return false
+					
 					if _selected_points.size() == 0:
 						return false
 					
+					#Unselect all
 					_selected_points.resize(0)
 
 					redraw()
