@@ -231,11 +231,11 @@ func apply_seam():
 
 func uv_unwrap() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.set_spivot_averaged()
+		current_mesh_data_instance.gizmo.uv_unwrap()
 	
 func set_pivot_averaged():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.set_selection_mode_face()
+		current_mesh_data_instance.gizmo.set_pivot_averaged()
 
 func set_pivot_mdi_origin():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
