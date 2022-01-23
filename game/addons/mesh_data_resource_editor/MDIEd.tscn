@@ -43,7 +43,7 @@ margin_bottom = 92.0
 
 [node name="Label" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
 margin_right = 9.0
-margin_bottom = 20.0
+margin_bottom = 28.0
 hint_tooltip = "Edit Mode"
 mouse_filter = 0
 size_flags_vertical = 7
@@ -52,9 +52,9 @@ align = 1
 valign = 1
 
 [node name="Label2" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
-margin_top = 24.0
+margin_top = 32.0
 margin_right = 9.0
-margin_bottom = 44.0
+margin_bottom = 60.0
 hint_tooltip = "Active Axis"
 mouse_filter = 0
 size_flags_vertical = 7
@@ -63,24 +63,13 @@ align = 1
 valign = 1
 
 [node name="Label3" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
-margin_top = 48.0
+margin_top = 64.0
 margin_right = 9.0
-margin_bottom = 68.0
+margin_bottom = 92.0
 hint_tooltip = "Selection Mode"
 mouse_filter = 0
 size_flags_vertical = 7
 text = "S"
-align = 1
-valign = 1
-
-[node name="Label4" type="Label" parent="VBoxContainer/Actions/Actions/VBoxContainer"]
-margin_top = 72.0
-margin_right = 9.0
-margin_bottom = 92.0
-hint_tooltip = "Pivot"
-mouse_filter = 0
-size_flags_vertical = 7
-text = "P"
 align = 1
 valign = 1
 
@@ -198,44 +187,6 @@ toggle_mode = true
 group = ExtResource( 5 )
 text = "F"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/Actions/Actions/VBoxContainer2"]
-margin_top = 72.0
-margin_right = 83.0
-margin_bottom = 92.0
-
-[node name="Average" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
-margin_right = 25.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 25, 20 )
-hint_tooltip = "Average"
-size_flags_horizontal = 3
-toggle_mode = true
-pressed = true
-group = ExtResource( 7 )
-text = "A"
-
-[node name="MDIOrigin" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
-margin_left = 29.0
-margin_right = 54.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 25, 20 )
-hint_tooltip = "Mesh Data Instance Origin"
-size_flags_horizontal = 3
-toggle_mode = true
-group = ExtResource( 7 )
-text = "M"
-
-[node name="WorldOrigin" type="Button" parent="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4"]
-margin_left = 58.0
-margin_right = 83.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 25, 20 )
-hint_tooltip = "World Origin"
-size_flags_horizontal = 3
-toggle_mode = true
-group = ExtResource( 7 )
-text = "w"
-
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
 margin_top = 96.0
 margin_right = 1010.0
@@ -254,9 +205,58 @@ margin_right = 998.0
 margin_bottom = 586.0
 size_flags_horizontal = 3
 
-[node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_right = 998.0
-margin_bottom = 104.0
+margin_bottom = 20.0
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+margin_right = 8.0
+margin_bottom = 20.0
+hint_tooltip = "Pivot"
+mouse_filter = 0
+size_flags_vertical = 7
+text = "P"
+align = 1
+valign = 1
+
+[node name="Average" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+margin_left = 12.0
+margin_right = 338.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Average"
+size_flags_horizontal = 3
+toggle_mode = true
+pressed = true
+group = ExtResource( 7 )
+text = "A"
+
+[node name="MDIOrigin" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+margin_left = 342.0
+margin_right = 668.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Mesh Data Instance Origin"
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 7 )
+text = "M"
+
+[node name="WorldOrigin" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
+margin_left = 672.0
+margin_right = 998.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "World Origin"
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 7 )
+text = "w"
+
+[node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+margin_top = 24.0
+margin_right = 998.0
+margin_bottom = 128.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps"]
 margin_right = 998.0
@@ -418,14 +418,14 @@ margin_bottom = 20.0
 text = "Delete"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 108.0
+margin_top = 132.0
 margin_right = 998.0
-margin_bottom = 112.0
+margin_bottom = 136.0
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 116.0
+margin_top = 140.0
 margin_right = 998.0
-margin_bottom = 480.0
+margin_bottom = 504.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_right = 998.0
@@ -519,14 +519,14 @@ margin_bottom = 346.0
 text = "Unwrap"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 484.0
+margin_top = 508.0
 margin_right = 998.0
-margin_bottom = 488.0
+margin_bottom = 512.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 492.0
+margin_top = 516.0
 margin_right = 998.0
-margin_bottom = 578.0
+margin_bottom = 602.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
 margin_right = 998.0
@@ -560,9 +560,9 @@ size_flags_horizontal = 3
 text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 582.0
+margin_top = 606.0
 margin_right = 998.0
-margin_bottom = 586.0
+margin_bottom = 610.0
 
 [node name="Popups" type="Control" parent="."]
 margin_left = 7.0
@@ -603,9 +603,9 @@ size_flags_vertical = 3
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge" to="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps" method="set_visible"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="." method="on_selection_mode_face_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="VBoxContainer/ScrollContainer/VBoxContainer2/FaceOps" method="set_visible"]
-[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/Average" to="." method="on_pivot_average_toggled"]
-[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/MDIOrigin" to="." method="on_pivot_mdi_origin_toggled"]
-[connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer4/WorldOrigin" to="." method="on_pivot_world_origin_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/Average" to="." method="on_pivot_average_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/MDIOrigin" to="." method="on_pivot_mdi_origin_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/WorldOrigin" to="." method="on_pivot_world_origin_toggled"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/AddFace" to="." method="_oncreate_face_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/Split" to="." method="_on_split_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToFirst" to="." method="_on_connect_to_first_selected_pressed"]
