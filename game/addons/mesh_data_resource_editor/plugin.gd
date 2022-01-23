@@ -92,40 +92,41 @@ func unregister_gizmo(gizmo):
 			return
 
 func set_translate(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_translate(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_translate(on)
 	
 func set_scale(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_scale(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_scale(on)
 	
 func set_rotate(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_rotate(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_rotate(on)
 	
 func set_axis_x(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_axis_x(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_axis_x(on)
 	
 func set_axis_y(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_axis_y(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_axis_y(on)
 	
 func set_axis_z(on : bool) -> void:
-	for g in active_gizmos:
-		g.set_axis_z(on)
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_axis_z(on)
 
 func set_selection_mode_vertex() -> void:
-	for g in active_gizmos:
-		g.set_selection_mode_vertex()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_selection_mode_vertex()
+
 
 func set_selection_mode_edge() -> void:
-	for g in active_gizmos:
-		g.set_selection_mode_edge()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_selection_mode_edge()
 			
 func set_selection_mode_face() -> void:
-	for g in active_gizmos:
-		g.set_selection_mode_face()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_selection_mode_face()
 
 func get_mdr() -> MeshDataResource:
 	if current_mesh_data_instance:
@@ -142,104 +143,110 @@ func get_mdr() -> MeshDataResource:
 #	return false
 
 func forward_spatial_gui_input(index, camera, event):
-	for g in active_gizmos:
-		if g.forward_spatial_gui_input(index, camera, event):
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		if current_mesh_data_instance.gizmo.forward_spatial_gui_input(index, camera, event):
 			return true
 
 	return false
 
 func add_box() -> void:
-	for g in active_gizmos:
-		g.add_box()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.add_box()
 
 func add_triangle() -> void:
-	for g in active_gizmos:
-		g.add_triangle()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.add_triangle()
 		
 func add_quad() -> void:
-	for g in active_gizmos:
-		g.add_quad()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.add_quad()
 
 func add_triangle_at() -> void:
-	for g in active_gizmos:
-		g.add_triangle_at()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.add_triangle_at()
 		
 func add_quad_at() -> void:
-	for g in active_gizmos:
-		g.add_quad_at()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.add_quad_at()
 
 func split():
-	for g in active_gizmos:
-		g.split()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.split()
 
 func connect_action():
-	for g in active_gizmos:
-		g.connect_action()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.connect_action()
 
 func disconnect_action():
-	for g in active_gizmos:
-		g.disconnect_action()
-		
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.disconnect_action()
+
 func create_face():
-	for g in active_gizmos:
-		g.create_face()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.create_face()
 
 func delete_selected():
-	for g in active_gizmos:
-		g.delete_selected()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.delete_selected()
 
 func generate_normals():
-	for g in active_gizmos:
-		g.generate_normals()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.generate_normals()
 		
 func remove_doubles():
-	for g in active_gizmos:
-		g.remove_doubles()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.remove_doubles()
 		
 func merge_optimize():
-	for g in active_gizmos:
-		g.merge_optimize()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.merge_optimize()
 		
 func generate_tangents():
-	for g in active_gizmos:
-		g.generate_tangents()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.generate_tangents()
 		
 func onnect_to_first_selected():
-	for g in active_gizmos:
-		g.onnect_to_first_selected()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.onnect_to_first_selected()
 		
 func connect_to_avg():
-	for g in active_gizmos:
-		g.connect_to_avg()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.connect_to_avg()
 		
 func connect_to_last_selected():
-	for g in active_gizmos:
-		g.connect_to_last_selected()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.connect_to_last_selected()
 
 func mark_seam():
-	for g in active_gizmos:
-		g.mark_seam()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.mark_seam()
 		
 func unmark_seam():
-	for g in active_gizmos:
-		g.unmark_seam()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.unmark_seam()
 
 func apply_seam():
-	for g in active_gizmos:
-		g.apply_seam()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.apply_seam()
 
 func uv_unwrap() -> void:
-	for g in active_gizmos:
-		g.uv_unwrap()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_spivot_averaged()
 	
 func set_spivot_averaged():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_selection_mode_face()
+		
 	for g in active_gizmos:
-		g.set_spivot_averaged()
+		if g.active:
+			g.set_spivot_averaged()
+			return
 
 func set_pivot_mdi_origin():
-	for g in active_gizmos:
-		g.set_pivot_mdi_origin()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_pivot_mdi_origin()
 
 func set_pivot_world_origin():
-	for g in active_gizmos:
-		g.set_pivot_world_origin()
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.set_pivot_world_origin()
+		
