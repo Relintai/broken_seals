@@ -233,14 +233,9 @@ func uv_unwrap() -> void:
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.set_spivot_averaged()
 	
-func set_spivot_averaged():
+func set_pivot_averaged():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.set_selection_mode_face()
-		
-	for g in active_gizmos:
-		if g.active:
-			g.set_spivot_averaged()
-			return
 
 func set_pivot_mdi_origin():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:

@@ -214,7 +214,7 @@ func _on_uv_edit_pressed():
 
 func on_pivot_average_toggled(on : bool):
 	if on:
-		_plugin.set_spivot_averaged()
+		_plugin.set_pivot_averaged()
 
 func on_pivot_mdi_origin_toggled(on : bool):
 	if on:
