@@ -255,13 +255,13 @@ func forward_spatial_gui_input(index, camera, event):
 						for si in range(_selected_points.size()):
 							
 							if _selected_points[si] == closest_idx:
-								if event.control:
+								if event.alt || event.control:
 									_selected_points.remove(si)
 									return true
 									
 								return false
 						
-						if event.control:
+						if event.alt || event.control:
 							return false
 						
 						if event.shift:
@@ -275,7 +275,7 @@ func forward_spatial_gui_input(index, camera, event):
 						redraw()
 					else:
 						# Don't unselect all if either control or shift is held down
-						if event.shift || event.control:
+						if event.shift || event.control || event.alt:
 							return false
 						
 						if _selected_points.size() == 0:
@@ -287,7 +287,40 @@ func forward_spatial_gui_input(index, camera, event):
 						redraw()
 				#Rect drag
 				else:
-					pass
+					# Always return false here, so the drag rect thing disappears in the editor
+					var rect : Rect2 = Rect2(_rect_drag_start_point, rect_size)
+					var selected : PoolIntArray = PoolIntArray()
+					
+					for i in range(_handle_points.size()):
+						var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
+						var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
+						
+						if rect.has_point(vert_pos_2d):
+							selected.push_back(i)
+						
+					if event.alt || event.control:
+						for isel in selected:
+							for i in range(_selected_points.size()):
+								if _selected_points[i] == isel:
+									_selected_points.remove(i)
+									break
+						redraw()
+						
+						return false
+					
+					if event.shift:
+						for isel in selected:
+							if !pool_int_arr_contains(_selected_points, isel):
+								_selected_points.push_back(isel)
+								
+						redraw()
+						return false
+						
+					_selected_points.resize(0)
+					_selected_points.append_array(selected)
+					
+					redraw()
+					return false
 			else:
 				# event is pressed
 				_rect_drag = true
