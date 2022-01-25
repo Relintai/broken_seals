@@ -260,4 +260,15 @@ func visual_indicator_handle_set(on : bool):
 func select_all():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.select_all()
-	
+
+func handle_selection_type_front():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.handle_selection_type_front()
+		
+func handle_selection_type_back():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.handle_selection_type_back()
+		
+func handle_selection_type_all():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.handle_selection_type_all()

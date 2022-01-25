@@ -30,12 +30,19 @@ enum PivotTypes {
 	PIVOT_TYPE_WORLD_ORIGIN = 2,
 }
 
+enum HandleSelectionType {
+	HANDLE_SELECTION_TYPE_FRONT = 0,
+	HANDLE_SELECTION_TYPE_BACK = 1,
+	HANDLE_SELECTION_TYPE_ALL = 2,
+}
+
 var gizmo_size = 3.0
 
 var edit_mode : int = EditMode.EDIT_MODE_TRANSLATE
 var pivot_type : int = PivotTypes.PIVOT_TYPE_AVERAGED
 var axis_constraint : int = AxisConstraint.X | AxisConstraint.Y | AxisConstraint.Z
 var selection_mode : int = SelectionMode.SELECTION_MODE_VERTEX
+var handle_selection_type : int = HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT
 var visual_indicator_outline : bool = true
 var visual_indicator_seam : bool= true
 var visual_indicator_handle : bool = true
@@ -482,7 +489,7 @@ func recalculate_handle_points() -> void:
 	arr.resize(ArrayMesh.ARRAY_MAX)
 	arr[ArrayMesh.ARRAY_VERTEX] = mdr_arr[ArrayMesh.ARRAY_VERTEX]
 	arr[ArrayMesh.ARRAY_INDEX] = mdr_arr[ArrayMesh.ARRAY_INDEX]
-
+	
 	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
 		var merged_arrays : Array = MeshUtils.merge_mesh_array(arr)
 		_handle_points = merged_arrays[ArrayMesh.ARRAY_VERTEX]
@@ -1352,6 +1359,7 @@ func transfer_state_from(other) -> void:
 	pivot_type = other.pivot_type
 	axis_constraint = other.axis_constraint
 	selection_mode = other.selection_mode
+	handle_selection_type = other.handle_selection_type
 	
 	visual_indicator_outline = other.visual_indicator_outline
 	visual_indicator_seam = other.visual_indicator_seam
@@ -1368,3 +1376,13 @@ func visual_indicator_seam_set(on : bool):
 func visual_indicator_handle_set(on : bool):
 	visual_indicator_handle = on
 	redraw()
+
+func handle_selection_type_front():
+	handle_selection_type = HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT
+		
+func handle_selection_type_back():
+	handle_selection_type = HandleSelectionType.HANDLE_SELECTION_TYPE_BACK
+		
+func handle_selection_type_all():
+	handle_selection_type = HandleSelectionType.HANDLE_SELECTION_TYPE_ALL
+

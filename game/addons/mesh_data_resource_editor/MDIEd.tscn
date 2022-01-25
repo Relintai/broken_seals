@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://addons/mesh_data_resource_editor/MDIEd.gd" type="Script" id=1]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/vertex_position_operation_bg.tres" type="ButtonGroup" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/edit_mode_button_group.tres" type="ButtonGroup" id=5]
 [ext_resource path="res://addons/mesh_data_resource_editor/uv_editor/UVEditorPopup.gd" type="Script" id=6]
 [ext_resource path="res://addons/mesh_data_resource_editor/button_groups/pivot_button_group.tres" type="ButtonGroup" id=7]
+[ext_resource path="res://addons/mesh_data_resource_editor/button_groups/handle_selection_typen_group.tres" type="ButtonGroup" id=8]
 
 [node name="MDIEd" type="PanelContainer"]
 anchor_right = 1.0
@@ -205,9 +206,61 @@ margin_right = 998.0
 margin_bottom = 666.0
 size_flags_horizontal = 3
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+[node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_right = 998.0
 margin_bottom = 20.0
+
+[node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6"]
+margin_right = 10.0
+margin_bottom = 20.0
+hint_tooltip = "Handle Selection type."
+mouse_filter = 0
+size_flags_vertical = 7
+text = "H"
+align = 1
+valign = 1
+
+[node name="Front" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6"]
+margin_left = 14.0
+margin_right = 339.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "
+"
+size_flags_horizontal = 3
+toggle_mode = true
+pressed = true
+group = ExtResource( 8 )
+text = "F"
+
+[node name="Back" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6"]
+margin_left = 343.0
+margin_right = 668.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Only select handles that face away 
+the camera."
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 8 )
+text = "B"
+
+[node name="All" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6"]
+margin_left = 672.0
+margin_right = 998.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 25, 20 )
+hint_tooltip = "Ignore camera facing when selecting handles.
+"
+size_flags_horizontal = 3
+toggle_mode = true
+group = ExtResource( 8 )
+text = "A"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+margin_top = 24.0
+margin_right = 998.0
+margin_bottom = 44.0
 
 [node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4"]
 margin_right = 8.0
@@ -254,9 +307,9 @@ group = ExtResource( 7 )
 text = "w"
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 24.0
+margin_top = 48.0
 margin_right = 998.0
-margin_bottom = 44.0
+margin_bottom = 68.0
 
 [node name="Label4" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer5"]
 margin_right = 8.0
@@ -302,23 +355,23 @@ pressed = true
 text = "H"
 
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 48.0
+margin_top = 72.0
 margin_right = 998.0
-margin_bottom = 52.0
+margin_bottom = 76.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Select All" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 56.0
+margin_top = 80.0
 margin_right = 998.0
-margin_bottom = 76.0
+margin_bottom = 100.0
 text = "Select All"
 
 [node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 80.0
+margin_top = 104.0
 margin_right = 998.0
-margin_bottom = 184.0
+margin_bottom = 208.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps"]
 margin_right = 998.0
@@ -480,14 +533,14 @@ margin_bottom = 20.0
 text = "Delete"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 188.0
+margin_top = 212.0
 margin_right = 998.0
-margin_bottom = 192.0
+margin_bottom = 216.0
 
 [node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 196.0
+margin_top = 220.0
 margin_right = 998.0
-margin_bottom = 560.0
+margin_bottom = 584.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_right = 998.0
@@ -581,14 +634,14 @@ margin_bottom = 346.0
 text = "Unwrap"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 564.0
+margin_top = 588.0
 margin_right = 998.0
-margin_bottom = 568.0
+margin_bottom = 592.0
 
 [node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 572.0
+margin_top = 596.0
 margin_right = 998.0
-margin_bottom = 658.0
+margin_bottom = 682.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
 margin_right = 998.0
@@ -622,9 +675,9 @@ size_flags_horizontal = 3
 text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 662.0
+margin_top = 686.0
 margin_right = 998.0
-margin_bottom = 666.0
+margin_bottom = 690.0
 
 [node name="Popups" type="Control" parent="."]
 margin_left = 7.0
@@ -668,6 +721,9 @@ size_flags_vertical = 3
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Edge" to="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps" method="set_visible"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="." method="on_selection_mode_face_toggled"]
 [connection signal="toggled" from="VBoxContainer/Actions/Actions/VBoxContainer2/HBoxContainer3/Face" to="VBoxContainer/ScrollContainer/VBoxContainer2/FaceOps" method="set_visible"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6/Front" to="." method="onhandle_selection_type_front_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6/Back" to="." method="onhandle_selection_type_back_toggled"]
+[connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer6/All" to="." method="onhandle_selection_type_all_toggled"]
 [connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/Average" to="." method="on_pivot_average_toggled"]
 [connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/MDIOrigin" to="." method="on_pivot_mdi_origin_toggled"]
 [connection signal="toggled" from="VBoxContainer/ScrollContainer/VBoxContainer2/HBoxContainer4/WorldOrigin" to="." method="on_pivot_world_origin_toggled"]

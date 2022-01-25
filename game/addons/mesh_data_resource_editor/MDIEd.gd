@@ -235,3 +235,12 @@ func on_visual_indicator_handle_toggled(on : bool):
 
 func _on_select_all_pressed():
 	_plugin.select_all()
+
+func onhandle_selection_type_front_toggled(on : bool):
+	_plugin.handle_selection_type_front()
+
+func onhandle_selection_type_back_toggled(on : bool):
+	_plugin.handle_selection_type_back()
+
+func onhandle_selection_type_all_toggled(on : bool):
+	_plugin.handle_selection_type_all()
