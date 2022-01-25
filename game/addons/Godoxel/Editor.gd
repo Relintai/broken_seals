@@ -142,7 +142,7 @@ func _input(event):
 	if event is InputEventKey and event.is_pressed() and not event.is_echo():
 		_handle_shortcuts(event.scancode)
 	
-	if is_mouse_in_canvas():
+	if is_mouse_in_canvas() and paint_canvas.mouse_on_top:
 		_handle_zoom(event)
 	
 	if paint_canvas.is_active_layer_locked():
