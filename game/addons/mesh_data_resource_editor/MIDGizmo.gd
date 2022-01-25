@@ -236,6 +236,10 @@ func is_point_visible(point_orig : Vector3, camera_pos : Vector3, gt : Transform
 		var v1 : Vector3 = _vertices[i1]
 		var v2 : Vector3 = _vertices[i2]
 		
+		v0 = gt.xform(v0)
+		v1 = gt.xform(v1)
+		v2 = gt.xform(v2)
+		
 		var res = Geometry.ray_intersects_triangle(point, dir, v0, v1, v2)
 
 		if res is Vector3:
