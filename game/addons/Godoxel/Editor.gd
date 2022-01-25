@@ -201,11 +201,13 @@ func _process(delta):
 	mouse_position = get_global_mouse_position() #paint_canvas.get_local_mouse_position()
 	canvas_position = paint_canvas.rect_global_position
 	canvas_mouse_position = Vector2(mouse_position.x - canvas_position.x, mouse_position.y - canvas_position.y)
-	if is_mouse_in_canvas():
+	
+	if is_mouse_in_canvas() && paint_canvas.mouse_on_top:
 		cell_mouse_position = Vector2(
 				floor(canvas_mouse_position.x / grid_size), 
 				floor(canvas_mouse_position.y / grid_size))
 		cell_color = paint_canvas.get_pixel(cell_mouse_position.x, cell_mouse_position.y)
+		
 	update_text_info()
 	
 #	if not is_mouse_in_canvas():
@@ -213,7 +215,7 @@ func _process(delta):
 #		paint_canvas.update()
 #		paint_canvas.tool_layer.update_texture()
 #	else:
-	if is_mouse_in_canvas():
+	if is_mouse_in_canvas() && paint_canvas.mouse_on_top:
 		if not paint_canvas.is_active_layer_locked():
 			if is_position_in_canvas(get_global_mouse_position()) or \
 					is_position_in_canvas(_last_mouse_pos_canvas_area):
