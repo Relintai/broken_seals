@@ -203,7 +203,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 998.0
-margin_bottom = 666.0
+margin_bottom = 690.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
@@ -368,10 +368,18 @@ margin_right = 998.0
 margin_bottom = 100.0
 text = "Select All"
 
-[node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+[node name="HSeparator5" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 104.0
 margin_right = 998.0
-margin_bottom = 208.0
+margin_bottom = 108.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VertexOps" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+margin_top = 112.0
+margin_right = 998.0
+margin_bottom = 216.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps"]
 margin_right = 998.0
@@ -533,14 +541,14 @@ margin_bottom = 20.0
 text = "Delete"
 
 [node name="HSeparator4" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 212.0
-margin_right = 998.0
-margin_bottom = 216.0
-
-[node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 220.0
 margin_right = 998.0
-margin_bottom = 584.0
+margin_bottom = 224.0
+
+[node name="Operations" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+margin_top = 228.0
+margin_right = 998.0
+margin_bottom = 592.0
 
 [node name="OperationsLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Operations"]
 margin_right = 998.0
@@ -634,14 +642,14 @@ margin_bottom = 346.0
 text = "Unwrap"
 
 [node name="HSeparator3" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 588.0
-margin_right = 998.0
-margin_bottom = 592.0
-
-[node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
 margin_top = 596.0
 margin_right = 998.0
-margin_bottom = 682.0
+margin_bottom = 600.0
+
+[node name="Add" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
+margin_top = 604.0
+margin_right = 998.0
+margin_bottom = 690.0
 
 [node name="AddLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/Add"]
 margin_right = 998.0
@@ -675,9 +683,9 @@ size_flags_horizontal = 3
 text = "Quad"
 
 [node name="HSeparator2" type="HSeparator" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
-margin_top = 686.0
+margin_top = 694.0
 margin_right = 998.0
-margin_bottom = 690.0
+margin_bottom = 698.0
 
 [node name="Popups" type="Control" parent="."]
 margin_left = 7.0
