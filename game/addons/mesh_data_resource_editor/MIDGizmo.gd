@@ -289,6 +289,16 @@ func forward_spatial_gui_input(index, camera, event):
 				else:
 					# Always return false here, so the drag rect thing disappears in the editor
 					var rect : Rect2 = Rect2(_rect_drag_start_point, rect_size)
+					
+					# This is needed so selection works even when you drag from bottom to top, and from right to left
+					var rect_ofs : Vector2 = _rect_drag_start_point - mouse_pos
+					
+					if rect_ofs.x > 0:
+						rect.position.x -= rect_ofs.x
+						
+					if rect_ofs.y > 0:
+						rect.position.y -= rect_ofs.y
+					
 					var selected : PoolIntArray = PoolIntArray()
 					
 					for i in range(_handle_points.size()):
