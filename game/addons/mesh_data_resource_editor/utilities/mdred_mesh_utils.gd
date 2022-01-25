@@ -512,6 +512,10 @@ static func is_normal_similar(v0 : Vector3, v1 : Vector3, v2 : Vector3, similar_
 	
 	return ndns >= 0
 
+static func is_direction_similar(d0 : Vector3, d1 : Vector3) -> bool:
+	var ndns : float = d0.dot(d1)
+	return ndns >= 0
+
 static func flip_triangle_ti(mdr : MeshDataResource, triangle_index : int) -> void:
 	flip_triangle(mdr, triangle_index * 3)
 
