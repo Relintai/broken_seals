@@ -201,15 +201,117 @@ func select_all() -> void:
 	
 	redraw()
 
-func forward_spatial_gui_input(index, camera, event):
-	_last_known_camera_facing = camera.transform.basis.xform(Vector3(0, 0, -1))
-	
-	if event is InputEventMouseButton:
+func selection_click_select_through(index, camera, event):
 		var gt : Transform = get_spatial_node().global_transform
 		var ray_from : Vector3 = camera.global_transform.origin
 		var gpoint : Vector2 = event.get_position()
 		var grab_threshold : float = 8
 
+		
+		# select vertex
+		var closest_idx : int = -1
+		var closest_dist : float = 1e10
+					
+		for i in range(_handle_points.size()):
+			var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
+			var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
+			var dist_3d : float = ray_from.distance_to(vert_pos_3d)
+			var dist_2d : float = gpoint.distance_to(vert_pos_2d)
+						
+			if (dist_2d < grab_threshold && dist_3d < closest_dist):
+				closest_dist = dist_3d
+				closest_idx = i
+
+		if (closest_idx >= 0):
+			for si in range(_selected_points.size()):
+							
+				if _selected_points[si] == closest_idx:
+					if event.alt || event.control:
+						_selected_points.remove(si)
+						return true
+									
+					return false
+						
+			if event.alt || event.control:
+				return false
+						
+			if event.shift:
+				_selected_points.append(closest_idx)
+			else:
+				# Select new point only
+				_selected_points.resize(0)
+				_selected_points.append(closest_idx)
+
+			apply()
+			redraw()
+		else:
+			# Don't unselect all if either control or shift is held down
+			if event.shift || event.control || event.alt:
+				return false
+						
+			if _selected_points.size() == 0:
+				return false
+						
+			#Unselect all
+			_selected_points.resize(0)
+
+			redraw()
+
+func selection_drag_rect_select_through(index, camera, event):
+	var gt : Transform = get_spatial_node().global_transform
+	
+	var mouse_pos : Vector2 = event.get_position()
+	var rect_size : Vector2 = _rect_drag_start_point - mouse_pos
+	rect_size.x = abs(rect_size.x)
+	rect_size.y = abs(rect_size.y)
+	
+	var rect : Rect2 = Rect2(_rect_drag_start_point, rect_size)
+					
+	# This is needed so selection works even when you drag from bottom to top, and from right to left
+	var rect_ofs : Vector2 = _rect_drag_start_point - mouse_pos
+				
+	if rect_ofs.x > 0:
+		rect.position.x -= rect_ofs.x
+						
+	if rect_ofs.y > 0:
+		rect.position.y -= rect_ofs.y
+					
+	var selected : PoolIntArray = PoolIntArray()
+					
+	for i in range(_handle_points.size()):
+		var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
+		var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
+						
+		if rect.has_point(vert_pos_2d):
+			selected.push_back(i)
+						
+	if event.alt || event.control:
+		for isel in selected:
+			for i in range(_selected_points.size()):
+				if _selected_points[i] == isel:
+					_selected_points.remove(i)
+					break
+		redraw()
+						
+		return
+					
+	if event.shift:
+		for isel in selected:
+			if !pool_int_arr_contains(_selected_points, isel):
+				_selected_points.push_back(isel)
+								
+		redraw()
+		return
+						
+	_selected_points.resize(0)
+	_selected_points.append_array(selected)
+					
+	redraw()
+
+func forward_spatial_gui_input(index, camera, event):
+	_last_known_camera_facing = camera.transform.basis.xform(Vector3(0, 0, -1))
+	
+	if event is InputEventMouseButton:
 		if event.get_button_index() == BUTTON_LEFT:
 			if !event.is_pressed():
 				# If a handle was being dragged only run these
@@ -234,102 +336,12 @@ func forward_spatial_gui_input(index, camera, event):
 
 				if rect_size.x > _rect_drag_min_ofset || rect_size.y > _rect_drag_min_ofset:
 					had_rect_drag = true
-				
-				# Click
-				if !had_rect_drag:
-					# select vertex
-					var closest_idx : int = -1
-					var closest_dist : float = 1e10
-					
-					for i in range(_handle_points.size()):
-						var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
-						var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
-						var dist_3d : float = ray_from.distance_to(vert_pos_3d)
-						var dist_2d : float = gpoint.distance_to(vert_pos_2d)
-						
-						if (dist_2d < grab_threshold && dist_3d < closest_dist):
-							closest_dist = dist_3d
-							closest_idx = i
-
-					if (closest_idx >= 0):
-						for si in range(_selected_points.size()):
 							
-							if _selected_points[si] == closest_idx:
-								if event.alt || event.control:
-									_selected_points.remove(si)
-									return true
-									
-								return false
-						
-						if event.alt || event.control:
-							return false
-						
-						if event.shift:
-							_selected_points.append(closest_idx)
-						else:
-							# Select new point only
-							_selected_points.resize(0)
-							_selected_points.append(closest_idx)
-
-						apply()
-						redraw()
-					else:
-						# Don't unselect all if either control or shift is held down
-						if event.shift || event.control || event.alt:
-							return false
-						
-						if _selected_points.size() == 0:
-							return false
-						
-						#Unselect all
-						_selected_points.resize(0)
-
-						redraw()
-				#Rect drag
+				if !had_rect_drag:
+					return selection_click_select_through(index, camera, event)
 				else:
+					selection_drag_rect_select_through(index, camera, event)
 					# Always return false here, so the drag rect thing disappears in the editor
-					var rect : Rect2 = Rect2(_rect_drag_start_point, rect_size)
-					
-					# This is needed so selection works even when you drag from bottom to top, and from right to left
-					var rect_ofs : Vector2 = _rect_drag_start_point - mouse_pos
-					
-					if rect_ofs.x > 0:
-						rect.position.x -= rect_ofs.x
-						
-					if rect_ofs.y > 0:
-						rect.position.y -= rect_ofs.y
-					
-					var selected : PoolIntArray = PoolIntArray()
-					
-					for i in range(_handle_points.size()):
-						var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
-						var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
-						
-						if rect.has_point(vert_pos_2d):
-							selected.push_back(i)
-						
-					if event.alt || event.control:
-						for isel in selected:
-							for i in range(_selected_points.size()):
-								if _selected_points[i] == isel:
-									_selected_points.remove(i)
-									break
-						redraw()
-						
-						return false
-					
-					if event.shift:
-						for isel in selected:
-							if !pool_int_arr_contains(_selected_points, isel):
-								_selected_points.push_back(isel)
-								
-						redraw()
-						return false
-						
-					_selected_points.resize(0)
-					_selected_points.append_array(selected)
-					
-					redraw()
 					return false
 			else:
 				# event is pressed
