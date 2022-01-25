@@ -1516,7 +1516,7 @@ func copy_mdr_verts_array() -> PoolVector3Array:
 	
 	return ret
 
-func set_spivot_averaged():
+func set_pivot_averaged():
 	pivot_type = PivotTypes.PIVOT_TYPE_AVERAGED
 
 func set_pivot_mdi_origin():
