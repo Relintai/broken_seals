@@ -40,10 +40,13 @@ var visual_indicator_outline : bool = true
 var visual_indicator_seam : bool= true
 var visual_indicator_handle : bool = true
 
-
 var previous_point : Vector2
 var is_dragging : bool = false
 var _last_known_camera_facing : Vector3 = Vector3(0, 0, -1)
+
+var _rect_drag : bool = false
+var _rect_drag_start_point : Vector2 = Vector2()
+var _rect_drag_min_ofset : float = 10
 
 var _mdr : MeshDataResource = null
 
@@ -208,70 +211,87 @@ func forward_spatial_gui_input(index, camera, event):
 		var grab_threshold : float = 8
 
 		if event.get_button_index() == BUTTON_LEFT:
-			if event.is_pressed():
-				var mouse_pos = event.get_position()
-				
-#				if (_gizmo_select(p_index, _edit.mouse_pos)) 
-#					return true;
-
-				# select vertex
-				var closest_idx : int = -1
-				var closest_dist : float = 1e10
-				
-				for i in range(_handle_points.size()):
-					var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
-					var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
-					var dist_3d : float = ray_from.distance_to(vert_pos_3d)
-					var dist_2d : float = gpoint.distance_to(vert_pos_2d)
-					
-					if (dist_2d < grab_threshold && dist_3d < closest_dist):
-						closest_dist = dist_3d
-						closest_idx = i
-
-				if (closest_idx >= 0):
-					for si in range(_selected_points.size()):
-						
-						if _selected_points[si] == closest_idx:
-							if event.control:
-								_selected_points.remove(si)
-								return true
-								
-							return false
-					
-					if event.control:
-						return false
-					
-					if event.shift:
-						_selected_points.append(closest_idx)
-					else:
-						# Select new point only
-						_selected_points.resize(0)
-						_selected_points.append(closest_idx)
-
-					apply()
-					redraw()
-				else:
-					# Don't unselect all if either control or shift is held down
-					if event.shift || event.control:
-						return false
-					
-					if _selected_points.size() == 0:
-						return false
-					
-					#Unselect all
-					_selected_points.resize(0)
-
-					redraw()
-			else:
+			if !event.is_pressed():
+				# If a handle was being dragged only run these
 				is_dragging = false
-				
+					
 				if _handle_drag_op && _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null && _mdr.array[ArrayMesh.ARRAY_VERTEX].size() == _drag_op_orig_verices.size():
 					_undo_redo.create_action("Drag")
 					_undo_redo.add_do_method(self, "apply_vertex_array", _mdr, _mdr.array[ArrayMesh.ARRAY_VERTEX])
 					_undo_redo.add_undo_method(self, "apply_vertex_array", _mdr, _drag_op_orig_verices)
 					_undo_redo.commit_action()
+				
+				if _handle_drag_op:
+					_handle_drag_op = false
+					return true
+				
+				# See whether we should check for a click or a selection box
+				var mouse_pos : Vector2 = event.get_position()
+				var rect_size : Vector2 = _rect_drag_start_point - mouse_pos
+				rect_size.x = abs(rect_size.x)
+				rect_size.y = abs(rect_size.y)
+				var had_rect_drag : bool = false
+
+				if rect_size.x > _rect_drag_min_ofset || rect_size.y > _rect_drag_min_ofset:
+					had_rect_drag = true
+				
+				# Click
+				if !had_rect_drag:
+					# select vertex
+					var closest_idx : int = -1
+					var closest_dist : float = 1e10
 					
-				_handle_drag_op = false
+					for i in range(_handle_points.size()):
+						var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
+						var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
+						var dist_3d : float = ray_from.distance_to(vert_pos_3d)
+						var dist_2d : float = gpoint.distance_to(vert_pos_2d)
+						
+						if (dist_2d < grab_threshold && dist_3d < closest_dist):
+							closest_dist = dist_3d
+							closest_idx = i
+
+					if (closest_idx >= 0):
+						for si in range(_selected_points.size()):
+							
+							if _selected_points[si] == closest_idx:
+								if event.control:
+									_selected_points.remove(si)
+									return true
+									
+								return false
+						
+						if event.control:
+							return false
+						
+						if event.shift:
+							_selected_points.append(closest_idx)
+						else:
+							# Select new point only
+							_selected_points.resize(0)
+							_selected_points.append(closest_idx)
+
+						apply()
+						redraw()
+					else:
+						# Don't unselect all if either control or shift is held down
+						if event.shift || event.control:
+							return false
+						
+						if _selected_points.size() == 0:
+							return false
+						
+						#Unselect all
+						_selected_points.resize(0)
+
+						redraw()
+				#Rect drag
+				else:
+					pass
+			else:
+				# event is pressed
+				_rect_drag = true
+				_rect_drag_start_point = event.get_position()
 				
 #	elif event is InputEventMouseMotion:
 #		if edit_mode == EditMode.EDIT_MODE_NONE:
