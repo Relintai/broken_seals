@@ -60,7 +60,6 @@ var _mdr : MeshDataResource = null
 var _vertices : PoolVector3Array
 var _indices : PoolIntArray
 var _handle_points : PoolVector3Array
-var _handle_normals : PoolVector3Array
 var _handle_to_vertex_map : Array
 var _selected_points : PoolIntArray
 
@@ -229,15 +228,6 @@ func selection_click_select_front_or_back(index, camera, event):
 		var closest_dist : float = 1e10
 					
 		for i in range(_handle_points.size()):
-			var is_dir_similar : bool = MDRMeshUtils.is_direction_similar(_handle_normals[i], _last_known_camera_facing)
-			
-			if handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
-				if is_dir_similar:
-					continue
-			elif handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_BACK:
-				if !is_dir_similar:
-					continue
-			
 			var vert_pos_3d : Vector3 = gt.xform(_handle_points[i])
 			var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
 			var dist_3d : float = ray_from.distance_to(vert_pos_3d)
@@ -607,7 +597,6 @@ func recalculate_handle_points() -> void:
 	if !_mdr:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
-		_handle_normals.resize(0)
 		return
 	
 	var mdr_arr : Array = _mdr.array
@@ -615,7 +604,6 @@ func recalculate_handle_points() -> void:
 	if mdr_arr.size() != ArrayMesh.ARRAY_MAX || mdr_arr[ArrayMesh.ARRAY_VERTEX] == null || mdr_arr[ArrayMesh.ARRAY_VERTEX].size() == 0:
 		_handle_points.resize(0)
 		_handle_to_vertex_map.resize(0)
-		_handle_normals.resize(0)
 		return
 	
 	var arr : Array = Array()
@@ -638,66 +626,6 @@ func recalculate_handle_points() -> void:
 		_handle_points = result[0]
 		_handle_to_vertex_map = result[1]
 		
-	recalculate_handle_normals()
-
-func recalculate_handle_normals() -> void:
-	_handle_normals.resize(0)
-	var mdr_arr : Array = _mdr.array
-	
-	if mdr_arr[ArrayMesh.ARRAY_NORMAL] == null || mdr_arr[ArrayMesh.ARRAY_NORMAL].size() != mdr_arr[ArrayMesh.ARRAY_VERTEX].size():
-		recalculate_handle_normals_no_vert_normals()
-		return
-	
-	var normals : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_NORMAL]
-	
-	for i in range(_handle_points.size()):
-		var ps : PoolIntArray = _handle_to_vertex_map[i]
-		
-		if ps.size() == 0:
-			_handle_normals.push_back(Vector3())
-			continue
-		
-		var handle_normal : Vector3 = normals[ps[0]]
-		
-		for ind in range(1, ps.size()):
-			handle_normal += normals[ps[ind]]
-			
-		handle_normal /= ps.size()
-		_handle_normals.push_back(handle_normal.normalized())
-
-func recalculate_handle_normals_no_vert_normals() -> void:
-	var mdr_arr : Array = _mdr.array
-	var vertices : PoolVector3Array = mdr_arr[ArrayMesh.ARRAY_VERTEX]
-	var indices : PoolIntArray = mdr_arr[ArrayMesh.ARRAY_INDEX]
-	
-	for i in range(_handle_points.size()):
-		var ps : PoolIntArray = _handle_to_vertex_map[i]
-		
-		if ps.size() == 0:
-			_handle_normals.push_back(Vector3())
-			continue
-		
-		var handle_normal : Vector3 = Vector3()
-
-		for ind in range(ps.size()):
-			var n : Vector3 = Vector3()
-			
-			for iind in range(indices.size()):
-				var indx : int = indices[iind]
-				
-				if ind == iind:
-					var tri_start_ind : int = iind / 3
-					tri_start_ind *= 3
-					
-					var p : Plane = Plane(vertices[tri_start_ind], vertices[tri_start_ind + 1], vertices[tri_start_ind + 2])
-					
-					n += p.normal
-			
-			handle_normal += n.normalized()
-			
-		handle_normal /= ps.size()
-		_handle_normals.push_back(handle_normal.normalized())
-
 func on_mesh_data_resource_changed(mdr : MeshDataResource) -> void:
 	if _mdr:
 		_mdr.disconnect("changed", self, "on_mdr_changed")
