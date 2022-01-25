@@ -256,3 +256,8 @@ func visual_indicator_seam_set(on : bool):
 func visual_indicator_handle_set(on : bool):
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.visual_indicator_handle_set(on)
+
+func select_all():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.select_all()
+	

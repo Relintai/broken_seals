@@ -186,6 +186,18 @@ func apply() -> void:
 	
 	enable_change_event()
 
+func select_all() -> void:
+	print("asdasd")
+	if _selected_points.size() == _handle_points.size():
+		return
+	
+	_selected_points.resize(_handle_points.size())
+	
+	for i in range(_selected_points.size()):
+		_selected_points[i] = i
+	
+	redraw()
+
 func forward_spatial_gui_input(index, camera, event):
 	_last_known_camera_facing = camera.transform.basis.xform(Vector3(0, 0, -1))
 	

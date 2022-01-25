@@ -232,3 +232,6 @@ func on_visual_indicator_seam_toggled(on : bool):
 
 func on_visual_indicator_handle_toggled(on : bool):
 	_plugin.visual_indicator_handle_set(on)
+
+func _on_select_all_pressed():
+	_plugin.select_all()
