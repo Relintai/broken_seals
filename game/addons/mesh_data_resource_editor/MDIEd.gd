@@ -237,10 +237,13 @@ func _on_select_all_pressed():
 	_plugin.select_all()
 
 func onhandle_selection_type_front_toggled(on : bool):
-	_plugin.handle_selection_type_front()
+	if on:
+		_plugin.handle_selection_type_front()
 
 func onhandle_selection_type_back_toggled(on : bool):
-	_plugin.handle_selection_type_back()
+	if on:
+		_plugin.handle_selection_type_back()
 
 func onhandle_selection_type_all_toggled(on : bool):
-	_plugin.handle_selection_type_all()
+	if on:
+		_plugin.handle_selection_type_all()
