@@ -207,6 +207,7 @@ func select_all() -> void:
 	
 	redraw()
 
+
 func selection_click(index, camera, event) -> bool:
 	if handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
 		return selection_click_select_front_or_back(index, camera, event)
@@ -216,6 +217,32 @@ func selection_click(index, camera, event) -> bool:
 		return selection_click_select_through(index, camera, event)
 		
 	return false
+
+func is_point_visible(point_orig : Vector3, camera_pos : Vector3, gt : Transform) -> bool:
+	var point : Vector3 = gt.xform(point_orig)
+	
+	# go from the given point to the origin (camera_pos -> camera)
+	var dir : Vector3 = camera_pos - point
+	dir = dir.normalized()
+	# Might need to reduce z fighting
+	#point += dir * 0.5
+
+	for i in range(0, _indices.size(), 3):
+		var i0 : int = _indices[i]
+		var i1 : int = _indices[i + 1]
+		var i2 : int = _indices[i + 2]
+		
+		var v0 : Vector3 = _vertices[i0]
+		var v1 : Vector3 = _vertices[i1]
+		var v2 : Vector3 = _vertices[i2]
+		
+		var res = Geometry.ray_intersects_triangle(point, dir, v0, v1, v2)
+
+		if res is Vector3:
+			return false
+		
+	return true
+
 
 func selection_click_select_front_or_back(index, camera, event):
 		var gt : Transform = get_spatial_node().global_transform
@@ -234,6 +261,15 @@ func selection_click_select_front_or_back(index, camera, event):
 			var dist_2d : float = gpoint.distance_to(vert_pos_2d)
 
 			if (dist_2d < grab_threshold && dist_3d < closest_dist):
+				var point_visible : bool = is_point_visible(_handle_points[i], ray_from, gt)
+				
+				if handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
+					if !point_visible:
+						continue
+				elif handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_BACK:
+					if point_visible:
+						continue
+				
 				closest_dist = dist_3d
 				closest_idx = i
 
@@ -329,13 +365,14 @@ func selection_click_select_through(index, camera, event):
 func selection_drag(index, camera, event) -> void:
 	if handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
 		selection_drag_rect_select_front_back(index, camera, event)
-	elif handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
+	elif handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_BACK:
 		selection_drag_rect_select_front_back(index, camera, event)
 	else:
 		selection_drag_rect_select_through(index, camera, event)
 
 func selection_drag_rect_select_front_back(index, camera, event):
 	var gt : Transform = get_spatial_node().global_transform
+	var ray_from : Vector3 = camera.global_transform.origin
 	
 	var mouse_pos : Vector2 = event.get_position()
 	var rect_size : Vector2 = _rect_drag_start_point - mouse_pos
@@ -360,6 +397,15 @@ func selection_drag_rect_select_front_back(index, camera, event):
 		var vert_pos_2d : Vector2 = camera.unproject_position(vert_pos_3d)
 						
 		if rect.has_point(vert_pos_2d):
+			var point_visible : bool = is_point_visible(_handle_points[i], ray_from, gt)
+				
+			if handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_FRONT:
+				if !point_visible:
+					continue
+			elif handle_selection_type == HandleSelectionType.HANDLE_SELECTION_TYPE_BACK:
+				if point_visible:
+					continue
+			
 			selected.push_back(i)
 						
 	if event.alt || event.control:
