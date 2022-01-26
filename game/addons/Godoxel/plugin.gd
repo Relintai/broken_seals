@@ -29,7 +29,7 @@ func make_visible(visible):
 
 
 func get_plugin_name():
-	return "Godoxel"
+	return "Paint"
 
 
 func get_plugin_icon():
