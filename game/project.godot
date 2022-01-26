@@ -8,6 +8,7 @@
 
 config_version=4
 
+Node="input/actionbar_5_11"
 _global_script_classes=[ {
 "base": "Reference",
 "class": "BrushPrefabs",
@@ -311,7 +312,6 @@ _global_script_class_icons={
 "WorldGeneratorSettings": "",
 "Zone": ""
 }
-Node="input/actionbar_5_11"
 
 [application]
 

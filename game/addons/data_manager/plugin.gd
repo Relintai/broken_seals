@@ -1,12 +1,18 @@
 tool
 extends EditorPlugin
 
+const DataManagerAddonSettings = preload("res://addons/data_manager/resources/data_manager_addon_settings.gd")
+
 const _main_panel : PackedScene = preload("res://addons/data_manager/panels/MainPanel.tscn")
 const _script_icon : Texture = preload("res://addons/data_manager/icons/icon_multi_line.png")
+
+var settings : DataManagerAddonSettings = null
 
 var _main_panel_instance : Control
 
 func _enter_tree():
+	load_settings()
+	
 	_main_panel_instance = _main_panel.instance() as Control
 	_main_panel_instance.connect("inspect_data", self, "inspect_data")
 
@@ -34,3 +40,21 @@ func get_plugin_name():
 
 func inspect_data(var data : Resource) -> void:
 	get_editor_interface().inspect_object(data)
+
+func ensure_data_dir_exists() -> void:
+	var dir : Directory = Directory.new()
+	
+	if !dir.dir_exists("res://addons/data_manager/_data/"):
+		dir.make_dir("res://addons/data_manager/_data/")
+
+func load_settings() -> void:
+	ensure_data_dir_exists()
+	
+	var dir : Directory = Directory.new()
+	
+	if !dir.file_exists("res://addons/data_manager/_data/settings.res"):
+		settings = DataManagerAddonSettings.new()
+		
+		ResourceSaver.save("res://addons/data_manager/_data/settings.res", settings)
+	else:
+		settings = ResourceLoader.load("res://addons/data_manager/_data/settings.res")
