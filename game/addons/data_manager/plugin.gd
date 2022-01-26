@@ -30,7 +30,7 @@ func get_plugin_icon():
 	return _script_icon
 
 func get_plugin_name():
-	return "Modules"
+	return "Data"
 
 func inspect_data(var data : Resource) -> void:
 	get_editor_interface().inspect_object(data)
