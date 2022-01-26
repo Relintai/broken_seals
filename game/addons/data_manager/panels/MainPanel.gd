@@ -2,6 +2,8 @@ tool
 extends Control
 
 const DataManagerAddonSettings = preload("res://addons/data_manager/resources/data_manager_addon_settings.gd")
+const add_icon = preload("res://addons/data_manager/icons/icon_add.png")
+
 
 signal inspect_data
 
@@ -27,6 +29,9 @@ var _plugin : EditorPlugin = null
 func _enter_tree():
 	if !is_connected("visibility_changed", self, "on_visibility_changed"):
 		connect("visibility_changed", self, "on_visibility_changed")
+		
+	if !$Popups/AddFolderDialog.is_connected("folders_created", self, "on_folders_created"):
+		$Popups/AddFolderDialog.connect("folders_created", self, "on_folders_created")
 
 func on_visibility_changed():
 	if _plugin && is_visible_in_tree() && !_initialized:
@@ -72,7 +77,12 @@ func generate_folder_entry_list() -> void:
 		
 	var dir : Directory = Directory.new()
 	
-	for module in _active_modules:
+	for i in range(_active_modules.size()):
+		var module = _active_modules[i]
+		
+		if i > 0:
+			_folder_entry_container.add_child(HSeparator.new())
+		
 		var label_str : String = "= " + get_module_label_text(module) + " ="
 		var mlabel : Label = Label.new()
 		mlabel.text = label_str
@@ -102,6 +112,16 @@ func generate_folder_entry_list() -> void:
 			fe.set_main_panel(self)
 			
 			index += 1
+		
+		var bsep : Label = Label.new()
+		bsep.text = "Actions"
+		_folder_entry_container.add_child(bsep)
+		
+		var add_folder_button : Button = Button.new()
+		add_folder_button.text = "Add Folder"
+		add_folder_button.icon = add_icon
+		_folder_entry_container.add_child(add_folder_button)
+		add_folder_button.connect("pressed", self, "on_add_folder_button_pressed", [ module ])
 	
 	set_tab(0)
 
@@ -119,6 +139,9 @@ func on_module_entry_button_toggled(on : bool, module) -> void:
 				_active_modules.remove(i)
 				generate_folder_entry_list()
 				return
+
+func on_add_folder_button_pressed(module) -> void:
+	$Popups/AddFolderDialog.set_module(module, _settings)
 
 func load_modules() -> void:
 	_modules.clear()
@@ -161,8 +184,7 @@ class ModulePathSorter:
 		if a.resource_path < b.resource_path:
 			return true
 		return false
-
-
+		
 func set_tab(tab_index : int) -> void:
 	hide_all()
 	
@@ -188,3 +210,6 @@ func get_module_label_text(module) -> String:
 		label_str = label_str.replace("game_module.tres", "")
 		
 	return label_str
+
+func on_folders_created() -> void:
+	generate_folder_entry_list()

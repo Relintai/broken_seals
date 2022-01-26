@@ -8,7 +8,6 @@
 [ext_resource path="res://addons/data_manager/icons/icon_empty.png" type="Texture" id=6]
 [ext_resource path="res://addons/data_manager/icons/icon_reload_small.png" type="Texture" id=7]
 
-
 [node name="Panel" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,71 +32,71 @@ __meta__ = {
 }
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="ResourcePanel"]
-margin_right = 664.0
+margin_right = 600.0
 margin_bottom = 600.0
 
 [node name="LineEdit" type="LineEdit" parent="ResourcePanel/VBoxContainer2"]
-margin_right = 664.0
-margin_bottom = 45.0
+margin_right = 600.0
+margin_bottom = 26.0
 right_icon = ExtResource( 6 )
 placeholder_text = "Filter"
 caret_blink = true
 
 [node name="CreateButton" type="Button" parent="ResourcePanel/VBoxContainer2"]
-margin_top = 53.0
-margin_right = 664.0
-margin_bottom = 90.0
+margin_top = 30.0
+margin_right = 600.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 100, 0 )
 text = "Create"
 icon = ExtResource( 4 )
 expand_icon = true
 
 [node name="HSeparator" type="HSeparator" parent="ResourcePanel/VBoxContainer2"]
-margin_top = 98.0
-margin_right = 664.0
-margin_bottom = 106.0
+margin_top = 54.0
+margin_right = 600.0
+margin_bottom = 58.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScrollContainer2" type="ScrollContainer" parent="ResourcePanel/VBoxContainer2"]
-margin_top = 114.0
-margin_right = 664.0
+margin_top = 62.0
+margin_right = 600.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ResourcePanel/VBoxContainer2/ScrollContainer2"]
-margin_right = 664.0
+margin_right = 600.0
 size_flags_horizontal = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ResourcePanel"]
-margin_left = 688.0
+margin_left = 612.0
 margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="Button" type="Button" parent="ResourcePanel/VBoxContainer"]
-margin_right = 336.0
-margin_bottom = 37.0
+margin_right = 412.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Clear History"
 icon = ExtResource( 7 )
 
 [node name="HSeparator" type="HSeparator" parent="ResourcePanel/VBoxContainer"]
-margin_top = 45.0
-margin_right = 336.0
-margin_bottom = 53.0
+margin_top = 24.0
+margin_right = 412.0
+margin_bottom = 28.0
 size_flags_horizontal = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ResourcePanel/VBoxContainer"]
-margin_top = 61.0
-margin_right = 336.0
+margin_top = 32.0
+margin_right = 412.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ResourcePanel/VBoxContainer/ScrollContainer"]
-margin_right = 336.0
+margin_right = 412.0
 size_flags_horizontal = 3
 
 [node name="CreateNamePopup" parent="." instance=ExtResource( 1 )]
@@ -112,6 +111,7 @@ margin_top = -55.0
 margin_right = 139.0
 margin_bottom = 55.0
 dialog_text = "Delete?"
+
 [connection signal="text_entered" from="ResourcePanel/VBoxContainer2/LineEdit" to="." method="search"]
 [connection signal="pressed" from="ResourcePanel/VBoxContainer2/CreateButton" to="CreateNamePopup" method="popup"]
 [connection signal="pressed" from="ResourcePanel/VBoxContainer/Button" to="." method="clear_history"]
