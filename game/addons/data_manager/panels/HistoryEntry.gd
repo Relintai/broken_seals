@@ -18,7 +18,9 @@ func set_data(pdata: Resource) -> void:
 		
 	if data.has_method("get_text_name"):
 		s += str(data.get_text_name())
-		
+	elif data.has_method("get_name"):
+		s += str(data.get_name())
+
 	if data.has_method("get_rank"):
 		s += " (R " + str(data.get_rank()) + ")"
 
