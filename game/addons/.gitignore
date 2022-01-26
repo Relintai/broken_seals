@@ -1,4 +1,6 @@
 *
+!data_manager
+!data_manager/**
 !module_manager
 !module_manager/**
 !Godoxel
