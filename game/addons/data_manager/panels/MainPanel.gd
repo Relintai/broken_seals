@@ -9,10 +9,12 @@ export(PackedScene) var resource_scene : PackedScene
 export(PackedScene) var folder_entry_button_scene : PackedScene
 export(String) var base_folder : String = "res://"
 export(NodePath) var main_container : NodePath
+export(NodePath) var module_entry_container_path : NodePath
 export(NodePath) var folder_entry_container_path : NodePath
 
 var _main_container : Node
 var _resource_scene : Node
+var _module_entry_container : Node
 var _folder_entry_container : Node
 
 var _modules : Array = Array()
@@ -41,6 +43,25 @@ func load_data():
 	_main_container.add_child(_resource_scene)
 	_resource_scene.owner = _main_container
 	_resource_scene.connect("inspect_data", self, "inspect_data")
+	
+	_module_entry_container = get_node(module_entry_container_path)
+	load_modules()
+	
+	for m in _modules:
+		var label_str : String = m.resource_name
+		
+		if label_str == "":
+			label_str = m.resource_path
+			label_str = label_str.replace("res://", "")
+			label_str = label_str.replace("/game_module.tres", "")
+			label_str = label_str.replace("game_module.tres", "")
+			
+		var b : Button = Button.new()
+		b.toggle_mode = true
+		b.text = label_str
+		b.set_h_size_flags(SIZE_EXPAND_FILL)
+		b.connect("toggled", self, "on_module_entry_button_toggled", [ m ])
+		_module_entry_container.add_child(b)
 	
 	_folder_entry_container = get_node(folder_entry_container_path)
 	
@@ -71,17 +92,13 @@ func load_data():
 	
 	set_tab(0)
 
+func on_module_entry_button_toggled(on : bool, module) -> void:
+	pass
 
-func initialize_modules() -> void:
+func load_modules() -> void:
 	_modules.clear()
-	
 	load_modules_at("res://")
-	
 	_modules.sort_custom(ModulePathSorter, "sort_ascending")
-	
-	for module in _modules:
-		if module.has_method("load_module"):
-			module.load_module()
 	
 func load_modules_at(path : String) -> void:
 	var dir = Directory.new()
@@ -113,7 +130,6 @@ func load_modules_at(path : String) -> void:
 			file_name = dir.get_next()
 	else:
 		print("An error occurred when trying to access the path: " + path)
-
 
 class ModulePathSorter:
 	static func sort_ascending(a, b):

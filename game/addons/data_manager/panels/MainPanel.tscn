@@ -17,7 +17,8 @@ resource_scene = ExtResource( 3 )
 folder_entry_button_scene = ExtResource( 2 )
 base_folder = "res://data/"
 main_container = NodePath("HSplitContainer/MarginContainer")
-folder_entry_container_path = NodePath("HSplitContainer/ScrollContainer/VBoxContainer")
+module_entry_container_path = NodePath("HSplitContainer/TabContainer/Modules/VBoxContainer")
+folder_entry_container_path = NodePath("HSplitContainer/TabContainer/Folders/VBoxContainer")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 margin_right = 1024.0
@@ -29,16 +30,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
-margin_right = 210.0
+[node name="TabContainer" type="TabContainer" parent="HSplitContainer"]
+margin_right = 218.0
 margin_bottom = 600.0
-size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/ScrollContainer"]
+[node name="Modules" type="ScrollContainer" parent="HSplitContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/TabContainer/Modules"]
+margin_right = 210.0
+size_flags_horizontal = 3
+
+[node name="Folders" type="ScrollContainer" parent="HSplitContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_vertical = 3
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/TabContainer/Folders"]
 margin_right = 210.0
 size_flags_horizontal = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
-margin_left = 222.0
+margin_left = 230.0
 margin_right = 1024.0
 margin_bottom = 600.0
