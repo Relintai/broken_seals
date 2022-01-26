@@ -22,7 +22,8 @@ var _initialized : bool = false
 var _plugin : EditorPlugin = null
 
 func _enter_tree():
-	connect("visibility_changed", self, "on_visibility_changed")
+	if !is_connected("visibility_changed", self, "on_visibility_changed"):
+		connect("visibility_changed", self, "on_visibility_changed")
 
 func on_visibility_changed():
 	if _plugin && is_visible_in_tree() && !_initialized:
