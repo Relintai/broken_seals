@@ -42,6 +42,9 @@ func _ready():
 	_delete_popup = get_node(delete_popup_path)
 
 func set_resource_type(folder : String, resource_type : String) -> void:
+	if !folder.ends_with("/"):
+		folder += "/"
+	
 	if folder == _folder and _resource_type == resource_type:
 		return
 	
