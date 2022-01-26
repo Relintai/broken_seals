@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://addons/data_manager/panels/MainPanel.gd" type="Script" id=1]
-[ext_resource path="res://addons/data_manager/panels/FolderEntryButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/data_manager/panels/ResourcePanel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/data_manager/panels/AddFolderDialog.gd" type="Script" id=4]
 
@@ -15,7 +14,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 resource_scene = ExtResource( 3 )
-folder_entry_button_scene = ExtResource( 2 )
 base_folder = "res://data/"
 main_container = NodePath("HSplitContainer/MarginContainer")
 module_entry_container_path = NodePath("HSplitContainer/TabContainer/Modules/VBoxContainer")

@@ -4,11 +4,9 @@ extends Control
 const DataManagerAddonSettings = preload("res://addons/data_manager/resources/data_manager_addon_settings.gd")
 const add_icon = preload("res://addons/data_manager/icons/icon_add.png")
 
-
 signal inspect_data
 
 export(PackedScene) var resource_scene : PackedScene
-export(PackedScene) var folder_entry_button_scene : PackedScene
 export(String) var base_folder : String = "res://"
 export(NodePath) var main_container : NodePath
 export(NodePath) var module_entry_container_path : NodePath
@@ -92,8 +90,11 @@ func generate_folder_entry_list() -> void:
 		var module_dir_base : String = module.resource_path.get_base_dir()
 		
 		var index = 0
-		for f in _settings.folders:
-			if !dir.dir_exists(module_dir_base + "/" + f.folder):
+		for j in range(_settings.get_folder_count()):
+			var f = _settings.folder_get(j)
+			var full_folder_path : String = module_dir_base + "/" + f.folder
+			
+			if !dir.dir_exists(full_folder_path):
 				continue
 			
 			if f.header != "":
@@ -102,14 +103,10 @@ func generate_folder_entry_list() -> void:
 				_folder_entry_container.add_child(h)
 				h.text = f.header
 			
-			var fe : Node = folder_entry_button_scene.instance()
-			
-			_folder_entry_container.add_child(fe)
-			
+			var fe : Button = Button.new()
 			fe.text = f.name
-			fe.tab = index
-			
-			fe.set_main_panel(self)
+			fe.connect("pressed", self, "on_folder_entry_button_pressed", [ module, full_folder_path, j ])
+			_folder_entry_container.add_child(fe)
 			
 			index += 1
 		
@@ -123,7 +120,11 @@ func generate_folder_entry_list() -> void:
 		_folder_entry_container.add_child(add_folder_button)
 		add_folder_button.connect("pressed", self, "on_add_folder_button_pressed", [ module ])
 	
-	set_tab(0)
+	#set_tab(0)
+
+func on_folder_entry_button_pressed(module, full_folder_path : String, folder_index : int) -> void:
+	#_resource_scene.show()
+	_resource_scene.set_resource_type(full_folder_path, _settings.folder_get_type(folder_index))
 
 func on_module_entry_button_toggled(on : bool, module) -> void:
 	if on:
