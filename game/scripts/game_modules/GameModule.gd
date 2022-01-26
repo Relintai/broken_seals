@@ -2,6 +2,10 @@ extends Resource
 class_name GameModule
 
 export(bool) var enabled : bool = true
+export(String) var description : String = ""
+# You can put onther game modules (path) here, so it's easier to tell when a module depends on an another
+# It's for humans at the moment
+export(PoolStringArray) var dependencies : PoolStringArray = PoolStringArray()
 
 export(ESSResourceDB) var resource_db : ESSResourceDB
 
