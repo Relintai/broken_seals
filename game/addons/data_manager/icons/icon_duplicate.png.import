@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/icon_duplicate.png-2fca67563e92c088a06d8cd03e837bd7.stex"
+path="res://.import/icon_duplicate.png-bc9124161be2304f34e2e5292fc9bb72.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/module_manager/icons/icon_duplicate.png"
-dest_files=[ "res://.import/icon_duplicate.png-2fca67563e92c088a06d8cd03e837bd7.stex" ]
+source_file="res://addons/data_manager/icons/icon_duplicate.png"
+dest_files=[ "res://.import/icon_duplicate.png-bc9124161be2304f34e2e5292fc9bb72.stex" ]
 
 [params]
 

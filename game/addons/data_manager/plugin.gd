@@ -1,8 +1,8 @@
 tool
 extends EditorPlugin
 
-const _main_panel : PackedScene = preload("res://addons/module_manager/panels/MainPanel.tscn")
-const _script_icon : Texture = preload("res://addons/module_manager/icons/icon_multi_line.png")
+const _main_panel : PackedScene = preload("res://addons/data_manager/panels/MainPanel.tscn")
+const _script_icon : Texture = preload("res://addons/data_manager/icons/icon_multi_line.png")
 
 var _main_panel_instance : Control
 

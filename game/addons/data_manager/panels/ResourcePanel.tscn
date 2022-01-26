@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://addons/module_manager/panels/CreateNamePopup.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/module_manager/panels/ResourceRow.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/module_manager/panels/HistoryEntry.tscn" type="PackedScene" id=3]
-[ext_resource path="res://addons/module_manager/icons/icon_add.png" type="Texture" id=4]
-[ext_resource path="res://addons/module_manager/panels/ResourcePanel.gd" type="Script" id=5]
-[ext_resource path="res://addons/module_manager/icons/icon_empty.png" type="Texture" id=6]
-[ext_resource path="res://addons/module_manager/icons/icon_reload_small.png" type="Texture" id=7]
+[ext_resource path="res://addons/data_manager/panels/CreateNamePopup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://addons/data_manager/panels/ResourceRow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/data_manager/panels/HistoryEntry.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/data_manager/icons/icon_add.png" type="Texture" id=4]
+[ext_resource path="res://addons/data_manager/panels/ResourcePanel.gd" type="Script" id=5]
+[ext_resource path="res://addons/data_manager/icons/icon_empty.png" type="Texture" id=6]
+[ext_resource path="res://addons/data_manager/icons/icon_reload_small.png" type="Texture" id=7]
 
 
 [node name="Panel" type="Control"]

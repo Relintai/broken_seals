@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://addons/module_manager/panels/CreateNamePopup.gd" type="Script" id=1]
+[ext_resource path="res://addons/data_manager/panels/CreateNamePopup.gd" type="Script" id=1]
 
 
 [node name="CreateNamePopup" type="ConfirmationDialog"]
