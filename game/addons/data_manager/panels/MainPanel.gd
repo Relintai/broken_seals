@@ -1,6 +1,8 @@
 tool
 extends Control
 
+const DataManagerAddonSettings = preload("res://addons/data_manager/resources/data_manager_addon_settings.gd")
+
 signal inspect_data
 
 export(PackedScene) var resource_scene : PackedScene
@@ -14,21 +16,24 @@ var _resource_scene : Node
 var _folder_entry_container : Node
 
 var _modules : Array = Array()
-var _folders : Array = Array()
+var _settings : DataManagerAddonSettings = null
 
-func _old_ready():
+var _initialized : bool = false
+var _plugin : EditorPlugin = null
+
+func _enter_tree():
+	connect("visibility_changed", self, "on_visibility_changed")
+
+func on_visibility_changed():
+	if _plugin && is_visible_in_tree() && !_initialized:
+		_initialized = true
+		load_data()
+
+func load_data():
 	var dir : Directory = Directory.new()
 	
-	if dir.file_exists("res://ess_data.json"):
-		var file : File = File.new()
-		
-		if file.open("res://ess_data.json", File.READ) == OK:
-			var s : String = file.get_as_text()
-			
-			_folders = parse_json(s)
-			
-			file.close()
-
+	_settings = _plugin.settings
+	
 	_main_container = get_node(main_container)
 	
 	_resource_scene = resource_scene.instance()
@@ -42,21 +47,21 @@ func _old_ready():
 		ch.queue_free()
 	
 	var index = 0
-	for f in _folders:
-		if f.has("header"):
+	for f in _settings.folders:
+		if f.header != "":
 			var h : Label = Label.new()
 			
 			_folder_entry_container.add_child(h)
 			h.owner = _folder_entry_container
 			
-			h.text = f["header"]
+			h.text = f.header
 		
 		var fe : Node = folder_entry_button_scene.instance()
 		
 		_folder_entry_container.add_child(fe)
 		fe.owner = _folder_entry_container
 		
-		fe.text = f["name"]
+		fe.text = f.name
 		fe.tab = index
 		
 		fe.set_main_panel(self)
@@ -64,7 +69,6 @@ func _old_ready():
 		index += 1
 	
 	set_tab(0)
-#	set_tab("test")
 
 
 func initialize_modules() -> void:
@@ -121,10 +125,13 @@ func set_tab(tab_index : int) -> void:
 	hide_all()
 	
 	_resource_scene.show()
-	_resource_scene.set_resource_type(_folders[tab_index]["folder"], _folders[tab_index]["type"])
+	_resource_scene.set_resource_type(_settings.folder_get_folder(tab_index), _settings.folder_get_type(tab_index))
 	
 func hide_all() -> void:
 	_resource_scene.hide()
 
 func inspect_data(var data : Resource) -> void:
 	emit_signal("inspect_data", data)
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin

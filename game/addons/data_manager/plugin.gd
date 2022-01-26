@@ -14,6 +14,7 @@ func _enter_tree():
 	load_settings()
 	
 	_main_panel_instance = _main_panel.instance() as Control
+	_main_panel_instance.set_plugin(self)
 	_main_panel_instance.connect("inspect_data", self, "inspect_data")
 
 	get_editor_interface().get_editor_viewport().add_child(_main_panel_instance)

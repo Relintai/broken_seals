@@ -9,6 +9,24 @@ class SettingEntry:
 
 var folders : Array = Array()
 
+func get_folder_count() -> int:
+	return folders.size()
+
+func folder_get(index : int) -> SettingEntry:
+	return folders[index]
+
+func folder_get_folder(index : int) -> String:
+	return folders[index].folder
+
+func folder_get_header(index : int) -> String:
+	return folders[index].header
+	
+func folder_get_name(index : int) -> String:
+	return folders[index].name
+	
+func folder_get_type(index : int) -> String:
+	return folders[index].type
+
 func _get(property):
 	if property == "folder_count":
 		return folders.size()
