@@ -9,7 +9,8 @@ var _module = null
 signal folders_created
 
 func _enter_tree():
-	connect("confirmed", self, "on_confirmed")
+	if !is_connected("confirmed", self, "on_confirmed"):
+		connect("confirmed", self, "on_confirmed")
 
 func setup() -> void:
 	var entry_container : Control = $ScrollContainer/VBoxContainer
