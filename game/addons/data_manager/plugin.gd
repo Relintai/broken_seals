@@ -52,9 +52,9 @@ func load_settings() -> void:
 	
 	var dir : Directory = Directory.new()
 	
-	if !dir.file_exists("res://addons/data_manager/_data/settings.res"):
+	if !dir.file_exists("res://addons/data_manager/_data/settings.tres"):
 		settings = DataManagerAddonSettings.new()
 		
-		ResourceSaver.save("res://addons/data_manager/_data/settings.res", settings)
+		ResourceSaver.save("res://addons/data_manager/_data/settings.tres", settings)
 	else:
-		settings = ResourceLoader.load("res://addons/data_manager/_data/settings.res")
+		settings = ResourceLoader.load("res://addons/data_manager/_data/settings.tres")
