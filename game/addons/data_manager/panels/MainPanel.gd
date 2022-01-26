@@ -18,6 +18,7 @@ var _module_entry_container : Node
 var _folder_entry_container : Node
 
 var _modules : Array = Array()
+var _active_modules : Array = Array()
 var _settings : DataManagerAddonSettings = null
 
 var _initialized : bool = false
@@ -45,16 +46,18 @@ func load_data():
 	_resource_scene.connect("inspect_data", self, "inspect_data")
 	
 	_module_entry_container = get_node(module_entry_container_path)
+	_folder_entry_container = get_node(folder_entry_container_path)
+	
+	generate_module_entry_list()
+
+func generate_module_entry_list() -> void:
+	for ch in _folder_entry_container.get_children():
+		ch.queue_free()
+	
 	load_modules()
 	
 	for m in _modules:
-		var label_str : String = m.resource_name
-		
-		if label_str == "":
-			label_str = m.resource_path
-			label_str = label_str.replace("res://", "")
-			label_str = label_str.replace("/game_module.tres", "")
-			label_str = label_str.replace("game_module.tres", "")
+		var label_str : String = get_module_label_text(m)
 			
 		var b : Button = Button.new()
 		b.toggle_mode = true
@@ -62,38 +65,60 @@ func load_data():
 		b.set_h_size_flags(SIZE_EXPAND_FILL)
 		b.connect("toggled", self, "on_module_entry_button_toggled", [ m ])
 		_module_entry_container.add_child(b)
-	
-	_folder_entry_container = get_node(folder_entry_container_path)
-	
+
+func generate_folder_entry_list() -> void:
 	for ch in _folder_entry_container.get_children():
 		ch.queue_free()
+		
+	var dir : Directory = Directory.new()
 	
-	var index = 0
-	for f in _settings.folders:
-		if f.header != "":
-			var h : Label = Label.new()
+	for module in _active_modules:
+		var label_str : String = "= " + get_module_label_text(module) + " ="
+		var mlabel : Label = Label.new()
+		mlabel.text = label_str
+		mlabel.align = HALIGN_CENTER
+		mlabel.valign = VALIGN_CENTER
+		_folder_entry_container.add_child(mlabel)
+		var module_dir_base : String = module.resource_path.get_base_dir()
+		
+		var index = 0
+		for f in _settings.folders:
+			if !dir.dir_exists(module_dir_base + "/" + f.folder):
+				continue
 			
-			_folder_entry_container.add_child(h)
-			h.owner = _folder_entry_container
+			if f.header != "":
+				var h : Label = Label.new()
+				
+				_folder_entry_container.add_child(h)
+				h.text = f.header
 			
-			h.text = f.header
-		
-		var fe : Node = folder_entry_button_scene.instance()
-		
-		_folder_entry_container.add_child(fe)
-		fe.owner = _folder_entry_container
-		
-		fe.text = f.name
-		fe.tab = index
-		
-		fe.set_main_panel(self)
-		
-		index += 1
+			var fe : Node = folder_entry_button_scene.instance()
+			
+			_folder_entry_container.add_child(fe)
+			
+			fe.text = f.name
+			fe.tab = index
+			
+			fe.set_main_panel(self)
+			
+			index += 1
 	
 	set_tab(0)
 
 func on_module_entry_button_toggled(on : bool, module) -> void:
-	pass
+	if on:
+		for m in _active_modules:
+			if m == module:
+				return
+		
+		_active_modules.push_back(module)
+		generate_folder_entry_list()
+	else:
+		for i in range(_active_modules.size()):
+			if _active_modules[i] == module:
+				_active_modules.remove(i)
+				generate_folder_entry_list()
+				return
 
 func load_modules() -> void:
 	_modules.clear()
@@ -152,3 +177,14 @@ func inspect_data(var data : Resource) -> void:
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
+
+func get_module_label_text(module) -> String:
+	var label_str : String = module.resource_name
+		
+	if label_str == "":
+		label_str = module.resource_path
+		label_str = label_str.replace("res://", "")
+		label_str = label_str.replace("/game_module.tres", "")
+		label_str = label_str.replace("game_module.tres", "")
+		
+	return label_str
