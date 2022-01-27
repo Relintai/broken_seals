@@ -83,7 +83,6 @@ func set_editor_plugin(editor_plugin : EditorPlugin) -> void:
 	_undo_redo = _editor_plugin.get_undo_redo()
 
 func set_handle(index: int, camera: Camera, point: Vector2):
-	print("set_handle")
 	var relative : Vector2 = point - previous_point
 	
 	if !_handle_drag_op:
