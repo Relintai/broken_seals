@@ -205,9 +205,9 @@ func generate_tangents():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.generate_tangents()
 		
-func onnect_to_first_selected():
+func connect_to_first_selected():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
-		current_mesh_data_instance.gizmo.onnect_to_first_selected()
+		current_mesh_data_instance.gizmo.connect_to_first_selected()
 		
 func connect_to_avg():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:

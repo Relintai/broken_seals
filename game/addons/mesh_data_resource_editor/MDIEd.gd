@@ -165,7 +165,7 @@ func _on_split_pressed():
 	_plugin.split()
 
 func _on_connect_to_first_selected_pressed():
-	_plugin.onnect_to_first_selected()
+	_plugin.connect_to_first_selected()
 	
 func _on_connect_to_avg_pressed():
 	_plugin.connect_to_avg()
