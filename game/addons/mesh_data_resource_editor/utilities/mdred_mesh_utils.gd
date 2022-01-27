@@ -34,6 +34,81 @@ static func remove_triangle(mdr : MeshDataResource, triangle_index : int) -> voi
 	
 	mdr.set_array(arrays)
 
+static func add_triangulated_mesh_from_points_delaunay(mdr : MeshDataResource, selected_points : PoolVector3Array, last_known_camera_facing : Vector3) -> bool:
+	if selected_points.size() < 3:
+		return false
+		
+	var tetrahedrons : PoolIntArray = MeshUtils.delaunay3d_tetrahedralize(selected_points)
+	
+	if tetrahedrons.size() == 0:
+		# try randomly displacing the points a bit, it can help
+		var rnd_selected_points : PoolVector3Array = PoolVector3Array()
+		rnd_selected_points.append_array(selected_points)
+		
+		for i in range(rnd_selected_points.size()):
+			rnd_selected_points[i] = rnd_selected_points[i] + (Vector3(randf(),randf(), randf()) * 0.1)
+		
+		tetrahedrons = MeshUtils.delaunay3d_tetrahedralize(rnd_selected_points)
+		
+		if tetrahedrons.size() == 0:
+			print("add_triangulated_mesh_from_points_delaunay: tetrahedrons.size() == 0!")
+			return false
+
+	var st : SurfaceTool = SurfaceTool.new()
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	for i in range(0, tetrahedrons.size(), 4):
+		var i0 : int = tetrahedrons[i]
+		var i1 : int = tetrahedrons[i + 1]
+		var i2 : int = tetrahedrons[i + 2]
+		var i3 : int = tetrahedrons[i + 3]
+		
+		var v0 : Vector3 = selected_points[i0]
+		var v1 : Vector3 = selected_points[i1]
+		var v2 : Vector3 = selected_points[i2]
+		var v3 : Vector3 = selected_points[i3]
+	
+		var flip : bool = is_normal_similar(v0, v1, v2, last_known_camera_facing)
+		
+		var normal : Vector3 = get_face_normal(v0, v1, v2, flip)
+
+		st.add_uv(Vector2(0, 1))
+		st.add_normal(normal)
+		st.add_vertex(v0)
+		st.add_uv(Vector2(0.5, 0))
+		st.add_normal(normal)
+		st.add_vertex(v1)
+		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
+		st.add_vertex(v2)
+		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
+		st.add_vertex(v3)
+		
+		var im3 : int = i
+
+		if !flip:
+			st.add_index(im3 + 0)
+			st.add_index(im3 + 1)
+			st.add_index(im3 + 2)
+			
+			st.add_index(im3 + 0)
+			st.add_index(im3 + 2)
+			st.add_index(im3 + 3)
+		else:
+			st.add_index(im3 + 3)
+			st.add_index(im3 + 2)
+			st.add_index(im3 + 0)
+			
+			st.add_index(im3 + 2)
+			st.add_index(im3 + 1)
+			st.add_index(im3 + 0)
+	
+	merge_in_surface_tool(mdr, st)
+	
+	return true
+
 static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_points : PoolVector3Array, last_known_camera_facing : Vector3) -> void:
 	if selected_points.size() < 3:
 		return

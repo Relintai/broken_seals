@@ -1037,6 +1037,13 @@ func split():
 func disconnect_action():
 	pass
 
+func get_first_triangle_index_for_vertex(indx : int) -> int:
+	for i in range(_indices.size()):
+		if _indices[i] == indx:
+			return i / 3
+			
+	return -1
+	
 func create_face():
 	if !_mdr:
 		return
@@ -1053,12 +1060,44 @@ func create_face():
 		
 		for sp in _selected_points:
 			points.push_back(_handle_points[sp])
+		
+		if points.size() == 3:
+			var i0 : int = _handle_to_vertex_map[_selected_points[0]][0]
+			var i1 : int = _handle_to_vertex_map[_selected_points[1]][0]
+			var i2 : int = _handle_to_vertex_map[_selected_points[2]][0]
 			
-		MDRMeshUtils.add_triangulated_mesh_from_points(_mdr, points, _last_known_camera_facing)
+			var v0 : Vector3 = points[0]
+			var v1 : Vector3 = points[1]
+			var v2 : Vector3 = points[2]
+			
+			var tfn : Vector3 = Vector3()
+			
+			if orig_arr[ArrayMesh.ARRAY_NORMAL] != null && orig_arr[ArrayMesh.ARRAY_NORMAL].size() == orig_arr[ArrayMesh.ARRAY_VERTEX].size():
+				var normals : PoolVector3Array = orig_arr[ArrayMesh.ARRAY_NORMAL]
+				
+				tfn += normals[i0]
+				tfn += normals[i1]
+				tfn += normals[i2]
+				tfn /= 3
+				tfn = tfn.normalized()
+			else:
+				tfn = MDRMeshUtils.get_face_normal(_vertices[i0], _vertices[i1], _vertices[i2])
+
+
+			var flip : bool = MDRMeshUtils.should_triangle_flip(v0, v1, v2, tfn)
+			
+			MDRMeshUtils.add_triangle_at(_mdr, v0, v1, v2, flip)
+			add_mesh_change_undo_redo(orig_arr, _mdr.array, "Create Face")
+			enable_change_event()
+			return
+		
+		if !MDRMeshUtils.add_triangulated_mesh_from_points_delaunay(_mdr, points, _last_known_camera_facing):
+			enable_change_event()
+			return
 		
 		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Create Face")
 		
-		_selected_points.resize(0)
+		#_selected_points.resize(0)
 		enable_change_event()
 	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
 		pass
