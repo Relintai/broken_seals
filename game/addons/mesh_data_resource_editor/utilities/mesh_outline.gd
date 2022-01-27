@@ -1,7 +1,7 @@
 tool
 extends Reference
 
-var marker_size : float = 0.1
+var marker_size : float = 0.05
 
 var _mdr : MeshDataResource
 
