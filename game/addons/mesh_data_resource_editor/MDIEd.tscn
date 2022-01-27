@@ -399,23 +399,24 @@ margin_bottom = 20.0
 text = "Create Face"
 
 [node name="Split" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
+visible = false
 margin_top = 24.0
 margin_right = 998.0
 margin_bottom = 44.0
 text = "Split"
 
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
-margin_top = 48.0
+margin_top = 24.0
 margin_right = 998.0
-margin_bottom = 62.0
+margin_bottom = 38.0
 text = "Connect"
 align = 1
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations"]
-margin_top = 66.0
+margin_top = 42.0
 margin_right = 998.0
-margin_bottom = 86.0
+margin_bottom = 62.0
 size_flags_horizontal = 3
 
 [node name="ConnectToFirst" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer"]
