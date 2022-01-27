@@ -1,6 +1,8 @@
 tool
 extends Reference
 
+var marker_size : float = 0.1
+
 var _mdr : MeshDataResource
 
 var lines : PoolVector3Array
@@ -74,7 +76,7 @@ func generate(mark_outline : bool, mark_handles : bool):
 		for i in range(_vertices.size()):
 			var v : Vector3 = get_vertex(i)
 
-			var l : float = v.length() / 20.0
+			var l : float = marker_size
 					
 			lines.append(v + Vector3(l, 0, 0))
 			lines.append(v + Vector3(-l, 0, 0))
@@ -109,7 +111,7 @@ func generate_mark_edges(mark_outline : bool, mark_handles : bool):
 			
 			if mark_handles:
 				var pmid : Vector3 = lerp(v0, v1, 0.5)
-				var l : float = (v0 - v1).length() / 20.0
+				var l : float = marker_size
 					
 				lines.append(pmid + Vector3(l, 0, 0))
 				lines.append(pmid + Vector3(-l, 0, 0))
@@ -149,7 +151,7 @@ func generate_mark_faces(mark_outline : bool, mark_handles : bool):
 
 				var pmid : Vector3 = v0 + v1 + v2
 				pmid /= 3
-				var l : float = (v0 - v1).length() / 20.0
+				var l : float = marker_size
 					
 				lines.append(pmid + Vector3(l, 0, 0))
 				lines.append(pmid + Vector3(-l, 0, 0))
