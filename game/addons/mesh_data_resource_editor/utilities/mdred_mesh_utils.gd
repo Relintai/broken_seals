@@ -47,16 +47,21 @@ static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_p
 
 	for i in range(2, selected_points.size()):
 		var v2 : Vector3 = selected_points[i]
+	
+		var flip : bool = is_normal_similar(v0, v1, v2, last_known_camera_facing)
 		
+		var normal : Vector3 = get_face_normal(v0, v1, v2, flip)
+
 		st.add_uv(Vector2(0, 1))
+		st.add_normal(normal)
 		st.add_vertex(v0)
 		st.add_uv(Vector2(0.5, 0))
+		st.add_normal(normal)
 		st.add_vertex(v1)
 		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
 		st.add_vertex(v2)
 		
-		var flip : bool = is_normal_similar(v0, v1, v2, last_known_camera_facing)
-
 		var im3 : int = (i - 2) * 3
 
 		if !flip:
@@ -67,8 +72,6 @@ static func add_triangulated_mesh_from_points(mdr : MeshDataResource, selected_p
 			st.add_index(im3 + 2)
 			st.add_index(im3 + 1)
 			st.add_index(im3)
-
-	st.generate_normals()
 	
 	merge_in_surface_tool(mdr, st)
 
@@ -82,12 +85,17 @@ static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, 
 	var st : SurfaceTool = SurfaceTool.new()
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	
+	var normal : Vector3 = get_face_normal(v0, v1, v2, flip)
 
 	st.add_uv(Vector2(0, 1))
+	st.add_normal(normal)
 	st.add_vertex(v0)
 	st.add_uv(Vector2(0.5, 0))
+	st.add_normal(normal)
 	st.add_vertex(v1)
 	st.add_uv(Vector2(1, 1))
+	st.add_normal(normal)
 	st.add_vertex(v2)
 
 	if !flip:
@@ -99,27 +107,28 @@ static func add_triangle_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, 
 		st.add_index(1)
 		st.add_index(0)
 
-	st.generate_normals()
-	
 	merge_in_surface_tool(mdr, st)
 
 static func add_triangle(mdr : MeshDataResource) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-
+	
+	var normal : Vector3 = get_face_normal(Vector3(-0.5, -0.5, 0), Vector3(0, 0.5, 0), Vector3(0.5, -0.5, 0))
+	
 	st.add_uv(Vector2(0, 1))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(-0.5, -0.5, 0))
 	st.add_uv(Vector2(0.5, 0))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(0, 0.5, 0))
 	st.add_uv(Vector2(1, 1))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(0.5, -0.5, 0))
 		
 	st.add_index(0)
 	st.add_index(1)
 	st.add_index(2)
-
-	st.generate_normals()
 	
 	merge_in_surface_tool(mdr, st)
 
@@ -141,13 +150,19 @@ static func add_quad_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 :
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
+	var normal : Vector3 = get_face_normal(v0, v1, v2, flip)
+
 	st.add_uv(Vector2(0, 1))
+	st.add_normal(normal)
 	st.add_vertex(v0)
 	st.add_uv(Vector2(0, 0))
+	st.add_normal(normal)
 	st.add_vertex(v1)
 	st.add_uv(Vector2(1, 0))
+	st.add_normal(normal)
 	st.add_vertex(v2)
 	st.add_uv(Vector2(1, 1))
+	st.add_normal(normal)
 	st.add_vertex(v3)
 	
 
@@ -168,22 +183,26 @@ static func add_quad_at(mdr : MeshDataResource, v0 : Vector3, v1 : Vector3, v2 :
 		st.add_index(2)
 		st.add_index(0)
 
-	st.generate_normals()
-	
 	merge_in_surface_tool(mdr, st)
 
 static func add_quad(mdr : MeshDataResource) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
 	
+	var normal : Vector3 = get_face_normal(Vector3(-0.5, -0.5, 0), Vector3(-0.5, 0.5, 0), Vector3(0.5, 0.5, 0))
+	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
 	st.add_uv(Vector2(0, 1))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(-0.5, -0.5, 0))
 	st.add_uv(Vector2(0, 0))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(-0.5, 0.5, 0))
 	st.add_uv(Vector2(1, 0))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(0.5, 0.5, 0))
 	st.add_uv(Vector2(1, 1))
+	st.add_normal(normal)
 	st.add_vertex(Vector3(0.5, -0.5, 0))
 		
 	st.add_index(0)
@@ -193,52 +212,70 @@ static func add_quad(mdr : MeshDataResource) -> void:
 	st.add_index(3)
 	st.add_index(0)
 
-	st.generate_normals()
-	
 	merge_in_surface_tool(mdr, st)
 	
 static func add_box(mdr : MeshDataResource) -> void:
 	var st : SurfaceTool = SurfaceTool.new()
 	
+	var normal : Vector3 = Vector3()
+	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-
+	
 	var sgn : float = 1
 
 	#z
 	for i in range(2):
+		normal = get_face_normal(Vector3(-0.5, -0.5, sgn * 0.5), Vector3(-0.5, 0.5, sgn * 0.5), Vector3(0.5, 0.5, sgn * 0.5), sgn < 0)
+		
 		st.add_uv(Vector2(0, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(-0.5, -0.5, sgn * 0.5))
 		st.add_uv(Vector2(0, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(-0.5, 0.5, sgn * 0.5))
 		st.add_uv(Vector2(1, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(0.5, 0.5, sgn * 0.5))
 		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(0.5, -0.5, sgn * 0.5))
 		
 		sgn *= -1
 	
 	#x
 	for i in range(2):
+		normal = get_face_normal(Vector3(sgn * 0.5, -0.5, 0.5), Vector3(sgn * 0.5, 0.5, 0.5), Vector3(sgn * 0.5, 0.5, -0.5), sgn < 0)
+		
 		st.add_uv(Vector2(0, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(sgn * 0.5, -0.5, 0.5))
 		st.add_uv(Vector2(0, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(sgn * 0.5, 0.5, 0.5))
 		st.add_uv(Vector2(1, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(sgn * 0.5, 0.5, -0.5))
 		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(sgn * 0.5, -0.5, -0.5))
 		
 		sgn *= -1
 
 	#y
 	for i in range(2):
+		normal = get_face_normal(Vector3(-0.5, sgn * 0.5, 0.5), Vector3(-0.5, sgn * 0.5, -0.5), Vector3(0.5, sgn * 0.5, -0.5), sgn < 0)
+		
 		st.add_uv(Vector2(0, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(-0.5, sgn * 0.5, 0.5))
 		st.add_uv(Vector2(0, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(-0.5, sgn * 0.5, -0.5))
 		st.add_uv(Vector2(1, 0))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(0.5, sgn * 0.5, -0.5))
 		st.add_uv(Vector2(1, 1))
+		st.add_normal(normal)
 		st.add_vertex(Vector3(0.5, sgn * 0.5, 0.5))
 		
 		
@@ -265,8 +302,6 @@ static func add_box(mdr : MeshDataResource) -> void:
 		
 		ind += 4
 	
-	st.generate_normals()
-	
 	merge_in_surface_tool(mdr, st)
 
 static func merge_in_surface_tool(mdr : MeshDataResource, st : SurfaceTool, generate_normals_if_needed : bool = true, generate_tangents_if_needed : bool = true) -> void:
@@ -276,7 +311,8 @@ static func merge_in_surface_tool(mdr : MeshDataResource, st : SurfaceTool, gene
 		arrays.resize(ArrayMesh.ARRAY_MAX)
 	
 	if generate_normals_if_needed && arrays[ArrayMesh.ARRAY_NORMAL] == null:
-		st.generate_normals()
+		#st.generate_normals()
+		generate_normals_mdr(mdr)
 	
 	if generate_tangents_if_needed && arrays[ArrayMesh.ARRAY_TANGENT] == null:
 		st.generate_tangents()
@@ -629,7 +665,48 @@ static func add_into_surface_tool(mdr : MeshDataResource, st : SurfaceTool) -> v
 	for ind in indices:
 		st.add_index(ind)
 
-static func generate_normals(mdr : MeshDataResource) -> void:
+static func generate_normals_arrs(arrays : Array) -> Array:
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+		
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return arrays
+	
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		arrays.resize(ArrayMesh.ARRAY_MAX)
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	var normals : PoolVector3Array = PoolVector3Array()
+	normals.resize(vertices.size())
+	var nc : PoolIntArray = PoolIntArray()
+	nc.resize(vertices.size())
+	
+	for i in range(vertices.size()):
+		nc[i] = 0
+	
+	for i in range(0, indices.size(), 3):
+		var i0 : int = indices[i]
+		
+		var v0 : Vector3 = vertices[i0]
+		var v1 : Vector3 = vertices[indices[i + 1]]
+		var v2 : Vector3 = vertices[indices[i + 2]]
+		
+		var n = Plane(v0, v1, v2).normal
+		
+		if nc[i0] == 0:
+			nc[i0] = 1
+			normals[i0] = n
+		else:
+			normals[i0] = lerp(normals[i0], n, 0.5).normalized()
+	
+	arrays[ArrayMesh.ARRAY_NORMAL] = normals
+
+	return arrays
+	
+
+static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 	var arrays : Array = mdr.get_array()
 	
 	if arrays.size() != ArrayMesh.ARRAY_MAX:
