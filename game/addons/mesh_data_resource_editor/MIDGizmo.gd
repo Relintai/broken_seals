@@ -48,7 +48,6 @@ var visual_indicator_seam : bool= true
 var visual_indicator_handle : bool = true
 
 var previous_point : Vector2
-var is_dragging : bool = false
 var _last_known_camera_facing : Vector3 = Vector3(0, 0, -1)
 
 var _rect_drag : bool = false
@@ -84,12 +83,11 @@ func set_editor_plugin(editor_plugin : EditorPlugin) -> void:
 	_undo_redo = _editor_plugin.get_undo_redo()
 
 func set_handle(index: int, camera: Camera, point: Vector2):
+	print("set_handle")
 	var relative : Vector2 = point - previous_point
 	
-	if !is_dragging:
+	if !_handle_drag_op:
 		relative = Vector2()
-		is_dragging = true
-		
 		_handle_drag_op = true
 		_drag_op_orig_verices = copy_mdr_verts_array()
 	
@@ -491,20 +489,22 @@ func forward_spatial_gui_input(index, camera, event):
 	
 	if event is InputEventMouseButton:
 		if event.get_button_index() == BUTTON_LEFT:
-			if !event.is_pressed():
-				# If a handle was being dragged only run these
-				is_dragging = false
-					
-				if _handle_drag_op && _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null && _mdr.array[ArrayMesh.ARRAY_VERTEX].size() == _drag_op_orig_verices.size():
-					_undo_redo.create_action("Drag")
-					_undo_redo.add_do_method(self, "apply_vertex_array", _mdr, _mdr.array[ArrayMesh.ARRAY_VERTEX])
-					_undo_redo.add_undo_method(self, "apply_vertex_array", _mdr, _drag_op_orig_verices)
-					_undo_redo.commit_action()
-				
-				if _handle_drag_op:
+			if _handle_drag_op:
+				if !event.is_pressed():
 					_handle_drag_op = false
-					return true
 				
+					# If a handle was being dragged only run these
+					if _mdr && _mdr.array.size() == ArrayMesh.ARRAY_MAX && _mdr.array[ArrayMesh.ARRAY_VERTEX] != null && _mdr.array[ArrayMesh.ARRAY_VERTEX].size() == _drag_op_orig_verices.size():
+						_undo_redo.create_action("Drag")
+						_undo_redo.add_do_method(self, "apply_vertex_array", _mdr, _mdr.array[ArrayMesh.ARRAY_VERTEX])
+						_undo_redo.add_undo_method(self, "apply_vertex_array", _mdr, _drag_op_orig_verices)
+						_undo_redo.commit_action()
+				
+				# Dont consume the event here, because the handles will get stuck 
+				# to the mouse pointer if we return true
+				return false
+		
+			if !event.is_pressed():
 				# See whether we should check for a click or a selection box
 				var mouse_pos : Vector2 = event.get_position()
 				var rect_size : Vector2 = _rect_drag_start_point - mouse_pos
