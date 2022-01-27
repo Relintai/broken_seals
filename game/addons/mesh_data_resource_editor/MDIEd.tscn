@@ -203,7 +203,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 margin_right = 998.0
-margin_bottom = 690.0
+margin_bottom = 698.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="VBoxContainer/ScrollContainer/VBoxContainer2"]
@@ -459,6 +459,11 @@ margin_top = 18.0
 margin_right = 998.0
 margin_bottom = 98.0
 
+[node name="Extrude" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations"]
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Extrude"
+
 [node name="Label" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations"]
 margin_right = 998.0
 margin_bottom = 14.0
@@ -484,12 +489,6 @@ margin_right = 998.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Quad"
-
-[node name="Extrude" type="Button" parent="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations"]
-visible = false
-margin_right = 1010.0
-margin_bottom = 20.0
-text = "Extrude"
 
 [node name="SeamLabel" type="Label" parent="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations"]
 margin_top = 42.0
@@ -744,9 +743,9 @@ size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToFirst" to="." method="_on_connect_to_first_selected_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectMed" to="." method="_on_connect_to_avg_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/VertexOps/Operations/HBoxContainer/ConnectToLast" to="." method="_on_connect_to_last_selected_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/Extrude" to="." method="_on_Extrude_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer2/TriAt" to="." method="_on_add_triangle_at_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer2/QuadAt" to="." method="_on_add_auad_at_pressed"]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/Extrude" to="." method="_on_Extrude_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer/Mark" to="." method="_on_mark_seam_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/EdgeOps/Operations/HBoxContainer/Unmark" to="." method="_on_unmark_seam_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/FaceOps/Operations/Delete" to="." method="_on_delete_pressed"]

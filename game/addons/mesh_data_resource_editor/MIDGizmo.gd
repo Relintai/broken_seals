@@ -939,7 +939,92 @@ func add_quad_at() -> void:
 		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Add Quad At")
 		enable_change_event()
 	else:
-		add_triangle()
+		add_quad()
+
+func extrude() -> void:
+	if !_mdr:
+		return
+	
+	if _mdr.array.size() != ArrayMesh.ARRAY_MAX || _mdr.array[ArrayMesh.ARRAY_VERTEX] == null:
+		return
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		disable_change_event()
+		var orig_arr = copy_arrays(_mdr.array)
+		var original_size : int = orig_arr[ArrayMesh.ARRAY_VERTEX].size()
+		
+		for sp in _selected_points:
+			add_quad_to_edge(sp)
+
+		var arr : Array = _mdr.array
+		
+		# Note: This algorithm depends heavily depends on the inner workings of add_quad_to_edge!
+		var new_verts : PoolVector3Array = arr[ArrayMesh.ARRAY_VERTEX]
+		
+		# every 4 vertex is a quad
+		# 1 ---- 2
+		# |      |
+		# |      |
+		# 0 ---- 3
+		# vertex 1, and 2 are the created new ones, 0, and 3 are duplicated from the original edge
+		
+		# Don't reallocate it every time
+		var found_verts : PoolIntArray = PoolIntArray()
+		
+		# Go through every new created 0th vertex
+		for i in range(original_size, new_verts.size(), 4):
+			var v0 : Vector3 = new_verts[i]
+			
+			found_verts.resize(0)
+			
+			# Find a pair for it (has to be the 3th).
+			for j in range(original_size, new_verts.size(), 4):
+				if i == j:
+					continue
+				
+				# +3 offset to 3rd vert
+				var v3 : Vector3 = new_verts[j + 3]
+
+				if is_verts_equal(v0, v3):
+					# +2 offset to 2rd vert
+					found_verts.append(j + 2)
+			
+			if found_verts.size() == 0:
+				continue
+			
+			# Also append the first vertex index to simplify logic
+			found_verts.append(i + 1)
+			
+			# Calculate avg
+			var vavg : Vector3 = Vector3()
+			for ind in found_verts:
+				vavg += new_verts[ind]
+				
+			vavg /= found_verts.size()
+			
+			# set back
+			for ind in found_verts:
+				new_verts[ind] = vavg
+
+		arr[ArrayMesh.ARRAY_VERTEX] = new_verts
+		_mdr.array = arr
+		
+		_selected_points.resize(0)
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Extrude")
+		enable_change_event()
+		
+		# The selection alo will take care of the duplicates
+		var new_handle_points : PoolVector3Array = PoolVector3Array()
+		for i in range(original_size, new_verts.size() - 4, 4):
+			new_handle_points.append(new_verts[i + 1])
+			new_handle_points.append(new_verts[i + 2])
+		
+		# select new ones
+		# TODO
+	else:
+		add_quad()
 
 func add_box() -> void:
 	if _mdr:

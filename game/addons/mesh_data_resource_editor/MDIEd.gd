@@ -147,7 +147,7 @@ func set_selection_mode_face() -> void:
 
 
 func _on_Extrude_pressed():
-	pass # Replace with function body.
+	_plugin.extrude()
 
 func _on_AddBox_pressed():
 	_plugin.add_box()
