@@ -1550,7 +1550,34 @@ func apply_seam():
 	add_mesh_change_undo_redo(orig_arr, _mdr.array, "apply_seam")
 	
 	enable_change_event()
+
+func clean_mesh():
+	if !_mdr:
+		return
 	
+	var arrays : Array = _mdr.array
+	
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return arrays
+	
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null || arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return arrays
+	
+	var old_vert_size : int = arrays[ArrayMesh.ARRAY_VERTEX].size()
+	
+	disable_change_event()
+	
+	var orig_arr : Array = copy_arrays(arrays)
+	arrays = MDRMeshUtils.remove_used_vertices(arrays)
+	var new_vert_size : int = arrays[ArrayMesh.ARRAY_VERTEX].size()
+	add_mesh_change_undo_redo(orig_arr, arrays, "clean_mesh")
+	
+	enable_change_event()
+	
+	var d : int = old_vert_size - new_vert_size
+	
+	print("MDRED: Removed " + str(d) + " unused vertices.")
+
 func uv_unwrap() -> void:
 	if !_mdr:
 		return

@@ -754,7 +754,7 @@ size_flags_vertical = 3
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/GenTangents" to="." method="_on_GenTangents_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/RemDoubles" to="." method="_on_RemDoubles_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/MergeOptimize" to="." method="_on_MergeOptimize_pressed"]
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/Clean" to="." method="_on_MergeOptimize_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/Clean" to="." method="_on_clean_mesh_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UVEditButton" to="." method="_on_uv_edit_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/ApplySeams" to="." method="_on_apply_seams_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/VBoxContainer2/Operations/Operations/UnwrapButton2" to="." method="_on_UnwrapButton_pressed"]

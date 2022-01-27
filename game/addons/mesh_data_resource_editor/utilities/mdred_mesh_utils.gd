@@ -861,6 +861,164 @@ static func generate_tangents(mdr : MeshDataResource) -> void:
 	
 	mdr.array = st.commit_to_arrays()
 
+static func remove_used_vertices(arrays : Array) -> Array:
+	if arrays.size() != ArrayMesh.ARRAY_MAX:
+		return arrays
+	
+	if arrays[ArrayMesh.ARRAY_VERTEX] == null || arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return arrays
+	
+	var vert_size : int = arrays[ArrayMesh.ARRAY_VERTEX].size()
+	var indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	var unused_indices : PoolIntArray = PoolIntArray()
+	
+	for i in range(vert_size):
+		if !pool_int_arr_contains(indices, i):
+			unused_indices.append(i)
+	
+	remove_vertices(arrays, unused_indices)
+	
+	return arrays
+	
+
+static func remove_vertices(arrays : Array, indices : PoolIntArray) -> Array:
+	if indices.size() == 0:
+		return arrays
+	
+	var vertices : PoolVector3Array = arrays[ArrayMesh.ARRAY_VERTEX]
+	
+	var normals : PoolVector3Array
+	var tangents : PoolRealArray
+	var colors : PoolColorArray
+	var uv : PoolVector2Array
+	var uv2 : PoolVector2Array
+	var bones : PoolRealArray
+	var weights : PoolRealArray
+
+	if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+		normals = arrays[ArrayMesh.ARRAY_NORMAL]
+		
+	if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+		tangents = arrays[ArrayMesh.ARRAY_TANGENT]
+		
+	if arrays[ArrayMesh.ARRAY_COLOR] != null:
+		colors = arrays[ArrayMesh.ARRAY_COLOR]
+	
+	if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+		uv = arrays[ArrayMesh.ARRAY_TEX_UV]
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+		uv2 = arrays[ArrayMesh.ARRAY_TEX_UV2]
+		
+	if arrays[ArrayMesh.ARRAY_BONES] != null:
+		bones = arrays[ArrayMesh.ARRAY_BONES]
+		
+	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+		weights = arrays[ArrayMesh.ARRAY_WEIGHTS]
+	
+	for index in indices:
+		vertices.remove(index)
+		
+		if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+			normals.remove(index)
+			
+		if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+			var tindex : int = index * 4
+			
+			tangents.remove(tindex)
+			tangents.remove(tindex)
+			tangents.remove(tindex)
+			tangents.remove(tindex)
+			
+		if arrays[ArrayMesh.ARRAY_COLOR] != null:
+			colors.remove(index)
+
+		if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+			uv.remove(index)
+
+		if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+			uv2.remove(index)
+
+		if arrays[ArrayMesh.ARRAY_BONES] != null:
+			bones.remove(index)
+			bones.remove(index)
+			bones.remove(index)
+			bones.remove(index)
+
+		if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+			weights.remove(index)
+			weights.remove(index)
+			weights.remove(index)
+			weights.remove(index)
+
+	#write back
+	arrays[ArrayMesh.ARRAY_VERTEX] = vertices
+		
+	if arrays[ArrayMesh.ARRAY_NORMAL] != null:
+		arrays[ArrayMesh.ARRAY_NORMAL] = normals
+		
+	if arrays[ArrayMesh.ARRAY_TANGENT] != null:
+		arrays[ArrayMesh.ARRAY_TANGENT] = tangents
+		
+	if arrays[ArrayMesh.ARRAY_COLOR] != null:
+		arrays[ArrayMesh.ARRAY_COLOR] = colors
+	
+	if arrays[ArrayMesh.ARRAY_TEX_UV] != null:
+		arrays[ArrayMesh.ARRAY_TEX_UV] = uv
+		
+	if arrays[ArrayMesh.ARRAY_TEX_UV2] != null:
+		arrays[ArrayMesh.ARRAY_TEX_UV2] = uv2
+		
+	if arrays[ArrayMesh.ARRAY_BONES] != null:
+		arrays[ArrayMesh.ARRAY_BONES] = bones
+		
+	if arrays[ArrayMesh.ARRAY_WEIGHTS] != null:
+		arrays[ArrayMesh.ARRAY_WEIGHTS] = weights
+	
+	if arrays[ArrayMesh.ARRAY_INDEX] == null:
+		return arrays
+	
+	#udpate indices
+	var arr_indices : PoolIntArray = arrays[ArrayMesh.ARRAY_INDEX]
+	
+	var max_index : int = find_max(indices)
+		
+	for k in range(indices.size()):
+		for i in range(arr_indices.size()):
+			var ai : int = arr_indices[i]
+			
+			if ai >= max_index:
+				arr_indices[i] = ai - 1
+				
+		max_index = find_max_capped(indices, max_index)
+	
+	arrays[ArrayMesh.ARRAY_INDEX] = arr_indices
+	
+	return arrays
+
+static func find_max(arr : PoolIntArray) -> int:
+	var m : int = arr[0]
+	
+	for v in arr:
+		if v > m:
+			m = v
+			
+	return m
+
+static func find_max_capped(arr : PoolIntArray, last : int) -> int:
+	var m : int = 0
+	
+	for v in arr:
+		if v < last:
+			m = v
+			break
+	
+	for v in arr:
+		if v > m && v < last:
+			m = v
+			
+	return m
+
 static func order_seam_indices(arr : PoolIntArray) -> PoolIntArray:
 	var ret : PoolIntArray = PoolIntArray()
 	
@@ -1021,7 +1179,7 @@ static func pool_int_arr_contains(arr : PoolIntArray, val : int) -> bool:
 			return true
 			
 	return false
-	
+
 
 class SeamTriangleHelper:
 	var i0 : int = 0

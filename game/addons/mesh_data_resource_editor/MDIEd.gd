@@ -247,3 +247,6 @@ func onhandle_selection_type_back_toggled(on : bool):
 func onhandle_selection_type_all_toggled(on : bool):
 	if on:
 		_plugin.handle_selection_type_all()
+
+func _on_clean_mesh_pressed():
+	_plugin.clean_mesh()

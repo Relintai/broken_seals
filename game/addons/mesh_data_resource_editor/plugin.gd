@@ -276,3 +276,7 @@ func handle_selection_type_all():
 func extrude():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.extrude()
+
+func clean_mesh():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.clean_mesh()
