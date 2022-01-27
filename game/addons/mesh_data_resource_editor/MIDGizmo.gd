@@ -1016,12 +1016,14 @@ func extrude() -> void:
 		
 		# The selection alo will take care of the duplicates
 		var new_handle_points : PoolVector3Array = PoolVector3Array()
-		for i in range(original_size, new_verts.size() - 4, 4):
-			new_handle_points.append(new_verts[i + 1])
-			new_handle_points.append(new_verts[i + 2])
+		for i in range(original_size, new_verts.size(), 4):
+			var vavg : Vector3 = new_verts[i + 1]
+			vavg += new_verts[i + 2]
+			vavg /= 2
+			
+			new_handle_points.append(vavg)
 		
-		# select new ones
-		# TODO
+		select_handle_points(new_handle_points)
 	else:
 		add_quad()
 
@@ -1082,7 +1084,6 @@ func create_face():
 				tfn = tfn.normalized()
 			else:
 				tfn = MDRMeshUtils.get_face_normal(_vertices[i0], _vertices[i1], _vertices[i2])
-
 
 			var flip : bool = MDRMeshUtils.should_triangle_flip(v0, v1, v2, tfn)
 			
@@ -1638,6 +1639,17 @@ func copy_mdr_verts_array() -> PoolVector3Array:
 	ret.append_array(vertices)
 	
 	return ret
+
+func select_handle_points(points : PoolVector3Array) -> void:
+	_selected_points.resize(0)
+	
+	for p in points:
+		for i in range(_handle_points.size()):
+			if is_verts_equal(p, _handle_points[i]):
+				if !pool_int_arr_contains(_selected_points, i):
+					_selected_points.push_back(i)
+
+	redraw()
 
 func set_pivot_averaged():
 	pivot_type = PivotTypes.PIVOT_TYPE_AVERAGED
