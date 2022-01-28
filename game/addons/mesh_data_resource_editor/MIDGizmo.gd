@@ -149,8 +149,11 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		_drag_op_accumulator += vs
 		
 		var b : Basis = Basis().scaled(_drag_op_accumulator) 
-		
-		mul_all_selected_with_basis(b)
+		var t : Transform = Transform(Basis(), _drag_op_pivot)
+		t *= Transform(b, Vector3())
+		t *= Transform(Basis(), _drag_op_pivot).inverse()
+
+		mul_all_selected_with_transform(t)
 
 		apply()
 		redraw()
