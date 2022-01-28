@@ -549,29 +549,7 @@ func forward_spatial_gui_input(index, camera, event):
 				# event is pressed
 				_rect_drag = true
 				_rect_drag_start_point = event.get_position()
-				
-#	elif event is InputEventMouseMotion:
-#		if edit_mode == EditMode.EDIT_MODE_NONE:
-#			return false
-#		elif edit_mode == EditMode.EDIT_MODE_TRANSLATE:
-#			for i in selected_indices:
-#				var v : Vector3 = vertices[i]
-#
-#				if axis_constraint == AxisConstraint.X:
-#					v.x += event.relative.x * -0.001
-#				elif axis_constraint == AxisConstraint.Y:
-#					v.y += event.relative.y * 0.001
-#				elif axis_constraint == AxisConstraint.Z:
-#					v.z += event.relative.x * 0.001
-#
-#				vertices.set(i, v)
-#
-#			redraw()
-#		elif edit_mode == EditMode.EDIT_MODE_SCALE:
-#			print("SCALE")
-#		elif edit_mode == EditMode.EDIT_MODE_ROTATE:
-#			print("ROTATE")
-					
+
 	return false
 
 func add_to_all_selected(ofs : Vector3) -> void:
@@ -594,6 +572,17 @@ func mul_all_selected_with_basis(b : Basis) -> void:
 	for indx in _drag_op_indices:
 		var v : Vector3 = _drag_op_orig_verices[indx]
 		v = b * v
+		_vertices.set(indx, v)
+
+func mul_all_selected_with_transform(t : Transform) -> void:
+	for i in _selected_points:
+		var v : Vector3 = _handle_points[i]
+		v = t * v
+		_handle_points.set(i, v)
+	
+	for indx in _drag_op_indices:
+		var v : Vector3 = _drag_op_orig_verices[indx]
+		v = t * v
 		_vertices.set(indx, v)
 
 func set_translate() -> void:
