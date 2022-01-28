@@ -4,11 +4,11 @@
 
 [resource]
 script = ExtResource( 1 )
-folder_count = 24
-folders/0/folder = "entity_resources"
-folders/0/header = "Entities"
-folders/0/name = "Entity Resources"
-folders/0/type = "EntityResourceData"
+folder_count = 25
+folders/0/folder = "."
+folders/0/header = ""
+folders/0/name = "Root"
+folders/0/type = "Resource"
 folders/1/folder = "entity_skills"
 folders/1/header = ""
 folders/1/name = "Skills"
@@ -101,3 +101,7 @@ folders/23/folder = "prop_models"
 folders/23/header = ""
 folders/23/name = "Prop Models"
 folders/23/type = "PackedScene"
+folders/24/folder = "entity_resources"
+folders/24/header = "Entities"
+folders/24/name = "Entity Resources"
+folders/24/type = "EntityResourceData"
