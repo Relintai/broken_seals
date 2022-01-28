@@ -162,36 +162,12 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		_drag_op_accumulator_quat *= xrot
 		_drag_op_accumulator_quat = _drag_op_accumulator_quat.normalized()
 
-		# Works in world and local
-#		var b : Basis = Basis(_drag_op_accumulator_quat)
-#		var t : Transform = Transform(b, Vector3())
-#		t *= Transform(Basis(), _drag_op_pivot)
-#
-#		# Rotate around pivot
-#		mul_all_selected_with_transform(t)
-#		# Bring verts back to local space
-#		mul_all_selected_with_transform_acc(Transform(Basis(), _drag_op_pivot).inverse())
-#
-
 		var b : Basis = Basis(_drag_op_accumulator_quat)
-		#var t : Transform = Transform(b, _drag_op_pivot)
-		#t *= Transform(Basis(), _drag_op_pivot)
-		
-		var t : Transform = Transform(Basis(), _drag_op_pivot).inverse()
+		var t : Transform = Transform(Basis(), _drag_op_pivot)
 		t *= Transform(b, Vector3())
-		t *= Transform(Basis(), _drag_op_pivot)
+		t *= Transform(Basis(), _drag_op_pivot).inverse()
 
-		# Rotate around pivot
 		mul_all_selected_with_transform(t)
-		# Bring verts back to local space
-		#mul_all_selected_with_transform_acc(Transform(Basis(), _drag_op_pivot).inverse())
-
-
-		#old
-		#var b : Basis = Basis(_drag_op_accumulator_quat)
-		#var t : Transform = Transform(b, _drag_op_pivot)
-
-		#mul_all_selected_with_transform(t)
 
 		apply()
 		redraw()
