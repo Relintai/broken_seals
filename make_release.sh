@@ -40,6 +40,8 @@ zip -q ../release/editor_windows_bs${version_snake_cased}.zip  ./godot.bs${versi
 zip -q ../release/editor_linux_bs${version_snake_cased}.zip  ./godot.bs${version}.x11.opt.tools.64
 zip -q ../release/editor_pi4_bs${version_snake_cased}.zip  ./godot.bs${version}.x11.pi4.opt.tools.32
 
+cp  ./godot.bs${version}.javascript.opt.tools.zip ../release/editor_javascript_bs${version_snake_cased}.zip
+
 zip -q ../release/export_templates_bs${version_snake_cased}.zip  ./export_templates_bs${version_snake_cased}/*
 
 zip -q -r ../release/broken_seals${version_snake_cased}_full_source.zip  ./broken_seals${version_snake_cased}_full_source/*
