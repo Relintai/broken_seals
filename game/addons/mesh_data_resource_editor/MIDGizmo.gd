@@ -67,6 +67,7 @@ var _mesh_outline_generator
 var _handle_drag_op : bool = false
 var _drag_op_orig_verices : PoolVector3Array = PoolVector3Array()
 var _drag_op_indices : PoolIntArray = PoolIntArray()
+var _drag_op_accumulator : Vector3 = Vector3()
 
 var _editor_plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -89,6 +90,12 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 	if !_handle_drag_op:
 		relative = Vector2()
 		_handle_drag_op = true
+		
+		if edit_mode == EditMode.EDIT_MODE_SCALE:
+			_drag_op_accumulator = Vector3(1, 1, 1)
+		else:
+			_drag_op_accumulator = Vector3()
+			
 		_drag_op_orig_verices = copy_mdr_verts_array()
 		setup_op_drag_indices()
 	
@@ -105,14 +112,15 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 				
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			ofs.z = relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
+		
+		_drag_op_accumulator += ofs
+		
+		add_to_all_selected(_drag_op_accumulator)
 
-		add_to_all_selected(ofs)
-
-		recalculate_handle_points()
 		apply()
 		redraw()
 	elif edit_mode == EditMode.EDIT_MODE_SCALE:
-		var r : float = 1.0 + ((relative.x + relative.y) * 0.05)
+		var r : float = ((relative.x + relative.y) * 0.05)
 		
 		var vs : Vector3 = Vector3()
 		
@@ -125,16 +133,37 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			vs.z = r
 		
-		var b : Basis = Basis().scaled(vs) 
+		_drag_op_accumulator += vs
+		
+		var b : Basis = Basis().scaled(_drag_op_accumulator) 
 		
 		mul_all_selected_with_basis(b)
 
-		recalculate_handle_points()
 		apply()
 		redraw()
 	elif edit_mode == EditMode.EDIT_MODE_ROTATE:
-		print("MDR Editor: ROTATE NYI")
+		var ofs : Vector3 = Vector3()
+
+		if (axis_constraint & AxisConstraint.X) != 0:
+			ofs.x = relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
+				
+		if (axis_constraint & AxisConstraint.Y) != 0:
+			ofs.y = relative.y * -0.001
+				
+		if (axis_constraint & AxisConstraint.Z) != 0:
+			ofs.z = relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
+
+		_drag_op_accumulator += ofs
+		_drag_op_accumulator = _drag_op_accumulator.normalized()
 		
+		var b : Basis = Basis().rotated(Vector3(1, 0, 0), _drag_op_accumulator.x)
+		b = b.rotated(Vector3(0, 1, 0), _drag_op_accumulator.y)
+		b = b.rotated(Vector3(0, 0, 1), _drag_op_accumulator.z)
+		
+		mul_all_selected_with_basis(b)
+		
+		apply()
+		redraw()
 		
 	previous_point = point
 
@@ -558,7 +587,7 @@ func add_to_all_selected(ofs : Vector3) -> void:
 		_handle_points.set(i, v)
 	
 	for indx in _drag_op_indices:
-		var v : Vector3 = _vertices[indx]
+		var v : Vector3 = _drag_op_orig_verices[indx]
 		v += ofs
 		_vertices.set(indx, v)
 
@@ -569,7 +598,7 @@ func mul_all_selected_with_basis(b : Basis) -> void:
 		_handle_points.set(i, v)
 	
 	for indx in _drag_op_indices:
-		var v : Vector3 = _vertices[indx]
+		var v : Vector3 = _drag_op_orig_verices[indx]
 		v = b * v
 		_vertices.set(indx, v)
 
