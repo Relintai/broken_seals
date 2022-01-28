@@ -38,16 +38,18 @@ fi
 $podman_build -t godot-osx:${img_version} -v ${files_root}:/root/files -f Dockerfile.osx . 2>&1 | tee logs/osx.log
 $podman_build -t godot-ios:${img_version} -v ${files_root}:/root/files -f Dockerfile.ios . 2>&1 | tee logs/ios.log
 
-if [ ! -e files/msvc2017.tar ]; then
-  echo
-  echo "files/msvc2017.tar is missing. This file can be created on a Windows 7 or 10 machine by downloading the 'Visual Studio Tools' installer."
-  echo "here: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2017"
-  echo "The required components can be installed by running"
-  echo "vs_buildtools.exe --add Microsoft.VisualStudio.Workload.UniversalBuildTools --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop --add Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP.Native --passive"
-  echo "after that create a zipfile of C:/Program Files (x86)/Microsoft Visual Studio"
-  echo "tar -cf msvc2017.tar -C \"c:/Program Files (x86)/ Microsoft Visual Studio\""
-  echo
-  exit 1
-fi
+if [ "${build_msvc}" != "0" ]; then
+  if [ ! -e files/msvc2017.tar ]; then
+    echo
+    echo "files/msvc2017.tar is missing. This file can be created on a Windows 7 or 10 machine by downloading the 'Visual Studio Tools' installer."
+    echo "here: https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2017"
+    echo "The required components can be installed by running"
+    echo "vs_buildtools.exe --add Microsoft.VisualStudio.Workload.UniversalBuildTools --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Component.Windows10SDK.16299.Desktop --add Microsoft.VisualStudio.Component.Windows10SDK.16299.UWP.Native --passive"
+    echo "after that create a zipfile of C:/Program Files (x86)/Microsoft Visual Studio"
+    echo "tar -cf msvc2017.tar -C \"c:/Program Files (x86)/ Microsoft Visual Studio\""
+    echo
+    exit 1
+  fi
 
-$podman_build -t godot-msvc:${img_version} -f Dockerfile.msvc -v ${files_root}:/root/files . 2>&1 | tee logs/msvc.log
+  $podman_build -t godot-msvc:${img_version} -f Dockerfile.msvc -v ${files_root}:/root/files . 2>&1 | tee logs/msvc.log
+fi
