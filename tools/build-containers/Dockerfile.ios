@@ -1,7 +1,7 @@
 ARG img_version
 FROM godot-osx:${img_version}
 
-ENV IOS_SDK=14.4
+ENV IOS_SDK=14.5
 
 RUN dnf -y install --setopt=install_weak_deps=False \
       automake autoconf clang gcc gcc-c++ gcc-objc gcc-objc++ cmake libicu-devel libtool libxml2-devel llvm-devel openssl-devel perl python yasm && \
@@ -31,17 +31,9 @@ RUN dnf -y install --setopt=install_weak_deps=False \
     mkdir /root/ioscross/x86_64_sim/usr && \
     ln -s /root/ioscross/x86_64_sim/bin /root/ioscross/x86_64_sim/usr/bin
 
+
 ENV OSXCROSS_IOS=not_nothing
 ENV IOSCROSS_ROOT=/root/ioscross
 ENV PATH="/root/ioscross/arm64/bin:/root/ioscross/arm64_sim/bin:/root/ioscross/x86_64_sim/bin:${PATH}"
-
-
-# Until we can build the cross-compiler, we include a pre-made build in the container.
-RUN mkdir -p /root/aot-compilers/iphone-arm64 && \
-    curl -LO https://github.com/godotengine/godot-mono-builds/releases/download/release-c3a9d31/ios-cross-arm64.zip && \
-    dnf -y install --setopt=install_weak_deps=False p7zip && \
-    7za e ios-cross-arm64.zip ios-cross-arm64-release/bin/aarch64-apple-darwin-mono-sgen -o/root/aot-compilers/iphone-arm64 && \
-    rm ios-cross-arm64.zip
-
 
 CMD /bin/bash

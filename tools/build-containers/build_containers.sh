@@ -17,26 +17,26 @@ export podman_build="$podman build --build-arg img_version=${img_version}"
 
 $podman build -v ${files_root}:/root/files -t godot-fedora:${img_version} -f Dockerfile.base . 2>&1 | tee logs/base.log
 $podman_build -t godot-linux:${img_version} -f Dockerfile.linux . 2>&1 | tee logs/linux.log
-
-$podman_build -t godot-mono:${img_version} -f Dockerfile.mono . 2>&1 | tee logs/mono.log
-$podman_build -t godot-mono-glue:${img_version} -f Dockerfile.mono-glue . 2>&1 | tee logs/mono-glue.log
 $podman_build -t godot-windows:${img_version} -f Dockerfile.windows --ulimit nofile=65536 . 2>&1 | tee logs/windows.log
 $podman_build -t godot-javascript:${img_version} -f Dockerfile.javascript . 2>&1 | tee logs/javascript.log
 $podman_build -t godot-android:${img_version} -f Dockerfile.android . 2>&1 | tee logs/android.log
 
-if [ ! -e files/MacOSX10.14.sdk.tar.xz ] || [ ! -e files/iPhoneOS12.4.sdk.tar.xz ] || [ ! -e files/iPhoneSimulator12.4.sdk.tar.xz ]; then
-  if [ ! -e files/Xcode_10.3.xip ]; then
-    echo "files/Xcode_10.3.xip is required. It can be downloaded from https://developer.apple.com/download/more/ with a valid apple ID"
+XCODE_SDK=12.5.1
+OSX_SDK=11.3
+IOS_SDK=14.5
+if [ ! -e files/MacOSX${OSX_SDK}.sdk.tar.xz ] || [ ! -e files/iPhoneOS${IOS_SDK}.sdk.tar.xz ] || [ ! -e files/iPhoneSimulator${IOS_SDK}.sdk.tar.xz ]; then
+  if [ ! -e files/Xcode_${XCODE_SDK}.xip ]; then
+    echo "files/Xcode_${XCODE_SDK}.xip is required. It can be downloaded from https://developer.apple.com/download/more/ with a valid apple ID."
     exit 1
   fi
 
   echo "Building OSX and iOS SDK packages. This will take a while"
   $podman_build -t godot-xcode-packer:${img_version} -f Dockerfile.xcode -v ${files_root}:/root/files . 2>&1 | tee logs/xcode.log
-  $podman run -it --rm -v ${files_root}:/root/files godot-xcode-packer:${img_version} 2>&1 | tee logs/xcode_packer.logw
+  $podman run -it --rm -v ${files_root}:/root/files godot-xcode-packer:${img_version} 2>&1 | tee logs/xcode_packer.log
 fi
 
-$podman_build -t godot-osx:${img_version} -f Dockerfile.osx . 2>&1 | tee logs/osx.log
-$podman_build -t godot-ios:${img_version} -f Dockerfile.ios . 2>&1 | tee logs/ios.log
+$podman_build -t godot-osx:${img_version} -v ${files_root}:/root/files -f Dockerfile.osx . 2>&1 | tee logs/osx.log
+$podman_build -t godot-ios:${img_version} -v ${files_root}:/root/files -f Dockerfile.ios . 2>&1 | tee logs/ios.log
 
 if [ ! -e files/msvc2017.tar ]; then
   echo

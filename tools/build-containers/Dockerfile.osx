@@ -1,14 +1,14 @@
 ARG img_version
 FROM godot-fedora:${img_version}
 
+#cmake 
+
 RUN dnf -y install --setopt=install_weak_deps=False \
-      automake autoconf bzip2-devel clang libicu-devel libtool libxml2-devel llvm-devel openssl-devel yasm && \
+      automake autoconf bzip2-devel clang libicu-devel libtool libxml2-devel llvm-devel openssl-devel yasm cmake && \
     git clone --progress https://github.com/tpoechtrager/osxcross.git && \
     cd /root/osxcross && \
-    git checkout de6c72eff2d6013f5af46fba1fa205654c5cf5e2 && \
-    ln -s /root/files/MacOSX11.1.sdk.tar.xz /root/osxcross/tarballs && \
-    url -LO https://github.com/tpoechtrager/osxcross/pull/286.patch && \
-    patch -p1 < 286.patch && \
+    git checkout 0f87f567dfaf98460244471ad6c0f4311d62079c && \
+    ln -s /root/files/MacOSX11.3.sdk.tar.xz /root/osxcross/tarballs && \
     UNATTENDED=1 ./build.sh && \
     ./build_compiler_rt.sh
 
