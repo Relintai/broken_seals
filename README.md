@@ -354,6 +354,12 @@ Appends `debug_symbols=no` to the build command, which will strip the resulting 
 
 ``` scons bel_strip -j4 ```
 
+##### threads
+
+Appends `threads_enabled=yes` to the build command. Useful for building the editor for html.
+
+``` scons bej_threads -j4 ```
+
 #### Scons cache, and sdk locations
 
 In order to use scons cache and to tell the build system where some of the required sdks are located you usually 

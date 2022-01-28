@@ -433,6 +433,10 @@ if len(sys.argv) > 1:
             build_string += 'debug_symbols=no'
             build_string += ' '
 
+        if 'threads' in arg_split:
+            build_string += 'threads_enabled=yes'
+            build_string += ' '
+
         target = ' '
 
         if 'E' in arg:
