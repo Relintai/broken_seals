@@ -69,6 +69,7 @@ var _drag_op_orig_verices : PoolVector3Array = PoolVector3Array()
 var _drag_op_indices : PoolIntArray = PoolIntArray()
 var _drag_op_accumulator : Vector3 = Vector3()
 var _drag_op_accumulator_quat : Quat = Quat()
+var _drag_op_pivot : Vector3 = Vector3()
 
 var _editor_plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -98,24 +99,33 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 			_drag_op_accumulator = Vector3()
 			
 		_drag_op_accumulator_quat = Quat()
-			
+		
 		_drag_op_orig_verices = copy_mdr_verts_array()
 		setup_op_drag_indices()
+		_drag_op_pivot = get_drag_op_pivot()
 	
 	if edit_mode == EditMode.EDIT_MODE_NONE:
 		return
 	elif edit_mode == EditMode.EDIT_MODE_TRANSLATE:
 		var ofs : Vector3 = Vector3()
 
-		if (axis_constraint & AxisConstraint.X) != 0:
-			ofs.x = relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
-				
-		if (axis_constraint & AxisConstraint.Y) != 0:
-			ofs.y = relative.y * -0.001
-				
-		if (axis_constraint & AxisConstraint.Z) != 0:
-			ofs.z = relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
+		ofs = camera.get_global_transform().basis.x
 		
+		if (axis_constraint & AxisConstraint.X) != 0:
+			ofs.x *= relative.x * 0.01
+		else:
+			ofs.x = 0
+		
+		if (axis_constraint & AxisConstraint.Y) != 0:
+			ofs.y = relative.y * -0.01
+		else:
+			ofs.x = 0
+		
+		if (axis_constraint & AxisConstraint.Z) != 0:
+			ofs.z *= relative.x * 0.01
+		else:
+			ofs.z = 0
+
 		_drag_op_accumulator += ofs
 		
 		add_to_all_selected(_drag_op_accumulator)
@@ -152,10 +162,37 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		_drag_op_accumulator_quat *= xrot
 		_drag_op_accumulator_quat = _drag_op_accumulator_quat.normalized()
 
-		var b : Basis = Basis(_drag_op_accumulator_quat)
+		# Works in world and local
+#		var b : Basis = Basis(_drag_op_accumulator_quat)
+#		var t : Transform = Transform(b, Vector3())
+#		t *= Transform(Basis(), _drag_op_pivot)
+#
+#		# Rotate around pivot
+#		mul_all_selected_with_transform(t)
+#		# Bring verts back to local space
+#		mul_all_selected_with_transform_acc(Transform(Basis(), _drag_op_pivot).inverse())
+#
 
-		mul_all_selected_with_basis(b)
+		var b : Basis = Basis(_drag_op_accumulator_quat)
+		#var t : Transform = Transform(b, _drag_op_pivot)
+		#t *= Transform(Basis(), _drag_op_pivot)
 		
+		var t : Transform = Transform(Basis(), _drag_op_pivot).inverse()
+		t *= Transform(b, Vector3())
+		t *= Transform(Basis(), _drag_op_pivot)
+
+		# Rotate around pivot
+		mul_all_selected_with_transform(t)
+		# Bring verts back to local space
+		#mul_all_selected_with_transform_acc(Transform(Basis(), _drag_op_pivot).inverse())
+
+
+		#old
+		#var b : Basis = Basis(_drag_op_accumulator_quat)
+		#var t : Transform = Transform(b, _drag_op_pivot)
+
+		#mul_all_selected_with_transform(t)
+
 		apply()
 		redraw()
 		
@@ -582,6 +619,17 @@ func mul_all_selected_with_transform(t : Transform) -> void:
 	
 	for indx in _drag_op_indices:
 		var v : Vector3 = _drag_op_orig_verices[indx]
+		v = t * v
+		_vertices.set(indx, v)
+
+func mul_all_selected_with_transform_acc(t : Transform) -> void:
+	for i in _selected_points:
+		var v : Vector3 = _handle_points[i]
+		v = t * v
+		_handle_points.set(i, v)
+	
+	for indx in _drag_op_indices:
+		var v : Vector3 = _vertices[indx]
 		v = t * v
 		_vertices.set(indx, v)
 
@@ -1685,6 +1733,22 @@ func setup_op_drag_indices() -> void:
 			if !pool_int_arr_contains(_drag_op_indices, indx):
 				_drag_op_indices.append(indx)
 
+func get_drag_op_pivot() -> Vector3:
+	if pivot_type == PivotTypes.PIVOT_TYPE_AVERAGED:
+		var avg : Vector3 = Vector3()
+		
+		for indx in _drag_op_indices:
+			avg += _vertices[indx]
+			
+		avg /= _drag_op_indices.size()
+
+		return avg
+	elif pivot_type == PivotTypes.PIVOT_TYPE_MDI_ORIGIN:
+		return Vector3()
+	elif pivot_type == PivotTypes.PIVOT_TYPE_WORLD_ORIGIN:
+		return get_spatial_node().to_local(Vector3())
+	
+	return Vector3()
 
 func select_handle_points(points : PoolVector3Array) -> void:
 	_selected_points.resize(0)
