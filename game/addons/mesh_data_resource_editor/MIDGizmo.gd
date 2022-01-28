@@ -1120,7 +1120,7 @@ func create_face():
 			else:
 				tfn = MDRMeshUtils.get_face_normal(_vertices[i0], _vertices[i1], _vertices[i2])
 
-			var flip : bool = MDRMeshUtils.should_triangle_flip(v0, v1, v2, tfn)
+			var flip : bool = !MDRMeshUtils.should_triangle_flip(v0, v1, v2, tfn)
 			
 			MDRMeshUtils.add_triangle_at(_mdr, v0, v1, v2, flip)
 			add_mesh_change_undo_redo(orig_arr, _mdr.array, "Create Face")
