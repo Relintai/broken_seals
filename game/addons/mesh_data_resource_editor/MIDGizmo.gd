@@ -66,6 +66,7 @@ var _mesh_outline_generator
 
 var _handle_drag_op : bool = false
 var _drag_op_orig_verices : PoolVector3Array = PoolVector3Array()
+var _drag_op_indices : PoolIntArray = PoolIntArray()
 
 var _editor_plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -89,6 +90,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		relative = Vector2()
 		_handle_drag_op = true
 		_drag_op_orig_verices = copy_mdr_verts_array()
+		setup_op_drag_indices()
 	
 	if edit_mode == EditMode.EDIT_MODE_NONE:
 		return
@@ -555,13 +557,10 @@ func add_to_all_selected(ofs : Vector3) -> void:
 		v += ofs
 		_handle_points.set(i, v)
 	
-	for i in _selected_points:
-		var ps : PoolIntArray = _handle_to_vertex_map[i]
-		
-		for j in ps:
-			var v : Vector3 = _vertices[j]
-			v += ofs
-			_vertices.set(j, v)
+	for indx in _drag_op_indices:
+		var v : Vector3 = _vertices[indx]
+		v += ofs
+		_vertices.set(indx, v)
 
 func mul_all_selected_with_basis(b : Basis) -> void:
 	for i in _selected_points:
@@ -569,13 +568,10 @@ func mul_all_selected_with_basis(b : Basis) -> void:
 		v = b * v
 		_handle_points.set(i, v)
 	
-	for i in _selected_points:
-		var ps : PoolIntArray = _handle_to_vertex_map[i]
-		
-		for j in ps:
-			var v : Vector3 = _vertices[j]
-			v = b * v
-			_vertices.set(j, v)
+	for indx in _drag_op_indices:
+		var v : Vector3 = _vertices[indx]
+		v = b * v
+		_vertices.set(indx, v)
 
 func set_translate() -> void:
 	edit_mode = EditMode.EDIT_MODE_TRANSLATE
@@ -1666,6 +1662,17 @@ func copy_mdr_verts_array() -> PoolVector3Array:
 	ret.append_array(vertices)
 	
 	return ret
+
+func setup_op_drag_indices() -> void:
+	_drag_op_indices.resize(0)
+	
+	for sp in _selected_points:
+		var pi : PoolIntArray = _handle_to_vertex_map[sp]
+		
+		for indx in pi:
+			if !pool_int_arr_contains(_drag_op_indices, indx):
+				_drag_op_indices.append(indx)
+
 
 func select_handle_points(points : PoolVector3Array) -> void:
 	_selected_points.resize(0)
