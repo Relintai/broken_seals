@@ -68,6 +68,7 @@ var _handle_drag_op : bool = false
 var _drag_op_orig_verices : PoolVector3Array = PoolVector3Array()
 var _drag_op_indices : PoolIntArray = PoolIntArray()
 var _drag_op_accumulator : Vector3 = Vector3()
+var _drag_op_accumulator_quat : Quat = Quat()
 
 var _editor_plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
@@ -95,6 +96,8 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 			_drag_op_accumulator = Vector3(1, 1, 1)
 		else:
 			_drag_op_accumulator = Vector3()
+			
+		_drag_op_accumulator_quat = Quat()
 			
 		_drag_op_orig_verices = copy_mdr_verts_array()
 		setup_op_drag_indices()
@@ -142,24 +145,15 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		apply()
 		redraw()
 	elif edit_mode == EditMode.EDIT_MODE_ROTATE:
-		var ofs : Vector3 = Vector3()
+		var yrot : Quat = Quat(Vector3(0, 1, 0), relative.x * 0.01)
+		var xrot : Quat = Quat(camera.get_global_transform().basis.x, relative.y * 0.01)
 
-		if (axis_constraint & AxisConstraint.X) != 0:
-			ofs.x = relative.x * 0.001 * sign(camera.get_global_transform().basis.z.z)
-				
-		if (axis_constraint & AxisConstraint.Y) != 0:
-			ofs.y = relative.y * -0.001
-				
-		if (axis_constraint & AxisConstraint.Z) != 0:
-			ofs.z = relative.x * 0.001  * -sign(camera.get_global_transform().basis.z.x)
+		_drag_op_accumulator_quat *= yrot
+		_drag_op_accumulator_quat *= xrot
+		_drag_op_accumulator_quat = _drag_op_accumulator_quat.normalized()
 
-		_drag_op_accumulator += ofs
-		_drag_op_accumulator = _drag_op_accumulator.normalized()
-		
-		var b : Basis = Basis().rotated(Vector3(1, 0, 0), _drag_op_accumulator.x)
-		b = b.rotated(Vector3(0, 1, 0), _drag_op_accumulator.y)
-		b = b.rotated(Vector3(0, 0, 1), _drag_op_accumulator.z)
-		
+		var b : Basis = Basis(_drag_op_accumulator_quat)
+
 		mul_all_selected_with_basis(b)
 		
 		apply()
@@ -167,10 +161,10 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		
 	previous_point = point
 
-func commit_handle(index: int, restore, cancel: bool = false) -> void:
-	previous_point = Vector2()
-	
-	print("MDR Editor: commit_handle test")
+#func commit_handle(index: int, restore, cancel: bool = false) -> void:
+#	previous_point = Vector2()
+#
+#	print("MDR Editor: commit_handle test")
 
 func redraw():
 	clear()
