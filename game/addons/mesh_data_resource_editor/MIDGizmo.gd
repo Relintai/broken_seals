@@ -110,7 +110,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		var ofs : Vector3 = Vector3()
 
 		ofs = camera.get_global_transform().basis.x
-		
+
 		if (axis_constraint & AxisConstraint.X) != 0:
 			ofs.x *= relative.x * 0.01
 		else:
@@ -119,7 +119,7 @@ func set_handle(index: int, camera: Camera, point: Vector2):
 		if (axis_constraint & AxisConstraint.Y) != 0:
 			ofs.y = relative.y * -0.01
 		else:
-			ofs.x = 0
+			ofs.y = 0
 		
 		if (axis_constraint & AxisConstraint.Z) != 0:
 			ofs.z *= relative.x * 0.01
