@@ -46,6 +46,9 @@ exports = {
     'windows': [],
     'android': [],
     'javascript': [],
+    'osx': [],
+    'ios': [],
+    'server': [],
 }
 
 additional_commands = {
@@ -54,6 +57,9 @@ additional_commands = {
     'windows': [],
     'android': [],
     'javascript': [],
+    'osx': [],
+    'ios': [],
+    'server': [],
 }
 
 target_commits = {}
@@ -501,23 +507,31 @@ if len(sys.argv) > 1:
         elif 'i' in arg:
             build_string += 'platform=iphone'
 
-            subprocess.call(build_string + ' arch=arm', shell=True)
-            subprocess.call(build_string + ' arch=arm64', shell=True)
+            print('Running command: ' + build_string)
+            subprocess.call(build_string, shell=True)
 
-            #subprocess.call('lipo -create bin/libgodot.iphone.{0}.arm.a bin/libgodot.iphone.{0}.arm64.a -output bin/libgodot.iphone.{1}.fat.a'.fomat(), shell=True)
+            #print('Running command: ' + build_string + " arch=arm")
+            #subprocess.call(build_string + ' arch=arm', shell=True)
+            #print('Running command: ' + build_string + " arch=arm64")
+            #subprocess.call(build_string + ' arch=arm64', shell=True)
+            #print('Running command: ' + build_string + " arch=x86_64")
+            #subprocess.call(build_string + ' arch=x86_64', shell=True)
+        elif 'x' in arg:
+            build_string += 'platform=osx'
 
-            #lipo -create bin/libgodot.iphone.opt.debug.arm.a bin/libgodot.iphone.opt.debug.arm64.a -output bin/libgodot.iphone.debug.fat.a
-            #rm bin/ios_xcode/libgodot.iphone.debug.fat.a
-            #cp bin/libgodot.iphone.debug.fat.a  bin/ios_xcode/libgodot.iphone.debug.fat.a
+            build_string = get_exports_for('osx') + get_additional_commands_for('osx') + build_string + target
 
-            #lipo -create bin/libgodot.iphone.opt.arm.a bin/libgodot.iphone.opt.arm64.a -output bin/libgodot.iphone.release.fat.a
-            #rm bin/ios_xcode/libgodot.iphone.release.fat.a
-            #cp bin/libgodot.iphone.release.fat.a  bin/ios_xcode/libgodot.iphone.release.fat.a
+            print('Running command: ' + build_string)
+            subprocess.call(build_string, shell=True)
+        elif 'h' in arg:
+            #headless
+            build_string += 'platform=server'
 
-            subprocess.call('rm bin/iphone.zip', shell=True)
-            #cd bin/ios_xcode
-            subprocess.call(build_string + ' arch=arm64', shell=True)
-            subprocess.call('zip -r -X ../iphone.zip .', shell=True)
+            build_string = get_exports_for('server') + get_additional_commands_for('server') + build_string
+
+            print('Running command: ' + build_string)
+
+            subprocess.call(build_string, shell=True)
 
         else:
             print('No platform specified')
