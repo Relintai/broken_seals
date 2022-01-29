@@ -16,7 +16,7 @@ mkdir -p logs
 #sudo podman run -i -t -v $(pwd)/files:/root/files godot-osx:bs /bin/bash
 #sudo podman run -i -t -v $(pwd)/:/root/project -w /root/project godot-osx:bs /bin/bash
 #sudo podman run -v $(pwd)/:/root/project -w /root/project godot-osx:bs scons bex_strip arch=x86_64 -j4 osxcross_sdk=darwin20.4
-#sudo podman run -i -t -v $(pwd)/:/root/project -w /root/project/tools/osx godot-osx:bs  ./lipo.sh
+#sudo podman run -i -t -v $(pwd)/:/root/project -w /root/project/tools/osx godot-osx:bs bash -c ./lipo.sh
 
 rm -f engine/modules/modules_enabled.gen.h
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bew_strip -j4 . 2>&1 | tee logs/bew.log
