@@ -1,9 +1,12 @@
-rm -Rf ../../engine/bin/Godot.app
-cp -r ../../engine/misc/dist/osx_tools.app ../../engine/bin/Godot.app
-mkdir -p ../../engine/bin/Godot.app/Contents/MacOS
-cp ../../engine/bin/godot.osx.opt.tools.universal ../../engine/bin/Godot.app/Contents/MacOS/Godot
-chmod +x ../../engine/bin/Godot.app/Contents/MacOS/Godot
+cd ../../engine/bin/
 
-#cd ../../engine/bin/
-#zip -q -r Godot.app.zip  Godot.app/*
-#cd ../../tools/osx/
+rm -Rf Godot.app
+rm -f Godot.app.zip
+
+cp -r ../misc/dist/osx_tools.app Godot.app
+mkdir -p Godot.app/Contents/MacOS
+cp godot.osx.opt.tools.universal Godot.app/Contents/MacOS/Godot
+chmod +x Godot.app/Contents/MacOS/Godot
+
+zip -q -r Godot.app.zip  Godot.app/*
+cd ../../tools/osx/
