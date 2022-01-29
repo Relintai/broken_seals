@@ -77,3 +77,50 @@ $podman run -v ${project_root}:/root/project -w /root/project/tools/osx godot-os
 # $podman run -v ${project_root}:/root/project -i -w /root/project -t godot-windows:${img_version} scons bew -j4
 rm -f engine/modules/modules_enabled.gen.h
 
+
+# Check files
+
+cd ./engine/bin/
+
+files=(
+  # Windows
+  "godot.windows.opt.64.exe"
+  "godot.windows.opt.debug.64.exe"
+  "godot.windows.opt.tools.64.exe"
+  # Linux
+  "godot.x11.opt.64"
+  "godot.x11.opt.debug.64"
+  "godot.x11.opt.tools.64"
+  # JS
+  "godot.javascript.opt.tools.threads.zip"
+  "godot.javascript.opt.zip"
+  # Android
+  "android_debug.apk"
+  "android_release.apk"
+  # OSX
+  "godot.osx.opt.arm64"
+  "godot.osx.opt.debug.arm64"
+  "godot.osx.opt.debug.universal"
+  "godot.osx.opt.debug.x86_64"
+  "godot.osx.opt.tools.arm64"
+  "godot.osx.opt.tools.universal"
+  "godot.osx.opt.tools.x86_64"
+  "godot.osx.opt.universal"
+  "godot.osx.opt.x86_64"
+)
+
+error=0
+
+for f in ${files[*]} 
+do
+if [ ! -e $f ]; then
+  error=1
+  echo "$f is not present!"
+fi
+done
+
+if [ $error -eq 0 ]; then
+  echo "All files are present!"
+fi
+
+cd ../..
