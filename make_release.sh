@@ -35,7 +35,7 @@ zip -q ../release/broken_seals${version_snake_cased}_javascript.zip  ./broken_se
 zip -q ../release/broken_seals${version_snake_cased}_linux.zip  ./broken_seals${version_snake_cased}_linux/*
 zip -q ../release/broken_seals${version_snake_cased}_windows.zip  ./broken_seals${version_snake_cased}_windows/*
 zip -q ../release/broken_seals${version_snake_cased}_pi4.zip  ./broken_seals${version_snake_cased}_pi4/*
-zip -q ../release/broken_seals${version_snake_cased}_osx.zip  ./broken_seals${version_snake_cased}_osx/*
+zip -r -q ../release/broken_seals${version_snake_cased}_osx.zip  ./broken_seals${version_snake_cased}_osx/*
 
 # Editor
 zip -q ../release/editor_windows_bs${version_snake_cased}.zip  ./godot.bs${version}.windows.opt.tools.64.exe
