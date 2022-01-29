@@ -16,7 +16,7 @@ mkdir -p logs
 #sudo podman run -i -t -v $(pwd)/files:/root/files godot-osx:bs /bin/bash
 #sudo podman run -i -t -v $(pwd)/:/root/project -w /root/project godot-osx:bs /bin/bash
 #sudo podman run -v $(pwd)/:/root/project -w /root/project godot-osx:bs scons bex_strip arch=x86_64 -j4 osxcross_sdk=darwin20.4
-
+#sudo podman run -i -t -v $(pwd)/:/root/project -w /root/project/tools/osx godot-osx:bs  ./lipo.sh
 
 rm -f engine/modules/modules_enabled.gen.h
 $podman run -v ${project_root}:/root/project -w /root/project godot-windows:${img_version} scons bew_strip -j4 . 2>&1 | tee logs/bew.log
@@ -56,19 +56,19 @@ $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_ve
 rm -f engine/modules/modules_enabled.gen.h
 $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_version} scons bex_strip arch=arm64 -j4 osxcross_sdk=darwin20.4 . 2>&1 | tee logs/bex_arm64.log
 rm -f engine/modules/modules_enabled.gen.h
-#todo lipo script
 
 $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_version} scons bx_strip arch=x86_64 -j4 osxcross_sdk=darwin20.4 . 2>&1 | tee logs/bx_x86_64.log
 rm -f engine/modules/modules_enabled.gen.h
 $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_version} scons bx_strip arch=arm64 -j4 osxcross_sdk=darwin20.4 . 2>&1 | tee logs/bx_arm64.log
 rm -f engine/modules/modules_enabled.gen.h
-#todo lipo script
 
 $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_version} scons bxr_strip arch=x86_64 -j4 osxcross_sdk=darwin20.4 . 2>&1 | tee logs/bxr_x86_64.log
 rm -f engine/modules/modules_enabled.gen.h
 $podman run -v ${project_root}:/root/project -w /root/project godot-osx:${img_version} scons bxr_strip arch=arm64 -j4 osxcross_sdk=darwin20.4 . 2>&1 | tee logs/bxr_arm64.log
 rm -f engine/modules/modules_enabled.gen.h
-#todo lipo script
+
+#lipo
+$podman run -v ${project_root}:/root/project -w /root/project/tools/osx godot-osx:${img_version} bash -c ./lipo.sh
 
 #ios
 #$podman run -v ${project_root}:/root/project -w /root/project godot-ios:${img_version} scons bir_strip -j4 . 2>&1 | tee logs/bir.log
