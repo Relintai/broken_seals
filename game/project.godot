@@ -358,7 +358,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/data_manager/plugin.cfg", "res://addons/godot-plugin-refresher/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/color-palette/plugin.cfg", "res://addons/data_manager/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/mesh_data_resource_editor/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
 
 [ess]
 
