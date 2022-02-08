@@ -1,4 +1,4 @@
-[gd_resource type="TerramanLibraryMergerPCM" load_steps=12 format=2]
+[gd_resource type="TerrainLibraryMergerPCM" load_steps=12 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/grass_mossy_albedo.png" type="Texture" id=1]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_1_albedo.png" type="Texture" id=2]
@@ -8,22 +8,22 @@
 [ext_resource path="res://modules/core/materials/6_standard_material_prop_nouv2.tres" type="Material" id=6]
 [ext_resource path="res://modules/core/materials/8_standard_material_prop_notex.tres" type="Material" id=7]
 
-[sub_resource type="TerraSurfaceMerger" id=1]
+[sub_resource type="TerrainSurfaceMerger" id=1]
 texture_top = ExtResource( 1 )
 texture_bottom = ExtResource( 1 )
 texture_side = ExtResource( 1 )
 
-[sub_resource type="TerraSurfaceMerger" id=2]
+[sub_resource type="TerrainSurfaceMerger" id=2]
 texture_top = ExtResource( 3 )
 texture_bottom = ExtResource( 3 )
 texture_side = ExtResource( 3 )
 
-[sub_resource type="TerraSurfaceMerger" id=3]
+[sub_resource type="TerrainSurfaceMerger" id=3]
 texture_top = ExtResource( 3 )
 texture_bottom = ExtResource( 1 )
 texture_side = ExtResource( 2 )
 
-[sub_resource type="TerraSurfaceMerger" id=4]
+[sub_resource type="TerrainSurfaceMerger" id=4]
 texture_top = ExtResource( 2 )
 texture_bottom = ExtResource( 2 )
 texture_side = ExtResource( 2 )

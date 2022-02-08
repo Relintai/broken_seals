@@ -47,10 +47,10 @@ func get_editor_class() -> String:
 func get_editor_additional_text() -> String:
 	return "TestContinent"
 	
-func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
+func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
-func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
 
@@ -98,9 +98,9 @@ func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, sta
 							100, \
 							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
 
-func gen_terra_chunk(chunk: TerraChunk, rng : RandomNumberGenerator) -> void:
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator) -> void:
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
 	
 	var s : FastNoise = FastNoise.new()
 	s.set_noise_type(FastNoise.TYPE_SIMPLEX)
@@ -120,12 +120,12 @@ func gen_terra_chunk(chunk: TerraChunk, rng : RandomNumberGenerator) -> void:
 			val *= 20.0
 			val += abs(sdet.get_noise_2d(vx * 0.8, vz * 0.8)) * 20
 
-			chunk.set_voxel(val, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			chunk.set_voxel(val, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 
 			if val < 50:
-				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+				chunk.set_voxel(2, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 			elif val > 90:
-				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+				chunk.set_voxel(4, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 			else:
 				if chunk.position_x == 0 && chunk.position_z == 0:
 					continue
@@ -148,11 +148,11 @@ func gen_terra_chunk(chunk: TerraChunk, rng : RandomNumberGenerator) -> void:
 #						chunk.voxel_world.prop_add(tr, prop_tree2)
 		
 
-func spawn_dungeon(chunk: TerraChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
+func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
 	var x : float = chunk.position_x * chunk.voxel_scale * chunk.size_x
 	var z : float = chunk.position_z * chunk.voxel_scale * chunk.size_z
 	
-	var vh : int = chunk.get_voxel(6, 6, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+	var vh : int = chunk.get_voxel(6, 6, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 	var vwh : float = chunk.get_voxel_scale() * chunk.get_world_height() * (vh / 256.0)
 	
 	var dt : Spatial = dungeon_teleporter.instance()

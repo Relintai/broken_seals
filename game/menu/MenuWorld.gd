@@ -1,5 +1,5 @@
 tool
-extends TerraWorldBlocky
+extends TerrainWorldBlocky
 
 # Copyright Péter Magyar relintai@gmail.com
 # MIT License, might be merged into the Voxelman engine module
@@ -116,7 +116,7 @@ func _process(delta):
 		var count : int = chunk_get_count()
 		var i : int = 0
 		while i < count:
-			var c : TerraChunk = chunk_get_index(i)
+			var c : TerrainChunk = chunk_get_index(i)
 			
 			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
 			
@@ -161,7 +161,7 @@ func _process(delta):
 
 #func _process(delta : float) -> void:
 #	if not generation_queue.empty():
-#		var chunk : TerraChunk = generation_queue.front()
+#		var chunk : TerrainChunk = generation_queue.front()
 
 #		refresh_chunk_lod_level_data(chunk)
 
@@ -192,23 +192,23 @@ func _generation_finished():
 func get_chunk_lod_level(x : int, z : int, default : int) -> int:
 #	var key : String = str(x) + "," + str(y) + "," + str(z)
 	
-	var ch : TerraChunk = chunk_get(x, z)
+	var ch : TerrainChunk = chunk_get(x, z)
 	
 	if ch == null:
 		return default
 	
 	return ch.lod_size
 
-func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
+func _create_chunk(x : int, z : int, pchunk : TerrainChunk) -> TerrainChunk:
 	if !pchunk:
-		pchunk = TerraChunkBlocky.new()
+		pchunk = TerrainChunkBlocky.new()
 	
 	if pchunk.job_get_count() == 0:
-		var tj : TerraTerrarinJob = TerraTerrarinJob.new()
-		var lj : TerraLightJob = TerraLightJob.new()
-		var pj : TerraPropJob = TerraPropJob.new()
+		var tj : TerrainTerrainJob = TerrainTerrainJob.new()
+		var lj : TerrainLightJob = TerrainLightJob.new()
+		var pj : TerrainPropJob = TerrainPropJob.new()
 		
-		var prop_mesher = TerraMesherBlocky.new()
+		var prop_mesher = TerrainMesherBlocky.new()
 		prop_mesher.base_light_value = 0.45
 		prop_mesher.ao_strength = 0.2
 		prop_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
@@ -218,38 +218,38 @@ func _create_chunk(x : int, z : int, pchunk : TerraChunk) -> TerraChunk:
 		
 		pj.set_prop_mesher(prop_mesher);
 
-		var mesher : TerraMesherBlocky = TerraMesherBlocky.new()
+		var mesher : TerrainMesherBlocky = TerrainMesherBlocky.new()
 		mesher.base_light_value = 0.45
 		mesher.ao_strength = 0.2
 		mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
 		mesher.voxel_scale = voxel_scale
 		mesher.build_flags = build_flags
 		mesher.texture_scale = 3
-		mesher.channel_index_type = TerraChunkDefault.DEFAULT_CHANNEL_TYPE
-		mesher.channel_index_isolevel = TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
+		mesher.channel_index_type = TerrainChunkDefault.DEFAULT_CHANNEL_TYPE
+		mesher.channel_index_isolevel = TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL
 #		mesher.lod_index = 3
 		tj.set_mesher(mesher)
 
-		var s : TerraMesherJobStep = TerraMesherJobStep.new()
-		s.job_type = TerraMesherJobStep.TYPE_NORMAL
+		var s : TerrainMesherJobStep = TerrainMesherJobStep.new()
+		s.job_type = TerrainMesherJobStep.TYPE_NORMAL
 		tj.add_jobs_step(s)
 
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+#		s = TerrainMesherJobStep.new()
+#		s.job_type = TerrainMesherJobStep.TYPE_NORMAL_LOD
 #		s.lod_index = 1
 #		tj.add_jobs_step(s)
 #
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_NORMAL_LOD
+#		s = TerrainMesherJobStep.new()
+#		s.job_type = TerrainMesherJobStep.TYPE_NORMAL_LOD
 #		s.lod_index = 2
 #		tj.add_jobs_step(s)
 #
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_MERGE_VERTS
+#		s = TerrainMesherJobStep.new()
+#		s.job_type = TerrainMesherJobStep.TYPE_MERGE_VERTS
 #		tj.add_jobs_step(s)
 #
-#		s = TerraMesherJobStep.new()
-#		s.job_type = TerraMesherJobStep.TYPE_BAKE_TEXTURE
+#		s = TerrainMesherJobStep.new()
+#		s.job_type = TerrainMesherJobStep.TYPE_BAKE_TEXTURE
 #		tj.add_jobs_step(s)
 
 
@@ -297,7 +297,7 @@ func create_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 	var chunkx : int = int(x / chunk_size_x)
 	var chunkz : int = int(z / chunk_size_z)
 	
-	var light : TerraLight = TerraLight.new()
+	var light : TerrainLight = TerrainLight.new()
 	light.color = color
 	light.size = size
 	light.set_world_position(x, 20, z)
@@ -354,7 +354,7 @@ func set_test_lod(val : int) -> void:
 	test_lod = val
 	
 	for i in range(chunk_get_count()):
-		var c : TerraChunkDefault = chunk_get_index(i)
+		var c : TerrainChunkDefault = chunk_get_index(i)
 		
 		c.current_lod_level = test_lod
 		

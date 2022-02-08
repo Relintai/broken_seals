@@ -99,7 +99,7 @@ var death_timer : float = 0
 
 var last_mouse_over : Entity = null
 
-var world : TerraWorld = null
+var world : TerrainWorld = null
 
 var entity : Entity
 var model_rotation_node : Spatial
@@ -145,7 +145,7 @@ func _ready() -> void:
 #	set_process_unhandled_input(false)
 
 func _enter_tree():
-	world = get_node(world_path) as TerraWorld
+	world = get_node(world_path) as TerrainWorld
 	
 	set_physics_process(true)
 

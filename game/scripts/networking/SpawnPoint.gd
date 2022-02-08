@@ -41,7 +41,7 @@ var connect_button : Button
 var naturalist_button : Button
 
 var player : Entity
-var terrarin : TerraWorld
+var terrarin : TerrainWorld
 
 var spawned : bool = false
 
@@ -61,7 +61,7 @@ func _ready():
 	naturalist_button = get_node(naturalist_button_path)
 	naturalist_button.connect("pressed", self, "_on_client_naturalist_button_clicked")
 	
-	terrarin = get_node(terrarin_path) as TerraWorld
+	terrarin = get_node(terrarin_path) as TerrainWorld
 	
 	Server.connect("cplayer_master_created", self, "_cplayer_master_created")
 	

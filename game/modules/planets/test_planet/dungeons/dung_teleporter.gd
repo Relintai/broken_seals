@@ -12,13 +12,13 @@ var max_level : int = 2
 var dungeon_seed : int = 0
 var spawn_mobs : bool = true
 
-var owner_chunk : TerraChunk = null
+var owner_chunk : TerrainChunk = null
 var _dungeon : Spatial = null
 var _dungeon_back_teleporter : Spatial = null
 
 var teleport_to : Vector3 = Vector3()
 
-var _world : TerraWorld = null
+var _world : TerrainWorld = null
 
 var _is_windows : bool = false
 var _mouse_hover : bool = false
@@ -117,7 +117,7 @@ func teleport():
 #		p.get_body().transform.origin = teleport_to
 
 
-func on_chunk_removed(chunk : TerraChunk) -> void:
+func on_chunk_removed(chunk : TerrainChunk) -> void:
 	if chunk == owner_chunk:
 		queue_free()
 

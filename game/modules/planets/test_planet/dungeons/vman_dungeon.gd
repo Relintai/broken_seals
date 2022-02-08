@@ -115,7 +115,7 @@ func _generate_voxel_chunk(chunk, spawn_mobs):
 	if !aabb.intersects(chunk_aabb):
 		return
 		
-	chunk.ensure_channel_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ALT_TYPE, 1)
+	chunk.ensure_channel_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ALT_TYPE, 1)
 
 	var px : int = chunk.position_x * chunk.size_x - posx
 	var pz : int = chunk.position_z * chunk.size_z - posz
@@ -180,12 +180,12 @@ func _generate_voxel_chunk(chunk, spawn_mobs):
 #	for i in range(get_dungeon_start_room_count()):
 #		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
 
-func add_wall(chunk : TerraChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
+func add_wall(chunk : TerrainChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
 	for y in range(floor_pos, ceiling_pos):
-		chunk.set_voxel(0, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ALT_TYPE)
+		chunk.set_voxel(0, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ALT_TYPE)
 #		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall, tex)
 
-func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : TerraChunk, teleports_to : Vector3):
+func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : TerrainChunk, teleports_to : Vector3):
 	var s = scene.instance()
 	chunk.get_voxel_world().add_child(s)
 	s.transform = transform

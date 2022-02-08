@@ -1,14 +1,14 @@
 tool
-extends TerramanLevelGenerator
+extends TerrainLevelGenerator
 
 var lseed = 0
 
-func setup(world : TerraWorld, level_seed : int, spawn_mobs : bool, library: TerramanLibrary) -> void:
+func setup(world : TerrainWorld, level_seed : int, spawn_mobs : bool, library: TerrainLibrary) -> void:
 	lseed = level_seed
 
-func _generate_chunk(chunk: TerraChunk) -> void:
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+func _generate_chunk(chunk: TerrainChunk) -> void:
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
 	
 	var s : OpenSimplexNoise = OpenSimplexNoise.new()
 	s.seed = lseed
@@ -22,9 +22,9 @@ func _generate_chunk(chunk: TerraChunk) -> void:
 			val *= val
 			val *= 20.0
 
-			chunk.set_voxel(val, x, z, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			chunk.set_voxel(val, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 
 			if val < 50:
-				chunk.set_voxel(2, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+				chunk.set_voxel(2, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 			elif val > 70:
-				chunk.set_voxel(4, x, z, TerraChunkDefault.DEFAULT_CHANNEL_TYPE)
+				chunk.set_voxel(4, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)

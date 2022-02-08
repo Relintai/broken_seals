@@ -218,6 +218,6 @@ master func sreceive_upload_character(data: String) -> void:
 func set_terrarin_player():
 	Logger.verbose("NetworkManager cspawn_player")
 	
-	var terrarin : TerraWorld = get_node("/root/main/World")
+	var terrarin : TerrainWorld = get_node("/root/main/World")
 	
 	terrarin.set_player(local_player_master.player.get_body() as Spatial)

@@ -1,4 +1,4 @@
-[gd_resource type="TerramanLevelGeneratorFlat" format=2]
+[gd_resource type="TerrainLevelGeneratorFlat" format=2]
 
 [resource]
 floor_position = 10

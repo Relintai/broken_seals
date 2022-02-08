@@ -1,6 +1,6 @@
 tool
-extends TerramanLevelGenerator
-class_name TerraWorldGenerator
+extends TerrainLevelGenerator
+class_name TerrainWorldGenerator
 
 # Copyright (c) 2019-2021 Péter Magyar
 #
@@ -26,10 +26,10 @@ export(int) var _level_seed : int
 export(bool) var _spawn_mobs : bool
 export(Resource) var world_gen_world : Resource = null
 
-var _world : TerraWorld
-var _library : TerramanLibrary
+var _world : TerrainWorld
+var _library : TerrainLibrary
 
-func setup(world : TerraWorld, level_seed : int, spawn_mobs : bool, library: TerramanLibrary) -> void:
+func setup(world : TerrainWorld, level_seed : int, spawn_mobs : bool, library: TerrainLibrary) -> void:
 	_level_seed = level_seed
 	_spawn_mobs = spawn_mobs
 	_library = library
@@ -48,7 +48,7 @@ func get_spawn_chunk_position() -> Vector2:
 	
 	return Vector2()
 
-func _generate_chunk(chunk : TerraChunk) -> void:
+func _generate_chunk(chunk : TerrainChunk) -> void:
 	if world_gen_world == null:
 		return
 	

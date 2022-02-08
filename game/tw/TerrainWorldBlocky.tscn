@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://tw/new_terramanlibrarymergerpcm.tres" type="TerramanLibraryMergerPCM" id=1]
-[ext_resource path="res://tw/TerraWorldBlocky.gd" type="Script" id=2]
-[ext_resource path="res://tw/world_generator.tres" type="TerramanLevelGenerator" id=3]
+[ext_resource path="res://tw/new_terramanlibrarymergerpcm.tres" type="TerrainLibraryMergerPCM" id=1]
+[ext_resource path="res://tw/TerrainWorldBlocky.gd" type="Script" id=2]
+[ext_resource path="res://tw/world_generator.tres" type="TerrainLevelGenerator" id=3]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=4]
 [ext_resource path="res://test_props/MeshDataInstance.tres" type="PropData" id=5]
 
@@ -47,7 +47,7 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 
-[node name="World" type="TerraWorldBlocky"]
+[node name="World" type="TerrainWorldBlocky"]
 world_height = 100.0
 library = ExtResource( 1 )
 level_generator = ExtResource( 3 )

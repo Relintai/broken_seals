@@ -14,7 +14,7 @@ func _setup() -> void:
 func get_spawn_chunk_position() -> Vector2:
 	return Vector2(main_chunk_pos_x, main_chunk_pos_z)
 
-func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
 	if !spawn_mobs:
 		return
 	

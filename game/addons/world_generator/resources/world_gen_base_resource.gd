@@ -91,17 +91,17 @@ func duplicate_content_entry(entry : WorldGenBaseResource, add : bool = true) ->
 		
 	return de
 
-func setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
+func setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	_setup_terra_library(library, pseed)
 	
 	for c in get_content():
 		if c:
 			c.setup_terra_library(library, pseed)
 
-func _setup_terra_library(library : TerramanLibrary, pseed : int) -> void:
+func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
-func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
+func generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
 	var p : Vector2 = Vector2(chunk.get_position_x(), chunk.get_position_z())
 
 	var stack : Array = get_hit_stack(p)
@@ -113,13 +113,13 @@ func generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> v
 	for i in range(stack.size()):
 		stack[i]._generate_terra_chunk(chunk, pseed, spawn_mobs, stack, i)
 	
-func _generate_terra_chunk(chunk: TerraChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
 	pass
 	
-func _generate_terra_chunk_fallback(chunk: TerraChunk, pseed : int, spawn_mobs: bool) -> void:
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
-	chunk.channel_ensure_allocated(TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 1)
-	chunk.set_voxel(1, 0, 0, TerraChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+func _generate_terra_chunk_fallback(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 1)
+	chunk.set_voxel(1, 0, 0, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 	
 func generate_map(pseed : int) -> Image:
 	var img : Image = Image.new()

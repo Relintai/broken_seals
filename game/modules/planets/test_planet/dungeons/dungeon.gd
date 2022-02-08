@@ -123,7 +123,7 @@ func _setup():
 func _setup_terra_library(library):
 	._setup_terra_library(library)
 	
-	if library is TerramanLibraryMerger:
+	if library is TerrainLibraryMerger:
 		library.get_prop_packer().add_texture(wall_texture)
 		library.get_prop_packer().add_texture(floor_texture)
 		library.get_prop_packer().add_texture(ceiling_texture)
@@ -221,11 +221,11 @@ func _generate_voxel_chunk(chunk, spawn_mobs):
 #	for i in range(get_dungeon_start_room_count()):
 #		get_dungeon_start_room(i).generate_chunk(chunk, spawn_mobs)
 
-func add_wall(chunk : TerraChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
+func add_wall(chunk : TerrainChunk, x : int, z : int, floor_pos : int, ceiling_pos : int, wall : MeshDataResource, tex : Texture):
 	for y in range(floor_pos, ceiling_pos):
 		chunk.add_mesh_data_resourcev(Vector3(x, y, z), wall, tex)
 
-func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : TerraChunk, teleports_to : Vector3):
+func spawn_teleporter_scene(scene : PackedScene, transform : Transform, chunk : TerrainChunk, teleports_to : Vector3):
 	var s = scene.instance()
 	chunk.get_voxel_world().add_child(s)
 	s.transform = transform
