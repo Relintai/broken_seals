@@ -5,8 +5,8 @@
 [ext_resource path="res://world_generator/zones/test_zone.gd" type="Script" id=3]
 [ext_resource path="res://world_generator/subzones/spawner.gd" type="Script" id=4]
 [ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=5]
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="PropData" id=6]
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t2.tres" type="PropData" id=7]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1scene.tres" type="PropData" id=6]
+[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t2scene.tres" type="PropData" id=7]
 [ext_resource path="res://modules/entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=8]
 [ext_resource path="res://modules/entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=9]
 
