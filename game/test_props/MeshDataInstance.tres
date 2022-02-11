@@ -1,7 +1,7 @@
 [gd_resource type="PropData" load_steps=10 format=2]
 
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.gltf" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.gltf" type="MeshDataResource" id=2]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_handl.tres" type="MeshDataResource" id=1]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_spine1.tres" type="MeshDataResource" id=2]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_green_scarf.png" type="Texture" id=3]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_red_scarf.png" type="Texture" id=4]
 [ext_resource path="res://test_props/MeshDataInstance2.tres" type="PropData" id=5]

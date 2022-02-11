@@ -1,6 +1,6 @@
 [gd_resource type="ModelVisualEntry" load_steps=3 format=2]
 
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.gltf" type="MeshDataResource" id=1]
+[ext_resource path="res://modules/species/Human/Female/character_models/huf_thigh_left.tres" type="MeshDataResource" id=1]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_simple_v3.png" type="Texture" id=2]
 
 [resource]
