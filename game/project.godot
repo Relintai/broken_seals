@@ -835,3 +835,8 @@ quality/directional_shadow/size.mobile=1024
 quality/shading/force_vertex_shading=true
 quality/2d/use_batching=true
 quality/shadows/enabled=false
+
+[ui]
+
+actionbar/show_keybind_text=true
+actionbar/show_cooldown_text=true

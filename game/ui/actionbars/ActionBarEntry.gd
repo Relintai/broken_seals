@@ -44,6 +44,9 @@ var categ_cd : float = 0
 var has_gcd : bool = false
 var gcd : float = 0.0
 
+var show_keybind_text : bool = true
+var show_cooldown_text : bool = true
+
 func _ready() -> void:
 	button = get_node(button_path) as Button
 	icon_rect = get_node(icon_path) as TextureRect
@@ -56,6 +59,19 @@ func _ready() -> void:
 	
 	ProfileManager.connect("keybinds_changed", self, "on_keybinds_changed")
 
+	show_keybind_text = Settings.get_value("ui", "actionbar_show_keybind_text")
+	show_cooldown_text = Settings.get_value("ui", "actionbar_show_coldown_text")
+	
+	Settings.connect("setting_changed", self, "on_setting_changed")
+	
+	if show_keybind_text:
+		keybind_text.show()
+	else:
+		keybind_text.hide()
+		
+	if !show_cooldown_text:
+		cooldown_text.hide()
+	
 func _exit_tree():
 	if icon_rect.texture != null:
 		ThemeAtlas.unref_texture(icon_rect.texture)
@@ -90,7 +106,9 @@ func _process(delta : float) -> void:
 
 func set_cooldown_time(time : float) -> void:
 	cooldown_indicator.value = time
-	cooldown_text.text = str(int(time))
+	
+	if show_cooldown_text:
+		cooldown_text.text = str(int(time))
 
 func show_cooldown_timer(max_time : float) -> void:
 	if cooldown_indicator.visible and cooldown_indicator.max_value < max_time:
@@ -100,11 +118,15 @@ func show_cooldown_timer(max_time : float) -> void:
 		cooldown_indicator.max_value = max_time
 	
 	cooldown_indicator.show()
-	cooldown_text.show()
+	
+	if show_cooldown_text:
+		cooldown_text.show()
 	
 func hide_cooldown_timer() -> void:
 	cooldown_indicator.hide()
-	cooldown_text.hide()
+	
+	if show_cooldown_text:
+		cooldown_text.hide()
 
 func set_button_entry(action_bar_button_entry: ActionBarButtonEntry, p_player: Entity) -> void:
 	player = p_player
@@ -386,3 +408,24 @@ func _cgcd_started(e : Entity, value :float) -> void:
 	
 func _cgcd_finished(val) -> void:
 	gcd = 0
+
+func on_setting_changed(section, key, value):
+	if section == "ui":
+		if key == "actionbar_show_keybind_text":
+			show_keybind_text = value
+			
+			if show_keybind_text:
+				keybind_text.show()
+			else:
+				keybind_text.hide()
+			
+		elif key == "actionbar_show_coldown_text":
+			show_cooldown_text = value
+			
+			if cd > 0.2 || categ_cd > 0.2:
+				#The update loop should take care of the rest
+				if show_cooldown_text:
+					cooldown_text.show()
+				else:
+					cooldown_text.hide()
+	
