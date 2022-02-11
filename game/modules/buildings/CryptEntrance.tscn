@@ -1,10 +1,10 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://modules/core_models/wall_xp.gltf" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/core_models/wall_xn.gltf" type="MeshDataResource" id=2]
-[ext_resource path="res://modules/core_models/floor.gltf" type="MeshDataResource" id=3]
-[ext_resource path="res://modules/core_models/wall_zn.gltf" type="MeshDataResource" id=4]
-[ext_resource path="res://modules/core_models/wall_zp.gltf" type="MeshDataResource" id=5]
+[ext_resource path="res://modules/core_models/wall_xp.tres" type="MeshDataResource" id=1]
+[ext_resource path="res://modules/core_models/wall_xn.tres" type="MeshDataResource" id=2]
+[ext_resource path="res://modules/core_models/floor.tres" type="MeshDataResource" id=3]
+[ext_resource path="res://modules/core_models/wall_zn.tres" type="MeshDataResource" id=4]
+[ext_resource path="res://modules/core_models/wall_zp.tres" type="MeshDataResource" id=5]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=6]
 [ext_resource path="res://modules/buildings/CryptEntranceDoor.tscn" type="PackedScene" id=7]
 

@@ -17,3 +17,4 @@ collider_type=4
 offset=Vector3( 0, 0, 0 )
 rotation=Vector3( 0, 0, 0 )
 scale=Vector3( 1, 1, 1 )
+save_copy_as_resource=true

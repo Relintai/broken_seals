@@ -1,0 +1,5 @@
+[gd_resource type="MeshDataResource" format=2]
+
+[resource]
+array = [ PoolVector3Array( 1.19209e-07, 8.9407e-08, 1, 8.9407e-08, -1.47027e-07, 1.78814e-07, 1, -8.9407e-08, 1.78814e-07, 1, 1.47027e-07, 1 ), PoolVector3Array( 5.76204e-08, -1, 2.36434e-07, 5.76204e-08, -1, 2.36434e-07, 5.76204e-08, -1, 2.36434e-07, 5.76204e-08, -1, 2.36434e-07 ), null, null, PoolVector2Array( 1, 0, 0, 0, 0, 1, 1, 1 ), null, null, null, PoolIntArray( 0, 2, 1, 0, 3, 2 ) ]
+aabb = AABB( 8.9407e-08, -1.47027e-07, 1.78814e-07, 1, 2.94055e-07, 1 )

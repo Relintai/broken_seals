@@ -1,0 +1,9 @@
+[gd_resource type="MeshDataResource" load_steps=2 format=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.5, 0.5, 4.37114e-08 )
+
+[resource]
+array = [ PoolVector3Array( 1, 1, 4.37114e-08, 1, 0, -4.37114e-08, 1.49012e-07, 0, -4.37114e-08, 1.49012e-07, 1, 4.37114e-08 ), PoolVector3Array( 0, 8.74228e-08, -1, 0, 8.74228e-08, -1, 0, 8.74228e-08, -1, 0, 8.74228e-08, -1 ), null, null, PoolVector2Array( 0, 0, 0, 1, 1, 1, 1, 0 ), null, null, null, PoolIntArray( 0, 2, 1, 0, 3, 2 ) ]
+aabb = AABB( 1.49012e-07, 0, -4.37114e-08, 1, 1, 8.74228e-08 )
+collision_shapes = [ Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0 ), SubResource( 1 ) ]
