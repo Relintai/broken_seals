@@ -280,3 +280,7 @@ func extrude():
 func clean_mesh():
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		current_mesh_data_instance.gizmo.clean_mesh()
+		
+func flip_selected_faces():
+	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
+		current_mesh_data_instance.gizmo.flip_selected_faces()

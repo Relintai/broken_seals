@@ -250,3 +250,6 @@ func onhandle_selection_type_all_toggled(on : bool):
 
 func _on_clean_mesh_pressed():
 	_plugin.clean_mesh()
+
+func _on_flip_face_pressed():
+	_plugin.flip_selected_faces()

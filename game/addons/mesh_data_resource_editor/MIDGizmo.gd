@@ -1637,6 +1637,31 @@ func uv_unwrap() -> void:
 	add_mesh_change_undo_redo(orig_arr, mdr_arr, "uv_unwrap")
 	enable_change_event()
 
+func flip_selected_faces() -> void:
+	if !_mdr:
+		return
+		
+	if _selected_points.size() == 0:
+		return
+	
+	if selection_mode == SelectionMode.SELECTION_MODE_VERTEX:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_EDGE:
+		pass
+	elif selection_mode == SelectionMode.SELECTION_MODE_FACE:
+		disable_change_event()
+		
+		var orig_arr = copy_arrays(_mdr.array)
+		
+		for sp in _selected_points:
+			var triangle_index : int = find_first_triangle_index_for_face(sp)
+			
+			MDRMeshUtils.flip_triangle_ti(_mdr, triangle_index)
+
+		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Flip Faces")
+
+		enable_change_event()
+
 func add_mesh_change_undo_redo(orig_arr : Array, new_arr : Array, action_name : String) -> void:
 	_undo_redo.create_action(action_name)
 	var nac : Array = copy_arrays(new_arr)
