@@ -1238,7 +1238,7 @@ func generate_normals():
 	var orig_seams = copy_pool_int_array(_mdr.seams)
 	
 	var seam_points : PoolVector3Array = MDRMeshUtils.seams_to_points(_mdr)
-	MDRMeshUtils.generate_normals(_mdr)
+	MDRMeshUtils.generate_normals_mdr(_mdr)
 	MDRMeshUtils.points_to_seams(_mdr, seam_points)
 	
 	add_mesh_seam_change_undo_redo(orig_arr, orig_seams, _mdr.array, _mdr.seams, "Generate Normals")
