@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/keybinds/KeybindCategory.gd" type="Script" id=1]
-[ext_resource path="res://ui/keybinds/KeybindEntry.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/windows/keybinds/KeybindEntry.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/windows/keybinds/KeybindCategory.gd" type="Script" id=2]
 
 [node name="KeybindCategory" type="VBoxContainer"]
 margin_right = 1016.0
 margin_bottom = 23.0
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-keybind_entry_scene = ExtResource( 2 )
+keybind_entry_scene = ExtResource( 1 )
 content_container_path = NodePath("VBoxContainer/content")
 
 [node name="Label" type="Label" parent="."]

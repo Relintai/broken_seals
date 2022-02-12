@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://ui/about/GodotAuthors.gd" type="Script" id=1]
-[ext_resource path="res://ui/about/GodotDonors.gd" type="Script" id=2]
+[ext_resource path="res://ui/windows/about/GodotAuthors.gd" type="Script" id=1]
+[ext_resource path="res://ui/windows/about/GodotDonors.gd" type="Script" id=2]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
-[ext_resource path="res://ui/about/GodotLicense.gd" type="Script" id=4]
-[ext_resource path="res://ui/about/GodotThirdPartyLicenses.gd" type="Script" id=5]
-[ext_resource path="res://ui/about/Authors.gd" type="Script" id=6]
-[ext_resource path="res://ui/about/Third-Party Licenses.gd" type="Script" id=7]
+[ext_resource path="res://ui/windows/about/GodotLicense.gd" type="Script" id=4]
+[ext_resource path="res://ui/windows/about/GodotThirdPartyLicenses.gd" type="Script" id=5]
+[ext_resource path="res://ui/windows/about/Authors.gd" type="Script" id=6]
+[ext_resource path="res://ui/windows/about/Third-Party Licenses.gd" type="Script" id=7]
 [ext_resource path="res://ui/scripts/Window.gd" type="Script" id=8]
 [ext_resource path="res://ui/scripts/KeyboardTabContainer.gd" type="Script" id=9]
 

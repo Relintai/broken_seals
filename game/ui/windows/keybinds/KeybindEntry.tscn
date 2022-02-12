@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://ui/keybinds/KeybindEntry.gd" type="Script" id=1]
+[ext_resource path="res://ui/windows/keybinds/KeybindEntry.gd" type="Script" id=1]
 
 [node name="KeybindEntry" type="HBoxContainer"]
 margin_right = 996.0
@@ -30,5 +30,6 @@ margin_right = 996.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 200, 30 )
 text = "empty"
+
 [connection signal="pressed" from="Button" to="." method="query_keybind_1"]
 [connection signal="pressed" from="Button2" to="." method="query_keybind_2"]

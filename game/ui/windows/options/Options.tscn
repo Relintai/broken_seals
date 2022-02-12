@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://ui/player/player_ui/RemoveProfile.gd" type="Script" id=2]
-[ext_resource path="res://ui/options/OptionsViewportLabel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ui/options/OptionCheckboxRow.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ui/options/OptionCheckBox.gd" type="Script" id=5]
-[ext_resource path="res://ui/options/OptionEnumRow.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/windows/options/OptionEnumRow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/windows/options/OptionCheckboxRow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/player/player_ui/RemoveProfile.gd" type="Script" id=4]
+[ext_resource path="res://ui/windows/options/OptionsViewportLabel.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ui/windows/options/OptionCheckBox.gd" type="Script" id=6]
 [ext_resource path="res://ui/scripts/Window.gd" type="Script" id=7]
-[ext_resource path="res://ui/options/OptionsSpinboxRow.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ui/scripts/KeyboardTabContainer.gd" type="Script" id=9]
+[ext_resource path="res://ui/scripts/KeyboardTabContainer.gd" type="Script" id=8]
+[ext_resource path="res://ui/windows/options/OptionsSpinboxRow.tscn" type="PackedScene" id=9]
 
 [node name="Options" type="Control"]
 anchor_right = 1.0
@@ -46,7 +46,7 @@ margin_bottom = 431.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
-script = ExtResource( 9 )
+script = ExtResource( 8 )
 focus_control_on_tab_change_path = NodePath("../Close")
 
 [node name="Video" type="VBoxContainer" parent="PanelContainer/VBoxContainer/TabContainer"]
@@ -58,17 +58,17 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 
-[node name="ViewportWidth" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
+[node name="ViewportWidth" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 5 )]
 margin_bottom = 15.0
 property_label = "Viewport Width"
 
-[node name="ViewportHeight" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
+[node name="ViewportHeight" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 5 )]
 margin_top = 23.0
 margin_bottom = 38.0
 property_label = "Viewport Height"
 width = false
 
-[node name="ViewportScale" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 8 )]
+[node name="ViewportScale" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 9 )]
 margin_top = 46.0
 margin_bottom = 70.0
 property_category = "rendering"
@@ -78,28 +78,28 @@ min_value = 20.0
 step = 5.0
 suffix = "%"
 
-[node name="Borderless" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="Borderless" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 78.0
 margin_bottom = 104.0
 property_category = "rendering"
 property_name = "borderless"
 property_label = "Borderless Window"
 
-[node name="FullScreen" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="FullScreen" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 112.0
 margin_bottom = 138.0
 property_category = "rendering"
 property_name = "fullscreen"
 property_label = "Fullscreen"
 
-[node name="AlwaysOnTop" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="AlwaysOnTop" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 146.0
 margin_bottom = 172.0
 property_category = "rendering"
 property_name = "always_on_top"
 property_label = "Always On Top"
 
-[node name="ThreadModel" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 6 )]
+[node name="ThreadModel" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 2 )]
 margin_top = 180.0
 margin_bottom = 206.0
 property_category = "rendering"
@@ -107,21 +107,21 @@ property_name = "thread_model"
 property_label = "Thread Model"
 options = [ "Single-Unsafe", "Single-Safe", "Multi Threaded" ]
 
-[node name="Shadows" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="Shadows" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 214.0
 margin_bottom = 240.0
 property_category = "rendering"
 property_name = "shadows_enabled"
 property_label = "Shadows Enabled"
 
-[node name="VSync" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="VSync" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 248.0
 margin_bottom = 274.0
 property_category = "rendering"
 property_name = "use_vsync"
 property_label = "VSync"
 
-[node name="VSyncViaCompositor" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 4 )]
+[node name="VSyncViaCompositor" parent="PanelContainer/VBoxContainer/TabContainer/Video" instance=ExtResource( 3 )]
 margin_top = 282.0
 margin_bottom = 308.0
 property_category = "rendering"
@@ -138,7 +138,7 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 
-[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 9 )]
 margin_top = 0.0
 margin_bottom = 24.0
 property_category = "game"
@@ -148,7 +148,7 @@ min_value = 2.0
 max_value = 30.0
 step = 1.0
 
-[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 9 )]
 margin_top = 32.0
 margin_bottom = 56.0
 property_category = "game"
@@ -157,7 +157,7 @@ property_label = "Chunk Lod First Falloff"
 max_value = 30.0
 step = 1.0
 
-[node name="OptionsSpinboxRow3" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 8 )]
+[node name="OptionsSpinboxRow3" parent="PanelContainer/VBoxContainer/TabContainer/Game" instance=ExtResource( 9 )]
 margin_top = 64.0
 margin_bottom = 88.0
 property_category = "game"
@@ -176,14 +176,14 @@ margin_right = -4.0
 margin_bottom = -4.0
 size_flags_horizontal = 3
 
-[node name="OptionToggleRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 4 )]
+[node name="OptionToggleRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 3 )]
 margin_top = 0.0
 margin_bottom = 26.0
 property_category = "ui"
 property_name = "touchscreen_mode"
 property_label = "Touchscreen Mode"
 
-[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
+[node name="OptionsSpinboxRow" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 9 )]
 margin_top = 34.0
 margin_bottom = 58.0
 property_category = "ui"
@@ -194,7 +194,7 @@ max_value = 2.4
 step = 0.01
 rounded = false
 
-[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 8 )]
+[node name="OptionsSpinboxRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 9 )]
 margin_top = 66.0
 margin_bottom = 90.0
 property_category = "ui"
@@ -205,14 +205,14 @@ max_value = 2.4
 step = 0.01
 rounded = false
 
-[node name="OptionToggleRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 4 )]
+[node name="OptionToggleRow2" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 3 )]
 margin_top = 98.0
 margin_bottom = 124.0
 property_category = "ui"
 property_name = "actionbar_show_keybind_text"
 property_label = "Show Keybind Text"
 
-[node name="OptionToggleRow3" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 4 )]
+[node name="OptionToggleRow3" parent="PanelContainer/VBoxContainer/TabContainer/Interface" instance=ExtResource( 3 )]
 margin_top = 132.0
 margin_bottom = 158.0
 property_category = "ui"
@@ -233,7 +233,7 @@ size_flags_horizontal = 3
 margin_right = 527.0
 margin_bottom = 26.269
 text = "Show Debug info"
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 property_category = "debug"
 property_name = "debug_info"
 
@@ -243,7 +243,7 @@ margin_right = 527.0
 margin_bottom = 60.269
 size_flags_horizontal = 3
 text = "Remove Profile"
-script = ExtResource( 2 )
+script = ExtResource( 4 )
 
 [node name="Close" type="Button" parent="PanelContainer/VBoxContainer"]
 margin_top = 439.0

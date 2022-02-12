@@ -1,10 +1,11 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://ui/options/OptionsViewportLabel.gd" type="Script" id=1]
+[ext_resource path="res://ui/windows/options/OptionsSliderRow.gd" type="Script" id=1]
 
-[node name="OptionsViewportLabel" type="HBoxContainer"]
+[node name="OptionsSliderRow" type="HBoxContainer"]
+margin_top = 46.0
 margin_right = 527.0
-margin_bottom = 26.0
+margin_bottom = 72.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
@@ -17,11 +18,12 @@ margin_right = 261.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
-[node name="Label2" type="Label" parent="."]
+[node name="HSlider" type="HSlider" parent="."]
 margin_left = 265.0
 margin_right = 527.0
 margin_bottom = 26.0
 size_flags_horizontal = 3
-size_flags_vertical = 7
-align = 1
-valign = 1
+size_flags_vertical = 3
+min_value = 5.0
+step = 5.0
+value = 100.0

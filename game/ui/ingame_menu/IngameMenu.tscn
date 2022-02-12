@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://ui/options/Options.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/windows/options/Options.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ui/ingame_menu/ExitButton.gd" type="Script" id=3]
-[ext_resource path="res://ui/keybinds/Keybinds.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/windows/keybinds/Keybinds.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ui/interface/InterfaceOptions.tscn" type="PackedScene" id=5]
 
 [node name="IngameMenu" type="Control"]
@@ -99,6 +99,7 @@ margin_left = -331.0
 margin_top = -224.5
 margin_right = 331.0
 margin_bottom = 224.5
+
 [connection signal="pressed" from="Menu/VBoxContainer/Resume" to="." method="hide"]
 [connection signal="pressed" from="Menu/VBoxContainer/Keybinds" to="KeybindWindow" method="show"]
 [connection signal="pressed" from="Menu/VBoxContainer/Interface" to="InterfaceOptions" method="show"]
