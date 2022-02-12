@@ -10,6 +10,8 @@ enum DragType {
 	DRAG_RESIZE_LEFT = 1 << 4
 };
 
+var selected : bool = false
+
 var _mdr : MeshDataResource = null
 var _indices : PoolIntArray = PoolIntArray()
 var _uvs : PoolVector2Array = PoolVector2Array()
@@ -21,6 +23,8 @@ var edited_resource_parent_size : Vector2 = Vector2()
 
 var _edited_resource_rect_border_color : Color = Color(0.8, 0.8, 0.8, 0.5)
 var _edited_resource_rect_color : Color = Color(0.5, 0.5, 0.5, 0.2)
+var _edited_resource_rect_selected_border_color : Color = Color(0.9, 0.9, 0.9, 0.5)
+var _edited_resource_rect_selected_color : Color = Color(0.6, 0.6, 0.6, 0.2)
 var _edited_resource_uv_mesh_color : Color = Color(1, 1, 1, 1)
 var _editor_rect_border_size : int = 2
 var _edited_resource_font_color : Color = Color(0, 0, 0, 1)
@@ -33,8 +37,12 @@ var drag_offset_far : Vector2
 var _rect_scale : float = 1
 
 func _draw():
-	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
-	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
+	if selected:
+		draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_selected_color)
+		draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_selected_border_color, false, _editor_rect_border_size)
+	else:
+		draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
+		draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
 	
 	if _mdr && _uvs.size() > 0:
 		var c : Color = _edited_resource_uv_mesh_color
@@ -191,6 +199,8 @@ func _gui_input(p_event : InputEvent) -> void:
 		var mb : InputEventMouseButton = p_event as InputEventMouseButton
 		
 		if (mb.is_pressed()):
+			get_parent().set_selected(self)
+			
 			# Begin a possible dragging operation.
 			drag_type = _drag_hit_test(Vector2(mb.get_position().x, mb.get_position().y))
 			
@@ -292,3 +302,7 @@ func _drag_hit_test(pos : Vector2) -> int:
 		drag_type = DragType.DRAG_MOVE
 
 	return drag_type
+
+func set_selected(val : bool) -> void:
+	selected = val
+	update()

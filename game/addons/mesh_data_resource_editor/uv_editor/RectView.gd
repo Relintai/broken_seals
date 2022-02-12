@@ -20,6 +20,8 @@ var _stored_uvs : PoolVector2Array = PoolVector2Array()
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
+var selected_rect : Control = null
+
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
 	
@@ -190,3 +192,12 @@ func cancel_pressed() -> void:
 	_undo_redo.commit_action()
 	
 	_stored_uvs.resize(0)
+
+func set_selected(node : Control) -> void:
+	if selected_rect && is_instance_valid(selected_rect):
+		selected_rect.set_selected(false)
+		
+	selected_rect = node
+	
+	if selected_rect:
+		selected_rect.set_selected(true)
