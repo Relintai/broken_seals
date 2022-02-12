@@ -1,6 +1,6 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=2]
 
-[ext_resource path="res://modules/icons/icons-3/vines-plain-2.png" type="Texture" id=1]
+[ext_resource path="res://icons/icons-3/vines-plain-2.png" type="Texture" id=1]
 
 
 [resource]
