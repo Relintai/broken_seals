@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
+[ext_resource path="res://tools/texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://texture_tools/test/new_packerimageresource.tres" type="Texture" id=3]
+[ext_resource path="res://tools/texture_tools/test/new_packerimageresource.tres" type="Texture" id=3]
 
 [node name="LayeredTextureMaker" type="Node2D"]
 script = ExtResource( 1 )

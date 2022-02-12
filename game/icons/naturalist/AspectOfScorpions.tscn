@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
+[ext_resource path="res://tools/texture_tools/LayeredTextureMaker.gd" type="Script" id=1]
 [ext_resource path="res://icons/naturalist/AspectOfScorpions.png" type="Texture" id=2]
 [ext_resource path="res://icons/parts/circles.svg" type="Texture" id=3]
 [ext_resource path="res://icons/icons.png" type="Texture" id=4]

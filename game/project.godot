@@ -143,7 +143,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "LayeredTextureMaker",
 "language": "GDScript",
-"path": "res://texture_tools/LayeredTextureMaker.gd"
+"path": "res://tools/texture_tools/LayeredTextureMaker.gd"
 }, {
 "base": "Resource",
 "class": "MMMateial",
