@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://ui/interface/SetActionbarAsDefault.gd" type="Script" id=1]
-[ext_resource path="res://ui/interface/InterfaceOptions.gd" type="Script" id=2]
+[ext_resource path="res://ui/player/player_ui/interface/SetActionbarAsDefault.gd" type="Script" id=1]
+[ext_resource path="res://ui/player/player_ui/interface/InterfaceOptions.gd" type="Script" id=2]
 
 [node name="InterfaceOptions" type="PanelContainer"]
 anchor_right = 1.0
@@ -49,4 +49,5 @@ margin_right = 1010.0
 margin_bottom = 20.0
 text = "Set current actionbar setup as default"
 script = ExtResource( 1 )
+
 [connection signal="pressed" from="VBoxContainer2/HBoxContainer/Button" to="." method="hide"]

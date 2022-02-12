@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
-[ext_resource path="res://ui/windows/options/Options.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ui/ingame_menu/ExitButton.gd" type="Script" id=3]
+[ext_resource path="res://ui/player/player_ui/ingame_menu/ExitButton.gd" type="Script" id=2]
+[ext_resource path="res://ui/windows/options/Options.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/windows/keybinds/Keybinds.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ui/interface/InterfaceOptions.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ui/player/player_ui/interface/InterfaceOptions.tscn" type="PackedScene" id=5]
 
 [node name="IngameMenu" type="Control"]
 anchor_right = 1.0
@@ -65,9 +65,9 @@ margin_top = 136.0
 margin_right = 147.0
 margin_bottom = 162.57
 text = "Exit"
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 
-[node name="Options" parent="." instance=ExtResource( 2 )]
+[node name="Options" parent="." instance=ExtResource( 3 )]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5

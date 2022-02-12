@@ -6,7 +6,7 @@
 [ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=4]
 [ext_resource path="res://player/GUI.gd" type="Script" id=5]
 [ext_resource path="res://ui/player/player_ui/player_ui.gd" type="Script" id=6]
-[ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/player/player_ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://ui/player/player_ui/buttons/Buttons.gd" type="Script" id=8]
 [ext_resource path="res://ui/player/player_ui/buttons/ImageButton.tscn" type="PackedScene" id=9]
 
