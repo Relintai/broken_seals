@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/theme/locked_icon.tres" type="Texture" id=2]
+[ext_resource path="res://ui/theme/menu_icon.tres" type="Texture" id=3]
+[ext_resource path="res://ui/theme/unlocked_icon.tres" type="Texture" id=4]
+[ext_resource path="res://player/GUI.gd" type="Script" id=5]
+[ext_resource path="res://ui/player/player_ui/player_ui.gd" type="Script" id=6]
+[ext_resource path="res://ui/ingame_menu/IngameMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/buttons/Buttons.gd" type="Script" id=8]
+[ext_resource path="res://ui/buttons/ImageButton.tscn" type="PackedScene" id=9]
+
+[node name="GUILayer" type="CanvasLayer"]
+script = ExtResource( 6 )
+gui_base_path = NodePath("GUI")
+buttons_path = NodePath("GUI/Buttons")
+windows_path = NodePath("GUI/Windows")
+
+[node name="GUI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Buttons" type="HBoxContainer" parent="GUI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 342.0
+rect_min_size = Vector2( 0, 40 )
+mouse_filter = 2
+custom_constants/separation = 0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+image_button = ExtResource( 9 )
+lock_button_path = NodePath("LockButton")
+
+[node name="LockButton" type="Button" parent="GUI/Buttons"]
+margin_right = 25.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 30 )
+toggle_mode = true
+keep_pressed_outside = true
+
+[node name="locked" type="TextureRect" parent="GUI/Buttons/LockButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="unlocked" type="TextureRect" parent="GUI/Buttons/LockButton"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Button" parent="GUI/Buttons"]
+margin_left = 25.0
+margin_right = 50.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 25, 30 )
+keep_pressed_outside = true
+
+[node name="TextureRect3" type="TextureRect" parent="GUI/Buttons/Menu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Windows" type="CanvasLayer" parent="GUI"]
+layer = 2
+
+[node name="IngameMenu" parent="GUI" instance=ExtResource( 7 )]
+visible = false
+
+[connection signal="pressed" from="GUI/Buttons/Menu" to="GUI/IngameMenu" method="show"]
+
+[editable path="GUI/IngameMenu"]

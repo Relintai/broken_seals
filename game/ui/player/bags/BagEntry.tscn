@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/player/bags/BagEntry.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/cooldown_progress.png" type="Texture" id=2]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
+[ext_resource path="res://ui/theme/actionbar_dynamicfont.tres" type="DynamicFont" id=5]
+
+[node name="BagEntry" type="Button"]
+margin_top = 1.0
+margin_right = 45.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 45, 45 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 3 )
+shortcut_in_tooltip = false
+action_mode = 0
+button_mask = 3
+keep_pressed_outside = true
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+button_path = NodePath(".")
+icon_path = NodePath("MarginContainer/TextureRect")
+cooldown_indicator_path = NodePath("CooldownIndicator")
+cooldown_text_path = NodePath("CooldownText")
+stack_counter = NodePath("MarginContainer2/StackCounter")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 43.0
+margin_bottom = 43.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand = true
+
+[node name="CooldownIndicator" type="TextureProgress" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+step = 0.0
+texture_progress = ExtResource( 2 )
+fill_mode = 5
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CooldownText" type="Label" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 5 )
+align = 1
+valign = 1
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StackCounter" type="Label" parent="MarginContainer2"]
+visible = false
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 2
+valign = 2

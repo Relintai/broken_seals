@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/player/castbar/Castbar.gd" type="Script" id=1]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue.tres" type="StyleBox" id=2]
+
+[node name="Castbar" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+progress_bar_path = NodePath("HBoxContainer/ProgressBar")
+label_path = NodePath("HBoxContainer/ProgressBar/Label")
+
+[node name="Spacer" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 447.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_top = 451.0
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer"]
+margin_left = 402.0
+margin_right = 622.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 220, 20 )
+mouse_filter = 2
+custom_styles/fg = ExtResource( 2 )
+percent_visible = false
+
+[node name="Label" type="Label" parent="HBoxContainer/ProgressBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

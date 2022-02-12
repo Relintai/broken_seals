@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/player/talents/Spec.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/player/talents/TalentWindow.gd" type="Script" id=3]
+[ext_resource path="res://ui/player/talents/talent_switcher_button.tscn" type="PackedScene" id=4]
+
+[node name="TalentWindow" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+spec_scene = ExtResource( 2 )
+spec_switcher_scene = ExtResource( 4 )
+spec_container_path = NodePath("PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer/TabContainer2")
+spec_switcher_path = NodePath("PanelContainer/VBoxContainer/Header/SpecSwitcher")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 68.0
+margin_top = 87.0
+margin_right = 643.0
+margin_bottom = 525.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 571.0
+margin_bottom = 434.0
+
+[node name="Header" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_right = 567.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 30 )
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Header"]
+margin_top = 7.0
+margin_right = 42.0
+margin_bottom = 22.0
+text = "Talents"
+
+[node name="SpecSwitcher" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Header"]
+margin_left = 46.0
+margin_right = 523.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/Header"]
+margin_left = 527.0
+margin_right = 567.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 40, 30 )
+text = "X"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 38.0
+margin_right = 567.0
+margin_bottom = 430.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_right = 185.0
+margin_bottom = 392.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.49
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 181.0
+margin_bottom = 388.0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+margin_right = 177.0
+margin_bottom = 15.0
+text = "Body"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 23.0
+margin_right = 177.0
+margin_bottom = 384.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 189.0
+margin_right = 567.0
+margin_bottom = 392.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 374.0
+margin_bottom = 388.0
+
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+visible = false
+margin_right = 672.0
+margin_bottom = 15.0
+text = "Class"
+
+[node name="TabContainer2" type="TabContainer" parent="PanelContainer/VBoxContainer/HBoxContainer/PanelContainer2/VBoxContainer"]
+margin_right = 370.0
+margin_bottom = 384.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/Header/Button" to="." method="hide"]

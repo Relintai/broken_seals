@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ui/player/unitframes/TargetUnitframe.gd" type="Script" id=1]
+[ext_resource path="res://ui/player/auraframe/AuraEntry.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=3]
+[ext_resource path="res://ui/theme/scrollbar_grabber_red.tres" type="StyleBox" id=4]
+[ext_resource path="res://ui/theme/scrollbar_grabber_blue.tres" type="StyleBox" id=5]
+
+[node name="TargetUnitframe" type="VBoxContainer"]
+margin_left = 151.0
+margin_right = 300.0
+margin_bottom = 209.0
+theme = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+aura_entry_scene = ExtResource( 2 )
+name_text_path = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Label")
+level_text_path = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Label2")
+health_range_path = NodePath("MarginContainer/VBoxContainer/MarginContainer/ProgressBar")
+health_text_path = NodePath("MarginContainer/VBoxContainer/MarginContainer/Label")
+resource_range_path = NodePath("MarginContainer/VBoxContainer/MarginContainer2/ProgressBar")
+resource_text_path = NodePath("MarginContainer/VBoxContainer/MarginContainer2/Label")
+aura_grid_path = NodePath("auras")
+
+[node name="MarginContainer" type="PanelContainer" parent="."]
+margin_right = 149.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 145.0
+margin_bottom = 49.0
+size_flags_horizontal = 3
+custom_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 141.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 137.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+valign = 1
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 141.0
+margin_right = 141.0
+margin_bottom = 15.0
+size_flags_horizontal = 0
+valign = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 15.0
+margin_right = 141.0
+margin_bottom = 30.0
+size_flags_horizontal = 3
+custom_constants/margin_top = 0
+custom_constants/margin_bottom = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MarginContainer"]
+margin_right = 141.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/fg = ExtResource( 4 )
+percent_visible = false
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer"]
+margin_right = 141.0
+margin_bottom = 15.0
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 30.0
+margin_right = 141.0
+margin_bottom = 45.0
+size_flags_horizontal = 3
+custom_constants/margin_top = 0
+custom_constants/margin_bottom = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+margin_right = 141.0
+margin_bottom = 15.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/fg = ExtResource( 5 )
+percent_visible = false
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer2"]
+margin_right = 141.0
+margin_bottom = 15.0
+align = 1
+valign = 1
+
+[node name="auras" type="GridContainer" parent="."]
+margin_top = 61.0
+margin_right = 149.0
+margin_bottom = 209.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 9
+__meta__ = {
+"_edit_use_anchors_": false
+}
