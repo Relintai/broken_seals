@@ -497,7 +497,7 @@ static func merge_in_arrays(mdr : MeshDataResource, merge : Array) -> void:
 		
 	if arrays[ArrayMesh.ARRAY_COLOR] != null:
 		if merge_vertices.size() != merge_colors.size():
-			for i in range(merge_colors.size()):
+			for i in range(merge_vertices.size()):
 				colors.append(Color())
 		else:
 			colors.append_array(merge_colors)
