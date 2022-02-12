@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-continent_class_folders = PoolStringArray( "res://world_generator/continents/" )
-zone_class_folders = PoolStringArray( "res://world_generator/zones/" )
-subzone_class_folders = PoolStringArray( "res://world_generator/subzones/" )
+continent_class_folders = PoolStringArray( "res://scripts/world_generator/continents/" )
+zone_class_folders = PoolStringArray( "res://scripts/world_generator/zones/" )
+subzone_class_folders = PoolStringArray( "res://scripts/world_generator/subzones/" )
