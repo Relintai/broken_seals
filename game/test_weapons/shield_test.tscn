@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=2]
-
-[ext_resource path="res://test_weapons/shield_d.mesh" type="ArrayMesh" id=1]
-
-[node name="MeshInstance2" type="MeshInstance"]
-transform = Transform( -0.430658, 0.00290468, 0.130517, -0.130451, 0.00984704, -0.4306, -0.00563716, -0.449808, -0.00858344, 0, 0, 0 )
-mesh = ExtResource( 1 )
-material/0 = null

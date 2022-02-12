@@ -1,9 +1,0 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=2]
-
-[ext_resource path="res://modules/core/shaders/4_standard_character_shader.tres" type="Shader" id=1]
-[ext_resource path="res://test_weapons/textures/shield_d.png" type="Texture" id=2]
-
-[resource]
-shader = ExtResource( 1 )
-shader_param/albedo = Color( 0.764706, 0.764706, 0.764706, 1 )
-shader_param/texture_albedo = ExtResource( 2 )
