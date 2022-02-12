@@ -1,7 +1,7 @@
 [gd_resource type="CraftRecipe" load_steps=5 format=2]
 
-[ext_resource path="res://modules/core/item_templates/2_test.tres" type="ItemTemplate" id=1]
-[ext_resource path="res://modules/core/item_templates/3_chest_of_the_infinite_wisdom.tres" type="ItemTemplate" id=2]
+[ext_resource path="res://core/item_templates/2_test.tres" type="ItemTemplate" id=1]
+[ext_resource path="res://core/item_templates/3_chest_of_the_infinite_wisdom.tres" type="ItemTemplate" id=2]
 
 [sub_resource type="CraftRecipeHelper" id=1]
 item = ExtResource( 1 )
