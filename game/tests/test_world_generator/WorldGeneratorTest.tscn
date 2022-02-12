@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://test_world_generator/WorldGeneratorTest.gd" type="Script" id=1]
+[ext_resource path="res://tests/test_world_generator/WorldGeneratorTest.gd" type="Script" id=1]
 
 [node name="WorldGeneratorTest" type="Sprite"]
 script = ExtResource( 1 )

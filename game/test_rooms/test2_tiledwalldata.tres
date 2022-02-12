@@ -1,7 +1,0 @@
-[gd_resource type="TiledWallData" load_steps=2 format=2]
-
-[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=6]
-
-[resource]
-tiling_type = 3
-textures = [ ExtResource( 6 ) ]

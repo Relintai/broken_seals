@@ -2,7 +2,7 @@
 
 [ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.gd" type="Script" id=1]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/test_brick_albedo.png" type="Texture" id=2]
-[ext_resource path="res://test_dungeon/Dungeon.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tests/test_dungeon/Dungeon.tscn" type="PackedScene" id=3]
 [ext_resource path="res://modules/planets/test_planet/dungeons/dung_back_teleporter.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CubeMesh" id=1]
