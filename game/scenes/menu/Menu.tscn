@@ -2,7 +2,7 @@
 
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=1]
 [ext_resource path="res://ui/player/menu/CharacterEntry.tscn" type="PackedScene" id=2]
-[ext_resource path="res://menu/Menu.gd" type="Script" id=3]
+[ext_resource path="res://scenes/menu/Menu.gd" type="Script" id=3]
 [ext_resource path="res://ui/player/menu/menu_character_button_group.tres" type="ButtonGroup" id=4]
 [ext_resource path="res://scenes/CharacterSelectorMenu.gd" type="Script" id=5]
 [ext_resource path="res://scenes/CharacterCreationMenu.gd" type="Script" id=6]
@@ -15,12 +15,12 @@
 [ext_resource path="res://scenes/DisconnectButton.gd" type="Script" id=13]
 [ext_resource path="res://scenes/ConnectServerButton.gd" type="Script" id=14]
 [ext_resource path="res://scenes/HostGameButton.gd" type="Script" id=15]
-[ext_resource path="res://menu/MenuWorld.gd" type="Script" id=16]
+[ext_resource path="res://scenes/menu/MenuWorld.gd" type="Script" id=16]
 [ext_resource path="res://scenes/world/new_terramanlibrarymerger.tres" type="TerrainLibraryMerger" id=17]
 [ext_resource path="res://scenes/world/new_terramanlevelgenerator.tres" type="TerrainLevelGenerator" id=18]
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/windows/about/About.tscn" type="PackedScene" id=20]
-[ext_resource path="res://menu/ExitButton.gd" type="Script" id=21]
+[ext_resource path="res://scenes/menu/ExitButton.gd" type="Script" id=21]
 [ext_resource path="res://ui/scripts/Window.gd" type="Script" id=22]
 
 [sub_resource type="TerrainChunkBlocky" id=1]

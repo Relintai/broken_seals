@@ -173,7 +173,7 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "Menu",
 "language": "GDScript",
-"path": "res://menu/Menu.gd"
+"path": "res://scenes/menu/Menu.gd"
 }, {
 "base": "Entity",
 "class": "MobGD",
