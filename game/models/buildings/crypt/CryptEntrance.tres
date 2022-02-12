@@ -1,6 +1,6 @@
 [gd_resource type="PropData" load_steps=39 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=1]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=1]
 [ext_resource path="res://models/core_models/wall_xp.tres" type="MeshDataResource" id=2]
 [ext_resource path="res://models/core_models/wall_xn.tres" type="MeshDataResource" id=3]
 [ext_resource path="res://models/core_models/wall_zn.tres" type="MeshDataResource" id=4]

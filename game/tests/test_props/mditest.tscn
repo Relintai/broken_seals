@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/planets/test_planet/biomes/simple_biome/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=2]
+[ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=1]
+[ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=2]
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_texture = ExtResource( 2 )

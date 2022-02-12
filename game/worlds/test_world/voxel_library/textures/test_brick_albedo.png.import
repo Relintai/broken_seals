@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/test_brick_albedo.png-a91e032f0cc919b0e30efae9485fabce.stex"
+path="res://.import/test_brick_albedo.png-34908346a2e599b2437099267bc7061a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/planets/test_planet/voxel_library/textures/test_brick_albedo.png"
-dest_files=[ "res://.import/test_brick_albedo.png-a91e032f0cc919b0e30efae9485fabce.stex" ]
+source_file="res://worlds/test_world/voxel_library/textures/test_brick_albedo.png"
+dest_files=[ "res://.import/test_brick_albedo.png-34908346a2e599b2437099267bc7061a.stex" ]
 
 [params]
 

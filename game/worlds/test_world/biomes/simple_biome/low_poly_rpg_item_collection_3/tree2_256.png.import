@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/stone_dungeon_1_albedo.png-a248bf80f0a570ffdec62e801e741ef5.stex"
+path="res://.import/tree2_256.png-7d1d22586bd6d23a42fbd57e2147077a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png"
-dest_files=[ "res://.import/stone_dungeon_1_albedo.png-a248bf80f0a570ffdec62e801e741ef5.stex" ]
+source_file="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/tree2_256.png"
+dest_files=[ "res://.import/tree2_256.png-7d1d22586bd6d23a42fbd57e2147077a.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

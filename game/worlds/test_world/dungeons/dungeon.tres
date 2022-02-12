@@ -1,16 +1,16 @@
 [gd_resource type="Resource" load_steps=12 format=2]
 
-[ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.gd" type="Script" id=1]
+[ext_resource path="res://worlds/test_world/dungeons/dungeon.gd" type="Script" id=1]
 [ext_resource path="res://models/entities/human/female/character_models/huf_calf_left.tres" type="MeshDataResource" id=2]
-[ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=3]
+[ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://models/core_models/ceiling.tres" type="MeshDataResource" id=4]
 [ext_resource path="res://models/core_models/wall_xp.tres" type="MeshDataResource" id=5]
 [ext_resource path="res://models/core_models/wall_xn.tres" type="MeshDataResource" id=6]
 [ext_resource path="res://models/core_models/floor.tres" type="MeshDataResource" id=7]
 [ext_resource path="res://models/core_models/wall_zn.tres" type="MeshDataResource" id=8]
 [ext_resource path="res://models/core_models/wall_zp.tres" type="MeshDataResource" id=9]
-[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_1_albedo.png" type="Texture" id=10]
-[ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=11]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_1_albedo.png" type="Texture" id=10]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=11]
 
 [resource]
 posy = -45
