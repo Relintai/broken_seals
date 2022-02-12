@@ -1,0 +1,11 @@
+[gd_resource type="ModelVisualEntry" load_steps=3 format=2]
+
+[ext_resource path="res://models/entities/human/female/character_textures/100_seamless/armor_simple_v3.png" type="Texture" id=1]
+[ext_resource path="res://models/entities/human/female/character_models/huf_foot_left.tres" type="MeshDataResource" id=2]
+
+[resource]
+entity_type = 1
+bone = 25
+group = 1
+entry_0/mesh = ExtResource( 2 )
+entry_0/texture = ExtResource( 1 )

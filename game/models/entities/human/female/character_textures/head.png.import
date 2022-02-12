@@ -1,0 +1,15 @@
+[remap]
+
+importer="packer_image_resource"
+type="PackerImageResource"
+path="res://.import/head.png-fa6fd16f56f8458abf2cf279364481d2.restex"
+
+[deps]
+
+source_file="res://models/entities/human/female/character_textures/head.png"
+dest_files=[ "res://.import/head.png-fa6fd16f56f8458abf2cf279364481d2.restex" ]
+
+[params]
+
+hdr_as_srgb=false
+scale=1.0

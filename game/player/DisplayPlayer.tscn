@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/DisplayPlayer.gd" type="Script" id=1]
-[ext_resource path="res://modules/species/Human/models/armature_huf.tscn" type="PackedScene" id=2]
+[ext_resource path="res://models/entities/human/models/armature_huf.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/EntityModel.gd" type="Script" id=3]
 
 [node name="DisplayPlayer" type="Entity" groups=[

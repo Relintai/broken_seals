@@ -1,0 +1,15 @@
+[remap]
+
+importer="packer_image_resource"
+type="PackerImageResource"
+path="res://.import/armor_red_scarf.png-23ec1b83cd191d9174c4a70ab992120d.restex"
+
+[deps]
+
+source_file="res://models/entities/human/female/character_textures/100_seamless/armor_red_scarf.png"
+dest_files=[ "res://.import/armor_red_scarf.png-23ec1b83cd191d9174c4a70ab992120d.restex" ]
+
+[params]
+
+hdr_as_srgb=false
+scale=1.0

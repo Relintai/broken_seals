@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://models/entities/human/models/armature_huf.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/Body.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.266582
+height = 0.927641
+
+[node name="HumanFemale" type="KinematicBody"]
+collision_layer = 2147483650
+collision_mask = 3
+script = ExtResource( 2 )
+max_visible_distance = 70.0
+model_path = NodePath("../HumanFemale/Rotation_Helper/Model")
+character_skeleton_path = NodePath("Rotation_Helper/Model/character2")
+
+[node name="Body_CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.73, 0 )
+shape = SubResource( 1 )
+
+[node name="Contact" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.209, 0 )
+enabled = true
+cast_to = Vector3( 0, -0.4, 0 )
+
+[node name="Rotation_Helper" type="Spatial" parent="."]
+transform = Transform( -1, 0, -3.25841e-07, 0, 1, 0, 3.25841e-07, 0, -1, 0, 0, 0 )
+
+[node name="Model" type="Spatial" parent="Rotation_Helper"]
+
+[node name="character2" parent="Rotation_Helper/Model" instance=ExtResource( 1 )]

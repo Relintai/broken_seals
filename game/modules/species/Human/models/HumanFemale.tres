@@ -1,9 +1,0 @@
-[gd_resource type="SpeciesModelData" load_steps=2 format=2]
-
-[ext_resource path="res://modules/species/Human/models/HumanFemale.tscn" type="PackedScene" id=1]
-
-[resource]
-resource_name = "Human Female"
-id = 1
-text_name = "Human Female"
-body = ExtResource( 1 )

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=12 format=2]
 
 [ext_resource path="res://modules/planets/test_planet/dungeons/dungeon.gd" type="Script" id=1]
-[ext_resource path="res://modules/species/Human/Female/character_models/huf_calf_left.tres" type="MeshDataResource" id=2]
+[ext_resource path="res://models/entities/human/female/character_models/huf_calf_left.tres" type="MeshDataResource" id=2]
 [ext_resource path="res://modules/planets/test_planet/dungeons/dung_teleporter.tscn" type="PackedScene" id=3]
 [ext_resource path="res://models/core_models/ceiling.tres" type="MeshDataResource" id=4]
 [ext_resource path="res://models/core_models/wall_xp.tres" type="MeshDataResource" id=5]
