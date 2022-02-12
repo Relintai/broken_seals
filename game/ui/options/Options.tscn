@@ -8,7 +8,7 @@
 [ext_resource path="res://ui/options/OptionEnumRow.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ui/scripts/Window.gd" type="Script" id=7]
 [ext_resource path="res://ui/options/OptionsSpinboxRow.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ui/KeyboardTabContainer.gd" type="Script" id=9]
+[ext_resource path="res://ui/scripts/KeyboardTabContainer.gd" type="Script" id=9]
 
 [node name="Options" type="Control"]
 anchor_right = 1.0
