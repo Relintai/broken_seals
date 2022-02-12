@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://modules/core/shaders/5_standard_shader_nouv2.tres" type="Shader" id=1]
+[ext_resource path="res://shaders/5_standard_shader_nouv2.tres" type="Shader" id=1]
 
 [resource]
 shader = ExtResource( 1 )

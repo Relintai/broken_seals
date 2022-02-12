@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://modules/core/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
+[ext_resource path="res://shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
 [ext_resource path="res://modules/entity_classes/naturalist/spell_effects/textures/small_star.png" type="Texture" id=2]
 
 

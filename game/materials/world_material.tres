@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=4 format=2]
 
-[ext_resource path="res://modules/core/shaders/1_standard_shader.tres" type="Shader" id=1]
+[ext_resource path="res://shaders/1_standard_shader.tres" type="Shader" id=1]
 
 
 

@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://modules/core/shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
+[ext_resource path="res://shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
 
 
 
