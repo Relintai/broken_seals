@@ -801,7 +801,7 @@ func on_c_controlled_changed():
 			
 		set_process_input(false)
 		set_process_unhandled_input(false)
-		var nameplatescn : PackedScene = ResourceLoader.load("res://ui/nameplates/NamePlate.tscn")
+		var nameplatescn : PackedScene = ResourceLoader.load("res://ui/world/nameplates/NamePlate.tscn")
 		_nameplate = nameplatescn.instance()
 		add_child(_nameplate)
 		

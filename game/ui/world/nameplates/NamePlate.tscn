@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://ui/nameplates/name_plate_theme.tres" type="Theme" id=1]
-[ext_resource path="res://ui/nameplates/texture_progress_fg.tres" type="Texture" id=2]
+[ext_resource path="res://ui/world/nameplates/name_plate_theme.tres" type="Theme" id=1]
+[ext_resource path="res://ui/world/nameplates/texture_progress_fg.tres" type="Texture" id=2]
 [ext_resource path="res://player/NamePlate.gd" type="Script" id=3]
 
 [node name="NamePlate" type="VBoxContainer"]
