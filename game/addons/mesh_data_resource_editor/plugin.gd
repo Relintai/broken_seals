@@ -143,6 +143,9 @@ func get_mdr() -> MeshDataResource:
 #	return false
 
 func forward_spatial_gui_input(index, camera, event):
+	if (!is_instance_valid(current_mesh_data_instance)):
+		current_mesh_data_instance = null
+		
 	if current_mesh_data_instance && current_mesh_data_instance.gizmo:
 		if current_mesh_data_instance.gizmo.forward_spatial_gui_input(index, camera, event):
 			return true
