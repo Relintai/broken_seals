@@ -21,7 +21,7 @@
 [ext_resource path="res://scripts/settings/DirectionalLightSettings.gd" type="Script" id=19]
 [ext_resource path="res://ui/about/About.tscn" type="PackedScene" id=20]
 [ext_resource path="res://menu/ExitButton.gd" type="Script" id=21]
-[ext_resource path="res://ui/Window.gd" type="Script" id=22]
+[ext_resource path="res://ui/player/Window.gd" type="Script" id=22]
 
 [sub_resource type="TerrainChunkBlocky" id=1]
 resource_name = "Chunk[-2,0]"
