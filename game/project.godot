@@ -369,7 +369,7 @@ enums/skeletons_bones=PoolStringArray( "", "root,pelvis,spine,spine_1,spine_2,ne
 enums/skeletons_bone_attachment_points=PoolStringArray( "", "left_hand,right_hand,torso,root,right_hip,left_hip,spine_2,weapon_left,weapon_right,weapon_left_back,weapon_right_back,weapon_shield_left" )
 xp/character_xps=PoolIntArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 material_cache/texture_flags=1
-material_cache/material_paths=PoolStringArray( "res://modules/core/materials/3_standard_character_material.tres", "res://modules/core/materials/3_standard_character_material.tres", "res://modules/core/materials/9_standard_character_material_notex.tres" )
+material_cache/material_paths=PoolStringArray( "res://materials/3_standard_character_material.tres", "res://materials/3_standard_character_material.tres", "res://materials/9_standard_character_material_notex.tres" )
 profiles/automatic_save=true
 data/ess_entity_spawner_path="res://player/bs_entity_spawner.tres"
 level/max_character_level=60
@@ -824,7 +824,7 @@ limits/message_queue/max_size_kb=2048
 [props]
 
 texture_flags=1
-material_paths=PoolStringArray( "res://modules/core/materials/6_standard_material_prop_nouv2.tres", "res://modules/core/materials/6_standard_material_prop_nouv2.tres", "res://modules/core/materials/8_standard_material_prop_notex.tres" )
+material_paths=PoolStringArray( "res://materials/6_standard_material_prop_nouv2.tres", "res://materials/6_standard_material_prop_nouv2.tres", "res://materials/8_standard_material_prop_notex.tres" )
 
 [rendering]
 
