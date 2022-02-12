@@ -321,6 +321,10 @@ run/main_scene="res://scenes/Main.tscn"
 config/icon="res://icon.png"
 config/version="0.3.8"
 
+[audio]
+
+default_bus_layout="res://audio_bus_layout.tres"
+
 [autoload]
 
 Logger="*res://autoload/Logger.tscn"
