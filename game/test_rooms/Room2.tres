@@ -1,7 +1,7 @@
 [gd_resource type="PropData" load_steps=16 format=2]
 
 [ext_resource path="res://modules/species/Human/Female/character_models/huf_spine2.tres" type="MeshDataResource" id=1]
-[ext_resource path="res://modules/core_models/wall_zn.tres" type="MeshDataResource" id=2]
+[ext_resource path="res://models/core_models/wall_zn.tres" type="MeshDataResource" id=2]
 [ext_resource path="res://modules/planets/test_planet/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=3]
 [ext_resource path="res://modules/species/Human/Female/character_textures/100_seamless/armor_simple.png" type="Texture" id=4]
 [ext_resource path="res://test_rooms/test2_tiledwalldata.tres" type="TiledWallData" id=5]
