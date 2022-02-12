@@ -38,6 +38,11 @@ margin_bottom = 650.0
 rect_min_size = Vector2( 600, 600 )
 script = ExtResource( 3 )
 zoom_widget_path = NodePath("../../../Control/HBoxContainer/EditorZoomWidget")
+mirror_horizontal_button_path = NodePath("../../../Control/HBoxContainer/HorizontalMirror")
+mirror_vertical_button_path = NodePath("../../../Control/HBoxContainer/VerticalMirror")
+rotate_left_button_path = NodePath("../../../Control/HBoxContainer/RotLeft")
+rotate_amount_spinbox_path = NodePath("../../../Control/HBoxContainer/SpinBox")
+rotate_right_button_path = NodePath("../../../Control/HBoxContainer/RotRight")
 
 [node name="Control" type="VBoxContainer" parent="."]
 margin_left = 7.0

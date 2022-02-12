@@ -7,6 +7,13 @@ var rect_editor_node_scene : PackedScene = preload("res://addons/mesh_data_resou
 
 export(NodePath) var zoom_widget_path : NodePath = ""
 
+export(NodePath) var mirror_horizontal_button_path : NodePath = ""
+export(NodePath) var mirror_vertical_button_path : NodePath = ""
+
+export(NodePath) var rotate_left_button_path : NodePath = ""
+export(NodePath) var rotate_amount_spinbox_path : NodePath = ""
+export(NodePath) var rotate_right_button_path : NodePath = ""
+
 var _rect_scale : float = 1
 
 var _mdr : MeshDataResource = null
@@ -22,17 +29,53 @@ var _undo_redo : UndoRedo = null
 
 var selected_rect : Control = null
 
+var rotation_amount : float = 45
+
 func _enter_tree():
 	var zoom_widget : Node = get_node_or_null(zoom_widget_path)
 	
-	if !zoom_widget:
-		return
-	
-	if !zoom_widget.is_connected("zoom_changed", self, "on_zoom_changed"):
+	if zoom_widget && !zoom_widget.is_connected("zoom_changed", self, "on_zoom_changed"):
 		zoom_widget.connect("zoom_changed", self, "on_zoom_changed")
+	
+	var mirror_horizontal_button : Button = get_node_or_null(mirror_horizontal_button_path)
+	if mirror_horizontal_button && !mirror_horizontal_button.is_connected("pressed", self, "on_mirror_horizontal_button_pressed"):
+		mirror_horizontal_button.connect("pressed", self, "on_mirror_horizontal_button_pressed")
+	
+	var mirror_vertical_button : Button = get_node_or_null(mirror_vertical_button_path)
+	if mirror_vertical_button && !mirror_vertical_button.is_connected("pressed", self, "on_mirror_vertical_button_pressed"):
+		mirror_vertical_button.connect("pressed", self, "on_mirror_vertical_button_pressed")
+	
+	var rotate_left_button : Button = get_node_or_null(rotate_left_button_path)
+	if rotate_left_button && !rotate_left_button.is_connected("pressed", self, "on_rotate_left_button_button_pressed"):
+		rotate_left_button.connect("pressed", self, "on_rotate_left_button_button_pressed")
+	
+	var rotate_amount_spinbox : SpinBox = get_node_or_null(rotate_amount_spinbox_path)
+	if rotate_amount_spinbox:
+		rotation_amount = rotate_amount_spinbox.value
+		if !rotate_amount_spinbox.is_connected("value_changed", self, "on_rotate_amount_spinbox_changed"):
+			rotate_amount_spinbox.connect("value_changed", self, "on_rotate_amount_spinbox_changed")
+	
+	var rotate_right_button : Button = get_node_or_null(rotate_right_button_path)
+	if rotate_right_button && !rotate_right_button.is_connected("pressed", self, "on_rotate_right_button_button_pressed"):
+		rotate_right_button.connect("pressed", self, "on_rotate_right_button_button_pressed")
 	
 	if !is_connected("visibility_changed", self, "on_visibility_changed"):
 		connect("visibility_changed", self, "on_visibility_changed")
+
+func on_mirror_horizontal_button_pressed() -> void:
+	pass
+	
+func on_mirror_vertical_button_pressed() -> void:
+	pass
+	
+func on_rotate_left_button_button_pressed() -> void:
+	pass
+	
+func on_rotate_amount_spinbox_changed(val : float) -> void:
+	rotation_amount = val
+
+func on_rotate_right_button_button_pressed() -> void:
+	pass
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
