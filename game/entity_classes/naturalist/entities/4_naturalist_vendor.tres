@@ -1,0 +1,14 @@
+[gd_resource type="EntityData" load_steps=4 format=2]
+
+[ext_resource path="res://entity_classes/naturalist/1_naturalist_vendor.tres" type="EntityClassData" id=1]
+[ext_resource path="res://scripts/entities/EntityDataGD.gd" type="Script" id=2]
+[ext_resource path="res://models/entities/human/species_human.tres" type="EntitySpeciesData" id=3]
+
+[resource]
+resource_name = "Naturalist Vendor"
+id = 3
+entity_interaction_type = 5
+text_name = "Naturalist Vendor"
+entity_species_data = ExtResource( 3 )
+entity_class_data = ExtResource( 1 )
+script = ExtResource( 2 )

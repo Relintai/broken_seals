@@ -1,0 +1,16 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/auras/SpellDamageModAura.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/amplify_pain.tres" type="Texture" id=2]
+
+[resource]
+resource_name = "Improved Strike"
+rank = 1
+icon = ExtResource( 2 )
+text_name = "Improved Strike"
+aura_type = 6
+aura_hide = true
+aura_text_description = "Reduces the cast time of Aspect of Scorpions by %%reduction_value seconds."
+script = ExtResource( 1 )
+spell_name = "Strike"
+mod_value = 80.0

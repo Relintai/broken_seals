@@ -1,0 +1,16 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://entity_classes/naturalist/icons/root.tres" type="Texture" id=1]
+[ext_resource path="res://scripts/auras/CastTimeReductionAura.gd" type="Script" id=2]
+
+[resource]
+resource_name = "Improved Regrow"
+rank = 3
+icon = ExtResource( 1 )
+text_name = "Improved Regrow"
+aura_type = 6
+aura_hide = true
+aura_text_description = "Reduces the cast time of Aspect of Scorpions by %%reduction_value seconds."
+script = ExtResource( 2 )
+spell_name = "Regrow"
+reduction_value = 0.5

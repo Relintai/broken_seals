@@ -1,0 +1,30 @@
+[gd_resource type="Spell" load_steps=4 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/aspect_of_wolves.tres" type="Texture" id=3]
+[ext_resource path="res://entity_classes/naturalist/aura_groups/3_aspect_of_wolves.tres" type="AuraGroup" id=4]
+
+[resource]
+resource_name = "Aspect of Wolves"
+id = 19
+spell_type = 8
+rank = 1
+icon = ExtResource( 3 )
+needs_target = true
+text_name = "Aspect of Wolves"
+text_description = "Range: 26m.
+Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
+range_range = 26.0
+aoe_targetType = 1129071960
+aoe_colliderType = 1058050193
+aura_time = 22.0
+aura_tick = 2.0
+aura_debuff = true
+aura_type = 1
+aura_group = ExtResource( 4 )
+aura_text_description = "Deals 280 to 330 damage every 2 sec, and reduces melee and spell damage by 10% for 22 sec."
+aura_damage_enabled = true
+aura_damage_type = 16
+aura_damage_min = 10
+aura_damage_max = 12
+script = ExtResource( 1 )

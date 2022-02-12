@@ -1,0 +1,43 @@
+[gd_resource type="EntityClassData" load_steps=28 format=2]
+
+[ext_resource path="res://scripts/entities/EntityClassDataGD.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/spells/19_uproot_rank_1.tres" type="Spell" id=2]
+[ext_resource path="res://entity_classes/naturalist/spells/22_shield_of_barbs_rank_1.tres" type="Spell" id=3]
+[ext_resource path="res://entity_classes/naturalist/spells/23_calm_rank_1.tres" type="Spell" id=4]
+[ext_resource path="res://entity_classes/naturalist/spells/16_close_wounds_rank_1.tres" type="Spell" id=5]
+[ext_resource path="res://entity_classes/naturalist/spells/26_rest.tres" type="Spell" id=6]
+[ext_resource path="res://entity_classes/naturalist/spells/24_attunement_rank_1.tres" type="Spell" id=7]
+[ext_resource path="res://entity_classes/naturalist/spells/14_amplify_pain_rank_1.tres" type="Spell" id=8]
+[ext_resource path="res://entity_classes/naturalist/specs/aspects.tres" type="CharacterSpec" id=9]
+[ext_resource path="res://modules/core/entity_resources/1_mana_resource.tres" type="EntityResource" id=10]
+[ext_resource path="res://entity_classes/naturalist/spells/17_ironbark_rank_1.tres" type="Spell" id=11]
+[ext_resource path="res://entity_classes/naturalist/spells/10_aspect_of_scorpions_rank_1.tres" type="Spell" id=12]
+[ext_resource path="res://entity_classes/naturalist/spells/11_aspect_of_wasps_rank_1.tres" type="Spell" id=13]
+[ext_resource path="res://entity_classes/naturalist/specs/nature.tres" type="CharacterSpec" id=14]
+[ext_resource path="res://scripts/ai/EntityAIGD.gd" type="Script" id=15]
+[ext_resource path="res://entity_classes/naturalist/spells/13_aspect_of_bees_rank_1.tres" type="Spell" id=16]
+[ext_resource path="res://entity_classes/naturalist/spells/36_regrow.tres" type="Spell" id=17]
+[ext_resource path="res://entity_classes/naturalist/spells/12_aspect_of_wolves_rank_1.tres" type="Spell" id=18]
+[ext_resource path="res://entity_classes/naturalist/spells/21_strength_of_nature_rank_1.tres" type="Spell" id=19]
+[ext_resource path="res://entity_classes/naturalist/spells/20_root_rank_1.tres" type="Spell" id=20]
+[ext_resource path="res://entity_classes/naturalist/spells/35_strike.tres" type="Spell" id=21]
+[ext_resource path="res://entity_classes/naturalist/spells/25_inner_will.tres" type="Spell" id=22]
+[ext_resource path="res://entity_classes/naturalist/spells/15_rejuvenation_rank_1.tres" type="Spell" id=23]
+[ext_resource path="res://entity_classes/naturalist/stats/player_statdata.tres" type="StatData" id=24]
+[ext_resource path="res://entity_classes/naturalist/spells/18_natures_swiftness_rank_1.tres" type="Spell" id=25]
+[ext_resource path="res://entity_classes/naturalist/specs/melee.tres" type="CharacterSpec" id=26]
+
+[sub_resource type="EntityAI" id=1]
+script = ExtResource( 15 )
+
+[resource]
+resource_name = "Naturalist"
+id = 1
+text_name = "Naturalist"
+stat_data = ExtResource( 24 )
+entity_resources = [ ExtResource( 10 ) ]
+specs = [ ExtResource( 9 ), ExtResource( 26 ), ExtResource( 14 ) ]
+spells = [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 8 ), ExtResource( 23 ), ExtResource( 5 ), ExtResource( 11 ), ExtResource( 25 ), ExtResource( 2 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 22 ), ExtResource( 6 ), ExtResource( 21 ), ExtResource( 17 ) ]
+start_spells = [ ExtResource( 12 ), ExtResource( 21 ), ExtResource( 17 ) ]
+ais = [ SubResource( 1 ) ]
+script = ExtResource( 1 )

@@ -1,0 +1,12 @@
+[gd_resource type="SpellEffectVisual" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/resources/spell_effect_visual_basic.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/spell_effects/nature/NautreSwiftness.tscn" type="PackedScene" id=2]
+
+[resource]
+script = ExtResource( 1 )
+torso_aura_effect_time = 0.0
+root_aura_effect = ExtResource( 2 )
+root_aura_effect_time = 0.0
+torso_spell_cast_finish_effect_time = 1.0
+root_spell_cast_finish_effect_time = 1.0

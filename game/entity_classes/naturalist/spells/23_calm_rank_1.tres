@@ -1,0 +1,20 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/calm.tres" type="Texture" id=2]
+
+[resource]
+resource_name = "Calm"
+id = 13
+spell_type = 8
+rank = 1
+icon = ExtResource( 2 )
+text_name = "Calm"
+text_description = "Range: 26m.
+Instant.
+Cooldown: {2}
+Reduces the target's melee and spell damage by 50% for 10 sec."
+cooldown_cooldown = 90.0
+aoe_targetType = -2147478784
+aoe_colliderType = 7602273
+script = ExtResource( 1 )

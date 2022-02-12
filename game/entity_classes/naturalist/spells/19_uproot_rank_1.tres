@@ -1,0 +1,22 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/uproot.tres" type="Texture" id=2]
+
+[resource]
+resource_name = "Uproot"
+id = 9
+spell_type = 8
+target_type = -2147460864
+rank = 1
+icon = ExtResource( 2 )
+text_name = "Uproot"
+text_description = "Instant.
+Cooldown: {2}
+Roots every enemy around you in a 15m radius for 8 sec. This spell doesn't have diminishing return."
+cooldown_cooldown = 24.0
+range_range = 15.0
+aoe = true
+aoe_targetType = -572653568
+aoe_colliderType = 537722880
+script = ExtResource( 1 )

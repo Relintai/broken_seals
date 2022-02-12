@@ -1,0 +1,19 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/inner_will.tres" type="Texture" id=2]
+
+[resource]
+resource_name = "Inner Will"
+id = 15
+spell_type = 1
+target_type = 2
+target_relation_type = -11822355
+icon = ExtResource( 2 )
+text_name = "Inner Will"
+text_description = "Cooldown: 1.5 min.
+Removes any movement impairing effects, stuns, and effects which makes you lose control of your character. This spell is not on the global cooldown."
+cooldown_cooldown = 90.0
+aoe_targetType = 7
+aoe_colliderType = 480
+script = ExtResource( 1 )

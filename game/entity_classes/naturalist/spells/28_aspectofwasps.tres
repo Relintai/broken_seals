@@ -1,0 +1,19 @@
+[gd_resource type="Spell" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/spells/gd_spell_script.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/icons/aspect_of_wasps.tres" type="Texture" id=3]
+
+[resource]
+resource_name = "Aspect of Wasps"
+id = 18
+spell_type = 8
+rank = 1
+icon = ExtResource( 3 )
+text_name = "Aspect of Wasps"
+text_description = "Range: 26m.
+Instant.
+Deals 230 to 270 damage every 3 sec, this damage increases over the duration, for 21 sec."
+range_range = 26.0
+aoe_targetType = 541
+aoe_colliderType = 541
+script = ExtResource( 1 )

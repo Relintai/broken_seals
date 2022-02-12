@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shaders/2_simple_particle_billboard_shader.shader" type="Shader" id=1]
+[ext_resource path="res://entity_classes/naturalist/spell_effects/textures/small_star.png" type="Texture" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/texture_albedo = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=2]
+material = SubResource( 1 )
+
+[node name="AOSCastFinish" type="CPUParticles"]
+emitting = false
+amount = 4
+lifetime = 4.0
+one_shot = true
+mesh = SubResource( 2 )
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 234.0
+angular_velocity_random = 0.09
+linear_accel = 0.1
+linear_accel_random = 0.1
+scale_amount = 0.7
+color = Color( 0.0352941, 0.286275, 0.0823529, 1 )
+hue_variation = 0.13

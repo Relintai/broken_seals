@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Override.svg-90676568ad3b2265d0058068c0ba9a61.stex"
+path="res://.import/star.png-c183c5ae10449ab52d3c3f5e9ce2bfee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/color-palette/icons/Override.svg"
-dest_files=[ "res://.import/Override.svg-90676568ad3b2265d0058068c0ba9a61.stex" ]
+source_file="res://entity_classes/naturalist/spell_effects/textures/star.png"
+dest_files=[ "res://.import/star.png-c183c5ae10449ab52d3c3f5e9ce2bfee.stex" ]
 
 [params]
 
@@ -20,16 +20,16 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
-process/fix_alpha_border=true
+process/fix_alpha_border=false
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0

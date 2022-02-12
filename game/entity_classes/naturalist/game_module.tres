@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://scripts/game_modules/GameModule.gd" type="Script" id=1]
+[ext_resource path="res://entity_classes/naturalist/resource_db.tres" type="ESSResourceDBStatic" id=2]
+
+[resource]
+script = ExtResource( 1 )
+enabled = true
+resource_db = ExtResource( 2 )

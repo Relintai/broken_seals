@@ -7,8 +7,8 @@
 [ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/t2scene.tres" type="PropData" id=5]
 [ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/t1scene.tres" type="PropData" id=6]
 [ext_resource path="res://world_generator/zones/test_zone.gd" type="Script" id=7]
-[ext_resource path="res://modules/entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=8]
-[ext_resource path="res://modules/entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=9]
+[ext_resource path="res://entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=8]
+[ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=9]
 
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
