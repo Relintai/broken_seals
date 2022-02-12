@@ -321,7 +321,8 @@ Note: to easily run the editor you can use the `editor.sh` or `editor.bat` in th
 
 #### Other
 
-Append `v` to pass the `vsproj=yes` parameter to the build script. This will generate Visual Studio project files.
+Append `v` to pass the `vsproj=yes` parameter to the build script. This will generate Visual Studio project files.\
+Append `c` to pass the `compiledb=yes` parameter to the build script. This is a new feature in 3.x to have this disabled by default to lessen compile times.
 
 #### Postfixes
 

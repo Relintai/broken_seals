@@ -443,6 +443,10 @@ if len(sys.argv) > 1:
             build_string += 'threads_enabled=yes'
             build_string += ' '
 
+        if 'c' in arg:
+            build_string += 'compiledb=yes'
+            build_string += ' '
+
         target = ' '
 
         if 'E' in arg:
