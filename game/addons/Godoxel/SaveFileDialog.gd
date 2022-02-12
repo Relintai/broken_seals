@@ -1,13 +1,14 @@
 tool
 extends FileDialog
 
-var canvas
+#var canvas
 
 var file_path = ""
 
 
-func _enter_tree():
-	canvas = get_parent().find_node("Canvas")
+#func _enter_tree():
+	#canvas = get_parent().find_node("Canvas")
+	#canvas = get_parent().paint_canvas
 
 
 func _ready():
@@ -37,6 +38,7 @@ func _on_SaveFileDialog_confirmed():
 
 func save_file():
 	var image = Image.new()
+	var canvas = get_parent().paint_canvas
 	image.create(canvas.canvas_width, canvas.canvas_height, true, Image.FORMAT_RGBA8)
 	image.lock()
 	
