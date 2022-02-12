@@ -7,7 +7,7 @@
 [ext_resource path="res://ui/about/GodotThirdPartyLicenses.gd" type="Script" id=5]
 [ext_resource path="res://ui/about/Authors.gd" type="Script" id=6]
 [ext_resource path="res://ui/about/Third-Party Licenses.gd" type="Script" id=7]
-[ext_resource path="res://ui/player/Window.gd" type="Script" id=8]
+[ext_resource path="res://ui/scripts/Window.gd" type="Script" id=8]
 [ext_resource path="res://ui/KeyboardTabContainer.gd" type="Script" id=9]
 
 [node name="About" type="Control"]
