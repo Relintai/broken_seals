@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/menu/Menu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ui/theme/ui_theme.tres" type="Theme" id=4]
 [ext_resource path="res://ui/debug/DebugInfo.tscn" type="PackedScene" id=5]
-[ext_resource path="res://debug/FreeLookCam.tscn" type="PackedScene" id=6]
+[ext_resource path="res://tools/free_look_camera/FreeLookCam.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )

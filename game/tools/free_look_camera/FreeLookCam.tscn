@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://debug/FreeLookCamera.gd" type="Script" id=1]
+[ext_resource path="res://tools/free_look_camera/FreeLookCamera.gd" type="Script" id=1]
 
 
 [node name="Camera" type="Camera"]

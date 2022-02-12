@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://tests/test_dungeon/Dungeon.tscn" type="PackedScene" id=1]
-[ext_resource path="res://debug/FreeLookCamera.gd" type="Script" id=3]
+[ext_resource path="res://tools/free_look_camera/FreeLookCamera.gd" type="Script" id=3]
 
 [sub_resource type="ProceduralSky" id=2]
 
