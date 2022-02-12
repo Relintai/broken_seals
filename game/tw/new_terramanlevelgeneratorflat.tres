@@ -1,8 +1,0 @@
-[gd_resource type="TerrainLevelGeneratorFlat" format=2]
-
-[resource]
-floor_position = 10
-channel_map = {
-0: 1,
-1: 10
-}

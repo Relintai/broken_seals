@@ -1,6 +1,0 @@
-[gd_resource type="TerrainLevelGenerator" load_steps=2 format=2]
-
-[ext_resource path="res://tw/new_terramanlevelgenerator.gd" type="Script" id=1]
-
-[resource]
-script = ExtResource( 1 )

@@ -1,0 +1,35 @@
+[gd_resource type="TerrainLibraryMergerPCM" load_steps=12 format=2]
+
+[ext_resource path="res://materials/8_standard_material_prop_notex.tres" type="Material" id=1]
+[ext_resource path="res://materials/6_standard_material_prop_nouv2.tres" type="Material" id=2]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/grass_mossy_albedo.png" type="Texture" id=3]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/dirt_albedo.png" type="Texture" id=4]
+[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_1_albedo.png" type="Texture" id=5]
+[ext_resource path="res://materials/7_standard_material_notex.tres" type="Material" id=6]
+[ext_resource path="res://materials/5_standard_material_nouv2.tres" type="Material" id=7]
+
+[sub_resource type="TerrainSurfaceMerger" id=1]
+texture_top = ExtResource( 3 )
+texture_bottom = ExtResource( 3 )
+texture_side = ExtResource( 3 )
+
+[sub_resource type="TerrainSurfaceMerger" id=2]
+texture_top = ExtResource( 4 )
+texture_bottom = ExtResource( 4 )
+texture_side = ExtResource( 4 )
+
+[sub_resource type="TerrainSurfaceMerger" id=3]
+texture_top = ExtResource( 4 )
+texture_bottom = ExtResource( 3 )
+texture_side = ExtResource( 5 )
+
+[sub_resource type="TerrainSurfaceMerger" id=4]
+texture_top = ExtResource( 5 )
+texture_bottom = ExtResource( 5 )
+texture_side = ExtResource( 5 )
+
+[resource]
+materials = [ ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 6 ) ]
+prop_materials = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 1 ) ]
+texture_flags = 1
+voxel_surfaces = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
