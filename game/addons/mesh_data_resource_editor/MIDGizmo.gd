@@ -1569,7 +1569,7 @@ func unmark_seam():
 				
 			MDRMeshUtils.remove_seam(_mdr, eis[0], eis[1])
 		
-		_undo_redo.create_action("mark_seam")
+		_undo_redo.create_action("unmark_seam")
 		_undo_redo.add_do_method(self, "set_seam", _mdr, copy_pool_int_array(_mdr.seams))
 		_undo_redo.add_undo_method(self, "set_seam", _mdr, prev_seams)
 		_undo_redo.commit_action()
