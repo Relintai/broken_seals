@@ -101,7 +101,7 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, s
 func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator) -> void:
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
-	
+
 	var s : FastNoise = FastNoise.new()
 	s.set_noise_type(FastNoise.TYPE_SIMPLEX)
 	s.set_seed(current_seed)
@@ -149,11 +149,24 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator) -> void:
 		
 
 func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
-	var x : float = chunk.position_x * chunk.voxel_scale * chunk.size_x
-	var z : float = chunk.position_z * chunk.voxel_scale * chunk.size_z
+	var world_space_data_coordinates_x : int = chunk.position_x * chunk.size_x
+	var world_space_data_coordinates_z : int = chunk.position_z * chunk.size_z
 	
-	var vh : int = chunk.get_voxel(6, 6, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
-	var vwh : float = chunk.get_voxel_scale() * chunk.get_world_height() * (vh / 256.0)
+	var vpx : int = 6
+	var vpz : int = 6
+	
+	var x : float = (world_space_data_coordinates_x + vpx) * chunk.voxel_scale
+	var z : float = (world_space_data_coordinates_z + vpz) * chunk.voxel_scale
+	
+	var vh : int = chunk.get_voxel(vpx, vpz, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+	
+	var orx : int = (randi() % 3) + 1
+	var orz : int = (randi() % 3) + 1
+	
+	for wx in range(vpx - orx, vpx + orx + 1):
+		for wz in range(vpz - orz, vpz + orz + 1):
+			chunk.set_voxel(vh, wx, wz, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+	var vwh : float = chunk.get_voxel_scale() * chunk.get_world_height() * (vh / 255.0)
 	
 	var dt : Spatial = dungeon_teleporter.instance()
 	chunk.voxel_world.add_child(dt)
