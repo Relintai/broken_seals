@@ -9,8 +9,8 @@
 [ext_resource path="res://models/core_models/floor.tres" type="MeshDataResource" id=7]
 [ext_resource path="res://models/core_models/wall_zn.tres" type="MeshDataResource" id=8]
 [ext_resource path="res://models/core_models/wall_zp.tres" type="MeshDataResource" id=9]
-[ext_resource path="res://textures/stone/stone_1_albedo.png" type="Texture" id=10]
-[ext_resource path="res://textures/stone/stone_dungeon_1_albedo.png" type="Texture" id=11]
+[ext_resource path="res://textures/world/stone/stone_1_albedo.png" type="Texture" id=10]
+[ext_resource path="res://textures/world/stone/stone_dungeon_1_albedo.png" type="Texture" id=11]
 
 [resource]
 posy = -45

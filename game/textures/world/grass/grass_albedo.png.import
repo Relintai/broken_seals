@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/test_brick_albedo.png-8e7c577447ede4c1eda61a908c66542a.stex"
+path="res://.import/grass_albedo.png-98f823f3934e2385e621ff43b9d5e799.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/bricks/test_brick_albedo.png"
-dest_files=[ "res://.import/test_brick_albedo.png-8e7c577447ede4c1eda61a908c66542a.stex" ]
+source_file="res://textures/world/grass/grass_albedo.png"
+dest_files=[ "res://.import/grass_albedo.png-98f823f3934e2385e621ff43b9d5e799.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

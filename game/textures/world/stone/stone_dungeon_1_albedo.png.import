@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dirt_albedo.png-d6fc52a68abcaa5cba6736aac308fc3f.stex"
+path="res://.import/stone_dungeon_1_albedo.png-f7da6adb808a7a62b93721a24a2d7f89.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/dirt/dirt_albedo.png"
-dest_files=[ "res://.import/dirt_albedo.png-d6fc52a68abcaa5cba6736aac308fc3f.stex" ]
+source_file="res://textures/world/stone/stone_dungeon_1_albedo.png"
+dest_files=[ "res://.import/stone_dungeon_1_albedo.png-f7da6adb808a7a62b93721a24a2d7f89.stex" ]
 
 [params]
 

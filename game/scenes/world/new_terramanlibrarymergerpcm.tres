@@ -2,9 +2,9 @@
 
 [ext_resource path="res://materials/8_standard_material_prop_notex.tres" type="Material" id=1]
 [ext_resource path="res://materials/6_standard_material_prop_nouv2.tres" type="Material" id=2]
-[ext_resource path="res://textures/grass/grass_mossy_albedo.png" type="Texture" id=3]
-[ext_resource path="res://textures/dirt/dirt_albedo.png" type="Texture" id=4]
-[ext_resource path="res://textures/stone/stone_1_albedo.png" type="Texture" id=5]
+[ext_resource path="res://textures/world/grass/grass_mossy_albedo.png" type="Texture" id=3]
+[ext_resource path="res://textures/world/dirt/dirt_albedo.png" type="Texture" id=4]
+[ext_resource path="res://textures/world/stone/stone_1_albedo.png" type="Texture" id=5]
 [ext_resource path="res://materials/7_standard_material_notex.tres" type="Material" id=6]
 [ext_resource path="res://materials/5_standard_material_nouv2.tres" type="Material" id=7]
 

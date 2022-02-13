@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass_mossy_albedo.png-24a324fb3c9987ba0713948e1d98cab3.stex"
+path="res://.import/grass_mossy_albedo.png-a81a460ca5e83d451b21837e8f017c21.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/grass/grass_mossy_albedo.png"
-dest_files=[ "res://.import/grass_mossy_albedo.png-24a324fb3c9987ba0713948e1d98cab3.stex" ]
+source_file="res://textures/world/grass/grass_mossy_albedo.png"
+dest_files=[ "res://.import/grass_mossy_albedo.png-a81a460ca5e83d451b21837e8f017c21.stex" ]
 
 [params]
 
