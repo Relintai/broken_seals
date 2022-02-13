@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://particles/magic/particle_magic_float.tres" type="Material" id=1]
+
+[sub_resource type="QuadMesh" id=2]
+material = ExtResource( 1 )
+size = Vector2( 0.2, 0.2 )
+
+[node name="ParticleMagicShimmer" type="CPUParticles"]
+generate_lightmap = false
+lifetime = 9.52
+mesh = SubResource( 2 )
+emission_shape = 2
+emission_box_extents = Vector3( 0.5, 1, 0.5 )
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 1.0
+linear_accel = -18.18
+linear_accel_random = 0.06
+scale_amount_random = 0.3
+color = Color( 0.345098, 0.592157, 0.839216, 0.552941 )
+hue_variation_random = 0.18
