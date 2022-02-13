@@ -1214,9 +1214,16 @@ func delete_selected() -> void:
 		
 		var orig_arr = copy_arrays(_mdr.array)
 		
+		var triangle_indexes : Array = Array()
 		for sp in _selected_points:
 			var triangle_index : int = find_first_triangle_index_for_face(sp)
+			triangle_indexes.append(triangle_index)
 			
+		#delete in reverse triangle index order
+		triangle_indexes.sort()
+
+		for i in range(triangle_indexes.size() - 1, -1, -1):
+			var triangle_index : int = triangle_indexes[i]
 			MDRMeshUtils.remove_triangle(_mdr, triangle_index)
 
 		add_mesh_change_undo_redo(orig_arr, _mdr.array, "Delete")
