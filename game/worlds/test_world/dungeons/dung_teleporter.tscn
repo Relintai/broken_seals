@@ -3,7 +3,7 @@
 [ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.gd" type="Script" id=1]
 [ext_resource path="res://worlds/test_world/dungeons/dung_back_teleporter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tests/test_dungeon/Dungeon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://worlds/test_world/voxel_library/textures/test_brick_albedo.png" type="Texture" id=4]
+[ext_resource path="res://textures/test_brick_albedo.png" type="Texture" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 1, 1 )

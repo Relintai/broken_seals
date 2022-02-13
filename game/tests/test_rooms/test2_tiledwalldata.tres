@@ -1,6 +1,6 @@
 [gd_resource type="TiledWallData" load_steps=2 format=2]
 
-[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=1]
+[ext_resource path="res://textures/stone_dungeon_1_albedo.png" type="Texture" id=1]
 
 [resource]
 tiling_type = 3

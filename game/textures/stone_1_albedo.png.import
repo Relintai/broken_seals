@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass_albedo.png-7b7c1a3b62e50ce2656e87fc5c280425.stex"
+path="res://.import/stone_1_albedo.png-37c59431ed79adeae1710bd7549f5e2b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://worlds/test_world/voxel_library/textures/grass_albedo.png"
-dest_files=[ "res://.import/grass_albedo.png-7b7c1a3b62e50ce2656e87fc5c280425.stex" ]
+source_file="res://textures/stone_1_albedo.png"
+dest_files=[ "res://.import/stone_1_albedo.png-37c59431ed79adeae1710bd7549f5e2b.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

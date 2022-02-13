@@ -2,7 +2,7 @@
 
 [ext_resource path="res://models/core_models/wall_zn.tres" type="MeshDataResource" id=1]
 [ext_resource path="res://tests/test_rooms/test2_tiledwalldata.tres" type="TiledWallData" id=2]
-[ext_resource path="res://worlds/test_world/voxel_library/textures/stone_dungeon_1_albedo.png" type="Texture" id=3]
+[ext_resource path="res://textures/stone_dungeon_1_albedo.png" type="Texture" id=3]
 
 [sub_resource type="PropDataTiledWall" id=1]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0 )
