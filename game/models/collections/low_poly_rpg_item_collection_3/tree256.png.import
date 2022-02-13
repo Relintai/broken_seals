@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tree2_256.png-7d1d22586bd6d23a42fbd57e2147077a.stex"
+path="res://.import/tree256.png-18fc3402babc0bb5fbdd851eeba5132c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/tree2_256.png"
-dest_files=[ "res://.import/tree2_256.png-7d1d22586bd6d23a42fbd57e2147077a.stex" ]
+source_file="res://models/collections/low_poly_rpg_item_collection_3/tree256.png"
+dest_files=[ "res://.import/tree256.png-18fc3402babc0bb5fbdd851eeba5132c.stex" ]
 
 [params]
 

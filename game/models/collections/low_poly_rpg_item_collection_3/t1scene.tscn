@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/tree.material" type="Material" id=1]
-[ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=2]
-[ext_resource path="res://worlds/test_world/biomes/simple_biome/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=3]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree.material" type="Material" id=1]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=2]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 surfaces/0 = {

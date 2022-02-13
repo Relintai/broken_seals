@@ -1,0 +1,11 @@
+[gd_resource type="PropData" load_steps=4 format=2]
+
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=1]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree2_256.png" type="Texture" id=2]
+
+[sub_resource type="PropDataMeshData" id=1]
+mesh = ExtResource( 1 )
+texture = ExtResource( 2 )
+
+[resource]
+props = [ SubResource( 1 ) ]
