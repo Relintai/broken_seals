@@ -52,6 +52,53 @@ func _draw():
 			draw_line(_uvs[_indices[i + 1]] * get_size(), _uvs[_indices[i + 2]] * get_size(), c, 1, false)
 			draw_line(_uvs[_indices[i + 2]] * get_size(), _uvs[_indices[i]] * get_size(), c, 1, false)
 
+func mirror_horizontal() -> void:
+	var pia : PoolIntArray = PoolIntArray()
+	for index in _indices:
+		var found : bool = false
+		
+		for i in pia:
+			if i == index:
+				found = true
+				break
+		
+		if found:
+			continue
+			
+		pia.append(index)
+		
+		var uv : Vector2 = _uvs[index]
+		uv.x = 1.0 - uv.x
+		_uvs.set(index, uv)
+		
+	apply_uv()
+	update()
+	
+func mirror_vertical() -> void:
+	var pia : PoolIntArray = PoolIntArray()
+	for index in _indices:
+		var found : bool = false
+		
+		for i in pia:
+			if i == index:
+				found = true
+				break
+		
+		if found:
+			continue
+			
+		pia.append(index)
+		
+		var uv : Vector2 = _uvs[index]
+		uv.y = 1.0 - uv.y
+		_uvs.set(index, uv)
+		
+	apply_uv()
+	update()
+	
+func rotate_uvs(amount : float) -> void:
+	pass
+
 func refresh() -> void:
 	if !_mdr:
 		return
