@@ -4,7 +4,7 @@
 
 [sub_resource type="QuadMesh" id=2]
 material = ExtResource( 1 )
-size = Vector2( 0.2, 0.2 )
+size = Vector2( 0.4, 0.4 )
 
 [node name="ParticleMagicShimmer" type="CPUParticles"]
 generate_lightmap = false
