@@ -1,7 +1,7 @@
 extends StaticBody
 
-export(Color) var default_albedo : Color = Color(0.494118, 0.494118, 0.494118)
-export(Color) var hover_albedo : Color = Color(0.65098, 0.65098, 0.65098)
+export(Material) var default_material : Material = null
+export(Material) var hover_material : Material = null
 export(float) var use_range : float = 5
 
 var _dungeon : Spatial = null
@@ -17,20 +17,20 @@ func _ready():
 	connect("mouse_entered", self, "on_mouse_entered")
 	connect("mouse_exited", self, "on_mouse_exited")
 	
-	var mat = $MeshInstance.get_surface_material(0)
-	mat.albedo_color = default_albedo
+	if default_material:
+		$MeshDataInstance.material = default_material
 	
 func on_mouse_entered():
-	var mat = $MeshInstance.get_surface_material(0)
-	mat.albedo_color = hover_albedo
+	if hover_material:
+		$MeshDataInstance.material = hover_material
 	
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 	
 	_mouse_hover = true
 
 func on_mouse_exited():
-	var mat = $MeshInstance.get_surface_material(0)
-	mat.albedo_color = default_albedo
+	if default_material:
+		$MeshDataInstance.material = default_material
 	
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	

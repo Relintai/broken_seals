@@ -1,25 +1,23 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/dungeons/teleporters/dung_back_teleporter.gd" type="Script" id=1]
 [ext_resource path="res://textures/bricks/test_brick_albedo.png" type="Texture" id=2]
-
-[sub_resource type="CubeMesh" id=1]
-size = Vector3( 1, 1, 1 )
-
-[sub_resource type="SpatialMaterial" id=2]
-flags_vertex_lighting = true
-albedo_color = Color( 0.494118, 0.494118, 0.494118, 1 )
-albedo_texture = ExtResource( 2 )
+[ext_resource path="res://props/teleporters/dungeon/simple_dungeon_teleporter_material.tres" type="Material" id=3]
+[ext_resource path="res://props/teleporters/dungeon/simple_dungeon_teleporter_highlight_material.tres" type="Material" id=4]
+[ext_resource path="res://models/teleporters/dungeon/simple_dungeon_teleporter.tres" type="MeshDataResource" id=5]
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 0.5, 0.5, 0.5 )
 
 [node name="DungeonBackTeleporter" type="StaticBody"]
 script = ExtResource( 1 )
+default_material = ExtResource( 3 )
+hover_material = ExtResource( 4 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
-material/0 = SubResource( 2 )
+[node name="MeshDataInstance" type="MeshDataInstance" parent="."]
+mesh_data = ExtResource( 5 )
+texture = ExtResource( 2 )
+material = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 3 )
