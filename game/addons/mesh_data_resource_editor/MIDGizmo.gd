@@ -1635,6 +1635,7 @@ func uv_unwrap() -> void:
 	
 	if uvs.size() != mdr_arr[ArrayMesh.ARRAY_VERTEX].size():
 		print("Error: Could not unwrap mesh!")
+		enable_change_event(false)
 		return
 		
 	var orig_arr : Array = copy_arrays(mdr_arr)
