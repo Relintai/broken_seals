@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/dungeons/teleporters/dung_teleporter.gd" type="Script" id=1]
 [ext_resource path="res://props/teleporters/dungeon/simple_dungeon_back_teleporter.tscn" type="PackedScene" id=2]
-[ext_resource path="res://textures/test_brick_albedo.png" type="Texture" id=4]
+[ext_resource path="res://textures/bricks/test_brick_albedo.png" type="Texture" id=4]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 1, 1 )

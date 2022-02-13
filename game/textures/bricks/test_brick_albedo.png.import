@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dirt_albedo.png-cf18c6242612638033ba78a0016e5710.stex"
+path="res://.import/test_brick_albedo.png-8e7c577447ede4c1eda61a908c66542a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/dirt_albedo.png"
-dest_files=[ "res://.import/dirt_albedo.png-cf18c6242612638033ba78a0016e5710.stex" ]
+source_file="res://textures/bricks/test_brick_albedo.png"
+dest_files=[ "res://.import/test_brick_albedo.png-8e7c577447ede4c1eda61a908c66542a.stex" ]
 
 [params]
 

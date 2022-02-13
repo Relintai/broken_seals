@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grass_albedo.png-47ac8c2804c6c9304d3021c8dbb029e2.stex"
+path="res://.import/stone_1_albedo.png-16c773285e3ce65fd23a7f7f8ff228ea.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/grass_albedo.png"
-dest_files=[ "res://.import/grass_albedo.png-47ac8c2804c6c9304d3021c8dbb029e2.stex" ]
+source_file="res://textures/stone/stone_1_albedo.png"
+dest_files=[ "res://.import/stone_1_albedo.png-16c773285e3ce65fd23a7f7f8ff228ea.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false

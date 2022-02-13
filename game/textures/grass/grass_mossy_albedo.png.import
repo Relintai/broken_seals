@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/test_brick_albedo.png-731f8726c07c0a3899f66f89894a9527.stex"
+path="res://.import/grass_mossy_albedo.png-24a324fb3c9987ba0713948e1d98cab3.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/test_brick_albedo.png"
-dest_files=[ "res://.import/test_brick_albedo.png-731f8726c07c0a3899f66f89894a9527.stex" ]
+source_file="res://textures/grass/grass_mossy_albedo.png"
+dest_files=[ "res://.import/grass_mossy_albedo.png-24a324fb3c9987ba0713948e1d98cab3.stex" ]
 
 [params]
 
