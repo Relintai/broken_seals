@@ -160,8 +160,8 @@ func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -
 	
 	var vh : int = chunk.get_voxel(vpx, vpz, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 	
-	var orx : int = (randi() % 3) + 1
-	var orz : int = (randi() % 3) + 1
+	var orx : int = (randi() % 3) + 2
+	var orz : int = (randi() % 3) + 2
 	
 	for wx in range(vpx - orx, vpx + orx + 1):
 		for wz in range(vpz - orz, vpz + orz + 1):
