@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://scripts/dungeons/dungeon.gd" type="Script" id=1]
+[ext_resource path="res://scripts/dungeons/old_dungeon.gd" type="Script" id=1]
 [ext_resource path="res://tests/test_rooms/Room5.tres" type="PropData" id=2]
 [ext_resource path="res://tests/test_rooms/Room1.tres" type="PropData" id=3]
 [ext_resource path="res://tests/test_rooms/Room4.tres" type="PropData" id=4]
