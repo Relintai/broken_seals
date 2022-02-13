@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=2]
 
 [ext_resource path="res://shaders/5_standard_shader_nouv2.tres" type="Shader" id=1]
-[ext_resource path="res://textures/bricks/test_brick_albedo.png" type="Texture" id=2]
+[ext_resource path="res://textures/stone/stone_1_albedo.png" type="Texture" id=2]
 
 [resource]
 shader = ExtResource( 1 )
