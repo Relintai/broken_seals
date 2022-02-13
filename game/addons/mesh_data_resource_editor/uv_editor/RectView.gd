@@ -72,14 +72,14 @@ func on_mirror_vertical_button_pressed() -> void:
 	
 func on_rotate_left_button_button_pressed() -> void:
 	if selected_rect && is_instance_valid(selected_rect):
-		selected_rect.rotate_uvs(rotation_amount)
+		selected_rect.rotate_uvs(-rotation_amount)
 	
 func on_rotate_amount_spinbox_changed(val : float) -> void:
 	rotation_amount = val
 
 func on_rotate_right_button_button_pressed() -> void:
 	if selected_rect && is_instance_valid(selected_rect):
-		selected_rect.rotate_uvs(-rotation_amount)
+		selected_rect.rotate_uvs(rotation_amount)
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin

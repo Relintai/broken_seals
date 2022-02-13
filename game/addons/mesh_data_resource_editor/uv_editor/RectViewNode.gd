@@ -23,8 +23,8 @@ var edited_resource_parent_size : Vector2 = Vector2()
 
 var _edited_resource_rect_border_color : Color = Color(0.8, 0.8, 0.8, 0.5)
 var _edited_resource_rect_color : Color = Color(0.5, 0.5, 0.5, 0.2)
-var _edited_resource_rect_selected_border_color : Color = Color(0.9, 0.9, 0.9, 0.5)
-var _edited_resource_rect_selected_color : Color = Color(0.6, 0.6, 0.6, 0.2)
+var _edited_resource_rect_selected_border_color : Color = Color(0.9, 0.9, 0.9, 0.8)
+var _edited_resource_rect_selected_color : Color = Color(0.5, 0.5, 0.5, 0.4)
 var _edited_resource_uv_mesh_color : Color = Color(1, 1, 1, 1)
 var _editor_rect_border_size : int = 2
 var _edited_resource_font_color : Color = Color(0, 0, 0, 1)
@@ -97,7 +97,30 @@ func mirror_vertical() -> void:
 	update()
 	
 func rotate_uvs(amount : float) -> void:
-	pass
+	var t : Transform2D = Transform2D(deg2rad(amount), Vector2())
+	
+	var pia : PoolIntArray = PoolIntArray()
+	for index in _indices:
+		var found : bool = false
+		
+		for i in pia:
+			if i == index:
+				found = true
+				break
+		
+		if found:
+			continue
+			
+		pia.append(index)
+		
+		var uv : Vector2 = _uvs[index]
+		uv = t.xform(uv)
+		_uvs.set(index, uv)
+	
+	
+	re_normalize_uvs()
+	apply_uv()
+	update()
 
 func refresh() -> void:
 	if !_mdr:
@@ -171,7 +194,48 @@ func set_up_base_rect() -> void:
 	_uv_max = vmax
 	
 	normalize_uvs()
+
+func re_normalize_uvs() -> void:
+	if _uvs.size() == 0:
+		return
 	
+	var vmin : Vector2 = _uvs[_indices[0]]
+	var vmax : Vector2 = vmin
+	for i in range(1, _indices.size()):
+		var uv : Vector2 = _uvs[_indices[i]]
+		
+		if uv.x < vmin.x:
+			vmin.x = uv.x
+		
+		if uv.x > vmax.x:
+			vmax.x = uv.x
+		
+		if uv.y < vmin.y:
+			vmin.y = uv.y
+		
+		if uv.y > vmax.y:
+			vmax.y = uv.y
+	
+	var xmm : float = vmax.x - vmin.x
+	var ymm : float = vmax.y - vmin.y
+	
+	if xmm == 0:
+		xmm = 0.0000001
+		
+	if ymm == 0:
+		ymm = 0.0000001
+	
+	for i in range(_uvs.size()):
+		var uv : Vector2 = _uvs[i]
+		
+		uv.x -= vmin.x
+		uv.x /= xmm
+		
+		uv.y -= vmin.y
+		uv.y /= ymm
+		
+		_uvs[i] = uv
+
 func normalize_uvs() -> void:
 	var xmm : float = _uv_max.x - _uv_min.x
 	var ymm : float = _uv_max.y - _uv_min.y
@@ -192,7 +256,6 @@ func normalize_uvs() -> void:
 		uv.y /= ymm
 		
 		_uvs[i] = uv
-
 
 func apply_uv() -> void:
 	if !_mdr:
