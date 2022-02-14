@@ -150,11 +150,13 @@ func set_player(p_player: Entity) -> void:
 	if _player != null:
 		_player.disconnect("cfree_spell_points_changed", self, "cfree_spell_points_changed")
 		_player.disconnect("centity_data_changed", self, "centity_data_changed")
+		_player.disconnect("deserialized", self, "on_deserialized")
 	
 	_player = p_player
 	
 	_player.connect("cfree_spell_points_changed", self, "cfree_spell_points_changed")
 	_player.connect("centity_data_changed", self, "centity_data_changed")
+	_player.connect("deserialized", self, "on_deserialized")
 	
 	if _player != null:
 		centity_data_changed(_player.centity_data)
@@ -183,7 +185,9 @@ func centity_data_changed(data: EntityData):
 		_spells.append(_character_class.get_spell(i))
 		
 	_spells.sort_custom(CustomSpellSorter, "sort")
-	
+
+func on_deserialized(data: Entity):
+	refresh_entries()
 	
 class CustomSpellSorter:
 	static func sort(a, b):
