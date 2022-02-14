@@ -772,6 +772,10 @@ static func generate_normals_arrs(arrays : Array) -> Array:
 		
 		var n = Plane(v0, v1, v2).normal
 		
+		if n.is_equal_approx(Vector3()):
+			print("Warning face's normal is zero! " + str(Vector3(i0, i1, i2)))
+			n = Vector3(0, 0, 1)
+		
 		if nc[i0] == 0:
 			nc[i0] = 1
 			normals[i0] = n
@@ -804,7 +808,6 @@ static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 	if arrays[ArrayMesh.ARRAY_INDEX] == null:
 		return
 	
-	
 	if arrays.size() != ArrayMesh.ARRAY_MAX:
 		arrays.resize(ArrayMesh.ARRAY_MAX)
 	
@@ -829,6 +832,10 @@ static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 		
 		var n = Plane(v0, v1, v2).normal
 		
+		if n.is_equal_approx(Vector3()):
+			print("Warning face's normal is zero! " + str(Vector3(i0, i1, i2)))
+			n = Vector3(0, 0, 1)
+		
 		if nc[i0] == 0:
 			nc[i0] = 1
 			normals[i0] = n
@@ -846,7 +853,7 @@ static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 			normals[i2] = n
 		else:
 			normals[i2] = lerp(normals[i2], n, 0.5).normalized()
-
+			
 	arrays[ArrayMesh.ARRAY_NORMAL] = normals
 	mdr.array = arrays
 	
