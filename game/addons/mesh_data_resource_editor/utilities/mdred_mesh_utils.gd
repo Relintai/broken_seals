@@ -763,10 +763,12 @@ static func generate_normals_arrs(arrays : Array) -> Array:
 	
 	for i in range(0, indices.size(), 3):
 		var i0 : int = indices[i]
+		var i1 : int = indices[i + 1]
+		var i2 : int = indices[i + 2]
 		
 		var v0 : Vector3 = vertices[i0]
-		var v1 : Vector3 = vertices[indices[i + 1]]
-		var v2 : Vector3 = vertices[indices[i + 2]]
+		var v1 : Vector3 = vertices[i1]
+		var v2 : Vector3 = vertices[i2]
 		
 		var n = Plane(v0, v1, v2).normal
 		
@@ -775,6 +777,18 @@ static func generate_normals_arrs(arrays : Array) -> Array:
 			normals[i0] = n
 		else:
 			normals[i0] = lerp(normals[i0], n, 0.5).normalized()
+			
+		if nc[i1] == 0:
+			nc[i1] = 1
+			normals[i1] = n
+		else:
+			normals[i1] = lerp(normals[i1], n, 0.5).normalized()
+			
+		if nc[i2] == 0:
+			nc[i2] = 1
+			normals[i2] = n
+		else:
+			normals[i2] = lerp(normals[i2], n, 0.5).normalized()
 	
 	arrays[ArrayMesh.ARRAY_NORMAL] = normals
 
@@ -806,10 +820,12 @@ static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 	
 	for i in range(0, indices.size(), 3):
 		var i0 : int = indices[i]
+		var i1 : int = indices[i + 1]
+		var i2 : int = indices[i + 2]
 		
 		var v0 : Vector3 = vertices[i0]
-		var v1 : Vector3 = vertices[indices[i + 1]]
-		var v2 : Vector3 = vertices[indices[i + 2]]
+		var v1 : Vector3 = vertices[i1]
+		var v2 : Vector3 = vertices[i2]
 		
 		var n = Plane(v0, v1, v2).normal
 		
@@ -818,11 +834,22 @@ static func generate_normals_mdr(mdr : MeshDataResource) -> void:
 			normals[i0] = n
 		else:
 			normals[i0] = lerp(normals[i0], n, 0.5).normalized()
-	
+			
+		if nc[i1] == 0:
+			nc[i1] = 1
+			normals[i1] = n
+		else:
+			normals[i1] = lerp(normals[i1], n, 0.5).normalized()
+			
+		if nc[i2] == 0:
+			nc[i2] = 1
+			normals[i2] = n
+		else:
+			normals[i2] = lerp(normals[i2], n, 0.5).normalized()
+
 	arrays[ArrayMesh.ARRAY_NORMAL] = normals
 	mdr.array = arrays
 	
-
 # Apparently surfacetool adds more verts during normal generation
 # Keeping this here for now
 static func generate_normals_surface_tool(mdr : MeshDataResource) -> void:
