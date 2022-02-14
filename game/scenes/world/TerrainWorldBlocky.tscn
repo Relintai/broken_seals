@@ -47,7 +47,7 @@ glow_strength = 1.1
 glow_bloom = 0.1
 glow_hdr_luminance_cap = 1.0
 
-[node name="World" type="TerrainWorldBlocky"]
+[node name="World" type="TerrainWorldBlocky" groups=["save"]]
 world_height = 100.0
 library = ExtResource( 1 )
 level_generator = ExtResource( 3 )
