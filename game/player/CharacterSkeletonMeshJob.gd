@@ -28,6 +28,8 @@ export(bool) var use_lod : bool = true
 
 var meshes : Array
 
+#var debug_arrays : Array
+
 var _generating : bool = false
 
 var _textures : Array
@@ -67,7 +69,7 @@ func _execute():
 		var mesh : MeshDataResource = ddict["mesh"]
 				
 		var rect : Rect2 = material_cache.texture_get_uv_rect(texture)
-			
+		
 		bones[0] = bone_idx
 		
 		mm.add_mesh_data_resource_bone(mesh, bones, bonew, transform, rect)
@@ -76,6 +78,9 @@ func _execute():
 
 	var mesh : ArrayMesh = ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	
+	#debug_arrays = arr.duplicate(true)
+	
 	mesh.surface_set_material(0, material_cache.material_lod_get(0))
 	meshes.append(mesh)
 	
@@ -110,12 +115,43 @@ func _execute():
 
 func prepare_textures() -> void:
 	if !material_cache.initialized:
+		initialize_material_cache()
+	
+	var curr_tex_index : int = 0
+	for i in range(data.size()):
+		var ddict : Dictionary = data[i]
+		var textures : Array = ddict["textures"]
+		
+		var texture : Texture = null
+		var tcount : int = 0
+		for j in range(textures.size()):
+			if textures[j]:
+				tcount += 1
+		
+		if tcount > 1:
+			# merged texture. We need to get the texture itself
+			texture = material_cache.texture_get(curr_tex_index)
+		else:
+			for j in range(textures.size() - 1, -1, -1):
+				if textures[j]:
+					texture = textures[j]
+					break
+
+		ddict["texture"] = texture
+		data[i] = ddict
+		
+		if texture != null:
+			curr_tex_index += 1
+
+func initialize_material_cache() -> void:
+	if !material_cache.initialized:
 		material_cache.mutex_lock()
 		
 		#got initialized before we got the lock
 		#No need to have the lock anymore
 		if material_cache.initialized:
 			material_cache.mutex_unlock()
+			return
 	
 	var lmerger : TextureLayerMerger = TextureLayerMerger.new()
 	
@@ -144,14 +180,10 @@ func prepare_textures() -> void:
 					texture = textures[j]
 					break
 
-		ddict["texture"] = texture
-
 		if texture != null:
-			if !material_cache.initialized:
-				material_cache.texture_add(texture)
-				
-		data[i] = ddict
+			material_cache.texture_add(texture)
 
-	if !material_cache.initialized:
-		material_cache.refresh_rects()
-		material_cache.mutex_unlock()
+	material_cache.refresh_rects()
+	material_cache.mutex_unlock()
+
+
