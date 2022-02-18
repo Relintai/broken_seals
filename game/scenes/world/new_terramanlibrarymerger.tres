@@ -29,4 +29,4 @@ texture_side = ExtResource( 3 )
 [resource]
 materials = [ ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 4 ) ]
 texture_flags = 1
-voxel_surfaces = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
+terra_surfaces = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
