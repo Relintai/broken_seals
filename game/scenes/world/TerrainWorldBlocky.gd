@@ -222,6 +222,17 @@ func _create_chunk(x : int, z : int, pchunk : TerrainChunk) -> TerrainChunk:
 #		mesher.lod_index = 3
 		tj.set_mesher(mesher)
 		
+		var liquid_mesher : TerrainMesherBlocky = TerrainMesherBlocky.new()
+		liquid_mesher.base_light_value = 0.45
+		liquid_mesher.ao_strength = 0.2
+		liquid_mesher.uv_margin = Rect2(0.017, 0.017, 1 - 0.034, 1 - 0.034)
+		liquid_mesher.voxel_scale = voxel_scale
+		liquid_mesher.build_flags = build_flags
+		liquid_mesher.texture_scale = 3
+		liquid_mesher.channel_index_type = TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_TYPE
+		liquid_mesher.channel_index_isolevel = TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_ISOLEVEL
+		tj.set_liquid_mesher(liquid_mesher)
+		
 		var s : TerrainMesherJobStep = TerrainMesherJobStep.new()
 		s.job_type = TerrainMesherJobStep.TYPE_NORMAL
 		tj.add_jobs_step(s)
