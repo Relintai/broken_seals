@@ -8,6 +8,11 @@ I want the game to run on every platform, but the game design is PC first. From 
 
 This project uses a custom version of ![godot (3.x branch)](https://github.com/godotengine/godot/tree/3.x) as it's engine.
 
+You can get binaries under the releases tab [here](https://github.com/Relintai/broken_seals/releases).\
+You can also try a live version running in the browser [here](https://relintai.github.io/broken_seals/).
+
+Unfortunately the web editor needs custom http headers to work and I can't set that up from github.io, so right now I don't have a hosted version of that.
+
 #### On Desktop
 
 ![Broken Seals desktop](pictures/screenshot_desktop.jpg)
