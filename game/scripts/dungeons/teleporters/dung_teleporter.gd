@@ -1,3 +1,4 @@
+tool
 extends StaticBody
 
 export(Material) var default_material : Material = null
