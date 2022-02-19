@@ -245,6 +245,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/world_generator/resources/world_gen_base_resource.gd"
 }, {
+"base": "Reference",
+"class": "WorldGenRaycast",
+"language": "GDScript",
+"path": "res://addons/world_generator/raycast/world_gen_raycast.gd"
+}, {
 "base": "Resource",
 "class": "WorldGenWorld",
 "language": "GDScript",
@@ -308,6 +313,7 @@ _global_script_class_icons={
 "UIGuiChildModule": "",
 "UIWindowModule": "",
 "WorldGenBaseResource": "",
+"WorldGenRaycast": "",
 "WorldGenWorld": "",
 "WorldGeneratorSettings": "",
 "Zone": ""

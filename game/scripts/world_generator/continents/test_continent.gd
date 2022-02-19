@@ -50,7 +50,7 @@ func get_editor_additional_text() -> String:
 func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
-func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, stack : Array, stack_index : int) -> void:
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
 
