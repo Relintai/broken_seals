@@ -48,6 +48,7 @@ var _player_file_name : String
 var _player : Entity
 
 const VIS_UPDATE_INTERVAL = 5
+const EDITOR_VIS_UPDATE_INTERVAL = 0.5
 var vis_update : float = 0
 var _max_frame_chunk_build_temp : int
 
@@ -89,18 +90,23 @@ func generate():
 
 	spawn(0, 0)
 
-		
 func _process(delta):
 	if !active:
 		return
-	
+
 	if initial_generation:
 		return
 	
+	if !Engine.editor_hint:
+		_process_game(delta)
+	else:
+		_process_editor(delta)
+
+func _process_game(delta) -> void:
 	if _player == null:
 		set_process(false)
 		return
-		
+			
 	vis_update += delta
 	
 	if vis_update >= VIS_UPDATE_INTERVAL:
@@ -128,21 +134,6 @@ func _process(delta):
 				chunk_remove_index(i)
 				i -= 1
 				count -= 1
-#			else:
-#				var dx : int = abs(ppx - c.position_x)
-#				var dy : int = abs(ppy - c.position_y)
-#				var dz : int = abs(ppz - c.position_z)
-#
-#				var mr : int = max(max(dx, dy), dz)
-#
-#				if mr <= 1:
-#					c.current_lod_level = 0
-#				elif mr == 2:
-#					c.current_lod_level = 1
-#				elif mr == 3:# or mr == 4:
-#					c.current_lod_level = 2
-#				else:
-#					c.current_lod_level = 3
 
 			i += 1
 			
@@ -162,22 +153,65 @@ func _process(delta):
 						
 		update_lods()
 
-#func _process(delta : float) -> void:
-#	if not generation_queue.empty():
-#		var chunk : TerrainChunk = generation_queue.front()
+func _process_editor(delta) -> void:
+	if !_editor_generate:
+		set_process(false)
+		return
 
-#		refresh_chunk_lod_level_data(chunk)
+	if !is_inside_tree():
+		return
 
-#		level_generator.generate_chunk(chunk)
+	var cam : Camera = get_editor_camera()
+	
+	if cam == null:
+		set_process(false)
+		return
+		
+	vis_update += delta
+	
+	if vis_update >= EDITOR_VIS_UPDATE_INTERVAL:
+		vis_update = 0
+		
+		var ppos : Vector3 = cam.transform.origin
+		
+		var cpos : Vector3 = ppos
+		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))
+		var ppz : int = int(cpos.z / (chunk_size_z * voxel_scale))
 
-#		generation_queue.remove(0)
-#
-#		if generation_queue.empty():
-#			emit_signal("generation_finished")
-#			initial_generation = false
-#
-#			if show_loading_screen and not Engine.editor_hint:
-#				get_node("..").hide_loading_screen()
+		cpos.x = ppx
+		cpos.y = 0
+		cpos.z = ppz
+		
+		var count : int = chunk_get_count()
+		var i : int = 0
+		while i < count:
+			var c : TerrainChunk = chunk_get_index(i)
+			
+			var l : float = (Vector2(cpos.x, cpos.z) - Vector2(c.position_x, c.position_z)).length()
+			
+			if l > chunk_spawn_range + 3:
+#				print("despawn " + str(Vector3(c.position_x, c.position_y, c.position_z)))
+				chunk_remove_index(i)
+				i -= 1
+				count -= 1
+
+			i += 1
+			
+			
+		for x in range(int(cpos.x) - chunk_spawn_range, chunk_spawn_range + int(cpos.x)):
+			for z in range(int(cpos.z) - chunk_spawn_range, chunk_spawn_range + int(cpos.z)):
+				
+				var l : float = (Vector2(cpos.x, cpos.z) - Vector2(x, z)).length()
+			
+				if l > chunk_spawn_range:
+					continue
+				
+				for y in range(-1 + cpos.y, spawn_height + cpos.y):
+					if not chunk_has(x, z):
+						#print("spawn " + str(Vector2(x, z)))
+						chunk_create(x, z)
+						
+		update_lods()
 
 func _generation_finished():
 	initial_generation = false
@@ -316,17 +350,41 @@ func get_editor_generate() -> bool:
 	return _editor_generate
 	
 func set_editor_generate(value : bool) -> void:
-	if value:
-		library.refresh_rects()
-		
-		level_generator.setup(self, current_seed, false, library)
-		spawn(0, 0)
-#	else:
-#		spawned = false
-#		clear()
-		
 	_editor_generate = value
 	
+	if is_inside_tree() && Engine.editor_hint:
+		if value:
+			library.refresh_rects()
+			
+			level_generator.setup(self, current_seed, false, library)
+			
+			var editor_camera : Camera = get_editor_camera()
+			
+			if editor_camera:
+				var cpos : Vector3 = editor_camera.transform.origin
+				cpos.x /= chunk_size_x * voxel_scale
+				cpos.z /= chunk_size_z * voxel_scale
+				
+				spawn(cpos.x, cpos.z)
+
+				set_player(get_editor_camera())
+		
+				set_process(true)
+				
+			else:
+				spawn(0, 0)
+				set_process(true)
+				
+			initial_generation = false
+		else:
+			if get_player() == get_editor_camera():
+				set_player(null)
+				
+			chunks_clear()
+			initial_generation = false
+
+			spawned = false
+
 func create_light(x : int, y : int, z : int, size : int, color : Color) -> void:
 	var chunkx : int = int(x / chunk_size_x)
 	var chunkz : int = int(z / chunk_size_z)
