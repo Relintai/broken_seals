@@ -1,4 +1,4 @@
-[gd_resource type="TerrainLibraryMergerPCM" load_steps=12 format=2]
+[gd_resource type="TerrainLibraryMergerPCM" load_steps=13 format=2]
 
 [ext_resource path="res://materials/8_standard_material_prop_notex.tres" type="Material" id=1]
 [ext_resource path="res://materials/6_standard_material_prop_nouv2.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://textures/world/stone/stone_1_albedo.png" type="Texture" id=5]
 [ext_resource path="res://materials/7_standard_material_notex.tres" type="Material" id=6]
 [ext_resource path="res://materials/5_standard_material_nouv2.tres" type="Material" id=7]
+[ext_resource path="res://materials/liquid_material.tres.tres" type="Material" id=8]
 
 [sub_resource type="TerrainSurfaceMerger" id=1]
 texture_top = ExtResource( 3 )
@@ -30,6 +31,7 @@ texture_side = ExtResource( 5 )
 
 [resource]
 materials = [ ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 6 ) ]
+liquid_materials = [ ExtResource( 8 ) ]
 prop_materials = [ ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 2 ), ExtResource( 1 ) ]
 texture_flags = 1
 terra_surfaces = [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ]
