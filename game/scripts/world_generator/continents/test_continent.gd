@@ -51,20 +51,14 @@ func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
 func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+	pass
+
+
+
+
+func _generate_terra_chunk_old(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
-
-#		#todo generate this properly
-#		var entrance_position : Vector3 = Vector3(7, 5, 7)
-#
-#		for i in range(get_building_count()):
-#			var d : Building = get_building(i)
-#
-#			if d.has_method("has_entrance_position"):
-#				d.entrance_position.origin = entrance_position
-#
-#				entrance_position = d.next_level_teleporter_position_data_space
-#				entrance_position *= voxel_scale
 
 	var cx : int = chunk.get_position_x()
 	var cz : int = chunk.get_position_z()
@@ -74,7 +68,6 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.seed = chunk_seed
 	
-	#terrarin_gen.generate_simple_terrarin(chunk, spawn_mobs)
 	gen_terra_chunk(chunk, rng)
 	
 	if chunk.position_x == 0 && chunk.position_z == 0:
@@ -84,9 +77,6 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 		if rng.randi() % 10 == 0:
 			spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	
-#	for i in range(get_building_count()):
-#		get_building(i).generate_terra_chunk(chunk, spawn_mobs)
-
 	if not Engine.editor_hint and spawn_mobs and rng.randi() % 4 == 0:
 		var level : int = 1
 
@@ -141,13 +131,6 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator) -> void:
 					tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((val - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
 
 					chunk.voxel_world.prop_add(tr, prop_tree)
-
-#					Uncomment to test the prop texture merger system:
-#					if randf() > 0.5:
-#						chunk.voxel_world.prop_add(tr, prop_tree)
-#					else:
-#						chunk.voxel_world.prop_add(tr, prop_tree2)
-		
 
 func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
 	var world_space_data_coordinates_x : int = chunk.position_x * chunk.size_x
