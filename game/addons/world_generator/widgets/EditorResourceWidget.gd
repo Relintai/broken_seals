@@ -3,6 +3,7 @@ extends HBoxContainer
 
 var _resource_type : String = "Resource"
 var _resource : Resource = null
+var _plugin : EditorPlugin = null
 
 signal on_resource_changed(new_res)
 
@@ -41,9 +42,8 @@ func on_clear_button_pressed() -> void:
 		set_resource(null)
 
 func on_resource_button_pressed() -> void:
-	if _resource:
-		#todo
-		pass
+	if _resource && _plugin:
+		_plugin.get_editor_interface().inspect_object(_resource)
 
 #examples
 #{files:[res://modules/planets/test_planet/test_world.tres], from:@@4176:[Tree:9070], type:files}
@@ -75,3 +75,6 @@ func get_drag_data_fw(position, from_control):
 	d["type"] = "resource"
 	
 	return d
+
+func set_plugin(plugin : EditorPlugin) -> void:
+	_plugin = plugin

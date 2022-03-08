@@ -53,6 +53,7 @@ func add_slot_resource(getter : String, setter : String, slot_name : String, res
 	bc.add_child(l)
 	
 	var r : Control = EditorResourceWidget.instance()
+	r.set_plugin(_plugin)
 	r.set_resource_type(resource_type)
 	r.set_resource(_edited_resource.call(getter))
 	r.set_h_size_flags(SIZE_EXPAND_FILL)
