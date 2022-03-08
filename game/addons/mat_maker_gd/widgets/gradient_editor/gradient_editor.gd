@@ -199,7 +199,7 @@ func _gui_input(ev) -> void:
 			var popup_size = popup.rect_size
 			popup.popup(Rect2(ev.global_position, Vector2(0, 0)))
 			popup.set_global_position(ev.global_position-Vector2(popup_size.x / 2, popup_size.y))
-			popup.init(value)
+			popup.init(value, graph_node, _undo_redo)
 			popup.connect("updated", self, "set_value")
 			popup.connect("popup_hide", popup, "queue_free")
 
