@@ -42,8 +42,10 @@ class GradientCursor:
 					label.visible = false
 			elif ev.button_index == BUTTON_RIGHT and get_parent().get_sorted_cursors().size() > 2:
 				var parent = get_parent()
+				parent.save_color_state()
 				parent.remove_child(self)
 				parent.update_value()
+				parent.undo_redo_save_color_state()
 				queue_free()
 		elif ev is InputEventMouseMotion and (ev.button_mask & BUTTON_MASK_LEFT) != 0 and sliding:
 			rect_position.x += get_local_mouse_position().x
@@ -191,8 +193,10 @@ func _gui_input(ev) -> void:
 	if ev is InputEventMouseButton and ev.button_index == 1 and ev.doubleclick:
 		if ev.position.y > 15:
 			var p = clamp(ev.position.x, 0, rect_size.x-GradientCursor.WIDTH)
+			save_color_state()
 			add_cursor(p, get_gradient_color(p))
 			update_value()
+			undo_redo_save_color_state()
 		elif embedded:
 			var popup = load("res://addons/mat_maker_gd/widgets/gradient_editor/gradient_popup.tscn").instance()
 			add_child(popup)
