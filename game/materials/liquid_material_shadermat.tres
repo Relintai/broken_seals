@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://shaders/liquid.tres" type="Shader" id=2]
+
+[resource]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 1, 1, 1, 0.662745 )

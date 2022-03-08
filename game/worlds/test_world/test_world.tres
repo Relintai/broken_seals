@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=13 format=2]
+[gd_resource type="Resource" load_steps=14 format=2]
 
-[ext_resource path="res://addons/world_generator/resources/world_gen_world.gd" type="Script" id=1]
+[ext_resource path="res://scripts/world_generator/worlds/ocean_base_world.gd" type="Script" id=1]
 [ext_resource path="res://scripts/world_generator/subzones/spawner.gd" type="Script" id=2]
 [ext_resource path="res://scripts/world_generator/continents/test_continent.gd" type="Script" id=3]
 [ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.tscn" type="PackedScene" id=4]
@@ -9,6 +9,7 @@
 [ext_resource path="res://scripts/world_generator/zones/test_zone.gd" type="Script" id=7]
 [ext_resource path="res://entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=8]
 [ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=9]
+[ext_resource path="res://worlds/test_world/noises/base_ocean_noise.tres" type="FastnoiseNoiseParams" id=10]
 
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
@@ -41,3 +42,7 @@ script = ExtResource( 1 )
 rect = Rect2( -250, -250, 500, 500 )
 locked = false
 continents = [ SubResource( 1 ) ]
+base_iso_level = 0
+water_iso_level = 100
+water_surface_id = 5
+base_noise = ExtResource( 10 )

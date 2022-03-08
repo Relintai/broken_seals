@@ -1,0 +1,4 @@
+[gd_resource type="FastnoiseNoiseParams" format=2]
+
+[resource]
+resource_name = "Ocean Floor Noise"

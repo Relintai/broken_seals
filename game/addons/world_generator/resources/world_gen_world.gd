@@ -38,3 +38,26 @@ func remove_content_entry(entry : WorldGenBaseResource) -> void:
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	
+func generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
+	var p : Vector2 = Vector2(chunk.get_position_x(), chunk.get_position_z())
+
+	var raycast : WorldGenRaycast = get_hit_stack(p)
+	
+	if raycast.size() == 0:
+		_generate_terra_chunk_fallback(chunk, pseed, spawn_mobs)
+		return
+	
+	_generate_terra_chunk(chunk, pseed, spawn_mobs, raycast)
+	
+	while raycast.next():
+		raycast.get_resource()._generate_terra_chunk(chunk, pseed, spawn_mobs, raycast)
+		
+	
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+	pass
+	
+func _generate_terra_chunk_fallback(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 1)
+	chunk.set_voxel(1, 0, 0, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+	

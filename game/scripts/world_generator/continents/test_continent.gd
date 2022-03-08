@@ -119,12 +119,13 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator) -> void:
 			val *= val
 			val *= 20.0
 			val += abs(sdet.get_noise_2d(vx * 0.8, vz * 0.8)) * 20
+			val += 100
 
 			chunk.set_voxel(val, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 
-			if val < 50:
+			if val < 150:
 				chunk.set_voxel(2, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
-			elif val > 90:
+			elif val > 190:
 				chunk.set_voxel(4, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 			else:
 				if chunk.position_x == 0 && chunk.position_z == 0:
