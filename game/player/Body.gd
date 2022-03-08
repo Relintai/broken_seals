@@ -218,7 +218,7 @@ func _physics_process(delta : float) -> void:
 					
 				var space : PhysicsDirectSpaceState = get_world().direct_space_state
 					
-				var res : Dictionary = space.intersect_ray(transform.origin + Vector3(0, 100, 0), transform.origin + Vector3(0, -100, 0), [ self ])
+				var res : Dictionary = space.intersect_ray(transform.origin + Vector3(0, 300, 0), transform.origin + Vector3(0, -100, 0), [ self ])
 		
 				if not res.empty():
 					var pos : Vector3 = res["position"]
