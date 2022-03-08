@@ -267,7 +267,15 @@ func update_preview() -> void:
 	call_deferred("generate_preview_image")
 
 func _on_Interpolation_item_selected(ID) -> void:
-	value.interpolation_type = ID
+	ignore_changes(true)
+	
+	_undo_redo.create_action("MMGD: gradient interpolation_type changed")
+	_undo_redo.add_do_method(value, "set_interpolation_type", ID)
+	_undo_redo.add_undo_method(value, "set_interpolation_type", value.interpolation_type)
+	_undo_redo.commit_action()
+	
+	ignore_changes(false)
+	
 	update_preview()
 
 func on_resized() -> void:
