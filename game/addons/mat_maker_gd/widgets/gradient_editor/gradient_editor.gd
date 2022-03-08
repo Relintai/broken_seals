@@ -27,12 +27,17 @@ class GradientCursor:
 		if ev is InputEventMouseButton:
 			if ev.button_index == BUTTON_LEFT:
 				if ev.doubleclick:
+					get_parent().save_color_state()
 					get_parent().select_color(self, ev.global_position)
 				elif ev.pressed:
+					get_parent().save_color_state()
 					sliding = true
 					label.visible = true
 					label.text = "%.03f" % get_cursor_position()
 				else:
+					if sliding:
+						get_parent().undo_redo_save_color_state()
+						
 					sliding = false
 					label.visible = false
 			elif ev.button_index == BUTTON_RIGHT and get_parent().get_sorted_cursors().size() > 2:
@@ -65,14 +70,49 @@ class GradientCursor:
 	func drop_data(_position, data) -> void:
 		set_color(data)
 
-
+var graph_node = null
 var value = null setget set_value
 export var embedded : bool = true
+var _undo_redo : UndoRedo = null 
 
 signal updated(value)
 
+var _saved_points : PoolRealArray = PoolRealArray()
+
 func _init():
 	connect("resized", self, "on_resized")
+
+func ignore_changes(val):
+	graph_node.ignore_changes(val)
+	
+func save_color_state():
+	var p : PoolRealArray = value.points
+	_saved_points.resize(0)
+	
+	for v in p:
+		_saved_points.push_back(v)
+
+	ignore_changes(true)
+
+func undo_redo_save_color_state():
+	var op : PoolRealArray
+	var np : PoolRealArray
+
+	for v in _saved_points:
+		op.push_back(v)
+		
+	for v in value.get_points():
+		np.push_back(v)
+	
+	_undo_redo.create_action("MMGD: gradient colors changed")
+	_undo_redo.add_do_method(value, "set_points", np)
+	_undo_redo.add_undo_method(value, "set_points", op)
+	_undo_redo.commit_action()
+	
+	ignore_changes(false)
+
+func set_undo_redo(ur : UndoRedo) -> void:
+	_undo_redo = ur
 
 #func get_gradient_from_data(data):
 #	if typeof(data) == TYPE_ARRAY:
@@ -124,8 +164,20 @@ func update_value() -> void:
 	
 	var sc : Array = get_sorted_cursors()
 	
+	var points : PoolRealArray = PoolRealArray()
+	
 	for c in sc:
-		value.add_point(c.rect_position.x/(rect_size.x-GradientCursor.WIDTH), c.color)
+		
+		points.push_back(c.rect_position.x/(rect_size.x-GradientCursor.WIDTH))
+		
+		var color : Color = c.color
+		
+		points.push_back(color.r)
+		points.push_back(color.g)
+		points.push_back(color.b)
+		points.push_back(color.a)
+		
+	value.set_points(points)
 			
 	update_preview()
 
@@ -163,6 +215,7 @@ func select_color(cursor, position) -> void:
 	color_picker.color = cursor.color
 	color_picker.connect("color_changed", cursor, "set_color")
 	color_picker_popup.rect_position = position
+	color_picker_popup.connect("popup_hide", self, "undo_redo_save_color_state")
 	color_picker_popup.connect("popup_hide", color_picker_popup, "queue_free")
 	color_picker_popup.popup()
 

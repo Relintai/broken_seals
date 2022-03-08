@@ -85,6 +85,8 @@ func add_slot_image_path_universal(property : MMNodeUniversalProperty, getter : 
 
 func add_slot_gradient() -> int:
 	var ge : Control = gradient_editor_scene.instance()
+	ge.graph_node = self
+	ge.set_undo_redo(_undo_redo)
 
 	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
 	
