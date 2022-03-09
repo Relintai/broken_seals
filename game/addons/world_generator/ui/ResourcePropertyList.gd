@@ -310,16 +310,18 @@ func add_slot(getter : String, setter : String, control : Control) -> int:
 	var content_node = $MainContainer/Content
 	
 	content_node.add_child(control)
-	var slot_idx : int = content_node.get_child_count() - 1
+	var child_idx : int = content_node.get_child_count() - 1
 	
 	var arr : Array = Array()
 	
-	arr.append(slot_idx)
+	arr.append(child_idx)
 	arr.append(getter)
 	arr.append(setter)
 	arr.append(control)
 	
 	properties.append(arr)
+	
+	var slot_idx : int = properties.size() - 1
 
 	return slot_idx
 
