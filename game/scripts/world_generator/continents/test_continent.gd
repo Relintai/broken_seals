@@ -250,9 +250,7 @@ func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
 	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")
 	
+	inspector.add_h_separator()
 	inspector.add_slot_float("get_continent_radius", "set_continent_radius", "Continent Radius", 0.01)
 	inspector.add_slot_float("get_continent_bevel", "get_continent_bevel", "Continent Bevel", 0.01)
 	inspector.add_slot_float("get_continent_base", "set_continent_base", "Continent Base", 0.01)
-
-
-
