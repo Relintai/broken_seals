@@ -111,10 +111,11 @@ func add_slot_enum(getter : String, setter : String, slot_name : String, values 
 	return slot_idx
 
 func add_slot_int(getter : String, setter : String, slot_name : String, prange : Vector2 = Vector2(-1000, 1000)) -> int:
-	var bc : VBoxContainer = VBoxContainer.new()
+	var bc : HBoxContainer = HBoxContainer.new()
 	
 	var l : Label = Label.new()
 	l.text = slot_name
+	l.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
