@@ -252,5 +252,5 @@ func setup_property_inspector(inspector) -> void:
 	
 	inspector.add_h_separator()
 	inspector.add_slot_float("get_continent_radius", "set_continent_radius", "Continent Radius", 0.01)
-	inspector.add_slot_float("get_continent_bevel", "get_continent_bevel", "Continent Bevel", 0.01)
+	inspector.add_slot_float("get_continent_bevel", "set_continent_bevel", "Continent Bevel", 0.01)
 	inspector.add_slot_float("get_continent_base", "set_continent_base", "Continent Base", 0.01)
