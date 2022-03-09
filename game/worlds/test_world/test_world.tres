@@ -25,6 +25,9 @@ script = ExtResource( 7 )
 rect = Rect2( 5.75557, 7.61018, 10.8128, 9.92373 )
 locked = false
 subzones = [ SubResource( 2 ) ]
+zone_radius = 0.5
+zone_bevel = 0.3
+zone_base = 0.0
 dungeon_teleporter = ExtResource( 4 )
 prop_tree = ExtResource( 6 )
 prop_tree2 = ExtResource( 5 )
@@ -38,9 +41,6 @@ zones = [ SubResource( 3 ) ]
 continent_radius = 0.5
 continent_bevel = 0.3
 continent_base = 0.0
-dungeon_teleporter = ExtResource( 4 )
-prop_tree = ExtResource( 6 )
-prop_tree2 = ExtResource( 5 )
 
 [resource]
 resource_name = "TestWorld"
