@@ -144,10 +144,11 @@ func add_slot_bool(getter : String, setter : String, slot_name : String) -> int:
 	return slot_idx
 
 func add_slot_float(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
-	var bc : VBoxContainer = VBoxContainer.new()
+	var bc : HBoxContainer = HBoxContainer.new()
 	
 	var l : Label = Label.new()
 	l.text = slot_name
+	l.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
