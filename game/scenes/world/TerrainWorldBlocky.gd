@@ -30,6 +30,8 @@ export(bool) var editor_generate : bool = false setget set_editor_generate, get_
 export(bool) var show_loading_screen : bool = true
 export(bool) var generate_on_ready : bool = false
 
+export(int) var editor_chunk_spawn_range : int = 5
+
 export(bool) var use_global_chunk_settings : bool = true
 
 export(PropData) var test_prop : PropData
@@ -350,6 +352,8 @@ func set_editor_generate(value : bool) -> void:
 	
 	if is_inside_tree() && Engine.editor_hint:
 		if value:
+			chunk_spawn_range = editor_chunk_spawn_range
+			
 			library.refresh_rects()
 			
 			level_generator.setup(self, current_seed, false, library)
@@ -450,5 +454,3 @@ func set_test_lod(val : int) -> void:
 		var c : TerrainChunkDefault = chunk_get_index(i)
 		
 		c.current_lod_level = test_lod
-		
-	
