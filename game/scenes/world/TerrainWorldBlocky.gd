@@ -30,8 +30,6 @@ export(bool) var editor_generate : bool = false setget set_editor_generate, get_
 export(bool) var show_loading_screen : bool = true
 export(bool) var generate_on_ready : bool = false
 
-export(int) var spawn_height : int = 5
-
 export(bool) var use_global_chunk_settings : bool = true
 
 export(PropData) var test_prop : PropData
@@ -146,10 +144,9 @@ func _process_game(delta) -> void:
 				if l > chunk_spawn_range:
 					continue
 				
-				for y in range(-1 + cpos.y, spawn_height + cpos.y):
-					if not chunk_has(x, z):
-						#print("spawn " + str(Vector2(x, z)))
-						chunk_create(x, z)
+				if not chunk_has(x, z):
+					#print("spawn " + str(Vector2(x, z)))
+					chunk_create(x, z)
 						
 		update_lods()
 
@@ -206,10 +203,9 @@ func _process_editor(delta) -> void:
 				if l > chunk_spawn_range:
 					continue
 				
-				for y in range(-1 + cpos.y, spawn_height + cpos.y):
-					if not chunk_has(x, z):
-						#print("spawn " + str(Vector2(x, z)))
-						chunk_create(x, z)
+				if not chunk_has(x, z):
+					#print("spawn " + str(Vector2(x, z)))
+					chunk_create(x, z)
 						
 		update_lods()
 
