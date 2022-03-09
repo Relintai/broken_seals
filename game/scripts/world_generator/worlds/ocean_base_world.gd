@@ -1,6 +1,7 @@
 tool
 extends "res://addons/world_generator/resources/world_gen_world.gd"
 
+export(int) var normal_surface_id : int = 2
 export(int) var base_iso_level : int = 0
 export(int) var water_iso_level : int = 100
 export(int) var water_surface_id : int = 5
@@ -9,6 +10,7 @@ export(FastnoiseNoiseParams) var base_noise : FastnoiseNoiseParams = null
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	
+	inspector.add_slot_int("get_normal_surface_id", "set_normal_surface_id", "Normal Surface ID")
 	inspector.add_slot_int("get_base_iso_level", "set_base_iso_level", "Base Isolevel")
 	inspector.add_slot_int("get_water_iso_level", "set_water_iso_level", "Water Isolevel")
 	inspector.add_slot_int("get_water_surface_id", "set_water_surface_id", "Water Surface ID")
@@ -32,7 +34,7 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	_generate_terra_chunk_fallback(chunk, pseed, spawn_mobs)
 	
 func _generate_terra_chunk_fallback(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
-	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, normal_surface_id)
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, base_iso_level)
 	#chunk.set_voxel(1, 0, 0, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 	
@@ -58,6 +60,13 @@ func _generate_terra_chunk_ocean(chunk: TerrainChunk, pseed : int, spawn_mobs: b
 
 				chunk.set_voxel(water_surface_id, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_TYPE)
 				chunk.set_voxel(water_iso_level, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_ISOLEVEL)
+
+func get_normal_surface_id() -> int:
+	return normal_surface_id
+	
+func set_normal_surface_id(ed : int) -> void:
+	normal_surface_id = ed
+	emit_changed()
 
 func get_base_iso_level() -> int:
 	return base_iso_level
