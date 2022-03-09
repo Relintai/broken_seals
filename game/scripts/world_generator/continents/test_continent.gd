@@ -1,6 +1,8 @@
 tool
 extends Continent
 
+export(float) var interpolation_size : float = 0.1
+
 export(PackedScene) var dungeon_teleporter : PackedScene
 export(PropData) var prop_tree : PropData
 export(PropData) var prop_tree2 : PropData
@@ -50,13 +52,67 @@ func get_editor_additional_text() -> String:
 func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
+func _generate_terra_chunk_t(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+
+	var s : FastNoise = FastNoise.new()
+	s.set_noise_type(FastNoise.TYPE_SIMPLEX)
+	s.set_seed(current_seed)
+	
+	var sdet : FastNoise = FastNoise.new()
+	sdet.set_noise_type(FastNoise.TYPE_SIMPLEX)
+	sdet.set_seed(current_seed)
+	
+	var lpos : Vector2 = raycast.get_local_uv()
+	var scale_x : bool = true
+	var scale_z : bool = true
+	
+	#var interp_size_x : float = 1 / get_rect().size.x * interpolation_size
+	#var interp_size_z : float = 1 / get_rect().size.y * interpolation_size
+	
+	if lpos.x > interpolation_size:
+		scale_x = false
+	#else:
+	#	lpos.x = lpos.x / interpolation_size
+		
+	if lpos.y > interpolation_size:
+		scale_z = false
+	#else:
+	#	lpos.y = lpos.y / interpolation_size
+		
+
+	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+		for z in range(-chunk.margin_start, chunk.size_z + chunk.margin_end):
+			var vx : int = x + (chunk.position_x * chunk.size_x)
+			var vz : int = z + (chunk.position_z * chunk.size_z)
+			
+			var val : float = (s.get_noise_2d(vx * 0.2, vz * 0.2))
+			val *= val
+			val += abs(sdet.get_noise_2d(vx * 0.3, vz * 0.3)) * 10
+			val += 110
+			
+			var oil : int = chunk.get_voxel(x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			
+			var sc : float = 1
+			
+			if scale_x:
+				sc = lpos.x + (x / float(chunk.size_x))
+				
+			if scale_z:
+				var scz : float = lpos.y + (z / float(chunk.size_z))
+				
+				if scale_x:
+					sc = max(sc, scz)
+				else:
+					sc = scz
+					
+			oil += float(val) * sc
+
+			chunk.set_voxel(oil, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			chunk.set_voxel(1, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
+
 func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
-	pass
-
-
-
-
-func _generate_terra_chunk_old(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
 
