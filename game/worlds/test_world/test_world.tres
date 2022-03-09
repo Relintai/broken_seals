@@ -22,7 +22,7 @@ vendor = ExtResource( 8 )
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
 script = ExtResource( 7 )
-rect = Rect2( 5.75557, 7.61018, 10.8128, 9.92373 )
+rect = Rect2( 8.75557, 6.875, 21.9944, 11.2839 )
 locked = false
 subzones = [ SubResource( 2 ) ]
 zone_radius = 0.5
@@ -35,7 +35,7 @@ prop_tree2 = ExtResource( 5 )
 [sub_resource type="Resource" id=1]
 resource_name = "Continent"
 script = ExtResource( 3 )
-rect = Rect2( 250, 250, 23, 25 )
+rect = Rect2( 250, 250, 40, 25 )
 locked = false
 zones = [ SubResource( 3 ) ]
 continent_radius = 0.5
