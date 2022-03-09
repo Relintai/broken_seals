@@ -130,7 +130,6 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 			oil += float(val) * interp
 
 			chunk.set_voxel(oil, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
-			chunk.set_voxel(1, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 
 func _generate_terra_chunka(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
