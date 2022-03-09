@@ -56,7 +56,7 @@ func _generate_terra_chunk_ocean(chunk: TerrainChunk, pseed : int, spawn_mobs: b
 					ensured_channels = true
 					
 					chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_TYPE, 0)
-					chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_ISOLEVEL, 0)
+					chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_ISOLEVEL, water_iso_level)
 
 				chunk.set_voxel(water_surface_id, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_TYPE)
 				chunk.set_voxel(water_iso_level, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_LIQUID_ISOLEVEL)
