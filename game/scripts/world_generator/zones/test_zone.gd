@@ -157,6 +157,10 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator, raycast :
 			oil += float(val) * interp
 
 			chunk.set_voxel(oil, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+			
+			if interp < 0.2:
+				continue
+				
 			chunk.set_voxel(1, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 
 			if chunk.position_x == 0 && chunk.position_z == 0:
