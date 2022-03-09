@@ -1,7 +1,9 @@
 tool
 extends Continent
 
-export(float) var interpolation_size : float = 0.1
+export(float) var continent_radius : float = 0.5
+export(float) var continent_bevel : float = 0.3
+export(float) var continent_base : float = 0
 
 export(PackedScene) var dungeon_teleporter : PackedScene
 export(PropData) var prop_tree : PropData
@@ -31,6 +33,28 @@ func set_prop_tree2(ed : PropData) -> void:
 	prop_tree2 = ed
 	emit_changed()
 
+func get_continent_radius() -> float:
+	return continent_radius
+	
+func set_continent_radius(ed : float) -> void:
+	continent_radius = ed
+	emit_changed()
+	
+func get_continent_bevel() -> float:
+	return continent_bevel
+	
+func set_continent_bevel(ed : float) -> void:
+	continent_bevel = ed
+	emit_changed()
+	
+func get_continent_base() -> float:
+	return continent_base
+	
+func set_continent_base(ed : float) -> void:
+	continent_base = ed
+	emit_changed()
+
+
 func get_editor_rect_border_color() -> Color:
 	return Color(0.8, 0.8, 0.8, 1)
 
@@ -52,7 +76,20 @@ func get_editor_additional_text() -> String:
 func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
 
-func _generate_terra_chunk_t(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+static func circle(uv : Vector2, c : Vector2, r : float) -> float:
+	c.x += 0.5
+	c.y += 0.5
+	
+	return (uv - c).length() - r;
+
+func get_value_for(uv : Vector2) -> float:
+	var f : float = circle(uv, Vector2(), continent_radius)
+	
+	var cf : float = clamp(continent_base - f / max(continent_bevel, 0.00001), 0.0, 1.0)
+	
+	return cf
+
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
 
@@ -64,28 +101,24 @@ func _generate_terra_chunk_t(chunk: TerrainChunk, pseed : int, spawn_mobs: bool,
 	sdet.set_noise_type(FastNoise.TYPE_SIMPLEX)
 	sdet.set_seed(current_seed)
 	
-	var lpos : Vector2 = raycast.get_local_uv()
-	var scale_x : bool = true
-	var scale_z : bool = true
+	var luv : Vector2 = raycast.get_local_uv()
 	
-	#var interp_size_x : float = 1 / get_rect().size.x * interpolation_size
-	#var interp_size_z : float = 1 / get_rect().size.y * interpolation_size
+	var lhit_world_pos : Vector2 = raycast.get_local_position()
+	lhit_world_pos.x *= chunk.size_x
+	lhit_world_pos.y *= chunk.size_z
 	
-	if lpos.x > interpolation_size:
-		scale_x = false
-	#else:
-	#	lpos.x = lpos.x / interpolation_size
-		
-	if lpos.y > interpolation_size:
-		scale_z = false
-	#else:
-	#	lpos.y = lpos.y / interpolation_size
-		
+	var world_rect_size : Vector2 = get_rect().size
+	world_rect_size.x *= chunk.size_x
+	world_rect_size.y *= chunk.size_z
 
 	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
 		for z in range(-chunk.margin_start, chunk.size_z + chunk.margin_end):
 			var vx : int = x + (chunk.position_x * chunk.size_x)
 			var vz : int = z + (chunk.position_z * chunk.size_z)
+			
+			var lwp : Vector2 = lhit_world_pos + Vector2(x, z)
+			var local_uv : Vector2 = lwp / world_rect_size
+			var interp : float = get_value_for(local_uv)
 			
 			var val : float = (s.get_noise_2d(vx * 0.2, vz * 0.2))
 			val *= val
@@ -94,25 +127,12 @@ func _generate_terra_chunk_t(chunk: TerrainChunk, pseed : int, spawn_mobs: bool,
 			
 			var oil : int = chunk.get_voxel(x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 			
-			var sc : float = 1
-			
-			if scale_x:
-				sc = lpos.x + (x / float(chunk.size_x))
-				
-			if scale_z:
-				var scz : float = lpos.y + (z / float(chunk.size_z))
-				
-				if scale_x:
-					sc = max(sc, scz)
-				else:
-					sc = scz
-					
-			oil += float(val) * sc
+			oil += float(val) * interp
 
 			chunk.set_voxel(oil, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
 			chunk.set_voxel(1, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 
-func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+func _generate_terra_chunka(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
 
@@ -230,3 +250,10 @@ func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_resource("get_dungeon_teleporter", "set_dungeon_teleporter", "Dungeon Teleporter", "PackedScene")
 	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
 	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")
+	
+	inspector.add_slot_float("get_continent_radius", "set_continent_radius", "Continent Radius", 0.01)
+	inspector.add_slot_float("get_continent_bevel", "get_continent_bevel", "Continent Bevel", 0.01)
+	inspector.add_slot_float("get_continent_base", "set_continent_base", "Continent Base", 0.01)
+
+
+
