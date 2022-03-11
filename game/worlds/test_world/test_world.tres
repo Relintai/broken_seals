@@ -14,7 +14,7 @@
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
 script = ExtResource( 2 )
-rect = Rect2( 2.25, 3, 5, 5 )
+rect = Rect2( 8.375, 2.6875, 5, 5 )
 locked = false
 trainer = ExtResource( 9 )
 vendor = ExtResource( 8 )
