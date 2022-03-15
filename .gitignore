@@ -1,4 +1,5 @@
 engine
+pandemonium_engine
 modules/*
 logs/*
 

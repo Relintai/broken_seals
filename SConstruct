@@ -236,13 +236,13 @@ def remove_repository(data, target_folder):
         shutil.rmtree(folder)
 
 def update_engine():
-    validate_repository_origin(module_config.engine_repository, './engine/', module_config.godot_branch)
+    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.godot_branch)
     update_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def update_modules():
     for rep in module_config.module_repositories:
         update_repository(rep, module_clone_path)
-        copy_repository(rep, './engine/modules/', '.' + module_clone_path)
+        copy_repository(rep, './pandemonium_engine/modules/', '.' + module_clone_path)
 
 def update_addons():
     for rep in module_config.addon_repositories:
@@ -264,16 +264,16 @@ def update_all():
 
 
 def setup_engine():
-    validate_repository_origin(module_config.engine_repository, './engine/', module_config.godot_branch)
+    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.godot_branch)
     setup_repository(module_config.engine_repository, '/', module_config.godot_branch)
 
 def setup_modules():
     for rep in module_config.module_repositories:
         setup_repository(rep, module_clone_path)
-        copy_repository(rep, './engine/modules/', '.' + module_clone_path)
+        copy_repository(rep, './pandemonium_engine/modules/', '.' + module_clone_path)
 
     for rep in module_config.removed_modules:
-        remove_repository(rep, './engine/modules/')
+        remove_repository(rep, './pandemonium_engine/modules/')
 
 
 def setup_addons():
@@ -461,10 +461,10 @@ if len(sys.argv) > 1:
             target += 'bin/libprocedural_animations.x11.opt.tools.64.so'
 
         cwd = os.getcwd()
-        full_path = cwd + '/engine/'
+        full_path = cwd + '/pandemonium_engine/'
 
         if not os.path.isdir(full_path):
-            print('engine directory doesnt exists.')
+            print('engine (pandemonium_engine) directory doesnt exists.')
             exit()
 
         os.chdir(full_path)
@@ -548,10 +548,10 @@ if len(sys.argv) > 1:
 #            exit()
 #
 #        cwd = os.getcwd()
-#        full_path = cwd + '/engine/'
+#        full_path = cwd + '/pandemonium_engine/'
 #
 #        if not os.path.isdir(full_path):
-#            print('engine directory does not exists.')
+#            print('engine (pandemonium_engine) directory does not exists.')
 #            exit()
 #
 #        os.chdir(full_path)
@@ -564,7 +564,7 @@ if len(sys.argv) > 1:
 #            #unstage all files
 #            subprocess.call('git reset', shell=True)
 #
-#            vman_full_path = cwd + '/engine/modules/voxelman/'
+#            vman_full_path = cwd + '/pandemonium_engine/modules/voxelman/'
 #
 #            #also patch voxelman as the plugin changes forward_spatial_gui_input's definition
 #            if os.path.isdir(vman_full_path):

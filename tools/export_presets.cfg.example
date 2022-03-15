@@ -13,8 +13,8 @@ script_encryption_key=""
 
 [preset.0.options]
 
-custom_template/debug="../engine/bin/android_debug.apk"
-custom_template/release="../engine/bin/android_release.apk"
+custom_template/debug="../pandemonium_engine/bin/android_debug.apk"
+custom_template/release="../pandemonium_engine/bin/android_release.apk"
 custom_template/use_custom_build=false
 custom_template/export_format=0
 architectures/armeabi-v7a=true
@@ -213,8 +213,8 @@ script_encryption_key=""
 
 [preset.1.options]
 
-custom_template/debug="../engine/bin/godot.x11.opt.debug.64"
-custom_template/release="../engine/bin/godot.x11.opt.64"
+custom_template/debug="../pandemonium_engine/bin/godot.x11.opt.debug.64"
+custom_template/release="../pandemonium_engine/bin/godot.x11.opt.64"
 binary_format/64_bits=true
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -238,8 +238,8 @@ script_encryption_key=""
 
 [preset.2.options]
 
-custom_template/debug="../engine/bin/godot.javascript.opt.zip"
-custom_template/release="../engine/bin/godot.javascript.opt.debug.zip"
+custom_template/debug="../pandemonium_engine/bin/godot.javascript.opt.zip"
+custom_template/release="../pandemonium_engine/bin/godot.javascript.opt.debug.zip"
 variant/export_type=0
 vram_texture_compression/for_desktop=true
 vram_texture_compression/for_mobile=true
@@ -263,8 +263,8 @@ script_encryption_key=""
 
 [preset.3.options]
 
-custom_template/debug="../engine/bin/godot.windows.opt.debug.64.exe"
-custom_template/release="../engine/bin/godot.windows.opt.64.exe"
+custom_template/debug="../pandemonium_engine/bin/godot.windows.opt.debug.64.exe"
+custom_template/release="../pandemonium_engine/bin/godot.windows.opt.64.exe"
 binary_format/64_bits=true
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -304,8 +304,8 @@ script_encryption_key=""
 
 [preset.4.options]
 
-custom_template/debug="../engine/bin/android_release.apk"
-custom_template/release="../engine/bin/android_release.apk"
+custom_template/debug="../pandemonium_engine/bin/android_release.apk"
+custom_template/release="../pandemonium_engine/bin/android_release.apk"
 custom_template/use_custom_build=false
 custom_template/export_format=0
 architectures/armeabi-v7a=true
@@ -504,8 +504,8 @@ script_encryption_key=""
 
 [preset.5.options]
 
-custom_template/debug="../engine/bin/godot.x11.pi4.opt.debug.32"
-custom_template/release="../engine/bin/godot.x11.pi4.opt.32"
+custom_template/debug="../pandemonium_engine/bin/godot.x11.pi4.opt.debug.32"
+custom_template/release="../pandemonium_engine/bin/godot.x11.pi4.opt.32"
 binary_format/64_bits=false
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -530,8 +530,8 @@ script_encryption_key=""
 
 [preset.6.options]
 
-custom_template/debug="../engine/bin/osx.zip"
-custom_template/release="../engine/bin/osx.zip"
+custom_template/debug="../pandemonium_engine/bin/osx.zip"
+custom_template/release="../pandemonium_engine/bin/osx.zip"
 application/name="Broken Seals"
 application/info="Made with Godot Engine"
 application/icon=""

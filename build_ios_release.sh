@@ -2,7 +2,7 @@
 export SCONS_CACHE=~/.scons_cache
 export SCONS_CACHE_LIMIT=5000
 
-cd ./engine
+cd ./pandemonium_engine
 
 scons -j6 p=iphone tools=no target=release arch=arm module_arkit_enabled=no game_center=no
 scons -j6 p=iphone tools=no target=release arch=arm64 module_arkit_enabled=no game_center=no

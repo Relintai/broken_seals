@@ -2,7 +2,7 @@
 export SCONS_CACHE=~/.scons_cache
 export SCONS_CACHE_LIMIT=5000
 
-cd ./engine
+cd ./pandemonium_engine
 
 scons -j6 platform=osx target=release_debug 
 

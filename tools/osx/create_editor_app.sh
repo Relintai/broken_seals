@@ -1,4 +1,4 @@
-cd ../../engine/bin/
+cd ../../pandemonium_engine/bin/
 
 rm -Rf Godot.app
 rm -f Godot.app.zip

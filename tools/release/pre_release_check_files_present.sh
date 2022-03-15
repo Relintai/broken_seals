@@ -1,4 +1,4 @@
-cd ../../engine/bin/
+cd ../../pandemonium_engine/bin/
 
 files=(
   # Windows

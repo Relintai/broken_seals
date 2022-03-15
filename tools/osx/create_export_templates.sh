@@ -1,6 +1,6 @@
 #templates
 
-cd ../../engine/bin
+cd ../../pandemonium_engine/bin
 
 cp -r ../misc/dist/osx_template.app .
 mkdir -p osx_template.app/Contents/MacOS
