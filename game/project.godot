@@ -838,7 +838,6 @@ material_paths=PoolStringArray( "res://materials/6_standard_material_prop_nouv2.
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 quality/directional_shadow/size.mobile=1024
