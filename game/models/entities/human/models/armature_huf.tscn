@@ -156,7 +156,7 @@ bones/21/bound_children = [ NodePath("ShieldAttachment") ]
 bones/22/bound_children = [ NodePath("LeftHandAttachment") ]
 bones/27/bound_children = [ NodePath("NeckAttachment") ]
 
-[node name="MeshInstance" type="TMeshInstance" parent="armature/Armature/Skeleton" index="0"]
+[node name="MeshInstance" type="MeshInstance" parent="armature/Armature/Skeleton" index="0"]
 visible = false
 
 [node name="LeftHandAttachment" type="BoneAttachment" parent="armature/Armature/Skeleton" index="1"]
