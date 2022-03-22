@@ -24,7 +24,7 @@ class_name PlayerMaster
 # Player info, associate ID to data
 var player_info = {}
 # Info we send to other players
-var my_info = { name = "Testname", selected_class = 1 }
+var my_info = { "name": "Testname", "selected_class": 1 }
 var sid : int
 
 var player : Entity 

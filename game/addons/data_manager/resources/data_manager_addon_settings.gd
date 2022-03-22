@@ -27,12 +27,14 @@ func folder_get_name(index : int) -> String:
 func folder_get_type(index : int) -> String:
 	return folders[index].type
 
-func _get(property):
-	if property == "folder_count":
+func _get(property : StringName):
+	var sprop : String = property
+	
+	if sprop == "folder_count":
 		return folders.size()
 		
-	if property.begins_with("folders/"):
-		var sindex : String = property.get_slice("/", 1)
+	if sprop.begins_with("folders/"):
+		var sindex : String = sprop.get_slice("/", 1)
 		
 		if sindex == "":
 			return null
@@ -42,7 +44,7 @@ func _get(property):
 		if index < 0 || index >= folders.size():
 			return null
 			
-		var p : String = property.get_slice("/", 2)
+		var p : String = sprop.get_slice("/", 2)
 		
 		if p == "folder":
 			return folders[index].folder
@@ -57,16 +59,18 @@ func _get(property):
 		
 	return null
 
-func _set(property, val):
+func _set(property : StringName, val) -> bool:
+	var sprop : String = property
+	
 	if property == "folder_count":
 		set_folder_count(val)
 		return true
 	
-	if property.begins_with("folders/"):
-		var sindex : String = property.get_slice("/", 1)
+	if sprop.begins_with("folders/"):
+		var sindex : String = sprop.get_slice("/", 1)
 		
 		if sindex == "":
-			return null
+			return false
 			
 		var index : int = sindex.to_int()
 		
@@ -76,7 +80,7 @@ func _set(property, val):
 		if index >= folders.size():
 			return false
 			
-		var p : String = property.get_slice("/", 2)
+		var p : String = sprop.get_slice("/", 2)
 		
 		if p == "folder":
 			folders[index].folder = val
