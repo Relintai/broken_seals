@@ -236,8 +236,8 @@ def remove_repository(data, target_folder):
         shutil.rmtree(folder)
 
 def update_engine():
-    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.godot_branch)
-    update_repository(module_config.engine_repository, '/', module_config.godot_branch)
+    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.pandemonium_branch)
+    update_repository(module_config.engine_repository, '/', module_config.pandemonium_branch)
 
 def update_modules():
     for rep in module_config.module_repositories:
@@ -264,8 +264,8 @@ def update_all():
 
 
 def setup_engine():
-    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.godot_branch)
-    setup_repository(module_config.engine_repository, '/', module_config.godot_branch)
+    validate_repository_origin(module_config.engine_repository, './pandemonium_engine/', module_config.pandemonium_branch)
+    setup_repository(module_config.engine_repository, '/', module_config.pandemonium_branch)
 
 def setup_modules():
     for rep in module_config.module_repositories:
@@ -614,7 +614,7 @@ if not os.path.isdir('./modules'):
     os.mkdir('./modules')
 
 if 'm' in action:
-    godot_branch = 'master'
+    pandemonium_branch = 'master'
 
 if 'setup' in action or action[0] == 's':
     if target == 'all':

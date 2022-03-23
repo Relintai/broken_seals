@@ -13,15 +13,15 @@ if [ -z "${registry}" ]; then
   registry=registry.prehensile-tales.com
 fi
 
-$podman push godot-export:latest ${registry}/godot/export
-$podman push godot-mono-glue:latest ${registry}/godot/mono-glue
-$podman push godot-windows:latest ${registry}/godot/windows
-$podman push godot-ubuntu-32:latest ${registry}/godot/ubuntu-32
-$podman push godot-ubuntu-64:latest ${registry}/godot/ubuntu-64
-$podman push godot-javascript:latest ${registry}/godot/javascript
-$podman push godot-xcode-packer:latest ${registry}/godot/xcode-packer
+$podman push pandemonium-export:latest ${registry}/pandemonium/export
+$podman push pandemonium-mono-glue:latest ${registry}/pandemonium/mono-glue
+$podman push pandemonium-windows:latest ${registry}/pandemonium/windows
+$podman push pandemonium-ubuntu-32:latest ${registry}/pandemonium/ubuntu-32
+$podman push pandemonium-ubuntu-64:latest ${registry}/pandemonium/ubuntu-64
+$podman push pandemonium-javascript:latest ${registry}/pandemonium/javascript
+$podman push pandemonium-xcode-packer:latest ${registry}/pandemonium/xcode-packer
 
-$podman push godot-android:latest ${registry}/godot-private/android
-$podman push godot-ios:latest ${registry}/godot-private/ios
-$podman push godot-osx:latest ${registry}/godot-private/macosx
-$podman push godot-msvc:latest ${registry}/godot-private/uwp
+$podman push pandemonium-android:latest ${registry}/pandemonium-private/android
+$podman push pandemonium-ios:latest ${registry}/pandemonium-private/ios
+$podman push pandemonium-osx:latest ${registry}/pandemonium-private/macosx
+$podman push pandemonium-msvc:latest ${registry}/pandemonium-private/uwp

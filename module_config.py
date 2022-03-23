@@ -1,5 +1,5 @@
 
-godot_branch = 'master'
+pandemonium_branch = 'master'
 
 engine_repository = [ ['https://github.com/Relintai/pandemonium_engine.git', 'git@github.com:Relintai/pandemonium_engine.git'], 'pandemonium_engine', '' ]
 

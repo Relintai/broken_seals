@@ -15,11 +15,11 @@ mkdir -p logs
 
 export podman_build="$podman build --build-arg img_version=${img_version}"
 
-$podman build -v ${files_root}:/root/files -t godot-fedora:${img_version} -f Dockerfile.base . 2>&1 | tee logs/base.log
-$podman_build -t godot-linux:${img_version} -f Dockerfile.linux . 2>&1 | tee logs/linux.log
-$podman_build -t godot-windows:${img_version} -f Dockerfile.windows --ulimit nofile=65536 . 2>&1 | tee logs/windows.log
-$podman_build -t godot-javascript:${img_version} -f Dockerfile.javascript . 2>&1 | tee logs/javascript.log
-$podman_build -t godot-android:${img_version} -f Dockerfile.android . 2>&1 | tee logs/android.log
+$podman build -v ${files_root}:/root/files -t pandemonium-fedora:${img_version} -f Dockerfile.base . 2>&1 | tee logs/base.log
+$podman_build -t pandemonium-linux:${img_version} -f Dockerfile.linux . 2>&1 | tee logs/linux.log
+$podman_build -t pandemonium-windows:${img_version} -f Dockerfile.windows --ulimit nofile=65536 . 2>&1 | tee logs/windows.log
+$podman_build -t pandemonium-javascript:${img_version} -f Dockerfile.javascript . 2>&1 | tee logs/javascript.log
+$podman_build -t pandemonium-android:${img_version} -f Dockerfile.android . 2>&1 | tee logs/android.log
 
 XCODE_SDK=12.5.1
 OSX_SDK=11.3
@@ -31,12 +31,12 @@ if [ ! -e files/MacOSX${OSX_SDK}.sdk.tar.xz ] || [ ! -e files/iPhoneOS${IOS_SDK}
   fi
 
   echo "Building OSX and iOS SDK packages. This will take a while"
-  $podman_build -t godot-xcode-packer:${img_version} -f Dockerfile.xcode -v ${files_root}:/root/files . 2>&1 | tee logs/xcode.log
-  $podman run -it --rm -v ${files_root}:/root/files godot-xcode-packer:${img_version} 2>&1 | tee logs/xcode_packer.log
+  $podman_build -t pandemonium-xcode-packer:${img_version} -f Dockerfile.xcode -v ${files_root}:/root/files . 2>&1 | tee logs/xcode.log
+  $podman run -it --rm -v ${files_root}:/root/files pandemonium-xcode-packer:${img_version} 2>&1 | tee logs/xcode_packer.log
 fi
 
-$podman_build -t godot-osx:${img_version} -v ${files_root}:/root/files -f Dockerfile.osx . 2>&1 | tee logs/osx.log
-$podman_build -t godot-ios:${img_version} -v ${files_root}:/root/files -f Dockerfile.ios . 2>&1 | tee logs/ios.log
+$podman_build -t pandemonium-osx:${img_version} -v ${files_root}:/root/files -f Dockerfile.osx . 2>&1 | tee logs/osx.log
+$podman_build -t pandemonium-ios:${img_version} -v ${files_root}:/root/files -f Dockerfile.ios . 2>&1 | tee logs/ios.log
 
 if [ "${build_msvc}" != "0" ]; then
   if [ ! -e files/msvc2017.tar ]; then
@@ -51,5 +51,5 @@ if [ "${build_msvc}" != "0" ]; then
     exit 1
   fi
 
-  $podman_build -t godot-msvc:${img_version} -f Dockerfile.msvc -v ${files_root}:/root/files . 2>&1 | tee logs/msvc.log
+  $podman_build -t pandemonium-msvc:${img_version} -f Dockerfile.msvc -v ${files_root}:/root/files . 2>&1 | tee logs/msvc.log
 fi

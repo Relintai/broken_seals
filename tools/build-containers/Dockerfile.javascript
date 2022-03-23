@@ -1,5 +1,5 @@
 ARG img_version
-FROM godot-fedora:${img_version}
+FROM pandemonium-fedora:${img_version}
 
 ENV EMSCRIPTEN_CLASSICAL=2.0.25
 

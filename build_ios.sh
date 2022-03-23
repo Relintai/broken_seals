@@ -6,9 +6,9 @@ cd ./pandemonium_engine
 
 scons -j6 p=iphone tools=no target=release_debug arch=arm module_arkit_enabled=no game_center=no
 scons -j6 p=iphone tools=no target=release_debug arch=arm64 module_arkit_enabled=no game_center=no
-lipo -create bin/libgodot.iphone.opt.debug.arm.a bin/libgodot.iphone.opt.debug.arm64.a -output bin/libgodot.iphone.debug.fat.a
-rm bin/ios_xcode/libgodot.iphone.debug.fat.a
-cp bin/libgodot.iphone.debug.fat.a  bin/ios_xcode/libgodot.iphone.debug.fat.a
+lipo -create bin/libpandemonium.iphone.opt.debug.arm.a bin/libpandemonium.iphone.opt.debug.arm64.a -output bin/libpandemonium.iphone.debug.fat.a
+rm bin/ios_xcode/libpandemonium.iphone.debug.fat.a
+cp bin/libpandemonium.iphone.debug.fat.a  bin/ios_xcode/libpandemonium.iphone.debug.fat.a
 
 rm bin/iphone.zip
 cd bin/ios_xcode

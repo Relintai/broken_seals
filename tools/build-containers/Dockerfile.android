@@ -1,5 +1,5 @@
 ARG img_version
-FROM godot-fedora:${img_version}
+FROM pandemonium-fedora:${img_version}
 
 ENV ANDROID_SDK_ROOT=/root/sdk
 ENV ANDROID_NDK_VERSION=21.4.7075529

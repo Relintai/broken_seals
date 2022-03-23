@@ -1,11 +1,11 @@
 ARG img_version
-FROM godot-fedora:${img_version}
+FROM pandemonium-fedora:${img_version}
 
 ENV WINEDEBUG=-all
 
 RUN dnf -y install --setopt=install_weak_deps=False \
       wine winetricks xorg-x11-server-Xvfb p7zip-plugins findutils && \
-    curl -LO https://github.com/GodotBuilder/godot-builds/releases/download/_tools/angle.7z && \
+    curl -LO https://github.com/GodotBuilder/pandemonium-builds/releases/download/_tools/angle.7z && \
     curl -LO https://www.python.org/ftp/python/3.7.2/python-3.7.2-amd64.exe && \
     xvfb-run sh -c "winetricks -q vcrun2017; wineserver -w" ;\
     xvfb-run sh -c "winetricks -q dotnet461; wineserver -w" ;\
