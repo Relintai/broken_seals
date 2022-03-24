@@ -77,7 +77,8 @@ func _execute():
 	var arr : Array = mm.build_mesh()
 
 	var mesh : ArrayMesh = ArrayMesh.new()
-	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+	# No octahedral compression for skinned meshes for now. Can cause bugs on some gpus
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [],  ArrayMesh.ARRAY_COMPRESS_NORMAL | ArrayMesh.ARRAY_COMPRESS_TANGENT | ArrayMesh.ARRAY_COMPRESS_COLOR | ArrayMesh.ARRAY_COMPRESS_TEX_UV | ArrayMesh.ARRAY_COMPRESS_TEX_UV2 | ArrayMesh.ARRAY_COMPRESS_WEIGHTS)
 	
 	#debug_arrays = arr.duplicate(true)
 	
@@ -87,7 +88,7 @@ func _execute():
 	if use_lod:
 		arr = MeshUtils.merge_mesh_array(arr)
 		var meshl2 : ArrayMesh = ArrayMesh.new()
-		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		meshl2.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [],  ArrayMesh.ARRAY_COMPRESS_NORMAL | ArrayMesh.ARRAY_COMPRESS_TANGENT | ArrayMesh.ARRAY_COMPRESS_COLOR | ArrayMesh.ARRAY_COMPRESS_TEX_UV | ArrayMesh.ARRAY_COMPRESS_TEX_UV2 | ArrayMesh.ARRAY_COMPRESS_WEIGHTS)
 		meshl2.surface_set_material(0, material_cache.material_lod_get(1))
 		meshes.append(meshl2)
 		
@@ -105,7 +106,7 @@ func _execute():
 		arr = MeshUtils.bake_mesh_array_uv(arr, texture)
 		arr[VisualServer.ARRAY_TEX_UV] = null
 		var meshl3 : ArrayMesh = ArrayMesh.new()
-		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr)
+		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [],  ArrayMesh.ARRAY_COMPRESS_NORMAL | ArrayMesh.ARRAY_COMPRESS_TANGENT | ArrayMesh.ARRAY_COMPRESS_COLOR | ArrayMesh.ARRAY_COMPRESS_TEX_UV | ArrayMesh.ARRAY_COMPRESS_TEX_UV2 | ArrayMesh.ARRAY_COMPRESS_WEIGHTS)
 		meshl3.surface_set_material(0, material_cache.material_lod_get(2))
 		meshes.append(meshl3)
 	
