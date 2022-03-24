@@ -500,11 +500,11 @@ if len(sys.argv) > 1:
             os.chdir(full_path + 'platform/android/java/')
 
             if 'e' in arg: #editor
-                print('Running command: ' + get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotEditor')
-                subprocess.call(get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotEditor', shell=True)
+                print('Running command: ' + get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generatePandemoniumEditor')
+                subprocess.call(get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generatePandemoniumEditor', shell=True)
             else: #normal templates
-                print('Running command: ' + get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotTemplates')
-                subprocess.call(get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generateGodotTemplates', shell=True)
+                print('Running command: ' + get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generatePandemoniumTemplates')
+                subprocess.call(get_exports_for('global') + get_additional_commands_for('global') + get_exports_for('android') + get_additional_commands_for('android') + './gradlew generatePandemoniumTemplates', shell=True)
         elif 'j' in arg:
             build_string += 'platform=javascript'
 
