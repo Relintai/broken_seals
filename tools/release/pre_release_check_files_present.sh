@@ -20,7 +20,7 @@ files=(
   "android_release.apk"
 
   # OSX - Editor
-  "Godot.app.zip"
+  "Pandemonium.app.zip"
 
   # OSX - export templates
   "osx.zip"
