@@ -7,7 +7,8 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
 This project now uses the ![Pandemonium Engine](https://github.com/Relintai/pandemonium_engine), which is my custom version of godot.
-It requires the presence of some of my engine modules, pandemonium contains all of them. See [here](https://github.com/Relintai/pandemonium_engine/tree/master/modules).
+
+The project also requires the presence of some of my engine modules, Pandemonium contains all of them. See [here](https://github.com/Relintai/pandemonium_engine/tree/master/modules).
 
 You can get binaries under the releases tab [here](https://github.com/Relintai/broken_seals/releases).\
 You can also try a live version running in the browser [here](https://relintai.github.io/broken_seals/).
