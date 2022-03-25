@@ -19,7 +19,7 @@ custom_template/use_custom_build=false
 custom_template/export_format=0
 architectures/armeabi-v7a=true
 architectures/arm64-v8a=true
-architectures/x86=false
+architectures/x86=true
 architectures/x86_64=false
 keystore/debug=""
 keystore/debug_user=""
@@ -28,8 +28,8 @@ keystore/release=""
 keystore/release_user=""
 keystore/release_password=""
 one_click_deploy/clear_previous_install=false
-version/code=2
-version/name="0.3.2"
+version/code=7
+version/name="0.3.10"
 package/unique_name="net.relintai.$genname"
 package/name="Broken Seals"
 package/signed=true
@@ -38,10 +38,6 @@ launcher_icons/adaptive_foreground_432x432="res://icon.png"
 launcher_icons/adaptive_background_432x432="res://icon.png"
 graphics/32_bits_framebuffer=true
 graphics/opengl_debug=false
-xr_features/xr_mode=0
-xr_features/degrees_of_freedom=0
-xr_features/hand_tracking=0
-xr_features/focus_awareness=false
 screen/immersive_mode=true
 screen/support_small=true
 screen/support_normal=true
@@ -213,8 +209,8 @@ script_encryption_key=""
 
 [preset.1.options]
 
-custom_template/debug="../pandemonium_engine/bin/godot.x11.opt.debug.64"
-custom_template/release="../pandemonium_engine/bin/godot.x11.opt.64"
+custom_template/debug="../pandemonium_engine/bin/pandemonium.x11.opt.debug.64"
+custom_template/release="../pandemonium_engine/bin/pandemonium.x11.opt.64"
 binary_format/64_bits=true
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -238,8 +234,8 @@ script_encryption_key=""
 
 [preset.2.options]
 
-custom_template/debug="../pandemonium_engine/bin/godot.javascript.opt.zip"
-custom_template/release="../pandemonium_engine/bin/godot.javascript.opt.debug.zip"
+custom_template/debug="../pandemonium_engine/bin/pandemonium.javascript.opt.zip"
+custom_template/release="../pandemonium_engine/bin/pandemonium.javascript.opt.debug.zip"
 variant/export_type=0
 vram_texture_compression/for_desktop=true
 vram_texture_compression/for_mobile=true
@@ -263,8 +259,8 @@ script_encryption_key=""
 
 [preset.3.options]
 
-custom_template/debug="../pandemonium_engine/bin/godot.windows.opt.debug.64.exe"
-custom_template/release="../pandemonium_engine/bin/godot.windows.opt.64.exe"
+custom_template/debug="../pandemonium_engine/bin/pandemonium.windows.opt.debug.64.exe"
+custom_template/release="../pandemonium_engine/bin/pandemonium.windows.opt.64.exe"
 binary_format/64_bits=true
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -281,12 +277,12 @@ codesign/digest_algorithm=1
 codesign/description=""
 codesign/custom_options=PoolStringArray(  )
 application/icon=""
-application/file_version=""
-application/product_version=""
+application/file_version="0.3.10"
+application/product_version="0.3.10"
 application/company_name=""
-application/product_name=""
+application/product_name="Broken Seals"
 application/file_description=""
-application/copyright=""
+application/copyright="Péter Magyar"
 application/trademarks=""
 
 [preset.4]
@@ -310,7 +306,7 @@ custom_template/use_custom_build=false
 custom_template/export_format=0
 architectures/armeabi-v7a=true
 architectures/arm64-v8a=true
-architectures/x86=false
+architectures/x86=true
 architectures/x86_64=false
 keystore/debug=""
 keystore/debug_user=""
@@ -319,8 +315,8 @@ keystore/release=""
 keystore/release_user=""
 keystore/release_password=""
 one_click_deploy/clear_previous_install=false
-version/code=2
-version/name="0.3.2"
+version/code=7
+version/name="0.3.10"
 package/unique_name="net.relintai.$genname"
 package/name="Broken Seals"
 package/signed=true
@@ -329,10 +325,6 @@ launcher_icons/adaptive_foreground_432x432="res://icon.png"
 launcher_icons/adaptive_background_432x432="res://icon.png"
 graphics/32_bits_framebuffer=true
 graphics/opengl_debug=false
-xr_features/xr_mode=0
-xr_features/degrees_of_freedom=0
-xr_features/hand_tracking=0
-xr_features/focus_awareness=false
 screen/immersive_mode=true
 screen/support_small=true
 screen/support_normal=true
@@ -504,8 +496,8 @@ script_encryption_key=""
 
 [preset.5.options]
 
-custom_template/debug="../pandemonium_engine/bin/godot.x11.pi4.opt.debug.32"
-custom_template/release="../pandemonium_engine/bin/godot.x11.pi4.opt.32"
+custom_template/debug="../pandemonium_engine/bin/pandemonium.x11.pi4.opt.debug.32"
+custom_template/release="../pandemonium_engine/bin/pandemonium.x11.pi4.opt.32"
 binary_format/64_bits=false
 binary_format/embed_pck=false
 texture_format/bptc=false
@@ -533,14 +525,14 @@ script_encryption_key=""
 custom_template/debug="../pandemonium_engine/bin/osx.zip"
 custom_template/release="../pandemonium_engine/bin/osx.zip"
 application/name="Broken Seals"
-application/info="Made with Godot Engine"
+application/info="Made with Pandemonium Engine"
 application/icon=""
 application/identifier="net.relintai.brokenseals"
 application/signature=""
 application/app_category="Role-playing-games"
-application/short_version="1.0"
-application/version="1.0"
-application/copyright=""
+application/short_version="0.3.10"
+application/version="0.3.10"
+application/copyright="Péter Magyar"
 display/high_res=false
 privacy/microphone_usage_description=""
 privacy/camera_usage_description=""
