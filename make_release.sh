@@ -46,7 +46,7 @@ zip -q ../release/editor_osx_bs${version_snake_cased}.zip  ./pandemonium.bs${ver
 zip -q ../release/pandemonium.bs${version}.android_editor.zip  ./pandemonium.bs${version}.android_editor.apk
 
 zip -q ../release/export_templates_bs${version_snake_cased}.zip  ./export_templates_bs${version_snake_cased}/*
-mv ../release/export_templates_bs${version_snake_cased}.zip ../release/export_templates_bs${version_snake_cased}.tpz
+#mv ../release/export_templates_bs${version_snake_cased}.zip ../release/export_templates_bs${version_snake_cased}.tpz
 
 zip -q -r ../release/broken_seals${version_snake_cased}_full_source.zip  ./broken_seals${version_snake_cased}_full_source/*
 zip -q -r ../release/broken_seals${version_snake_cased}_game_source.zip  ./broken_seals${version_snake_cased}_game_source/*
