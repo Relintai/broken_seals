@@ -7,6 +7,7 @@ The main gameplay-loop goal is to create an experience with enough complexity an
 I want the game to run on every platform, but the game design is PC first. From the testing I've done this is not going to be an issue.
 
 This project now uses the ![Pandemonium Engine](https://github.com/Relintai/pandemonium_engine), which is my custom version of godot.
+It requires the presence of some of my engine modules, pandemonium contains all of them. See [here](https://github.com/Relintai/pandemonium_engine/tree/master/modules).
 
 You can get binaries under the releases tab [here](https://github.com/Relintai/broken_seals/releases).\
 You can also try a live version running in the browser [here](https://relintai.github.io/broken_seals/).
@@ -108,8 +109,8 @@ Missing:
 - Per chunk material support, even for props.
 - Terraman: prop support, even with mesh (and texture) merging. If you look at the trees on the screenshot, they are merged together per chunk, and they all share the material, and shader. Also if you serialize lights into props, they are added as vertex lights.
 - Terraman and PropInstance: Vertex light support. You can add vertex lights (via code, or the prop system), and the meshes will be colored with it.
-- Terraman:Vertex colors are also used to achieve the main style. (RAO).
-- Terraman:Vertex color based ambient occlusion support.
+- Terraman: Vertex colors are also used to achieve the main style. (RAO).
+- Terraman: Vertex color based ambient occlusion support.
 - Terraman and PropInstance: LOD support, even for prop meshes.
 - Terraman and PropInstance: LOD generation is scriptable.
 - Dungeon generation support via a separate prop based system. Dungeons are generated below ground, with teleporters to them. Also support for turning off the terrain engine while the player is inside a dungeon.
@@ -136,22 +137,12 @@ See the [Compiling](#compiling) section if you want to know how to do this.
 
 ### Engine
 
-Currently [my fork](https://github.com/Relintai/godot) of godot is used as a base for the engine (3.x). \
-This contains a port of [TokageItLab's SkeletonEditor pr](https://github.com/godotengine/godot/pull/45699).\
-The original godot source will likely work too if you want that for some reason.
+Currently the [Pandemonium Engine](https://github.com/Relintai/pandemonium_engine) is used as the engine for this project,
+which is a heavily customized verison of the [Godot game engine](https://godotengine.org/). It's based on the 3.x branch. 
 
-The engine needs to have some engine modules built in. For example:
+It contains my engine modules, and also it got significanlty slimmed down compared to vanilla Godot.
 
-- Except for a few scripts, entities, spells and auras are handled by the 
-[entity_spell_system](https://github.com/Relintai/entity_spell_system)
-module, on the c++ side.
-- Threading is handled by [ThreadPool](https://github.com/Relintai/thread_pool).
-- The terrain is handled by [Terraman](https://github.com/Relintai/terraman.git).
-- Most of the models are imported as MeshDataResources, these are meshes that are meant to be merged.
-These come from the [MeshDataResource](https://github.com/Relintai/mesh_data_resource) module.
-(Currently I'm working on the mesh_data_resource_editor addon that will enable these to be edited directly inside the editor.)
-
-Actually [here's the full list](#the-required-engine-modules).
+For a more in-depth changelog see it's changelog file [here](https://github.com/Relintai/pandemonium_engine/blob/master/CHANGELOG.md).
 
 ### Game
 
@@ -205,7 +196,7 @@ The editor contains an addon to help with editing the world.
 
 ## Editing the game
 
-Grab an engine with the required modules and then open the project inside the `game` folder.
+Grab the engine itself, and then open the project inside the `game` folder.
 
 After the initial import it might need an editor restart, however everything should work after that.
 
@@ -213,8 +204,11 @@ If you want to use master, you will likely need to build the editor for it if th
 
 ## Compiling
 
-First make sure, that you have everything installed to be able to compile the godot engine. See: See the [official docs for compiling Godot](https://docs.godotengine.org/en/latest/development/compiling/index.html) for more info. My setup/compile script uses the same tools, so
-you don't need to install anything else.
+First make sure, that you have everything installed to be able to compile the engine. 
+See the [official docs for compiling Godot](https://docs.godotengine.org/en/3.4/development/compiling/index.html) for more info. 
+My setup/compile script uses the same tools, so you don't need to install anything else.
+
+Even though the project doesn't use godot anymore, their docs are still sufficient.
 
 Now let's clone this repository:
 
@@ -383,44 +377,18 @@ the settings inside.
 If you you don't want to use the setup script (or just want to know what it actually does), 
 this section will explain how to set everything up manually.
 
-First clone godot. Either my fork (recommended at the moment):
+First clone the engine:
 
-``` git clone https://github.com/Relintai/godot.git ```
-
-or the official 3.x master:
-
-``` git clone https://github.com/godotengine/godot.git -b 3.x ```
-
-go into engine's modules fodler.
-
-``` cd godot/modules/ ```
-
-Now go ahead and get every single required engine module from [here](#the-required-engine-modules).
-
-``` cd ../../ ```
+``` git clone https://github.com/Relintai/pandemonium_engine ```
 
 Now if you look at the [HEADS file](https://github.com/Relintai/broken_seals/blob/master/HEADS).
 
 It contains the commit hashes for that particular revision for every module and the engine.
+The engine now contains all the modules, so at the moment only worry about the engine's commit hash.
 
-You need to go through them and checkout the proper commits.
+You need to go and checkout the proper commit for it.
 
-Now you can go ahead and compile godot normally.
-
-#### The required engine modules
-
-These are the required engine modules, they are listed here for completeness`s sake, the project's setup script will install these for you automatically! See the [compiling](#compiling) section.
-
-https://github.com/Relintai/entity_spell_system.git \
-https://github.com/Relintai/ui_extensions.git \
-https://github.com/Relintai/texture_packer.git \
-https://github.com/Relintai/godot_fastnoise.git \
-https://github.com/Relintai/mesh_data_resource.git \
-https://github.com/Relintai/props.git \
-https://github.com/Relintai/mesh_utils.git \
-https://github.com/Relintai/broken_seals_module.git \
-https://github.com/Relintai/thread_pool.git \
-https://github.com/Relintai/terraman.git
+Now you can go ahead and compile the engine normally.
 
 ## Pulling upstream changes
 
