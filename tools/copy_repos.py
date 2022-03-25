@@ -58,7 +58,7 @@ def copytree(src, dst, warn = 0):
         dp = os.path.join(dst, item)
 
         if os.path.isdir(sp):
-            if item == ".git" or item == "bin" or item == "__pycache__" or item == ".import" or item == "logs" or item == "release" or item == "export" or item == "build" or item == "libs":
+            if item == ".git" or item == ".gradle" or item == "bin" or item == "__pycache__" or item == ".import" or item == "logs" or item == "release" or item == "export" or item == "build" or item == "libs":
                 continue
 
             #print(item)
