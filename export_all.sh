@@ -37,7 +37,8 @@ cp ./pandemonium_engine/bin/pandemonium.windows.opt.tools.64.exe ${project_root}
 cp ./pandemonium_engine/bin/pandemonium.x11.opt.tools.64 ${project_root}/export/pandemonium.bs${version}.x11.opt.tools.64
 cp ./pandemonium_engine/bin/pandemonium.x11.pi4.opt.tools.32 ${project_root}/export/pandemonium.bs${version}.x11.pi4.opt.tools.32
 cp ./pandemonium_engine/bin/pandemonium.javascript.opt.tools.threads.zip ${project_root}/export/pandemonium.bs${version}.javascript.opt.tools.zip
-cp ./pandemonium_engine/bin/Godot.app.zip ${project_root}/export/pandemonium.bs${version}.osx.opt.tools.zip
+cp ./pandemonium_engine/bin/android_editor.apk ${project_root}/export/pandemonium.bs${version}.android_editor.apk
+cp ./pandemonium_engine/bin/Pandemonium.app.zip ${project_root}/export/pandemonium.bs${version}.osx.opt.tools.zip
 
 cp ./pandemonium_engine/bin/android_debug.apk ${project_root}/export/export_templates_bs${version_snake_cased}/android_debug.apk
 cp ./pandemonium_engine/bin/android_release.apk ${project_root}/export/export_templates_bs${version_snake_cased}/android_release.apk
