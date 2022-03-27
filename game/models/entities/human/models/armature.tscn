@@ -1,4 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://models/entities/human/models/cast-end.tres" type="Animation" id=1]
+[ext_resource path="res://models/entities/human/models/casting-loop.tres" type="Animation" id=2]
+[ext_resource path="res://models/entities/human/models/dead.tres" type="Animation" id=3]
+[ext_resource path="res://models/entities/human/models/idle-loop.tres" type="Animation" id=4]
+[ext_resource path="res://models/entities/human/models/rest.tres" type="Animation" id=5]
+[ext_resource path="res://models/entities/human/models/run-left-loop.tres" type="Animation" id=6]
+[ext_resource path="res://models/entities/human/models/run-loop.tres" type="Animation" id=7]
+[ext_resource path="res://models/entities/human/models/run-right-loop.tres" type="Animation" id=8]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -155,4 +164,13 @@ bones/28/enabled = true
 bones/28/bound_children = [  ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rest"
 anims/RESET = SubResource( 1 )
+anims/cast-end = ExtResource( 1 )
+anims/casting-loop = ExtResource( 2 )
+anims/dead = ExtResource( 3 )
+anims/idle-loop = ExtResource( 4 )
+anims/rest = ExtResource( 5 )
+anims/run-left-loop = ExtResource( 6 )
+anims/run-loop = ExtResource( 7 )
+anims/run-right-loop = ExtResource( 8 )
