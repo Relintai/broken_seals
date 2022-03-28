@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://models/entities/human/models/armature_editor.gd" type="Script" id=1]
 [ext_resource path="res://player/CharacterSkeletonAttachPoint.gd" type="Script" id=2]
 [ext_resource path="res://core/model_visuals/test_base_v3.tres" type="ModelVisual" id=5]
 [ext_resource path="res://models/entities/human/models/armature.tscn" type="PackedScene" id=6]
+
+[sub_resource type="ProceduralSky" id=6]
+sky_top_color = Color( 0.960784, 0.984314, 0.996078, 1 )
+sky_horizon_color = Color( 0.129412, 0.129412, 0.129412, 1 )
+sky_curve = 0.151361
+ground_horizon_color = Color( 0.0745098, 0.0745098, 0.0745098, 1 )
+
+[sub_resource type="Environment" id=7]
+background_mode = 2
+background_sky = SubResource( 6 )
+background_color = Color( 0.105882, 0.0862745, 0.0862745, 1 )
+background_energy = 1.41
 
 [node name="character" type="CharacterSkeleton3D"]
 entity_type = 1
@@ -131,5 +143,12 @@ positions = [ NodePath("../LeftBackAttachment/LeftBackAP"), NodePath("../ShieldA
 transform = Transform( 0.999997, -0.00244488, -0.000478373, 0.00244479, 0.999902, 0.0113564, 0.000450593, -0.0113563, 0.999935, 0.00159363, 1.13165, -0.122549 )
 script = ExtResource( 2 )
 positions = [ NodePath("../RightBackAttachment/RightBackAP"), NodePath("../RightHandAttachment/RightHandAP") ]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.962004, 0.140685, -0.234001, 0, 0.857032, 0.515262, 0.273036, -0.495684, 0.824468, -2.67044, 6.99647, 9.77147 )
+light_color = Color( 0.752941, 0.101961, 0.101961, 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 7 )
 
 [editable path="armature"]
