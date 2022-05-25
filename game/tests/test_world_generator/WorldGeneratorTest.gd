@@ -1,7 +1,7 @@
 tool
 extends Sprite
 
-var brenzenham_script = preload("res://test_world_generator/brenzenham.gd")
+var brenzenham_script = preload("res://tests/test_world_generator/brenzenham.gd")
 var brenzenham
 
 export(int) var continent_width : int = 1024
