@@ -3,5 +3,8 @@
 [ext_resource path="res://textures/world/stone/stone_dungeon_1_albedo.png" type="Texture" id=1]
 
 [resource]
-tiling_type = 3
-textures = [ ExtResource( 1 ) ]
+tiling_type = 2
+set_tile_count = 1
+tile_0/texture = ExtResource( 1 )
+tile_0/y_size = 1.0
+tile_0/z_offset = 0.0
