@@ -21,3 +21,5 @@
 !world_generator/**
 !addon_versions
 
+!gdc_converter
+!gdc_converter/**
