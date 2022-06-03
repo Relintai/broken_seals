@@ -392,6 +392,12 @@ class GDSParser:
 				
 				ret.append("#" + expstr)
 				l = l.replace(expstr, "")
+				
+			var setget_indx = lfstrip.find(" setget ")
+			if setget_indx != -1:
+				var setget_str : String = lfstrip.substr(setget_indx)
+				ret.append("#" + setget_str)
+				l = l.replace(setget_str, "")
 			
 			if l.ends_with("\\"):
 				if !accum:
