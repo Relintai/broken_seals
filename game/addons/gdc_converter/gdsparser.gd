@@ -614,7 +614,7 @@ class GDSScope:
 
 
 class GDSParser:
-	var root : GDSScope.GDSScope
+	var root : GDSScope
 	
 	func parse(contents : String, file_name : String) -> void:
 		root = GDSScope.new()
