@@ -351,6 +351,26 @@ class GDSScope:
 		func_final += ")"
 		
 		return func_final
+		
+	func camel_case_scope_data() -> void:
+		scope_data = camel_case_name(scope_data)
+
+	func camel_case_name(cname : String) -> String:
+		var ret : String = ""
+		
+		var next_upper : bool = true
+		for i in range(cname.length()):
+			if cname[i] == "_":
+				next_upper = true
+				continue
+				
+			if next_upper:
+				ret += cname[i].to_upper()
+				next_upper = false
+			else:
+				ret += cname[i]
+
+		return ret
 
 	func _to_string():
 		return convert_to_string()
@@ -362,9 +382,11 @@ class GDSParser:
 		root = GDSScope.new()
 		root.raw_scope_data = file_name
 		root.scope_data = file_name.get_file().trim_suffix(".gd")
+		root.camel_case_scope_data()
 		var c : PoolStringArray = split_preprocess_content(contents)
 		root.parse(c)
-	
+		
+
 	func split_preprocess_content(contents : String) -> PoolStringArray:
 		var ret : PoolStringArray = PoolStringArray()
 		
