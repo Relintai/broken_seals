@@ -51,24 +51,25 @@ class GDSScope:
 				scope_lines.append(cl)
 				current_index += 1
 				continue
-			
+				
 			var curr_line_indent : int = get_indent_count(cl)
+			var clstripped : String = cl.strip_edges(true, false)
 			
 			if curr_line_indent < current_indent:
 				return current_index
 			
 			if cl.ends_with(":"):
 				var scope : GDSScope = GDSScope.new()
-				scope.parse_scope_data(cl)
+				scope.parse_scope_data(clstripped)
 				current_index += 1
-				current_index = scope.parse(contents, current_index, curr_line_indent)
+				current_index = scope.parse(contents, current_index, curr_line_indent + 1)
 				subscopes.append(scope)
 				
 				#don't
 				#current_index += 1
 				continue
 			
-			scope_lines.append(cl)
+			scope_lines.append(clstripped)
 			current_index += 1
 		
 		return current_index
@@ -88,23 +89,32 @@ class GDSScope:
 				break
 		
 		return c
+	
+	func convert_to_string(current_scope_level : int = 0) -> String:
+		var indents : String = ""
 		
-	func _to_string():
-		var s : String = "---GDSScope---\n"
+		for i in range(current_scope_level):
+			indents += " "
+			
+		var s : String = indents + "---GDSScope---\n"
+			
+		s += indents + raw_scope_data + "\n"
 		
-		s += raw_scope_data + "\n"
+		indents += " "
 		
 		for l in scope_lines:
-			s += l + "\n"
+			s += indents + l + "\n"
 			
 		for subs in subscopes:
 			s += "\n"
-			s += str(subs)
-			s += "\n"
+			s += subs.convert_to_string(current_scope_level + 1)
 			
 		s += "\n"
 			
 		return s
+	
+	func _to_string():
+		return convert_to_string()
 
 class GDSParser:
 	var root : GDSScope
