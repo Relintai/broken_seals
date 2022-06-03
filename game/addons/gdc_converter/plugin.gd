@@ -322,6 +322,13 @@ class GDSParser:
 			if lfstrip.begins_with("#"):
 				ret.append(lfstrip)
 				continue
+				
+			if lfstrip.begins_with("export"):
+				var indx = lfstrip.find("var")
+				var expstr : String = lfstrip.substr(0, indx)
+				
+				ret.append("#" + expstr)
+				l = l.replace(expstr, "")
 			
 			if l.ends_with("\\"):
 				if !accum:
