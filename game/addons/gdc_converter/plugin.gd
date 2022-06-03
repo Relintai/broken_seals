@@ -1,6 +1,12 @@
 tool
 extends EditorPlugin
 
+#TODO
+#CamelCase Class names
+#variable transforms. -> Simple core types should be locals, the rest are pointers. Refs refs.
+#class variables to contructors
+#getters setters from class variables
+#bind methods autogen
 
 func _enter_tree():
 	add_tool_menu_item("Convert scripts", self, "on_menu_clicked")
@@ -243,7 +249,7 @@ class GDSScope:
 			s += indents + " public:\n"
 
 		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
-			s += scope_data + ";"
+			s += transform_method_to_cpp() + ";"
 			return s
 		elif type == GDScopeType.GDSCOPE_TYPE_ENUM:
 			s += scope_data + " {"
@@ -275,7 +281,6 @@ class GDSScope:
 			s += indents + scope_data + "();\n"
 			s += indents + "~" + scope_data + "();\n"
 			s += "\n"
-			
 			s += indents + "protected:\n"
 			s += indents + "static void _bind_methods();\n"
 			
@@ -288,6 +293,64 @@ class GDSScope:
 		s += "\n"
 			
 		return s
+
+	func transform_method_to_cpp(name_prefix : String = "") -> String:
+		if type != GDScopeType.GDSCOPE_TYPE_FUNC:
+			return ""
+		
+		var func_data : String = scope_data
+		var func_ret_type : String = "void"
+		
+		var indx : int = scope_data.find(" -> ")
+		
+		if indx != -1:
+			func_ret_type = scope_data.substr(indx + 4)
+			func_data = scope_data.substr(0, indx)
+			
+		var func_final : String = func_ret_type + " "
+		indx = func_data.find("(")
+		var func_name : String = func_data.substr(0, indx)
+		func_final += name_prefix + func_name + "("
+		
+		var func_params : String = func_data.substr(indx + 1, func_data.length() - indx - 2)
+		
+		if func_params != "":
+			var params : PoolStringArray = func_params.split(",", false)
+			
+			for i in range(params.size()):
+				var p : String = params[i]
+				
+				var default_value_indx : int = p.find("=")
+				var default_value : String 
+				
+				if default_value_indx != -1:
+					default_value = p.substr(default_value_indx + 1).strip_edges()
+					p = p.substr(0, default_value_indx).strip_edges()
+				
+				var type_indx : int = p.find(":")
+				
+				if type_indx != -1:
+					var param_type : String = p.substr(type_indx + 1).strip_edges()
+					p = p.substr(0, type_indx).strip_edges()
+					
+					if param_type == "int" || param_type == "float" || param_type == "bool" || param_type == "RID":
+						func_final += "const " + param_type + " "
+					else:
+						func_final += "const " + param_type + " &"
+				else:
+					func_final += "const Variant &"
+
+				func_final += p
+				
+				if default_value_indx != -1:
+					func_final += " = " + default_value
+				
+				if i + 1 < params.size():
+					func_final += ", "
+		
+		func_final += ")"
+		
+		return func_final
 
 	func _to_string():
 		return convert_to_string()
