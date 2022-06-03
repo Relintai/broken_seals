@@ -38,15 +38,35 @@ enum GDScopeType {
 
 class GDSScope:
 	var type : int = GDScopeType.GDSCOPE_TYPE_GENERIC
-	var scope_name : String = ""
 	var scope_data : String = ""
 	var raw_scope_data : String = ""
+	var scope_data_alt : String = ""
+	var raw_scope_data_alt : String = ""
 	var subscopes : Array = Array()
 	var scope_lines : PoolStringArray = PoolStringArray()
 
 	func parse(contents : PoolStringArray, current_index : int = 0, current_indent : int = 0) -> int:
 		while current_index < contents.size():
 			var cl : String = contents[current_index]
+			
+			if cl == "tool":
+				scope_lines.append("#" + cl)
+				current_index += 1
+				continue
+			
+			if cl.begins_with("class_name "):
+				type = GDScopeType.GDSCOPE_TYPE_CLASS
+				raw_scope_data = cl
+				scope_data = cl.trim_prefix("class_name ")
+				current_index += 1
+				continue
+				
+			if cl.begins_with("extends "):
+				type = GDScopeType.GDSCOPE_TYPE_CLASS
+				raw_scope_data_alt = cl
+				scope_data_alt = cl.trim_prefix("extends ")
+				current_index += 1
+				continue
 			
 			if cl.begins_with("#"):
 				scope_lines.append(cl)
@@ -121,7 +141,13 @@ class GDSScope:
 			
 		var s : String = indents + "---GDSScope---\n"
 			
-		s += indents + raw_scope_data + " -- " + type_to_print_string() + " " + scope_data + "\n"
+		s += indents + raw_scope_data + " -- " + type_to_print_string() + " "
+		s += scope_data
+		
+		if scope_data_alt != "":
+			s += " " + scope_data_alt
+			
+		s += "\n"
 		
 		indents += " "
 		
@@ -164,8 +190,10 @@ class GDSScope:
 class GDSParser:
 	var root : GDSScope
 	
-	func parse(contents : String) -> void:
+	func parse(contents : String, file_name : String) -> void:
 		root = GDSScope.new()
+		root.raw_scope_data = file_name
+		root.scope_data = file_name.get_file().trim_suffix(".gd")
 		var c : PoolStringArray = split_preprocess_content(contents)
 		root.parse(c)
 	
@@ -217,6 +245,6 @@ func process_file(file_name : String) -> void:
 	file.close()
 	
 	var parser : GDSParser = GDSParser.new()
-	parser.parse(contents)
+	parser.parse(contents, file_name)
 	print(parser)
 	
