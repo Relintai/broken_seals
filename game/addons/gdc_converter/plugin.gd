@@ -1,11 +1,6 @@
 tool
 extends EditorPlugin
 
-#TODO
-#.cpp gen
-#class variables to contructors
-#bind methods autogen
-
 func _enter_tree():
 	add_tool_menu_item("Convert scripts", self, "on_menu_clicked")
 
