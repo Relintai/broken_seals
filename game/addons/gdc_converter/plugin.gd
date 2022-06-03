@@ -2,7 +2,6 @@ tool
 extends EditorPlugin
 
 #TODO
-#CamelCase Class names
 #variable transforms. -> Simple core types should be locals, the rest are pointers. Refs refs.
 #class variables to contructors
 #getters setters from class variables
@@ -257,18 +256,7 @@ class GDSScope:
 		s += "\n"
 		
 		indents += " "
-		
-		for l in scope_lines:
-			if l.begins_with("#"):
-				l = l.replace("#", "//")
-				s += indents + l + "\n"
-				continue
 
-			l = l.replace("#", ";//")
-			s += indents + l + ";\n"
-			
-		s += "\n"
-			
 		for subs in subscopes:
 			var scstr : String = subs.get_cpp_header_string(current_scope_level + 1)
 			
@@ -284,6 +272,16 @@ class GDSScope:
 			s += indents + "protected:\n"
 			s += indents + "static void _bind_methods();\n"
 			
+		s += "\n"
+				
+		for l in scope_lines:
+			if l.begins_with("#"):
+				l = l.replace("#", "//")
+				s += indents + l + "\n"
+				continue
+
+			l = l.replace("#", ";//")
+			s += indents + l + ";\n"
 		
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS || type == GDScopeType.GDSCOPE_TYPE_ENUM:
 			s += "};"
