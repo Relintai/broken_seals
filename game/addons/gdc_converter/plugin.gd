@@ -272,17 +272,26 @@ class GDSScope:
 			s += indents + "static void _bind_methods();\n"
 			
 		s += "\n"
-				
-		for l in scope_lines:
-			if l.begins_with("#"):
-				l = l.replace("#", "//")
+		
+		if type != GDScopeType.GDSCOPE_TYPE_ENUM:
+			for l in scope_lines:
+				if l.begins_with("#"):
+					l = l.replace("#", "//")
+					s += indents + l + "\n"
+					continue
+					
+				if l.begins_with("var "):
+					s += indents + transform_variable_to_cpp(l) + ";\n"
+				else:
+					s += indents + l + ";\n"
+		else:
+			for l in scope_lines:
+				if l.begins_with("#"):
+					l = l.replace("#", "//")
+					s += indents + l + "\n"
+					continue
+
 				s += indents + l + "\n"
-				continue
-				
-			if l.begins_with("var "):
-				s += indents + transform_variable_to_cpp(l) + ";\n"
-			else:
-				s += indents + l + ";\n"
 		
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS || type == GDScopeType.GDSCOPE_TYPE_ENUM:
 			s += "};"
