@@ -33,6 +33,7 @@ enum GDScopeType {
 	GDSCOPE_TYPE_FUNC,
 	GDSCOPE_TYPE_FOR,
 	GDSCOPE_TYPE_WHILE,
+	GDSCOPE_TYPE_ENUM,
 };
 
 class GDSScope:
@@ -58,7 +59,7 @@ class GDSScope:
 			if curr_line_indent < current_indent:
 				return current_index
 			
-			if cl.ends_with(":"):
+			if cl.ends_with(":") || cl.begins_with("enum "):
 				var scope : GDSScope = GDSScope.new()
 				scope.parse_scope_data(clstripped)
 				current_index += 1
@@ -77,8 +78,30 @@ class GDSScope:
 	func parse_scope_data(s : String) -> void:
 		raw_scope_data = s
 		
-		#todo handle and split ifs, etc
-		
+		if raw_scope_data.begins_with("if "):
+			type = GDScopeType.GDSCOPE_TYPE_IF
+			scope_data = raw_scope_data.trim_prefix("if ").trim_suffix(":")
+		elif raw_scope_data.begins_with("elif "):
+			type = GDScopeType.GDSCOPE_TYPE_ELIF
+			scope_data = raw_scope_data.trim_prefix("elif ").trim_suffix(":")
+		elif raw_scope_data.begins_with("else"):
+			type = GDScopeType.GDSCOPE_TYPE_ELSE
+		elif raw_scope_data.begins_with("class "):
+			type = GDScopeType.GDSCOPE_TYPE_CLASS
+			scope_data = raw_scope_data.trim_prefix("class ").trim_suffix(":")
+		elif raw_scope_data.begins_with("enum "):
+			type = GDScopeType.GDSCOPE_TYPE_ENUM
+			scope_data = raw_scope_data.trim_prefix("enum ").trim_suffix("{")
+		elif raw_scope_data.begins_with("func "):
+			type = GDScopeType.GDSCOPE_TYPE_FUNC
+			scope_data = raw_scope_data.trim_prefix("func ").trim_suffix(":")
+		elif raw_scope_data.begins_with("for "):
+			type = GDScopeType.GDSCOPE_TYPE_FOR
+			scope_data = raw_scope_data.trim_prefix("for ").trim_suffix(":")
+		elif raw_scope_data.begins_with("while "):
+			type = GDScopeType.GDSCOPE_TYPE_WHILE
+			scope_data = raw_scope_data.trim_prefix("while ").trim_suffix(":")
+
 	func get_indent_count(s : String) -> int:
 		var c : int = 0
 		
@@ -98,7 +121,7 @@ class GDSScope:
 			
 		var s : String = indents + "---GDSScope---\n"
 			
-		s += indents + raw_scope_data + "\n"
+		s += indents + raw_scope_data + " -- " + type_to_print_string() + " " + scope_data + "\n"
 		
 		indents += " "
 		
@@ -113,6 +136,28 @@ class GDSScope:
 			
 		return s
 	
+	func type_to_print_string() -> String:
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			return "(CLASS)"
+		elif type == GDScopeType.GDSCOPE_TYPE_IF:
+			return "(IF)"
+		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
+			return "(ELIF)"
+		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
+			return "(ELSE)"
+		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
+			return "(FUNC)"
+		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
+			return "(FOR)"
+		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
+			return "(WHILE)"
+		elif type == GDScopeType.GDSCOPE_TYPE_ENUM:
+			return "(ENUM)"
+		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
+			return "(GEN)"
+
+		return "(UNKN)"
+
 	func _to_string():
 		return convert_to_string()
 
