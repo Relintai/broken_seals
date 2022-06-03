@@ -309,7 +309,104 @@ class GDSScope:
 			
 		return s
 
-	func create_cpp_getter_setter(line : String, header : bool, indent : String) -> String:
+	func get_cpp_impl_string(current_scope_level : int = 0, owner_class_name : String = "") -> String:
+		if type == GDScopeType.GDSCOPE_TYPE_ENUM:
+			return ""
+		
+		var indents : String = ""
+		
+		for i in range(current_scope_level):
+			indents += " "
+			
+		var s : String = ""
+			
+		s += indents
+		
+		if type == GDScopeType.GDSCOPE_TYPE_IF:
+			s += "if (" + scope_data + ") {"
+		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
+			s += "if (" + scope_data  + ") {"
+		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
+			s += "else {"
+		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
+			s += "for (" + scope_data  + ") {"
+		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
+			s += "while (" + scope_data  + ") {"
+		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
+			s += scope_data  + " {"
+		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
+			s += transform_method_to_cpp(owner_class_name)  + " {"
+		elif type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			owner_class_name = scope_data + "::"
+			
+			for l in scope_lines:
+				var gs : String = create_cpp_getter_setter(l, false, indents, owner_class_name)
+				
+				if gs != "":
+					s += gs + "\n"
+		
+		s += "\n"
+		indents += " "
+
+		for subs in subscopes:
+			var scstr : String = subs.get_cpp_impl_string(current_scope_level + 1, owner_class_name)
+			
+			if scstr != "":
+				s += scstr
+				s += "\n"
+		
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			s += "\n"
+			s += indents + scope_data + "::" + scope_data + "() {\n"
+			
+			for l in scope_lines:
+				if l.find("preload") != -1:
+					s += indents + "//" + l + ";\n"
+				elif l.begins_with("var "):
+					var vcpp : String = transform_variable_to_cpp(l)
+					var index_fs : int = vcpp.find(" ")
+					if index_fs != -1:
+						vcpp = vcpp.substr(index_fs + 1)
+
+					s += indents + " " + vcpp + ";\n"
+			
+			s += indents + "}\n\n"
+			s += indents + scope_data + "::~" + scope_data + "() {\n"
+			s += indents + "}\n\n"
+			s += "\n"
+			s += indents + "static void " + scope_data + "::_bind_methods() {\n"
+			s += indents + "/*\n"
+			
+			for l in scope_lines:
+				var gs : String = create_cpp_getter_setter(l, true, indents + " ")
+				
+				if gs != "":
+					s += gs + "\n"
+					
+			for subs in subscopes:
+				var scstr : String = subs.get_cpp_header_string(indents.length() + 1)
+				
+				if scstr != "":
+					s += scstr + "\n"
+					
+			s += indents + "*/\n"
+			s += indents + "}\n\n"
+			
+		s += "\n"
+		
+		if type != GDScopeType.GDSCOPE_TYPE_CLASS:
+			for l in scope_lines:
+				if l.begins_with("#"):
+					l = l.replace("#", "//")
+					s += indents + l + ";\n"
+					continue
+
+				s += indents + l + ";\n"
+			s += "}\n"
+			
+		return s
+
+	func create_cpp_getter_setter(line : String, header : bool, indent : String, class_prefix : String = "") -> String:
 		if !line.begins_with("var "):
 			return ""
 		
@@ -328,7 +425,7 @@ class GDSScope:
 		var ret_final : String = ""
 		
 		if var_type == "int" || var_type == "float" || var_type == "bool" || var_type == "RID":
-			ret_final += indent + var_type + " get_" + var_name + "() const"
+			ret_final += indent + var_type + " " + class_prefix + "get_" + var_name + "() const"
 			
 			if !header:
 				ret_final += " {\n";
@@ -337,7 +434,7 @@ class GDSScope:
 			else:
 				ret_final += ";\n"
 				
-			ret_final += indent + "void set_" + var_name + "(const " + var_type + " val)"
+			ret_final += indent + "void " + class_prefix + "set_" + var_name + "(const " + var_type + " val)"
 			
 			if !header:
 				ret_final += " {\n";
@@ -346,7 +443,7 @@ class GDSScope:
 			else:
 				ret_final += ";\n"
 		else:
-			ret_final += indent + var_type + " get_" + var_name + "()"
+			ret_final += indent + var_type + " " + class_prefix + "get_" + var_name + "()"
 			
 			if !header:
 				ret_final += " {\n";
@@ -355,7 +452,7 @@ class GDSScope:
 			else:
 				ret_final += ";\n"
 			
-			ret_final += indent + "void set_" + var_name + "(const " + var_type + " &val)"
+			ret_final += indent + "void " + class_prefix + "set_" + var_name + "(const " + var_type + " &val)"
 			
 			if !header:
 				ret_final += " {\n";
@@ -629,7 +726,22 @@ class GDSParser:
 		s += "\n"
 		
 		return s
+		
+	func get_cpp_impl_string(file_name : String) -> String:
+		var include_name : String = file_name.get_file()
+		include_name = include_name.to_lower()
+		include_name = include_name.trim_suffix(".gd")
+		include_name += ".h"
 
+		var s : String = "\n"
+		s += "#include \"" + include_name + "\"\n"
+		s += "\n\n"
+		
+		s += root.get_cpp_impl_string()
+		
+		s += "\n\n"
+		
+		return s
 
 func process_file(file_name : String) -> void:
 	var file : File = File.new()
@@ -640,5 +752,6 @@ func process_file(file_name : String) -> void:
 	var parser : GDSParser = GDSParser.new()
 	parser.parse(contents, file_name)
 	#print(parser)
-	print(parser.get_cpp_header_string(file_name))
+	#print(parser.get_cpp_header_string(file_name))
+	print(parser.get_cpp_impl_string(file_name))
 	
