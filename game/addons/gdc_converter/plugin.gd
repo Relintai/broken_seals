@@ -132,7 +132,7 @@ class GDSScope:
 				break
 		
 		return c
-	
+		
 	func convert_to_string(current_scope_level : int = 0) -> String:
 		var indents : String = ""
 		
@@ -183,6 +183,101 @@ class GDSScope:
 			return "(GEN)"
 
 		return "(UNKN)"
+		
+	func type_to_cpp_entity() -> String:
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			return "class "
+		elif type == GDScopeType.GDSCOPE_TYPE_IF:
+			return "if "
+		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
+			return "else if "
+		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
+			return "else "
+		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
+			return "for "
+		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
+			return "while "
+		elif type == GDScopeType.GDSCOPE_TYPE_ENUM:
+			return "enum "
+		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
+			return ""
+
+		return ""
+
+	func get_cpp_header_string(current_scope_level : int = 0) -> String:
+		if type == GDScopeType.GDSCOPE_TYPE_IF:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
+			return ""
+		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
+			return ""
+		
+		var indents : String = ""
+		
+		for i in range(current_scope_level):
+			indents += " "
+			
+		var s : String = ""
+			
+		s += indents + type_to_cpp_entity() 
+		
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			s += scope_data 
+			
+			if scope_data_alt != "":
+				s += " : public " + scope_data_alt
+			
+			s += " {\n"
+			
+			if scope_data_alt != "":
+				s += indents + " GDCLASS(" + scope_data + ", " + scope_data_alt + ")\n\n"
+				
+			s += indents + " public:\n"
+
+		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
+			s += scope_data + ";"
+			return s
+		elif type == GDScopeType.GDSCOPE_TYPE_ENUM:
+			s += scope_data + " {"
+		
+		s += "\n"
+		
+		indents += " "
+		
+		for l in scope_lines:
+			if l.begins_with("#"):
+				l = l.replace("#", "//")
+				s += indents + l + "\n"
+				continue
+
+			l = l.replace("#", ";//")
+			s += indents + l + ";\n"
+			
+		s += "\n"
+			
+		for subs in subscopes:
+			var scstr : String = subs.get_cpp_header_string(current_scope_level + 1)
+			
+			if scstr != "":
+				s += scstr
+				s += "\n"
+			
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS || type == GDScopeType.GDSCOPE_TYPE_ENUM:
+			s += "};"
+		else:
+			s += "}"
+		
+		s += "\n"
+			
+		return s
 
 	func _to_string():
 		return convert_to_string()
@@ -236,6 +331,24 @@ class GDSParser:
 		
 	func _to_string():
 		return str(root)
+		
+	func get_cpp_header_string(file_name : String) -> String:
+		var include_guard_name : String = file_name.get_file()
+		include_guard_name = include_guard_name.to_upper()
+		include_guard_name = include_guard_name.trim_suffix(".GD")
+		include_guard_name += "_H"
+
+		var s : String = "#ifndef " + include_guard_name + "\n"
+		s += "#define " + include_guard_name + "\n"
+		s += "\n\n"
+		
+		s += root.get_cpp_header_string()
+		
+		s += "\n\n"
+		s += "#endif"
+		s += "\n"
+		
+		return s
 
 
 func process_file(file_name : String) -> void:
@@ -246,5 +359,6 @@ func process_file(file_name : String) -> void:
 	
 	var parser : GDSParser = GDSParser.new()
 	parser.parse(contents, file_name)
-	print(parser)
+	#print(parser)
+	print(parser.get_cpp_header_string(file_name))
 	
