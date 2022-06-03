@@ -23,7 +23,6 @@ func on_menu_clicked(val) -> void:
 			if !dir.current_is_dir():
 				if file_name.get_extension() == "gd":
 					process_file(dir_name + file_name)
-					return
 			
 			file_name = dir.get_next()
 			
@@ -242,7 +241,7 @@ class GDSScope:
 			s += " {\n"
 			
 			if scope_data_alt != "":
-				s += indents + " GDCLASS(" + scope_data + ", " + scope_data_alt + ")\n\n"
+				s += indents + " GDCLASS(" + scope_data + ", " + scope_data_alt + ");\n\n"
 				
 			s += indents + " public:\n"
 
@@ -753,5 +752,22 @@ func process_file(file_name : String) -> void:
 	parser.parse(contents, file_name)
 	#print(parser)
 	#print(parser.get_cpp_header_string(file_name))
-	print(parser.get_cpp_impl_string(file_name))
+	#print(parser.get_cpp_impl_string(file_name))
 	
+	var save_base_file_path : String = file_name.get_base_dir()
+	var save_base_file_name : String = file_name.get_file().to_lower().trim_suffix(".gd")
+	
+	var header_file : String = save_base_file_path + "/" + save_base_file_name + ".h"
+	var impl_file : String = save_base_file_path + "/" + save_base_file_name + ".cpp"
+	
+	var header_data : String = parser.get_cpp_header_string(file_name)
+	var impl_data : String = parser.get_cpp_impl_string(file_name)
+	
+	file.open(header_file, File.WRITE)
+	file.store_string(header_data)
+	file.close()
+	
+	file.open(impl_file, File.WRITE)
+	file.store_string(impl_data)
+	file.close()
+
