@@ -2,7 +2,6 @@ tool
 extends EditorPlugin
 
 #TODO
-#variable transforms. -> Simple core types should be locals, the rest are pointers. Refs refs.
 #class variables to contructors
 #getters setters from class variables
 #bind methods autogen
@@ -279,9 +278,11 @@ class GDSScope:
 				l = l.replace("#", "//")
 				s += indents + l + "\n"
 				continue
-
-			l = l.replace("#", ";//")
-			s += indents + l + ";\n"
+				
+			if l.begins_with("var "):
+				s += indents + transform_variable_to_cpp(l) + ";\n"
+			else:
+				s += indents + l + ";\n"
 		
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS || type == GDScopeType.GDSCOPE_TYPE_ENUM:
 			s += "};"
@@ -291,6 +292,101 @@ class GDSScope:
 		s += "\n"
 			
 		return s
+
+	func transform_variable_assign(line : String = "") -> String:
+		
+		if !line.ends_with(" as "):
+			return line
+		
+		#This should hadnle primitive types like int
+		if !line.ends_with(".new()"):
+			return line
+			
+		
+		return line
+
+	func transform_variable_to_cpp(line : String = "") -> String:
+		line = line.replace("var ", "")
+		
+		var var_final : String = ""
+		
+		var param_type : String
+		var var_name : String
+		var assigned_value : String 
+		
+		var assigned_value_indx : int = line.find("=")
+		
+		if assigned_value_indx != -1:
+			assigned_value = line.substr(assigned_value_indx + 1).strip_edges()
+			line = line.substr(0, assigned_value_indx).strip_edges()
+			assigned_value = transform_variable_assign(assigned_value)
+				
+		var type_indx : int = line.find(":")
+		if type_indx != -1:
+			param_type = line.substr(type_indx + 1).strip_edges()
+			var_name = line.substr(0, type_indx).strip_edges()
+		if param_type == "int" || param_type == "float" || param_type == "bool" || param_type == "RID":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Vector2" || param_type == "Vector2i":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Vector3" || param_type == "Vector3i":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Rect2" || param_type == "Rect2i":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Transform" || param_type == "Transform2D":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "String" || param_type == "StringName":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Quat" || param_type == "Plane":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "NodePath" || param_type == "Dictionary":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Color" || param_type == "Basis":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "Array" || param_type == "AABB":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "PoolByteArray" || param_type == "PoolColorArray":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "PoolIntArray" || param_type == "PoolRealArray":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "PoolVector2Array" || param_type == "PoolVector2iArray":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "PoolVector3Array" || param_type == "PoolVector3iArray":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type == "PoolStringArray":
+			var_final += param_type + " " + var_name + " = " + assigned_value
+		elif param_type != "":
+			if ClassDB.class_exists(param_type):
+				#check if it's a reference
+				var is_ref : bool = false
+				var pcls : String = param_type
+				while pcls != "Object":
+					pcls = ClassDB.get_parent_class(pcls)
+
+					if pcls == "Reference":
+						is_ref = true
+						break
+						
+				if is_ref:
+					var_final += "Ref<" + param_type + "> " + var_name
+				else:
+					var_final += param_type + " *" + var_name
+					
+				if assigned_value != "":
+					var_final += " = " + assigned_value
+			else:
+				#Assume it needs a pointer
+				var_final += param_type + " *" + var_name
+				
+				if assigned_value != "":
+					var_final += " = " + assigned_value
+		else:
+			var_final += "Variant "  + var_name
+			
+			if assigned_value != "":
+				var_final += " = " + assigned_value
+			
+		return var_final
 
 	func transform_method_to_cpp(name_prefix : String = "") -> String:
 		if type != GDScopeType.GDSCOPE_TYPE_FUNC:
