@@ -269,7 +269,17 @@ class GDSScope:
 			if scstr != "":
 				s += scstr
 				s += "\n"
+		
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			s += "\n"
+			s += indents + scope_data + "();\n"
+			s += indents + "~" + scope_data + "();\n"
+			s += "\n"
 			
+			s += indents + "protected:\n"
+			s += indents + "static void _bind_methods();\n"
+			
+		
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS || type == GDScopeType.GDSCOPE_TYPE_ENUM:
 			s += "};"
 		else:
