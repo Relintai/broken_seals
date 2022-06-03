@@ -413,11 +413,17 @@ class GDSParser:
 				ret.append("#" + expstr)
 				l = l.replace(expstr, "")
 				
-			var setget_indx = lfstrip.find(" setget ")
+			var setget_indx = l.find(" setget ")
 			if setget_indx != -1:
-				var setget_str : String = lfstrip.substr(setget_indx)
+				var setget_str : String = l.substr(setget_indx)
 				ret.append("#" + setget_str)
-				l = l.replace(setget_str, "")
+				l = l.substr(0, setget_indx).strip_edges(false, true)
+				
+			var hash_symbol_index = l.find("#")
+			if hash_symbol_index != -1:
+				var comment_str : String = l.substr(hash_symbol_index)
+				ret.append(comment_str)
+				l = l.substr(0, hash_symbol_index).strip_edges(false, true)
 			
 			if l.ends_with("\\"):
 				if !accum:
