@@ -2,8 +2,8 @@ tool
 extends EditorPlugin
 
 #TODO
+#.cpp gen
 #class variables to contructors
-#getters setters from class variables
 #bind methods autogen
 
 func _enter_tree():
@@ -255,7 +255,14 @@ class GDSScope:
 		s += "\n"
 		
 		indents += " "
-
+		
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			for l in scope_lines:
+				var gs : String = create_cpp_getter_setter(l, true, indents)
+				
+				if gs != "":
+					s += gs + "\n"
+			
 		for subs in subscopes:
 			var scstr : String = subs.get_cpp_header_string(current_scope_level + 1)
 			
@@ -302,7 +309,64 @@ class GDSScope:
 			
 		return s
 
-	func transform_variable_assign(line : String = "") -> String:
+	func create_cpp_getter_setter(line : String, header : bool, indent : String) -> String:
+		if !line.begins_with("var "):
+			return ""
+		
+		var cpp_var : String = transform_variable_to_cpp(line)
+		
+		var equals_index = cpp_var.find("=")
+		if equals_index != -1:
+			cpp_var = cpp_var.substr(0, equals_index)
+		
+		cpp_var = cpp_var.strip_edges()
+		
+		var name_start_index : int = cpp_var.find_last(" ")
+		var var_type : String = cpp_var.substr(0, name_start_index).strip_edges()
+		var var_name : String = cpp_var.substr(name_start_index + 1).strip_edges()
+		
+		var ret_final : String = ""
+		
+		if var_type == "int" || var_type == "float" || var_type == "bool" || var_type == "RID":
+			ret_final += indent + var_type + " get_" + var_name + "() const"
+			
+			if !header:
+				ret_final += " {\n";
+				ret_final += indent + " return " + var_name + ";\n"
+				ret_final += indent + "}\n\n";
+			else:
+				ret_final += ";\n"
+				
+			ret_final += indent + "void set_" + var_name + "(const " + var_type + " val)"
+			
+			if !header:
+				ret_final += " {\n";
+				ret_final += indent + var_name + " = val;\n"
+				ret_final += indent + "}\n\n";
+			else:
+				ret_final += ";\n"
+		else:
+			ret_final += indent + var_type + " get_" + var_name + "()"
+			
+			if !header:
+				ret_final += " {\n";
+				ret_final += indent + " return " + var_name + ";\n"
+				ret_final += indent + "}\n\n";
+			else:
+				ret_final += ";\n"
+			
+			ret_final += indent + "void set_" + var_name + "(const " + var_type + " &val)"
+			
+			if !header:
+				ret_final += " {\n";
+				ret_final += indent + var_name + " = val;\n"
+				ret_final += indent + "}\n\n";
+			else:
+				ret_final += ";\n"
+			
+		return ret_final
+
+	func transform_variable_assign(line : String) -> String:
 		
 		if !line.ends_with(" as "):
 			return line
@@ -311,10 +375,9 @@ class GDSScope:
 		if !line.ends_with(".new()"):
 			return line
 			
-		
 		return line
 
-	func transform_variable_to_cpp(line : String = "") -> String:
+	func transform_variable_to_cpp(line : String) -> String:
 		line = line.replace("var ", "")
 		
 		var var_final : String = ""
