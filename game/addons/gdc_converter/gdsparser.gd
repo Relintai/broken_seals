@@ -306,7 +306,7 @@ class GDSScope:
 		if type == GDScopeType.GDSCOPE_TYPE_IF:
 			s += "if (" + scope_data + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
-			s += "if (" + scope_data  + ") {"
+			s += "else if (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
 			s += "else {"
 		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
