@@ -304,8 +304,14 @@ class GDSScope:
 		s += indents
 		
 		if type == GDScopeType.GDSCOPE_TYPE_IF:
+			scope_data = scope_data.replace(" and ", " && ")
+			scope_data = scope_data.replace(" or ", " || ")
+			
 			s += "if (" + scope_data + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_ELIF:
+			scope_data = scope_data.replace(" and ", " && ")
+			scope_data = scope_data.replace(" or ", " || ")
+			
 			s += "else if (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
 			s += "else {"
@@ -331,6 +337,9 @@ class GDSScope:
 			else:
 				s += "for (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
+			scope_data = scope_data.replace(" and ", " && ")
+			scope_data = scope_data.replace(" or ", " || ")
+			
 			s += "while (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
 			s += scope_data  + " {"
