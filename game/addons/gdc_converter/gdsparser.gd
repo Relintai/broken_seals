@@ -310,7 +310,26 @@ class GDSScope:
 		elif type == GDScopeType.GDSCOPE_TYPE_ELSE:
 			s += "else {"
 		elif type == GDScopeType.GDSCOPE_TYPE_FOR:
-			s += "for (" + scope_data  + ") {"
+			var range_indx : int = scope_data.find("range(")
+			if range_indx != -1:
+				var var_end_indx : int = scope_data.find(" in ")
+				if var_end_indx != -1:
+					var var_str : String = scope_data.substr(0, var_end_indx)
+					var range_str : String = scope_data.substr(range_indx + 6, scope_data.length() - range_indx - 1 - 6)
+					var ranges : PoolStringArray = range_str.split(",")
+					
+					if ranges.size() == 1:
+						s += "for (int " + var_str  + " = 0; " + var_str + " < " + ranges[0] + "; ++" + var_str + ") { //" + scope_data
+					elif ranges.size() == 2:
+						s += "for (int " + var_str  + " = " + ranges[0] + "; " + var_str + " < " + ranges[1] + "; ++" + var_str + ") { //" + scope_data
+					elif ranges.size() == 3:
+						s += "for (int " + var_str  + " = " + ranges[0] + "; " + var_str + " > " + ranges[1] + "; " + var_str + " += " + ranges[2] + ") { //" + scope_data
+					else:
+						s += "for (" + scope_data  + ") {"
+				else:
+					s += "for (" + scope_data  + ") {"
+			else:
+				s += "for (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_WHILE:
 			s += "while (" + scope_data  + ") {"
 		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
