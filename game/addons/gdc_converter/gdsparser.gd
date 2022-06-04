@@ -744,6 +744,8 @@ class GDSParser:
 		s += "#endif"
 		s += "\n"
 		
+		s = s.replace(";;", ";")
+		
 		return s
 		
 	func get_cpp_impl_string(file_name : String) -> String:
@@ -759,6 +761,8 @@ class GDSParser:
 		s += root.get_cpp_impl_string()
 		
 		s += "\n\n"
+		
+		s = s.replace(";;", ";")
 		
 		return s
 
