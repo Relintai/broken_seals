@@ -428,14 +428,14 @@ class GDSScope:
 			s += indents + "}\n\n"
 			s += "\n"
 			s += indents + "static void " + scope_data + "::_bind_methods() {\n"
-			s += indents + "/*\n"
 			
 			for l in scope_lines:
-				var gs : String = create_cpp_getter_setter(l, true, indents + " ")
+				var gs : String = create_cpp_getter_setter_bind(l, indents + " ", scope_data)
 				
 				if gs != "":
 					s += gs + "\n"
-					
+			
+			s += indents + "/*\n"
 			for subs in subscopes:
 				var scstr : String = subs.get_cpp_header_string(indents.length() + 1)
 				
@@ -502,6 +502,109 @@ class GDSScope:
 			else:
 				ret_final += ";\n"
 			
+		return ret_final
+
+	func create_cpp_getter_setter_bind(line : String, indent : String, owner_class_name : String) -> String:
+		if !line.begins_with("var "):
+			return ""
+		
+		var cpp_var : String = transform_variable_to_cpp(line)
+		
+		var equals_index = cpp_var.find("=")
+		if equals_index != -1:
+			cpp_var = cpp_var.substr(0, equals_index)
+		
+		cpp_var = cpp_var.strip_edges()
+		
+		var name_start_index : int = cpp_var.find_last(" ")
+		var var_type : String = cpp_var.substr(0, name_start_index).strip_edges()
+		var var_name : String = cpp_var.substr(name_start_index + 1).strip_edges()
+		
+		var ret_final : String = ""
+		
+		ret_final += indent + " ClassDB::bind_method(D_METHOD(\"get_" + var_name + "\"), &" + owner_class_name + "::get_" + var_name + ");\n"
+		ret_final += indent + " ClassDB::bind_method(D_METHOD(\"set_" + var_name + "\", \"value\"), &" + owner_class_name + "::set_" + var_name + ");\n"
+		
+		ret_final += indent + " ADD_PROPERTY(PropertyInfo(Variant::"
+		
+		var is_object : bool = false
+		
+		if var_type == "bool":
+			ret_final += "BOOL"
+		elif var_type == "int":
+			ret_final += "INT"
+		elif var_type == "float" || var_type == "double":
+			ret_final += "REAL"
+		elif var_type == "String":
+			ret_final += "STRING"
+		elif var_type == "Vector2":
+			ret_final += "VECTOR2"
+		elif var_type == "Vector2i":
+			ret_final += "VECTOR2I"
+		elif var_type == "Rect2":
+			ret_final += "RECT2"
+		elif var_type == "Rect2i":
+			ret_final += "RECT2I"
+		elif var_type == "Vector3":
+			ret_final += "VECTOR3"
+		elif var_type == "Vector3i":
+			ret_final += "VECTOR3I"
+		elif var_type == "Transform2D":
+			ret_final += "TRANSFORM2D"
+		elif var_type == "Plane":
+			ret_final += "PLANE"
+		elif var_type == "Quat":
+			ret_final += "QUAT"
+		elif var_type == "AABB":
+			ret_final += "AABB"
+		elif var_type == "Basis":
+			ret_final += "BASIS"
+		elif var_type == "Transform":
+			ret_final += "TRANSFORM"
+		elif var_type == "Color":
+			ret_final += "COLOR"
+		elif var_type == "NodePath":
+			ret_final += "NODE_PATH"
+		elif var_type == "RID":
+			ret_final += "_RID"
+		elif var_type == "Object":
+			ret_final += "OBJECT"
+			is_object = true
+		elif var_type == "StringName":
+			ret_final += "STRING_NAME"
+		elif var_type == "Dictionary":
+			ret_final += "DICTIONARY"
+		elif var_type == "Array":
+			ret_final += "ARRAY"
+		elif var_type == "PoolByteArray":
+			ret_final += "POOL_BYTE_ARRAY"
+		elif var_type == "PoolIntArray":
+			ret_final += "POOL_INT_ARRAY"
+		elif var_type == "PoolRealArray":
+			ret_final += "POOL_REAL_ARRAY"
+		elif var_type == "PoolStringArray":
+			ret_final += "POOL_STRING_ARRAY"
+		elif var_type == "PoolVector2Array":
+			ret_final += "POOL_VECTOR2_ARRAY"
+		elif var_type == "PoolVector2iArray":
+			ret_final += "POOL_VECTOR2I_ARRAY"
+		elif var_type == "PoolVector3Array":
+			ret_final += "POOL_VECTOR3_ARRAY"
+		elif var_type == "PoolVector3iArray":
+			ret_final += "POOL_VECTOR3I_ARRAY"
+		elif var_type == "PoolColorArray":
+			ret_final += "POOL_COLOR_ARRAY"
+		else:
+			ret_final += "OBJECT"
+			is_object = true
+		
+		if is_object:
+			ret_final += ", \"" + var_name + "\", PROPERTY_HINT_RESOURCE_TYPE, \"" + var_type + "\"), \"set_" + var_name + "\", \"get_" + var_name + "\");"
+		else:
+			ret_final += ", \"" + var_name + "\"), \"set_" + var_name + "\", \"get_" + var_name + "\");"
+			
+		ret_final += "\n\n"
+
 		return ret_final
 
 	func transform_variable_assign(line : String) -> String:
