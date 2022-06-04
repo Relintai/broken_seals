@@ -435,16 +435,38 @@ class GDSScope:
 				if gs != "":
 					s += gs + "\n"
 			
-			s += indents + "/*\n"
-			for subs in subscopes:
-				var scstr : String = subs.get_cpp_header_string(indents.length() + 1)
-				
-				if scstr != "":
-					s += scstr + "\n"
-					
-			s += indents + "*/\n"
+			s +=  create_cpp_binds_string(indents.length() + 1)
+
 			s += indents + "}\n\n"
 			
+		return s
+		
+	func create_cpp_binds_string(current_scope_level : int = 0) -> String:
+		if type != GDScopeType.GDSCOPE_TYPE_CLASS:
+			return ""
+		
+		var indents : String = ""
+		
+		for i in range(current_scope_level):
+			indents += " "
+			
+		var s : String = ""
+
+		for subs in subscopes:
+			if subs.type != GDScopeType.GDSCOPE_TYPE_FUNC:
+				continue
+			
+			if subs.is_static:
+				continue
+			
+			var scstr : String = subs.transform_method_to_cpp_binding(scope_data)
+			
+			if scstr != "":
+				s += indents + scstr
+				s += "\n"
+		
+		s += "\n"
+
 		return s
 
 	func create_cpp_getter_setter(line : String, header : bool, indent : String, class_prefix : String = "") -> String:
@@ -758,6 +780,62 @@ class GDSScope:
 		func_final += ")"
 		
 		return func_final
+		
+	func transform_method_to_cpp_binding(name_prefix : String) -> String:
+		if type != GDScopeType.GDSCOPE_TYPE_FUNC:
+			return ""
+		
+		var func_data : String = scope_data
+		var func_ret_type : String = "void"
+		
+		var indx : int = scope_data.find(" -> ")
+		
+		if indx != -1:
+			func_ret_type = scope_data.substr(indx + 4)
+			func_data = scope_data.substr(0, indx)
+			
+		var ret_final : String = "ClassDB::bind_method(D_METHOD(\""
+		
+		indx = func_data.find("(")
+		var func_name : String = func_data.substr(0, indx)
+		ret_final += func_name + "\""
+		
+		var func_params : String = func_data.substr(indx + 1, func_data.length() - indx - 2)
+		
+		var default_values : PoolStringArray = PoolStringArray()
+		
+		if func_params != "":
+			var params : PoolStringArray = func_params.split(",", false)
+			
+			for i in range(params.size()):
+				ret_final += ", "
+				
+				var p : String = params[i]
+				
+				var default_value_indx : int = p.find("=")
+				var default_value : String 
+				
+				if default_value_indx != -1:
+					default_value = p.substr(default_value_indx + 1).strip_edges()
+					p = p.substr(0, default_value_indx).strip_edges()
+					default_values.push_back(default_value)
+				
+				var type_indx : int = p.find(":")
+				
+				if type_indx != -1:
+					var param_type : String = p.substr(type_indx + 1).strip_edges()
+					p = p.substr(0, type_indx).strip_edges()
+
+				ret_final += "\"" + p + "\""
+
+		ret_final += "), &" + name_prefix + "::" + func_name
+		
+		for i in range(default_values.size()):
+			ret_final += ", " + default_values[i]
+
+		ret_final += ");"
+		
+		return ret_final
 		
 	func camel_case_scope_data() -> void:
 		scope_data = camel_case_name(scope_data)
