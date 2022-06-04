@@ -382,7 +382,15 @@ class GDSScope:
 					s += indents + l + ";\n"
 					continue
 
-				s += indents + l + ";\n"
+				if l.begins_with("var "):
+					if l.find("preload") != -1:
+						s += indents + "//" + l + ";\n"
+						continue
+						
+					s += indents + " " + transform_variable_to_cpp(l) + ";\n"
+				else:
+					s += indents + l + ";\n"
+
 			s += "}\n"
 			
 		return s
