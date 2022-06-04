@@ -357,7 +357,7 @@ class GDSScope:
 		elif type == GDScopeType.GDSCOPE_TYPE_GENERIC:
 			s += scope_data  + " {"
 		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
-			s += transform_method_to_cpp(owner_class_name)  + " {"
+			s += transform_method_to_cpp(owner_class_name, false)  + " {"
 		elif type == GDScopeType.GDSCOPE_TYPE_CLASS:
 			owner_class_name = scope_data + "::"
 			
@@ -723,7 +723,7 @@ class GDSScope:
 			
 		return var_final
 
-	func transform_method_to_cpp(name_prefix : String = "") -> String:
+	func transform_method_to_cpp(name_prefix : String = "", default_params : bool = true) -> String:
 		if type != GDScopeType.GDSCOPE_TYPE_FUNC:
 			return ""
 		
@@ -771,7 +771,7 @@ class GDSScope:
 
 				func_final += p
 				
-				if default_value_indx != -1:
+				if default_params && default_value_indx != -1:
 					func_final += " = " + default_value
 				
 				if i + 1 < params.size():
