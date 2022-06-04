@@ -25,6 +25,11 @@ class GDSSceneParser:
 			nn = nn.get_parent()
 			
 		node_name = node_name.to_lower()
+		
+		var nscript : Script = node.get_script()
+		
+		if nscript:
+			result += "//Script: " + nscript.resource_path + "\n"
 
 		result += node.get_class() + " *" + node_name + " = memnew(" + node.get_class() + ");\n"
 		result += node_name + "->set_name(\"" + node.get_name() + "\");\n"
