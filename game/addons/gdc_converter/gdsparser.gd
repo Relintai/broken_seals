@@ -13,6 +13,11 @@ enum GDScopeType {
 	GDSCOPE_TYPE_ENUM,
 };
 
+enum GDScopeLineType {
+	GDSCOPE_TYPE_LINE = 0,
+	GDSCOPE_TYPE_SCOPE,
+};
+
 class GDSScope:
 	var type : int = GDScopeType.GDSCOPE_TYPE_GENERIC
 	var scope_data : String = ""
@@ -22,6 +27,7 @@ class GDSScope:
 	var subscopes : Array = Array()
 	var scope_lines : PoolStringArray = PoolStringArray()
 	var is_static : bool = false
+	var scope_line_order : PoolIntArray
 
 	func parse(contents : PoolStringArray, current_index : int = 0, current_indent : int = 0) -> int:
 		while current_index < contents.size():
@@ -29,6 +35,8 @@ class GDSScope:
 			
 			if cl == "tool":
 				scope_lines.append("#" + cl)
+				scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
+				scope_line_order.push_back(scope_lines.size() - 1)
 				current_index += 1
 				continue
 			
@@ -63,12 +71,16 @@ class GDSScope:
 				current_index += 1
 				current_index = scope.parse(contents, current_index, curr_line_indent + 1)
 				subscopes.append(scope)
+				scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_SCOPE)
+				scope_line_order.push_back(subscopes.size() - 1)
 				
 				#don't
 				#current_index += 1
 				continue
 			
 			scope_lines.append(clstripped)
+			scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
+			scope_line_order.push_back(scope_lines.size() - 1)
 			current_index += 1
 		
 		return current_index
@@ -133,16 +145,17 @@ class GDSScope:
 		
 		indents += " "
 		
-		for l in scope_lines:
-			s += indents + l + "\n"
-			
-		for subs in subscopes:
-			s += "\n"
-			s += subs.convert_to_string(current_scope_level + 1)
-			
+		for i in range(0, scope_line_order.size(), 2):
+			if scope_line_order[i] == GDScopeLineType.GDSCOPE_TYPE_LINE:
+				s += indents + scope_lines[scope_line_order[i + 1]] + "\n"
+			else:
+				s += "\n"
+				s += subscopes[scope_line_order[i + 1]].convert_to_string(current_scope_level + 1)
+		
 		s += "\n"
 			
 		return s
+	
 	
 	func type_to_print_string() -> String:
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
@@ -357,13 +370,44 @@ class GDSScope:
 		s += "\n"
 		indents += " "
 
-		for subs in subscopes:
-			var scstr : String = subs.get_cpp_impl_string(current_scope_level + 1, owner_class_name)
+		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
+			for subs in subscopes:
+				var scstr : String = subs.get_cpp_impl_string(current_scope_level + 1, owner_class_name)
+				
+				if scstr != "":
+					s += scstr
+					s += "\n"
+					s += "\n"
+		else:
+			for i in range(0, scope_line_order.size(), 2):
+				if scope_line_order[i] == GDScopeLineType.GDSCOPE_TYPE_LINE:
+					var l : String = scope_lines[scope_line_order[i + 1]]
+					
+					if l.begins_with("#"):
+						l = l.replace("#", "//")
+						s += indents + l + ";\n"
+						continue
+
+					if l.begins_with("var "):
+						if l.find("preload") != -1:
+							s += indents + "//" + l + ";\n"
+							continue
+							
+						s += indents + " " + transform_variable_to_cpp(l) + ";\n"
+					else:
+						s += indents + l + ";\n"
+				else:
+
+					var scstr : String = subscopes[scope_line_order[i + 1]].get_cpp_impl_string(current_scope_level + 1, owner_class_name)
+					
+					if scstr != "":
+						s += "\n"
+						s += scstr
+						s += "\n"
 			
-			if scstr != "":
-				s += scstr
-				s += "\n"
-		
+			s += "}\n"
+			
+
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
 			s += "\n"
 			s += indents + scope_data + "::" + scope_data + "() {\n"
@@ -400,26 +444,6 @@ class GDSScope:
 					
 			s += indents + "*/\n"
 			s += indents + "}\n\n"
-			
-		s += "\n"
-		
-		if type != GDScopeType.GDSCOPE_TYPE_CLASS:
-			for l in scope_lines:
-				if l.begins_with("#"):
-					l = l.replace("#", "//")
-					s += indents + l + ";\n"
-					continue
-
-				if l.begins_with("var "):
-					if l.find("preload") != -1:
-						s += indents + "//" + l + ";\n"
-						continue
-						
-					s += indents + " " + transform_variable_to_cpp(l) + ";\n"
-				else:
-					s += indents + l + ";\n"
-
-			s += "}\n"
 			
 		return s
 
