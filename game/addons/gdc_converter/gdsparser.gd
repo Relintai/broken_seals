@@ -21,6 +21,7 @@ class GDSScope:
 	var raw_scope_data_alt : String = ""
 	var subscopes : Array = Array()
 	var scope_lines : PoolStringArray = PoolStringArray()
+	var is_static : bool = false
 
 	func parse(contents : PoolStringArray, current_index : int = 0, current_indent : int = 0) -> int:
 		while current_index < contents.size():
@@ -74,6 +75,10 @@ class GDSScope:
 		
 	func parse_scope_data(s : String) -> void:
 		raw_scope_data = s
+		
+		if raw_scope_data.begins_with("static "):
+			is_static = true
+			raw_scope_data = raw_scope_data.trim_prefix("static ")
 		
 		if raw_scope_data.begins_with("if "):
 			type = GDScopeType.GDSCOPE_TYPE_IF
@@ -220,6 +225,9 @@ class GDSScope:
 			s += indents + " public:\n"
 
 		elif type == GDScopeType.GDSCOPE_TYPE_FUNC:
+			if is_static:
+				s += "static "
+			
 			s += transform_method_to_cpp() + ";"
 			return s
 		elif type == GDScopeType.GDSCOPE_TYPE_ENUM:
