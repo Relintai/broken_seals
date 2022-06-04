@@ -12,7 +12,7 @@ func _exit_tree():
 	remove_tool_menu_item("Convert Scenes to Cpp")
 
 func on_convert_script_menu_clicked(val) -> void:
-	var GDSParser = load("res://addons/gdc_converter/gdsparser.gd")
+	var GDSParser = load("res://addons/gdc_converter/gdc_code_converter.gd")
 	var parser = GDSParser.new()
 	
 	var dir = Directory.new()
