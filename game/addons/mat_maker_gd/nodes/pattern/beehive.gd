@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_main : Resource
 export(Resource) var out_random_color : Resource
@@ -69,11 +68,11 @@ func _render(material) -> void:
 			#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
 			#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
 			var beehive_uv : Vector2 = uv * size;
-			var beehive_uv_center : Color = Patterns.beehive_center(beehive_uv);
+			var beehive_uv_center : Color = Commons.beehive_center(beehive_uv);
 
 			#Output (float) - Shows the greyscale pattern
 			#1.0-2.0*beehive_dist($(name_uv)_center.xy)
-			var f : float = 1.0 - 2.0 * Patterns.beehive_dist(Vector2(beehive_uv_center.r, beehive_uv_center.g))
+			var f : float = 1.0 - 2.0 * Commons.beehive_dist(Vector2(beehive_uv_center.r, beehive_uv_center.g))
 			var main_pattern_col : Color = Color(f, f, f, 1)
 
 			#Random color (rgb) - Shows a random color for each hexagonal tile

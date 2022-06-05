@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var NoiseVoronoi = preload("res://addons/mat_maker_gd/nodes/common/noise_voronoi.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_nodes : Resource
 export(Resource) var out_borders : Resource
@@ -87,7 +86,7 @@ func _render(material) -> void:
 			var ps : float = 1.0 / float(pseed)
 
 			#vec4 $(name_uv)_xyzw = voronoi($uv, vec2($scale_x, $scale_y), vec2($stretch_y, $stretch_x), $intensity, $randomness, $seed);
-			var voronoi : Color = NoiseVoronoi.voronoi(uv, scale, stretch, intensity, randomness, ps)
+			var voronoi : Color = Commons.voronoi(uv, scale, stretch, intensity, randomness, ps)
 
 			#Nodes - float - A greyscale pattern based on the distance to cell centers
 			#$(name_uv)_xyzw.z

@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF3D = preload("res://addons/mat_maker_gd/nodes/common/sdf3d.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var output : Resource
@@ -42,7 +41,7 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	#todo make seed a class variable probably into MMNode
 	
-	var new_uv : Vector3 = SDF3D.sdf3d_repeat(uv3, col_row, rotation, 1)
+	var new_uv : Vector3 = Commons.sdf3d_repeat(uv3, col_row, rotation, 1)
 
 	return input.get_value_sdf3d(new_uv)
 

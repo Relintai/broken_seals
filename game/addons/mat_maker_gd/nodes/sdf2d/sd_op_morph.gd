@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input1 : Resource
 export(Resource) var input2 : Resource
@@ -52,7 +51,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_amount", "set_amount", "Amount", 0.01)
 
 func get_property_value(uv : Vector2) -> float:
-	return SDF2D.sdf_morph(input1.get_value(uv), input2.get_value(uv), amount)
+	return Commons.sdf_morph(input1.get_value(uv), input2.get_value(uv), amount)
 
 #amount
 func get_amount() -> float:

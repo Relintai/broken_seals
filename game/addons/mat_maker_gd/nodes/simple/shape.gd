@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Shapes = preload("res://addons/mat_maker_gd/nodes/common/shapes.gd")
+var Shapes = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 enum ShapeType {
 	SHAPE_TYPE_CIRCLE = 0,

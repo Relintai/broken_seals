@@ -1,7 +1,7 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/gradient_base.gd"
 
-var Gradients = preload("res://addons/mat_maker_gd/nodes/common/gradients.gd")
+var Gradients = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(float) var repeat : float = 1

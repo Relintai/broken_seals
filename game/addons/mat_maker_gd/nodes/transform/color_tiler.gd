@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var in_mask : Resource

@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Filter = preload("res://addons/mat_maker_gd/nodes/common/filter.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -44,15 +43,15 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var f : float = 0
 	
 	if type == 0:
-		f = Filter.grayscale_lightness(Vector3(c.r, c.g, c.b))
+		f = Commons.grayscale_lightness(Vector3(c.r, c.g, c.b))
 	elif type == 1:
-		f = Filter.grayscale_average(Vector3(c.r, c.g, c.b))
+		f = Commons.grayscale_average(Vector3(c.r, c.g, c.b))
 	elif type == 2:
-		f = Filter.grayscale_luminosity(Vector3(c.r, c.g, c.b))
+		f = Commons.grayscale_luminosity(Vector3(c.r, c.g, c.b))
 	elif type == 3:
-		f = Filter.grayscale_min(Vector3(c.r, c.g, c.b))
+		f = Commons.grayscale_min(Vector3(c.r, c.g, c.b))
 	elif type == 4:
-		f = Filter.grayscale_max(Vector3(c.r, c.g, c.b))
+		f = Commons.grayscale_max(Vector3(c.r, c.g, c.b))
 	
 	return Color(f, f, f, c.a)
 

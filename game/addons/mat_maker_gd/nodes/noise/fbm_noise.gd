@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var NoiseFBM = preload("res://addons/mat_maker_gd/nodes/common/noise_fbm.gd")
+var NoiseFBM = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 

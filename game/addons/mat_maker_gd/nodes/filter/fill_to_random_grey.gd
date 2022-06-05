@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Fills = preload("res://addons/mat_maker_gd/nodes/common/fills.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource

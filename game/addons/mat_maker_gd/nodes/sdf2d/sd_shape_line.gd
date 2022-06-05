@@ -1,9 +1,7 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
-var Curves = preload("res://addons/mat_maker_gd/nodes/common/curves.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(Vector2) var A : Vector2 = Vector2(-0.3, -0.3)
@@ -33,11 +31,11 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_curve()
 
 func get_property_value(uv : Vector2) -> float:
-	var line : Vector2 = SDF2D.sdf_line(uv, A, B, width)
+	var line : Vector2 = Commons.sdf_line(uv, A, B, width)
 	
 	#$(name_uv)_sdl.x - $r * $profile($(name_uv)_sdl.y)
 	
-	return line.x - width * Curves.curve(line.y, points)
+	return line.x - width * Commons.curve(line.y, points)
 
 #a
 func get_a() -> Vector2:

@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF3D = preload("res://addons/mat_maker_gd/nodes/common/sdf3d.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(int, "X,Y,Z") var axis : int = 1
@@ -29,11 +28,11 @@ func _register_methods(mm_graph_node) -> void:
 
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	if axis == 0:
-		return SDF3D.sdf3d_cylinder_x(uv3, radius, length)
+		return Commons.sdf3d_cylinder_x(uv3, radius, length)
 	elif axis == 1:
-		return SDF3D.sdf3d_cylinder_y(uv3, radius, length)
+		return Commons.sdf3d_cylinder_y(uv3, radius, length)
 	elif axis == 2:
-		return SDF3D.sdf3d_cylinder_z(uv3, radius, length)
+		return Commons.sdf3d_cylinder_z(uv3, radius, length)
 		
 	return Vector2()
 

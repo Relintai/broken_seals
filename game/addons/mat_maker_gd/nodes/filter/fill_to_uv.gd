@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Fills = preload("res://addons/mat_maker_gd/nodes/common/fills.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -46,9 +45,9 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var r : Vector3 = Vector3()
 
 	if mode == 0:
-		r = Fills.fill_to_uv_stretch(uv, c, float(pseed))
+		r = Commons.fill_to_uv_stretch(uv, c, float(pseed))
 	elif mode == 1:
-		r = Fills.fill_to_uv_square(uv, c, float(pseed))
+		r = Commons.fill_to_uv_square(uv, c, float(pseed))
 
 	return Color(r.x, r.y, r.z, 1)
 

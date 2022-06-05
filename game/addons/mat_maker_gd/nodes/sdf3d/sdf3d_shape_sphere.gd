@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF3D = preload("res://addons/mat_maker_gd/nodes/common/sdf3d.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(float) var radius : float = 0.5
@@ -24,7 +23,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_radius", "set_radius", "Radius", 0.01)
 
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
-	return SDF3D.sdf3d_sphere(uv3, radius)
+	return Commons.sdf3d_sphere(uv3, radius)
 
 #radius
 func get_radius() -> float:

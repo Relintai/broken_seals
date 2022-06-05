@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var NoiseVoronoi = preload("res://addons/mat_maker_gd/nodes/common/noise_voronoi.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var out_r : Resource

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(int, "Line,Circle") var shape : int = 0

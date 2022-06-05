@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 
@@ -58,7 +57,7 @@ func _render(material) -> void:
 
 func transform_uv(uv : Vector2) -> Vector2:
 	#vec2 $(name_uv)_bezier = sdBezier($uv, vec2($ax+0.5, $ay+0.5), vec2($bx+0.5, $by+0.5), vec2($cx+0.5, $cy+0.5));
-	var bezier : Vector2 = SDF2D.sdBezier(uv, Vector2(a.x + 0.5, a.y + 0.5), Vector2(b.x + 0.5, b.y + 0.5), Vector2(c.x + 0.5, c.y + 0.5))
+	var bezier : Vector2 = Commons.sdBezier(uv, Vector2(a.x + 0.5, a.y + 0.5), Vector2(b.x + 0.5, b.y + 0.5), Vector2(c.x + 0.5, c.y + 0.5))
 	
 	#vec2 $(name_uv)_uv = vec2($(name_uv)_bezier.x, $(name_uv)_bezier.y / $width+0.5);
 	var new_uv : Vector2 = Vector2(bezier.x, bezier.y / width + 0.5)

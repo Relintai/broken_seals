@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/sdf2d.gd")
+var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(float) var width : float = 0.1

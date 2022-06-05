@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Filter = preload("res://addons/mat_maker_gd/nodes/common/filter.gd")
+var Filter = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 enum BlendType {
 	NORMAL = 0,

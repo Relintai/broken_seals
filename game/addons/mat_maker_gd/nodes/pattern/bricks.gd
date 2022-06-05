@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/patterns.gd")
+var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_bricks_pattern : Resource
 export(Resource) var out_random_color : Resource

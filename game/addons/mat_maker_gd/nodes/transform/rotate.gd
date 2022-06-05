@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Transforms = preload("res://addons/mat_maker_gd/nodes/common/transforms.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -42,7 +41,7 @@ func _render(material) -> void:
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	#$i(rotate($uv, vec2(0.5+$cx, 0.5+$cy), $rotate*0.01745329251))
-	return input.get_value(Transforms.rotate(uv, center + Vector2(0.5, 0.5), rotate*0.01745329251))
+	return input.get_value(Commons.rotate(uv, center + Vector2(0.5, 0.5), rotate*0.01745329251))
 
 #center
 func get_center() -> Vector2:

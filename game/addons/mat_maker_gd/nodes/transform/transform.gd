@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var Transforms = preload("res://addons/mat_maker_gd/nodes/common/transforms.gd")
+var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -113,10 +112,10 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var rot : float = rotate.get_default_value() * 0.01745329251*(2.0 * rotate.get_value_or_zero(uv) - 1.0)
 	var sc : Vector2 = Vector2(scale_x.get_default_value() *(2.0 * scale_x.get_value_or_zero(uv) - 1.0), scale_y.get_default_value() *(2.0 * scale_y.get_value_or_zero(uv) - 1.0))
 	
-	var nuv : Vector2 = Transforms.transform2(uv, tr, rot, sc)
+	var nuv : Vector2 = Commons.transform2(uv, tr, rot, sc)
 	
 	if mode == 0:
-		nuv = Transforms.transform2_clamp(nuv)
+		nuv = Commons.transform2_clamp(nuv)
 	elif mode == 1:
 		nuv = Commons.fractv2(nuv)
 	

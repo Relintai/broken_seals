@@ -1,8 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/commons.gd")
-var SDF3D = preload("res://addons/mat_maker_gd/nodes/common/sdf3d.gd")
+const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var output : Resource
@@ -40,7 +39,7 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	#$in(rotate3d($uv, -vec3($ax, $ay, $az)*0.01745329251))
 
-	return input.get_value_sdf3d(SDF3D.rotate3d(uv3, -rotation * 0.01745329251))
+	return input.get_value_sdf3d(Commons.rotate3d(uv3, -rotation * 0.01745329251))
 
 #rotation
 func get_rotation() -> Vector3:
