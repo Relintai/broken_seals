@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Vector2) var size : Vector2 = Vector2(4, 4)
@@ -28,7 +28,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#IChing(vec2($columns, $rows)*$uv, float($seed))
-	return Patterns.IChingc(uv, size, ps)
+	return MMAlgos.IChingc(uv, size, ps)
 
 #size
 func get_size() -> Vector2:

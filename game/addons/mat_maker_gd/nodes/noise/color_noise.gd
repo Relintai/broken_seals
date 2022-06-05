@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Noises = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 
@@ -36,7 +36,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#color_dots($(uv), 1.0/$(size), $(seed))
-	return Noises.noise_color(uv, float(size), ps)
+	return MMAlgos.noise_color(uv, float(size), ps)
 
 func _render(material) -> void:
 	var img : Image = render_image(material)

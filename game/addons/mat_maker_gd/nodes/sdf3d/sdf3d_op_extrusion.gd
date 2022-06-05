@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var output : Resource
@@ -43,7 +43,7 @@ func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	var f : float = input.get_value(Vector2(uv3.x, uv3.z) + Vector2(0.5, 0.5))
 	var w : Vector2 = Vector2(f, abs(uv3.y) - length)
 	
-	var ff : float = min(max(w.x,w.y),0.0) + Commons.maxv2(w, Vector2()).length()
+	var ff : float = min(max(w.x,w.y),0.0) + MMAlgos.maxv2(w, Vector2()).length()
 	
 	return Vector2(ff, 0)
 

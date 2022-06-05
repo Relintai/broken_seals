@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var image : Resource
 export(Resource) var input : Resource
 export(int, "Area,Width,Height,Max(W,H)") var formula : int = 0

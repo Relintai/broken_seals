@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(int) var count : int = 6
@@ -27,7 +27,7 @@ func _register_methods(mm_graph_node) -> void:
 
 func get_property_value(uv : Vector2):
 	#$in(circle_repeat_transform_2d($uv-vec2(0.5), $c)+vec2(0.5))
-	var new_uv : Vector2 = SDF2D.circle_repeat_transform_2d(uv - Vector2(0.5, 0.5), count) + Vector2(0.5, 0.5)
+	var new_uv : Vector2 = MMAlgos.circle_repeat_transform_2d(uv - Vector2(0.5, 0.5), count) + Vector2(0.5, 0.5)
 	
 	return output.get_value(new_uv, true)
 

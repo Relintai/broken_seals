@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(Vector2) var center : Vector2 = Vector2(0, 0)
@@ -25,7 +25,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_vector2("get_size", "set_size", "Size", 0.01)
 
 func get_property_value(uv : Vector2) -> float:
-	return Commons.sdf_box(uv, center, size)
+	return MMAlgos.sdf_box(uv, center, size)
 
 #center
 func get_center() -> Vector2:

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -41,7 +41,7 @@ func _render(material) -> void:
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	#$i(kal_rotate($uv, $count, $offset))
-	return input.get_value(Commons.kal_rotate(uv, count, offset))
+	return input.get_value(MMAlgos.kal_rotate(uv, count, offset))
 
 #count
 func get_count() -> int:

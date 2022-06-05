@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -41,7 +41,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : Color = input.get_value(uv)
 
 	#vec4(floor($in($uv).rgb*$steps)/$steps, $in($uv).a)
-	var v : Vector3 = Commons.floorv3(Vector3(c.r, c.g, c.b) * steps) / float(steps)
+	var v : Vector3 = MMAlgos.floorv3(Vector3(c.r, c.g, c.b) * steps) / float(steps)
 	
 	return Color(v.x, v.y, v.z, c.a)
 

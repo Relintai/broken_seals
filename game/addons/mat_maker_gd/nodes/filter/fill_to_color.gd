@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -54,8 +54,8 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	
 	#mix($edgecolor, $map(fract($(name_uv)_bb.xy+0.5*$(name_uv)_bb.zw)), step(0.0000001, dot($(name_uv)_bb.zw, vec2(1.0))))
 	
-	var rc : Color = color_map.get_value(Commons.fractv2(Vector2(c.r, c.g) + 0.5 * Vector2(c.b, c.a)))
-	var s : float = Commons.step(0.0000001, Vector2(c.b, c.a).dot(Vector2(1, 1)))
+	var rc : Color = color_map.get_value(MMAlgos.fractv2(Vector2(c.r, c.g) + 0.5 * Vector2(c.b, c.a)))
+	var s : float = MMAlgos.step(0.0000001, Vector2(c.b, c.a).dot(Vector2(1, 1)))
 	
 	return lerp(edge_color, rc, s)
 

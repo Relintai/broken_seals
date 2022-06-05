@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var output : Resource
@@ -38,7 +38,7 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	#$in($uv - clamp($uv, -abs(vec3($x, $y, $z)), abs(vec3($x, $y, $z))))
 	
-	var new_uv : Vector3 = uv3 - Commons.clampv3(uv3, -Commons.absv3(length), Commons.absv3(length))
+	var new_uv : Vector3 = uv3 - MMAlgos.clampv3(uv3, -MMAlgos.absv3(length), MMAlgos.absv3(length))
 	
 	return input.get_value_sdf3d(new_uv)
 	

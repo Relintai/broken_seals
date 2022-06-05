@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Filter = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 enum BlendType {
 	NORMAL = 0,
@@ -90,29 +90,29 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	
 	#"Normal,Dissolve,Multiply,Screen,Overlay,Hard Light,Soft Light,Burn,Dodge,Lighten,Darken,Difference"
 	if blend_type == BlendType.NORMAL:
-		b = Filter.blend_normal(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_normal(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.DISSOLVE:
-		b = Filter.blend_dissolve(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_dissolve(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.MULTIPLY:
-		b = Filter.blend_multiply(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_multiply(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.SCREEN:
-		b = Filter.blend_screen(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_screen(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.OVERLAY:
-		b = Filter.blend_overlay(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_overlay(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.HARD_LIGHT:
-		b = Filter.blend_hard_light(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_hard_light(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.SOFT_LIGHT:
-		b = Filter.blend_soft_light(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_soft_light(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.BURN:
-		b = Filter.blend_burn(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_burn(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.DODGE:
-		b = Filter.blend_dodge(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_dodge(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.LIGHTEN:
-		b = Filter.blend_lighten(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_lighten(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.DARKEN:
-		b = Filter.blend_darken(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_darken(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 	elif blend_type == BlendType.DIFFRENCE:
-		b = Filter.blend_difference(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
+		b = MMAlgos.blend_difference(uv, Vector3(s1.r, s1.g, s1.b), Vector3(s2.r, s2.g, s2.b), a * s1.a)
 
 	return Color(b.x, b.y, b.z, min(1, s2.a + a * s1.a))
 

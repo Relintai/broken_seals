@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -68,9 +68,9 @@ func set_width(val : float) -> void:
 
 func make_tileable(uv : Vector2, w : float) -> Color:
 	var a: Color = input.get_value(uv);
-	var b : Color = input.get_value(Commons.fractv2(uv + Vector2(0.5, 0.5)));
+	var b : Color = input.get_value(MMAlgos.fractv2(uv + Vector2(0.5, 0.5)));
 	var coef_ab : float = sin(1.57079632679 * clamp(((uv - Vector2(0.5, 0.5)).length() - 0.5 + w) / w, 0.0, 1.0));
-	var c: Color = input.get_value(Commons.fractv2(uv + Vector2(0.25, 0.25)));
+	var c: Color = input.get_value(MMAlgos.fractv2(uv + Vector2(0.25, 0.25)));
 	var coef_abc : float = sin(1.57079632679 * clamp((min(min((uv - Vector2(0.0, 0.5)).length(), (uv - Vector2(0.5, 0.0)).length()), min((uv- Vector2(1.0, 0.5)).length(), (uv - Vector2(0.5, 1.0)).length())) - w) / w, 0.0, 1.0));
 	
 	return lerp(c, lerp(a, b, coef_ab), coef_abc)

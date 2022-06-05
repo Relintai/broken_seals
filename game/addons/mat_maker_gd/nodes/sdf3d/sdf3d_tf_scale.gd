@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var input : Resource
 export(Resource) var output : Resource
 export(float) var scale : float = 1

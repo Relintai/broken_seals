@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -43,9 +43,9 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	#$i(uvmirror_$direction($uv, $offset))
 
 	if direction == 0:
-		return input.get_value(Commons.uvmirror_h(uv, offset))
+		return input.get_value(MMAlgos.uvmirror_h(uv, offset))
 	elif direction == 1:
-		return input.get_value(Commons.uvmirror_v(uv, offset))
+		return input.get_value(MMAlgos.uvmirror_v(uv, offset))
 		
 	return Color(0, 0, 0, 1)
 

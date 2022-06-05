@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var NoisePerlin = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 
@@ -28,7 +28,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#perlin_color($(uv), vec2($(scale_x), $(scale_y)), int($(iterations)), $(persistence), $(seed))
-	return NoisePerlin.perlin_colorc(uv, scale, iterations, persistence, ps)
+	return MMAlgos.perlin_colorc(uv, scale, iterations, persistence, ps)
 
 func _render(material) -> void:
 	var img : Image = render_image(material)

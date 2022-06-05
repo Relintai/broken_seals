@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(float) var width : float = 0.1
@@ -30,7 +30,7 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value(uv : Vector2):
 	var val : float = output.get_value(uv, true)
 	
-	return SDF2D.sdRipples(val, width, ripples)
+	return MMAlgos.sdRipples(val, width, ripples)
 
 #width
 func get_width() -> float:

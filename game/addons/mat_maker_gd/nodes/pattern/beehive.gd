@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_main : Resource
 export(Resource) var out_random_color : Resource
@@ -68,22 +68,22 @@ func _render(material) -> void:
 			#vec2 $(name_uv)_uv = $uv*vec2($sx, $sy*1.73205080757);
 			#vec4 $(name_uv)_center = beehive_center($(name_uv)_uv);
 			var beehive_uv : Vector2 = uv * size;
-			var beehive_uv_center : Color = Commons.beehive_center(beehive_uv);
+			var beehive_uv_center : Color = MMAlgos.beehive_center(beehive_uv);
 
 			#Output (float) - Shows the greyscale pattern
 			#1.0-2.0*beehive_dist($(name_uv)_center.xy)
-			var f : float = 1.0 - 2.0 * Commons.beehive_dist(Vector2(beehive_uv_center.r, beehive_uv_center.g))
+			var f : float = 1.0 - 2.0 * MMAlgos.beehive_dist(Vector2(beehive_uv_center.r, beehive_uv_center.g))
 			var main_pattern_col : Color = Color(f, f, f, 1)
 
 			#Random color (rgb) - Shows a random color for each hexagonal tile
 			#rand3(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed)))
-			var rcv3 : Vector3 = Commons.rand3(Commons.fractv2(Vector2(beehive_uv_center.b, beehive_uv_center.a) / size) + Vector2(ps, ps))
+			var rcv3 : Vector3 = MMAlgos.rand3(MMAlgos.fractv2(Vector2(beehive_uv_center.b, beehive_uv_center.a) / size) + Vector2(ps, ps))
 			var random_color_col : Color = Color(rcv3.x, rcv3.y, rcv3.z, 1)
 
 			#UV map (rgb) - Shows an UV map to be connected to the UV map port of the Custom UV node
 			#vec3(vec2(0.5)+$(name_uv)_center.xy, rand(fract($(name_uv)_center.zw/vec2($sx, $sy))+vec2(float($seed))))
 			var uvm1 : Vector2 = Vector2(0.5, 0.5) + Vector2(beehive_uv_center.r, beehive_uv_center.g)
-			var uvm2 : Vector2 = Commons.rand2(Commons.fractv2(Vector2(beehive_uv_center.b, beehive_uv_center.a) / size) + Vector2(ps, ps))
+			var uvm2 : Vector2 = MMAlgos.rand2(MMAlgos.fractv2(Vector2(beehive_uv_center.b, beehive_uv_center.a) / size) + Vector2(ps, ps))
 			
 			var uv_map_col : Color = Color(uvm1.x, uvm1.y, uvm2.x, 1)
 

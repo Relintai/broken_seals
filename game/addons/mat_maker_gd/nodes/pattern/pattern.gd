@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(int, "Multiply,Add,Max,Min,Xor,Pow") var combiner_type : int = 0
@@ -31,7 +31,7 @@ func _render(material) -> void:
 	image.set_value(img)
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
-	var f : float = Patterns.pattern(uv, repeat.x, repeat.y, combiner_type, combiner_axis_type_x, combiner_axis_type_y)
+	var f : float = MMAlgos.pattern(uv, repeat.x, repeat.y, combiner_type, combiner_axis_type_x, combiner_axis_type_y)
 
 	return Color(f, f, f, 1)
 

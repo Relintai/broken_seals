@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Noises = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 
@@ -28,7 +28,7 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#anisotropic($(uv), vec2($(scale_x), $(scale_y)), $(seed), $(smoothness), $(interpolation))
-	return Noises.anisotropicc(uv, scale, ps, smoothness, interpolation)
+	return MMAlgos.anisotropicc(uv, scale, ps, smoothness, interpolation)
 
 func _render(material) -> void:
 	var img : Image = render_image(material)

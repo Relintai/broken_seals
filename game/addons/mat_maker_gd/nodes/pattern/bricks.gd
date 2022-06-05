@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_bricks_pattern : Resource
 export(Resource) var out_random_color : Resource
@@ -167,19 +167,19 @@ func _render(material) -> void:
 			#"Running Bond,Running Bond (2),HerringBone,Basket Weave,Spanish Bond"
 			
 			if type == 0:
-				brick_rect = Patterns.bricks_rb(uv, col_row, repeat, offset)
+				brick_rect = MMAlgos.bricks_rb(uv, col_row, repeat, offset)
 			elif type == 1:
-				brick_rect = Patterns.bricks_rb2(uv, col_row, repeat, offset)
+				brick_rect = MMAlgos.bricks_rb2(uv, col_row, repeat, offset)
 			elif type == 2:
-				brick_rect = Patterns.bricks_hb(uv, col_row, repeat, offset)
+				brick_rect = MMAlgos.bricks_hb(uv, col_row, repeat, offset)
 			elif type == 3:
-				brick_rect = Patterns.bricks_bw(uv, col_row, repeat, offset)
+				brick_rect = MMAlgos.bricks_bw(uv, col_row, repeat, offset)
 			elif type == 4:
-				brick_rect = Patterns.bricks_sb(uv, col_row, repeat, offset)
+				brick_rect = MMAlgos.bricks_sb(uv, col_row, repeat, offset)
 			
 			
 			#vec4 $(name_uv) = brick($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $round*$round_map($uv), max(0.001, $bevel*$bevel_map($uv)));
-			var brick : Color = Patterns.brick(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), mortar.get_value(uv), roundness.get_value(uv), max(0.001, bevel.get_value(uv)))
+			var brick : Color = MMAlgos.brick(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), mortar.get_value(uv), roundness.get_value(uv), max(0.001, bevel.get_value(uv)))
 			
 			#Bricks pattern (float) - A greyscale image that shows the bricks pattern
 			#$(name_uv).x
@@ -187,7 +187,7 @@ func _render(material) -> void:
 
 			#Random color (rgb) - A random color for each brick
 			#brick_random_color($(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
-			var brc : Vector3 = Patterns.brick_random_color(Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), 1 / float(pseed))
+			var brc : Vector3 = MMAlgos.brick_random_color(Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), 1 / float(pseed))
 			var random_color_col : Color = Color(brc.x, brc.y, brc.z, 1)
 
 			#Position.x (float) - The position of each brick along the X axis",
@@ -200,12 +200,12 @@ func _render(material) -> void:
 
 			#Brick UV (rgb) - An UV map output for each brick, to be connected to the Map input of a CustomUV node
 			#brick_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, float($seed))
-			var buv : Vector3 = Patterns.brick_uv(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), pseed)
+			var buv : Vector3 = MMAlgos.brick_uv(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), pseed)
 			var brick_uv_col : Color = Color(buv.x, buv.y, buv.z, 1)
 
 			#Corner UV (rgb) - An UV map output for each brick corner, to be connected to the Map input of a CustomUV node
 			#brick_corner_uv($uv, $(name_uv)_rect.xy, $(name_uv)_rect.zw, $mortar*$mortar_map($uv), $corner, float($seed))
-			var bcuv : Vector3 = Patterns.brick_corner_uv(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), mortar.get_value(uv), corner, pseed)
+			var bcuv : Vector3 = MMAlgos.brick_corner_uv(uv, Vector2(brick_rect.r, brick_rect.g), Vector2(brick_rect.b, brick_rect.a), mortar.get_value(uv), corner, pseed)
 			var corner_uv_col : Color = Color(bcuv.x, bcuv.y, bcuv.z, 1)
 
 			#Direction (float) - The direction of each brick (white: horizontal, black: vertical)

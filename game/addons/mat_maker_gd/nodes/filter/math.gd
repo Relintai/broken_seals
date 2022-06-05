@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var a : Resource
@@ -98,7 +98,7 @@ func get_property_value(uv : Vector2) -> float:
 	elif operation == 11:#"trunc(A)", 
 		f = int(af)
 	elif operation == 12:#"fract(A)", 
-		f = Commons.fractf(af)
+		f = MMAlgos.fractf(af)
 	elif operation == 13:#"min(A, B)", 
 		f = min(af, bf)
 	elif operation == 14:#"max(A, B)", 

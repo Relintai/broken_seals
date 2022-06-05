@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_main : Resource
 export(Resource) var out_horizontal_map : Resource
@@ -83,7 +83,7 @@ func _render(material) -> void:
 			var width_val : Vector2 = width.get_value(uv)
 			
 			#vec3 $(name_uv) = weave2($uv, vec2($columns, $rows), $stitch, $width_x*$width_map($uv), $width_y*$width_map($uv));
-			var weave : Vector3 = Patterns.weave2(uv, size, stitch, width_val.x, width_val.y);
+			var weave : Vector3 = MMAlgos.weave2(uv, size, stitch, width_val.x, width_val.y);
 
 			#Outputs:
 

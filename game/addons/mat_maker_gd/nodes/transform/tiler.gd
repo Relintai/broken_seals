@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 export(Resource) var in_mask : Resource
@@ -266,15 +266,15 @@ func tiler_calc(uv : Vector2, tile : Vector2, overlap : int, _seed : Vector2) ->
 	
 	for dx in range(-overlap, overlap): #for (int dx = -overlap; dx <= overlap; ++dx) {
 		for dy in range(-overlap, overlap): #for (int dy = -overlap; dy <= overlap; ++dy) {
-			var pos : Vector2 = Commons.fractv2((Commons.floorv2(uv * tile) + Vector2(dx, dy) + Vector2(0.5, 0.5)) / tile - Vector2(0.5, 0.5))
-			var vseed : Vector2 = Commons.rand2(pos+_seed)
-			rc1 = Commons.rand3(vseed)
-			pos = Commons.fractv2(pos + Vector2(fixed_offset / tile.x, 0.0) * floor(Commons.modf(pos.y * tile.y, 2.0)) + rnd_offset * vseed / tile)
-			var mask : float = in_mask.get_value(Commons.fractv2(pos + Vector2(0.5, 0.5)))
+			var pos : Vector2 = MMAlgos.fractv2((MMAlgos.floorv2(uv * tile) + Vector2(dx, dy) + Vector2(0.5, 0.5)) / tile - Vector2(0.5, 0.5))
+			var vseed : Vector2 = MMAlgos.rand2(pos+_seed)
+			rc1 = MMAlgos.rand3(vseed)
+			pos = MMAlgos.fractv2(pos + Vector2(fixed_offset / tile.x, 0.0) * floor(MMAlgos.modf(pos.y * tile.y, 2.0)) + rnd_offset * vseed / tile)
+			var mask : float = in_mask.get_value(MMAlgos.fractv2(pos + Vector2(0.5, 0.5)))
 
 			if (mask > 0.01):
-				var pv : Vector2 = Commons.fractv2(uv - pos) - Vector2(0.5, 0.5)
-				vseed = Commons.rand2(vseed)
+				var pv : Vector2 = MMAlgos.fractv2(uv - pos) - Vector2(0.5, 0.5)
+				vseed = MMAlgos.rand2(vseed)
 				var angle : float = (vseed.x * 2.0 - 1.0) * rnd_rotate * 0.01745329251
 				var ca : float = cos(angle)
 				var sa : float = sin(angle)
@@ -282,8 +282,8 @@ func tiler_calc(uv : Vector2, tile : Vector2, overlap : int, _seed : Vector2) ->
 				pv *= (vseed.y-0.5) * 2.0 * rnd_scale + 1.0
 				pv /= scale
 				pv += Vector2(0.5, 0.5)
-				vseed = Commons.rand2(vseed)
-				var clamped_pv : Vector2 = Commons.clampv2(pv, Vector2(), Vector2(1, 1))
+				vseed = MMAlgos.rand2(vseed)
+				var clamped_pv : Vector2 = MMAlgos.clampv2(pv, Vector2(), Vector2(1, 1))
 				
 				if (pv.x != clamped_pv.x || pv.y != clamped_pv.y):
 					continue
@@ -293,14 +293,14 @@ func tiler_calc(uv : Vector2, tile : Vector2, overlap : int, _seed : Vector2) ->
 				#16, "pv = clamp(0.25*(pv+floor(rand2(seed)*4.0)), vec2(0.0), vec2(1.0));"
 					
 				if select_inputs == 1:
-					pv = Commons.clampv2(0.5*(pv + Commons.floorv2(Commons.rand2(vseed)*2.0)), Vector2(), Vector2(1, 1));
+					pv = MMAlgos.clampv2(0.5*(pv + MMAlgos.floorv2(MMAlgos.rand2(vseed)*2.0)), Vector2(), Vector2(1, 1));
 				elif select_inputs == 2:
-					pv = Commons.clampv2(0.25*(pv + Commons.floorv2(Commons.rand2(vseed)*4.0)), Vector2(), Vector2(1, 1));
+					pv = MMAlgos.clampv2(0.25*(pv + MMAlgos.floorv2(MMAlgos.rand2(vseed)*4.0)), Vector2(), Vector2(1, 1));
 
 				#float c1 = $in.variation(pv, $variations ? vseed.x : 0.0) * mask * (1.0-$value*vseed.x)
 				var c1 : float = input.get_value(pv) * mask * (1.0 - rnd_value * vseed.x)
 				c = max(c, c1)
-				rc = lerp(rc, rc1, Commons.step(c, c1))
+				rc = lerp(rc, rc1, MMAlgos.step(c, c1))
 
 	return Color(rc.x, rc.y, rc.z, c)
 

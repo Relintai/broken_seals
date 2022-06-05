@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(int, "Line,Circle") var shape : int = 0
@@ -28,9 +28,9 @@ func _render(material) -> void:
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	if shape == 0:
-		return Patterns.truchet1c(uv, size, pseed)
+		return MMAlgos.truchet1c(uv, size, pseed)
 	elif shape == 1:
-		return Patterns.truchet2c(uv, size, pseed)
+		return MMAlgos.truchet2c(uv, size, pseed)
 	
 	return Color()
 

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input : Resource
 
@@ -24,4 +24,4 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_label_universal(input)
 
 func get_property_value(uv : Vector2):
-	return input.get_value(Commons.fractv2(uv), true)
+	return input.get_value(MMAlgos.fractv2(uv), true)

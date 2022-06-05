@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(Vector2) var angle : Vector2 = Vector2(30, 150)
@@ -27,7 +27,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_width", "set_width", "Width", 0.01)
 
 func get_property_value(uv : Vector2) -> float:
-	return Commons.sdf_arc(uv, angle, Vector2(radius, width))
+	return MMAlgos.sdf_arc(uv, angle, Vector2(radius, width))
 
 #angle
 func get_angle() -> Vector2:

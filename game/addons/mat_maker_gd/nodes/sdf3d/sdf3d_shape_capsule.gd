@@ -1,7 +1,7 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(int, "X,Y,Z") var axis : int = 1
@@ -49,7 +49,7 @@ func sdf3d_capsule_y(p : Vector3, r : float, l : float) -> Vector2:
 	v.y -= clamp(v.y, -l, l);
 	
 	var cx : float = clamp(0.5 + 0.5 * p.y / l, 0.0, 1.0)
-	var cp : float = Commons.curve(cx, points)
+	var cp : float = MMAlgos.curve(cx, points)
 	var f : float = v.length() - r * cp
 
 	return Vector2(f, 0.0);
@@ -59,7 +59,7 @@ func sdf3d_capsule_x(p : Vector3, r : float, l : float) -> Vector2:
 	v.x -= clamp(v.x, -l, l);
 	
 	var cx : float = clamp(0.5 + 0.5 * p.x / l, 0.0, 1.0)
-	var cp : float = Commons.curve(cx, points)
+	var cp : float = MMAlgos.curve(cx, points)
 	var f : float = v.length() - r * cp
 
 	return Vector2(f, 0.0);
@@ -69,7 +69,7 @@ func sdf3d_capsule_z(p : Vector3, r : float, l : float) -> Vector2:
 	v.z -= clamp(v.z, -l, l);
 	
 	var cx : float = clamp(0.5 + 0.5 * p.z / l, 0.0, 1.0)
-	var cp : float = Commons.curve(cx, points)
+	var cp : float = MMAlgos.curve(cx, points)
 	var f : float = v.length() - r * cp
 
 	return Vector2(f, 0.0);

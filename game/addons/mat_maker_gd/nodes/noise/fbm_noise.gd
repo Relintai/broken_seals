@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var NoiseFBM = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 
@@ -33,23 +33,23 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	
 	#"Value,Perlin,Simplex,Cellular1,Cellular2,Cellular3,Cellular4,Cellular5,Cellular6"
 	if type == 0:
-		return NoiseFBM.fbmval(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.fbmval(uv, scale, folds, iterations, persistence, ps)
 	elif type == 1:
-		return NoiseFBM.perlin(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.perlin(uv, scale, folds, iterations, persistence, ps)
 	elif type == 2:
-		return NoiseFBM.simplex(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.simplex(uv, scale, folds, iterations, persistence, ps)
 	elif type == 3:
-		return NoiseFBM.cellular(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular(uv, scale, folds, iterations, persistence, ps)
 	elif type == 4:
-		return NoiseFBM.cellular2(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular2(uv, scale, folds, iterations, persistence, ps)
 	elif type == 5:
-		return NoiseFBM.cellular3(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular3(uv, scale, folds, iterations, persistence, ps)
 	elif type == 6:
-		return NoiseFBM.cellular4(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular4(uv, scale, folds, iterations, persistence, ps)
 	elif type == 7:
-		return NoiseFBM.cellular5(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular5(uv, scale, folds, iterations, persistence, ps)
 	elif type == 8:
-		return NoiseFBM.cellular6(uv, scale, folds, iterations, persistence, ps)
+		return MMAlgos.cellular6(uv, scale, folds, iterations, persistence, ps)
 	
 	return Color()
 

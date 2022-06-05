@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input1 : Resource
 export(Resource) var input2 : Resource
@@ -54,11 +54,11 @@ func _register_methods(mm_graph_node) -> void:
 
 func get_property_value(uv : Vector2) -> float:
 	if operation == 0:
-		return Commons.sdf_smooth_boolean_union(input1.get_value(uv), input2.get_value(uv), smoothness)
+		return MMAlgos.sdf_smooth_boolean_union(input1.get_value(uv), input2.get_value(uv), smoothness)
 	elif operation == 1:
-		return Commons.sdf_smooth_boolean_substraction(input1.get_value(uv), input2.get_value(uv), smoothness)
+		return MMAlgos.sdf_smooth_boolean_substraction(input1.get_value(uv), input2.get_value(uv), smoothness)
 	elif operation == 2:
-		return Commons.sdf_smooth_boolean_intersection(input1.get_value(uv), input2.get_value(uv), smoothness)
+		return MMAlgos.sdf_smooth_boolean_intersection(input1.get_value(uv), input2.get_value(uv), smoothness)
 	
 	return 0.0
 

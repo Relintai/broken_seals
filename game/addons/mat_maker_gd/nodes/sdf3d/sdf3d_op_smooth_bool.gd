@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var input1 : Resource
 export(Resource) var input2 : Resource
@@ -57,11 +57,11 @@ func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	var s2 : Vector2 = input2.get_value_sdf3d(uv3)
 	
 	if operation == 0:
-		return Commons.sdf3d_smooth_union(s1, s2, smoothness)
+		return MMAlgos.sdf3d_smooth_union(s1, s2, smoothness)
 	elif operation == 1:
-		return Commons.sdf3d_smooth_subtraction(s1, s2, smoothness)
+		return MMAlgos.sdf3d_smooth_subtraction(s1, s2, smoothness)
 	elif operation == 2:
-		return Commons.sdf3d_smooth_intersection(s1, s2, smoothness)
+		return MMAlgos.sdf3d_smooth_intersection(s1, s2, smoothness)
 	
 	return Vector2()
 

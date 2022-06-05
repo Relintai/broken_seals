@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(float) var angle : float = 0
@@ -27,7 +27,7 @@ func _register_methods(mm_graph_node) -> void:
 
 func get_property_value(uv : Vector2):
 	#$in(sdf2d_rotate($uv, $a*0.01745329251))",
-	return output.get_value(SDF2D.sdf2d_rotate(uv, angle * 0.01745329251), true)
+	return output.get_value(MMAlgos.sdf2d_rotate(uv, angle * 0.01745329251), true)
 
 #angle
 func get_angle() -> float:

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -40,7 +40,7 @@ func _render(material) -> void:
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : Color = input.get_value(uv)
 	#vec2 $(name_uv)_c = fract($in($uv).xy+0.5*$in($uv).zw);
-	var cnv : Vector2 = Commons.fractv2(Vector2(c.r, c.g) + 0.5 * Vector2(c.b, c.a))
+	var cnv : Vector2 = MMAlgos.fractv2(Vector2(c.r, c.g) + 0.5 * Vector2(c.b, c.a))
 
 	#X, $(name_uv)_c.x
 	#Y, $(name_uv)_c.y

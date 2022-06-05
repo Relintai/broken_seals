@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Shapes = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 enum ShapeType {
 	SHAPE_TYPE_CIRCLE = 0,
@@ -72,15 +72,15 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 		edg = 0.0000001
 
 	if shape_type == ShapeType.SHAPE_TYPE_CIRCLE:
-		c = Shapes.shape_circle(uv, sides, rad, edg)
+		c = MMAlgos.shape_circle(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_POLYGON:
-		c = Shapes.shape_polygon(uv, sides, rad, edg)
+		c = MMAlgos.shape_polygon(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_STAR:
-		c = Shapes.shape_star(uv, sides, rad, edg)
+		c = MMAlgos.shape_star(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_CURVED_STAR:
-		c = Shapes.shape_curved_star(uv, sides, rad, edg)
+		c = MMAlgos.shape_curved_star(uv, sides, rad, edg)
 	elif shape_type == ShapeType.SHAPE_TYPE_RAYS:
-		c = Shapes.shape_rays(uv, sides, rad, edg)
+		c = MMAlgos.shape_rays(uv, sides, rad, edg)
 		
 	return Color(c, c, c, 1)
 

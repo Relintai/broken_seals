@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var out_nodes : Resource
 export(Resource) var out_borders : Resource
@@ -86,7 +86,7 @@ func _render(material) -> void:
 			var ps : float = 1.0 / float(pseed)
 
 			#vec4 $(name_uv)_xyzw = voronoi($uv, vec2($scale_x, $scale_y), vec2($stretch_y, $stretch_x), $intensity, $randomness, $seed);
-			var voronoi : Color = Commons.voronoi(uv, scale, stretch, intensity, randomness, ps)
+			var voronoi : Color = MMAlgos.voronoi(uv, scale, stretch, intensity, randomness, ps)
 
 			#Nodes - float - A greyscale pattern based on the distance to cell centers
 			#$(name_uv)_xyzw.z
@@ -98,12 +98,12 @@ func _render(material) -> void:
 
 			#Random color - rgb - A color pattern that assigns a random color to each cell
 			#rand3(fract(floor($(name_uv)_xyzw.xy)/vec2($scale_x, $scale_y)))
-			var rv3 : Vector3 = Commons.rand3(Commons.fractv2(Vector2(voronoi.r, voronoi.g) / scale))
+			var rv3 : Vector3 = MMAlgos.rand3(MMAlgos.fractv2(Vector2(voronoi.r, voronoi.g) / scale))
 			var random_color_col : Color = Color(rv3.x, rv3.y, rv3.z, 1)
 
 			#Fill - rgba - An output that should be plugged into a Fill companion node
 			#vec4(fract(($(name_uv)_xyzw.xy-1.0)/vec2($scale_x, $scale_y)), vec2(2.0)/vec2($scale_x, $scale_y))
-			var fv21 : Vector2 = Commons.fractv2((Vector2(voronoi.r, voronoi.g) - Vector2(1, 1)) / scale)
+			var fv21 : Vector2 = MMAlgos.fractv2((Vector2(voronoi.r, voronoi.g) - Vector2(1, 1)) / scale)
 			var fv22 : Vector2 = Vector2(2, 2) / scale
 			var fill_col : Color = Color(fv21.x, fv21.y, fv22.x, fv22.y)
 

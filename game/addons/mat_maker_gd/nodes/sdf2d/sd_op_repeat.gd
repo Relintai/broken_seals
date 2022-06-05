@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(int) var x : int = 3
@@ -34,7 +34,7 @@ func get_property_value(uv : Vector2):
 	var pseed : int = 123123
 	
 	#$in(repeat_2d($uv, vec2(1.0/$rx, 1.0/$ry), float($seed), $r))
-	var new_uv : Vector2 = SDF2D.repeat_2d(uv, Vector2(1.0 / float(x), 1.0/ float(y)), 1.0/float(pseed), random_rotation) 
+	var new_uv : Vector2 = MMAlgos.repeat_2d(uv, Vector2(1.0 / float(x), 1.0/ float(y)), 1.0/float(pseed), random_rotation) 
 	
 	return output.get_value(new_uv, true)
 #x

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(int, "+X,-X,+Y,-Y,+Z,-Z") var axis : int = 2
@@ -26,17 +26,17 @@ func _register_methods(mm_graph_node) -> void:
 
 func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	if axis == 0:
-		return Commons.sdf3d_cone_px(uv3, angle)
+		return MMAlgos.sdf3d_cone_px(uv3, angle)
 	elif axis == 1:
-		return Commons.sdf3d_cone_nx(uv3, angle)
+		return MMAlgos.sdf3d_cone_nx(uv3, angle)
 	elif axis == 2:
-		return Commons.sdf3d_cone_py(uv3, angle)
+		return MMAlgos.sdf3d_cone_py(uv3, angle)
 	elif axis == 3:
-		return Commons.sdf3d_cone_ny(uv3, angle)
+		return MMAlgos.sdf3d_cone_ny(uv3, angle)
 	elif axis == 4:
-		return Commons.sdf3d_cone_pz(uv3, angle)
+		return MMAlgos.sdf3d_cone_pz(uv3, angle)
 	elif axis == 5:
-		return Commons.sdf3d_cone_nz(uv3, angle)
+		return MMAlgos.sdf3d_cone_nz(uv3, angle)
 		
 	return Vector2()
 

@@ -1,7 +1,7 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/polygon_base.gd"
 
-const Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 
@@ -21,7 +21,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_polygon()
 
 func get_property_value(uv : Vector2) -> float:
-	return Commons.sdPolygon(uv, points)
+	return MMAlgos.sdPolygon(uv, points)
 
 func _polygon_changed() -> void:
 	emit_changed()

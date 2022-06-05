@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var SDF2D = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var output : Resource
 export(float) var radius : float = 0
@@ -28,7 +28,7 @@ func _register_methods(mm_graph_node) -> void:
 func get_property_value(uv : Vector2):
 	var val : float = output.get_value(uv, true)
 	
-	return SDF2D.sdf_rounded_shape(val, radius)
+	return MMAlgos.sdf_rounded_shape(val, radius)
 
 #radius
 func get_radius() -> float:

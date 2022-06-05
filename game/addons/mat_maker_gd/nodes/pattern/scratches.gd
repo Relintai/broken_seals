@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Patterns = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Vector2) var size : Vector2 = Vector2(0.25, 0.4)
@@ -34,7 +34,7 @@ func _render(material) -> void:
 
 func get_value_for(uv : Vector2, pseed : int) -> Color:
 	#scratches($uv, int($layers), vec2($length, $width), $waviness, $angle, $randomness, vec2(float($seed), 0.0))
-	return Patterns.scratchesc(uv, layers, size, waviness, angle, randomness, Vector2(pseed, 0.0))
+	return MMAlgos.scratchesc(uv, layers, size, waviness, angle, randomness, Vector2(pseed, 0.0))
 
 #size
 func get_size() -> Vector2:

@@ -1,7 +1,7 @@
 tool
 extends MMNode
 
-var Commons = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
+var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -42,11 +42,11 @@ func get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : Color = input.get_value(uv)
 	
 	#mix($edgecolor, rand(vec2(float($seed), rand(vec2(rand($(name_uv)_bb.xy), rand($(name_uv)_bb.zw))))), step(0.0000001, dot($(name_uv)_bb.zw, vec2(1.0))))
-	var r1 : float = Commons.rand(Vector2(c.r, c.g))
-	var r2 : float = Commons.rand(Vector2(c.b, c.a))
-	var s : float = Commons.step(0.0000001, Vector2(c.b, c.a).dot(Vector2(1, 1)))
+	var r1 : float = MMAlgos.rand(Vector2(c.r, c.g))
+	var r2 : float = MMAlgos.rand(Vector2(c.b, c.a))
+	var s : float = MMAlgos.step(0.0000001, Vector2(c.b, c.a).dot(Vector2(1, 1)))
 	
-	var f : float = lerp(edge_color, Commons.rand(Vector2(1.0 / float(pseed), Commons.rand(Vector2(r1, r2)))), s)
+	var f : float = lerp(edge_color, MMAlgos.rand(Vector2(1.0 / float(pseed), MMAlgos.rand(Vector2(r1, r2)))), s)
 	return Color(f, f, f, 1)
 
 #edge_color
