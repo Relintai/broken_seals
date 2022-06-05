@@ -56,6 +56,8 @@ class GDSScope:
 			
 			if cl.begins_with("#"):
 				scope_lines.append(cl)
+				scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
+				scope_line_order.push_back(scope_lines.size() - 1)
 				current_index += 1
 				continue
 				
