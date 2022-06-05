@@ -30,11 +30,16 @@ class GDSStaticClassParser:
 			s += " " + transform_method_to_cpp(m) + ";\n"
 		
 		s += "\n"
+		s += " static _" + scope_data + "* get_singleton();\n"
+		s += "\n"
 		s += " " + scope_data + "();\n"
 		s += " ~" + scope_data + "();\n"
 		s += "\n"
 		s += " protected:\n"
 		s += " static void _bind_methods();\n"
+		
+		s += "\n"
+		s += " static _" + scope_data + "* self;\n"
 			
 		s += "\n"
 		s += "};"
@@ -46,7 +51,7 @@ class GDSStaticClassParser:
 		var s : String = ""
 			
 		s += "\n"
-
+		
 		for m in static_methods:
 			#scope_data
 			
@@ -54,15 +59,27 @@ class GDSStaticClassParser:
 			s += " " + transform_method_to_cpp_call(m, scope_data + "::") + ";\n"
 			s += "}\n\n"
 
+		s += "_" + scope_data + "* _" + scope_data + "::get_singleton() {\n"
+		s += " return self;\n"
 		s += "}\n\n"
-		s += scope_data + "::~" + scope_data + "() {\n"
+		
+		s += "\n"
+
+		s += "_" + scope_data + "::_" + scope_data + "() {\n"
+		s += " self = this;\n"
+		s += "}\n\n"
+		
+		s += "_" + scope_data + "::~_" + scope_data + "() {\n"
+		s += " self = nullptr;\n"
 		s += "}\n\n"
 		s += "\n"
-		s += "static void " + scope_data + "::_bind_methods() {\n"
+		s += "static void _" + scope_data + "::_bind_methods() {\n"
 			
 		s +=  create_cpp_binds_string()
 
 		s += "}\n\n"
+		
+		s += "_" + scope_data + "* _" + scope_data + "::self = nullptr;\n"
 			
 		return s
 		
