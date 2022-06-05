@@ -28,6 +28,16 @@ class GDSScope:
 	var scope_lines : PoolStringArray = PoolStringArray()
 	var is_static : bool = false
 	var scope_line_order : PoolIntArray
+	
+	var comment_accumulator : PoolStringArray = PoolStringArray()
+	
+	func apply_comments() -> void:
+		for i in range(comment_accumulator.size()):
+			scope_lines.append(comment_accumulator[i])
+			scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
+			scope_line_order.push_back(scope_lines.size() - 1)
+			
+		comment_accumulator.resize(0)
 
 	func parse(contents : PoolStringArray, current_index : int = 0, current_indent : int = 0) -> int:
 		while current_index < contents.size():
@@ -55,9 +65,7 @@ class GDSScope:
 				continue
 			
 			if cl.begins_with("#"):
-				scope_lines.append(cl)
-				scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
-				scope_line_order.push_back(scope_lines.size() - 1)
+				comment_accumulator.append(cl)
 				current_index += 1
 				continue
 				
@@ -66,20 +74,27 @@ class GDSScope:
 			
 			if curr_line_indent < current_indent:
 				return current_index
-			
+				
+			apply_comments()
+
 			if cl.ends_with(":") || cl.begins_with("enum "):
 				var scope : GDSScope = GDSScope.new()
 				scope.parse_scope_data(clstripped)
 				current_index += 1
 				current_index = scope.parse(contents, current_index, curr_line_indent + 1)
+
 				subscopes.append(scope)
 				scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_SCOPE)
 				scope_line_order.push_back(subscopes.size() - 1)
 				
+				comment_accumulator = scope.comment_accumulator
+				scope.comment_accumulator.resize(0)
+				apply_comments()
+				
 				#don't
 				#current_index += 1
 				continue
-			
+
 			scope_lines.append(clstripped)
 			scope_line_order.push_back(GDScopeLineType.GDSCOPE_TYPE_LINE)
 			scope_line_order.push_back(scope_lines.size() - 1)
@@ -372,42 +387,32 @@ class GDSScope:
 		s += "\n"
 		indents += " "
 
-		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
-			for subs in subscopes:
-				var scstr : String = subs.get_cpp_impl_string(current_scope_level + 1, owner_class_name)
+		for i in range(0, scope_line_order.size(), 2):
+			if scope_line_order[i] == GDScopeLineType.GDSCOPE_TYPE_LINE:
+				var l : String = scope_lines[scope_line_order[i + 1]]
+					
+				if l.begins_with("#"):
+					l = l.replace("#", "//")
+					s += indents + l + ";\n"
+					continue
+
+				if l.begins_with("var "):
+					if l.find("preload") != -1:
+						s += indents + "//" + l + ";\n"
+						continue
+							
+					s += indents + " " + transform_variable_to_cpp(l) + ";\n"
+				else:
+					s += indents + l + ";\n"
+			else:
+				var scstr : String = subscopes[scope_line_order[i + 1]].get_cpp_impl_string(current_scope_level + 1, owner_class_name)
 				
 				if scstr != "":
+					s += "\n"
 					s += scstr
 					s += "\n"
-					s += "\n"
-		else:
-			for i in range(0, scope_line_order.size(), 2):
-				if scope_line_order[i] == GDScopeLineType.GDSCOPE_TYPE_LINE:
-					var l : String = scope_lines[scope_line_order[i + 1]]
-					
-					if l.begins_with("#"):
-						l = l.replace("#", "//")
-						s += indents + l + ";\n"
-						continue
-
-					if l.begins_with("var "):
-						if l.find("preload") != -1:
-							s += indents + "//" + l + ";\n"
-							continue
-							
-						s += indents + " " + transform_variable_to_cpp(l) + ";\n"
-					else:
-						s += indents + l + ";\n"
-				else:
-
-					var scstr : String = subscopes[scope_line_order[i + 1]].get_cpp_impl_string(current_scope_level + 1, owner_class_name)
-					
-					if scstr != "":
-						s += "\n"
-						s += scstr
-						s += "\n"
 			
-			s += "}\n"
+		s += "}\n"
 			
 
 		if type == GDScopeType.GDSCOPE_TYPE_CLASS:
@@ -874,6 +879,7 @@ class GDSParser:
 		root.camel_case_scope_data()
 		var c : PoolStringArray = split_preprocess_content(contents)
 		root.parse(c)
+		root.apply_comments()
 		
 
 	func split_preprocess_content(contents : String) -> PoolStringArray:
@@ -912,7 +918,7 @@ class GDSParser:
 				
 			var hash_symbol_index = l.find("#")
 			if hash_symbol_index != -1:
-				var comment_str : String = l.substr(hash_symbol_index)
+				var comment_str : String = l.substr(hash_symbol_index).strip_edges(true, false)
 				ret.append(comment_str)
 				l = l.substr(0, hash_symbol_index).strip_edges(false, true)
 			
