@@ -5,8 +5,6 @@ var gradient_editor_scene : PackedScene = preload("res://addons/mat_maker_gd/wid
 var polygon_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/polygon_edit/polygon_edit.tscn")
 var curve_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/curve_edit/curve_edit.tscn")
 
-var slot_colors : PoolColorArray
-
 var _material : MMMateial  = null
 var _node : MMNode = null
 var properties : Array = Array()
@@ -431,15 +429,11 @@ func add_slot(input_type : int, output_type : int, getter : String, setter : Str
 	
 	if input_type != -1:
 		set_slot_type_left(slot_idx, input_type)
+		set_slot_color_left(slot_idx, get_slot_color(input_type))
 		
 	if output_type != -1:
 		set_slot_type_left(slot_idx, output_type)
-		
-	if input_type != -1 && slot_colors.size() > input_type:
-		set_slot_color_left(slot_idx, slot_colors[input_type])
-		
-	if output_type != -1 && slot_colors.size() > output_type:
-		set_slot_color_right(slot_idx, slot_colors[output_type])
+		set_slot_color_right(slot_idx, get_slot_color(output_type))
 
 	return slot_idx
 
@@ -725,3 +719,24 @@ func on_close_request() -> void:
 			return
 			
 		n = n.get_parent()
+
+func get_slot_color(slot_type : int) -> Color:
+	return _get_slot_color(slot_type)
+	
+func _get_slot_color(slot_type : int) -> Color:
+	if slot_type == 0:
+		return Color(0.91, 0.06, 0.06)
+	elif slot_type == 1:
+		return Color(0.43, 0.04, 0.04)
+	elif slot_type == 2:
+		return Color(0.83, 0.38, 0.38)
+	elif slot_type == 3:
+		return Color(0.04, 0.48, 0.43)
+	elif slot_type == 4:
+		return Color(0.35, 0.04, 0.34)
+	elif slot_type == 5:
+		return Color(0.04, 0.05, 1)
+	elif slot_type == 6:
+		return Color(0.37, 0.37, 0.37)
+	
+	return Color(1, 1, 1, 1)
