@@ -120,6 +120,9 @@ func on_input_property_changed() -> void:
 	set_dirty(true)
 	emit_changed()
 
+# Add it to the MMAlgos bing class instead.
+# Not a perfect fit, but a better fit.
+
 #func editor_register_node_class(category : String, cls : String)
 # -> c++ method, adds node to the editor gui (add button)
 # in gdscript a plugin should instance an MMNode and call it to populate the add menu
