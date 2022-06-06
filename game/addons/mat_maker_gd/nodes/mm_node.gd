@@ -119,3 +119,17 @@ func set_dirty(val : bool) -> void:
 func on_input_property_changed() -> void:
 	set_dirty(true)
 	emit_changed()
+
+#func editor_register_node_class(category : String, cls : String)
+# -> c++ method, adds node to the editor gui (add button)
+# in gdscript a plugin should instance an MMNode and call it to populate the add menu
+# with MMNodes
+# in c++ it should have a static counterpart. 
+# register_types should populate c++ types with this
+
+#func editor_unregister_node_class(category : String, cls : String)
+
+#func editor_register_node_script(category : String, script_path : String)
+# same as the above, but for scripts
+
+#func editor_unregister_node_script(category : String, cls : String)
