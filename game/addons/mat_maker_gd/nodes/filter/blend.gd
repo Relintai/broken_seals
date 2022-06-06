@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 enum BlendType {
 	NORMAL = 0,
 	DISSOLVE,

@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 enum ShapeType {
 	SHAPE_TYPE_CIRCLE = 0,
 	SHAPE_TYPE_POLYGON = 1,

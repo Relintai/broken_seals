@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var image : Resource
 
 export(int, "Value,Perlin,Simplex,Cellular1,Cellular2,Cellular3,Cellular4,Cellular5,Cellular6") var type : int = 0

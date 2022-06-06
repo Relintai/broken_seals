@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var output : Resource
 export(int, "+X,-X,+Y,-Y,+Z,-Z") var axis : int = 2
 export(float) var angle : float = 30

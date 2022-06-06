@@ -1,8 +1,6 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/polygon_base.gd"
 
-const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var output : Resource
 
 func _init_properties():

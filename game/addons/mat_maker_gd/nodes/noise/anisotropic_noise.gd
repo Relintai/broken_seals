@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var image : Resource
 
 export(Vector2) var scale : Vector2 = Vector2(4, 256)

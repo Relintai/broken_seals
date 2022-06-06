@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var input1 : Resource
 export(Resource) var input2 : Resource
 export(Resource) var output : Resource

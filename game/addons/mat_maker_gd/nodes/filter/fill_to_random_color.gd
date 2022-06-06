@@ -1,8 +1,6 @@
 tool
 extends MMNode
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var image : Resource
 export(Resource) var input : Resource
 export(Color) var edge_color : Color = Color(1, 1, 1, 1)

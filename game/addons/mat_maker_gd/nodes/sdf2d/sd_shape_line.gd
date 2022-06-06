@@ -1,8 +1,6 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
 
-const MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var output : Resource
 export(Vector2) var A : Vector2 = Vector2(-0.3, -0.3)
 export(Vector2) var B : Vector2 = Vector2(0.3, 0.3)

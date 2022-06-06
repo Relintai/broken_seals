@@ -1,8 +1,6 @@
 tool
 extends "res://addons/mat_maker_gd/nodes/bases/gradient_base.gd"
 
-var MMAlgos = preload("res://addons/mat_maker_gd/nodes/common/m_m_algos.gd")
-
 export(Resource) var image : Resource
 export(float) var repeat : float = 1
 export(float) var rotate : float = 0
