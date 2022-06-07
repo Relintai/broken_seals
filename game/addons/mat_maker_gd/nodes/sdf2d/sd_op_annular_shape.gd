@@ -8,11 +8,11 @@ export(int) var ripples : int = 1
 func _init_properties():
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	output.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	#output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	#output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>    Apply    >>>"
 	output.get_value_from_owner = true
 
@@ -25,7 +25,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_width", "set_width", "Width", 0.01)
 	mm_graph_node.add_slot_int("get_ripples", "set_ripples", "Ripples")
 
-func get_property_value(uv : Vector2):
+func _get_property_value(uv : Vector2):
 	var val : float = output.get_value(uv, true)
 	
 	return MMAlgos.sdRipples(val, width, ripples)

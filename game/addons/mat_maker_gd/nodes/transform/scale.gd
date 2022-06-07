@@ -9,18 +9,18 @@ export(Vector2) var scale : Vector2 = Vector2(1, 1)
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color(0, 0, 0, 1))
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input1    "
 	
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	#image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	#image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	#image.force_override = true
 
 	register_input_property(input)
@@ -37,7 +37,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	#$i(scale($uv, vec2(0.5+$cx, 0.5+$cy), vec2($scale_x, $scale_y)))
 	return input.get_value(MMAlgos.scale(uv, center + Vector2(0.5, 0.5), scale))
 

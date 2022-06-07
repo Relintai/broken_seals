@@ -7,9 +7,9 @@ export(float) var repeat : float = 1
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(image)
 
@@ -23,7 +23,7 @@ func _render(material) -> void:
 	
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	if interpolation_type == 0:
 		return MMAlgos.circular_gradient_type_1(uv, repeat, points)
 	elif interpolation_type == 1:

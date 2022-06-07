@@ -20,9 +20,9 @@ export(int) var size : int = 8
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(image)
 
@@ -30,7 +30,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_texture_universal(image)
 	mm_graph_node.add_slot_int("get_size", "set_size", "Size")#, Vector2(1, 10))
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#color_dots($(uv), 1.0/$(size), $(seed))

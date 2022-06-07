@@ -13,16 +13,16 @@ export(int) var repeat : int = 1
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		input.set_default_value(1.0)
 		
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 
 	register_input_property(input)
@@ -38,7 +38,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_width", "set_width", "Width", 0.01)
 	mm_graph_node.add_slot_int("get_repeat", "set_repeat", "Repeat")
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var nuv : Vector2 = transform_uv(uv)
 	
 	var f : float = 0

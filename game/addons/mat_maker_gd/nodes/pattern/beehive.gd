@@ -10,21 +10,21 @@ export(Vector2) var size : Vector2 = Vector2(4, 4)
 func _init_properties():
 	if !out_main:
 		out_main = MMNodeUniversalProperty.new()
-		out_main.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_main.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_main.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_main.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_random_color:
 		out_random_color = MMNodeUniversalProperty.new()
-		out_random_color.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_random_color.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_random_color.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_random_color.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_uv_map:
 		out_uv_map = MMNodeUniversalProperty.new()
-		out_uv_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_uv_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_uv_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_uv_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(out_main)
 	register_output_property(out_random_color)
@@ -97,7 +97,7 @@ func _render(material) -> void:
 	out_random_color.set_value(random_color)
 	out_uv_map.set_value(uv_map)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #size

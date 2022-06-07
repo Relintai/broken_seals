@@ -25,34 +25,34 @@ export(Resource) var opacity : Resource
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !input1:
 		input1 = MMNodeUniversalProperty.new()
-		input1.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input1.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input1.set_default_value(Color(1, 1, 1, 1))
 
-	input1.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input1.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input1.slot_name = ">>>    Input1    "
 		
 	if !input2:
 		input2 = MMNodeUniversalProperty.new()
-		input2.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input2.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input2.set_default_value(Color(1, 1, 1, 1))
 	
-	input2.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input2.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input2.slot_name = ">>>    Input2    "
 	
 	if !opacity:
 		opacity = MMNodeUniversalProperty.new()
-		opacity.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		opacity.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		opacity.set_default_value(0.5)
 		opacity.value_range = Vector2(0, 1)
 		opacity.value_step = 0.01
 	
-	opacity.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	opacity.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	opacity.slot_name = "opacity"
 	
 	register_input_property(input1)
@@ -74,7 +74,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var b : Vector3 = Vector3()
 	
 	#vec4 $(name_uv)_s1 = $s1($uv);

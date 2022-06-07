@@ -14,63 +14,63 @@ export(int, "Clamp,Repeat,Extend") var mode : int = 0
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color(0, 0, 0, 1))
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 	
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	#image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	#image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	#image.force_override = true
 
 	if !translate_x:
 		translate_x = MMNodeUniversalProperty.new()
-		translate_x.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		translate_x.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		translate_x.set_default_value(0)
 		translate_x.value_step = 0.01
 
-	translate_x.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	translate_x.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	translate_x.slot_name = "Translate X"
 
 	if !translate_y:
 		translate_y = MMNodeUniversalProperty.new()
-		translate_y.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		translate_y.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		translate_y.set_default_value(0)
 		translate_y.value_step = 0.01
 
-	translate_y.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	translate_y.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	translate_y.slot_name = "Translate Y"
 
 	if !rotate:
 		rotate = MMNodeUniversalProperty.new()
-		rotate.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		rotate.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		rotate.set_default_value(0)
 		rotate.value_step = 0.01
 
-	rotate.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	rotate.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	rotate.slot_name = "Rotate"
 	
 	if !scale_x:
 		scale_x = MMNodeUniversalProperty.new()
-		scale_x.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		scale_x.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		scale_x.set_default_value(1)
 		scale_x.value_step = 0.01
 
-	scale_x.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	scale_x.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	scale_x.slot_name = "Scale X"
 	
 	if !scale_y:
 		scale_y = MMNodeUniversalProperty.new()
-		scale_y.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		scale_y.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		scale_y.set_default_value(1)
 		scale_y.value_step = 0.01
 
-	scale_y.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	scale_y.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	scale_y.slot_name = "Scale Y"
 
 	register_input_property(input)
@@ -98,7 +98,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	#$i($mode(transform2($uv, vec2($translate_x*(2.0*$tx($uv)-1.0), $translate_y*(2.0*$ty($uv)-1.0)), $rotate*0.01745329251*(2.0*$r($uv)-1.0), vec2($scale_x*(2.0*$sx($uv)-1.0), $scale_y*(2.0*$sy($uv)-1.0)))))",
 	
 	#Mode:

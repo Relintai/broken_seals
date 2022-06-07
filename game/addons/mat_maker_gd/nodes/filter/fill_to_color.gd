@@ -9,26 +9,26 @@ export(Color) var edge_color : Color = Color(1, 1, 1, 1)
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color(0, 0, 0, 1))
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 	
 	if !color_map:
 		color_map = MMNodeUniversalProperty.new()
-		color_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		color_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		color_map.set_default_value(Color(1, 1, 1, 1))
 
-	color_map.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	color_map.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	color_map.slot_name = ">>>  Color Map  "
 	
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	#image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	#image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	#image.force_override = true
 
 	register_input_property(input)
@@ -46,7 +46,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	#vec4 $(name_uv)_bb = $in($uv);
 	var c : Color = input.get_value(uv)
 	

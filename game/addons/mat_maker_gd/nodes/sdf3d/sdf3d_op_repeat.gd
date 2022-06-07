@@ -9,10 +9,10 @@ export(float) var rotation : float = 0.3
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 		
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-#	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+#	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_VECTOR2
 	input.slot_name = ">>>   Input        "
 	
 	if !input.is_connected("changed", self, "on_input_changed"):
@@ -20,9 +20,9 @@ func _init_properties():
 	
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 		
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>   Output    >>>"
 	output.get_value_from_owner = true
 
@@ -36,7 +36,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_vector2("get_col_row", "set_col_row", "Col,Row", 1)
 	mm_graph_node.add_slot_float("get_rotation", "set_rotation", "Rotation", 0.01)
 
-func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
+func _get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	#todo make seed a class variable probably into MMNode
 	
 	var new_uv : Vector3 = MMAlgos.sdf3d_repeat(uv3, col_row, rotation, 1)

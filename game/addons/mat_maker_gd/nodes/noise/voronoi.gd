@@ -14,27 +14,27 @@ export(float) var randomness : float = 0.85
 func _init_properties():
 	if !out_nodes:
 		out_nodes = MMNodeUniversalProperty.new()
-		out_nodes.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_nodes.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_nodes.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_nodes.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_borders:
 		out_borders = MMNodeUniversalProperty.new()
-		out_borders.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_borders.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_borders.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_borders.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_random_color:
 		out_random_color = MMNodeUniversalProperty.new()
-		out_random_color.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_random_color.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_random_color.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_random_color.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_fill:
 		out_fill = MMNodeUniversalProperty.new()
-		out_fill.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_fill.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_fill.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_fill.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(out_nodes)
 	register_output_property(out_borders)
@@ -120,7 +120,7 @@ func _render(material) -> void:
 	out_random_color.set_value(random_color)
 	out_fill.set_value(fill)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #scale

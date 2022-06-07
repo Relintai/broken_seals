@@ -21,31 +21,31 @@ export(bool) var variations : bool = false
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		input.set_default_value(0)
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 	
 	if !in_mask:
 		in_mask = MMNodeUniversalProperty.new()
-		in_mask.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		in_mask.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		in_mask.set_default_value(1)
 
-	in_mask.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	in_mask.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	in_mask.slot_name = ">>>    Mask    "
 	
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !instance_map:
 		instance_map = MMNodeUniversalProperty.new()
-		instance_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		instance_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	instance_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	instance_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	register_input_property(input)
 	register_input_property(in_mask)
@@ -113,7 +113,7 @@ func _render(material) -> void:
 	output.set_value(output_img)
 	instance_map.set_value(instance_map_img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #tile

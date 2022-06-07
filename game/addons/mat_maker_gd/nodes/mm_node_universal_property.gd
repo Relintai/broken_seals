@@ -1,5 +1,5 @@
 tool
-class_name MMNodeUniversalProperty
+#class_name MMNodeUniversalProperty
 extends Resource
 
 enum SlotTypes {

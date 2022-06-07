@@ -11,9 +11,9 @@ export(float) var randomness : float = 0.44
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(image)
 
@@ -30,7 +30,7 @@ func _render(material) -> void:
 	
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	#scratches($uv, int($layers), vec2($length, $width), $waviness, $angle, $randomness, vec2(float($seed), 0.0))
 	return MMAlgos.scratchesc(uv, layers, size, waviness, angle, randomness, Vector2(pseed, 0.0))
 

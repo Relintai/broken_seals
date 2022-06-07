@@ -11,24 +11,24 @@ var size : int = 0
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color())
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input1    "
 	
 	if !sigma:
 		sigma = MMNodeUniversalProperty.new()
-		sigma.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		sigma.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		sigma.set_default_value(50)
 
-	sigma.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	sigma.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	sigma.slot_name = "Sigma"
 		
 	register_input_property(input)
@@ -50,7 +50,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func render_image(material) -> Image:
+func _render_image(material) -> Image:
 	var img : Image = Image.new()
 	img.create(material.image_size.x, material.image_size.y, false, Image.FORMAT_RGBA8)
 

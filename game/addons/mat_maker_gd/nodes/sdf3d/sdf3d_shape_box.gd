@@ -8,9 +8,9 @@ export(float) var radius : float = 0.01
 func _init_properties():
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 		
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>   Output    >>>"
 	output.get_value_from_owner = true
 
@@ -22,7 +22,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_vector3("get_size", "set_size", "Size", 0.01)
 	mm_graph_node.add_slot_float("get_radius", "set_radius", "Radius", 0.01)
 
-func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
+func _get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	return MMAlgos.sdf3d_box(uv3, size.x, size.y, size.z, radius)
 
 #size

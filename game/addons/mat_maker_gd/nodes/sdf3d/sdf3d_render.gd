@@ -10,30 +10,30 @@ export(Resource) var out_color_map : Resource
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 	
 	#for some reason this doesn't work, todo check
-#	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+#	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = "Input"
 
 	if !out_height_map:
 		out_height_map = MMNodeUniversalProperty.new()
-		out_height_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_height_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_height_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_height_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_normal_map:
 		out_normal_map = MMNodeUniversalProperty.new()
-		out_normal_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_normal_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_normal_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_normal_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_color_map:
 		out_color_map = MMNodeUniversalProperty.new()
-		out_color_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_color_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_color_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_color_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(out_height_map)
 	register_output_property(out_normal_map)
@@ -100,7 +100,7 @@ func _render(material) -> void:
 	out_normal_map.set_value(normal_map)
 	out_color_map.set_value(color_map)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #vec2 raymarch_$name(vec2 uv) {

@@ -21,72 +21,72 @@ export(float) var corner : float = 0.3
 func _init_properties():
 	if !out_bricks_pattern:
 		out_bricks_pattern = MMNodeUniversalProperty.new()
-		out_bricks_pattern.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_bricks_pattern.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_bricks_pattern.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_bricks_pattern.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_random_color:
 		out_random_color = MMNodeUniversalProperty.new()
-		out_random_color.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_random_color.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_random_color.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_random_color.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_position_x:
 		out_position_x = MMNodeUniversalProperty.new()
-		out_position_x.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_position_x.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_position_x.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_position_x.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_position_y:
 		out_position_y = MMNodeUniversalProperty.new()
-		out_position_y.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_position_y.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_position_y.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_position_y.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_brick_uv:
 		out_brick_uv = MMNodeUniversalProperty.new()
-		out_brick_uv.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_brick_uv.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_brick_uv.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_brick_uv.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_corner_uv:
 		out_corner_uv = MMNodeUniversalProperty.new()
-		out_corner_uv.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_corner_uv.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_corner_uv.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_corner_uv.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_direction:
 		out_direction = MMNodeUniversalProperty.new()
-		out_direction.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_direction.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_direction.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_direction.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !mortar:
 		mortar = MMNodeUniversalProperty.new()
-		mortar.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		mortar.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		mortar.set_default_value(0.1)
 
-	mortar.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	mortar.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	mortar.slot_name = "Mortar"
 	mortar.value_step = 0.01
 	mortar.value_range = Vector2(0, 0.5)
 	
 	if !bevel:
 		bevel = MMNodeUniversalProperty.new()
-		bevel.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		bevel.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		bevel.set_default_value(0.1)
 
-	bevel.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	bevel.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	bevel.slot_name = "Bevel"
 	bevel.value_step = 0.01
 	bevel.value_range = Vector2(0, 0.5)
 
 	if !roundness:
 		roundness = MMNodeUniversalProperty.new()
-		roundness.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		roundness.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		roundness.set_default_value(0.1)
 
-	roundness.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	roundness.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	roundness.slot_name = "Roundness"
 	roundness.value_step = 0.01
 	roundness.value_range = Vector2(0, 0.5)
@@ -235,7 +235,7 @@ func _render(material) -> void:
 	out_corner_uv.set_value(corner_uv)
 	out_direction.set_value(direction)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #type

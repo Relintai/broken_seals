@@ -18,25 +18,25 @@ export(Resource) var edge : Resource
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !radius:
 		radius = MMNodeUniversalProperty.new()
-		radius.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		radius.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		radius.set_default_value(0.34375)
 
-	radius.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	radius.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	radius.slot_name = "radius"
 	radius.value_step = 0.05
 		
 	if !edge:
 		edge = MMNodeUniversalProperty.new()
-		edge.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		edge.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		edge.set_default_value(0.2)
 	
-	edge.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	edge.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	edge.slot_name = "edge"
 	edge.value_step = 0.05
 	
@@ -57,7 +57,7 @@ func _render(material) -> void:
 	
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : float = 0
 	
 	var rad : float = radius.get_value(uv)

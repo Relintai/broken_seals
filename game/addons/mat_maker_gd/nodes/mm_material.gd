@@ -1,5 +1,5 @@
 tool
-class_name MMMateial
+#class_name MMMaterial
 extends Resource
 
 #threads are implemented using my thread pool engine module.

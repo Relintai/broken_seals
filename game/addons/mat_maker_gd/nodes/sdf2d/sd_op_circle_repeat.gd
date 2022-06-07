@@ -7,11 +7,11 @@ export(int) var count : int = 6
 func _init_properties():
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	output.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	#output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	#output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>    Apply    >>>"
 	output.get_value_from_owner = true
 
@@ -23,7 +23,7 @@ func _register_methods(mm_graph_node) -> void:
 	
 	mm_graph_node.add_slot_int("get_count", "set_count", "Count")
 
-func get_property_value(uv : Vector2):
+func _get_property_value(uv : Vector2):
 	#$in(circle_repeat_transform_2d($uv-vec2(0.5), $c)+vec2(0.5))
 	var new_uv : Vector2 = MMAlgos.circle_repeat_transform_2d(uv - Vector2(0.5, 0.5), count) + Vector2(0.5, 0.5)
 	

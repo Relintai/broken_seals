@@ -8,7 +8,7 @@ export(NodePath) var add_popup_path : NodePath = "Popups/AddPopup"
 
 var _graph_edit : GraphEdit = null
 
-var _material : MMMateial
+var _material : MMMaterial
 var _ignore_material_change_event : int = 0
 var _recreation_in_progress : bool = false
 
@@ -29,28 +29,28 @@ func ensure_objs() -> void:
 	if !_graph_edit:
 		_graph_edit = get_node(graph_edit_path)
 		
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_INT, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
 
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_IMAGE)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_INT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_FLOAT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_VECTOR2)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_VECTOR3)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_COLOR)
 		
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL, MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL)
 		
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_INT)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR2)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_VECTOR3)
-		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_COLOR)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_IMAGE, MMNodeUniversalProperty.SLOT_TYPE_IMAGE)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_INT, MMNodeUniversalProperty.SLOT_TYPE_INT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_FLOAT, MMNodeUniversalProperty.SLOT_TYPE_FLOAT)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_VECTOR2, MMNodeUniversalProperty.SLOT_TYPE_VECTOR2)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_VECTOR3, MMNodeUniversalProperty.SLOT_TYPE_VECTOR3)
+		_graph_edit.add_valid_connection_type(MMNodeUniversalProperty.SLOT_TYPE_COLOR, MMNodeUniversalProperty.SLOT_TYPE_COLOR)
 
 		_graph_edit.connect("connection_request", self, "on_graph_edit_connection_request")
 		_graph_edit.connect("disconnection_request", self, "on_graph_edit_disconnection_request")
@@ -113,7 +113,7 @@ func find_graph_node_for(nnode) -> Node:
 
 	return null
 
-func set_mmmaterial(object : MMMateial):
+func set_mmmaterial(object : MMMaterial):
 	if _material:
 		_material.disconnect("changed", self, "on_material_changed")
 	

@@ -8,10 +8,10 @@ export(float) var length : float = 0.25
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-#	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+#	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	input.slot_name = ">>>   Input        "
 	
 	if !input.is_connected("changed", self, "on_input_changed"):
@@ -19,9 +19,9 @@ func _init_properties():
 	
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 		
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>   Output    >>>"
 	output.get_value_from_owner = true
 
@@ -34,7 +34,7 @@ func _register_methods(mm_graph_node) -> void:
 	
 	mm_graph_node.add_slot_float("get_length", "set_length", "Length", 0.01)
 
-func get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
+func _get_property_value_sdf3d(uv3 : Vector3) -> Vector2:
 	#vec2 $(name_uv)_w = vec2($in($uv.xz+vec2(0.5)),abs($uv.y)-$d);
 	#ret min(max($(name_uv)_w.x,$(name_uv)_w.y),0.0)+length(max($(name_uv)_w,0.0))
 	

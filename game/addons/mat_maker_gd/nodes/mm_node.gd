@@ -1,5 +1,5 @@
 tool
-class_name MMNode
+#class_name MMNode
 extends Resource
 
 export(Vector2) var graph_position : Vector2 = Vector2()
@@ -11,7 +11,7 @@ var properties_initialized : bool = false
 
 var dirty : bool = true
 
-#MMMateial
+#MMMaterial
 func render(material) -> bool:
 	if !dirty:
 		return false
@@ -26,11 +26,11 @@ func render(material) -> bool:
 	
 	return true
 
-#MMMateial
+#MMMaterial
 func _render(material) -> void:
 	pass
 
-func render_image(material) -> Image:
+func _render_image(material) -> Image:
 	var image : Image = Image.new()
 	image.create(material.image_size.x, material.image_size.y, false, Image.FORMAT_RGBA8)
 
@@ -41,19 +41,19 @@ func render_image(material) -> Image:
 	
 	var pseed : float = randf() + randi()
 	
-	for x in range(image.get_width()):
-		for y in range(image.get_height()):
-			var v : Vector2 = Vector2(x / w, y / h)
-
-			var col : Color = get_value_for(v, pseed)
-
-			image.set_pixel(x, y, col)
+#	for x in range(image.get_width()):
+#		for y in range(image.get_height()):
+#			var v : Vector2 = Vector2(x / w, y / h)
+#
+#			var col : Color = get_value_for(v, pseed)
+#
+#			image.set_pixel(x, y, col)
 
 	image.unlock()
 
 	return image
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 func init_properties() -> void:
@@ -81,7 +81,7 @@ func set_graph_position(pos : Vector2) -> void:
 	emit_changed()
 
 func register_input_property(prop : MMNodeUniversalProperty) -> void:
-	prop.owner = self
+	#prop.owner = self
 	
 	if !prop.is_connected("changed", self, "on_input_property_changed"):
 		prop.connect("changed", self, "on_input_property_changed")
@@ -89,8 +89,8 @@ func register_input_property(prop : MMNodeUniversalProperty) -> void:
 	input_properties.append(prop) 
 
 func unregister_input_property(prop : MMNodeUniversalProperty) -> void:
-	if prop.owner == self:
-		prop.owner = null
+	#if prop.owner == self:
+	#	prop.owner = null
 	
 	if prop.is_connected("changed", self, "on_input_property_changed"):
 		prop.disconnect("changed", self, "on_input_property_changed")
@@ -98,7 +98,7 @@ func unregister_input_property(prop : MMNodeUniversalProperty) -> void:
 	input_properties.erase(prop)
 
 func register_output_property(prop : MMNodeUniversalProperty) -> void:
-	prop.owner = self
+	#prop.owner = self
 	
 	output_properties.append(prop) 
 

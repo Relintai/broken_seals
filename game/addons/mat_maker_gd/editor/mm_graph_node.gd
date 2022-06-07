@@ -5,7 +5,7 @@ var gradient_editor_scene : PackedScene = preload("res://addons/mat_maker_gd/wid
 var polygon_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/polygon_edit/polygon_edit.tscn")
 var curve_edit_scene : PackedScene = preload("res://addons/mat_maker_gd/widgets/curve_edit/curve_edit.tscn")
 
-var _material : MMMateial  = null
+var _material : MMMaterial  = null
 var _node : MMNode = null
 var properties : Array = Array()
 
@@ -33,7 +33,7 @@ func add_slot_texture(getter : String, setter : String) -> int:
 	t.expand = true
 	t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, t)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, t)
 	
 	t.texture = _node.call(getter, _material, slot_idx)
 	properties[slot_idx].append(t.texture)
@@ -86,7 +86,7 @@ func add_slot_gradient() -> int:
 	ge.graph_node = self
 	ge.set_undo_redo(_undo_redo)
 
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, "", "", ge)
 	
 	ge.set_value(_node)
 	#ge.texture = _node.call(getter, _material, slot_idx)
@@ -97,7 +97,7 @@ func add_slot_gradient() -> int:
 func add_slot_polygon() -> int:
 	var ge : Control = polygon_edit_scene.instance()
 
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, "", "", ge)
 	
 	ge.set_value(_node)
 	#ge.texture = _node.call(getter, _material, slot_idx)
@@ -108,7 +108,7 @@ func add_slot_polygon() -> int:
 func add_slot_curve() -> int:
 	var ge : Control = curve_edit_scene.instance()
 
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, "", "", ge)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, "", "", ge)
 	
 	ge.set_value(_node)
 	#ge.texture = _node.call(getter, _material, slot_idx)
@@ -119,7 +119,7 @@ func add_slot_curve() -> int:
 func add_slot_color(getter : String, setter : String) -> int:
 	var cp : ColorPickerButton = ColorPickerButton.new()
 
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, cp)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, cp)
 	
 	cp.color = _node.call(getter)
 	
@@ -145,7 +145,7 @@ func add_slot_label(getter : String, setter : String, slot_name : String) -> int
 
 	l.text = slot_name
 	
-	return add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, l)
+	return add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, l)
 
 func add_slot_line_edit(getter : String, setter : String, slot_name : String, placeholder : String = "") -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
@@ -158,7 +158,7 @@ func add_slot_line_edit(getter : String, setter : String, slot_name : String, pl
 	le.placeholder_text = placeholder
 	bc.add_child(le)
 
-	var slot_idx : int =  add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int =  add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	le.text = _node.call(getter)
 	
@@ -181,7 +181,7 @@ func add_slot_enum(getter : String, setter : String, slot_name : String, values 
 	
 	bc.add_child(mb)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	mb.selected = _node.call(getter)
 	
@@ -202,7 +202,7 @@ func add_slot_int(getter : String, setter : String, slot_name : String, prange :
 	sb.max_value = prange.y
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	
 	sb.value = _node.call(getter)
 	
@@ -214,7 +214,7 @@ func add_slot_bool(getter : String, setter : String, slot_name : String) -> int:
 	var cb : CheckBox = CheckBox.new()
 	cb.text = slot_name
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, cb)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, cb)
 	
 	cb.pressed = _node.call(getter)
 	
@@ -265,7 +265,7 @@ func add_slot_float(getter : String, setter : String, slot_name : String, step :
 	var sb : SpinBox = SpinBox.new()
 	bc.add_child(sb)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	sb.rounded = false
 	sb.step = step
 	sb.min_value = prange.x
@@ -312,7 +312,7 @@ func add_slot_vector2(getter : String, setter : String, slot_name : String, step
 	var sby : SpinBox = SpinBox.new()
 	bc.add_child(sby)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	sbx.rounded = false
 	sby.rounded = false
 	sbx.step = step
@@ -348,7 +348,7 @@ func add_slot_vector3(getter : String, setter : String, slot_name : String, step
 	var sbz : SpinBox = SpinBox.new()
 	bc.add_child(sbz)
 	
-	var slot_idx : int = add_slot(MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_NONE, getter, setter, bc)
+	var slot_idx : int = add_slot(MMNodeUniversalProperty.SLOT_TYPE_NONE, MMNodeUniversalProperty.SLOT_TYPE_NONE, getter, setter, bc)
 	sbx.rounded = false
 	sby.rounded = false
 	sbz.rounded = false
@@ -522,7 +522,7 @@ func get_output_property_graph_node_slot_index(property) -> int:
 func get_property_control(slot_idx : int) -> Node:
 	return properties[slot_idx][5]
 
-func set_node(material : MMMateial, node : MMNode) -> void:
+func set_node(material : MMMaterial, node : MMNode) -> void:
 	_node = node
 	_material = material
 	

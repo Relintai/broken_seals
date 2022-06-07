@@ -10,35 +10,35 @@ export(Resource) var out_a : Resource
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color(0, 0, 0, 1))
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 	
 	if !out_r:
 		out_r = MMNodeUniversalProperty.new()
-		out_r.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_r.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_r.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_r.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	
 	if !out_g:
 		out_g = MMNodeUniversalProperty.new()
-		out_g.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_g.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_g.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_g.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_b:
 		out_b = MMNodeUniversalProperty.new()
-		out_b.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_b.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_b.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_b.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_a:
 		out_a = MMNodeUniversalProperty.new()
-		out_a.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_a.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_a.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_a.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_input_property(input)
 	register_output_property(out_r)
@@ -97,5 +97,5 @@ func _render(material) -> void:
 	out_b.set_value(img_b)
 	out_a.set_value(img_a)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()

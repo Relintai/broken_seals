@@ -7,8 +7,8 @@ export(String) var postfix : String = ""
 
 func _init_properties():
 	image = MMNodeUniversalProperty.new()
-	image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
-	image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
+	image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	image.slot_name = "image"
 	
 	register_input_property(image)

@@ -7,11 +7,11 @@ export(float) var angle : float = 0
 func _init_properties():
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	output.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-	#output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+	#output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = ">>>    Apply    >>>"
 	output.get_value_from_owner = true
 
@@ -23,7 +23,7 @@ func _register_methods(mm_graph_node) -> void:
 	
 	mm_graph_node.add_slot_float("get_angle", "set_angle", "Angle", 1)
 
-func get_property_value(uv : Vector2):
+func _get_property_value(uv : Vector2):
 	#$in(sdf2d_rotate($uv, $a*0.01745329251))",
 	return output.get_value(MMAlgos.sdf2d_rotate(uv, angle * 0.01745329251), true)
 

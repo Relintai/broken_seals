@@ -10,20 +10,20 @@ export(float) var smoothness : float = 0.15
 func _init_properties():
 	if !input1:
 		input1 = MMNodeUniversalProperty.new()
-		input1.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		input1.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	input1.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-#	input1.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	input1.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+#	input1.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	input1.slot_name = ">>>   Input 1       "
 	if !input1.is_connected("changed", self, "on_input_changed"):
 		input1.connect("changed", self, "on_input_changed")
 	
 	if !input2:
 		input2 = MMNodeUniversalProperty.new()
-		input2.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		input2.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	input2.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-#	input2.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	input2.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+#	input2.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	input2.slot_name = ">>>   Input 2       "
 	
 	if !input2.is_connected("changed", self, "on_input_changed"):
@@ -31,10 +31,10 @@ func _init_properties():
 
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
-#	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
+#	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
 	output.slot_name = "       Output    >>>"
 	output.get_value_from_owner = true
 	
@@ -50,7 +50,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_enum("get_operation", "set_operation", "Operation", [ "Union", "Substraction", "Intersection" ])
 	mm_graph_node.add_slot_float("get_smoothness", "set_smoothness", "Smoothness", 0.01)
 
-func get_property_value(uv : Vector2) -> float:
+func _get_property_value(uv : Vector2) -> float:
 	if operation == 0:
 		return MMAlgos.sdf_smooth_boolean_union(input1.get_value(uv), input2.get_value(uv), smoothness)
 	elif operation == 1:

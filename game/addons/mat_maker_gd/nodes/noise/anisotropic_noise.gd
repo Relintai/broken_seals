@@ -10,9 +10,9 @@ export(float) var interpolation : float = 1
 func _init_properties():
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	register_output_property(image)
 
@@ -22,7 +22,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_float("get_smoothness", "set_smoothness", "Smoothness", 0.01)#, Vector2(0, 1))
 	mm_graph_node.add_slot_float("get_interpolation", "set_interpolation", "Interpolation", 0.01)#, Vector2(0, 1))
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var ps : float = 1.0 / float(pseed)
 	
 	#anisotropic($(uv), vec2($(scale_x), $(scale_y)), $(seed), $(smoothness), $(interpolation))

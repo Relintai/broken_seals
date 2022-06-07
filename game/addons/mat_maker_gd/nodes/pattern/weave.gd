@@ -12,28 +12,28 @@ export(int) var stitch : int = 1
 func _init_properties():
 	if !out_main:
 		out_main = MMNodeUniversalProperty.new()
-		out_main.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_main.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_main.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_main.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_horizontal_map:
 		out_horizontal_map = MMNodeUniversalProperty.new()
-		out_horizontal_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_horizontal_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_horizontal_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_horizontal_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !out_vertical_map:
 		out_vertical_map = MMNodeUniversalProperty.new()
-		out_vertical_map.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		out_vertical_map.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	out_vertical_map.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	out_vertical_map.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 
 	if !width:
 		width = MMNodeUniversalProperty.new()
-		width.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_VECTOR2
+		width.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_VECTOR2
 		width.set_default_value(Vector2(0.9, 0.9))
 
-	width.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	width.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	width.slot_name = "Width"
 	width.value_step = 0.01
 	width.value_range = Vector2(0, 1)
@@ -109,7 +109,7 @@ func _render(material) -> void:
 	out_horizontal_map.set_value(horizontal_map)
 	out_vertical_map.set_value(vertical_map)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color()
 
 #size

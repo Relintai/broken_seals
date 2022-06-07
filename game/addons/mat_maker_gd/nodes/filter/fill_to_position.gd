@@ -8,18 +8,18 @@ export(int, "X,Y,Radial") var axis : int = 2
 func _init_properties():
 	if !input:
 		input = MMNodeUniversalProperty.new()
-		input.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_COLOR
+		input.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_COLOR
 		input.set_default_value(Color(0, 0, 0, 1))
 
-	input.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	input.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	input.slot_name = ">>>    Input    "
 	
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	#image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	#image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	#image.force_override = true
 
 	register_input_property(input)
@@ -35,7 +35,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var c : Color = input.get_value(uv)
 	#vec2 $(name_uv)_c = fract($in($uv).xy+0.5*$in($uv).zw);
 	var cnv : Vector2 = MMAlgos.fractv2(Vector2(c.r, c.g) + 0.5 * Vector2(c.b, c.a))

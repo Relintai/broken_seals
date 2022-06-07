@@ -12,20 +12,20 @@ export(bool) var clamp_result : bool = false
 func _init_properties():
 	if !a:
 		a = MMNodeUniversalProperty.new()
-		a.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		a.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		a.set_default_value(0)
 
-	a.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	a.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	a.slot_name = ">>>    A    "
 	a.value_step = 0.01
 	a.value_range = Vector2(0, 1)
 	
 	if !b:
 		b = MMNodeUniversalProperty.new()
-		b.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		b.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		b.set_default_value(0)
 
-	b.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	b.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	b.slot_name = ">>>    B    "
 	b.value_step = 0.01
 	b.value_range = Vector2(0, 1)
@@ -33,18 +33,18 @@ func _init_properties():
 
 	if !image:
 		image = MMNodeUniversalProperty.new()
-		image.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_IMAGE
+		image.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_IMAGE
 		
-	#image.input_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_FLOAT
-	image.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_IMAGE
+	#image.input_slot_type = MMNodeUniversalProperty.SLOT_TYPE_FLOAT
+	image.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_IMAGE
 	#image.force_override = true
 
 	if !output:
 		output = MMNodeUniversalProperty.new()
-		output.default_type = MMNodeUniversalProperty.MMNodeUniversalPropertyDefaultType.DEFAULT_TYPE_FLOAT
+		output.default_type = MMNodeUniversalProperty.DEFAULT_TYPE_FLOAT
 		output.set_default_value(0)
 
-	output.output_slot_type = MMNodeUniversalProperty.SlotTypes.SLOT_TYPE_UNIVERSAL
+	output.output_slot_type = MMNodeUniversalProperty.SLOT_TYPE_UNIVERSAL
 	output.slot_name = "     Output    >>>"
 	output.get_value_from_owner = true
 
@@ -61,7 +61,7 @@ func _register_methods(mm_graph_node) -> void:
 	mm_graph_node.add_slot_enum("get_operation", "set_operation", "Operation", [ "A+B", "A-B", "A*B", "A/B", "log(A)", "log2(A)", "pow(A, B)", "abs(A)", "round(A)", "floor(A)", "ceil(A)", "trunc(A)", "fract(A)", "min(A, B)", "max(A, B)", "A<B", "cos(A*B)", "sin(A*B)", "tan(A*B)", "sqrt(1-A*A)" ])
 	mm_graph_node.add_slot_bool("get_clamp_result", "set_clamp_result", "Clamp result")
 
-func get_property_value(uv : Vector2) -> float:
+func _get_property_value(uv : Vector2) -> float:
 	var af : float = a.get_value(uv)
 	var bf : float = b.get_value(uv)
 	
@@ -122,7 +122,7 @@ func _render(material) -> void:
 
 	image.set_value(img)
 
-func get_value_for(uv : Vector2, pseed : int) -> Color:
+func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var f : float = get_property_value(uv)
 
 	return Color(f, f, f, 1)
