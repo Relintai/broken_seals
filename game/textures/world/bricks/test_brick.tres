@@ -1,7 +1,5 @@
-[gd_resource type="Resource" load_steps=42 format=2]
+[gd_resource type="MMMaterial" load_steps=42 format=2]
 
-[ext_resource path="res://addons/mat_maker_gd/nodes/mm_material.gd" type="Script" id=1]
-[ext_resource path="res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd" type="Script" id=2]
 [ext_resource path="res://addons/mat_maker_gd/nodes/pattern/bricks.gd" type="Script" id=3]
 [ext_resource path="res://addons/mat_maker_gd/nodes/noise/fbm_noise.gd" type="Script" id=4]
 [ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=5]
@@ -9,8 +7,7 @@
 [ext_resource path="res://addons/mat_maker_gd/nodes/pattern/scratches.gd" type="Script" id=7]
 [ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=8]
 
-[sub_resource type="Resource" id=1]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=1]
 default_type = 1
 default_int = 0
 default_float = 0.0
@@ -18,8 +15,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=2]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=2]
 default_type = 1
 default_int = 0
 default_float = 0.03
@@ -27,8 +23,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=3]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=3]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -36,8 +31,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=4]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=4]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -45,8 +39,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=5]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=5]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -54,8 +47,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=6]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=6]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -63,8 +55,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=7]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=7]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -72,8 +63,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=8]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=8]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -81,8 +71,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=9]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=9]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -90,8 +79,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=10]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=10]
 default_type = 1
 default_int = 0
 default_float = 0.0
@@ -99,7 +87,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=11]
+[sub_resource type="MMNode" id=11]
 script = ExtResource( 3 )
 graph_position = Vector2( 0, 0 )
 out_bricks_pattern = SubResource( 4 )
@@ -118,8 +106,7 @@ bevel = SubResource( 1 )
 roundness = SubResource( 10 )
 corner = 0.3
 
-[sub_resource type="Resource" id=12]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=12]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -127,8 +114,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=13]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=13]
 default_type = 1
 default_int = 0
 default_float = 1.0
@@ -137,7 +123,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 4 )
 
-[sub_resource type="Resource" id=14]
+[sub_resource type="MMNode" id=14]
 script = ExtResource( 8 )
 graph_position = Vector2( 240, 200 )
 interpolation_type = 1
@@ -145,8 +131,7 @@ points = PoolRealArray( 0, 0.168627, 0.109804, 0.109804, 1, 1, 0.780392, 0.29803
 image = SubResource( 12 )
 input = SubResource( 13 )
 
-[sub_resource type="Resource" id=15]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=15]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -154,8 +139,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=22]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=22]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -163,8 +147,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=16]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=16]
 default_type = 4
 default_int = 0
 default_float = 0.0
@@ -173,8 +156,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
 input_property = SubResource( 22 )
 
-[sub_resource type="Resource" id=17]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=17]
 default_type = 4
 default_int = 0
 default_float = 0.0
@@ -183,8 +165,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
 input_property = SubResource( 12 )
 
-[sub_resource type="Resource" id=18]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=18]
 default_type = 1
 default_int = 0
 default_float = 0.52
@@ -192,7 +173,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=19]
+[sub_resource type="MMNode" id=19]
 script = ExtResource( 6 )
 graph_position = Vector2( 500, 20 )
 image = SubResource( 15 )
@@ -201,8 +182,7 @@ input2 = SubResource( 17 )
 blend_type = 0
 opacity = SubResource( 18 )
 
-[sub_resource type="Resource" id=20]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=20]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -210,7 +190,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=21]
+[sub_resource type="MMNode" id=21]
 script = ExtResource( 7 )
 graph_position = Vector2( 260, -340 )
 image = SubResource( 20 )
@@ -220,8 +200,7 @@ waviness = 0.05
 angle = 171
 randomness = 0.35
 
-[sub_resource type="Resource" id=23]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=23]
 default_type = 1
 default_int = 0
 default_float = 1.0
@@ -230,7 +209,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 20 )
 
-[sub_resource type="Resource" id=24]
+[sub_resource type="MMNode" id=24]
 script = ExtResource( 8 )
 graph_position = Vector2( 500, -300 )
 interpolation_type = 1
@@ -238,8 +217,7 @@ points = PoolRealArray( 0, 0, 0, 0, 0, 0.40678, 0, 0, 0, 1, 1, 0, 0, 0, 1 )
 image = SubResource( 22 )
 input = SubResource( 23 )
 
-[sub_resource type="Resource" id=25]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=25]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -247,7 +225,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=26]
+[sub_resource type="MMNode" id=26]
 script = ExtResource( 4 )
 graph_position = Vector2( 760, -320 )
 image = SubResource( 25 )
@@ -257,8 +235,7 @@ folds = 0
 iterations = 7
 persistence = 0.9
 
-[sub_resource type="Resource" id=27]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=27]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -266,8 +243,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=28]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=28]
 default_type = 4
 default_int = 0
 default_float = 0.0
@@ -276,8 +252,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
 input_property = SubResource( 25 )
 
-[sub_resource type="Resource" id=29]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=29]
 default_type = 4
 default_int = 0
 default_float = 0.0
@@ -286,8 +261,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 1, 1, 1, 1 )
 input_property = SubResource( 15 )
 
-[sub_resource type="Resource" id=30]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=30]
 default_type = 1
 default_int = 0
 default_float = 0.61
@@ -295,7 +269,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="Resource" id=31]
+[sub_resource type="MMNode" id=31]
 script = ExtResource( 6 )
 graph_position = Vector2( 960, 20 )
 image = SubResource( 27 )
@@ -304,8 +278,7 @@ input2 = SubResource( 29 )
 blend_type = 11
 opacity = SubResource( 30 )
 
-[sub_resource type="Resource" id=34]
-script = ExtResource( 2 )
+[sub_resource type="MMNodeUniversalProperty" id=34]
 default_type = 5
 default_int = 0
 default_float = 0.0
@@ -314,13 +287,12 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 27 )
 
-[sub_resource type="Resource" id=33]
+[sub_resource type="MMNode" id=33]
 script = ExtResource( 5 )
 graph_position = Vector2( 1200, 60 )
 image = SubResource( 34 )
 postfix = "_albedo"
 
 [resource]
-script = ExtResource( 1 )
 image_size = Vector2( 256, 256 )
 nodes = [ SubResource( 11 ), SubResource( 14 ), SubResource( 19 ), SubResource( 21 ), SubResource( 24 ), SubResource( 26 ), SubResource( 31 ), SubResource( 33 ) ]
