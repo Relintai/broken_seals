@@ -135,21 +135,6 @@ _global_script_classes=[ {
 "language": @"GDScript",
 "path": "res://tools/texture_tools/LayeredTextureMaker.gd"
 }, {
-"base": "Resource",
-"class": @"MMMateial",
-"language": @"GDScript",
-"path": "res://addons/mat_maker_gd/nodes/mm_material.gd"
-}, {
-"base": "Resource",
-"class": @"MMNode",
-"language": @"GDScript",
-"path": "res://addons/mat_maker_gd/nodes/mm_node.gd"
-}, {
-"base": "Resource",
-"class": @"MMNodeUniversalProperty",
-"language": @"GDScript",
-"path": "res://addons/mat_maker_gd/nodes/mm_node_universal_property.gd"
-}, {
 "base": "Node",
 "class": @"Main",
 "language": @"GDScript",
@@ -251,7 +236,6 @@ _global_script_class_icons={
 @"GECanvas": "",
 @"GEBrush": "",
 @"GECut": "",
-@"MMNode": "",
 @"WorldGeneratorSettings": "",
 @"CharacterSkeketonAttachPoint": "",
 @"PlayerGD": "",
@@ -284,14 +268,12 @@ _global_script_class_icons={
 @"UIGuiChildModule": "",
 @"ManaResource": "",
 @"GERainbow": "",
-@"MMNodeUniversalProperty": "",
 @"SubZone": "",
 @"DisplayPlayerGD": "",
 @"ItemTemplateGD": "",
 @"HealthResource": "",
 @"GEMultiLine": "",
 @"GEPencil": "",
-@"MMMateial": "",
 @"LayeredTextureMaker": ""
 }
 
@@ -344,7 +326,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/data_manager/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/data_manager/plugin.cfg", "res://addons/gdc_converter/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
 
 [ess]
 
