@@ -24,9 +24,12 @@
 import os
 import subprocess
 import json
+import sys
 
 import module_config
 
+repository_index = 0
+clone_command = 'git clone {0} {1}'
 target_commits = {}
 
 def setup_repository(data, clone_path, branch = 'master'):
@@ -70,6 +73,9 @@ if not os.path.isdir(engine_abspath):
 
     with open('./HEADS', 'r') as infile:
         target_commits = json.load(infile)
+
+    if 'repository_type=ssh' in sys.argv:
+        repository_index = 1
 
     setup_repository(module_config.engine_repository, '/', module_config.pandemonium_branch)
 
