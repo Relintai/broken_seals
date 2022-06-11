@@ -36,7 +36,7 @@ func _ready():
 	connect("visibility_changed", self, "on_visibility_changed")
 	
 	if entry_scene == null:
-		Logger.error("LootWindow: entry_scene is null")
+		PLogger.log_error("LootWindow: entry_scene is null")
 
 func refresh():
 	for child in container.get_children():

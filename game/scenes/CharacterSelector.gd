@@ -29,7 +29,7 @@ func _ready():
 	container = get_node(container_path)
 	
 	if container == null:
-		Logger.error("CharacterSelector not set up properly!")
+		PLogger.log_error("CharacterSelector not set up properly!")
 		
 	refresh()
 

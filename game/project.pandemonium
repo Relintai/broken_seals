@@ -291,7 +291,6 @@ default_bus_layout="res://audio_bus_layout.tres"
 
 [autoload]
 
-Logger="*res://autoload/Logger.tscn"
 Settings="*res://ui/autoload/SettingsManager.gd"
 CursorManager="*res://cursors/autoload/CursorManager.tscn"
 WorldNumbers="*res://ui/autoload/WorldNumbers.tscn"

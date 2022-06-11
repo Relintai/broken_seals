@@ -53,7 +53,7 @@ func on_network_peer_packet(id : int, packet : PoolByteArray) ->void:
 	pass
 	
 func spawn_for(player : Entity, target: Entity) -> void:
-	Logger.info("spawnfor " + target.name)
+	PLogger.log_message("spawnfor " + target.name)
 	
 	if _debug:
 		print("spawnfor " + player.name + " - " + target.name)
@@ -66,7 +66,7 @@ func spawn_for(player : Entity, target: Entity) -> void:
 	rpc_id(player.get_network_master(), "creceive_spawn_for", to_json(target.to_dict()), target.name, target.get_transform_3d().origin)
 	
 func despawn_for(player : Entity, target: Entity) -> void:
-	Logger.info("despawnfor " + target.name)
+	PLogger.log_message("despawnfor " + target.name)
 	
 	if _debug:
 		print("despawnfor " + target.name)
@@ -84,7 +84,7 @@ remote func creceive_spawn_for(data: String, global_name : String, position: Vec
 	
 	ESS.request_entity_spawn(createinfo)
 	
-	Logger.info("Player spawned ")
+	PLogger.log_message("Player spawned ")
 	
 	if _debug:
 		print("creceive_spawn_for " + global_name)
@@ -118,7 +118,7 @@ remote func spawn_owned_player(data : String, position : Vector3) -> Entity:
 	if _debug:
 		print("spawn_owned_player " + e.name)
 		
-	Logger.info("Player spawned ")
+	PLogger.log_message("Player spawned ")
 	
 	return e
 
@@ -134,7 +134,7 @@ func load_player(file_name : String, position : Vector3, network_owner : int) ->
 	createinfo.serialized_data = load_file(file_name)
 	createinfo.transform.origin = position
 	createinfo.networked = false
-	Logger.info("Player spawned ")
+	PLogger.log_message("Player spawned ")
 	ESS.request_entity_spawn(createinfo)
 	
 	if _debug:
@@ -159,7 +159,7 @@ func load_uploaded_character(data : String, position : Vector3, network_owner : 
 	createinfo.serialized_data = parse_json(data)
 	createinfo.transform.origin = position
 	createinfo.networked = false
-	Logger.info("Player spawned ")
+	PLogger.log_message("Player spawned ")
 	ESS.request_entity_spawn(createinfo)
 	var e : Entity = createinfo.created_entity
 	
@@ -191,7 +191,7 @@ func spawn_player_for_menu(class_id : int, name : String, parent : Node) -> Enti
 
 	ESS.request_entity_spawn(createinfo)
 	
-	Logger.info("Player spawned " + str(createinfo))
+	PLogger.log_message("Player spawned " + str(createinfo))
 	
 	return createinfo.created_entity
 	
@@ -206,7 +206,7 @@ func spawn_display_player(file_name : String, node_path : NodePath) -> Entity:
 	createinfo.serialized_data = load_file(file_name)
 	createinfo.parent_path = node_path
 	
-	Logger.info("Player spawned ")
+	PLogger.log_message("Player spawned ")
 
 	ESS.request_entity_spawn(createinfo)
 	
@@ -238,7 +238,7 @@ func spawn_networked_player(class_id : int,  position : Vector3, name : String, 
 
 	ESS.request_entity_spawn(createinfo)
 	
-	Logger.info("Player spawned " + str(createinfo))
+	PLogger.log_message("Player spawned " + str(createinfo))
 	
 	return createinfo.created_entity
 	
@@ -267,7 +267,7 @@ func spawn_player(class_id : int,  position : Vector3, name : String, node_name 
 
 	ESS.request_entity_spawn(createinfo)
 	
-	Logger.info("Player spawned " + str(createinfo))
+	PLogger.log_message("Player spawned " + str(createinfo))
 	
 	return createinfo.created_entity
 
@@ -288,7 +288,7 @@ func spawn_mob(class_id : int, level : int, position : Vector3) -> void:
 	
 	ESS.request_entity_spawn_deferred(createinfo)
 	
-	Logger.info("Mob spawned " + str(createinfo))
+	PLogger.log_message("Mob spawned " + str(createinfo))
 	
 	#return createinfo.created_entity
 
@@ -384,14 +384,14 @@ func load_file(file_name : String) -> Dictionary:
 		var json_err : String = validate_json(st)
 				
 		if json_err != "":
-			Logger.error("Save corrupted! " + file_name)
-			Logger.error(json_err)
+			PLogger.log_error("Save corrupted! " + file_name)
+			PLogger.log_error(json_err)
 			return Dictionary()
 				
 		var p = parse_json(st)
 				
 		if typeof(p) != TYPE_DICTIONARY:
-			Logger.error("Save corrupted! Not Dict! " + file_name)
+			PLogger.log_error("Save corrupted! Not Dict! " + file_name)
 			return Dictionary()
 			
 		if p is Dictionary:

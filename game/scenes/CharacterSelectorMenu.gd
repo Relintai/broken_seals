@@ -42,7 +42,7 @@ func _ready():
 	player_display_container_node = get_node(player_display_container_path)
 	
 	if container == null:
-		Logger.error("CharacterSelector not set up properly!")
+		PLogger.log_error("CharacterSelector not set up properly!")
 		
 	connect("visibility_changed", self, "visibility_changed")
 		
@@ -75,14 +75,14 @@ func refresh():
 				var json_err : String = validate_json(st)
 				
 				if json_err != "":
-					Logger.error("Save corrupted! " + file_name)
-					Logger.error(json_err)
+					PLogger.log_error("Save corrupted! " + file_name)
+					PLogger.log_error(json_err)
 					continue
 				
 				var p = parse_json(st)
 				
 				if typeof(p) != TYPE_DICTIONARY:
-					Logger.error("Save corrupted! Not Dict! " + file_name)
+					PLogger.log_error("Save corrupted! Not Dict! " + file_name)
 					continue
 				
 				var display : Entity = ESS.entity_spawner.spawn_display_player(file_name, player_display_container_node.get_path())
