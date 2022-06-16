@@ -1,5 +1,5 @@
 tool
-extends "res://addons/mat_maker_gd/nodes/bases/gradient_base.gd"
+extends GradientBase
 
 export(Resource) var image : Resource
 export(float) var repeat : float = 1
@@ -36,7 +36,7 @@ func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	return Color(1, 1, 1, 1)
 	
 
-func get_gradient_color(x : float) -> Color:
+func _get_gradient_color(x : float) -> Color:
 	if interpolation_type == 0:
 		return MMAlgos.gradient_type_1(x, points)
 	elif interpolation_type == 1:

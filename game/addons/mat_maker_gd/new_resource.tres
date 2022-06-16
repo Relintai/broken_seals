@@ -37,7 +37,7 @@ output_slot_type = 0
 
 [sub_resource type="MMNode" id=8]
 graph_position = Vector2( -160, 40 )
-output_properties = [ SubResource( 7 ), SubResource( 5 ), SubResource( 2 ), SubResource( 6 ) ]
+output_properties = [ null, null, null, null, SubResource( 7 ), SubResource( 5 ), SubResource( 2 ), SubResource( 6 ) ]
 script = ExtResource( 3 )
 out_nodes = SubResource( 7 )
 out_borders = SubResource( 5 )
@@ -59,8 +59,8 @@ slot_name = ">>>    Input1    "
 
 [sub_resource type="MMNode" id=11]
 graph_position = Vector2( 380, 80 )
-input_properties = [ SubResource( 10 ) ]
-output_properties = [ SubResource( 9 ) ]
+input_properties = [ null, SubResource( 10 ) ]
+output_properties = [ null, SubResource( 9 ) ]
 script = ExtResource( 4 )
 image = SubResource( 9 )
 input = SubResource( 10 )
@@ -95,8 +95,8 @@ input_property = SubResource( 5 )
 
 [sub_resource type="MMNode" id=17]
 graph_position = Vector2( 380, 380 )
-input_properties = [ SubResource( 16 ), SubResource( 15 ), SubResource( 14 ), SubResource( 13 ) ]
-output_properties = [ SubResource( 12 ) ]
+input_properties = [ null, null, null, null, SubResource( 16 ), SubResource( 15 ), SubResource( 14 ), SubResource( 13 ) ]
+output_properties = [ null, SubResource( 12 ) ]
 script = ExtResource( 6 )
 image = SubResource( 12 )
 input_r = SubResource( 16 )
@@ -116,8 +116,8 @@ input_property = SubResource( 12 )
 
 [sub_resource type="MMNode" id=20]
 graph_position = Vector2( 1080, 180 )
-input_properties = [ SubResource( 19 ) ]
-output_properties = [ SubResource( 18 ) ]
+input_properties = [ null, SubResource( 19 ) ]
+output_properties = [ null, SubResource( 18 ) ]
 script = ExtResource( 7 )
 image = SubResource( 18 )
 input = SubResource( 19 )
@@ -134,8 +134,8 @@ input_property = SubResource( 12 )
 
 [sub_resource type="MMNode" id=22]
 graph_position = Vector2( 560, 300 )
-input_properties = [ SubResource( 21 ) ]
-output_properties = [ SubResource( 21 ) ]
+input_properties = [ null, SubResource( 21 ) ]
+output_properties = [ null, SubResource( 21 ) ]
 script = ExtResource( 8 )
 input = SubResource( 21 )
 
@@ -151,8 +151,8 @@ input_property = SubResource( 21 )
 
 [sub_resource type="MMNode" id=25]
 graph_position = Vector2( 860, 200 )
-input_properties = [ SubResource( 24 ) ]
-output_properties = [ SubResource( 23 ) ]
+input_properties = [ null, SubResource( 24 ) ]
+output_properties = [ null, SubResource( 23 ) ]
 script = ExtResource( 9 )
 image = SubResource( 23 )
 input = SubResource( 24 )
@@ -172,8 +172,8 @@ input_property = SubResource( 21 )
 
 [sub_resource type="MMNode" id=28]
 graph_position = Vector2( 620, 460 )
-input_properties = [ SubResource( 27 ) ]
-output_properties = [ SubResource( 26 ) ]
+input_properties = [ null, SubResource( 27 ) ]
+output_properties = [ null, SubResource( 26 ) ]
 script = ExtResource( 10 )
 image = SubResource( 26 )
 input = SubResource( 27 )
@@ -192,8 +192,8 @@ input_property = SubResource( 21 )
 
 [sub_resource type="MMNode" id=34]
 graph_position = Vector2( 820, 580 )
-input_properties = [ SubResource( 33 ) ]
-output_properties = [ SubResource( 32 ) ]
+input_properties = [ null, SubResource( 33 ) ]
+output_properties = [ null, SubResource( 32 ) ]
 script = ExtResource( 12 )
 image = SubResource( 32 )
 input = SubResource( 33 )
@@ -211,8 +211,8 @@ slot_name = ">>>    Input1    "
 
 [sub_resource type="MMNode" id=37]
 graph_position = Vector2( 1040, 560 )
-input_properties = [ SubResource( 36 ) ]
-output_properties = [ SubResource( 35 ) ]
+input_properties = [ null, SubResource( 36 ) ]
+output_properties = [ null, SubResource( 35 ) ]
 script = ExtResource( 13 )
 image = SubResource( 35 )
 input = SubResource( 36 )
@@ -262,8 +262,8 @@ slot_name = "Scale Y"
 
 [sub_resource type="MMNode" id=45]
 graph_position = Vector2( 1280, 560 )
-input_properties = [ SubResource( 39 ), SubResource( 43 ), SubResource( 44 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ) ]
-output_properties = [ SubResource( 38 ) ]
+input_properties = [ null, null, null, null, null, null, SubResource( 39 ), SubResource( 43 ), SubResource( 44 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ) ]
+output_properties = [ null, SubResource( 38 ) ]
 script = ExtResource( 11 )
 image = SubResource( 38 )
 input = SubResource( 39 )
@@ -286,8 +286,8 @@ input_property = SubResource( 23 )
 
 [sub_resource type="MMNode" id=48]
 graph_position = Vector2( 620, 0 )
-input_properties = [ SubResource( 47 ) ]
-output_properties = [ SubResource( 46 ) ]
+input_properties = [ null, SubResource( 47 ) ]
+output_properties = [ null, SubResource( 46 ) ]
 script = ExtResource( 14 )
 points = [ 0.0, 0.0, 0.0, 1.0, 0.284455, 0.780757, 0.0, 0.0, 0.735577, 0.159306, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0 ]
 image = SubResource( 46 )
@@ -304,8 +304,8 @@ slot_name = ">>>    Input    "
 
 [sub_resource type="MMNode" id=51]
 graph_position = Vector2( 120, 440 )
-input_properties = [ SubResource( 50 ) ]
-output_properties = [ SubResource( 49 ) ]
+input_properties = [ null, SubResource( 50 ) ]
+output_properties = [ null, SubResource( 49 ) ]
 script = ExtResource( 15 )
 image = SubResource( 49 )
 input = SubResource( 50 )
@@ -332,8 +332,8 @@ input_property = SubResource( 2 )
 
 [sub_resource type="MMNode" id=55]
 graph_position = Vector2( -440, 200 )
-input_properties = [ SubResource( 54 ), SubResource( 52 ) ]
-output_properties = [ SubResource( 53 ) ]
+input_properties = [ null, null, SubResource( 54 ), SubResource( 52 ) ]
+output_properties = [ null, SubResource( 53 ) ]
 script = ExtResource( 16 )
 image = SubResource( 53 )
 shape_type = 2
@@ -357,8 +357,8 @@ input_property = SubResource( 59 )
 
 [sub_resource type="MMNode" id=58]
 graph_position = Vector2( 580, 800 )
-input_properties = [ SubResource( 57 ) ]
-output_properties = [ SubResource( 56 ) ]
+input_properties = [ null, SubResource( 57 ) ]
+output_properties = [ null, SubResource( 56 ) ]
 script = ExtResource( 17 )
 image = SubResource( 56 )
 input = SubResource( 57 )
@@ -372,8 +372,8 @@ input_property = SubResource( 12 )
 
 [sub_resource type="MMNode" id=61]
 graph_position = Vector2( 320, 700 )
-input_properties = [ SubResource( 60 ) ]
-output_properties = [ SubResource( 59 ) ]
+input_properties = [ null, SubResource( 60 ) ]
+output_properties = [ null, SubResource( 59 ) ]
 script = ExtResource( 18 )
 image = SubResource( 59 )
 input = SubResource( 60 )
@@ -407,8 +407,8 @@ slot_name = "     Output    >>>"
 
 [sub_resource type="MMNode" id=66]
 graph_position = Vector2( -720, 280 )
-input_properties = [ SubResource( 63 ), SubResource( 64 ) ]
-output_properties = [ SubResource( 62 ), SubResource( 65 ) ]
+input_properties = [ null, null, SubResource( 63 ), SubResource( 64 ) ]
+output_properties = [ null, null, SubResource( 62 ), SubResource( 65 ) ]
 script = ExtResource( 19 )
 image = SubResource( 65 )
 a = SubResource( 63 )
@@ -438,8 +438,8 @@ output_slot_type = 0
 
 [sub_resource type="MMNode" id=71]
 graph_position = Vector2( -1060, 280 )
-input_properties = [ SubResource( 68 ), SubResource( 67 ) ]
-output_properties = [ SubResource( 70 ), SubResource( 69 ) ]
+input_properties = [ null, null, SubResource( 68 ), SubResource( 67 ) ]
+output_properties = [ null, null, SubResource( 70 ), SubResource( 69 ) ]
 script = ExtResource( 20 )
 input = SubResource( 68 )
 in_mask = SubResource( 67 )
@@ -475,8 +475,8 @@ value_step = 0.05
 
 [sub_resource type="MMNode" id=73]
 graph_position = Vector2( -340, -420 )
-input_properties = [ SubResource( 75 ), SubResource( 74 ) ]
-output_properties = [ SubResource( 72 ) ]
+input_properties = [ null, null, SubResource( 75 ), SubResource( 74 ) ]
+output_properties = [ null, SubResource( 72 ) ]
 script = ExtResource( 16 )
 image = SubResource( 72 )
 shape_type = 1
@@ -497,8 +497,8 @@ input_property = SubResource( 72 )
 
 [sub_resource type="MMNode" id=78]
 graph_position = Vector2( -80, -520 )
-input_properties = [ SubResource( 77 ) ]
-output_properties = [ SubResource( 76 ) ]
+input_properties = [ null, SubResource( 77 ) ]
+output_properties = [ null, SubResource( 76 ) ]
 script = ExtResource( 1 )
 interpolation_type = 2
 points = PoolRealArray( 0, 0, 0, 0, 1, 0.458472, 0.921875, 0.860657, 0.860657, 1, 1, 1, 0, 0, 1 )

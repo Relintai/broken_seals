@@ -7,6 +7,7 @@ margin_right = 360.0
 margin_bottom = 130.0
 window_title = "Enregistrer un fichier"
 resizable = true
+show_hidden_files = true
 script = ExtResource( 1 )
 
 [connection signal="dir_selected" from="." to="." method="_on_FileDialog_dir_selected"]

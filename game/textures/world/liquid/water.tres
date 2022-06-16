@@ -40,7 +40,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 1 )
 
-[sub_resource type="MMNode" id=5]
+[sub_resource type="GradientBase" id=5]
 script = ExtResource( 4 )
 graph_position = Vector2( 260, 0 )
 interpolation_type = 1

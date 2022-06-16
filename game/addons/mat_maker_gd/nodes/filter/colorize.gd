@@ -1,5 +1,5 @@
 tool
-extends "res://addons/mat_maker_gd/nodes/bases/gradient_base.gd"
+extends GradientBase
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource

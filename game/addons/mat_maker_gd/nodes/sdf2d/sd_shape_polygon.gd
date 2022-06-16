@@ -1,5 +1,5 @@
 tool
-extends "res://addons/mat_maker_gd/nodes/bases/polygon_base.gd"
+extends PolygonBase
 
 export(Resource) var output : Resource
 

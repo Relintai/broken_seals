@@ -1,5 +1,5 @@
 tool
-extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
+extends CurveBase
 
 export(Resource) var image : Resource
 export(Resource) var input : Resource
@@ -40,7 +40,7 @@ func _render(material) -> void:
 func _get_value_for(uv : Vector2, pseed : int) -> Color:
 	var f : float = input.get_value(uv)
 	
-	var cf : float = MMAlgos.curve(f, points)
+	var cf : float = MMAlgos.curve(f, points_array)
 	
 	return Color(cf, cf, cf, 1)
 

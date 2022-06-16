@@ -1,5 +1,5 @@
 tool
-extends "res://addons/mat_maker_gd/nodes/bases/curve_base.gd"
+extends CurveBase
 
 export(Resource) var output : Resource
 export(Vector2) var A : Vector2 = Vector2(-0.3, -0.3)
@@ -33,7 +33,7 @@ func _get_property_value(uv : Vector2) -> float:
 	
 	#$(name_uv)_sdl.x - $r * $profile($(name_uv)_sdl.y)
 	
-	return line.x - width * MMAlgos.curve(line.y, points)
+	return line.x - width * MMAlgos.curve(line.y, points_array)
 
 #a
 func get_a() -> Vector2:
