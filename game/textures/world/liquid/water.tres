@@ -1,10 +1,5 @@
 [gd_resource type="MMMaterial" load_steps=17 format=2]
 
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/fbm_noise.gd" type="Script" id=3]
-[ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=4]
-[ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=5]
-[ext_resource path="res://addons/mat_maker_gd/nodes/filter/make_tileable.gd" type="Script" id=6]
-
 [sub_resource type="MMNodeUniversalProperty" id=1]
 default_type = 5
 default_int = 0
@@ -13,8 +8,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=2]
-script = ExtResource( 3 )
+[sub_resource type="MMFbmNoise" id=2]
 graph_position = Vector2( 0, 0 )
 image = SubResource( 1 )
 type = 0
@@ -40,8 +34,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 1 )
 
-[sub_resource type="GradientBase" id=5]
-script = ExtResource( 4 )
+[sub_resource type="MMColorize" id=5]
 graph_position = Vector2( 260, 0 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0.0398254, 0.344255, 0.566406, 1, 0.508475, 0.376061, 0.531586, 0.667135, 1, 1, 0.930923, 0.933838, 0.964844, 1 )
@@ -65,8 +58,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 8 )
 
-[sub_resource type="MMNode" id=7]
-script = ExtResource( 5 )
+[sub_resource type="MMOutputImage" id=7]
 graph_position = Vector2( 740, 20 )
 image = SubResource( 9 )
 postfix = "_albedo"
@@ -80,8 +72,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 3 )
 
-[sub_resource type="MMNode" id=11]
-script = ExtResource( 6 )
+[sub_resource type="MMMakeTileable" id=11]
 graph_position = Vector2( 480, 0 )
 image = SubResource( 8 )
 input = SubResource( 10 )

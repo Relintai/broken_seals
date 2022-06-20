@@ -1,13 +1,5 @@
 [gd_resource type="MMMaterial" load_steps=40 format=2]
 
-[ext_resource path="res://addons/mat_maker_gd/nodes/filter/colorize.gd" type="Script" id=2]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/voronoi.gd" type="Script" id=4]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/fbm_noise.gd" type="Script" id=5]
-[ext_resource path="res://addons/mat_maker_gd/nodes/noise/noise.gd" type="Script" id=6]
-[ext_resource path="res://addons/mat_maker_gd/nodes/filter/blend.gd" type="Script" id=7]
-[ext_resource path="res://addons/mat_maker_gd/nodes/other/output_image.gd" type="Script" id=8]
-[ext_resource path="res://addons/mat_maker_gd/nodes/filter/make_tileable.gd" type="Script" id=9]
-
 [sub_resource type="MMNodeUniversalProperty" id=1]
 default_type = 5
 default_int = 0
@@ -40,8 +32,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=5]
-script = ExtResource( 4 )
+[sub_resource type="MMVoronoi" id=5]
 graph_position = Vector2( -500, -20 )
 out_nodes = SubResource( 3 )
 out_borders = SubResource( 1 )
@@ -60,8 +51,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=7]
-script = ExtResource( 6 )
+[sub_resource type="MMNoise" id=7]
 graph_position = Vector2( -260, 300 )
 image = SubResource( 6 )
 grid_size = 256
@@ -92,8 +82,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 14 )
 
-[sub_resource type="GradientBase" id=10]
-script = ExtResource( 2 )
+[sub_resource type="MMColorize" id=10]
 graph_position = Vector2( 220, 40 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0, 0, 0, 0, 0.754237, 0.447059, 0.4, 0.2, 1, 1, 0.811765, 0.886275, 0.0980392, 1 )
@@ -125,8 +114,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 28 )
 
-[sub_resource type="GradientBase" id=13]
-script = ExtResource( 2 )
+[sub_resource type="MMColorize" id=13]
 graph_position = Vector2( 220, 640 )
 interpolation_type = 1
 points = PoolRealArray( 0, 0.227451, 0.286275, 0.215686, 1, 0.313559, 0.0901961, 0.113725, 0.0941176, 1, 0.669492, 0.14902, 0.223529, 0.14902, 1, 1, 0.376471, 0.521569, 0.329412, 1 )
@@ -159,8 +147,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=18]
-script = ExtResource( 7 )
+[sub_resource type="MMBlend" id=18]
 graph_position = Vector2( -20, 20 )
 image = SubResource( 14 )
 input1 = SubResource( 15 )
@@ -176,8 +163,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=20]
-script = ExtResource( 5 )
+[sub_resource type="MMFbmNoise" id=20]
 graph_position = Vector2( -220, 640 )
 image = SubResource( 19 )
 type = 0
@@ -220,8 +206,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=25]
-script = ExtResource( 7 )
+[sub_resource type="MMBlend" id=25]
 graph_position = Vector2( 440, 280 )
 image = SubResource( 21 )
 input1 = SubResource( 22 )
@@ -237,8 +222,7 @@ default_vector2 = Vector2( 0, 0 )
 default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="MMNode" id=27]
-script = ExtResource( 8 )
+[sub_resource type="MMOutputImage" id=27]
 graph_position = Vector2( 660, 340 )
 image = SubResource( 31 )
 postfix = "_albedo"
@@ -252,8 +236,7 @@ default_vector3 = Vector3( 0, 0, 0 )
 default_color = Color( 0, 0, 0, 1 )
 input_property = SubResource( 19 )
 
-[sub_resource type="MMNode" id=30]
-script = ExtResource( 9 )
+[sub_resource type="MMMakeTileable" id=30]
 graph_position = Vector2( -20, 640 )
 image = SubResource( 28 )
 input = SubResource( 29 )
