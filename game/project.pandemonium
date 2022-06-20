@@ -325,7 +325,7 @@ window/size/ui_scale_touch=1.0
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/Godoxel/plugin.cfg", "res://addons/data_manager/plugin.cfg", "res://addons/gdc_converter/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/data_manager/plugin.cfg", "res://addons/gdc_converter/plugin.cfg", "res://addons/mat_maker_gd/plugin.cfg", "res://addons/world_generator/plugin.cfg" )
 
 [ess]
 
