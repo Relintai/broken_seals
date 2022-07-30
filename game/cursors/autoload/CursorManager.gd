@@ -26,8 +26,11 @@ export(Texture) var attack_cursor : Texture
 export(Texture) var speak_cursor : Texture
 export(Texture) var drag_drop_cursor : Texture
 export(Texture) var forbidden_cursor : Texture
+export(Texture) var pointing_hand_cursor : Texture
 export(Texture) var text_cursor : Texture
 export(Vector2) var text_cursor_hotspot : Vector2
+
+
 
 func _ready():
 	# Changes only the arrow shape of the cursor.
@@ -38,6 +41,7 @@ func _ready():
 	Input.set_custom_mouse_cursor(speak_cursor, Input.CURSOR_HELP)
 	Input.set_custom_mouse_cursor(drag_drop_cursor, Input.CURSOR_CAN_DROP)
 	Input.set_custom_mouse_cursor(forbidden_cursor, Input.CURSOR_FORBIDDEN)
+	Input.set_custom_mouse_cursor(pointing_hand_cursor, Input.CURSOR_POINTING_HAND)
 	Input.set_custom_mouse_cursor(text_cursor, Input.CURSOR_IBEAM, text_cursor_hotspot)
 
 	# Changes a specific shape of the cursor (here, the I-beam shape).
