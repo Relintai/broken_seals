@@ -101,6 +101,20 @@ func _get_property_list() -> Array:
 	var props : Array = Array()
 	
 	props.append({
+			"name": "convert_to_json",
+			"type": TYPE_NIL,
+			"hint": PROPERTY_HINT_BUTTON,
+			"hint_string": "convert_to_json",
+		})
+		
+	props.append({
+			"name": "convert_from_json",
+			"type": TYPE_NIL,
+			"hint": PROPERTY_HINT_BUTTON,
+			"hint_string": "convert_from_json",
+		})
+
+	props.append({
 			"name": "folder_count",
 			"type": TYPE_INT,
 		})
@@ -137,3 +151,73 @@ func set_folder_count(val : int) -> void:
 
 	emit_changed()
 	property_list_changed_notify()
+
+func convert_to_json() -> void:
+	var f : File = File.new();
+	
+	f.open("res://addons/data_manager/_data/settings.json", File.WRITE);
+	f.store_string(get_as_json());
+	f.close();
+	
+	PLogger.log_message("Saved settings to res://addons/data_manager/_data/settings.json");
+
+func convert_from_json() -> void:
+	var f : File = File.new()
+	
+	if (!f.file_exists("res://addons/data_manager/_data/settings.json")):
+		PLogger.log_message("File res://addons/data_manager/_data/settings.json doesn't exist!");
+		return;
+	
+	f.open("res://addons/data_manager/_data/settings.json", File.READ);
+	set_from_json(f.get_as_text());
+	f.close();
+	
+	PLogger.log_message("Loaded settings from res://addons/data_manager/_data/settings.json");
+
+func get_as_json() -> String:
+	var arr : Array
+
+	for i in range(folders.size()):
+		var s : SettingEntry = folders[i]
+		
+		var dict : Dictionary
+		
+		dict["folder"] = s.folder
+		dict["header"] = s.header
+		dict["name"] = s.name
+		dict["type"] = s.type
+		
+		arr.push_back(dict)
+
+	return to_json(arr);
+
+
+#class SettingEntry:
+#	var folder : String = ""
+#	var header : String = ""
+#	var name : String = ""
+#	var type : String = ""
+
+
+
+func set_from_json(data : String) -> void:
+	var jpr : JSONParseResult = JSON.parse(data)
+	
+	if jpr.error != OK:
+		PLogger.log_message("DataManagerAddonSettings: set_from_json: Couldn't load data!");
+		return
+		
+	var arr = jpr.result
+	
+	for i in range(arr.size()):
+		var dict : Dictionary = arr[i]
+		
+		var s : SettingEntry = SettingEntry.new()
+		
+		s.folder = dict["folder"]
+		s.header = dict["header"]
+		s.name = dict["name"]
+		s.type = dict["type"]
+		
+		folders.push_back(s)
+
