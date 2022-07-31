@@ -99,12 +99,12 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	
 	gen_terra_chunk(chunk, rng, raycast)
 	
-	if chunk.position_x == 0 && chunk.position_z == 0:
-		#test
-		spawn_dungeon(chunk, chunk_seed, spawn_mobs)
-	else:
-		if rng.randi() % 10 == 0:
-			spawn_dungeon(chunk, chunk_seed, spawn_mobs)
+#	if chunk.position_x == 0 && chunk.position_z == 0:
+#		#test
+#		spawn_dungeon(chunk, chunk_seed, spawn_mobs)
+#	else:
+#		if rng.randi() % 10 == 0:
+#			spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	
 	if not Engine.editor_hint and spawn_mobs and rng.randi() % 4 == 0:
 		var level : int = 1

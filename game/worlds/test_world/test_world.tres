@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=14 format=2]
+[gd_resource type="Resource" load_steps=17 format=2]
 
 [ext_resource path="res://scripts/world_generator/worlds/ocean_base_world.gd" type="Script" id=1]
 [ext_resource path="res://scripts/world_generator/subzones/spawner.gd" type="Script" id=2]
@@ -10,21 +10,36 @@
 [ext_resource path="res://entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=8]
 [ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=9]
 [ext_resource path="res://worlds/test_world/noises/base_ocean_noise.tres" type="FastnoiseNoiseParams" id=10]
+[ext_resource path="res://scripts/world_generator/subzones/dungeon_spawner.gd" type="Script" id=11]
 
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
 script = ExtResource( 2 )
-rect = Rect2( 8.375, 2.6875, 5, 5 )
+rect = Rect2( 10.5469, 4.9375, 0.625, 0.5625 )
 locked = false
 trainer = ExtResource( 9 )
 vendor = ExtResource( 8 )
+
+[sub_resource type="Resource" id=4]
+resource_name = "DungeonSpawner"
+script = ExtResource( 11 )
+rect = Rect2( 10.6562, 5.01562, 0.421875, 0.421875 )
+locked = false
+dungeon_teleporter = ExtResource( 4 )
+
+[sub_resource type="Resource" id=5]
+resource_name = "DungeonSpawner2"
+script = ExtResource( 11 )
+rect = Rect2( 13.689, 6.71965, 1.30323, 1.0916 )
+locked = false
+dungeon_teleporter = ExtResource( 4 )
 
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
 script = ExtResource( 7 )
 rect = Rect2( 8.75557, 6.875, 21.9944, 11.2839 )
 locked = false
-subzones = [ SubResource( 2 ) ]
+subzones = [ SubResource( 2 ), SubResource( 4 ), SubResource( 5 ) ]
 zone_radius = 0.5
 zone_bevel = 0.3
 zone_base = 0.0
