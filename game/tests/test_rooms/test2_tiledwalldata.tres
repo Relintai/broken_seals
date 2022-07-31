@@ -8,3 +8,4 @@ set_tile_count = 1
 tile_0/texture = ExtResource( 1 )
 tile_0/y_size = 1.0
 tile_0/z_offset = 0.0
+tile_0/texture_scale = 2
