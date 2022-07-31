@@ -42,20 +42,6 @@ func get_plugin_name():
 func inspect_data(var data : Resource) -> void:
 	get_editor_interface().inspect_object(data)
 
-func ensure_data_dir_exists() -> void:
-	var dir : Directory = Directory.new()
-	
-	if !dir.dir_exists("res://addons/data_manager/_data/"):
-		dir.make_dir("res://addons/data_manager/_data/")
-
 func load_settings() -> void:
-	ensure_data_dir_exists()
-	
-	var dir : Directory = Directory.new()
-	
-	if !dir.file_exists("res://addons/data_manager/_data/settings.tres"):
-		settings = DataManagerAddonSettings.new()
-		
-		ResourceSaver.save("res://addons/data_manager/_data/settings.tres", settings)
-	else:
-		settings = ResourceLoader.load("res://addons/data_manager/_data/settings.tres")
+	settings = DataManagerAddonSettings.new()
+	settings.load_from_project_settings()

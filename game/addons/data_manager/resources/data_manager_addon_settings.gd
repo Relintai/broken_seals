@@ -101,18 +101,25 @@ func _get_property_list() -> Array:
 	var props : Array = Array()
 	
 	props.append({
-			"name": "convert_to_json",
+			"name": "save",
 			"type": TYPE_NIL,
 			"hint": PROPERTY_HINT_BUTTON,
-			"hint_string": "convert_to_json",
+			"hint_string": "save_to_project_settings",
 		})
-		
-	props.append({
-			"name": "convert_from_json",
-			"type": TYPE_NIL,
-			"hint": PROPERTY_HINT_BUTTON,
-			"hint_string": "convert_from_json",
-		})
+	
+#	props.append({
+#			"name": "convert_to_json",
+#			"type": TYPE_NIL,
+#			"hint": PROPERTY_HINT_BUTTON,
+#			"hint_string": "convert_to_json",
+#		})
+#
+#	props.append({
+#			"name": "convert_from_json",
+#			"type": TYPE_NIL,
+#			"hint": PROPERTY_HINT_BUTTON,
+#			"hint_string": "convert_from_json",
+#		})
 
 	props.append({
 			"name": "folder_count",
@@ -153,26 +160,26 @@ func set_folder_count(val : int) -> void:
 	property_list_changed_notify()
 
 func convert_to_json() -> void:
-	var f : File = File.new();
+	var f : File = File.new()
 	
-	f.open("res://addons/data_manager/_data/settings.json", File.WRITE);
-	f.store_string(get_as_json());
-	f.close();
+	f.open("res://addons/data_manager/_data/settings.json", File.WRITE)
+	f.store_string(get_as_json())
+	f.close()
 	
-	PLogger.log_message("Saved settings to res://addons/data_manager/_data/settings.json");
+	PLogger.log_message("Saved settings to res://addons/data_manager/_data/settings.json")
 
 func convert_from_json() -> void:
 	var f : File = File.new()
 	
 	if (!f.file_exists("res://addons/data_manager/_data/settings.json")):
-		PLogger.log_message("File res://addons/data_manager/_data/settings.json doesn't exist!");
-		return;
+		PLogger.log_message("File res://addons/data_manager/_data/settings.json doesn't exist!")
+		return
 	
-	f.open("res://addons/data_manager/_data/settings.json", File.READ);
-	set_from_json(f.get_as_text());
-	f.close();
+	f.open("res://addons/data_manager/_data/settings.json", File.READ)
+	set_from_json(f.get_as_text())
+	f.close()
 	
-	PLogger.log_message("Loaded settings from res://addons/data_manager/_data/settings.json");
+	PLogger.log_message("Loaded settings from res://addons/data_manager/_data/settings.json")
 
 func get_as_json() -> String:
 	var arr : Array
@@ -190,15 +197,6 @@ func get_as_json() -> String:
 		arr.push_back(dict)
 
 	return to_json(arr);
-
-
-#class SettingEntry:
-#	var folder : String = ""
-#	var header : String = ""
-#	var name : String = ""
-#	var type : String = ""
-
-
 
 func set_from_json(data : String) -> void:
 	var jpr : JSONParseResult = JSON.parse(data)
@@ -221,3 +219,12 @@ func set_from_json(data : String) -> void:
 		
 		folders.push_back(s)
 
+func save_to_project_settings() -> void:
+	ProjectSettings.set("addons/data_manager/folder_settings", get_as_json())
+	
+func load_from_project_settings() -> void:
+	var d : String = ProjectSettings.get("addons/data_manager/folder_settings")
+	
+	if d != "":
+		set_from_json(d)
+	

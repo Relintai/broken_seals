@@ -10,9 +10,6 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 resource_scene = ExtResource( 3 )
 base_folder = "res://data/"
 main_container = NodePath("HSplitContainer/MarginContainer")

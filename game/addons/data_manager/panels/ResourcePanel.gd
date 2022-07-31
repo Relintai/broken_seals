@@ -2,6 +2,7 @@ tool
 extends Control
 
 signal inspect_data
+signal edit_settings
 
 export(PackedScene) var resource_row_scene : PackedScene
 export(PackedScene) var history_row_scene : PackedScene
@@ -292,3 +293,7 @@ func search(text : String) -> void:
 
 func sort_entries(a, b):
 	return a["id"] < b["id"]
+
+
+func edit_settings():
+	emit_signal("edit_settings")

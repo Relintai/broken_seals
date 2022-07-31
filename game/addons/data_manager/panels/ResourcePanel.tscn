@@ -12,9 +12,6 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 resource_row_scene = ExtResource( 2 )
 history_row_scene = ExtResource( 3 )
 entry_container_path = NodePath("ResourcePanel/VBoxContainer2/ScrollContainer2/VBoxContainer")
@@ -75,21 +72,28 @@ margin_left = 612.0
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="Button" type="Button" parent="ResourcePanel/VBoxContainer"]
+[node name="Settings" type="Button" parent="ResourcePanel/VBoxContainer"]
 margin_right = 412.0
 margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Settings"
+
+[node name="Button" type="Button" parent="ResourcePanel/VBoxContainer"]
+margin_top = 24.0
+margin_right = 412.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 text = "Clear History"
 icon = ExtResource( 7 )
 
 [node name="HSeparator" type="HSeparator" parent="ResourcePanel/VBoxContainer"]
-margin_top = 24.0
+margin_top = 48.0
 margin_right = 412.0
-margin_bottom = 28.0
+margin_bottom = 52.0
 size_flags_horizontal = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ResourcePanel/VBoxContainer"]
-margin_top = 32.0
+margin_top = 56.0
 margin_right = 412.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
@@ -114,5 +118,6 @@ dialog_text = "Delete?"
 
 [connection signal="text_entered" from="ResourcePanel/VBoxContainer2/LineEdit" to="." method="search"]
 [connection signal="pressed" from="ResourcePanel/VBoxContainer2/CreateButton" to="CreateNamePopup" method="popup"]
+[connection signal="pressed" from="ResourcePanel/VBoxContainer/Settings" to="." method="edit_settings"]
 [connection signal="pressed" from="ResourcePanel/VBoxContainer/Button" to="." method="clear_history"]
 [connection signal="confirmed" from="DeletePopup" to="." method="delete_confirm"]

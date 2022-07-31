@@ -47,6 +47,7 @@ func load_data():
 	_main_container.add_child(_resource_scene)
 	_resource_scene.owner = _main_container
 	_resource_scene.connect("inspect_data", self, "inspect_data")
+	_resource_scene.connect("edit_settings", self, "edit_settings")
 	
 	_module_entry_container = get_node(module_entry_container_path)
 	_folder_entry_container = get_node(folder_entry_container_path)
@@ -197,6 +198,10 @@ func hide_all() -> void:
 
 func inspect_data(var data : Resource) -> void:
 	emit_signal("inspect_data", data)
+
+func edit_settings() -> void:
+	emit_signal("inspect_data", _settings)
+
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
