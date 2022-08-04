@@ -3,13 +3,33 @@ extends Resource
 class_name WorldGenBaseResource
 
 export(Rect2) var rect : Rect2 = Rect2(0, 0, 100, 100)
+export(Vector2i) var min_size : Vector2i = Vector2i(1, 1)
+export(Vector2i) var max_size : Vector2i = Vector2i(1000000, 1000000)
 export(bool) var locked : bool = false
 
 func get_rect() -> Rect2:
 	return rect
 
 func set_rect(r : Rect2) -> void:
-	rect = r
+	rect.position = r.position
+	rect.size.x = max(min_size.x, r.size.x)
+	rect.size.y = max(min_size.y, r.size.y)
+	rect.size.x = min(max_size.x, rect.size.x)
+	rect.size.y = min(max_size.y, rect.size.y)
+	emit_changed()
+
+func get_min_size() -> Vector2i:
+	return min_size
+
+func set_min_size(r : Vector2i) -> void:
+	min_size = r
+	emit_changed()
+	
+func get_max_size() -> Vector2i:
+	return max_size
+
+func set_max_size(r : Vector2i) -> void:
+	max_size = r
 	emit_changed()
 
 func get_locked() -> bool:
@@ -181,4 +201,7 @@ func get_editor_additional_text() -> String:
 func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_line_edit("get_name", "set_name", "Name")
 	inspector.add_slot_rect2("get_rect", "set_rect", "Rect", 1)
+	inspector.add_slot_vector2i("get_min_size", "set_min_size", "Min Size", 1)
+	inspector.add_slot_vector2i("get_max_size", "set_max_size", "Max Size", 1)
 	inspector.add_slot_bool("get_locked", "set_locked", "Locked")
+

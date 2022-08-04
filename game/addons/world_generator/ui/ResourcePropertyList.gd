@@ -198,7 +198,7 @@ func add_slot_vector2(getter : String, setter : String, slot_name : String, step
 	sby.connect("value_changed", self, "on_vector2_spinbox_value_changed", [ slot_idx, sbx, sby ])
 	
 	return slot_idx
-	
+
 func add_slot_vector3(getter : String, setter : String, slot_name : String, step : float = 0.1, prange : Vector2 = Vector2(-1000, 1000)) -> int:
 	var bc : VBoxContainer = VBoxContainer.new()
 	
@@ -306,6 +306,39 @@ func add_slot_rect2(getter : String, setter : String, slot_name : String, step :
 	
 	return slot_idx
 
+func add_slot_vector2i(getter : String, setter : String, slot_name : String, step : int = 1, prange : Vector2i = Vector2i(-1000000, 1000000)) -> int:
+	var bc : VBoxContainer = VBoxContainer.new()
+	
+	var l : Label = Label.new()
+	l.text = slot_name
+	bc.add_child(l)
+	
+	var sbx : SpinBox = SpinBox.new()
+	bc.add_child(sbx)
+	
+	var sby : SpinBox = SpinBox.new()
+	bc.add_child(sby)
+	
+	var slot_idx : int = add_slot(getter, setter, bc)
+	sbx.rounded = true
+	sby.rounded = true
+	sbx.step = step
+	sby.step = step
+	sbx.min_value = prange.x
+	sbx.max_value = prange.y
+	sby.min_value = prange.x
+	sby.max_value = prange.y
+	
+	var val : Vector2 = _edited_resource.call(getter)
+	
+	sbx.value = val.x
+	sby.value = val.y
+
+	sbx.connect("value_changed", self, "on_vector2i_spinbox_value_changed", [ slot_idx, sbx, sby ])
+	sby.connect("value_changed", self, "on_vector2i_spinbox_value_changed", [ slot_idx, sbx, sby ])
+	
+	return slot_idx
+
 func add_slot(getter : String, setter : String, control : Control) -> int:
 	var content_node = $MainContainer/Content
 	
@@ -393,6 +426,19 @@ func on_vector3_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_
 func on_rect2_spinbox_value_changed(val : float, slot_idx, spinboxes) -> void:
 	_ignore_changed_evend = true
 	var vv : Rect2 = Rect2(spinboxes[0].value, spinboxes[1].value, spinboxes[2].value, spinboxes[3].value)
+	
+	#_edited_resource.call(properties[slot_idx][2], vv)
+	
+	_undo_redo.create_action("WE: Set Value")
+	_undo_redo.add_do_method(_edited_resource, properties[slot_idx][2], vv)
+	_undo_redo.add_undo_method(_edited_resource, properties[slot_idx][2], _edited_resource.call(properties[slot_idx][1]))
+	_undo_redo.commit_action()
+	
+	_ignore_changed_evend = false
+
+func on_vector2i_spinbox_value_changed(val : float, slot_idx, spinbox_x, spinbox_y) -> void:
+	_ignore_changed_evend = true
+	var vv : Vector2i = Vector2i(spinbox_x.value, spinbox_y.value)
 	
 	#_edited_resource.call(properties[slot_idx][2], vv)
 	
