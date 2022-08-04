@@ -76,6 +76,8 @@ func set_zoom(p_zoom : float) -> void:
 	if (p_zoom > 0 && p_zoom != zoom):
 		zoom = p_zoom;
 		_update_zoom_label();
+		emit_signal("zoom_changed", zoom);
+		
 
 func set_zoom_by_increments(p_increment_count : int, p_integer_only : bool) -> void:
 	# Remove editor scale from the index computation.
