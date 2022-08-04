@@ -6,13 +6,6 @@ export(PackedScene) var dungeon_teleporter : PackedScene
 var voxel_scale : float = 1
 var current_seed : int = 0
 
-var main_chunk_pos_x : int = 0
-var main_chunk_pos_z : int = 0
-
-func _setup() -> void:
-	main_chunk_pos_x = get_parent_pos().x + get_rect().position.x + get_rect().size.x / 2
-	main_chunk_pos_z = get_parent_pos().y + get_rect().position.y + get_rect().size.y / 2
-
 func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	voxel_scale = chunk.voxel_scale
 	current_seed = pseed
@@ -24,8 +17,11 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 
 	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.seed = chunk_seed
+	
+	var p : Vector2i = Vector2i(get_rect().size.x / 2, get_rect().size.y / 2)
+	var lp : Vector2i = raycast.get_local_position()
 
-	if chunk.position_x == main_chunk_pos_x && chunk.position_z == main_chunk_pos_z:
+	if p == lp:
 		spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	
 func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
