@@ -5,19 +5,6 @@ class_name WorldGenBaseResource
 export(Rect2) var rect : Rect2 = Rect2(0, 0, 100, 100)
 export(bool) var locked : bool = false
 
-var _parent_pos : Vector2 = Vector2()
-
-func setup() -> void:
-	_setup()
-	
-	for c in get_content():
-		if c:
-			c.set_parent_pos(_parent_pos + get_rect().position)
-			c.setup()
-
-func _setup() -> void:
-	pass
-
 func get_rect() -> Rect2:
 	return rect
 
@@ -31,16 +18,6 @@ func get_locked() -> bool:
 func set_locked(r : bool) -> void:
 	locked = r
 	emit_changed()
-
-func get_parent_pos() -> Vector2:
-	return _parent_pos
-
-func set_parent_pos(parent_pos : Vector2) -> void:
-	_parent_pos = parent_pos
-	
-	for c in get_content():
-		if c:
-			c.set_parent_pos(_parent_pos + get_rect().position)
 
 func get_content() -> Array:
 	return Array()

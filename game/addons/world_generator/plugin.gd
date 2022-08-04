@@ -52,7 +52,6 @@ func edit(object):
 
 	if object is WorldGenWorld:
 		var wgw : WorldGenWorld = object as WorldGenWorld
-		wgw.setup()
 		editor_scene.set_wgworld(wgw)
 
 func make_visible(visible):

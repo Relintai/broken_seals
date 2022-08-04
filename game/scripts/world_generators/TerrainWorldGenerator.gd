@@ -35,7 +35,6 @@ func setup(world : TerrainWorld, level_seed : int, spawn_mobs : bool, library: T
 	_library = library
 	
 	if world_gen_world != null:
-		world_gen_world.setup()
 		world_gen_world.setup_terra_library(_library, _level_seed)
 		_library.refresh_rects()
 

@@ -23,14 +23,14 @@ vendor = ExtResource( 8 )
 [sub_resource type="Resource" id=4]
 resource_name = "DungeonSpawner"
 script = ExtResource( 11 )
-rect = Rect2( 10.4375, 4.76562, 0.734375, 0.734375 )
+rect = Rect2( 9.96875, 4.07812, 2.26562, 1.79688 )
 locked = false
 dungeon_teleporter = ExtResource( 4 )
 
 [sub_resource type="Resource" id=5]
 resource_name = "DungeonSpawner2"
 script = ExtResource( 11 )
-rect = Rect2( 13.689, 6.71965, 1.30323, 1.0916 )
+rect = Rect2( 13.439, 6.6259, 3.11573, 2.0916 )
 locked = false
 dungeon_teleporter = ExtResource( 4 )
 

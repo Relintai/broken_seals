@@ -25,7 +25,6 @@ func create_content(item_name : String = "") -> void:
 
 func add_content(entry : WorldGenBaseResource) -> void:
 	subzones.append(entry)
-	entry.set_parent_pos(get_parent_pos() + get_rect().position)
 	emit_changed()
 	
 func remove_content_entry(entry : WorldGenBaseResource) -> void:

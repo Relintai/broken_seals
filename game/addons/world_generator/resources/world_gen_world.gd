@@ -25,7 +25,6 @@ func add_content(entry : WorldGenBaseResource) -> void:
 	entry.set_rect(r)
 	
 	continents.append(entry)
-	entry.set_parent_pos(get_parent_pos() + get_rect().position)
 	emit_changed()
 
 func remove_content_entry(entry : WorldGenBaseResource) -> void:
