@@ -20,7 +20,6 @@ func setup_property_inspector(inspector) -> void:
 
 func generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool) -> void:
 	var p : Vector2 = Vector2(chunk.get_position_x(), chunk.get_position_z())
-
 	var raycast : WorldGenRaycast = get_hit_stack(p)
 	
 	_generate_terra_chunk(chunk, pseed, spawn_mobs, raycast)

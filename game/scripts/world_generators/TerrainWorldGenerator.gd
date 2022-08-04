@@ -41,11 +41,12 @@ func setup(world : TerrainWorld, level_seed : int, spawn_mobs : bool, library: T
 
 func get_spawn_chunk_position() -> Vector2:
 	if world_gen_world != null:
-		var spawner = world_gen_world.get_content_with_name("Spawner")
+		var spawners : Array = world_gen_world.get_spawn_positions()
 		
-		if spawner:
-			return spawner.get_spawn_chunk_position()
-	
+		if spawners.size() > 0:
+			var v : Vector2 = spawners[0][1]
+			return v
+		
 	return Vector2()
 
 func _generate_chunk(chunk : TerrainChunk) -> void:

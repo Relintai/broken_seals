@@ -4,15 +4,11 @@ extends SubZone
 export (EntityData) var trainer : EntityData
 export (EntityData) var vendor : EntityData
 
-var main_chunk_pos_x : int = 0
-var main_chunk_pos_z : int = 0
-
-func _setup() -> void:
-	main_chunk_pos_x = get_parent_pos().x + get_rect().position.x + get_rect().size.x / 2
-	main_chunk_pos_z = get_parent_pos().y + get_rect().position.y + get_rect().size.y / 2
+func _is_spawner() -> bool:
+	return true
 	
-func get_spawn_chunk_position() -> Vector2:
-	return Vector2(main_chunk_pos_x, main_chunk_pos_z)
+func _get_spawn_local_position() -> Vector2:
+	return Vector2(get_rect().size.x / 2, get_rect().size.y / 2)
 
 func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
 	if !spawn_mobs:
@@ -21,10 +17,13 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	if trainer == null || vendor == null:
 		return
 		
-	if chunk.position_x == main_chunk_pos_x && chunk.position_z == main_chunk_pos_z:
-		var pos : Vector3 = Vector3(main_chunk_pos_x * chunk.get_size_x() * chunk.voxel_scale + 4, 50 * chunk.voxel_scale, main_chunk_pos_z * chunk.get_size_z() * chunk.voxel_scale + 4)
+	var p : Vector2i = Vector2i(get_rect().size.x / 2, get_rect().size.y / 2)
+	var lp : Vector2i = raycast.get_local_position()
+
+	if p == lp:
+		var pos : Vector3 = Vector3(chunk.get_position_x() * chunk.get_size_x() * chunk.voxel_scale + 4, 50 * chunk.voxel_scale, chunk.get_position_z() * chunk.get_size_z() * chunk.voxel_scale + 4)
 		ESS.entity_spawner.spawn_mob(trainer.id, 1, pos)
-		pos = Vector3(main_chunk_pos_x * chunk.get_size_x() * chunk.voxel_scale + 2, 50 * chunk.voxel_scale, main_chunk_pos_z * chunk.get_size_z() * chunk.voxel_scale + 2)
+		pos = Vector3(chunk.get_position_x() * chunk.get_size_x() * chunk.voxel_scale + 2, 50 * chunk.voxel_scale, chunk.get_position_z() * chunk.get_size_z() * chunk.voxel_scale + 2)
 		ESS.entity_spawner.spawn_mob(vendor.id, 1, pos)
 
 func get_trainer() -> EntityData:

@@ -57,6 +57,31 @@ func create_content(item_name : String = "") -> void:
 func remove_content_entry(entry : WorldGenBaseResource) -> void:
 	pass
 
+func is_spawner() -> bool:
+	return _is_spawner()
+	
+func _is_spawner() -> bool:
+	return false
+	
+func get_spawn_local_position() -> Vector2:
+	return _get_spawn_local_position()
+	
+func _get_spawn_local_position() -> Vector2:
+	return Vector2()
+
+func get_spawn_positions(var parent_position : Vector2 = Vector2()) -> Array:
+	if is_spawner():
+		return [ [ resource_name, parent_position + rect.position + get_spawn_local_position() ] ]
+		
+	var spawners : Array
+	var p : Vector2 = parent_position + rect.position
+		
+	for c in get_content():
+		if c:
+			spawners.append_array(c.get_spawn_positions(p))
+		
+	return spawners
+
 func get_content_with_name(name : String) -> WorldGenBaseResource:
 	if resource_name == name:
 		return self

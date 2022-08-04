@@ -15,7 +15,7 @@
 [sub_resource type="Resource" id=2]
 resource_name = "Spawner"
 script = ExtResource( 2 )
-rect = Rect2( 10.5469, 4.9375, 0.625, 0.5625 )
+rect = Rect2( 9.6719, 4.34375, 2.09375, 1.6875 )
 locked = false
 trainer = ExtResource( 9 )
 vendor = ExtResource( 8 )
@@ -23,7 +23,7 @@ vendor = ExtResource( 8 )
 [sub_resource type="Resource" id=4]
 resource_name = "DungeonSpawner"
 script = ExtResource( 11 )
-rect = Rect2( 10.6562, 5.01562, 0.421875, 0.421875 )
+rect = Rect2( 10.4375, 4.76562, 0.734375, 0.734375 )
 locked = false
 dungeon_teleporter = ExtResource( 4 )
 
@@ -50,7 +50,7 @@ prop_tree2 = ExtResource( 5 )
 [sub_resource type="Resource" id=1]
 resource_name = "Continent"
 script = ExtResource( 3 )
-rect = Rect2( 250, 250, 40, 25 )
+rect = Rect2( 241, 247, 40, 25 )
 locked = false
 zones = [ SubResource( 3 ) ]
 continent_radius = 0.5
