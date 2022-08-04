@@ -59,6 +59,27 @@ func on_zoom_changed(zoom : float) -> void:
 func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), Color(0.2, 0.2, 0.2, 1))
 	
+	var rsh : float = clamp(_rect_scale / 2.0, 1, 5)
+	var c : Color = Color(0.4, 0.4, 0.4, 1)
+	
+	# Indicators that show the size of a unit (1 chunk)
+	
+	# Top left
+	draw_line(Vector2(_rect_scale, 0), Vector2(_rect_scale, rsh), c)
+	draw_line(Vector2(0, _rect_scale), Vector2(rsh, _rect_scale), c)
+	
+	# Top right
+	draw_line(Vector2(get_size().x - _rect_scale, 0), Vector2(get_size().x - _rect_scale, rsh), c)
+	draw_line(Vector2(get_size().x - rsh, _rect_scale), Vector2(get_size().x, _rect_scale), c)
+	
+	# Bottom left
+	draw_line(Vector2(_rect_scale, get_size().y - rsh), Vector2(_rect_scale, get_size().y), c)
+	draw_line(Vector2(0, get_size().y - _rect_scale), Vector2(rsh, get_size().y - _rect_scale), c)
+	
+	# Bottom right
+	draw_line(Vector2(get_size().x - _rect_scale, get_size().y - rsh), Vector2(get_size().x - _rect_scale, get_size().y), c)
+	draw_line(Vector2(get_size().x - rsh, get_size().y - _rect_scale), Vector2(get_size().x, get_size().y - _rect_scale), c)
+	
 func refresh() -> void:
 	clear()
 	
