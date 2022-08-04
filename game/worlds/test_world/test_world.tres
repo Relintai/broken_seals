@@ -34,7 +34,7 @@ dungeon_teleporter = ExtResource( 4 )
 [sub_resource type="Resource" id=5]
 resource_name = "DungeonSpawner2"
 script = ExtResource( 11 )
-rect = Rect2( 11.4113, 7.34633, 6.9637, 3 )
+rect = Rect2( 16.8488, 8.40883, 1, 1.0625 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
@@ -51,7 +51,6 @@ subzones = [ SubResource( 2 ), SubResource( 4 ), SubResource( 5 ) ]
 zone_radius = 0.5
 zone_bevel = 0.3
 zone_base = 0.0
-dungeon_teleporter = ExtResource( 4 )
 prop_tree = ExtResource( 6 )
 prop_tree2 = ExtResource( 5 )
 

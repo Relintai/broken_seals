@@ -5,7 +5,6 @@ export(float) var zone_radius : float = 0.5
 export(float) var zone_bevel : float = 0.3
 export(float) var zone_base : float = 0
 
-export(PackedScene) var dungeon_teleporter : PackedScene
 export(PropData) var prop_tree : PropData
 export(PropData) var prop_tree2 : PropData
 
@@ -31,13 +30,6 @@ func get_zone_base() -> float:
 	
 func set_zone_base(ed : float) -> void:
 	zone_base = ed
-	emit_changed()
-
-func get_dungeon_teleporter() -> PackedScene:
-	return dungeon_teleporter
-	
-func set_dungeon_teleporter(ed : PackedScene) -> void:
-	dungeon_teleporter = ed
 	emit_changed()
 
 func get_prop_tree() -> PropData:
@@ -98,13 +90,6 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	rng.seed = chunk_seed
 	
 	gen_terra_chunk(chunk, rng, raycast)
-	
-#	if chunk.position_x == 0 && chunk.position_z == 0:
-#		#test
-#		spawn_dungeon(chunk, chunk_seed, spawn_mobs)
-#	else:
-#		if rng.randi() % 10 == 0:
-#			spawn_dungeon(chunk, chunk_seed, spawn_mobs)
 	
 	if not Engine.editor_hint and spawn_mobs and rng.randi() % 4 == 0:
 		var level : int = 1
@@ -177,46 +162,10 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator, raycast :
 
 				chunk.voxel_world.prop_add(tr, prop_tree)
 
-func spawn_dungeon(chunk: TerrainChunk, dungeon_seed : int, spawn_mobs : bool) -> void:
-	var world_space_data_coordinates_x : int = chunk.position_x * chunk.size_x
-	var world_space_data_coordinates_z : int = chunk.position_z * chunk.size_z
-	
-	var vpx : int = 6
-	var vpz : int = 6
-	
-	var x : float = (world_space_data_coordinates_x + vpx) * chunk.voxel_scale
-	var z : float = (world_space_data_coordinates_z + vpz) * chunk.voxel_scale
-	
-	var vh : int = chunk.get_voxel(vpx, vpz, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
-	
-	var orx : int = (randi() % 3) + 2
-	var orz : int = (randi() % 3) + 2
-	
-	for wx in range(vpx - orx, vpx + orx + 1):
-		for wz in range(vpz - orz, vpz + orz + 1):
-			chunk.set_voxel(vh, wx, wz, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
-	var vwh : float = chunk.get_voxel_scale() * chunk.get_world_height() * (vh / 255.0)
-	
-	var dt : Spatial = dungeon_teleporter.instance()
-	chunk.voxel_world.add_child(dt)
-	dt.owner_chunk = chunk
-	
-	var level : int = 2
-		
-	if chunk.get_voxel_world().has_method("get_mob_level"):
-		level  = chunk.get_voxel_world().get_mob_level()
-	
-	dt.min_level = level - 1
-	dt.max_level = level + 1
-	dt.dungeon_seed = dungeon_seed
-	dt.spawn_mobs = spawn_mobs
-	dt.transform = Transform(Basis().scaled(Vector3(chunk.voxel_scale, chunk.voxel_scale, chunk.voxel_scale)), Vector3(x, vwh, z))
-	
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
 	
 	inspector.add_h_separator()
-	inspector.add_slot_resource("get_dungeon_teleporter", "set_dungeon_teleporter", "Dungeon Teleporter", "PackedScene")
 	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
 	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")
 	
