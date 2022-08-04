@@ -1,5 +1,5 @@
 tool
-extends SubZone
+extends SubZoneProp
 
 export (EntityData) var trainer : EntityData
 export (EntityData) var vendor : EntityData

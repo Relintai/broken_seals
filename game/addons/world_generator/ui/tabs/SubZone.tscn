@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://addons/world_generator/ui/tabs/SubZone.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/ui/ResourcePropertyList.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/world_generator/ui/DataList.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/world_generator/ui/RectEditor.tscn" type="PackedScene" id=4]
 
 [node name="SubZone" type="HBoxContainer"]
 anchor_right = 1.0
@@ -9,41 +11,97 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
-[node name="ContinentOptionButton" type="OptionButton" parent="VBoxContainer"]
-margin_right = 1024.0
-margin_bottom = 20.0
-
-[node name="ZoneOptionButton" type="OptionButton" parent="VBoxContainer"]
-margin_top = 24.0
-margin_right = 1024.0
-margin_bottom = 44.0
-
-[node name="SubZoneOptionButton" type="OptionButton" parent="VBoxContainer"]
-margin_top = 48.0
-margin_right = 1024.0
-margin_bottom = 68.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 72.0
-margin_right = 1024.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ResourcePropertyList" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 2 )]
+[node name="RectEditor" parent="HSplitContainer" instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_right = 735.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer"]
+margin_left = 747.0
 margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="ContinentOptionButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
+margin_right = 277.0
+margin_bottom = 20.0
+
+[node name="ZoneOptionButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 277.0
+margin_bottom = 44.0
+
+[node name="SubZoneOptionButton" type="OptionButton" parent="HSplitContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 277.0
+margin_bottom = 68.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HSplitContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 277.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResourcePropertyList" parent="HSplitContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 100.0
 margin_bottom = 528.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 104.0
+margin_right = 277.0
+margin_bottom = 528.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+margin_right = 173.0
+margin_bottom = 14.0
+text = "Sub Zones"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+margin_top = 18.0
+margin_right = 173.0
+margin_bottom = 38.0
+
+[node name="AddButton" type="Button" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+margin_right = 37.0
+margin_bottom = 20.0
+text = "Add"
+
+[node name="DeleteButton" type="Button" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 41.0
+margin_right = 96.0
+margin_bottom = 20.0
+text = "Delete"
+
+[node name="Duplicate" type="Button" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 100.0
+margin_right = 173.0
+margin_bottom = 20.0
+text = "Duplicate"
+
+[node name="DataList" parent="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 42.0
+margin_right = 173.0
+margin_bottom = 528.0
+class_types = 3
+
+[connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/AddButton" to="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList" method="add_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/DeleteButton" to="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList" method="delete_button_pressed"]
+[connection signal="pressed" from="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/Duplicate" to="HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList" method="duplicate_button_pressed"]

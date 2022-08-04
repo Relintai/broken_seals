@@ -1,5 +1,5 @@
 tool
-extends SubZone
+extends SubZoneProp
 
 export(PackedScene) var dungeon_teleporter : PackedScene
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/world_generator/ui/MainScreen.gd" type="Script" id=1]
 [ext_resource path="res://addons/world_generator/ui/tabs/World.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/world_generator/ui/tabs/Continent.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/world_generator/ui/tabs/Zone.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/world_generator/ui/tabs/SubZone.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/world_generator/ui/tabs/SubZoneProp.tscn" type="PackedScene" id=6]
 
 [node name="WorldGenerator" type="PanelContainer"]
 anchor_right = 1.0
@@ -41,7 +42,6 @@ margin_bottom = -4.0
 
 [node name="SubZone" parent="TabContainer" instance=ExtResource( 5 )]
 visible = false
-margin_left = 4.0
-margin_top = 32.0
-margin_right = -4.0
-margin_bottom = -4.0
+
+[node name="SubZoneProp" parent="TabContainer" instance=ExtResource( 6 )]
+visible = false

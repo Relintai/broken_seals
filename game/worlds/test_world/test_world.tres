@@ -1,44 +1,45 @@
-[gd_resource type="Resource" load_steps=17 format=2]
+[gd_resource type="Resource" load_steps=18 format=2]
 
 [ext_resource path="res://scripts/world_generator/worlds/ocean_base_world.gd" type="Script" id=1]
-[ext_resource path="res://scripts/world_generator/subzones/spawner.gd" type="Script" id=2]
+[ext_resource path="res://scripts/world_generator/subzones/test_subzone.gd" type="Script" id=2]
 [ext_resource path="res://scripts/world_generator/continents/test_continent.gd" type="Script" id=3]
-[ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/world_generator/subzoneprops/dungeon_spawner.gd" type="Script" id=4]
 [ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t2scene.tres" type="PropData" id=5]
 [ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t1scene.tres" type="PropData" id=6]
 [ext_resource path="res://scripts/world_generator/zones/test_zone.gd" type="Script" id=7]
-[ext_resource path="res://entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=8]
-[ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=9]
+[ext_resource path="res://scripts/world_generator/subzoneprops/spawner.gd" type="Script" id=8]
+[ext_resource path="res://entity_classes/naturalist/entities/4_naturalist_vendor.tres" type="EntityData" id=9]
 [ext_resource path="res://worlds/test_world/noises/base_ocean_noise.tres" type="FastnoiseNoiseParams" id=10]
-[ext_resource path="res://scripts/world_generator/subzones/dungeon_spawner.gd" type="Script" id=11]
-
-[sub_resource type="Resource" id=2]
-resource_name = "Spawner"
-script = ExtResource( 2 )
-rect = Rect2( 9.6719, 4.34375, 2.09375, 1.6875 )
-min_size = Vector2i( 1, 1 )
-max_size = Vector2i( 1e+06, 1e+06 )
-locked = false
-trainer = ExtResource( 9 )
-vendor = ExtResource( 8 )
-
-[sub_resource type="Resource" id=4]
-resource_name = "DungeonSpawner"
-script = ExtResource( 11 )
-rect = Rect2( 9.96875, 4.07812, 2.26562, 1.79688 )
-min_size = Vector2i( 1, 1 )
-max_size = Vector2i( 1e+06, 1e+06 )
-locked = false
-dungeon_teleporter = ExtResource( 4 )
+[ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=11]
+[ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Resource" id=5]
-resource_name = "DungeonSpawner2"
-script = ExtResource( 11 )
-rect = Rect2( 16.8488, 8.40883, 1, 1.0625 )
+resource_name = "Spawner"
+script = ExtResource( 8 )
+rect = Rect2( 1.01562, 2.54688, 2.45312, 2.09375 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-dungeon_teleporter = ExtResource( 4 )
+trainer = ExtResource( 11 )
+vendor = ExtResource( 9 )
+
+[sub_resource type="Resource" id=6]
+resource_name = "DS"
+script = ExtResource( 4 )
+rect = Rect2( 2.34402, 1.7592, 1.79547, 1.78381 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+dungeon_teleporter = ExtResource( 12 )
+
+[sub_resource type="Resource" id=4]
+resource_name = "Village"
+script = ExtResource( 2 )
+rect = Rect2( 6.4375, 3.21875, 6.3125, 5.5625 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+subzone_props = [ SubResource( 5 ), SubResource( 6 ) ]
 
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
@@ -47,7 +48,7 @@ rect = Rect2( 8.75557, 6.875, 21.9944, 11.2839 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzones = [ SubResource( 2 ), SubResource( 4 ), SubResource( 5 ) ]
+subzones = [ SubResource( 4 ) ]
 zone_radius = 0.5
 zone_bevel = 0.3
 zone_base = 0.0

@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/world_generator/ui/tabs/SubZoneProp.gd" type="Script" id=1]
+[ext_resource path="res://addons/world_generator/ui/ResourcePropertyList.tscn" type="PackedScene" id=2]
+
+[node name="SubZoneProp" type="HBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ContinentOptionButton" type="OptionButton" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 20.0
+
+[node name="ZoneOptionButton" type="OptionButton" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 44.0
+
+[node name="SubZoneOptionButton" type="OptionButton" parent="VBoxContainer"]
+margin_top = 48.0
+margin_right = 1024.0
+margin_bottom = 68.0
+
+[node name="SubZonePropOptionButton" type="OptionButton" parent="VBoxContainer"]
+margin_top = 72.0
+margin_right = 1024.0
+margin_bottom = 92.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 96.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResourcePropertyList" parent="VBoxContainer/HBoxContainer2" instance=ExtResource( 2 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1024.0
+margin_bottom = 504.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

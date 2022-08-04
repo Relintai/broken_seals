@@ -5,11 +5,13 @@ class_name WorldGeneratorSettings
 export(PoolStringArray) var continent_class_folders : PoolStringArray
 export(PoolStringArray) var zone_class_folders : PoolStringArray
 export(PoolStringArray) var subzone_class_folders : PoolStringArray
+export(PoolStringArray) var subzone_prop_class_folders : PoolStringArray
 
 enum WorldGeneratorScriptType {
 	CONTINENT = 0,
 	ZONE = 1,
 	SUBZONE = 2,
+	SUBZONE_PROP = 3,
 };
 
 func evaluate_scripts(script_type : int, tree : Tree) -> void:
@@ -19,6 +21,8 @@ func evaluate_scripts(script_type : int, tree : Tree) -> void:
 		evaluate_zone_scripts(tree)
 	elif (script_type == WorldGeneratorScriptType.SUBZONE):
 		evaluate_subzone_scripts(tree)
+	elif (script_type == WorldGeneratorScriptType.SUBZONE_PROP):
+		evaluate_subzone_prop_scripts(tree)
 
 func evaluate_continent_scripts(tree : Tree) -> void:
 	tree.clear()
@@ -52,6 +56,18 @@ func evaluate_subzone_scripts(tree : Tree) -> void:
 	root.set_meta("class_name", "SubZone")
 	
 	for s in subzone_class_folders:
+		evaluate_folder(s, tree, root)
+		
+	root.select(0)
+
+func evaluate_subzone_prop_scripts(tree : Tree) -> void:
+	tree.clear()
+	
+	var root : TreeItem = tree.create_item()
+	root.set_text(0, "SubZoneProp")
+	root.set_meta("class_name", "SubZoneProp")
+	
+	for s in subzone_prop_class_folders:
 		evaluate_folder(s, tree, root)
 		
 	root.select(0)

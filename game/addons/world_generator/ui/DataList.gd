@@ -1,7 +1,7 @@
 tool
 extends Tree
 
-export(int, "Continent,Zone,Sub Zone") var class_types : int = 0
+export(int, "Continent,Zone,Sub Zone,Sub Zone Prop") var class_types : int = 0
 
 var edited_resource : WorldGenBaseResource = null
 var name_edited_resource : WorldGenBaseResource = null
