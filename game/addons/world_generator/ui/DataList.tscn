@@ -9,9 +9,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 hide_root = true
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NameDialog" type="ConfirmationDialog" parent="."]
 margin_right = 329.0

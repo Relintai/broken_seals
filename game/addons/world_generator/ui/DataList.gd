@@ -49,6 +49,8 @@ func add_item(item_name : String = "") -> void:
 			e = Zone.new()
 		elif cn == "SubZone":
 			e = SubZone.new()
+		elif cn == "SubZoneProp":
+			e = SubZoneProp.new()
 			
 	elif ti.has_meta("file"):
 		var cls = load(ti.get_meta("file"))
@@ -60,6 +62,14 @@ func add_item(item_name : String = "") -> void:
 		return
 	
 	e.resource_name = item_name
+	
+	var r : Rect2 = edited_resource.get_rect()
+	var rs : Vector2 = r.size
+	r.size.x /= 10.0
+	r.size.y /= 10.0
+	r.position = rs / Vector2(2, 2)
+	r.position -= r.size / Vector2(2, 2)
+	e.set_rect(r)
 	
 	#edited_resource.add_content(e)
 	#remove_content_entry
