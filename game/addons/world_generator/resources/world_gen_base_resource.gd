@@ -196,7 +196,7 @@ func get_editor_class() -> String:
 	return "WorldGenBaseResource"
 
 func get_editor_additional_text() -> String:
-	return "WorldGenBaseResource"
+	return ""
 
 func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_line_edit("get_name", "set_name", "Name")

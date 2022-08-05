@@ -17,4 +17,4 @@ func get_editor_class() -> String:
 	return "TestSubZone"
 
 func get_editor_additional_text() -> String:
-	return "TestSubZone"
+	return ""

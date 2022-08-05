@@ -56,7 +56,7 @@ func get_editor_class() -> String:
 	return "Spawner"
 
 func get_editor_additional_text() -> String:
-	return "Spawner"
+	return ""
 
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)

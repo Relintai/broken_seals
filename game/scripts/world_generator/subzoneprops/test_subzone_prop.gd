@@ -14,7 +14,7 @@ func get_editor_font_color() -> Color:
 	return Color(0, 0, 0, 1)
 
 func get_editor_class() -> String:
-	return "TestSubZone"
+	return "TestSubZoneProp"
 
 func get_editor_additional_text() -> String:
-	return "TestSubZone"
+	return ""

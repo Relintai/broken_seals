@@ -62,7 +62,7 @@ func get_editor_class() -> String:
 	return "TestZone"
 
 func get_editor_additional_text() -> String:
-	return "TestZone"
+	return ""
 
 static func circle(uv : Vector2, c : Vector2, r : float) -> float:
 	c.x += 0.5

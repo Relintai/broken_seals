@@ -76,7 +76,7 @@ func get_editor_class() -> String:
 	return "DungeonSpawner"
 
 func get_editor_additional_text() -> String:
-	return "DungeonSpawner"
+	return ""
 
 func get_dungeon_teleporter() -> PackedScene:
 	return dungeon_teleporter

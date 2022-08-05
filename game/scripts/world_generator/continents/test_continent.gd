@@ -46,7 +46,7 @@ func get_editor_class() -> String:
 	return "TestContinent"
 
 func get_editor_additional_text() -> String:
-	return "TestContinent"
+	return ""
 	
 func _setup_terra_library(library : TerrainLibrary, pseed : int) -> void:
 	pass
