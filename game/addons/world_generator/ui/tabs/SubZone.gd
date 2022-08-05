@@ -125,7 +125,7 @@ func switch_to(continent : WorldGenBaseResource, zone : WorldGenBaseResource, su
 		
 		if (ccont == continent):
 			contob.select(i)
-			on_continent_item_selected(i)
+			set_continent(continent)
 			break
 			
 	var zoneob : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
@@ -135,7 +135,7 @@ func switch_to(continent : WorldGenBaseResource, zone : WorldGenBaseResource, su
 		
 		if (czone == zone):
 			zoneob.select(i)
-			on_zone_item_selected(i)
+			set_zone(zone)
 			break
 			
 	var subzoneob : OptionButton = $HSplitContainer/VBoxContainer/SubZoneOptionButton

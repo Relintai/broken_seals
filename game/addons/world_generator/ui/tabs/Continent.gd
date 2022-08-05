@@ -60,7 +60,7 @@ func switch_to(resource : WorldGenBaseResource) -> void:
 		
 		if (continent == resource):
 			option_button.select(i)
-			on_item_selected(i)
+			set_continent(continent)
 			return
 
 func set_continent(continent : Continent) -> void:
