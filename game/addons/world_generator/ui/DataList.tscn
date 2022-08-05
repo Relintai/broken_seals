@@ -81,4 +81,6 @@ margin_right = 207.0
 margin_bottom = 42.0
 
 [connection signal="confirmed" from="NameDialog" to="." method="name_dialog_ok_pressed"]
+[connection signal="about_to_show" from="NameEditDialog" to="NameEditDialog/VBoxContainer/LineEdit" method="grab_focus" flags=3]
 [connection signal="confirmed" from="NameEditDialog" to="." method="name_edit_dialog_ok_pressed"]
+[connection signal="text_entered" from="NameEditDialog/VBoxContainer/LineEdit" to="." method="name_edit_dialog_line_edit_text_entered"]

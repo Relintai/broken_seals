@@ -13,7 +13,7 @@ var _undo_redo : UndoRedo = null
 
 func _init():
 	connect("item_activated", self, "on_item_activated")
-
+	
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
 	_undo_redo = _plugin.get_undo_redo()
@@ -115,6 +115,10 @@ func name_edit_dialog_ok_pressed() -> void:
 		name_edited_resource.emit_changed()
 		name_edited_resource = null
 		on_resource_changed()
+		
+func name_edit_dialog_line_edit_text_entered(var s : String) -> void:
+	$NameEditDialog.hide()
+	name_edit_dialog_ok_pressed()
 
 func delete_button_pressed() -> void:
 	var item : TreeItem = get_selected()

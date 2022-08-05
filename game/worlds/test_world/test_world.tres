@@ -398,6 +398,7 @@ zone_bevel = 0.3
 zone_base = 0.0
 
 [sub_resource type="Resource" id=21]
+resource_name = "C"
 script = ExtResource( 3 )
 rect = Rect2( 241, 247, 40, 25 )
 min_size = Vector2i( 1, 1 )
