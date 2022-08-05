@@ -15,7 +15,7 @@ func set_edited_resource(res : WorldGenBaseResource):
 		
 		if r.size.x > 0:
 			var rsx : float = get_node("ScrollContainer").rect_size.x
-			var scale : float = rsx / r.size.x * 0.8
+			var scale : float = rsx / r.size.x * 0.5
 			
 			get_node("Control/EditorZoomWidget").zoom = scale
 			get_node("ScrollContainer/MarginContainer/RectView").apply_zoom()
