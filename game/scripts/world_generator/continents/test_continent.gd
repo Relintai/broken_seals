@@ -11,7 +11,11 @@ var current_seed : int = 0
 func _eitor_draw_additional(control : Control) -> void:
 	gui_draw_continent_radius(control, Color(0.6, 0.6, 0.6, 1))
 	gui_draw_continent_bevel(control, Color(1, 1, 1, 1))
-	
+
+func _eitor_draw_additional_background(control : Control) -> void:
+	gui_draw_continent_radius(control, Color(0.3, 0.3, 0.3, 1))
+	gui_draw_continent_bevel(control, Color(0.6, 0.6, 0.6, 1))
+
 func gui_draw_continent_radius(control : Control, color : Color) -> void:
 	var s : Vector2 = control.get_size()
 	
