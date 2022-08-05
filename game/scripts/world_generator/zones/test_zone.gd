@@ -74,17 +74,6 @@ func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, r
 	
 	gen_terra_chunk(chunk, rng, raycast)
 	
-	if not Engine.editor_hint and spawn_mobs and rng.randi() % 4 == 0:
-		var level : int = 1
-
-		if chunk.get_voxel_world().has_method("get_mob_level"):
-			level  = chunk.get_voxel_world().get_mob_level()
-
-		ESS.entity_spawner.spawn_mob(0, level, \
-					Vector3(chunk.position_x * chunk.size_x * chunk.voxel_scale + chunk.size_x / 2,\
-							100, \
-							chunk.position_z * chunk.size_z * chunk.voxel_scale + chunk.size_z / 2))
-
 func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator, raycast : WorldGenRaycast) -> void:
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
 	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)

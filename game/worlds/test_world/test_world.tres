@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=37 format=2]
+[gd_resource type="Resource" load_steps=43 format=2]
 
 [ext_resource path="res://scripts/world_generator/worlds/ocean_base_world.gd" type="Script" id=1]
 [ext_resource path="res://scripts/world_generator/subzones/test_subzone.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=14]
 [ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=15]
 [ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree2_256.png" type="Texture" id=16]
+[ext_resource path="res://scripts/world_generator/subzoneprops/mob_spawner.gd" type="Script" id=17]
+[ext_resource path="res://entity_classes/naturalist/entities/2_naturalist_mob.tres" type="EntityData" id=18]
 
 [sub_resource type="Resource" id=5]
 resource_name = "Spawner"
@@ -45,14 +47,24 @@ max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
 subzone_props = [ SubResource( 5 ), SubResource( 6 ) ]
 
+[sub_resource type="Resource" id=22]
+resource_name = "MS"
+script = ExtResource( 17 )
+rect = Rect2( 0.0787451, 0.0590621, 8.01231, 9.32505 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+mob = ExtResource( 18 )
+level = 1
+
 [sub_resource type="Resource" id=7]
-resource_name = "Forest"
+resource_name = "Forest1"
 script = ExtResource( 13 )
 rect = Rect2( 0.714818, 1.1547, 8.23499, 9.43806 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzone_props = [  ]
+subzone_props = [ SubResource( 22 ) ]
 prop_tree = ExtResource( 6 )
 prop_tree2 = ExtResource( 5 )
 
@@ -146,14 +158,24 @@ func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
 "
 
+[sub_resource type="Resource" id=23]
+resource_name = "MS"
+script = ExtResource( 17 )
+rect = Rect2( 0.125141, 0.166855, 8.81375, 9.16832 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+mob = ExtResource( 18 )
+level = 1
+
 [sub_resource type="Resource" id=12]
-resource_name = "Forest"
+resource_name = "Forest2"
 script = SubResource( 11 )
 rect = Rect2( 11.9503, 1.1547, 9.16433, 9.43806 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzone_props = [  ]
+subzone_props = [ SubResource( 23 ) ]
 prop_tree = SubResource( 8 )
 prop_tree2 = SubResource( 10 )
 
@@ -239,14 +261,24 @@ func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
 "
 
+[sub_resource type="Resource" id=24]
+resource_name = "MS"
+script = ExtResource( 17 )
+rect = Rect2( 0.0348115, 0.0394428, 2.60336, 3.43401 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+mob = ExtResource( 18 )
+level = 1
+
 [sub_resource type="Resource" id=16]
-resource_name = "Forest"
+resource_name = "Forest3"
 script = SubResource( 15 )
 rect = Rect2( 9.19214, 1.0339, 2.62036, 3.48083 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzone_props = [  ]
+subzone_props = [ SubResource( 24 ) ]
 prop_tree = SubResource( 13 )
 prop_tree2 = SubResource( 14 )
 
@@ -332,14 +364,24 @@ func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
 "
 
+[sub_resource type="Resource" id=25]
+resource_name = "MS"
+script = ExtResource( 17 )
+rect = Rect2( 0.056856, -0.016504, 2.28407, 3.506 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+mob = ExtResource( 11 )
+level = 1
+
 [sub_resource type="Resource" id=20]
-resource_name = "Forest"
+resource_name = "Forest4"
 script = SubResource( 19 )
 rect = Rect2( 9.27578, 7.43671, 2.34922, 3.51792 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzone_props = [  ]
+subzone_props = [ SubResource( 25 ) ]
 prop_tree = SubResource( 17 )
 prop_tree2 = SubResource( 18 )
 
