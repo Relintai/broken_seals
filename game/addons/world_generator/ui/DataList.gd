@@ -12,8 +12,6 @@ var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
 func _init():
-	#connect("item_activated", self, "on_item_activated")
-	
 	if !is_connected("item_edited", self, "on_item_edited"):
 		connect("item_edited", self, "on_item_edited")
 	
@@ -124,17 +122,6 @@ func add_button_pressed() -> void:
 func name_dialog_ok_pressed() -> void:
 	add_item($NameDialog/VBoxContainer/LineEdit.text)
 
-func name_edit_dialog_ok_pressed() -> void:
-	if name_edited_resource:
-		name_edited_resource.resource_name = $NameEditDialog/VBoxContainer/LineEdit.text
-		name_edited_resource.emit_changed()
-		name_edited_resource = null
-		on_resource_changed()
-		
-func name_edit_dialog_line_edit_text_entered(var s : String) -> void:
-	$NameEditDialog.hide()
-	name_edit_dialog_ok_pressed()
-
 func delete_button_pressed() -> void:
 	var item : TreeItem = get_selected()
 	
@@ -178,20 +165,6 @@ func on_resource_changed() -> void:
 		return
 		
 	call_deferred("refresh")
-
-func on_item_activated() -> void:
-	var item : TreeItem = get_selected()
-	
-	if !item:
-		return
-		
-	name_edited_resource = item.get_meta("res")
-	
-	if !name_edited_resource:
-		return
-		
-	$NameEditDialog/VBoxContainer/LineEdit.text = name_edited_resource.resource_name
-	$NameEditDialog.popup_centered()
 
 func on_item_edited() -> void:
 	var item : TreeItem = get_edited()
