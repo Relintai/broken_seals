@@ -11,7 +11,7 @@ var _ignore_changed_event : bool = false
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
-signal request_item_edit(world_gen_base_reosurce)
+signal request_item_edit(world_gen_base_resource)
 
 func _init():
 	if !is_connected("item_edited", self, "on_item_edited"):

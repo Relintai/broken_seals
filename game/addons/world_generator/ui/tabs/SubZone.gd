@@ -6,6 +6,8 @@ var edited_continent : Continent = null
 var edited_zone : Zone = null
 var edited_sub_zone : SubZone = null
 
+signal request_item_edit(world_gen_base_resource)
+
 func _ready():
 	var coption_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
 	coption_button.connect("item_selected", self, "on_continent_item_selected")
@@ -15,6 +17,10 @@ func _ready():
 	
 	var szoption_button : OptionButton = $HSplitContainer/VBoxContainer/SubZoneOptionButton
 	szoption_button.connect("item_selected", self, "on_sub_zone_item_selected")
+	
+	var dl : Control = get_node("HSplitContainer/VBoxContainer/HBoxContainer2/VBoxContainer/DataList")
+	if !dl.is_connected("request_item_edit", self, "on_request_item_edit"):
+		dl.connect("request_item_edit", self, "on_request_item_edit")
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	$HSplitContainer/VBoxContainer/HBoxContainer2/ResourcePropertyList.set_plugin(plugin)
@@ -125,3 +131,7 @@ func on_sub_zone_item_selected(idx : int) -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/SubZoneOptionButton
 	
 	set_sub_zone(option_button.get_item_metadata(idx))
+
+func on_request_item_edit(resource : WorldGenBaseResource) -> void:
+	emit_signal("request_item_edit", resource)
+	
