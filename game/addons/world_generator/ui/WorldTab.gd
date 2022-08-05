@@ -7,7 +7,6 @@ signal request_item_edit(world_gen_base_resource)
 
 func _ready():
 	var dl : Control = get_node("VBoxContainer/DataList")
-	
 	if !dl.is_connected("request_item_edit", self, "on_request_item_edit"):
 		dl.connect("request_item_edit", self, "on_request_item_edit")
 

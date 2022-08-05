@@ -52,6 +52,17 @@ func set_wgworld(wgw : WorldGenWorld) -> void:
 	
 	refresh()
 
+func switch_to(resource : WorldGenBaseResource) -> void:
+	var option_button : OptionButton = $HSplitContainer/VBoxContainer/OptionButton
+	
+	for i in range(option_button.get_item_count()):
+		var continent : Continent = option_button.get_item_metadata(i)
+		
+		if (continent == resource):
+			option_button.select(i)
+			on_item_selected(i)
+			return
+
 func set_continent(continent : Continent) -> void:
 	edited_continent = continent
 	
