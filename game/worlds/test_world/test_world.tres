@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=18 format=2]
+[gd_resource type="Resource" load_steps=37 format=2]
 
 [ext_resource path="res://scripts/world_generator/worlds/ocean_base_world.gd" type="Script" id=1]
 [ext_resource path="res://scripts/world_generator/subzones/test_subzone.gd" type="Script" id=2]
@@ -12,11 +12,15 @@
 [ext_resource path="res://worlds/test_world/noises/base_ocean_noise.tres" type="FastnoiseNoiseParams" id=10]
 [ext_resource path="res://entity_classes/naturalist/entities/3_naturalist_trainer.tres" type="EntityData" id=11]
 [ext_resource path="res://worlds/test_world/dungeons/dung_teleporter.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scripts/world_generator/subzones/forest.gd" type="Script" id=13]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree256.png" type="Texture" id=14]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/t1.tres" type="MeshDataResource" id=15]
+[ext_resource path="res://models/collections/low_poly_rpg_item_collection_3/tree2_256.png" type="Texture" id=16]
 
 [sub_resource type="Resource" id=5]
 resource_name = "Spawner"
 script = ExtResource( 8 )
-rect = Rect2( 1.01562, 2.54688, 2.45312, 2.09375 )
+rect = Rect2( 1.04718, 2.54688, 2.45312, 2.09375 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
@@ -35,11 +39,309 @@ dungeon_teleporter = ExtResource( 12 )
 [sub_resource type="Resource" id=4]
 resource_name = "Village"
 script = ExtResource( 2 )
-rect = Rect2( 6.4375, 3.21875, 6.3125, 5.5625 )
+rect = Rect2( 7.75716, 3.27374, 6.3125, 5.5625 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
 subzone_props = [ SubResource( 5 ), SubResource( 6 ) ]
+
+[sub_resource type="Resource" id=7]
+resource_name = "Forest"
+script = ExtResource( 13 )
+rect = Rect2( 0.714818, 1.1547, 8.23499, 9.43806 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+subzone_props = [  ]
+prop_tree = ExtResource( 6 )
+prop_tree2 = ExtResource( 5 )
+
+[sub_resource type="PropDataMeshData" id=1]
+mesh = ExtResource( 15 )
+texture = ExtResource( 14 )
+
+[sub_resource type="PropData" id=8]
+props = [ SubResource( 1 ) ]
+
+[sub_resource type="PropDataMeshData" id=9]
+mesh = ExtResource( 15 )
+texture = ExtResource( 16 )
+
+[sub_resource type="PropData" id=10]
+props = [ SubResource( 9 ) ]
+
+[sub_resource type="GDScript" id=11]
+script/source = "tool
+extends SubZone
+
+export(PropData) var prop_tree : PropData
+export(PropData) var prop_tree2 : PropData
+
+func get_prop_tree() -> PropData:
+	return prop_tree
+	
+func set_prop_tree(ed : PropData) -> void:
+	prop_tree = ed
+	emit_changed()
+
+func get_prop_tree2() -> PropData:
+	return prop_tree2
+	
+func set_prop_tree2(ed : PropData) -> void:
+	prop_tree2 = ed
+	emit_changed()
+
+func get_editor_rect_border_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 1)
+
+func get_editor_rect_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 0.9)
+
+func get_editor_rect_border_size() -> int:
+	return 2
+
+func get_editor_font_color() -> Color:
+	return Color(0, 0, 0, 1)
+
+func get_editor_class() -> String:
+	return \"Forest\"
+
+func get_editor_additional_text() -> String:
+	return \"\"
+
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+
+	var cx : int = chunk.get_position_x()
+	var cz : int = chunk.get_position_z()
+	
+	var chunk_seed : int = 123 + (cx * 231) + (cz * 123)
+
+	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = chunk_seed
+	
+	#chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+	
+	# TODO refactor this, it's inefficient
+	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+			if rng.randf() > 0.992:
+				var oil : int = chunk.get_voxel(x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				var tr : Transform = Transform()
+					
+				tr = tr.rotated(Vector3(0, 1, 0), rng.randf() * PI)
+				tr = tr.rotated(Vector3(1, 0, 0), rng.randf() * 0.2 - 0.1)
+				tr = tr.rotated(Vector3(0, 0, 1), rng.randf() * 0.2 - 0.1)
+				tr = tr.scaled(Vector3(0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2))
+				tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((oil - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
+
+				chunk.voxel_world.prop_add(tr, prop_tree)
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	
+	inspector.add_h_separator()
+	inspector.add_slot_resource(\"get_prop_tree\", \"set_prop_tree\", \"Prop Tree\", \"PropData\")
+	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
+"
+
+[sub_resource type="Resource" id=12]
+resource_name = "Forest"
+script = SubResource( 11 )
+rect = Rect2( 11.9503, 1.1547, 9.16433, 9.43806 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+subzone_props = [  ]
+prop_tree = SubResource( 8 )
+prop_tree2 = SubResource( 10 )
+
+[sub_resource type="PropData" id=13]
+props = [ SubResource( 1 ) ]
+
+[sub_resource type="PropData" id=14]
+props = [ SubResource( 9 ) ]
+
+[sub_resource type="GDScript" id=15]
+script/source = "tool
+extends SubZone
+
+export(PropData) var prop_tree : PropData
+export(PropData) var prop_tree2 : PropData
+
+func get_prop_tree() -> PropData:
+	return prop_tree
+	
+func set_prop_tree(ed : PropData) -> void:
+	prop_tree = ed
+	emit_changed()
+
+func get_prop_tree2() -> PropData:
+	return prop_tree2
+	
+func set_prop_tree2(ed : PropData) -> void:
+	prop_tree2 = ed
+	emit_changed()
+
+func get_editor_rect_border_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 1)
+
+func get_editor_rect_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 0.9)
+
+func get_editor_rect_border_size() -> int:
+	return 2
+
+func get_editor_font_color() -> Color:
+	return Color(0, 0, 0, 1)
+
+func get_editor_class() -> String:
+	return \"Forest\"
+
+func get_editor_additional_text() -> String:
+	return \"\"
+
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+
+	var cx : int = chunk.get_position_x()
+	var cz : int = chunk.get_position_z()
+	
+	var chunk_seed : int = 123 + (cx * 231) + (cz * 123)
+
+	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = chunk_seed
+	
+	#chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+	
+	# TODO refactor this, it's inefficient
+	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+			if rng.randf() > 0.992:
+				var oil : int = chunk.get_voxel(x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				var tr : Transform = Transform()
+					
+				tr = tr.rotated(Vector3(0, 1, 0), rng.randf() * PI)
+				tr = tr.rotated(Vector3(1, 0, 0), rng.randf() * 0.2 - 0.1)
+				tr = tr.rotated(Vector3(0, 0, 1), rng.randf() * 0.2 - 0.1)
+				tr = tr.scaled(Vector3(0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2))
+				tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((oil - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
+
+				chunk.voxel_world.prop_add(tr, prop_tree)
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	
+	inspector.add_h_separator()
+	inspector.add_slot_resource(\"get_prop_tree\", \"set_prop_tree\", \"Prop Tree\", \"PropData\")
+	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
+"
+
+[sub_resource type="Resource" id=16]
+resource_name = "Forest"
+script = SubResource( 15 )
+rect = Rect2( 9.19214, 1.0339, 2.62036, 3.48083 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+subzone_props = [  ]
+prop_tree = SubResource( 13 )
+prop_tree2 = SubResource( 14 )
+
+[sub_resource type="PropData" id=17]
+props = [ SubResource( 1 ) ]
+
+[sub_resource type="PropData" id=18]
+props = [ SubResource( 9 ) ]
+
+[sub_resource type="GDScript" id=19]
+script/source = "tool
+extends SubZone
+
+export(PropData) var prop_tree : PropData
+export(PropData) var prop_tree2 : PropData
+
+func get_prop_tree() -> PropData:
+	return prop_tree
+	
+func set_prop_tree(ed : PropData) -> void:
+	prop_tree = ed
+	emit_changed()
+
+func get_prop_tree2() -> PropData:
+	return prop_tree2
+	
+func set_prop_tree2(ed : PropData) -> void:
+	prop_tree2 = ed
+	emit_changed()
+
+func get_editor_rect_border_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 1)
+
+func get_editor_rect_color() -> Color:
+	return Color(0.8, 0.8, 0.8, 0.9)
+
+func get_editor_rect_border_size() -> int:
+	return 2
+
+func get_editor_font_color() -> Color:
+	return Color(0, 0, 0, 1)
+
+func get_editor_class() -> String:
+	return \"Forest\"
+
+func get_editor_additional_text() -> String:
+	return \"\"
+
+func _generate_terra_chunk(chunk: TerrainChunk, pseed : int, spawn_mobs: bool, raycast : WorldGenRaycast) -> void:
+
+	var cx : int = chunk.get_position_x()
+	var cz : int = chunk.get_position_z()
+	
+	var chunk_seed : int = 123 + (cx * 231) + (cz * 123)
+
+	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = chunk_seed
+	
+	#chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_TYPE, 1)
+	chunk.channel_ensure_allocated(TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL, 0)
+	
+	# TODO refactor this, it's inefficient
+	for x in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+		for z in range(-chunk.margin_start, chunk.size_x + chunk.margin_end):
+			if rng.randf() > 0.992:
+				var oil : int = chunk.get_voxel(x, z, TerrainChunkDefault.DEFAULT_CHANNEL_ISOLEVEL)
+				
+				var tr : Transform = Transform()
+					
+				tr = tr.rotated(Vector3(0, 1, 0), rng.randf() * PI)
+				tr = tr.rotated(Vector3(1, 0, 0), rng.randf() * 0.2 - 0.1)
+				tr = tr.rotated(Vector3(0, 0, 1), rng.randf() * 0.2 - 0.1)
+				tr = tr.scaled(Vector3(0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2))
+				tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((oil - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
+
+				chunk.voxel_world.prop_add(tr, prop_tree)
+
+func setup_property_inspector(inspector) -> void:
+	.setup_property_inspector(inspector)
+	
+	inspector.add_h_separator()
+	inspector.add_slot_resource(\"get_prop_tree\", \"set_prop_tree\", \"Prop Tree\", \"PropData\")
+	inspector.add_slot_resource(\"get_prop_tree2\", \"set_prop_tree2\", \"Prop Tree2\", \"PropData\")
+"
+
+[sub_resource type="Resource" id=20]
+resource_name = "Forest"
+script = SubResource( 19 )
+rect = Rect2( 9.27578, 7.43671, 2.34922, 3.51792 )
+min_size = Vector2i( 1, 1 )
+max_size = Vector2i( 1e+06, 1e+06 )
+locked = false
+subzone_props = [  ]
+prop_tree = SubResource( 17 )
+prop_tree2 = SubResource( 18 )
 
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
@@ -48,15 +350,12 @@ rect = Rect2( 8.85557, 6.975, 21.9944, 11.2839 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-subzones = [ SubResource( 4 ) ]
+subzones = [ SubResource( 4 ), SubResource( 7 ), SubResource( 12 ), SubResource( 16 ), SubResource( 20 ) ]
 zone_radius = 0.5
 zone_bevel = 0.3
 zone_base = 0.0
-prop_tree = ExtResource( 6 )
-prop_tree2 = ExtResource( 5 )
 
-[sub_resource type="Resource" id=1]
-resource_name = "Continent"
+[sub_resource type="Resource" id=21]
 script = ExtResource( 3 )
 rect = Rect2( 241, 247, 40, 25 )
 min_size = Vector2i( 1, 1 )
@@ -74,7 +373,7 @@ rect = Rect2( -250, -250, 500, 500 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false
-continents = [ SubResource( 1 ) ]
+continents = [ SubResource( 21 ) ]
 normal_surface_id = 2
 base_iso_level = 0
 water_iso_level = 100

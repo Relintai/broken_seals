@@ -5,9 +5,6 @@ export(float) var zone_radius : float = 0.5
 export(float) var zone_bevel : float = 0.3
 export(float) var zone_base : float = 0
 
-export(PropData) var prop_tree : PropData
-export(PropData) var prop_tree2 : PropData
-
 var voxel_scale : float = 1
 var current_seed : int = 0
 
@@ -30,20 +27,6 @@ func get_zone_base() -> float:
 	
 func set_zone_base(ed : float) -> void:
 	zone_base = ed
-	emit_changed()
-
-func get_prop_tree() -> PropData:
-	return prop_tree
-	
-func set_prop_tree(ed : PropData) -> void:
-	prop_tree = ed
-	emit_changed()
-
-func get_prop_tree2() -> PropData:
-	return prop_tree2
-	
-func set_prop_tree2(ed : PropData) -> void:
-	prop_tree2 = ed
 	emit_changed()
 
 func get_editor_rect_border_color() -> Color:
@@ -148,30 +131,10 @@ func gen_terra_chunk(chunk: TerrainChunk, rng : RandomNumberGenerator, raycast :
 				
 			chunk.set_voxel(1, x, z, TerrainChunkDefault.DEFAULT_CHANNEL_TYPE)
 
-			if chunk.position_x == 0 && chunk.position_z == 0:
-				continue
-					
-			if rng.randf() > 0.992:
-				var tr : Transform = Transform()
-					
-				tr = tr.rotated(Vector3(0, 1, 0), rng.randf() * PI)
-				tr = tr.rotated(Vector3(1, 0, 0), rng.randf() * 0.2 - 0.1)
-				tr = tr.rotated(Vector3(0, 0, 1), rng.randf() * 0.2 - 0.1)
-				tr = tr.scaled(Vector3(0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2, 0.9 + rng.randf() * 0.2))
-				tr.origin = Vector3((x + chunk.position_x * chunk.size_x), ((oil - 2) / 255.0) * chunk.world_height, (z + chunk.position_z * chunk.size_z))
-
-				chunk.voxel_world.prop_add(tr, prop_tree)
-
 func setup_property_inspector(inspector) -> void:
 	.setup_property_inspector(inspector)
-	
-	inspector.add_h_separator()
-	inspector.add_slot_resource("get_prop_tree", "set_prop_tree", "Prop Tree", "PropData")
-	inspector.add_slot_resource("get_prop_tree2", "set_prop_tree2", "Prop Tree2", "PropData")
 	
 	inspector.add_h_separator()
 	inspector.add_slot_float("get_zone_radius", "set_zone_radius", "Zone Radius", 0.01)
 	inspector.add_slot_float("get_zone_bevel", "set_zone_bevel", "Zone Bevel", 0.01)
 	inspector.add_slot_float("get_zone_base", "set_zone_base", "Zone Base", 0.01)
-
-
