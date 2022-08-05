@@ -177,10 +177,12 @@ func on_item_edited() -> void:
 	if !name_edited_resource:
 		return
 		
-	name_edited_resource.resource_name = item.get_text(0)
+	_undo_redo.create_action("WE: Renamed Entry")
+	_undo_redo.add_do_method(name_edited_resource, "set_name", item.get_text(0))
+	_undo_redo.add_undo_method(name_edited_resource, "set_name", name_edited_resource.resource_name)
+	_undo_redo.commit_action()
+	
+#	name_edited_resource.resource_name = item.get_text(0)
 	name_edited_resource.emit_changed()
 	name_edited_resource = null
 	on_resource_changed()
-
-
-
