@@ -117,6 +117,37 @@ func set_wgworld(wgw : WorldGenWorld) -> void:
 	
 	refresh()
 
+func switch_to(continent : WorldGenBaseResource, zone : WorldGenBaseResource, subzone : WorldGenBaseResource) -> void:
+	var contob : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
+	
+	for i in range(contob.get_item_count()):
+		var ccont : Continent = contob.get_item_metadata(i)
+		
+		if (ccont == continent):
+			contob.select(i)
+			on_continent_item_selected(i)
+			break
+			
+	var zoneob : OptionButton = $HSplitContainer/VBoxContainer/ZoneOptionButton
+			
+	for i in range(zoneob.get_item_count()):
+		var czone : Zone = zoneob.get_item_metadata(i)
+		
+		if (czone == zone):
+			zoneob.select(i)
+			on_zone_item_selected(i)
+			break
+			
+	var subzoneob : OptionButton = $HSplitContainer/VBoxContainer/SubZoneOptionButton
+			
+	for i in range(subzoneob.get_item_count()):
+		var cszone : SubZone = subzoneob.get_item_metadata(i)
+		
+		if (cszone == subzone):
+			subzoneob.select(i)
+			set_sub_zone(subzone)
+			return
+
 func on_continent_item_selected(idx : int) -> void:
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
 	

@@ -5,7 +5,7 @@ var edited_world : WorldGenWorld = null
 var edited_continent : Continent = null
 var edited_zone : Zone = null
 
-signal request_item_edit(world_gen_base_resource)
+signal request_item_edit(continent, zone, subzone)
 
 func _ready():
 	var coption_button : OptionButton = $HSplitContainer/VBoxContainer/ContinentOptionButton
@@ -119,5 +119,4 @@ func on_zone_item_selected(idx : int) -> void:
 	set_zone(option_button.get_item_metadata(idx))
 
 func on_request_item_edit(resource : WorldGenBaseResource) -> void:
-	emit_signal("request_item_edit", resource)
-	
+	emit_signal("request_item_edit", edited_continent, edited_zone, resource)
