@@ -8,6 +8,45 @@ export(float) var continent_base : float = 0
 var voxel_scale : float = 1
 var current_seed : int = 0
 
+func _eitor_draw_additional(control : Control) -> void:
+	gui_draw_continent_radius(control, Color(0.6, 0.6, 0.6, 1))
+	gui_draw_continent_bevel(control, Color(1, 1, 1, 1))
+	
+func gui_draw_continent_radius(control : Control, color : Color) -> void:
+	var s : Vector2 = control.get_size()
+	
+	var points : PoolVector2Array
+	var ofsx : float = (1 - (continent_radius * 2)) * s.x / 2.0
+	var ofsy : float = (1 - (continent_radius * 2)) * s.y / 2.0
+	
+	for i in range(16):
+		var ifl : float = float(i)
+		var n : float = ifl / 16.0 * 2 * PI
+		var n1 : float = (ifl + 1.0) / 16.0 * 2 * PI
+		
+		points.push_back(Vector2((sin(n) + 1.0) * 0.5 * continent_radius * 2 * s.x + ofsx, (cos(n) + 1.0) * 0.5 * continent_radius * 2 * s.y + ofsy))
+		points.push_back(Vector2((sin(n1) + 1.0) * 0.5 * continent_radius * 2 * s.x + ofsx, (cos(n1) + 1.0) * 0.5 * continent_radius * 2 * s.y + ofsy))
+		
+	control.draw_polyline(points, color, 1)
+
+func gui_draw_continent_bevel(control : Control, color : Color) -> void:
+	var s : Vector2 = control.get_size()
+	
+	var points : PoolVector2Array
+	var bevel_radius : float =  (min(continent_radius, continent_bevel) / continent_radius) / 2.0
+	var ofsx : float = (1 - (bevel_radius * 2)) * s.x / 2.0
+	var ofsy : float = (1 - (bevel_radius * 2)) * s.y / 2.0
+	
+	for i in range(16):
+		var ifl : float = float(i)
+		var n : float = ifl / 16.0 * 2 * PI
+		var n1 : float = (ifl + 1.0) / 16.0 * 2 * PI
+		
+		points.push_back(Vector2((sin(n) + 1.0) * 0.5 * bevel_radius * 2 * s.x + ofsx, (cos(n) + 1.0) * 0.5 * bevel_radius * 2 * s.y + ofsy))
+		points.push_back(Vector2((sin(n1) + 1.0) * 0.5 * bevel_radius * 2 * s.x + ofsx, (cos(n1) + 1.0) * 0.5 * bevel_radius * 2 * s.y + ofsy))
+		
+	control.draw_polyline(points, color, 1)
+
 func get_continent_radius() -> float:
 	return continent_radius
 	

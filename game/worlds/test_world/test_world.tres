@@ -44,7 +44,7 @@ subzone_props = [ SubResource( 5 ), SubResource( 6 ) ]
 [sub_resource type="Resource" id=3]
 resource_name = "TestForest"
 script = ExtResource( 7 )
-rect = Rect2( 8.75557, 6.875, 21.9944, 11.2839 )
+rect = Rect2( 8.85557, 6.975, 21.9944, 11.2839 )
 min_size = Vector2i( 1, 1 )
 max_size = Vector2i( 1e+06, 1e+06 )
 locked = false

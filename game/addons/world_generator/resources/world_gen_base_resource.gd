@@ -198,10 +198,10 @@ func get_editor_class() -> String:
 func get_editor_additional_text() -> String:
 	return ""
 	
-func eitor_draw_additional(rect_view_node : MarginContainer) -> void:
-	_eitor_draw_additional(rect_view_node)
+func eitor_draw_additional(control : Control) -> void:
+	_eitor_draw_additional(control)
 	
-func _eitor_draw_additional(rect_view_node : MarginContainer) -> void:
+func _eitor_draw_additional(control : Control) -> void:
 	pass
 
 func setup_property_inspector(inspector) -> void:
