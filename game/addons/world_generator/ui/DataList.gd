@@ -12,7 +12,10 @@ var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
 func _init():
-	connect("item_activated", self, "on_item_activated")
+	#connect("item_activated", self, "on_item_activated")
+	
+	if !is_connected("item_edited", self, "on_item_edited"):
+		connect("item_edited", self, "on_item_edited")
 	
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
@@ -100,6 +103,8 @@ func refresh() -> void:
 			
 			item.set_text(0, n)
 			item.set_meta("res", d)
+			item.add_button(0, get_icon("Edit", "EditorIcons"), -1, false, "Edit")
+			item.set_editable(0, true)
 
 func set_edited_resource(res : WorldGenBaseResource)-> void:
 	if edited_resource:
@@ -187,3 +192,22 @@ func on_item_activated() -> void:
 		
 	$NameEditDialog/VBoxContainer/LineEdit.text = name_edited_resource.resource_name
 	$NameEditDialog.popup_centered()
+
+func on_item_edited() -> void:
+	var item : TreeItem = get_edited()
+	
+	if !item:
+		return
+		
+	name_edited_resource = item.get_meta("res")
+	
+	if !name_edited_resource:
+		return
+		
+	name_edited_resource.resource_name = item.get_text(0)
+	name_edited_resource.emit_changed()
+	name_edited_resource = null
+	on_resource_changed()
+
+
+
