@@ -115,13 +115,14 @@ func add_slot_int(getter : String, setter : String, slot_name : String, prange :
 	
 	var l : Label = Label.new()
 	l.text = slot_name
-	l.size_flags_horizontal = SIZE_EXPAND_FILL
+#	l.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
 	sb.rounded = true
 	sb.min_value = prange.x
 	sb.max_value = prange.y
+	sb.set_h_size_flags(SIZE_EXPAND_FILL)
 	bc.add_child(sb)
 	
 	var slot_idx : int = add_slot(getter, setter, bc)
@@ -149,7 +150,7 @@ func add_slot_float(getter : String, setter : String, slot_name : String, step :
 	
 	var l : Label = Label.new()
 	l.text = slot_name
-	l.size_flags_horizontal = SIZE_EXPAND_FILL
+#	l.size_flags_horizontal = SIZE_EXPAND_FILL
 	bc.add_child(l)
 	
 	var sb : SpinBox = SpinBox.new()
@@ -161,6 +162,7 @@ func add_slot_float(getter : String, setter : String, slot_name : String, step :
 	sb.min_value = prange.x
 	sb.max_value = prange.y
 	sb.value = _edited_resource.call(getter)
+	sb.set_h_size_flags(SIZE_EXPAND_FILL)
 
 	sb.connect("value_changed", self, "on_float_spinbox_value_changed", [ slot_idx ])
 	
