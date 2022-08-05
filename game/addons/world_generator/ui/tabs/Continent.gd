@@ -4,7 +4,7 @@ extends HBoxContainer
 var edited_world : WorldGenWorld = null
 var edited_continent : Continent = null
 
-signal request_item_edit(world_gen_base_resource)
+signal request_item_edit(continent, world_gen_base_resource)
 
 func _ready():
 	var option_button : OptionButton = $HSplitContainer/VBoxContainer/OptionButton
@@ -74,5 +74,5 @@ func on_item_selected(idx : int) -> void:
 	set_continent(option_button.get_item_metadata(idx))
 
 func on_request_item_edit(resource : WorldGenBaseResource) -> void:
-	emit_signal("request_item_edit", resource)
+	emit_signal("request_item_edit", edited_continent, resource)
 	

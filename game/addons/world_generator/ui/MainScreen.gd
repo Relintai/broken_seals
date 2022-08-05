@@ -7,6 +7,10 @@ func _ready():
 	var world : Control = get_node("TabContainer/World")
 	if !world.is_connected("request_item_edit", self, "on_world_request_item_edit"):
 		world.connect("request_item_edit", self, "on_world_request_item_edit")
+		
+	var continent : Control = get_node("TabContainer/Continent")
+	if !continent.is_connected("request_item_edit", self, "on_continent_request_item_edit"):
+		continent.connect("request_item_edit", self, "on_continent_request_item_edit")
 
 func set_plugin(plugin : EditorPlugin) -> void:
 	$TabContainer/World.set_plugin(plugin)
@@ -34,3 +38,11 @@ func on_world_request_item_edit(resource : WorldGenBaseResource) -> void:
 	tc.current_tab = cont.get_position_in_parent()
 	
 	cont.switch_to(resource)
+
+func on_continent_request_item_edit(continent : WorldGenBaseResource, resource : WorldGenBaseResource) -> void:
+	var zone : Control = get_node("TabContainer/Zone")
+	
+	var tc : TabContainer = get_node("TabContainer")
+	tc.current_tab = zone.get_position_in_parent()
+
+	zone.switch_to(continent, resource)
