@@ -11,9 +11,14 @@ var _ignore_changed_event : bool = false
 var _plugin : EditorPlugin = null
 var _undo_redo : UndoRedo = null
 
+signal request_item_edit(world_gen_base_reosurce)
+
 func _init():
 	if !is_connected("item_edited", self, "on_item_edited"):
 		connect("item_edited", self, "on_item_edited")
+	
+	if !is_connected("button_pressed", self, "on_tree_button_pressed"):
+		connect("button_pressed", self, "on_tree_button_pressed")
 	
 func set_plugin(plugin : EditorPlugin) -> void:
 	_plugin = plugin
@@ -165,6 +170,14 @@ func on_resource_changed() -> void:
 		return
 		
 	call_deferred("refresh")
+
+func on_tree_button_pressed(item: TreeItem, column: int, id: int) -> void:
+	var resource : WorldGenBaseResource = item.get_meta("res")
+	
+	if !resource:
+		return
+		
+	emit_signal("request_item_edit", resource)
 
 func on_item_edited() -> void:
 	var item : TreeItem = get_edited()
