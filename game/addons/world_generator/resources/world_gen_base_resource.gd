@@ -203,6 +203,12 @@ func eitor_draw_additional(control : Control) -> void:
 	
 func _eitor_draw_additional(control : Control) -> void:
 	pass
+	
+func eitor_draw_additional_background(control : Control) -> void:
+	_eitor_draw_additional_background(control)
+	
+func _eitor_draw_additional_background(control : Control) -> void:
+	pass
 
 func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_line_edit("get_name", "set_name", "Name")

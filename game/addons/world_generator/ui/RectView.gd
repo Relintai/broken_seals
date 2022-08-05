@@ -80,6 +80,8 @@ func _draw():
 	draw_line(Vector2(get_size().x - _rect_scale, get_size().y - rsh), Vector2(get_size().x - _rect_scale, get_size().y), c)
 	draw_line(Vector2(get_size().x - rsh, get_size().y - _rect_scale), Vector2(get_size().x, get_size().y - _rect_scale), c)
 	
+	edited_resource.eitor_draw_additional_background(self)
+	
 func refresh() -> void:
 	clear()
 	
