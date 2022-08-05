@@ -135,11 +135,53 @@ func set_sub_zone(sub_zone : SubZone) -> void:
 	edited_sub_zone_prop = null
 	
 	sub_zone_changed()
-	
+
 func set_sub_zone_prop(sub_zone_prop : SubZoneProp) -> void:
 	edited_sub_zone_prop = sub_zone_prop
 	
 	sub_zone_prop_changed()
+
+func switch_to(continent : WorldGenBaseResource, zone : WorldGenBaseResource, subzone : WorldGenBaseResource, subzone_prop : WorldGenBaseResource) -> void:
+	var contob : OptionButton = $VBoxContainer/ContinentOptionButton
+	
+	for i in range(contob.get_item_count()):
+		var ccont : Continent = contob.get_item_metadata(i)
+		
+		if (ccont == continent):
+			contob.select(i)
+			on_continent_item_selected(i)
+			break
+			
+	var zoneob : OptionButton = $VBoxContainer/ZoneOptionButton
+			
+	for i in range(zoneob.get_item_count()):
+		var czone : Zone = zoneob.get_item_metadata(i)
+		
+		if (czone == zone):
+			zoneob.select(i)
+			on_zone_item_selected(i)
+			break
+			
+	var subzoneob : OptionButton = $VBoxContainer/SubZoneOptionButton
+			
+	for i in range(subzoneob.get_item_count()):
+		var cszone : SubZone = subzoneob.get_item_metadata(i)
+		
+		if (cszone == subzone):
+			subzoneob.select(i)
+			set_sub_zone(subzone)
+			break
+	
+	var subzonepropob : OptionButton = $VBoxContainer/SubZonePropOptionButton
+			
+	for i in range(subzonepropob.get_item_count()):
+		var cszoneprop : SubZoneProp = subzonepropob.get_item_metadata(i)
+		
+		if (cszoneprop == subzone_prop):
+			subzonepropob.select(i)
+			set_sub_zone_prop(subzone_prop)
+			return
+
 
 func on_continent_item_selected(idx : int) -> void:
 	var option_button : OptionButton = $VBoxContainer/ContinentOptionButton
