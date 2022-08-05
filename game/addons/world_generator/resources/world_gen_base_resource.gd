@@ -197,6 +197,12 @@ func get_editor_class() -> String:
 
 func get_editor_additional_text() -> String:
 	return ""
+	
+func eitor_draw_additional(rect_view_node : MarginContainer) -> void:
+	_eitor_draw_additional(rect_view_node)
+	
+func _eitor_draw_additional(rect_view_node : MarginContainer) -> void:
+	pass
 
 func setup_property_inspector(inspector) -> void:
 	inspector.add_slot_line_edit("get_name", "set_name", "Name")

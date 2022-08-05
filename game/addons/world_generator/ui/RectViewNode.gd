@@ -58,6 +58,8 @@ func _draw():
 	if _editor_additional_text != "":
 		draw_string(font, Vector2(_editor_rect_border_size, font.get_height() * 3), _editor_additional_text, _edited_resource_font_color, get_rect().size.x)
 	
+	if edited_resource:
+		edited_resource.eitor_draw_additional(self)
 
 func refresh() -> void:
 	if !edited_resource:
