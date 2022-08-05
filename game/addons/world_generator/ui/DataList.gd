@@ -65,8 +65,8 @@ func add_item(item_name : String = "") -> void:
 	
 	var r : Rect2 = edited_resource.get_rect()
 	var rs : Vector2 = r.size
-	r.size.x /= 10.0
-	r.size.y /= 10.0
+	r.size.x /= 5.0
+	r.size.y /= 5.0
 	r.position = rs / Vector2(2, 2)
 	r.position -= r.size / Vector2(2, 2)
 	e.set_rect(r)
