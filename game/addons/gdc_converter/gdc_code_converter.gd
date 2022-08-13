@@ -582,8 +582,8 @@ class GDSScope:
 			ret_final += "TRANSFORM2D"
 		elif var_type == "Plane":
 			ret_final += "PLANE"
-		elif var_type == "Quat":
-			ret_final += "QUAT"
+		elif var_type == "Quaternion":
+			ret_final += "QUATERNION"
 		elif var_type == "AABB":
 			ret_final += "AABB"
 		elif var_type == "Basis":
@@ -679,7 +679,7 @@ class GDSScope:
 			var_final += param_type + " " + var_name + " = " + assigned_value
 		elif param_type == "String" || param_type == "StringName":
 			var_final += param_type + " " + var_name + " = " + assigned_value
-		elif param_type == "Quat" || param_type == "Plane":
+		elif param_type == "Quaternion" || param_type == "Plane":
 			var_final += param_type + " " + var_name + " = " + assigned_value
 		elif param_type == "NodePath" || param_type == "Dictionary":
 			var_final += param_type + " " + var_name + " = " + assigned_value

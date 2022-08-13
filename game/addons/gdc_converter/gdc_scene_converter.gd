@@ -87,8 +87,8 @@ class GDSSceneParser:
 					result += "//" + node_name + " property " + property_name + " TYPE_TRANSFORM2D value: " + str(prop_value) + "\n"
 				elif property_type == TYPE_PLANE:
 					result += "//" + node_name + " property " + property_name + " TYPE_PLANE value: " + str(prop_value) + "\n"
-				elif property_type == TYPE_QUAT:
-					result += "//" + node_name + " property " + property_name + " TYPE_QUAT value: " + str(prop_value) + "\n"
+				elif property_type == TYPE_QUATERNION:
+					result += "//" + node_name + " property " + property_name + " TYPE_QUATERNION value: " + str(prop_value) + "\n"
 				elif property_type == TYPE_AABB:
 					result += "//" + node_name + " property " + property_name + " TYPE_AABB value: " + str(prop_value) + "\n"
 				elif property_type == TYPE_BASIS:
