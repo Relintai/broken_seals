@@ -150,7 +150,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 		var lworld_curr_portal : Transform = current_portal.transform
 		#portal center should be precalculated
 		#this will only work with the current portals
-		lworld_curr_portal = lworld_curr_portal.translated(Vector3(-0.5, 0, 0))
+		lworld_curr_portal = lworld_curr_portal.translated_local(Vector3(-0.5, 0, 0))
 		lworld_curr_portal.basis = lworld_curr_portal.basis.rotated(Vector3(0, 1, 0), PI)
 		room_lworld_transform = room_lworld_transform * lworld_curr_portal.inverse()
 
@@ -213,7 +213,7 @@ func spawn_room(room_lworld_transform : Transform, room : PropData, level : int 
 			var offset_current_portal_lworld_position : Transform = current_portal_lworld_position
 			#portal center should be precalculated
 			#this will only work with the current portals
-			offset_current_portal_lworld_position = offset_current_portal_lworld_position.translated(Vector3(-0.5, 0, 0))
+			offset_current_portal_lworld_position = offset_current_portal_lworld_position.translated_local(Vector3(-0.5, 0, 0))
 			
 			var ab : PoolVector2Array = room_hulls[new_room]
 			var tfab : PoolVector2Array = PoolVector2Array()

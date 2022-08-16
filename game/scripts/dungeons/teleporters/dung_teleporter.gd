@@ -90,7 +90,7 @@ func teleport():
 		if !_dungeon:
 			_dungeon = dungeon.instance() as Spatial
 			var t : Transform = global_transform
-			t = t.translated(Vector3(0, -500, 0))
+			t = t.translated_local(Vector3(0, -500, 0))
 			_dungeon.transform = t 
 			_dungeon.min_level = min_level
 			_dungeon.max_level = max_level
@@ -104,8 +104,8 @@ func teleport():
 			
 			_dungeon_back_teleporter = dungeon_back_teleporter.instance() as Spatial
 			var tdb : Transform = global_transform
-			tdb = tdb.translated(Vector3(0, -500, 0))
-			tdb = tdb.translated(Vector3(1, 0, -1))
+			tdb = tdb.translated_local(Vector3(0, -500, 0))
+			tdb = tdb.translated_local(Vector3(1, 0, -1))
 			_dungeon_back_teleporter.transform = tdb
 			_dungeon_back_teleporter.teleport_to = global_transform.xform(Vector3())
 			get_parent().add_child(_dungeon_back_teleporter)

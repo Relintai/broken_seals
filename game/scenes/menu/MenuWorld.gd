@@ -273,7 +273,7 @@ func spawn(start_x : int, start_z : int) -> void:
 			
 			chunk_create(x, z)
 				
-#	add_prop(Transform().translated(Vector3(0, 2, 0)), test_prop)
+#	add_prop(Transform().translated_local(Vector3(0, 2, 0)), test_prop)
 
 	set_process(true)
 	
