@@ -38,7 +38,7 @@ func _draw():
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_color)
 	draw_rect(Rect2(Vector2(), get_size()), _edited_resource_rect_border_color, false, _editor_rect_border_size)
 	
-	var font : Font = get_font("font")
+	var font : Font = get_theme_font("font")
 	
 	var res_name : String = "NULL"
 	

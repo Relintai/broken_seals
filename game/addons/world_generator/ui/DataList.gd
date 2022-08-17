@@ -106,7 +106,7 @@ func refresh() -> void:
 			
 			item.set_text(0, n)
 			item.set_meta("res", d)
-			item.add_button(0, get_icon("Edit", "EditorIcons"), -1, false, "Edit")
+			item.add_button(0, get_theme_icon("Edit", "EditorIcons"), -1, false, "Edit")
 			item.set_editable(0, true)
 
 func set_edited_resource(res : WorldGenBaseResource)-> void:

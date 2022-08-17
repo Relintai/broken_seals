@@ -74,7 +74,7 @@ func setup(pos : Vector3, color : Color, value : int, crit : bool) -> void:
 	camera = get_tree().get_root().get_camera() as Camera
 	
 	text = str(value)
-	add_color_override("font_color", color)
+	add_theme_color_override("font_color", color)
 	
 	if crit:
 		animation_player.play("crit")

@@ -49,9 +49,9 @@ func _init() -> void:
 	zoom_reset = Button.new()
 	zoom_reset.set_flat(true)
 	add_child(zoom_reset)
-	zoom_reset.add_constant_override("outline_size", 1)
-	zoom_reset.add_color_override("font_outline_color", Color(0, 0, 0))
-	zoom_reset.add_color_override("font_color", Color(1, 1, 1))
+	zoom_reset.add_theme_constant_override("outline_size", 1)
+	zoom_reset.add_theme_color_override("font_outline_color", Color(0, 0, 0))
+	zoom_reset.add_theme_color_override("font_color", Color(1, 1, 1))
 	zoom_reset.connect("pressed", self, "_button_zoom_reset")
 	zoom_reset.set_shortcut(ED_SHORTCUT("canvas_item_editor/zoom_reset", tr("Zoom Reset"), KEY_MASK_CMD | KEY_0))
 	zoom_reset.set_focus_mode(FOCUS_NONE)
@@ -67,7 +67,7 @@ func _init() -> void:
 
 	_update_zoom_label()
 	
-	add_constant_override("separation", round(-8))
+	add_theme_constant_override("separation", round(-8))
 
 func get_zoom() -> float:
 	return zoom
@@ -175,8 +175,8 @@ func _button_zoom_plus() -> void:
 
 func _notification(p_what : int) -> void:
 	if (p_what == NOTIFICATION_ENTER_TREE || p_what == NOTIFICATION_THEME_CHANGED):
-		zoom_minus.icon = get_icon("ZoomLess", "EditorIcons")
-		zoom_plus.icon = get_icon("ZoomMore", "EditorIcons")
+		zoom_minus.icon = get_theme_icon("ZoomLess", "EditorIcons")
+		zoom_plus.icon = get_theme_icon("ZoomMore", "EditorIcons")
 
 #from godot editor/editor_Settings.cpp
 func ED_SHORTCUT(p_path : String, p_name : String, p_keycode : int, editor_settings : EditorSettings = null) -> ShortCut:
