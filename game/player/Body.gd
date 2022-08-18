@@ -140,6 +140,10 @@ func _ready() -> void:
 		
 	animation_tree["parameters/run-loop/blend_position"] = Vector2(0, -1)
 	
+	rpc_config("sset_position", MultiplayerAPI.RPC_MODE_REMOTE)
+	rpc_config("cset_position", MultiplayerAPI.RPC_MODE_REMOTE)
+	rpc_config("set_position", MultiplayerAPI.RPC_MODE_REMOTE)
+	
 #	set_process(false)
 #	set_process_input(false)
 #	set_process_unhandled_input(false)
@@ -715,7 +719,7 @@ func analog_force_change(vector, touchpad):
 func queue_camera_rotation(rot : Vector2) -> void:
 	queued_camera_rotaions += rot
 
-remote func sset_position(position : Vector3, protation : Vector3) -> void:
+func sset_position(position : Vector3, protation : Vector3) -> void:
 	if multiplayer.network_peer and multiplayer.is_network_server():
 		for i in range(entity.seen_by_gets_count()):
 			var e : Entity = entity.seen_by_gets(i)
@@ -739,7 +743,7 @@ func crequest_set_position(position : Vector3, protation : Vector3) -> void:
 	else:
 		sset_position(position, protation)
 
-remote func cset_position(position : Vector3, protation : Vector3) -> void:
+func cset_position(position : Vector3, protation : Vector3) -> void:
 	translation = position
 	rotation = protation
 	
@@ -817,7 +821,7 @@ func on_diesd(entity):
 	
 	set_physics_process(false)
 	
-remote func set_position(position : Vector3, rotation : Vector3) -> void:
+func set_position(position : Vector3, rotation : Vector3) -> void:
 	if get_tree().is_network_server():
 		rpc("set_position", position, rotation)
 

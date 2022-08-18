@@ -43,6 +43,11 @@ func _ready() -> void:
 	#Temporary! REMOVE!
 	get_multiplayer().allow_object_decoding = true
 	
+	rpc_config("cset_seed", MultiplayerAPI.RPC_MODE_REMOTE)
+	rpc_config("crequest_select_class", MultiplayerAPI.RPC_MODE_REMOTE)
+	rpc_config("cspawn_player", MultiplayerAPI.RPC_MODE_REMOTESYNC)
+	rpc_config("sreceive_upload_character", MultiplayerAPI.RPC_MODE_MASTER)
+	
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_network_peer_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
@@ -158,8 +163,7 @@ func sset_seed(pseed):
 	if multiplayer.has_network_peer() and multiplayer.is_network_server():
 		rpc("cset_seed", _sseed)
 	
-remote func cset_seed(pseed):
-
+func cset_seed(pseed):
 	_cseed = pseed
 	
 	print("clientseed set")
@@ -173,7 +177,7 @@ func set_class():
 	else:
 		crequest_select_class(local_player_master.my_info)
 
-remote func crequest_select_class(info : Dictionary) -> void:
+func crequest_select_class(info : Dictionary) -> void:
 	PLogger.log_trace("NetworkManager crequest_select_class")
 	
 	if get_tree().is_network_server():
@@ -185,7 +189,7 @@ remote func crequest_select_class(info : Dictionary) -> void:
 		rpc("cspawn_player", info, sid, Vector3(10, 10, 10))
 		
 
-remotesync func cspawn_player(info : Dictionary, sid : int, pos : Vector3):
+func cspawn_player(info : Dictionary, sid : int, pos : Vector3):
 	PLogger.log_trace("NetworkManager cspawn_player")
 	
 	if sid == get_tree().get_network_unique_id():
@@ -212,7 +216,7 @@ remotesync func cspawn_player(info : Dictionary, sid : int, pos : Vector3):
 func upload_character(data : String) -> void:
 	rpc_id(1, "sreceive_upload_character", data)
 	
-master func sreceive_upload_character(data: String) -> void:
+func sreceive_upload_character(data: String) -> void:
 	ESS.entity_spawner.load_uploaded_character(data, Vector3(0, 10, 0), multiplayer.get_rpc_sender_id())
 
 func set_terrarin_player():
