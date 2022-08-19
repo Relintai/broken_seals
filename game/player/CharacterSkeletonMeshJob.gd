@@ -104,7 +104,7 @@ func _execute():
 			texture = sm.get_shader_param("texture_albedo")
 
 		arr = MeshUtils.bake_mesh_array_uv(arr, texture)
-		arr[VisualServer.ARRAY_TEX_UV] = null
+		arr[RenderingServer.ARRAY_TEX_UV] = null
 		var meshl3 : ArrayMesh = ArrayMesh.new()
 		meshl3.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arr, [],  ArrayMesh.ARRAY_COMPRESS_NORMAL | ArrayMesh.ARRAY_COMPRESS_TANGENT | ArrayMesh.ARRAY_COMPRESS_COLOR | ArrayMesh.ARRAY_COMPRESS_TEX_UV | ArrayMesh.ARRAY_COMPRESS_TEX_UV2 | ArrayMesh.ARRAY_COMPRESS_WEIGHTS)
 		meshl3.surface_set_material(0, material_cache.material_lod_get(2))
