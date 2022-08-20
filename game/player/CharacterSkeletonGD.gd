@@ -148,7 +148,7 @@ func build():
 			continue
 		
 		var bone_idx : int = skeleton.find_bone(bone_name)
-		
+
 		var abi_dict : Dictionary = Dictionary()
 		
 		for abti in range(bone_additional_mesh_transform_count):
@@ -169,7 +169,7 @@ func build():
 					
 					var global_pose = skeleton.get_bone_global_pose(bone_idx)
 					
-					ddict["transform"] = skeleton.get_bone_global_pose(bone_idx)
+					#ddict["transform"] = global_pose
 					
 					if abi_dict.has(bone_idx):
 						global_pose *= abi_dict[bone_idx]
@@ -238,7 +238,7 @@ func setup_build_mesh() -> void:
 		get_animation_tree().active = false
 	
 	if get_animation_player() != null:
-		get_animation_player().play("rest")
+		get_animation_player().play("RESET")
 		get_animation_player().seek(0, true)
 	
 func finish_build_mesh() -> void:
