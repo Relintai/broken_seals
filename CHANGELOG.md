@@ -6,6 +6,119 @@ All notable changes to this project will be documented in this file.
 
 - Nothing since the last changeset.
 
+## [0.3.13]
+
+#### General
+
+##### WorldGenerator
+
+- Reworked how spawn positions work in the world_generator addon. Now all resources have overridable methods, and all of them are collected based on those. Also now the spawner works in local space.
+- Now the dungeon spawner also uses local coordinates.
+- Removed parent_positions from WorldGenBaseResources, and also removed the setup() method. I'ts better this way, as they are resources, and now they can be reused (even though the gui itself doesn't support it). Spawning code is also simpler.
+- Added min and max size support for the world generator addon.
+- Removed the dungeon teleported from the test zone.
+- Added an another layer to the world generator addon. Now subzones contain subzone props. Reworked the old subzones into these.
+- Emit the zoom_changed signal in EditorZoomWidget when setting the zoom value through the zoom property.
+- Set a usable initial zoom value in world generator's rect editors.
+- Added size indicators to the world generator addon's rect editors to show how big a chunk is at the current zoom level.
+- Now the editor_class is on top of the editor_additional_text in RectViewNodes.
+- Removed the additional text for the current world generator resources.
+- Now WorldGenBaseResources can draw additional graphics to the RectViewNodes.
+- Draw the bevel and radius to the world editor's rects for the test continent.
+- World generator's resources now can also draw to the editor gui when actually edited.
+- Made the test continent also draw radius and bevel indicators when edited.
+- Moved tree spawning out from the test zone to a new forest subzone.
+- Moved the mob spawning logic from the test zone to a new mob spawner SubZoneProp.
+- Now the world generator addon's datalist popup will focus the line edit for changing the resource's name. Also it will accept enter as ok.
+- Now the world editor tries to center rects of the newly opened resources better.
+- Also handle if the y axis is bigger in the rect editor.
+- Size newly added resources in the world editor properly.
+- Now the resource names are directly editable using the DataList tree in the world generator addon's ui.
+- Removed the name edit dialog from the DataList.
+- Set the resource's new name using UndoRedo.
+- Added a new request_item_edit signal to the DataList.
+- Set up signal chain for the edit requests.
+- Added edit buttons to the resource datalists be able to navigate easier.
+- Small improvements to the slot and int fields of the world generator addon's ResourcePropertyList.
+
+##### DataManager
+
+- Now the data manager addon uses a built in editor icon for it's top bar icon, so it won't get disabled when (re)importing the game project.
+
+##### Animations
+
+- Moved the character's animations to the new format.
+- Cleanups to the character's skeleton and animations.
+
+#### Engine
+
+- Backported everything up to and including https://github.com/godotengine/godot/commit/989d5990ad704fe97a341cb5883d4725479ea09b
+- Added a new templated WeakRef (WRef) class.
+- Added hash_set from godot4.
+- Added RBMap and RBSet from godot4.
+- Backported helper classes to pair.h from Godot4. 
+- Ported the improvements to the hash funcs from Godot4.
+- Backported the improvements to the Math class from Godot4.
+- Added Vector4, Vector4i, and projection classes from Godot4.
+- Backported almost all improvements to core math classes from Godot4. Also bound all eligible methods.
+- Now Vector4, Vector4i, Projection, PoolVector4Array, PoolVector4iArray, are built in variant types. Also reordered the Variant's Type enum, renamed - _RID in it to RID, fixed a few smaller issues and removed some very old compat code.
+- Backported the improvements to StringName from Godot4.
+- Backported convert_rg_to_ra_rgba8 and convert_ra_rgba8_to_rg from Godot4's Image.
+- Added more helper methods to DirAccessRef and FileAccessRef. Also smaller cleanups.
+- Backported from Godot4: Node3D gizmo improvements, including subgizmos.
+- Backported: returning AfterGUIInput from forward_spatial_gui_input from Godot4. Also removed the first index parameter.
+- Renamed AFTER_GUI_INPUT_DESELECT to AFTER_GUI_INPUT_NO_DESELECT.
+- Backported: add viewport.get_camera_2d()
+- Now full screen editor plugins have the ability to hide their tab button in the top bar.
+- Now the editor won't treat a hidden main button as an indicator that their editor plugin is disabled. This behavior was used to be a part of editor feature profiles, which I removed a long time ago.
+- Backported ImporterMesh and ImporterMeshInstance3D from Godot4. 
+- Backported ImmediateMesh from Godot4.
+- Backported some of the improvements to BoneAttachment from Godot4.
+- Backported most improvements to Skeleton from Godot4.
+- Backported: "Remove animation 3D transform track, replace by loc/rot/scale tracks" from Godot4.
+- Backported Godot4's skeleton editor.
+- Backported from Godot 4: New and improved IK system for Skeleton3D.
+- Backported from Godot 4: New and improved IK system for Skeleton2D.
+- Ported from Godot4: Remove REST transform influence in skeleton bones. (This means that: Animations and Skeletons are now pose-only. Rest transform is kept as reference (when it exists) and for IK. Improves 3D model compatibility (non uniform transforms will properly work, as well as all animations coming from Autodesk products).)
+- Removed rsets.
+- Moved visibility rpcs (vrpc) from Entity to Node. Also added an unreliable variant.
+- Added a few small networking related helper methods to Node. Made the rpc macros in Entity use them.
+- Removed deprecated enum values from multiplayerPeer.
+- Removed additional direct script rpc mode query when sending rpcs, in order to simplify that codepath as much as possible. Also removed the remote, remotesync etc. keywords from gdscript, as now they won't work anymore. Node's rpc_config() method should be used instead of marking methods with keywords in scripts.
+- Backported: [Scons] Implement module dependency sorting.
+- Moved http server simple to it's own module.
+- Moved the editor only modules to a new editor_modules folder.
+- Removed stub module.
+- Now text files will show up in the editor if the text editor plugin is enabled. Also clicking them will open them in the text editor.
+- Now custom file creation entries can be added to the editor's FilesystemDock.
+- Now the TextEditor addon will add it's own "create file" entry to the editor's filesystem dock.
+- Now the TextEditor won't open a file multiple times, instead it will just switch to the proper tab.
+- Added web node editor plugin.
+- Added icons for web nodes.
+- Also created full documentation for most of the classes in the web module, and added descriptions and brief descriptions everything, except a few small helper utilities.
+- Added icons for User, and user web pages.
+- Added icons for the UserManagers.
+- Added an icon for UserModule.
+- Added an icon for MeshDataResource, MeshDataInstance, and for the meshDataInstance editor toggle.
+- Now in order to edit MeshDataInstance a new edit mode has to be togged from the top bar. While this mode is enabled the edited MeshDataInstace can't be deselected. Also now Mesh Data Editor's sidebar will only be visible in this mode, along with the editor gizmo.
+- The transform gizmo is hidden now while editing a mesh data resource.
+- Renamed Quat to Quaternion for consistency with the other engine math classes.
+- Removed CameraMatrix, and switched to Projection.
+- Now all Variant math types are structs.
+- Ported form godot4: Reformat structure string operators.
+- Backported from Godot4: Cleaned up Hash Functions. Clean up and do fixes to hash functions and newly introduced murmur3 hashes.
+- Restructured the core folder's directory.
+- Added _theme_ infix to the theme helper methods in Control.
+- Renamed the VisualServer to RenderingServer like in Godot4, as I think it's a lot better name for it. I did not yet rename the files.
+- Actually check whether modules are enabled, not just for their existence in mesh_data_resource's SCsub.
+- Check whether the gltf module is enabled or not before trying to use it.
+- Main build script: Properly set module_ name _enabled in environment to false for modules that get disabled using can_build().
+- Fix serializing variants into binary files.
+- Use AnimationPlayer's root property instead of just getting it's parent when exprting a GLTFDocument.
+- Use string length() instead of size() as it was intended in HTMLParser, and BBCodeParser.
+- HTMLParser now properly parses doctype in a case insensitive way. Also improved an error message a bit.
+- Removed AnimationTreePlayer, as it was deprecated (and also practically unusable).
+
 ## [0.3.12]
 
 #### General
