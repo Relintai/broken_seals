@@ -5,7 +5,7 @@
 
 [resource]
 entity_type = 1
-bone = 13
+bone = 21
 group = 1
 entry_0/mesh = ExtResource( 1 )
 entry_0/texture = ExtResource( 2 )
