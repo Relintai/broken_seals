@@ -44,7 +44,7 @@ func _ready() -> void:
 func _physics_process(delta):
 	var pos : Vector3 = to_global(Vector3())
 	
-	var space_state = get_world().direct_space_state
+	var space_state = get_world_3d().direct_space_state
 	
 	var result : Dictionary = space_state.intersect_ray(pos, to_global(Vector3(0, 0, target_camera_distance)), [ player.get_body() ], player.get_body().collision_mask)
 	

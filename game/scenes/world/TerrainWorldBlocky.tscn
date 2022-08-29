@@ -23,7 +23,7 @@ sun_angle_max = 23.15
 sun_energy = 9.29
 texture_size = 0
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment3D" id=3]
 background_mode = 2
 background_sky = SubResource( 2 )
 ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
@@ -59,7 +59,7 @@ script = ExtResource( 2 )
 editor_chunk_spawn_range = 10
 test_prop = ExtResource( 5 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment3D" type="WorldEnvironment3D" parent="."]
 environment = SubResource( 3 )
 __meta__ = {
 "_editor_description_": ""

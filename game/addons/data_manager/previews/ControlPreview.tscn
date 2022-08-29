@@ -17,6 +17,6 @@ container_path = NodePath("Viewport")
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 500, 500 )
-own_world = true
+own_world_3d = true
 handle_input_locally = false
 render_target_update_mode = 3

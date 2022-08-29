@@ -229,7 +229,7 @@ sun_angle_max = 23.15
 sun_energy = 9.29
 texture_size = 0
 
-[sub_resource type="Environment" id=13]
+[sub_resource type="Environment3D" id=13]
 background_mode = 2
 background_sky = SubResource( 12 )
 ambient_light_color = Color( 0.870588, 0.870588, 0.870588, 1 )
@@ -824,7 +824,7 @@ num_lods = 0
 script = ExtResource( 16 )
 show_loading_screen = false
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+[node name="WorldEnvironment3D" type="WorldEnvironment3D" parent="World"]
 environment = SubResource( 13 )
 __meta__ = {
 "_editor_description_": ""

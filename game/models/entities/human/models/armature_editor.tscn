@@ -11,7 +11,7 @@ sky_horizon_color = Color( 0.129412, 0.129412, 0.129412, 1 )
 sky_curve = 0.151361
 ground_horizon_color = Color( 0.0745098, 0.0745098, 0.0745098, 1 )
 
-[sub_resource type="Environment" id=7]
+[sub_resource type="Environment3D" id=7]
 background_mode = 2
 background_sky = SubResource( 6 )
 background_color = Color( 0.105882, 0.0862745, 0.0862745, 1 )
@@ -148,7 +148,7 @@ positions = [ NodePath("../RightBackAttachment/RightBackAP"), NodePath("../Right
 transform = Transform( 0.962004, 0.140685, -0.234001, 0, 0.857032, 0.515262, 0.273036, -0.495684, 0.824468, -2.67044, 6.99647, 9.77147 )
 light_color = Color( 0.752941, 0.101961, 0.101961, 1 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment3D" type="WorldEnvironment3D" parent="."]
 environment = SubResource( 7 )
 
 [editable path="armature"]

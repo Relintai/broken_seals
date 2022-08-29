@@ -220,7 +220,7 @@ func _physics_process(delta : float) -> void:
 				if not world.is_position_walkable(transform.origin):
 					return
 					
-				var space : PhysicsDirectSpaceState = get_world().direct_space_state
+				var space : PhysicsDirectSpaceState = get_world_3d().direct_space_state
 					
 				var res : Dictionary = space.intersect_ray(transform.origin + Vector3(0, 1000, 0), transform.origin + Vector3(0, -100, 0), [ self ])
 		
@@ -238,7 +238,7 @@ func _physics_process(delta : float) -> void:
 #		var camera : Camera = get_tree().get_root().get_camera() as Camera
 #
 #		if camera != null:
-#			var res = get_world().get_direct_space_state().intersect_ray(get_transform().origin, camera.transform.origin, [ self ], 1)
+#			var res = get_world_3d().get_direct_space_state().intersect_ray(get_transform().origin, camera.transform.origin, [ self ], 1)
 #
 #			if res:
 #				los = true
@@ -664,7 +664,7 @@ func target(position : Vector2):
 	var from = camera.project_ray_origin(position)
 	var to = from + camera.project_ray_normal(position) * ray_length
 		
-	var space_state = get_world().direct_space_state
+	var space_state = get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(from, to, [], collision_mask)
 		
 	if result:
@@ -682,7 +682,7 @@ func cmouseover(event):
 	var from = camera.project_ray_origin(event.position)
 	var to = from + camera.project_ray_normal(event.position) * ray_length
 		
-	var space_state = get_world().direct_space_state
+	var space_state = get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(from, to, [], collision_mask)
 	
 	if result:

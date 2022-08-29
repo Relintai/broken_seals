@@ -5,7 +5,7 @@
 
 [sub_resource type="ProceduralSky" id=2]
 
-[sub_resource type="Environment" id=1]
+[sub_resource type="Environment3D" id=1]
 background_mode = 2
 background_sky = SubResource( 2 )
 
@@ -21,5 +21,5 @@ script = ExtResource( 3 )
 
 [node name="Dungeon" parent="." instance=ExtResource( 1 )]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment3D" type="WorldEnvironment3D" parent="."]
 environment = SubResource( 1 )
