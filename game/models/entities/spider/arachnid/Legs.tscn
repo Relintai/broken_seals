@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://models/entities/arachnid/spider_base_chitin_albedo.png" type="Texture" id=1]
-[ext_resource path="res://models/entities/arachnid/lower_leg.tres" type="MeshDataResource" id=2]
-[ext_resource path="res://models/entities/arachnid/upper_leg.tres" type="MeshDataResource" id=3]
-[ext_resource path="res://models/entities/arachnid/leg_thorax.tres" type="MeshDataResource" id=4]
+[ext_resource path="res://models/entities/spider/arachnid/spider_base_chitin_albedo.png" type="Texture" id=1]
+[ext_resource path="res://models/entities/spider/arachnid/lower_leg.tres" type="MeshDataResource" id=2]
+[ext_resource path="res://models/entities/spider/arachnid/upper_leg.tres" type="MeshDataResource" id=3]
+[ext_resource path="res://models/entities/spider/arachnid/leg_thorax.tres" type="MeshDataResource" id=4]
 
 [sub_resource type="SpatialMaterial" id=1]
 flags_vertex_lighting = true

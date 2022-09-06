@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/spider_base_chitin_albedo.png-ae6b6463391c788d819b03235f820a74.stex"
+path="res://.import/spider_base_chitin_albedo.png-5463c3df644ce3bf72c19063e4896dd8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://models/entities/tarantula/spider_base_chitin_albedo.png"
-dest_files=[ "res://.import/spider_base_chitin_albedo.png-ae6b6463391c788d819b03235f820a74.stex" ]
+source_file="res://models/entities/spider/arachnid/spider_base_chitin_albedo.png"
+dest_files=[ "res://.import/spider_base_chitin_albedo.png-5463c3df644ce3bf72c19063e4896dd8.stex" ]
 
 [params]
 
