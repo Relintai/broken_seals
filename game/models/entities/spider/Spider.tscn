@@ -105,86 +105,146 @@ mesh_data = ExtResource( 8 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="LegsLeft" type="Spatial" parent="FullPreview"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.17828, 0.640268, 0.000238292 )
+[node name="LegsLeftBack" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.853778, 0, 0.520637, 0, 1, 0, -0.520637, 0, 0.853778, 0.178, 0.64, -0.166827 )
 
-[node name="UpperLeg2" type="MeshDataInstance" parent="FullPreview/LegsLeft"]
-transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.00337219, -0.0222741, -0.596947 )
+[node name="UpperLeg2" type="MeshDataInstance" parent="FullPreview/LegsLeftBack"]
+transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.003, -0.022, 0 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="UpperLeg3" type="MeshDataInstance" parent="FullPreview/LegsLeft"]
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsLeftBack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.503581, -0.206726, 0 )
+
+[node name="LowerLeg7" type="MeshDataInstance" parent="FullPreview/LegsLeftBack/LowerLegs"]
+transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.01, 0, 0 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LegsLeftMid" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.977849, 0, 0.209311, 0, 1, 0, -0.209311, 0, 0.977849, 0.17828, 0.640268, -0.0524873 )
+
+[node name="UpperLeg3" type="MeshDataInstance" parent="FullPreview/LegsLeftMid"]
 transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.00337267, -0.0222741, 0.0126154 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="UpperLeg4" type="MeshDataInstance" parent="FullPreview/LegsLeft"]
-transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.00337219, -0.0222741, 0.588191 )
-mesh_data = ExtResource( 3 )
-texture = ExtResource( 2 )
-material = SubResource( 1 )
-
-[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsLeft"]
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsLeftMid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.503581, -0.206726, 0 )
 
-[node name="LowerLeg5" type="MeshDataInstance" parent="FullPreview/LegsLeft/LowerLegs"]
-transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.0101099, -0.000204921, 0.590914 )
-mesh_data = ExtResource( 1 )
-texture = ExtResource( 2 )
-material = SubResource( 1 )
-
-[node name="LowerLeg6" type="MeshDataInstance" parent="FullPreview/LegsLeft/LowerLegs"]
+[node name="LowerLeg6" type="MeshDataInstance" parent="FullPreview/LegsLeftMid/LowerLegs"]
 transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.0101099, -0.000204921, 0.0172505 )
 mesh_data = ExtResource( 1 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="LowerLeg7" type="MeshDataInstance" parent="FullPreview/LegsLeft/LowerLegs"]
-transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.0101099, -0.000204921, -0.590388 )
-mesh_data = ExtResource( 1 )
-texture = ExtResource( 2 )
-material = SubResource( 1 )
+[node name="LegsLeftMid2" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.970321, 0, -0.24182, 0, 1, 0, 0.24182, 0, 0.970321, 0.17828, 0.640268, 0.064917 )
 
-[node name="LegsRight" type="Spatial" parent="FullPreview"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.204, 0.621, 0 )
-
-[node name="UpperLeg5" type="MeshDataInstance" parent="FullPreview/LegsRight"]
-transform = Transform( -0.346936, -0.937889, 0, 0.937889, -0.346936, 0, 0, 0, 1, -0.00836086, -0.00902534, 0.582202 )
+[node name="UpperLeg3" type="MeshDataInstance" parent="FullPreview/LegsLeftMid2"]
+transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.00337267, -0.0222741, 0.0126154 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="UpperLeg6" type="MeshDataInstance" parent="FullPreview/LegsRight"]
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsLeftMid2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.503581, -0.206726, 0 )
+
+[node name="LowerLeg6" type="MeshDataInstance" parent="FullPreview/LegsLeftMid2/LowerLegs"]
+transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.0101099, -0.000204921, 0.0172505 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LegsLeftFront" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.755854, 0, -0.654741, 0, 1, 0, 0.654741, 0, 0.755854, 0.166105, 0.64, 0.168087 )
+
+[node name="UpperLeg4" type="MeshDataInstance" parent="FullPreview/LegsLeftFront"]
+transform = Transform( -0.347689, 0.93761, 0, -0.93761, -0.347689, 0, 0, 0, 1, -0.003, -0.022, 0 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsLeftFront"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.503581, -0.206726, 0 )
+
+[node name="LowerLeg5" type="MeshDataInstance" parent="FullPreview/LegsLeftFront/LowerLegs"]
+transform = Transform( -0.832825, 0.553537, 0, -0.553537, -0.832825, 0, 0, 0, 1, 0.01, 0, 0 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LegsRightBack" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.843972, 0, -0.536387, 0, 1, 0, 0.536387, 0, 0.843972, -0.188771, 0.621, -0.157888 )
+
+[node name="UpperLeg7" type="MeshDataInstance" parent="FullPreview/LegsRightBack"]
+transform = Transform( -0.385294, -0.922794, 0, 0.922794, -0.385294, 0, 0, 0, 1, -0.008, -0.009, 0 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsRightBack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.558352, -0.233083, 0 )
+
+[node name="LowerLeg2" type="MeshDataInstance" parent="FullPreview/LegsRightBack/LowerLegs"]
+transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.026, 0.045, 0 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LegsRightMid" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.978216, 0, -0.207587, 0, 1, 0, 0.207587, 0, 0.978216, -0.204, 0.621, -0.032139 )
+
+[node name="UpperLeg6" type="MeshDataInstance" parent="FullPreview/LegsRightMid"]
 transform = Transform( -0.385294, -0.922794, 0, 0.922794, -0.385294, 0, 0, 0, 1, -0.00836056, -0.00902534, -0.0215956 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="UpperLeg7" type="MeshDataInstance" parent="FullPreview/LegsRight"]
-transform = Transform( -0.385294, -0.922794, 0, 0.922794, -0.385294, 0, 0, 0, 1, -0.00836086, -0.00902534, -0.594543 )
-mesh_data = ExtResource( 3 )
-texture = ExtResource( 2 )
-material = SubResource( 1 )
-
-[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsRight"]
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsRightMid"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.558352, -0.233083, 0 )
 
-[node name="LowerLeg2" type="MeshDataInstance" parent="FullPreview/LegsRight/LowerLegs"]
-transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.0255842, 0.044978, -0.597778 )
-mesh_data = ExtResource( 1 )
-texture = ExtResource( 2 )
-material = SubResource( 1 )
-
-[node name="LowerLeg3" type="MeshDataInstance" parent="FullPreview/LegsRight/LowerLegs"]
+[node name="LowerLeg3" type="MeshDataInstance" parent="FullPreview/LegsRightMid/LowerLegs"]
 transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.0255845, 0.044978, -0.0235229 )
 mesh_data = ExtResource( 1 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
 
-[node name="LowerLeg4" type="MeshDataInstance" parent="FullPreview/LegsRight/LowerLegs"]
-transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.0255842, 0.044978, 0.581975 )
+[node name="LegsRightMid2" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.986951, 0, 0.161018, 0, 1, 0, -0.161018, 0, 0.986951, -0.204, 0.621, 0.0811554 )
+
+[node name="UpperLeg6" type="MeshDataInstance" parent="FullPreview/LegsRightMid2"]
+transform = Transform( -0.385294, -0.922794, 0, 0.922794, -0.385294, 0, 0, 0, 1, -0.00836056, -0.00902534, -0.0215956 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsRightMid2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.558352, -0.233083, 0 )
+
+[node name="LowerLeg3" type="MeshDataInstance" parent="FullPreview/LegsRightMid2/LowerLegs"]
+transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.0255845, 0.044978, -0.0235229 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LegsRightFront" type="Spatial" parent="FullPreview"]
+transform = Transform( 0.735754, 0, 0.677248, 0, 1, 0, -0.677248, 0, 0.735754, -0.204, 0.621, 0.138077 )
+
+[node name="UpperLeg5" type="MeshDataInstance" parent="FullPreview/LegsRightFront"]
+transform = Transform( -0.346936, -0.937889, 0, 0.937889, -0.346936, 0, 0, 0, 1, -0.008, -0.009, 0 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 1 )
+
+[node name="LowerLegs" type="Spatial" parent="FullPreview/LegsRightFront"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.558352, -0.233083, 0 )
+
+[node name="LowerLeg4" type="MeshDataInstance" parent="FullPreview/LegsRightFront/LowerLegs"]
+transform = Transform( -0.831954, -0.554844, 0, 0.554844, -0.831954, 0, 0, 0, 1, 0.026, 0.045, 0 )
 mesh_data = ExtResource( 1 )
 texture = ExtResource( 2 )
 material = SubResource( 1 )
