@@ -1,9 +1,13 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://models/entities/boar/lower_leg.tres" type="MeshDataResource" id=1]
+[ext_resource path="res://models/entities/boar/leg_back.tres" type="MeshDataResource" id=1]
 [ext_resource path="res://models/entities/boar/boar_fur_albedo.png" type="Texture" id=2]
+[ext_resource path="res://models/entities/boar/leg_front.tres" type="MeshDataResource" id=3]
 [ext_resource path="res://worlds/test_world/environments/default_env.tres" type="Environment3D" id=4]
 [ext_resource path="res://textures/world/grass/grass_albedo.png" type="Texture" id=5]
+[ext_resource path="res://models/entities/boar/torso.tres" type="MeshDataResource" id=6]
+[ext_resource path="res://models/entities/boar/back.tres" type="MeshDataResource" id=7]
+[ext_resource path="res://models/entities/boar/head.tres" type="MeshDataResource" id=8]
 
 [sub_resource type="SpatialMaterial" id=5]
 flags_vertex_lighting = true
@@ -23,9 +27,33 @@ albedo_texture = ExtResource( 5 )
 
 [node name="Boar" type="Spatial"]
 
-[node name="LowerLeg" type="MeshDataInstance" parent="."]
+[node name="LegBack" type="MeshDataInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0645008, 0, -0.820011 )
 mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="LegFront" type="MeshDataInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0645008, 0, 0.51671 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="Torso" type="MeshDataInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18233, 0, -1.16418 )
+mesh_data = ExtResource( 6 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="Back" type="MeshDataInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.33726, 0, 0.51671 )
+mesh_data = ExtResource( 7 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="Head" type="MeshDataInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.429573, 0, -2.40585 )
+mesh_data = ExtResource( 8 )
 texture = ExtResource( 2 )
 material = SubResource( 5 )
 
@@ -43,6 +71,48 @@ __meta__ = {
 "_editor_description_": "Z+ -> Front"
 }
 
+[node name="Torso" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.510559, 0 )
+mesh_data = ExtResource( 6 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="Back" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( 1, 0, 0, 0, -0.172084, 0.985082, 0, -0.985082, -0.172084, 0, 0.545559, 0 )
+mesh_data = ExtResource( 7 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="Head" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( 1, 0, 0, 0, -0.182253, -0.983252, 0, 0.983252, -0.182253, 0, 0.502, 0.433 )
+mesh_data = ExtResource( 8 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="LegBackRight" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( 1, 1.50996e-07, 0, 1.48506e-07, -0.983512, -0.180845, 2.73069e-08, -0.180845, 0.983512, -0.11, 0.38501, -0.215081 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="LegFrontRight" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( -1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, -0.13, 0.562807, 0.263 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="LegBackLeft" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( -1, 8.74228e-08, 0, -8.59813e-08, -0.983512, -0.180845, -1.581e-08, -0.180845, 0.983512, 0.110449, 0.38501, -0.215081 )
+mesh_data = ExtResource( 1 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
+[node name="LegFrontLeft" type="MeshDataInstance" parent="FullPreview"]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0.130255, 0.563028, 0.263375 )
+mesh_data = ExtResource( 3 )
+texture = ExtResource( 2 )
+material = SubResource( 5 )
+
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45079, 0.5, -5.56819 )
 mesh = SubResource( 2 )
@@ -51,11 +121,17 @@ mesh = SubResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.69456, -0.5, 0.0802026 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="MeshInstance3" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31501, -0.5, -1.17679 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="WorldEnvironment3D" type="WorldEnvironment3D" parent="."]
 environment = ExtResource( 4 )
