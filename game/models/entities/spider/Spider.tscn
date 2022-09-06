@@ -93,7 +93,7 @@ __meta__ = {
 }
 
 [node name="Torso" type="Spatial" parent="FullPreview"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.595369, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.318816, 0 )
 
 [node name="Abdomen" type="MeshDataInstance" parent="FullPreview/Torso"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.231096 )
@@ -114,28 +114,28 @@ texture = ExtResource( 2 )
 material = SubResource( 1 )
 
 [node name="LegsLeftBack" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( 0.853778, 0, 0.520637, 0, 1, 0, -0.520637, 0, 0.853778, 0.201448, 0.64, -0.166827 )
+transform = Transform( 0.853778, 0, 0.520637, 0, 1, 0, -0.520637, 0, 0.853778, 0.201448, 0.303214, -0.166827 )
 
 [node name="LegsLeftMid" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( 0.977849, 0, 0.209311, 0, 1, 0, -0.209311, 0, 0.977849, 0.201728, 0.640268, -0.0524873 )
+transform = Transform( 0.977849, 0, 0.209311, 0, 1, 0, -0.209311, 0, 0.977849, 0.201728, 0.303482, -0.0524873 )
 
 [node name="LegsLeftMid2" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( 0.970321, 0, -0.24182, 0, 1, 0, 0.24182, 0, 0.970321, 0.201728, 0.640268, 0.064917 )
+transform = Transform( 0.970321, 0, -0.24182, 0, 1, 0, 0.24182, 0, 0.970321, 0.201728, 0.303482, 0.064917 )
 
 [node name="LegsLeftFront" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( 0.755854, 0, -0.654741, 0, 1, 0, 0.654741, 0, 0.755854, 0.189553, 0.64, 0.168087 )
+transform = Transform( 0.755854, 0, -0.654741, 0, 1, 0, 0.654741, 0, 0.755854, 0.189553, 0.303214, 0.168087 )
 
 [node name="LegsRightBack" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( -0.844019, 0, 0.536313, 0, 1, 0, -0.536313, 0, -0.844019, -0.188771, 0.621, -0.157888 )
+transform = Transform( -0.844019, 0, 0.536313, 0, 1, 0, -0.536313, 0, -0.844019, -0.188771, 0.284214, -0.157888 )
 
 [node name="LegsRightMid" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( -0.978216, 0, 0.207587, 0, 1, 0, -0.207587, 0, -0.978216, -0.204, 0.621, -0.032139 )
+transform = Transform( -0.978216, 0, 0.207587, 0, 1, 0, -0.207587, 0, -0.978216, -0.204, 0.284214, -0.032139 )
 
 [node name="LegsRightMid2" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( -0.986951, 0, -0.161018, 0, 1, 0, 0.161018, 0, -0.986951, -0.204, 0.621, 0.0811554 )
+transform = Transform( -0.986951, 0, -0.161018, 0, 1, 0, 0.161018, 0, -0.986951, -0.204, 0.284214, 0.0811554 )
 
 [node name="LegsRightFront" parent="FullPreview" instance=ExtResource( 12 )]
-transform = Transform( -0.735754, 0, -0.677249, 0, 1, 0, 0.677249, 0, -0.735754, -0.204, 0.621, 0.138077 )
+transform = Transform( -0.735754, 0, -0.677249, 0, 1, 0, 0.677249, 0, -0.735754, -0.204, 0.284214, 0.138077 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.45079, 0.5, -5.56819 )
