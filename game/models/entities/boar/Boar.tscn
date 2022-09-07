@@ -96,7 +96,7 @@ texture = ExtResource( 2 )
 material = SubResource( 5 )
 
 [node name="LegFrontRight" type="MeshDataInstance" parent="FullPreview"]
-transform = Transform( -1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, -0.13, 0.562807, 0.263 )
+transform = Transform( -1, 0, 0, 0, -1, 1.50996e-07, 0, -1.50996e-07, -1, -0.13, 0.513235, 0.263 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 5 )
@@ -108,7 +108,7 @@ texture = ExtResource( 2 )
 material = SubResource( 5 )
 
 [node name="LegFrontLeft" type="MeshDataInstance" parent="FullPreview"]
-transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0.13, 0.563, 0.263 )
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0.13, 0.513428, 0.263 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 2 )
 material = SubResource( 5 )
