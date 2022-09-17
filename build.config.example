@@ -41,5 +41,6 @@ export global SCONS_CACHE=~/.scons_cache
 export global SCONS_CACHE_LIMIT=5000
 
 export android ANDROID_HOME=~/SDKs/Android/SDK
+export android ANDROID_SDK_ROOT=~/SDKs/Android/SDK
 
 run javascript source ~/SDKs/emsdk/emsdk_env.sh
