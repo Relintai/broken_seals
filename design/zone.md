@@ -47,8 +47,8 @@ Now there is a way to scale worlds, that I think will work in this case, which i
 I think this will be implemented, especially before there is enough content to level a character, but even after,
 it will be able to give optional content to people that want it. It will be similar to Diablo II's difficulty, 
 except maybe it could go on for more (that could mostly be used for multiplayer challenges).
-It should not powercreep gear though (it should drop better gear, but only up to a point 
-- Also I think gear should be hand crafted -).
+It should not powercreep gear though (it should drop better gear, but only up to a point - Also I think gear should 
+be hand crafted -).
 
 Note that the World - Viewport separation in the engine is preparation for this feature + dungeons to be able to work
 on servers.
