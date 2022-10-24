@@ -44,10 +44,10 @@ func apply_zoom() -> void:
 	
 	var p : MarginContainer = get_parent() as MarginContainer
 
-	p.add_constant_override("margin_left", min(rect.size.x / 4.0, 50 * _rect_scale))
-	p.add_constant_override("margin_right", min(rect.size.x / 4.0, 50 * _rect_scale))
-	p.add_constant_override("margin_top", min(rect.size.y / 4.0, 50 * _rect_scale))
-	p.add_constant_override("margin_bottom", min(rect.size.y / 4.0, 50 * _rect_scale))
+	p.add_theme_constant_override("margin_left", min(rect.size.x / 4.0, 50 * _rect_scale))
+	p.add_theme_constant_override("margin_right", min(rect.size.x / 4.0, 50 * _rect_scale))
+	p.add_theme_constant_override("margin_top", min(rect.size.y / 4.0, 50 * _rect_scale))
+	p.add_theme_constant_override("margin_bottom", min(rect.size.y / 4.0, 50 * _rect_scale))
 	
 	for c in get_children():
 		c.set_editor_rect_scale(_rect_scale)
