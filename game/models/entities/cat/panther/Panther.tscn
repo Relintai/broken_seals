@@ -25,7 +25,7 @@ flags_vertex_lighting = true
 albedo_color = Color( 0.145098, 0.145098, 0.145098, 1 )
 albedo_texture = ExtResource( 5 )
 
-[node name="Boar" type="Spatial"]
+[node name="Panther" type="Spatial"]
 
 [node name="LegBack" type="MeshDataInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0645008, 0, -0.820011 )
@@ -78,7 +78,7 @@ texture = ExtResource( 6 )
 material = SubResource( 5 )
 
 [node name="Back" type="MeshDataInstance" parent="FullPreview"]
-transform = Transform( 1, 0, 0, 0, -0.172084, 0.985082, 0, -0.985082, -0.172084, 0, 0.39121, 0 )
+transform = Transform( 1, 0, 0, 0, -0.172084, 0.985082, 0, -0.985082, -0.172084, 0, 0.39121, -0.271277 )
 mesh_data = ExtResource( 8 )
 texture = ExtResource( 6 )
 material = SubResource( 5 )
@@ -90,7 +90,7 @@ texture = ExtResource( 6 )
 material = SubResource( 5 )
 
 [node name="LegBackRight" type="MeshDataInstance" parent="FullPreview"]
-transform = Transform( 1, 1.50996e-07, 0, 1.48506e-07, -0.983512, -0.180845, 2.73069e-08, -0.180845, 0.983512, -0.11, 0.230661, -0.215081 )
+transform = Transform( 1, 1.50996e-07, 0, 1.48506e-07, -0.983512, -0.180845, 2.73069e-08, -0.180845, 0.983512, -0.11, 0.230661, -0.554374 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 6 )
 material = SubResource( 5 )
@@ -102,7 +102,7 @@ texture = ExtResource( 6 )
 material = SubResource( 5 )
 
 [node name="LegBackLeft" type="MeshDataInstance" parent="FullPreview"]
-transform = Transform( -1, 8.74228e-08, 0, -8.59813e-08, -0.983512, -0.180845, -1.581e-08, -0.180845, 0.983512, 0.110449, 0.230661, -0.215081 )
+transform = Transform( -1, 8.74228e-08, 0, -8.59813e-08, -0.983512, -0.180845, -1.581e-08, -0.180845, 0.983512, 0.110449, 0.230661, -0.554374 )
 mesh_data = ExtResource( 3 )
 texture = ExtResource( 6 )
 material = SubResource( 5 )

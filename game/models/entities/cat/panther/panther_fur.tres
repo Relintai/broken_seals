@@ -1,4 +1,4 @@
-[gd_resource type="MMMaterial" load_steps=8 format=2]
+[gd_resource type="MMMaterial" load_steps=9 format=2]
 
 [sub_resource type="MMNodeUniversalProperty" id=8]
 default_type = 5
@@ -6,7 +6,7 @@ output_slot_type = 0
 
 [sub_resource type="MMFbmNoise" id=9]
 graph_position = Vector2( 20, 60 )
-output_properties = [ SubResource( 8 ) ]
+output_properties = [ SubResource( 8 ), SubResource( 8 ) ]
 image = SubResource( 8 )
 type = 1
 scale = Vector2( 5, 5 )
@@ -24,11 +24,17 @@ input_property = SubResource( 8 )
 
 [sub_resource type="MMColorize" id=12]
 graph_position = Vector2( 280, 80 )
-input_properties = [ SubResource( 11 ) ]
-output_properties = [ SubResource( 10 ) ]
-points = PoolRealArray( 0, 0.0390625, 0.0239754, 0.00457764, 1, 0.135593, 0, 0, 0, 1, 0.338983, 0.0351562, 0.0236807, 0.00892639, 1, 1, 0.15625, 0.0926876, 0.0250244, 1 )
+input_properties = [ SubResource( 11 ), SubResource( 11 ) ]
+output_properties = [ SubResource( 10 ), SubResource( 10 ) ]
+points = PoolRealArray( 0, 0.0390625, 0.0239754, 0.00457764, 1, 0.135593, 0, 0, 0, 1, 0.40678, 0.0081619, 0.00801086, 0.0273438, 1, 1, 0.0509804, 0.0588235, 0.12549, 1 )
 image = SubResource( 10 )
 input = SubResource( 11 )
+
+[sub_resource type="MMNodeUniversalProperty" id=15]
+default_type = 5
+input_slot_type = 6
+slot_name = "image"
+input_property = SubResource( 10 )
 
 [sub_resource type="MMNodeUniversalProperty" id=13]
 default_type = 5
@@ -38,8 +44,8 @@ input_property = SubResource( 10 )
 
 [sub_resource type="MMOutputImage" id=14]
 graph_position = Vector2( 620, 140 )
-input_properties = [ SubResource( 13 ) ]
-image = SubResource( 13 )
+input_properties = [ SubResource( 13 ), SubResource( 15 ) ]
+image = SubResource( 15 )
 postfix = "_albedo"
 
 [resource]
