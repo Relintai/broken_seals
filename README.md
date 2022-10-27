@@ -25,44 +25,26 @@ Unfortunately the web editor needs custom http headers to work and I can't set t
 
 ## Status 
 
-On the technical side almost everything has been set up the way I think will work in long term. \
-Improvements will be needed obviously, but I don't expect core reworks anymore for the forseable future.\
-[Here's a list of some of the more prominent features](#features).
+Currently I'm working content.
 
-Currently I'm working to finish / make the content creation tools usable without any issues.
+Roadmap:
 
-The Mesh Data Resource Editor will need the most amount of work by far, as it needs some of it's core tools implemented.
-The rest only needs undo-redo to fix most of their remaining usability issues.
+- Have a few animal models that can be used for the starter zones.
+- Have a few building models.
+- Add in sounds.
+- Have some ambient sounds as music.
+- Set up a proper starter zone.
+- Implement the naturalist's spells.
+- Add a male model.
+- Add more classes.
+- Then start working on new zones.
 
-Character mesh generation, and it's setup will probably get refinements soon, after the mesh data resource editor 
-editor plugin is done, as it definitely needs some work. This might require some api changes, other than this 
-I don't expect big changes anymore.
+Some planned changes that will come sometime:
 
-I only have a minimum amount of content, only enugh to figure out things like look, colors, style, and technical stuff etc.
-I'll start working on it properly after the content creation tools are done. \
-Hopefully it won't take long to have something that's actually playable.
-
-Note that things like the spell system already has most of the required core features for even complex spells,
-which might be strange at first sight, especially if you know agile development. This is because this project
-was originally developed in unity (for about 3 years), and then eventually due to constant issues, bugs,
-and annoyances I ported it to godot (while fixing the design issues that I was forced to do because of c# / unity).
-Then eventually I went open source with it. Since I already had a prototype that let me mess with classes for a while, 
-I decided to just focus on the technical stuff, and make that as good as I can first.
+- Add support for multiple worlds. (Just have to make use of the new World class in the engine. The scene tree (Entities and Entity Bodies) will need small changes.)
+- Fix up multiplayer, and implement missing things (like animations for clients).
 
 ## Features
-
-### Content creation tools
-
-Note: I'm currently focusing on these.
-
-- World Generator: It contains resources that can handle world generation, and an interface for easy editing. Needs undo redo.
-- Mat Maker GD: [RodZill4's Material Maker](https://github.com/RodZill4/material-maker) ported to the cpu. Needs undo redo, and about 60 nodes.
-- Mesh Data Resource Editor: Needs some core features (Like mesh face creation, deletion, edge split, merge etc). Also needs undo redo.
-
-I also have these added to the project.
-
-- Color palette addon from https://github.com/EricEzaM/godot-color-palette 
-- Godoxel addon (An in godot image editor.) from https://github.com/aaronfranke/GraphicsEditor
 
 ### Multiplayer
 
