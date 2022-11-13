@@ -223,8 +223,9 @@ func save_to_project_settings() -> void:
 	ProjectSettings.set("addons/data_manager/folder_settings", get_as_json())
 	
 func load_from_project_settings() -> void:
-	var d : String = ProjectSettings.get("addons/data_manager/folder_settings")
-	
-	if d != "":
-		set_from_json(d)
+	if ProjectSettings.has_setting("addons/data_manager/folder_settings"):
+		var d : String = ProjectSettings.get("addons/data_manager/folder_settings")
+		
+		if d != "":
+			set_from_json(d)
 	
