@@ -6,5 +6,5 @@
 
 [node name="Floor" type="TiledWall" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.5, -1, 0 )
-heigth = 2
+height = 2
 data = ExtResource( 10 )

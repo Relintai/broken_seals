@@ -13,13 +13,13 @@ points = PoolVector3Array( -0.01, 3.01, -4.29, -0.01, 2.255, -4.29, 1.66333, 0.7
 [node name="Floor" type="TiledWall" parent="."]
 transform = Transform( -1, 0, 3.17865e-08, -3.17865e-08, -5.96046e-08, -1, 2.66454e-15, -1, 5.96046e-08, 5, 0, 0 )
 width = 5
-heigth = 6
+height = 6
 data = ExtResource( 10 )
 
 [node name="Ceiling" type="TiledWall" parent="."]
 transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636e-15, 1, -5.96046e-08, 5, 3, -6 )
 width = 5
-heigth = 6
+height = 6
 data = ExtResource( 10 )
 collision = false
 
@@ -28,13 +28,13 @@ collision = false
 [node name="WallZN2" type="TiledWall" parent="wallzp"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="WallZN3" type="TiledWall" parent="wallzp"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="Portal" type="Portal" parent="wallzp"]
@@ -56,13 +56,13 @@ transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, -
 [node name="WallZN2" type="TiledWall" parent="wallzp2"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="WallZN3" type="TiledWall" parent="wallzp2"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="Portal" type="Portal" parent="wallzp2"]
@@ -84,13 +84,13 @@ transform = Transform( 1.19249e-08, 0, -1, 0, 1, 0, 1, 0, 1.19249e-08, 0, 0, -6 
 [node name="WallZN2" type="TiledWall" parent="wallzp3"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="WallZN3" type="TiledWall" parent="wallzp3"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
 width = 3
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="Portal" type="Portal" parent="wallzp3"]
@@ -112,13 +112,13 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 0, 0
 [node name="WallZN2" type="TiledWall" parent="wallzp4"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="WallZN3" type="TiledWall" parent="wallzp4"]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
 width = 3
-heigth = 3
+height = 3
 data = ExtResource( 10 )
 
 [node name="Portal" type="Portal" parent="wallzp4"]

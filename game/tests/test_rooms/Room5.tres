@@ -7,26 +7,26 @@
 [sub_resource type="PropDataTiledWall" id=1]
 transform = Transform( -1, 0, 3.17865e-08, -3.17865e-08, -5.96046e-08, -1, 2.66454e-15, -1, 5.96046e-08, 5, 0, 0 )
 width = 5
-heigth = 6
+height = 6
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataTiledWall" id=2]
 transform = Transform( -1, 0, 3.17865e-08, 3.17865e-08, 5.96046e-08, 1, -1.77636e-15, 1, -5.96046e-08, 5, 3, -6 )
 width = 5
-heigth = 6
+height = 6
 data = ExtResource( 2 )
 collision = false
 
 [sub_resource type="PropDataTiledWall" id=3]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 0, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataTiledWall" id=4]
 transform = Transform( 1, 0, 5.56363e-08, 0, 1, 0, -5.56363e-08, 0, 1, 3, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataPortal" id=5]
@@ -41,13 +41,13 @@ texture = ExtResource( 3 )
 [sub_resource type="PropDataTiledWall" id=7]
 transform = Transform( -1, 0, -1.43059e-07, 0, 1, 0, 1.43059e-07, 0, -1, 5, 0, -6 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataTiledWall" id=8]
 transform = Transform( -1, 0, -1.43059e-07, 0, 1, 0, 1.43059e-07, 0, -1, 2, 0, -6 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataPortal" id=9]
@@ -62,13 +62,13 @@ texture = ExtResource( 3 )
 [sub_resource type="PropDataTiledWall" id=11]
 transform = Transform( 6.75612e-08, 0, -1, 0, 1, 0, 1, 0, 6.75612e-08, 0, 0, -6 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataTiledWall" id=12]
 transform = Transform( 6.75612e-08, 0, -1, 0, 1, 0, 1, 0, 6.75612e-08, 3.57747e-08, 0, -3 )
 width = 3
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataPortal" id=13]
@@ -83,13 +83,13 @@ texture = ExtResource( 3 )
 [sub_resource type="PropDataTiledWall" id=15]
 transform = Transform( -9.93477e-08, 0, 1, 0, 1, 0, -1, 0, -9.93477e-08, 5, 0, 0 )
 width = 2
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataTiledWall" id=16]
 transform = Transform( -9.93477e-08, 0, 1, 0, 1, 0, -1, 0, -9.93477e-08, 5, 0, -3 )
 width = 3
-heigth = 3
+height = 3
 data = ExtResource( 2 )
 
 [sub_resource type="PropDataPortal" id=17]
