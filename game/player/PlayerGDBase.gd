@@ -50,8 +50,8 @@ func _physics_process(delta):
 			update_visibility()
 		
 func update_visibility() -> void:
-	_query.transform = Transform(Basis(), get_body().translation)
-	var res : Array = get_body().get_world_3d().direct_space_state.intersect_shape(_query)
+	_query.transform = Transform(Basis(), body_get().translation)
+	var res : Array = body_get().get_world_3d().direct_space_state.intersect_shape(_query)
 	
 	#warning-ignore:unassigned_variable
 	var currenty_sees : Array = Array()

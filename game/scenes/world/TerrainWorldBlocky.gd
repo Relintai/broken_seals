@@ -112,7 +112,7 @@ func _process_game(delta) -> void:
 	if vis_update >= VIS_UPDATE_INTERVAL:
 		vis_update = 0
 		
-		var ppos : Vector3 = _player.get_body_3d().transform.origin
+		var ppos : Vector3 = _player.body_get_3d().transform.origin
 		
 		var cpos : Vector3 = ppos
 		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))
@@ -426,7 +426,7 @@ func load_character(file_name : String) -> void:
 	var ppos : Vector3 = Vector3(spawn_chunk_pos.x * chunk_size_x * voxel_scale, 100, spawn_chunk_pos.y * chunk_size_z * voxel_scale)
 	
 	_player.set_transform_3d(Transform(Basis(), ppos))
-	set_player(_player.get_body())
+	set_player(_player.body_get())
 
 	spawn(spawn_chunk_pos.x, spawn_chunk_pos.y)
 	

@@ -61,7 +61,7 @@ func _enter_tree():
 	
 	entity = get_node("../..") as Entity
 	entity.connect("centity_resource_added", self, "on_centity_resource_added")
-	entity_body = entity.get_body()
+	entity_body = entity.body_get()
 
 	name_label.text = entity.centity_name
 	
@@ -189,7 +189,7 @@ func on_centity_resource_added(resorce) -> void:
 	c_health_changed()
 
 func _body_changed(ent):
-	entity_body = entity.get_body()
+	entity_body = entity.body_get()
 	
 	if entity_body && entity_body.has_signal("visibility_changed"):
 		entity_body.connect("visibility_changed", self, "_on_body_visibility_changed")

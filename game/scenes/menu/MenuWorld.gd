@@ -103,7 +103,7 @@ func _process(delta):
 	if vis_update >= VIS_UPDATE_INTERVAL:
 		vis_update = 0
 		
-		var ppos : Vector3 = _player.get_body_3d().transform.origin
+		var ppos : Vector3 = _player.body_get_3d().transform.origin
 		
 		var cpos : Vector3 = ppos
 		var ppx : int = int(cpos.x / (chunk_size_x * voxel_scale))
@@ -324,7 +324,7 @@ func load_character(file_name : String) -> void:
 	
 	mob_level = _player.clevel
 	
-	set_player(_player.get_body())
+	set_player(_player.body_get())
 
 	Server.sset_seed(_player.sseed)
 	

@@ -61,8 +61,8 @@ func _cast_starts(info : SpellCastInfo) -> void:
 		
 	if range_enabled:
 		if info.caster != info.target:
-			var c : Vector3 = info.caster.get_body().transform.origin
-			var t : Vector3 = info.target.get_body().transform.origin
+			var c : Vector3 = info.caster.body_get().transform.origin
+			var t : Vector3 = info.target.body_get().transform.origin
 			
 			if (c - t).length() > range_range:
 				return

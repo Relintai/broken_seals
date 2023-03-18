@@ -46,7 +46,7 @@ func _physics_process(delta):
 	
 	var space_state = get_world_3d().direct_space_state
 	
-	var result : Dictionary = space_state.intersect_ray(pos, to_global(Vector3(0, 0, target_camera_distance)), [ player.get_body() ], player.get_body().collision_mask)
+	var result : Dictionary = space_state.intersect_ray(pos, to_global(Vector3(0, 0, target_camera_distance)), [ player.body_get() ], player.body_get().collision_mask)
 	
 	if result:
 		camera_distance = (result.position - pos).length() - 0.2

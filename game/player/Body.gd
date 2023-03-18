@@ -450,7 +450,7 @@ func player_walk(delta : float) -> void:
 
 func process_movement_mob(delta : float) -> void:
 	if entity.starget != null:
-		look_at(entity.starget.get_body().translation, Vector3(0, 1, 0))
+		look_at(entity.starget.body_get().translation, Vector3(0, 1, 0))
 	
 	var state : int = entity.getc_state()
 	

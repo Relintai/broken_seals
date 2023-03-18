@@ -224,4 +224,4 @@ func set_terrarin_player():
 	
 	var terrarin : TerrainWorld = get_node("/root/main/World")
 	
-	terrarin.set_player(local_player_master.player.get_body() as Spatial)
+	terrarin.set_player(local_player_master.player.body_get() as Spatial)

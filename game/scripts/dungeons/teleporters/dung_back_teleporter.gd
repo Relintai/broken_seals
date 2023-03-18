@@ -65,7 +65,7 @@ func teleport():
 	if world && world._player:
 		var p : Entity = world._player
 
-		if (p.get_body().transform.origin - transform.origin).length() > use_range:
+		if (p.body_get().transform.origin - transform.origin).length() > use_range:
 			return
 
 		if _dungeon:
@@ -75,5 +75,5 @@ func teleport():
 		#turn back on world
 		world.active = true
 		
-		p.get_body().teleport(teleport_to)
-#		p.get_body().transform.origin = teleport_to
+		p.body_get().teleport(teleport_to)
+#		p.body_get().transform.origin = teleport_to
