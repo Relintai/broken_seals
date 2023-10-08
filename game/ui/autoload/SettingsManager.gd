@@ -61,21 +61,6 @@ var _settings : Dictionary = {
 
 func _ready():
 	load_settings()
-	
-	var actions : Array = InputMap.get_actions()
-	
-	for action in actions:
-		var acts : Array = InputMap.get_action_list(action)
-		
-		for i in range(len(acts)):
-			var a = acts[i]
-			if a is InputEventKey:
-				var nie : BSInputEventKey = BSInputEventKey.new()
-				nie.from_input_event_key(a as InputEventKey)
-				acts[i] = nie
-				
-				InputMap.action_erase_event(action, a)
-				InputMap.action_add_event(action, nie)
 				
 	set_stretch()
 	setup_window()
