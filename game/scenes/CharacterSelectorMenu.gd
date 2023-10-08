@@ -87,7 +87,7 @@ func refresh():
 				
 				var display : Entity = ESS.entity_spawner.spawn_display_player(file_name, player_display_container_node.get_path())
 				
-				var entity_data : EntityData = ESS.get_resource_db().get_entity_data(display.characterclass_id)
+				var entity_data : EntityData = ESS.get_resource_db().get_entity_data(display.sentity_data_id)
 				
 				if entity_data == null:
 					print("EntityData not found!")
@@ -106,7 +106,7 @@ func refresh():
 				centry.pressed = true
 				centry.connect("pressed", self, "character_selection_changed")
 				
-				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.characterclass_id).text_name, display.slevel, display.slevel, display)
+				centry.setup(file_name, display.sentity_name, ESS.get_resource_db().get_entity_data(display.sentity_data_id).text_name, display.slevel, display.slevel, display)
 				
 				if first_entry == null:
 					first_entry = centry
