@@ -1,4 +1,4 @@
-extends "PlayerGDBase.gd"
+extends "res://player/PlayerGDBase.gd"
 class_name NetworkedPlayerGD
 
 # Copyright Péter Magyar relintai@gmail.com
