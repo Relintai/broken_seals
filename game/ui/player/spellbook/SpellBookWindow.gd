@@ -137,7 +137,7 @@ func refresh_all() -> void:
 		_page = _max_pages
 
 	if ESS.use_spell_points:
-		_spell_points_label.text = "Free spell points: " + str(_player.free_spell_points_getc())
+		_spell_points_label.text = "Free spell points: " + str(_player.spell_points_getc_free())
 
 	refresh_entries()
 	
@@ -164,7 +164,7 @@ func set_player(p_player: Entity) -> void:
 		centity_data_changed(null)
 	
 func cfree_spell_points_changed(entity: Entity, value: int) -> void:
-	_spell_points_label.text = "Free spell points: " + str(_player.free_spell_points_getc())
+	_spell_points_label.text = "Free spell points: " + str(_player.spell_points_getc_free())
 
 func centity_data_changed(data: EntityData):
 	_spells.clear()
