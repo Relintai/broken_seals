@@ -33,7 +33,7 @@ func _moved():
 
 func _process(delta):
 	if Input.is_action_just_pressed("sheath"):
-		get_character_skeleton().toggle_sheath()
+		character_skeleton_get().toggle_sheath()
 		
 func _notification_slevel_up(value):
 	._notification_slevel_up(value)

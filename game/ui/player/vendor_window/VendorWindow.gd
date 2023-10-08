@@ -75,7 +75,7 @@ func _process(delta):
 		if _player == null:
 			return
 			
-		var target : Entity = _player.getc_target()
+		var target : Entity = _player.target_getc()
 			
 		if target != _vendor:
 			hide()
@@ -156,7 +156,7 @@ func _visibility_changed() -> void:
 		if !t:
 			return
 			
-		_vendor_item_data = t.getc_entity_data().entity_class_data.get_vendor_item_data()
+		_vendor_item_data = t.entity_data_getc().entity_class_data.get_vendor_item_data()
 
 		_page = 0
 		refresh_all()
@@ -179,7 +179,7 @@ func onc_open_winow_request(window_id : int) -> void:
 	if window_id != EntityEnums.ENTITY_WINDOW_VENDOR:
 		return
 		
-	_vendor = _player.getc_target()
+	_vendor = _player.target_getc()
 		
 	show()
 

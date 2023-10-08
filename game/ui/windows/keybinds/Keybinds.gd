@@ -32,7 +32,7 @@ func set_player(player : Entity):
 	
 	_player = player
 	
-	on_data_changed(_player.getc_entity_data())
+	on_data_changed(_player.entity_data_getc())
 		
 	_player.connect("centity_data_changed", self, "on_data_changed")
 	
@@ -150,7 +150,7 @@ func close():
 	InputMap.load_from_globals()
 	
 	if _player:
-		ProfileManager.on_keybinds_changed(_player.getc_entity_data().get_path())
+		ProfileManager.on_keybinds_changed(_player.entity_data_getc().get_path())
 		
 	hide()
 	

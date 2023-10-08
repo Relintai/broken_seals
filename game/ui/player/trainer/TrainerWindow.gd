@@ -80,7 +80,7 @@ func _process(delta):
 		if _player == null:
 			return
 			
-		var target : Entity = _player.getc_target()
+		var target : Entity = _player.target_getc()
 			
 		if target != _trainer:
 			hide()
@@ -247,7 +247,7 @@ func onc_open_winow_request(window_id : int) -> void:
 	if window_id != EntityEnums.ENTITY_WINDOW_TRAINER:
 		return
 		
-	_trainer = _player.getc_target()
+	_trainer = _player.target_getc()
 		
 	show()
 

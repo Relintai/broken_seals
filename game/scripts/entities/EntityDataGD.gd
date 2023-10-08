@@ -25,7 +25,7 @@ class_name EntityDataGD
 # SOFTWARE.
 
 func _sinteract(entity: Entity) -> void:
-	var target : Entity = entity.gets_target()
+	var target : Entity = entity.target_gets()
 	
 	if target == null or not is_instance_valid(target):
 		return
@@ -34,8 +34,8 @@ func _sinteract(entity: Entity) -> void:
 		return
 		
 	if target.sentity_interaction_type == EntityEnums.ENITIY_INTERACTION_TYPE_LOOT:
-		if target.gets_entity_data().loot_db != null and target.sbag == null:
-			var ldb : LootDataBase = target.gets_entity_data().loot_db
+		if target.entity_data_gets().loot_db != null and target.sbag == null:
+			var ldb : LootDataBase = target.entity_data_gets().loot_db
 			
 			var loot : Array = Array()
 			
@@ -60,7 +60,7 @@ func _sinteract(entity: Entity) -> void:
 		entity.ssend_open_window(EntityEnums.ENTITY_WINDOW_VENDOR)
 
 func _cans_interact(entity):
-	var target : Entity = entity.gets_target()
+	var target : Entity = entity.target_gets()
 	
 	if target == null or not is_instance_valid(target):
 		return false
