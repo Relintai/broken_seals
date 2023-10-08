@@ -16,4 +16,4 @@ entry_0/texture = ExtResource( 1 )
 
 [resource]
 layer = 5
-get_visual_entries = [ SubResource( 1 ), SubResource( 2 ) ]
+visual_entries = [ SubResource( 1 ), SubResource( 2 ) ]
