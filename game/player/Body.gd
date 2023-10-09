@@ -535,7 +535,7 @@ func process_movement_mob(delta : float) -> void:
 	if translation.y < -2000.0:
 		print("killed mob with fall damage")
 		var sdi : SpellDamageInfo = SpellDamageInfo.new()
-		sdi.damage_source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN
+		sdi.source_type = SpellDamageInfo.DAMAGE_SOURCE_UNKNOWN
 		sdi.damage = 999999999
 		entity.stake_damage(sdi)
 
